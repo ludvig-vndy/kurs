@@ -23,7 +23,10 @@
       "Bash(curl -s --cookie kurs_auth=580428ae1d34998d894658c34aff97b4ccdd37a5e107aea46e266e917a3aeffd https://kurs-7m8.pages.dev/)",
       "Bash(npx playwright *)",
       "Bash(curl -s -o /dev/null -w \"preview up: %{http_code}\\\\n\" http://localhost:4321/)",
-      "Bash(node shot.mjs)"
+      "Bash(node shot.mjs)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}\\\\n' --cookie kurs_auth=580428ae1d34998d894658c34aff97b4ccdd37a5e107aea46e266e917a3aeffd https://kurs-7m8.pages.dev/kurs/01-investeringsfilosofi/11-vad-det-innebar-att-aga-en-aktie/)",
+      "Bash(curl -s --cookie kurs_auth=580428ae1d34998d894658c34aff97b4ccdd37a5e107aea46e266e917a3aeffd https://kurs-7m8.pages.dev/kurs/01-investeringsfilosofi/11-vad-det-innebar-att-aga-en-aktie/)",
+      "Bash(node *)"
     ]
   }
 }
