@@ -1,0 +1,345 @@
+---
+import type { DelNode } from '../lib/course';
+import { lessonHref } from '../lib/course';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  tree: DelNode[];
+  currentId?: string;
+}
+const { tree, currentId } = Astro.props;
+
+const isCurrentModule = (lessonIds: string[]) =>
+  currentId ? lessonIds.includes(currentId) : false;
+---
+
+<aside class="sidebar" aria-label="Kursinnehåll">
+  <div class="sidebar__top">
+    <a href="/" class="brand" data-astro-prefetch>
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__text">Fundamental<br />aktieanalys</span>
+    </a>
+    <ThemeToggle />
+  </div>
+
+  <div class="course-progress" data-course-progress>
+    <div class="course-progress__head">
+      <span>Din progress</span>
+      <span class="course-progress__pct" data-course-pct>0%</span>
+    </div>
+    <div class="course-progress__track">
+      <div class="course-progress__fill" data-course-fill style="width:0%"></div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    {
+      tree.map((del) => (
+        <div class="del">
+          <div class="del__label">{del.del}</div>
+          {del.modules.map((mod) => {
+            const ids = mod.lessons.map((l) => l.id);
+            return (
+              <details class="module" open={isCurrentModule(ids)}>
+                <summary class="module__summary">
+                  <span class="module__chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+                  </span>
+                  <span class="module__title">
+                    <span class="module__num">{mod.modul}</span>
+                    {mod.modulTitel}
+                  </span>
+                  <span
+                    class="module__count"
+                    data-module-ids={ids.join(',')}
+                    aria-hidden="true"
+                  >
+                    0/{ids.length}
+                  </span>
+                </summary>
+                <ul class="lessons">
+                  {mod.lessons.map((lesson) => (
+                    <li>
+                      <a
+                        href={lessonHref(lesson)}
+                        class:list={['lesson', { 'is-current': lesson.id === currentId }]}
+                        data-lesson-id={lesson.id}
+                        aria-current={lesson.id === currentId ? 'page' : undefined}
+                        data-astro-prefetch
+                      >
+                        <span class="lesson__check" aria-hidden="true">
+                          <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>
+                        </span>
+                        <span class="lesson__num">{lesson.data.lektion}</span>
+                        <span class="lesson__title">{lesson.data.titel}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            );
+          })}
+        </div>
+      ))
+    }
+  </nav>
+</aside>
+
+<style>
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--bg-elev);
+    border-right: 1px solid var(--border);
+  }
+
+  .sidebar__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--text);
+  }
+  .brand:hover {
+    text-decoration: none;
+  }
+  .brand__mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(145deg, var(--accent), var(--accent-hover));
+    box-shadow: 0 0 0 1px var(--accent-line) inset;
+    flex-shrink: 0;
+  }
+  .brand__text {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* Total progress */
+  .course-progress {
+    margin: 0 var(--space-5) var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .course-progress__head {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-bottom: var(--space-2);
+    letter-spacing: 0.02em;
+  }
+  .course-progress__pct {
+    color: var(--accent);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .course-progress__track {
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+  .course-progress__fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: var(--radius-full);
+    transition: width var(--dur-comp) var(--ease-out);
+  }
+
+  /* Nav */
+  .nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 var(--space-3) var(--space-7);
+    scrollbar-width: thin;
+  }
+
+  .del__label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-faint);
+    font-weight: 600;
+    padding: var(--space-5) var(--space-3) var(--space-2);
+  }
+
+  .module {
+    border-radius: var(--radius-sm);
+  }
+  .module__summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    list-style: none;
+    color: var(--text);
+    transition: background var(--dur-micro) var(--ease-standard);
+  }
+  .module__summary::-webkit-details-marker {
+    display: none;
+  }
+  .module__summary:hover {
+    background: var(--surface);
+  }
+  .module__chevron svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--text-faint);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--dur-comp) var(--ease-out);
+  }
+  .module[open] .module__chevron svg {
+    transform: rotate(90deg);
+  }
+  .module__title {
+    flex: 1;
+    font-size: var(--text-sm);
+    font-weight: 550;
+    line-height: 1.3;
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+  .module__num {
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--text-xs);
+  }
+  .module__count {
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .module__count[data-complete='true'] {
+    color: var(--accent);
+  }
+
+  .lessons {
+    list-style: none;
+    margin: var(--space-1) 0 var(--space-3);
+    padding: 0 0 0 var(--space-4);
+  }
+  .lesson {
+    display: grid;
+    grid-template-columns: 18px auto 1fr;
+    align-items: start;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    margin-left: var(--space-1);
+    border-left: 2px solid var(--border);
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.35;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    transition:
+      color var(--dur-micro) var(--ease-standard),
+      background var(--dur-micro) var(--ease-standard),
+      border-color var(--dur-micro) var(--ease-standard);
+  }
+  .lesson:hover {
+    color: var(--text);
+    background: var(--surface);
+    text-decoration: none;
+  }
+  .lesson.is-current {
+    color: var(--text);
+    background: var(--accent-soft);
+    border-left-color: var(--accent);
+    font-weight: 550;
+  }
+  .lesson__num {
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--text-xs);
+    padding-top: 1px;
+  }
+  .lesson.is-current .lesson__num {
+    color: var(--accent);
+  }
+  .lesson__check {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    display: grid;
+    place-items: center;
+    margin-top: 1px;
+    transition:
+      background var(--dur-comp) var(--ease-out),
+      border-color var(--dur-comp) var(--ease-out);
+  }
+  .lesson__check svg {
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: var(--accent-contrast);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset var(--dur-comp) var(--ease-out);
+  }
+  .lesson.is-done .lesson__check {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .lesson.is-done .lesson__check svg {
+    stroke-dashoffset: 0;
+  }
+</style>
+
+<script>
+  import { getAll, PROGRESS_EVENT } from '../scripts/progress';
+
+  function paintSidebar() {
+    const store = getAll();
+
+    const lessons = document.querySelectorAll<HTMLElement>('.lesson[data-lesson-id]');
+    let total = 0;
+    let done = 0;
+    lessons.forEach((el) => {
+      total++;
+      const id = el.dataset.lessonId!;
+      const isDone = Boolean(store[id]?.done);
+      el.classList.toggle('is-done', isDone);
+      if (isDone) done++;
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-module-ids]').forEach((el) => {
+      const ids = (el.dataset.moduleIds || '').split(',').filter(Boolean);
+      const d = ids.filter((id) => store[id]?.done).length;
+      el.textContent = `${d}/${ids.length}`;
+      el.dataset.complete = String(d === ids.length && ids.length > 0);
+    });
+
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const pctEl = document.querySelector<HTMLElement>('[data-course-pct]');
+    const fillEl = document.querySelector<HTMLElement>('[data-course-fill]');
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (fillEl) fillEl.style.width = pct + '%';
+  }
+
+  document.addEventListener('astro:page-load', paintSidebar);
+  window.addEventListener(PROGRESS_EVENT, paintSidebar);
+</script>

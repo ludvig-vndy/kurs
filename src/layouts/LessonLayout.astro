@@ -1,0 +1,224 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
+import { getCourseTree } from '../lib/course';
+
+interface Props {
+  title: string;
+  currentId?: string;
+  showReadingProgress?: boolean;
+  deck?: boolean;
+}
+const { title, currentId, showReadingProgress = false, deck = false } = Astro.props;
+const tree = await getCourseTree();
+---
+
+<BaseLayout title={title}>
+  {showReadingProgress && <ReadingProgress />}
+
+  <div class="shell" data-shell>
+    <div class="scrim" data-scrim aria-hidden="true"></div>
+
+    <div class="sidebar-slot" data-sidebar>
+      <Sidebar tree={tree} currentId={currentId} />
+    </div>
+
+    <div class="main">
+      <header class="topbar">
+        <button
+          type="button"
+          class="hamburger"
+          data-menu-open
+          aria-label="Öppna meny"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <span class="topbar__title">{title}</span>
+      </header>
+
+      <main class:list={['content', { 'content--deck': deck }]}>
+        <slot />
+      </main>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .shell {
+    --sb: var(--sidebar-width);
+  }
+  .sidebar-slot {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sb);
+    z-index: 50;
+  }
+  .main {
+    margin-left: var(--sb);
+    min-height: 100vh;
+  }
+  .content {
+    max-width: calc(var(--content-max) + var(--space-8) * 2);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-8) var(--space-9);
+  }
+  .content--deck {
+    padding-top: var(--space-5);
+    padding-bottom: 0;
+  }
+
+  .topbar {
+    display: none;
+    align-items: center;
+    gap: var(--space-3);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: var(--space-3) var(--space-4);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar__title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hamburger {
+    display: grid;
+    gap: 4px;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .hamburger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+  }
+
+  .scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 45;
+    opacity: 0;
+    transition: opacity var(--dur-comp) var(--ease-standard);
+  }
+
+  @media (max-width: 900px) {
+    .main {
+      margin-left: 0;
+    }
+    .topbar {
+      display: flex;
+    }
+    .content {
+      padding: var(--space-5) var(--space-5) var(--space-8);
+    }
+    .sidebar-slot {
+      transform: translateX(-100%);
+      transition: transform var(--dur-comp) var(--ease-out);
+      box-shadow: var(--shadow-md);
+    }
+    [data-shell].menu-open .sidebar-slot {
+      transform: translateX(0);
+    }
+    [data-shell].menu-open .scrim {
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar-slot,
+    .scrim {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function setupShell() {
+    const shell = document.querySelector<HTMLElement>('[data-shell]');
+    if (!shell) return;
+    const openBtn = shell.querySelector<HTMLButtonElement>('[data-menu-open]');
+    const scrim = shell.querySelector<HTMLElement>('[data-scrim]');
+
+    function close() {
+      shell!.classList.remove('menu-open');
+      openBtn?.setAttribute('aria-expanded', 'false');
+    }
+    function toggle() {
+      const open = shell!.classList.toggle('menu-open');
+      openBtn?.setAttribute('aria-expanded', String(open));
+    }
+
+    openBtn?.addEventListener('click', toggle);
+    scrim?.addEventListener('click', close);
+    // Stäng drawern när man klickar en lektion
+    shell.querySelectorAll('.lesson').forEach((a) =>
+      a.addEventListener('click', close)
+    );
+  }
+
+  // Tangentbordsgenvägar — sätts EN gång, queryar aktuell DOM vid varje tryck.
+  let keysBound = false;
+  function bindShellKeys() {
+    if (keysBound) return;
+    keysBound = true;
+    document.addEventListener('keydown', (e) => {
+      const t = e.target as HTMLElement;
+      if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      const shell = document.querySelector<HTMLElement>('[data-shell]');
+      if (e.key === 'Escape') {
+        shell?.classList.remove('menu-open');
+        shell
+          ?.querySelector('[data-menu-open]')
+          ?.setAttribute('aria-expanded', 'false');
+      }
+      if (e.key === '[') {
+        document.documentElement.classList.toggle('sidebar-collapsed');
+      }
+      // Pil vänster/höger ägs av decket (se scripts/deck.ts).
+      // Fallback på sidor utan deck: navigera lektioner.
+      if (!document.querySelector('[data-deck]')) {
+        if (e.key === 'ArrowRight') {
+          document.querySelector<HTMLAnchorElement>('.pn--next')?.click();
+        }
+        if (e.key === 'ArrowLeft') {
+          document.querySelector<HTMLAnchorElement>('.pn--prev')?.click();
+        }
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    setupShell();
+    bindShellKeys();
+  });
+</script>
+
+<style is:global>
+  /* Hopfälld sidebar (tangent [) på desktop */
+  @media (min-width: 901px) {
+    html.sidebar-collapsed .sidebar-slot {
+      transform: translateX(-100%);
+      transition: transform var(--dur-comp) var(--ease-out);
+    }
+    html.sidebar-collapsed .main {
+      margin-left: 0;
+      transition: margin-left var(--dur-comp) var(--ease-out);
+    }
+  }
+</style>

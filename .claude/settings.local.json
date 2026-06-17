@@ -7,7 +7,23 @@
       "WebFetch(domain:screensdesign.com)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git mv *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:4321/ -o /dev/null -w \"home: %{http_code}\\\\n\")",
+      "Bash(curl -s \"http://localhost:4321/kurs/01-investeringsfilosofi/11-vad-det-innebar-att-aga-en-aktie/\" -o /dev/null -w \"lesson: %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:4321/kurs/01-investeringsfilosofi/11-vad-det-innebar-att-aga-en-aktie/)",
+      "Bash(npx --yes wrangler@latest whoami)",
+      "Bash(npx --yes wrangler@latest pages project list)",
+      "Bash(npx --yes wrangler@latest pages deploy dist --project-name=kurs --branch=main --commit-dirty=true)",
+      "Bash(curl -s -o /dev/null -w 'status: %{http_code}\\\\n' https://kurs-7m8.pages.dev/)",
+      "Bash(curl -s https://kurs-7m8.pages.dev/)",
+      "Bash(curl -s -o /dev/null -w 'status: %{http_code}\\\\n' --cookie kurs_auth=580428ae1d34998d894658c34aff97b4ccdd37a5e107aea46e266e917a3aeffd https://kurs-7m8.pages.dev/)",
+      "Bash(curl -s --cookie kurs_auth=580428ae1d34998d894658c34aff97b4ccdd37a5e107aea46e266e917a3aeffd https://kurs-7m8.pages.dev/)",
+      "Bash(npx playwright *)",
+      "Bash(curl -s -o /dev/null -w \"preview up: %{http_code}\\\\n\" http://localhost:4321/)",
+      "Bash(node shot.mjs)"
     ]
   }
 }

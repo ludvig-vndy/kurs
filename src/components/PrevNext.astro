@@ -1,0 +1,113 @@
+---
+import type { Lesson } from '../lib/course';
+import { lessonHref } from '../lib/course';
+
+interface Props {
+  prev: Lesson | null;
+  next: Lesson | null;
+}
+const { prev, next } = Astro.props;
+---
+
+<nav class="prevnext" aria-label="Lektionsnavigering">
+  {
+    prev ? (
+      <a class="pn pn--prev" href={lessonHref(prev)} data-astro-prefetch>
+        <span class="pn__dir">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+          Föregående
+        </span>
+        <span class="pn__title">{prev.data.titel}</span>
+      </a>
+    ) : (
+      <span class="pn pn--empty" />
+    )
+  }
+  {
+    next ? (
+      <a class="pn pn--next" href={lessonHref(next)} data-astro-prefetch>
+        <span class="pn__dir">
+          Nästa
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+        </span>
+        <span class="pn__title">{next.data.titel}</span>
+      </a>
+    ) : (
+      <span class="pn pn--empty" />
+    )
+  }
+</nav>
+
+<style>
+  .prevnext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+  .pn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-elev);
+    color: var(--text);
+    transition:
+      border-color var(--dur-micro) var(--ease-standard),
+      transform var(--dur-comp) var(--ease-out),
+      box-shadow var(--dur-comp) var(--ease-out);
+  }
+  .pn:hover {
+    text-decoration: none;
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .pn--next {
+    text-align: right;
+    align-items: flex-end;
+  }
+  .pn--empty {
+    border: none;
+    background: none;
+    pointer-events: none;
+  }
+  .pn__dir {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+  .pn__dir svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .pn__title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--text-base);
+    line-height: 1.3;
+    color: var(--text);
+  }
+  @media (max-width: 560px) {
+    .prevnext {
+      grid-template-columns: 1fr;
+    }
+    .pn--empty {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,123 @@
+/* ============================================================
+   Designtokens — en källa till sanning för färg, typ, rytm, motion.
+   Konsekvens via tokens = det som läser som "premium".
+   Mörkt läge är default; [data-theme="light"] växlar.
+   ============================================================ */
+
+:root {
+  /* --- Typografi --- */
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Modulär skala (~1.2 minor third), rem-baserad för tillgänglighet */
+  --text-xs: 0.79rem;
+  --text-sm: 0.889rem;
+  --text-base: 1.0rem;
+  --text-md: 1.1875rem; /* brödtext ~19px */
+  --text-lg: 1.333rem;
+  --text-xl: 1.602rem;
+  --text-2xl: 1.924rem;
+  --text-3xl: 2.311rem;
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-body: 1.62;
+
+  --measure: 65ch; /* radlängd för brödtext */
+
+  /* --- Spacing-skala (4-baserad) --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* --- Form --- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  --sidebar-width: 312px;
+  --content-max: 720px;
+
+  /* --- Motion --- */
+  --dur-micro: 150ms;
+  --dur-comp: 250ms;
+  --dur-reveal: 520ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Semantiska quiz-färger (delas av båda teman, justeras nedan) --- */
+  --ok: #1f7a55;
+  --ok-bg: rgba(31, 122, 85, 0.1);
+  --ok-border: rgba(31, 122, 85, 0.35);
+  --err: #b23b3b;
+  --err-bg: rgba(178, 59, 59, 0.09);
+  --err-border: rgba(178, 59, 59, 0.32);
+}
+
+/* ===================== MÖRKT (default) ===================== */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #131619;
+  --bg-elev: #181c20;
+  --surface: #1b2024;
+  --surface-2: #232a30;
+  --text: #e6e5df;
+  --text-muted: #9aa0a0;
+  --text-faint: #6c7376;
+  --border: #2a3036;
+  --border-strong: #3a424a;
+
+  --accent: #4fb89e;
+  --accent-hover: #6fccb3;
+  --accent-contrast: #07120f;
+  --accent-soft: rgba(79, 184, 158, 0.13);
+  --accent-line: rgba(79, 184, 158, 0.45);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.45);
+
+  --ok: #5fc191;
+  --ok-bg: rgba(95, 193, 145, 0.12);
+  --ok-border: rgba(95, 193, 145, 0.4);
+  --err: #e58a8a;
+  --err-bg: rgba(229, 138, 138, 0.11);
+  --err-border: rgba(229, 138, 138, 0.38);
+}
+
+/* ===================== LJUST ===================== */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #fbfbf9;
+  --bg-elev: #ffffff;
+  --surface: #f4f3ee;
+  --surface-2: #ebeae3;
+  --text: #1f1e1b;
+  --text-muted: #6b6a63;
+  --text-faint: #98968d;
+  --border: #e5e3db;
+  --border-strong: #d6d3c8;
+
+  --accent: #0f6e5c;
+  --accent-hover: #0b5546;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(15, 110, 92, 0.08);
+  --accent-line: rgba(15, 110, 92, 0.5);
+
+  --shadow-sm: 0 1px 2px rgba(31, 30, 27, 0.06);
+  --shadow-md: 0 12px 32px rgba(31, 30, 27, 0.1);
+
+  --ok: #1f7a55;
+  --ok-bg: rgba(31, 122, 85, 0.08);
+  --ok-border: rgba(31, 122, 85, 0.3);
+  --err: #b23b3b;
+  --err-bg: rgba(178, 59, 59, 0.07);
+  --err-border: rgba(178, 59, 59, 0.28);
+}

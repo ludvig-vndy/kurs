@@ -1,0 +1,136 @@
+---
+interface Props {
+  lessonId: string;
+}
+const { lessonId } = Astro.props;
+---
+
+<div class="complete" data-complete-id={lessonId}>
+  <button type="button" class="complete__btn" data-complete-btn aria-pressed="false">
+    <span class="complete__check" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>
+    </span>
+    <span class="complete__label" data-complete-label>Markera som klar</span>
+  </button>
+</div>
+
+<style>
+  .complete {
+    margin-top: var(--space-7);
+    display: flex;
+    justify-content: center;
+  }
+  .complete__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-full);
+    background: var(--bg-elev);
+    color: var(--accent);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--text-base);
+    cursor: pointer;
+    transition:
+      background var(--dur-comp) var(--ease-out),
+      color var(--dur-comp) var(--ease-out),
+      border-color var(--dur-comp) var(--ease-out),
+      transform var(--dur-micro) var(--ease-out);
+  }
+  .complete__btn:hover {
+    background: var(--accent-soft);
+  }
+  .complete__btn:active {
+    transform: scale(0.97);
+  }
+  .complete__check {
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--accent-line);
+    border-radius: var(--radius-full);
+    display: grid;
+    place-items: center;
+    transition:
+      background var(--dur-comp) var(--ease-out),
+      border-color var(--dur-comp) var(--ease-out),
+      transform var(--dur-comp) var(--ease-out);
+  }
+  .complete__check svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: var(--accent-contrast);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset var(--dur-comp) var(--ease-out);
+  }
+
+  .complete__btn[aria-pressed='true'] {
+    background: var(--accent);
+    color: var(--accent-contrast);
+    border-color: var(--accent);
+  }
+  .complete__btn[aria-pressed='true'] .complete__check {
+    background: transparent;
+    border-color: var(--accent-contrast);
+  }
+  .complete__btn[aria-pressed='true'] .complete__check svg {
+    stroke-dashoffset: 0;
+  }
+  .complete__btn.celebrate {
+    animation: pop var(--dur-comp) var(--ease-out);
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .complete__btn.celebrate {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { isDone, setDone, PROGRESS_EVENT } from '../scripts/progress';
+
+  function render(root: HTMLElement) {
+    const id = root.dataset.completeId!;
+    const btn = root.querySelector<HTMLButtonElement>('[data-complete-btn]')!;
+    const label = root.querySelector<HTMLElement>('[data-complete-label]')!;
+    const done = isDone(id);
+    btn.setAttribute('aria-pressed', String(done));
+    label.textContent = done ? 'Klar' : 'Markera som klar';
+  }
+
+  function wire() {
+    document.querySelectorAll<HTMLElement>('[data-complete-id]').forEach((root) => {
+      const id = root.dataset.completeId!;
+      const btn = root.querySelector<HTMLButtonElement>('[data-complete-btn]')!;
+      render(root);
+      if (btn.dataset.wired) return;
+      btn.dataset.wired = '1';
+      btn.addEventListener('click', () => {
+        const next = !isDone(id);
+        setDone(id, next);
+        if (next) {
+          btn.classList.remove('celebrate');
+          void btn.offsetWidth; // reflow för att starta om animationen
+          btn.classList.add('celebrate');
+        }
+        render(root);
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', wire);
+  window.addEventListener(PROGRESS_EVENT, () => {
+    document.querySelectorAll<HTMLElement>('[data-complete-id]').forEach(render);
+  });
+</script>
