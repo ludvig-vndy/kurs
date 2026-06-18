@@ -33,7 +33,10 @@ export async function checkIntegrity(base, manifestLektioner = null) {
   }
 
   if (manifestLektioner) {
-    const onDisk = new Set(lessons.map((l) => l.lektion));
+    // Referenssidor (formelbilaga m.m.) är inte lektioner — utanför korskollen.
+    const onDisk = new Set(
+      lessons.filter((l) => (l.frontmatter.format || 'standard') !== 'referens').map((l) => l.lektion)
+    );
     const inManifest = new Set(manifestLektioner);
     for (const m of inManifest)
       if (!onDisk.has(m)) errors.push(`manifest: lektion ${m} saknas på disk`);

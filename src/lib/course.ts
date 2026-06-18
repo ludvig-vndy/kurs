@@ -16,7 +16,10 @@ export interface DelNode {
 /** Alla lektioner, sorterade på `ordning`. Den globala läsordningen. */
 export async function getLessonsInOrder(): Promise<Lesson[]> {
   const lessons = await getCollection('kurs');
-  return lessons.sort((a, b) => a.data.ordning - b.data.ordning);
+  // Referenssidor (t.ex. formelbilagan) ingår inte i läsordning/sidebar/prev-next.
+  return lessons
+    .filter((l) => l.data.format !== 'referens')
+    .sort((a, b) => a.data.ordning - b.data.ordning);
 }
 
 /**
