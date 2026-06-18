@@ -109,3 +109,9 @@
 19.8	Scenarioanalys och att dimensionera jakten	src/content/kurs/19-att-hitta-framtidens-vinnare/19.8-scenarioanalys-och-att-dimensionera-jakten.md
 19.9	Syntes: så hittar du framtidens vinnare	src/content/kurs/19-att-hitta-framtidens-vinnare/19.9-syntes-sa-hittar-du-framtidens-vinnare.md
 20.1	Lifco, räkenskapsåret 2025	src/content/kurs/20-fallstudie-lifco/20.1-lifco-rakenskapsaret-2025.md
+21.1	Banker	src/content/kurs/21-sektoranalys/21.1-banker.md
+21.2	Försäkringsbolag	src/content/kurs/21-sektoranalys/21.2-forsakringsbolag.md
+21.3	Fastighetsbolag	src/content/kurs/21-sektoranalys/21.3-fastighetsbolag.md
+21.4	Råvaru- och cykliska bolag	src/content/kurs/21-sektoranalys/21.4-ravaru-och-cykliska-bolag.md
+22.1	Källor och verktyg	src/content/kurs/22-praktik/22.1-kallor-och-verktyg.md
+22.2	Svensk praktik: konton, listor och skatt	src/content/kurs/22-praktik/22.2-svensk-praktik-konton-listor-skatt.md

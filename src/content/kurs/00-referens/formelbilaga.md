@@ -103,7 +103,8 @@ merparten av totalvärdet — där sitter de farligaste antagandena.
 - EV/EBIT, EV/EBITDA och EV/EBITA använder Enterprise Value (EV = börsvärde +
   nettoskuld) — kapitalstruktur-neutralt, till skillnad från P/E. EV/EBITA är
   vanligt för serieförvärvare (EBITA rensar förvärvsavskrivningen).
-- P/S och P/B för bolag utan meningsfull vinst respektive tillgångstunga bolag.
+- P/S = börsvärde / omsättning, för bolag utan meningsfull vinst.
+- P/B = pris per aktie / bokfört eget kapital per aktie (eller börsvärde / eget kapital), för tillgångstunga bolag (banker, fastighet, cykliskt). Jämförs med ROE: hög ROE motiverar högre P/B.
 
 **Felmarginal (margin of safety)**
 felmarginal = (uppskattat värde − pris) / uppskattat värde.

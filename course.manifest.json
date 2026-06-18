@@ -1,7 +1,7 @@
 {
   "seededFrom": "_MANIFEST.txt (verifierad filuppsättning)",
   "crosscheckedAgainst": "Fundamental_analys_kursstruktur.md",
-  "count": 109,
+  "count": 115,
   "lessons": [
     {
       "lektion": "1.0",
@@ -438,6 +438,30 @@
     {
       "lektion": "20.1",
       "titel": "Lifco, räkenskapsåret 2025"
+    },
+    {
+      "lektion": "21.1",
+      "titel": "Banker"
+    },
+    {
+      "lektion": "21.2",
+      "titel": "Försäkringsbolag"
+    },
+    {
+      "lektion": "21.3",
+      "titel": "Fastighetsbolag"
+    },
+    {
+      "lektion": "21.4",
+      "titel": "Råvaru- och cykliska bolag"
+    },
+    {
+      "lektion": "22.1",
+      "titel": "Källor och verktyg"
+    },
+    {
+      "lektion": "22.2",
+      "titel": "Svensk praktik: konton, listor och skatt"
     }
   ]
 }
