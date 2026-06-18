@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "node tools/check-all.mjs",
+    "test:tools": "node --test \"tools/__tests__/*.test.mjs\""
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",
