@@ -183,6 +183,8 @@ const items = [
 <script>
   import { initDevUnlock, isDevUnlocked, setDevUnlock, META_EVENT } from '../scripts/state';
 
+  let metaListenerWired = false;
+
   function paintDev() {
     const on = isDevUnlocked();
     document.querySelectorAll<HTMLElement>('[data-dev-toggle]').forEach((el) => {
@@ -201,6 +203,9 @@ const items = [
     initDevUnlock();
     wireDev();
     paintDev();
+    if (!metaListenerWired) {
+      window.addEventListener(META_EVENT, paintDev);
+      metaListenerWired = true;
+    }
   });
-  window.addEventListener(META_EVENT, paintDev);
 </script>
