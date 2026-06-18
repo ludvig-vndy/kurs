@@ -1,0 +1,435 @@
+{
+  "seededFrom": "_MANIFEST.txt (verifierad filuppsättning)",
+  "crosscheckedAgainst": "Fundamental_analys_kursstruktur.md",
+  "count": 107,
+  "lessons": [
+    {
+      "lektion": "1.1",
+      "titel": "Vad det innebär att äga en aktie"
+    },
+    {
+      "lektion": "1.2",
+      "titel": "Pris vs värde"
+    },
+    {
+      "lektion": "1.3",
+      "titel": "Tidshorisont och avkastningens källor"
+    },
+    {
+      "lektion": "1.4",
+      "titel": "Olika investeringsfilosofier"
+    },
+    {
+      "lektion": "1.5",
+      "titel": "Din kompetenscirkel"
+    },
+    {
+      "lektion": "1.6",
+      "titel": "Syntes: så hänger Modul 1 ihop"
+    },
+    {
+      "lektion": "2.1",
+      "titel": "Hur ett bolag tjänar pengar"
+    },
+    {
+      "lektion": "2.2",
+      "titel": "Olika typer av affärsmodeller"
+    },
+    {
+      "lektion": "2.3",
+      "titel": "Enhetsekonomi"
+    },
+    {
+      "lektion": "2.4",
+      "titel": "Återkommande vs cyklisk intäkt"
+    },
+    {
+      "lektion": "2.5",
+      "titel": "Vad som driver tillväxt"
+    },
+    {
+      "lektion": "2.6",
+      "titel": "Syntes: så hänger Modul 2 ihop"
+    },
+    {
+      "lektion": "3.1",
+      "titel": "Årsredovisningens delar"
+    },
+    {
+      "lektion": "3.2",
+      "titel": "Läsa mellan raderna i VD-ord och förvaltningsberättelse"
+    },
+    {
+      "lektion": "3.3",
+      "titel": "Noterna är där sanningen gömmer sig"
+    },
+    {
+      "lektion": "3.4",
+      "titel": "Revisionsberättelsen och redovisningsprinciper"
+    },
+    {
+      "lektion": "3.5",
+      "titel": "Syntes: så hänger Modul 3 ihop, och in i Del 2"
+    },
+    {
+      "lektion": "4.1",
+      "titel": "Från omsättning till nettoresultat"
+    },
+    {
+      "lektion": "4.2",
+      "titel": "Bruttoresultat och kostnad för sålda varor"
+    },
+    {
+      "lektion": "4.3",
+      "titel": "Rörelseresultat och operativa kostnader"
+    },
+    {
+      "lektion": "4.4",
+      "titel": "Engångsposter och justerade resultat"
+    },
+    {
+      "lektion": "4.5",
+      "titel": "Intäktsredovisning som varningslampa"
+    },
+    {
+      "lektion": "4.6",
+      "titel": "Syntes: så hänger Modul 4 ihop"
+    },
+    {
+      "lektion": "5.1",
+      "titel": "Tillgångar, skulder och eget kapital"
+    },
+    {
+      "lektion": "5.2",
+      "titel": "Omsättningstillgångar och rörelsekapital"
+    },
+    {
+      "lektion": "5.3",
+      "titel": "Skuldsättning och finansiell risk"
+    },
+    {
+      "lektion": "5.4",
+      "titel": "Goodwill och immateriella tillgångar"
+    },
+    {
+      "lektion": "5.5",
+      "titel": "Det egna kapitalets sammansättning"
+    },
+    {
+      "lektion": "5.6",
+      "titel": "Syntes: så hänger Modul 5 ihop"
+    },
+    {
+      "lektion": "6.1",
+      "titel": "Varför kassaflöde är viktigare än vinst"
+    },
+    {
+      "lektion": "6.2",
+      "titel": "De tre flödena"
+    },
+    {
+      "lektion": "6.3",
+      "titel": "Fritt kassaflöde"
+    },
+    {
+      "lektion": "6.4",
+      "titel": "När vinst och kassaflöde glider isär"
+    },
+    {
+      "lektion": "6.5",
+      "titel": "Syntes: så hänger Modul 6 ihop"
+    },
+    {
+      "lektion": "7.1",
+      "titel": "Kopplingen mellan rapporterna"
+    },
+    {
+      "lektion": "7.2",
+      "titel": "Att läsa ett bolag som en helhet"
+    },
+    {
+      "lektion": "7.3",
+      "titel": "Syntes: så hänger Del 2 ihop"
+    },
+    {
+      "lektion": "8.1",
+      "titel": "Marginaler genom hela kedjan"
+    },
+    {
+      "lektion": "8.2",
+      "titel": "Tillväxttal och deras kvalitet"
+    },
+    {
+      "lektion": "8.3",
+      "titel": "Effektivitets- och omsättningstal"
+    },
+    {
+      "lektion": "8.4",
+      "titel": "Att använda nyckeltal rätt"
+    },
+    {
+      "lektion": "8.5",
+      "titel": "Syntes: så hänger Modul 8 ihop"
+    },
+    {
+      "lektion": "9.1",
+      "titel": "Vad ROIC är"
+    },
+    {
+      "lektion": "9.2",
+      "titel": "ROIC vs kapitalkostnad"
+    },
+    {
+      "lektion": "9.3",
+      "titel": "Reinvesteringsförmåga"
+    },
+    {
+      "lektion": "9.4",
+      "titel": "ROE och ROA och deras fallgropar"
+    },
+    {
+      "lektion": "9.5",
+      "titel": "Syntes: så hänger Modul 9 ihop"
+    },
+    {
+      "lektion": "10.1",
+      "titel": "Vad en moat är"
+    },
+    {
+      "lektion": "10.2",
+      "titel": "De olika typerna av moats"
+    },
+    {
+      "lektion": "10.3",
+      "titel": "Att bedöma en moats styrka och hållbarhet"
+    },
+    {
+      "lektion": "10.4",
+      "titel": "Moats i siffrorna"
+    },
+    {
+      "lektion": "10.5",
+      "titel": "Syntes: så hänger Modul 10 ihop"
+    },
+    {
+      "lektion": "11.1",
+      "titel": "Att bedöma en ledning"
+    },
+    {
+      "lektion": "11.2",
+      "titel": "Kapitalallokering som disciplin"
+    },
+    {
+      "lektion": "11.3",
+      "titel": "Förvärv: värdeskapande eller förstörande"
+    },
+    {
+      "lektion": "11.4",
+      "titel": "Återköp och utdelning"
+    },
+    {
+      "lektion": "11.5",
+      "titel": "Syntes: så hänger Del 3 ihop"
+    },
+    {
+      "lektion": "12.1",
+      "titel": "Vad värde är"
+    },
+    {
+      "lektion": "12.2",
+      "titel": "Pengars tidsvärde och diskontering"
+    },
+    {
+      "lektion": "12.3",
+      "titel": "Värdering är en åsikt, inte ett facit"
+    },
+    {
+      "lektion": "12.4",
+      "titel": "Syntes: så hänger Modul 12 ihop"
+    },
+    {
+      "lektion": "13.1",
+      "titel": "De vanligaste multiplarna"
+    },
+    {
+      "lektion": "13.2",
+      "titel": "Vad en multipel faktiskt säger"
+    },
+    {
+      "lektion": "13.3",
+      "titel": "Relativvärdering och jämförelser"
+    },
+    {
+      "lektion": "13.4",
+      "titel": "Multipelvärderingens begränsningar"
+    },
+    {
+      "lektion": "13.5",
+      "titel": "Syntes: så hänger Modul 13 ihop"
+    },
+    {
+      "lektion": "14.1",
+      "titel": "DCF-modellens logik"
+    },
+    {
+      "lektion": "14.2",
+      "titel": "Att bygga prognosen"
+    },
+    {
+      "lektion": "14.3",
+      "titel": "Diskonteringsränta och slutvärde"
+    },
+    {
+      "lektion": "14.4",
+      "titel": "Känslighetsanalys"
+    },
+    {
+      "lektion": "14.5",
+      "titel": "Syntes: så hänger Modul 14 ihop"
+    },
+    {
+      "lektion": "15.1",
+      "titel": "Vad risk faktiskt är"
+    },
+    {
+      "lektion": "15.2",
+      "titel": "Felmarginal (margin of safety)"
+    },
+    {
+      "lektion": "15.3",
+      "titel": "Att kartlägga vad som kan gå fel"
+    },
+    {
+      "lektion": "15.4",
+      "titel": "Att tänka i sannolikheter"
+    },
+    {
+      "lektion": "15.5",
+      "titel": "Syntes: så hänger Del 4 ihop"
+    },
+    {
+      "lektion": "16.1",
+      "titel": "Flockbeteende och FOMO"
+    },
+    {
+      "lektion": "16.2",
+      "titel": "Rädsla och panik"
+    },
+    {
+      "lektion": "16.3",
+      "titel": "Confirmation bias"
+    },
+    {
+      "lektion": "16.4",
+      "titel": "Story investing vs riktig analys"
+    },
+    {
+      "lektion": "16.5",
+      "titel": "Potential vs sannolikhet"
+    },
+    {
+      "lektion": "16.6",
+      "titel": "Anchoring"
+    },
+    {
+      "lektion": "16.7",
+      "titel": "Sunk cost fallacy"
+    },
+    {
+      "lektion": "16.8",
+      "titel": "Position sizing och ödmjukhet"
+    },
+    {
+      "lektion": "16.9",
+      "titel": "Att bygga ett investeringssystem"
+    },
+    {
+      "lektion": "16.10",
+      "titel": "Syntes: så hänger Del 5 ihop"
+    },
+    {
+      "lektion": "17.1",
+      "titel": "Varför vanliga verktyg inte fungerar"
+    },
+    {
+      "lektion": "17.2",
+      "titel": "Marknaden, problemet och produkten"
+    },
+    {
+      "lektion": "17.3",
+      "titel": "Enhetsekonomi och vägen till lönsamhet"
+    },
+    {
+      "lektion": "17.4",
+      "titel": "Kassa, burn rate och finansieringsrisk"
+    },
+    {
+      "lektion": "17.5",
+      "titel": "Att värdera framtiden i scenarier"
+    },
+    {
+      "lektion": "17.6",
+      "titel": "Att överleva resan"
+    },
+    {
+      "lektion": "17.7",
+      "titel": "Position sizing i hög osäkerhet"
+    },
+    {
+      "lektion": "17.8",
+      "titel": "Syntes: så hänger Del 6 ihop"
+    },
+    {
+      "lektion": "18.1",
+      "titel": "Från idé till beslut"
+    },
+    {
+      "lektion": "18.2",
+      "titel": "Att skriva ett investeringscase"
+    },
+    {
+      "lektion": "18.3",
+      "titel": "Bevaka, ompröva och sälja"
+    },
+    {
+      "lektion": "18.4",
+      "titel": "Kursavslutning: din resa härifrån"
+    },
+    {
+      "lektion": "19.1",
+      "titel": "Multibagger-linsen: en annan sorts analys"
+    },
+    {
+      "lektion": "19.2",
+      "titel": "Bra vs dåliga förluster"
+    },
+    {
+      "lektion": "19.3",
+      "titel": "TAM och product-market fit"
+    },
+    {
+      "lektion": "19.4",
+      "titel": "Skalbarhet, operating leverage och framtida marginalpotential"
+    },
+    {
+      "lektion": "19.5",
+      "titel": "Enhetsekonomi och tillväxtkvalitet"
+    },
+    {
+      "lektion": "19.6",
+      "titel": "Burn rate, runway och emissionsrisk"
+    },
+    {
+      "lektion": "19.7",
+      "titel": "Grundare, insiderägande och teknologiskt försprång"
+    },
+    {
+      "lektion": "19.8",
+      "titel": "Scenarioanalys och att dimensionera jakten"
+    },
+    {
+      "lektion": "19.9",
+      "titel": "Syntes: så hittar du framtidens vinnare"
+    }
+  ]
+}

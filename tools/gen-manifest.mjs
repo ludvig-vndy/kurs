@@ -35,5 +35,15 @@ await writeFile(
   '_MANIFEST.txt',
   '# Verifierad filuppsattning (kalla for course.manifest.json). En rad per lektion.\n# lektion\\ttitel\\tpath\n' + body + '\n'
 );
-console.log('Skrev _MANIFEST.txt med', rows.length, 'lektioner');
+
+// course.manifest.json seedas ur den verifierade uppsattningen (inte strukturdokumentet)
+const manifest = {
+  seededFrom: '_MANIFEST.txt (verifierad filuppsättning)',
+  crosscheckedAgainst: 'Fundamental_analys_kursstruktur.md',
+  count: rows.length,
+  lessons: rows.map((r) => ({ lektion: r.lektion, titel: r.titel })),
+};
+await writeFile('course.manifest.json', JSON.stringify(manifest, null, 2) + '\n');
+
+console.log('Skrev _MANIFEST.txt och course.manifest.json med', rows.length, 'lektioner');
 console.log('15.1:', rows.some((r) => r.lektion === '15.1'), '| 18.4:', rows.some((r) => r.lektion === '18.4'));
