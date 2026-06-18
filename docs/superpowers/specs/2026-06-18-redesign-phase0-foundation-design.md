@@ -85,69 +85,92 @@ inherit the revalued tokens/fonts. No page is migrated to `AppShell` in Phase 0.
 
 ## 3. Design tokens (`src/styles/tokens.css`)
 
-Keep the existing **semantic names** so existing components adopt the new look
-with zero markup change, **revalue** them to the handoff palette, and **add** the
-extra tokens later phases need.
+**Adopt the handoff's exact variable names** as the canonical token set. The
+handoff uses two vocabularies: the **Platform + Lesson** files share one set
+(the course surfaces), and the **tool** uses its own (`--page/--panel/--ink/
+--petrol/--brass/…`). We take the **Platform/Lesson set as the shared canonical
+tokens** (below); the tool keeps its own vocabulary scoped to the tool route in
+Phase 3 (§3.3).
 
-### Dark (default — handoff "fokus")
+### 3.1 Canonical tokens (exact handoff names)
 
-| Token | Value |
-|---|---|
-| `--bg` | `#0A0C0B` |
-| `--surface` / panel | `#11140F` |
-| `--surface-2` | `#161A14` |
-| `--text` | `#F0EDE4` |
-| `--text-soft` (new) | `#C3C7BC` |
-| `--text-muted` | `#777F73` |
-| `--text-faint` | `#333A32` |
-| `--accent` (mint) | `#8FD3B0` |
-| `--accent-hover` / accent-2 | `#A6E0C4` |
-| `--accent-contrast` (on-mint) | `#0A0C0B` |
-| `--accent-soft` | `rgba(143,211,176,.13)` |
-| `--accent-line` | `rgba(143,211,176,.45)` |
-| `--border` | `rgba(255,255,255,.09)` |
-| `--border-2` (new) | `rgba(255,255,255,.16)` |
-| `--brass` (new) | `#C9A86A` |
-| `--good` / `--mid` / `--bad` (new) | `#8FD3B0` / `#E3C06A` / `#E0896F` |
-| `--line-price` (new) | dashed price line, ~`#777F73` |
+| Token | Dark (default, "fokus") | Light (editorial, "ed") |
+|---|---|---|
+| `--bg` | `#0A0C0B` | `#EFE9DC` |
+| `--surface` | `#11140F` | `#F7F2E7` |
+| `--surface-2` | `#161A14` | `#FCFAF3` |
+| `--border` | `rgba(255,255,255,.09)` | `rgba(30,36,31,.14)` |
+| `--border-2` | `rgba(255,255,255,.16)` | `rgba(30,36,31,.24)` |
+| `--text` | `#F0EDE4` | `#1E241F` |
+| `--prose` | `#C3C7BC` | `#3C4239` |
+| `--muted` | `#777F73` | `#6E7568` |
+| `--faint` | `#333A32` | `#CBC3B2` |
+| `--mint` | `#8FD3B0` | `#1C6E50` |
+| `--mint-2` | `#A6E0C4` | `#155741` |
+| `--mint-soft` | `rgba(143,211,176,.11)` | `rgba(28,110,80,.10)` |
+| `--on-mint` | `#0A0C0B` | `#F6F3EA` |
+| `--line-price` | `#6F7A72` | `#9AA6B3` |
+| `--good` | `#8FD3B0` | `#3E7A4F` |
+| `--good-soft` | `rgba(143,211,176,.12)` | `rgba(62,122,79,.12)` |
+| `--mid` | `#E3C06A` | `#9A7320` |
+| `--bad` | `#E0A08A` | `#A8473A` |
+| `--bad-soft` | `rgba(224,160,138,.12)` | `rgba(168,71,58,.10)` |
 
-### Light (editorial — handoff "ed")
+Fonts (exact handoff names, from the tool's tokenized set):
 
-| Token | Value |
-|---|---|
-| `--bg` | `#EFE9DC` |
-| `--surface` | `#F7F2E7` |
-| `--surface-2` | `#FCFAF3` |
-| `--text` | `#1E241F` |
-| `--text-soft` | `#3C4239` |
-| `--text-muted` | `#6E7568` |
-| `--text-faint` | `#CBC3B2` |
-| `--accent` | `#1C6E50` |
-| `--accent-contrast` | `#F6F3EA` |
-| `--border` / `--border-2` | `rgba(30,36,31,.14)` / `.24` |
-| `--brass` | `#9A6E1C` |
-| `--good`/`--mid`/`--bad` | `#3E7A4F` / `#9A7320` / `#A8473A` |
+- `--serif: "Newsreader", Georgia, serif;` (300/400/500 + italic 400)
+- `--sans: "Schibsted Grotesk", system-ui, sans-serif;` (400/500/600)
+- `--mono: "IBM Plex Mono", ui-monospace, monospace;` (400/500/600)
 
-Existing quiz semantic colors (`--ok*`, `--err*`) are kept, retuned to
-`--good`/`--bad` where it reads better.
+Prose + form + layout:
 
-### Typography, form, motion
-
-- `--font-serif: "Newsreader", Georgia, serif;` (300/400/500 + italic 400)
-- `--font-sans: "Schibsted Grotesk", system-ui, sans-serif;` (400/500/600)
-- `--font-mono: "IBM Plex Mono", ui-monospace, monospace;` (400/500/600) — new
-- Display = Newsreader 300 + `letter-spacing:-.02em`. Body prose ~20px / lh ~1.7
-  (keep a `--prose-size` knob, defaults 20px). Kickers 10–11px, uppercase,
+- `--prose-size: 20px` (compact 18 / large 23), line-height ~1.7. Display =
+  Newsreader 300 + `letter-spacing:-.02em`. Kickers 10–11px, uppercase,
   letter-spacing .14–.28em.
-- Radii: `--radius-sm:6px`, `--radius-md:10px`, card `14–18px`, `--radius-full:99px`.
+- Keep our existing utility scales (`--space-*`, `--text-*` sizes, `--leading-*`,
+  `--measure`, `--radius-*`, `--dur-*`, `--ease-*`) — these aren't part of the
+  handoff's named design tokens and stay as-is.
 - `--rail-width: 248px`. Per-surface max-widths used later: dash 1000 / course
-  880 / tool 1160 / lesson prose ~65ch.
-- **Breakpoint: 760px** (rename/realign from the current 900px shell breakpoint
-  in `AppShell`; existing `LessonLayout` keeps its own until Phase 1).
-- Mint-glow shadow token for primary circular buttons:
-  `--glow-mint: 0 8px 22px -6px var(--accent)`.
-- Motion vars unchanged (`--ease-out`, durations); add a `riseF`-equivalent
-  entrance handled by the existing reveal system (§7).
+  880 / tool 1160 / lesson prose ~65ch. **Breakpoint: 760px** (used by `AppShell`;
+  `LessonLayout` keeps its 900px until Phase 1).
+- `--glow-mint: 0 8px 22px -6px var(--mint)` for primary circular buttons.
+
+### 3.2 Accent picker values (dark only — recorded, implemented Phase 1)
+
+Blå: `--mint:#83BDEE; --mint-2:#A3D0F5; --mint-soft:rgba(131,189,238,.12)`.
+Amber: `--mint:#E3C06A; --mint-2:#EED08A; --mint-soft:rgba(227,192,106,.12)`.
+
+### 3.3 Compatibility alias shim (temporary)
+
+So that not-yet-rebuilt components keep working through Phases 0–2 without being
+prematurely rewritten, add a small alias block in `tokens.css` mapping the old
+names to the canonical ones, e.g.:
+
+```css
+--bg-elev: var(--surface);
+--text-muted: var(--muted);
+--text-faint: var(--faint);
+--border-strong: var(--border-2);
+--accent: var(--mint);
+--accent-hover: var(--mint-2);
+--accent-contrast: var(--on-mint);
+--accent-soft: var(--mint-soft);
+--accent-line: var(--border-2);
+--ok: var(--good);  --err: var(--bad);
+--font-serif: var(--serif);  --font-sans: var(--sans);
+/* --ok-bg/--ok-border/--err-bg/--err-border retuned to good/bad as needed */
+```
+
+Each alias is removed as the component using it is rebuilt in its phase; the
+whole shim is deleted by the end of Phase 2. **All new code uses the canonical
+handoff names directly — never the aliases.**
+
+### 3.4 Tool tokens (Phase 3, recorded here)
+
+The tool route keeps the handoff tool vocabulary (`--page/--panel/--panel-2/
+--ink/--ink-soft/--ink-faint/--line/--line-soft/--petrol/--brass/--bad/--mid/
+--good/--great/--vhigh/--on-ink/--r`), scoped to that route, fed by the same
+`data-theme`. Not part of Phase 0.
 
 ---
 
@@ -161,8 +184,10 @@ Schibsted Grotesk: wght 400;500;600
 IBM Plex Mono: wght 400;500;600
 ```
 
-`display=swap`, `preconnect` kept. (Self-hosting is a later optimisation; the
-handoff's standalone files inline the fonts, we don't need to.)
+`display=swap`, `preconnect` kept. Define `--serif`/`--sans`/`--mono` in
+`tokens.css` (§3.1); the `--font-serif`/`--font-sans` aliases (§3.3) keep
+existing components working. (Self-hosting is a later optimisation; the handoff's
+standalone files inline the fonts, we don't need to.)
 
 ---
 
