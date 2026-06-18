@@ -6,8 +6,7 @@ interface Props {
 }
 const { active = 'hem' } = Astro.props;
 
-// Fas 0: platshållarmål. Fas 2 byter till riktiga rutter.
-const ROUTES = { hem: '/', kurs: '/', verktyg: '/' };
+const ROUTES = { hem: '/hem', kurs: '/oversikt', verktyg: '/verktyg' };
 const items = [
   { key: 'hem', label: 'Hem', href: ROUTES.hem },
   { key: 'kurs', label: 'Kursöversikt', href: ROUTES.kurs },

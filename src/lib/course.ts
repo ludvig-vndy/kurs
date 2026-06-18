@@ -53,6 +53,38 @@ export async function getCourseTree(): Promise<DelNode[]> {
   }));
 }
 
+/** Modul med dess lektions-id, i kursordning — för gating-beräkning. */
+export interface GateModuleData {
+  key: string;
+  modul: number;
+  modulTitel: string;
+  del: string;
+  lessonIds: string[];
+}
+
+/** Alla moduler i kursordning, var och en med sina lektions-id. */
+export async function getModulesInOrder(): Promise<GateModuleData[]> {
+  const tree = await getCourseTree();
+  const mods: GateModuleData[] = [];
+  for (const del of tree) {
+    for (const m of del.modules) {
+      mods.push({
+        key: String(m.modul),
+        modul: m.modul,
+        modulTitel: m.modulTitel,
+        del: del.del,
+        lessonIds: m.lessons.map((l) => l.id),
+      });
+    }
+  }
+  return mods;
+}
+
+/** Modulnyckeln en lektion tillhör (för gating). */
+export function moduleKeyOf(lesson: Lesson): string {
+  return String(lesson.data.modul);
+}
+
 /** Föregående/nästa lektion i den globala ordningen. */
 export async function getAdjacent(
   id: string

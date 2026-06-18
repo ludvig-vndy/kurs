@@ -6,6 +6,8 @@ import {
   computeGate,
   resumeTarget,
 } from './state-core.mjs';
+import type { GateModule, OrderedLesson, ResumePos } from './state-core.mjs';
+import { getAll } from './progress';
 
 const META_KEY = 'kurs:meta:v1';
 const DEV_KEY = 'kurs:dev-unlock';
@@ -68,6 +70,26 @@ export function recordPosition(lessonId: string, step: number): void {
   const m = readMeta();
   writeMeta({ ...m, lastLessonId: lessonId, lastStep: step });
   touchStreak();
+}
+
+/** Lektions-id som markerats klara. */
+export function getDoneIds(): string[] {
+  const store = getAll();
+  return Object.keys(store).filter((id) => store[id]?.done);
+}
+
+/**
+ * "Fortsätt där du slutade" beräknat ur localStorage: senaste position om
+ * upplåst & oavklarad, annars första upplåsta oavklarade lektionen.
+ * `ordered` = lektioner i global ordning, `modules` = moduler i ordning (för gating).
+ */
+export function getResumeTarget(
+  ordered: OrderedLesson[],
+  modules: GateModule[]
+): ResumePos | null {
+  const doneIds = getDoneIds();
+  const gate = computeGate(modules, doneIds, isDevUnlocked());
+  return resumeTarget(getMeta(), ordered, doneIds, gate);
 }
 
 /* ---- Dev-upplåsning ---- */
