@@ -1,19 +1,24 @@
 /* ============================================================
-   Designtokens — en källa till sanning för färg, typ, rytm, motion.
-   Konsekvens via tokens = det som läser som "premium".
-   Mörkt läge är default; [data-theme="light"] växlar.
+   Designtokens — Ägarboken. Exakta handoff-variabelnamn
+   (Plattform/Lektion-vokabulären). Mörkt ("fokus") är default;
+   [data-theme="light"] = ljust ("ed"). §3.3-aliaslagret längst ner
+   håller ej-ännu-ombyggda komponenter vid liv — tas bort per fas.
    ============================================================ */
 
 :root {
-  /* --- Typografi --- */
-  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* --- Typografi (handoff-namn) --- */
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Modulär skala (~1.2 minor third), rem-baserad för tillgänglighet */
+  /* Brödtextstorlek (Kompakt 18 / Standard 20 / Stor 23) */
+  --prose-size: 20px;
+
+  /* UI-storleksskala (behålls) */
   --text-xs: 0.79rem;
   --text-sm: 0.889rem;
-  --text-base: 1.0rem;
-  --text-md: 1.1875rem; /* brödtext ~19px */
+  --text-base: 1rem;
+  --text-md: 1.1875rem;
   --text-lg: 1.333rem;
   --text-xl: 1.602rem;
   --text-2xl: 1.924rem;
@@ -22,10 +27,9 @@
   --leading-tight: 1.15;
   --leading-snug: 1.35;
   --leading-body: 1.62;
+  --measure: 65ch;
 
-  --measure: 65ch; /* radlängd för brödtext */
-
-  /* --- Spacing-skala (4-baserad) --- */
+  /* --- Spacing (behålls) --- */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -40,84 +44,97 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
-  --radius-full: 999px;
+  --radius-full: 99px;
+  --rail-width: 248px;
 
+  /* Behålls tills LessonLayout byggs om (Fas 1) */
   --sidebar-width: 312px;
   --content-max: 720px;
 
-  /* --- Motion --- */
+  /* --- Motion (behålls) --- */
   --dur-micro: 150ms;
   --dur-comp: 250ms;
   --dur-reveal: 520ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* --- Semantiska quiz-färger (delas av båda teman, justeras nedan) --- */
-  --ok: #1f7a55;
-  --ok-bg: rgba(31, 122, 85, 0.1);
-  --ok-border: rgba(31, 122, 85, 0.35);
-  --err: #b23b3b;
-  --err-bg: rgba(178, 59, 59, 0.09);
-  --err-border: rgba(178, 59, 59, 0.32);
 }
 
-/* ===================== MÖRKT (default) ===================== */
+/* ===================== MÖRKT (default, "fokus") ===================== */
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #131619;
-  --bg-elev: #181c20;
-  --surface: #1b2024;
-  --surface-2: #232a30;
-  --text: #e6e5df;
-  --text-muted: #9aa0a0;
-  --text-faint: #6c7376;
-  --border: #2a3036;
-  --border-strong: #3a424a;
+  --bg: #0a0c0b;
+  --surface: #11140f;
+  --surface-2: #161a14;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-2: rgba(255, 255, 255, 0.16);
+  --text: #f0ede4;
+  --prose: #c3c7bc;
+  --muted: #777f73;
+  --faint: #333a32;
+  --mint: #8fd3b0;
+  --mint-2: #a6e0c4;
+  --mint-soft: rgba(143, 211, 176, 0.11);
+  --on-mint: #0a0c0b;
+  --line-price: #6f7a72;
+  --good: #8fd3b0;
+  --good-soft: rgba(143, 211, 176, 0.12);
+  --mid: #e3c06a;
+  --bad: #e0a08a;
+  --bad-soft: rgba(224, 160, 138, 0.12);
 
-  --accent: #4fb89e;
-  --accent-hover: #6fccb3;
-  --accent-contrast: #07120f;
-  --accent-soft: rgba(79, 184, 158, 0.13);
-  --accent-line: rgba(79, 184, 158, 0.45);
-
+  --glow-mint: 0 8px 22px -6px var(--mint);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.45);
-
-  --ok: #5fc191;
-  --ok-bg: rgba(95, 193, 145, 0.12);
-  --ok-border: rgba(95, 193, 145, 0.4);
-  --err: #e58a8a;
-  --err-bg: rgba(229, 138, 138, 0.11);
-  --err-border: rgba(229, 138, 138, 0.38);
 }
 
-/* ===================== LJUST ===================== */
+/* ===================== LJUST ("ed") ===================== */
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #fbfbf9;
-  --bg-elev: #ffffff;
-  --surface: #f4f3ee;
-  --surface-2: #ebeae3;
-  --text: #1f1e1b;
-  --text-muted: #6b6a63;
-  --text-faint: #98968d;
-  --border: #e5e3db;
-  --border-strong: #d6d3c8;
+  --bg: #efe9dc;
+  --surface: #f7f2e7;
+  --surface-2: #fcfaf3;
+  --border: rgba(30, 36, 31, 0.14);
+  --border-2: rgba(30, 36, 31, 0.24);
+  --text: #1e241f;
+  --prose: #3c4239;
+  --muted: #6e7568;
+  --faint: #cbc3b2;
+  --mint: #1c6e50;
+  --mint-2: #155741;
+  --mint-soft: rgba(28, 110, 80, 0.1);
+  --on-mint: #f6f3ea;
+  --line-price: #9aa6b3;
+  --good: #3e7a4f;
+  --good-soft: rgba(62, 122, 79, 0.12);
+  --mid: #9a7320;
+  --bad: #a8473a;
+  --bad-soft: rgba(168, 71, 58, 0.1);
 
-  --accent: #0f6e5c;
-  --accent-hover: #0b5546;
-  --accent-contrast: #ffffff;
-  --accent-soft: rgba(15, 110, 92, 0.08);
-  --accent-line: rgba(15, 110, 92, 0.5);
-
+  --glow-mint: 0 8px 22px -6px var(--mint);
   --shadow-sm: 0 1px 2px rgba(31, 30, 27, 0.06);
   --shadow-md: 0 12px 32px rgba(31, 30, 27, 0.1);
+}
 
-  --ok: #1f7a55;
-  --ok-bg: rgba(31, 122, 85, 0.08);
-  --ok-border: rgba(31, 122, 85, 0.3);
-  --err: #b23b3b;
-  --err-bg: rgba(178, 59, 59, 0.07);
-  --err-border: rgba(178, 59, 59, 0.28);
+/* ============ Kompatibilitetslager (tillfälligt, §3.3) ============
+   Ny kod använder handoff-namnen direkt. Aliasen tas bort
+   allteftersom komponenter byggs om; hela blocket bort efter Fas 2. */
+:root {
+  --bg-elev: var(--surface);
+  --text-muted: var(--muted);
+  --text-faint: var(--faint);
+  --border-strong: var(--border-2);
+  --accent: var(--mint);
+  --accent-hover: var(--mint-2);
+  --accent-contrast: var(--on-mint);
+  --accent-soft: var(--mint-soft);
+  --accent-line: var(--border-2);
+  --font-serif: var(--serif);
+  --font-sans: var(--sans);
+  --ok: var(--good);
+  --ok-bg: var(--good-soft);
+  --ok-border: var(--good);
+  --err: var(--bad);
+  --err-bg: var(--bad-soft);
+  --err-border: var(--bad);
 }
