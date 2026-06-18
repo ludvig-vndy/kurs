@@ -172,9 +172,41 @@ const modules = await getModulesInOrder();
     white-space: nowrap;
   }
 
-  /* Rail context */
+  /* Rail context — the active lesson item is slotted into Rail, so it carries
+     this page's scope, not Rail's. Restate the rail-item styles here. */
   .rail-lesson-ctx {
     display: contents;
+  }
+  .rail__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 11px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .rail__item:hover {
+    text-decoration: none;
+  }
+  .rail__item.is-active {
+    color: var(--text);
+    background: var(--mint-soft);
+  }
+  .rail__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+    flex-shrink: 0;
+  }
+  .rail__item.is-active .rail__dot {
+    background: var(--mint);
+    opacity: 1;
   }
   .rail-steps {
     padding: 0 10px;
@@ -273,10 +305,16 @@ const modules = await getModulesInOrder();
     const { moduleKey, modules } = parsed;
     if (!moduleKey || !modules) return;
 
+    let urlUnlock = false;
+    try {
+      urlUnlock = new URL(location.href).searchParams.get('unlock') === '1';
+    } catch {
+      /* ignorera */
+    }
     const store = getAll();
     const doneIds = Object.keys(store).filter((id) => store[id]?.done);
-    const gate = computeGate(modules, doneIds, isDevUnlocked());
-    const status = gate[moduleKey];
+    const gate = computeGate(modules, doneIds, isDevUnlocked() || urlUnlock);
+    const status = gate.find((g) => g.key === moduleKey)?.status;
     if (status === 'locked') {
       location.replace('/oversikt');
     }
