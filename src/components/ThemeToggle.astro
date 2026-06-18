@@ -66,7 +66,7 @@
 </style>
 
 <script>
-  import { toggleTheme } from '../scripts/theme';
+  import { toggleTheme, migrateThemeKey } from '../scripts/theme';
 
   function wire() {
     document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach((btn) => {
@@ -75,5 +75,8 @@
       btn.addEventListener('click', () => toggleTheme());
     });
   }
-  document.addEventListener('astro:page-load', wire);
+  document.addEventListener('astro:page-load', () => {
+    migrateThemeKey();
+    wire();
+  });
 </script>

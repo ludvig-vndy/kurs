@@ -20,7 +20,7 @@ const { title, description = 'Kurs i fundamental aktieanalys.' } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
@@ -29,7 +29,7 @@ const { title, description = 'Kurs i fundamental aktieanalys.' } = Astro.props;
       (function () {
         document.documentElement.classList.add('js');
         try {
-          var t = localStorage.getItem('kurs:theme');
+          var t = localStorage.getItem('agarboken-theme') || localStorage.getItem('kurs:theme');
           if (t === 'light' || t === 'dark') {
             document.documentElement.setAttribute('data-theme', t);
           }
