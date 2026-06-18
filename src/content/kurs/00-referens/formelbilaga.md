@@ -90,7 +90,7 @@ E = marknadsvärde eget kapital, D = räntebärande skuld, V = E + D.
 **CAPM (kostnad för eget kapital)**
 kostnad eget kapital = riskfri ränta + beta × marknadsriskpremie.
 Riskfri ränta förankras i en lång statsobligation (t.ex. svenska tioåringen);
-marknadsriskpremie historiskt ~4–5 %.
+marknadsriskpremie historiskt ~4-5 %.
 
 **Gordon / terminalvärde (DCF)**
 Terminalvärde (vid slutet av prognosår n) = FCF(n+1) / (r − g),
