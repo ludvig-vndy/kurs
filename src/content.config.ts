@@ -22,6 +22,9 @@ const kurs = defineCollection({
     niva: z.enum(['Nybörjare', 'Mellan', 'Avancerad']),
     ordning: z.number().int(),
     fardighet: z.string(),
+    // standard = innehållslektion (full mall), syntes = integrerande övning,
+    // referens = formelbilaga o.d. Undantas av struktur-/quiz-grindarna.
+    format: z.enum(['standard', 'syntes', 'referens']).optional(),
     quiz: z.array(quizFraga).optional(),
   }),
 });
