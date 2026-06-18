@@ -1,0 +1,109 @@
+# Verifierad filuppsattning (kalla for course.manifest.json). En rad per lektion.
+# lektion\ttitel\tpath
+1.1	Vad det innebär att äga en aktie	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.1-vad-det-innebar-att-aga-en-aktie.md
+1.2	Pris vs värde	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.2-pris-vs-varde.md
+1.3	Tidshorisont och avkastningens källor	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.3-tidshorisont-och-avkastningens-kallor.md
+1.4	Olika investeringsfilosofier	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.4-olika-investeringsfilosofier.md
+1.5	Din kompetenscirkel	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.5-din-kompetenscirkel.md
+1.6	Syntes: så hänger Modul 1 ihop	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.6-syntes-sa-hanger-modul-1-ihop.md
+2.1	Hur ett bolag tjänar pengar	src/content/kurs/02-forsta-affarsmodeller/2.1-hur-ett-bolag-tjanar-pengar.md
+2.2	Olika typer av affärsmodeller	src/content/kurs/02-forsta-affarsmodeller/2.2-olika-typer-av-affarsmodeller.md
+2.3	Enhetsekonomi	src/content/kurs/02-forsta-affarsmodeller/2.3-enhetsekonomi.md
+2.4	Återkommande vs cyklisk intäkt	src/content/kurs/02-forsta-affarsmodeller/2.4-aterkommande-vs-cyklisk-intakt.md
+2.5	Vad som driver tillväxt	src/content/kurs/02-forsta-affarsmodeller/2.5-vad-som-driver-tillvaxt.md
+2.6	Syntes: så hänger Modul 2 ihop	src/content/kurs/02-forsta-affarsmodeller/2.6-syntes-sa-hanger-modul-2-ihop.md
+3.1	Årsredovisningens delar	src/content/kurs/03-introduktion-till-arsredovisningen/3.1-arsredovisningens-delar.md
+3.2	Läsa mellan raderna i VD-ord och förvaltningsberättelse	src/content/kurs/03-introduktion-till-arsredovisningen/3.2-lasa-mellan-raderna-vd-ord-forvaltningsberattelse.md
+3.3	Noterna är där sanningen gömmer sig	src/content/kurs/03-introduktion-till-arsredovisningen/3.3-noterna-ar-dar-sanningen-gommer-sig.md
+3.4	Revisionsberättelsen och redovisningsprinciper	src/content/kurs/03-introduktion-till-arsredovisningen/3.4-revisionsberattelsen-och-redovisningsprinciper.md
+3.5	Syntes: så hänger Modul 3 ihop, och in i Del 2	src/content/kurs/03-introduktion-till-arsredovisningen/3.5-syntes-sa-hanger-modul-3-ihop.md
+4.1	Från omsättning till nettoresultat	src/content/kurs/04-resultatrakningen/4.1-fran-omsattning-till-nettoresultat.md
+4.2	Bruttoresultat och kostnad för sålda varor	src/content/kurs/04-resultatrakningen/4.2-bruttoresultat-och-kostnad-for-salda-varor.md
+4.3	Rörelseresultat och operativa kostnader	src/content/kurs/04-resultatrakningen/4.3-rorelseresultat-och-operativa-kostnader.md
+4.4	Engångsposter och justerade resultat	src/content/kurs/04-resultatrakningen/4.4-engangsposter-och-justerade-resultat.md
+4.5	Intäktsredovisning som varningslampa	src/content/kurs/04-resultatrakningen/4.5-intaktsredovisning-som-varningslampa.md
+4.6	Syntes: så hänger Modul 4 ihop	src/content/kurs/04-resultatrakningen/4.6-syntes-sa-hanger-modul-4-ihop.md
+5.1	Tillgångar, skulder och eget kapital	src/content/kurs/05-balansrakningen/5.1-tillgangar-skulder-och-eget-kapital.md
+5.2	Omsättningstillgångar och rörelsekapital	src/content/kurs/05-balansrakningen/5.2-omsattningstillgangar-och-rorelsekapital.md
+5.3	Skuldsättning och finansiell risk	src/content/kurs/05-balansrakningen/5.3-skuldsattning-och-finansiell-risk.md
+5.4	Goodwill och immateriella tillgångar	src/content/kurs/05-balansrakningen/5.4-goodwill-och-immateriella-tillgangar.md
+5.5	Det egna kapitalets sammansättning	src/content/kurs/05-balansrakningen/5.5-det-egna-kapitalets-sammansattning.md
+5.6	Syntes: så hänger Modul 5 ihop	src/content/kurs/05-balansrakningen/5.6-syntes-sa-hanger-modul-5-ihop.md
+6.1	Varför kassaflöde är viktigare än vinst	src/content/kurs/06-kassaflodesanalysen/6.1-varfor-kassaflode-ar-viktigare-an-vinst.md
+6.2	De tre flödena	src/content/kurs/06-kassaflodesanalysen/6.2-de-tre-flodena.md
+6.3	Fritt kassaflöde	src/content/kurs/06-kassaflodesanalysen/6.3-fritt-kassaflode.md
+6.4	När vinst och kassaflöde glider isär	src/content/kurs/06-kassaflodesanalysen/6.4-nar-vinst-och-kassaflode-glider-isar.md
+6.5	Syntes: så hänger Modul 6 ihop	src/content/kurs/06-kassaflodesanalysen/6.5-syntes-sa-hanger-modul-6-ihop.md
+7.1	Kopplingen mellan rapporterna	src/content/kurs/07-hur-de-tre-rapporterna-hanger-ihop/7.1-kopplingen-mellan-rapporterna.md
+7.2	Att läsa ett bolag som en helhet	src/content/kurs/07-hur-de-tre-rapporterna-hanger-ihop/7.2-att-lasa-ett-bolag-som-en-helhet.md
+7.3	Syntes: så hänger Del 2 ihop	src/content/kurs/07-hur-de-tre-rapporterna-hanger-ihop/7.3-syntes-sa-hanger-del-2-ihop.md
+8.1	Marginaler genom hela kedjan	src/content/kurs/08-nyckeltal-och-marginaler/8.1-marginaler-genom-hela-kedjan.md
+8.2	Tillväxttal och deras kvalitet	src/content/kurs/08-nyckeltal-och-marginaler/8.2-tillvaxttal-och-deras-kvalitet.md
+8.3	Effektivitets- och omsättningstal	src/content/kurs/08-nyckeltal-och-marginaler/8.3-effektivitets-och-omsattningstal.md
+8.4	Att använda nyckeltal rätt	src/content/kurs/08-nyckeltal-och-marginaler/8.4-att-anvanda-nyckeltal-ratt.md
+8.5	Syntes: så hänger Modul 8 ihop	src/content/kurs/08-nyckeltal-och-marginaler/8.5-syntes-sa-hanger-modul-8-ihop.md
+9.1	Vad ROIC är	src/content/kurs/09-roic-och-kapitalavkastning/9.1-vad-roic-ar.md
+9.2	ROIC vs kapitalkostnad	src/content/kurs/09-roic-och-kapitalavkastning/9.2-roic-vs-kapitalkostnad.md
+9.3	Reinvesteringsförmåga	src/content/kurs/09-roic-och-kapitalavkastning/9.3-reinvesteringsformaga.md
+9.4	ROE och ROA och deras fallgropar	src/content/kurs/09-roic-och-kapitalavkastning/9.4-roe-och-roa-och-deras-fallgropar.md
+9.5	Syntes: så hänger Modul 9 ihop	src/content/kurs/09-roic-och-kapitalavkastning/9.5-syntes-sa-hanger-modul-9-ihop.md
+10.1	Vad en moat är	src/content/kurs/10-konkurrensfordelar-moats/10.1-vad-en-moat-ar.md
+10.2	De olika typerna av moats	src/content/kurs/10-konkurrensfordelar-moats/10.2-de-olika-typerna-av-moats.md
+10.3	Att bedöma en moats styrka och hållbarhet	src/content/kurs/10-konkurrensfordelar-moats/10.3-att-bedoma-en-moats-styrka-och-hallbarhet.md
+10.4	Moats i siffrorna	src/content/kurs/10-konkurrensfordelar-moats/10.4-moats-i-siffrorna.md
+10.5	Syntes: så hänger Modul 10 ihop	src/content/kurs/10-konkurrensfordelar-moats/10.5-syntes-sa-hanger-modul-10-ihop.md
+11.1	Att bedöma en ledning	src/content/kurs/11-ledning-och-kapitalallokering/11.1-att-bedoma-en-ledning.md
+11.2	Kapitalallokering som disciplin	src/content/kurs/11-ledning-och-kapitalallokering/11.2-kapitalallokering-som-disciplin.md
+11.3	Förvärv: värdeskapande eller förstörande	src/content/kurs/11-ledning-och-kapitalallokering/11.3-forvarv-vardeskapande-eller-forstorande.md
+11.4	Återköp och utdelning	src/content/kurs/11-ledning-och-kapitalallokering/11.4-aterkop-och-utdelning.md
+11.5	Syntes: så hänger Del 3 ihop	src/content/kurs/11-ledning-och-kapitalallokering/11.5-syntes-sa-hanger-del-3-ihop.md
+12.1	Vad värde är	src/content/kurs/12-varderingsgrunder/12.1-vad-varde-ar.md
+12.2	Pengars tidsvärde och diskontering	src/content/kurs/12-varderingsgrunder/12.2-pengars-tidsvarde-och-diskontering.md
+12.3	Värdering är en åsikt, inte ett facit	src/content/kurs/12-varderingsgrunder/12.3-vardering-ar-en-asikt-inte-ett-facit.md
+12.4	Syntes: så hänger Modul 12 ihop	src/content/kurs/12-varderingsgrunder/12.4-syntes-sa-hanger-modul-12-ihop.md
+13.1	De vanligaste multiplarna	src/content/kurs/13-multipelvardering/13.1-de-vanligaste-multiplarna.md
+13.2	Vad en multipel faktiskt säger	src/content/kurs/13-multipelvardering/13.2-vad-en-multipel-faktiskt-sager.md
+13.3	Relativvärdering och jämförelser	src/content/kurs/13-multipelvardering/13.3-relativvardering-och-jamforelser.md
+13.4	Multipelvärderingens begränsningar	src/content/kurs/13-multipelvardering/13.4-multipelvarderingens-begransningar.md
+13.5	Syntes: så hänger Modul 13 ihop	src/content/kurs/13-multipelvardering/13.5-syntes-sa-hanger-modul-13-ihop.md
+14.1	DCF-modellens logik	src/content/kurs/14-dcf-kassaflodesvardering/14.1-dcf-modellens-logik.md
+14.2	Att bygga prognosen	src/content/kurs/14-dcf-kassaflodesvardering/14.2-att-bygga-prognosen.md
+14.3	Diskonteringsränta och slutvärde	src/content/kurs/14-dcf-kassaflodesvardering/14.3-diskonteringsranta-och-slutvarde.md
+14.4	Känslighetsanalys	src/content/kurs/14-dcf-kassaflodesvardering/14.4-kanslighetsanalys.md
+14.5	Syntes: så hänger Modul 14 ihop	src/content/kurs/14-dcf-kassaflodesvardering/14.5-syntes-sa-hanger-modul-14-ihop.md
+15.1	Vad risk faktiskt är	src/content/kurs/15-risk-och-felmarginal/15.1-vad-risk-faktiskt-ar.md
+15.2	Felmarginal (margin of safety)	src/content/kurs/15-risk-och-felmarginal/15.2-felmarginal-margin-of-safety.md
+15.3	Att kartlägga vad som kan gå fel	src/content/kurs/15-risk-och-felmarginal/15.3-att-kartlagga-vad-som-kan-ga-fel.md
+15.4	Att tänka i sannolikheter	src/content/kurs/15-risk-och-felmarginal/15.4-att-tanka-i-sannolikheter.md
+15.5	Syntes: så hänger Del 4 ihop	src/content/kurs/15-risk-och-felmarginal/15.5-syntes-sa-hanger-del-4-ihop.md
+16.1	Flockbeteende och FOMO	src/content/kurs/16-investeringspsykologi/16.1-flockbeteende-och-fomo.md
+16.2	Rädsla och panik	src/content/kurs/16-investeringspsykologi/16.2-radsla-och-panik.md
+16.3	Confirmation bias	src/content/kurs/16-investeringspsykologi/16.3-confirmation-bias.md
+16.4	Story investing vs riktig analys	src/content/kurs/16-investeringspsykologi/16.4-story-investing-vs-riktig-analys.md
+16.5	Potential vs sannolikhet	src/content/kurs/16-investeringspsykologi/16.5-potential-vs-sannolikhet.md
+16.6	Anchoring	src/content/kurs/16-investeringspsykologi/16.6-anchoring.md
+16.7	Sunk cost fallacy	src/content/kurs/16-investeringspsykologi/16.7-sunk-cost-fallacy.md
+16.8	Position sizing och ödmjukhet	src/content/kurs/16-investeringspsykologi/16.8-position-sizing-och-odmjukhet.md
+16.9	Att bygga ett investeringssystem	src/content/kurs/16-investeringspsykologi/16.9-att-bygga-ett-investeringssystem.md
+16.10	Syntes: så hänger Del 5 ihop	src/content/kurs/16-investeringspsykologi/16.10-syntes-sa-hanger-del-5-ihop.md
+17.1	Varför vanliga verktyg inte fungerar	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.1-varfor-vanliga-verktyg-inte-fungerar.md
+17.2	Marknaden, problemet och produkten	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.2-marknaden-problemet-och-produkten.md
+17.3	Enhetsekonomi och vägen till lönsamhet	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.3-enhetsekonomi-och-vagen-till-lonsamhet.md
+17.4	Kassa, burn rate och finansieringsrisk	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.4-kassa-burn-rate-och-finansieringsrisk.md
+17.5	Att värdera framtiden i scenarier	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.5-att-vardera-framtiden-i-scenarier.md
+17.6	Att överleva resan	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.6-att-overleva-resan.md
+17.7	Position sizing i hög osäkerhet	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.7-position-sizing-i-hog-osakerhet.md
+17.8	Syntes: så hänger Del 6 ihop	src/content/kurs/17-att-analysera-sma-olonsamma-tillvaxtbolag/17.8-syntes-sa-hanger-del-6-ihop.md
+18.1	Från idé till beslut	src/content/kurs/18-din-egen-investeringsprocess/18.1-fran-ide-till-beslut.md
+18.2	Att skriva ett investeringscase	src/content/kurs/18-din-egen-investeringsprocess/18.2-att-skriva-ett-investeringscase.md
+18.3	Bevaka, ompröva och sälja	src/content/kurs/18-din-egen-investeringsprocess/18.3-bevaka-omprova-och-salja.md
+18.4	Kursavslutning: din resa härifrån	src/content/kurs/18-din-egen-investeringsprocess/18.4-kursavslutning-din-resa-harifran.md
+19.1	Multibagger-linsen: en annan sorts analys	src/content/kurs/19-att-hitta-framtidens-vinnare/19.1-multibagger-linsen.md
+19.2	Bra vs dåliga förluster	src/content/kurs/19-att-hitta-framtidens-vinnare/19.2-bra-vs-daliga-forluster.md
+19.3	TAM och product-market fit	src/content/kurs/19-att-hitta-framtidens-vinnare/19.3-tam-och-product-market-fit.md
+19.4	Skalbarhet, operating leverage och framtida marginalpotential	src/content/kurs/19-att-hitta-framtidens-vinnare/19.4-skalbarhet-operating-leverage-och-framtida-marginalpotential.md
+19.5	Enhetsekonomi och tillväxtkvalitet	src/content/kurs/19-att-hitta-framtidens-vinnare/19.5-enhetsekonomi-och-tillvaxtkvalitet.md
+19.6	Burn rate, runway och emissionsrisk	src/content/kurs/19-att-hitta-framtidens-vinnare/19.6-burn-rate-runway-och-emissionsrisk.md
+19.7	Grundare, insiderägande och teknologiskt försprång	src/content/kurs/19-att-hitta-framtidens-vinnare/19.7-grundare-insideragande-och-teknologiskt-forsprang.md
+19.8	Scenarioanalys och att dimensionera jakten	src/content/kurs/19-att-hitta-framtidens-vinnare/19.8-scenarioanalys-och-att-dimensionera-jakten.md
+19.9	Syntes: så hittar du framtidens vinnare	src/content/kurs/19-att-hitta-framtidens-vinnare/19.9-syntes-sa-hittar-du-framtidens-vinnare.md

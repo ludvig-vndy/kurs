@@ -448,6 +448,10 @@ Färdighet efteråt: Eleven kan skriva ett tydligt, falsifierbart investeringsca
 Lär ut: Hur man följer upp ett innehav, när man ändrar sig och hur ett disciplinerat säljbeslut ser ut.
 Färdighet efteråt: Eleven kan förvalta ett innehav över tid utan att styras av känslor.
 
+**Lektion 18.4: Kursavslutning: din resa härifrån**
+Lär ut: Hur hela kursens ram hänger ihop till en sammanhängande process, och hur eleven fortsätter utvecklas härifrån.
+Färdighet efteråt: Eleven har en komplett, sammanhängande ram för fundamental analys och en realistisk bild av hur hen fortsätter.
+
 ---
 
 # SPECIALISERING: ATT HITTA FRAMTIDENS VINNARE

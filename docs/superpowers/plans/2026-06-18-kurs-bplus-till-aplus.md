@@ -45,40 +45,40 @@ Fas A är där den här planen tillför mest över strategidokumentet: utan grin
 
 ## FAS A — Grund & grindar (kodbar, TDD)
 
-### Task A0: Repo-synk och nulägeskoll
+### Task A0: Repo-synk och nulägeskoll  ✅ (delvis gjort)
+
+**Status:** De tidigare saknade filerna **15.1 (Vad risk faktiskt är)** och **18.4 (Kursavslutning)** är nu inlagda i repot och verifierade. Repot innehåller **107 lektioner**. `_MANIFEST.txt` (genererad ur den verifierade filuppsättningen) och en uppdaterad kursstruktur (18.4 tillagd) finns redan.
 
 **Files:**
+- Exists: `_MANIFEST.txt` (verifierad uppsättning, 107 rader, inkl. 15.1 och 18.4)
 - Create: `course.manifest.json`
 
-- [ ] **Step 1: Inventera repot mot kursstrukturen**
+- [ ] **Step 1: Seeda manifestet ur den VERIFIERADE filuppsättningen, inte strukturdokumentet**
 
-Run:
+Viktigt (användarfeedback): om manifestet härleds enbart ur `Fundamental_analys_kursstruktur.md` riskerar 18.4 att saknas och då skyddar integritetsgrinden den aldrig — den kan tyst falla bort. Generera därför `course.manifest.json` ur `_MANIFEST.txt` (sanningen är de filer som faktiskt finns och verifierats), och *korskolla* mot strukturdokumentet som sekundär kontroll.
+
 ```bash
-node -e "import('fast-glob').catch(()=>{});" 2>/dev/null; \
-ls src/content/kurs/*/ | sort
+node tools/gen-manifest.mjs   # uppdaterar _MANIFEST.txt vid behov
 ```
-Bekräfta vilka lektioner som faktiskt finns. Känt nu: **15.1 och 18.4 saknas i repot** (modul 15 börjar på 15.2, modul 18 slutar på 18.3). Strategidokumentet hävdar att de finns i en kanonisk källa — **detta måste lösas med användaren innan Fas C** (se Task C7). Notera: kursstrukturen (`Fundamental_analys_kursstruktur.md`) listar 15.1 men *inte* 18.4.
-
-- [ ] **Step 2: Generera manifestet från kursstrukturen**
-
-Create `course.manifest.json` genom att parsa `Fundamental_analys_kursstruktur.md` (rader `**Lektion X.Y: Titel**`). Format:
-
+Format på `course.manifest.json`:
 ```json
 {
-  "generatedFrom": "Fundamental_analys_kursstruktur.md",
-  "lessons": [
-    { "lektion": "1.1", "modul": 1, "titel": "Vad det innebär att äga en aktie" }
-  ],
-  "knownGaps": ["15.1"],
-  "claimedButUnconfirmed": ["18.4"]
+  "seededFrom": "_MANIFEST.txt (verifierad filuppsättning)",
+  "crosscheckedAgainst": "Fundamental_analys_kursstruktur.md",
+  "count": 107,
+  "lessons": [{ "lektion": "1.1", "modul": 1, "titel": "Vad det innebär att äga en aktie" }]
 }
 ```
+
+- [ ] **Step 2: Korskolla manifest vs strukturdokument**
+
+Integritetsgrinden (A2) ska rapportera diff åt *båda* håll: filer som finns men saknas i strukturdokumentet, och tvärtom. Strukturdokumentet är nu uppdaterat med 18.4 så de ska stämma. Avvikelser stoppar Fas B.
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add course.manifest.json
-git commit -m "chore: add canonical course manifest from structure doc"
+git add course.manifest.json _MANIFEST.txt tools/gen-manifest.mjs Fundamental_analys_kursstruktur.md
+git commit -m "chore: seed manifest from verified file set (107 lessons incl 15.1, 18.4)"
 ```
 
 ---
@@ -204,6 +204,8 @@ git commit -m "feat(tools): shared lesson parser with tests"
 ---
 
 ### Task A2: Integritetsgrind
+
+> Utöver fälten nedan ska grinden även **korskolla mot `course.manifest.json`**: varje manifest-lektion måste finnas som fil (annars kan en lektion tyst falla bort), och varje fil måste finnas i manifestet. Lägg ett test `flags a lesson missing vs manifest` och utöka `checkIntegrity` att läsa manifestet och rapportera diff åt båda håll.
 
 **Files:**
 - Create: `tools/check-integrity.mjs`
@@ -711,10 +713,13 @@ För **varje modul N** (kör 3–4 parallellt via subagent-driven-development):
 
 Per-modul-agenter är blinda för varandra. Detta steg körs **efter** att alla moduler är omskrivna.
 
-- [ ] **Step 1:** Run: `npm run check` på hela kursen; samla dedup-träffar.
-- [ ] **Step 2:** Dispatcha en konsistensagent som får hela dedup-rapporten + manifestet: lös kvarvarande dubbletter (behåll på ett ställe, referera från övriga), harmonisera terminologi och se till att korsreferenser är ömsesidiga.
-- [ ] **Step 3:** Run: `npm run check` — dedup-gruppen ska vara ≤ en överenskommen tröskel (mål: 0 meningar i >2 lektioner).
-- [ ] **Step 4:** Commit.
+> **Grinden fångar meningar, inte begrepp (användarfeedback).** `check-dedup` flaggar ordagrann upprepning (samma mening >8 ord i >2 lektioner). Men den dyraste redundansen är *begreppslig*: enhetsekonomi förklarad tre gånger med olika ord, samma "två bolag, en variabel"-grepp. Två lektioner kan förklara samma sak helt olika utan att dela en mening — då tiger grinden. Därför är "dedup grön" ett *nödvändigt men otillräckligt* villkor; B20 måste innehålla en mänsklig/agent-läsning för begreppslig överlappning.
+
+- [ ] **Step 1:** Run: `npm run check`; samla de ordagranna dedup-träffarna.
+- [ ] **Step 2:** Dispatcha en konsistensagent (får dedup-rapporten + manifestet) som löser *både* ordagranna *och begreppsliga* dubbletter: lär ut ett begrepp på ett ställe, referera från övriga (enhetsekonomi, serieförvärvare, risk, 17-mekanik), harmonisera terminologi, gör korsreferenser ömsesidiga.
+- [ ] **Step 3:** **Mänsklig genomläsning** av de moduler som strategin pekar ut som överlappstunga (2/8/9/11/15/16/17/19) för begreppslig redundans grinden inte ser. Lita inte på grönt här.
+- [ ] **Step 4:** Run: `npm run check` — ordagrann dedup = 0; notera att detta inte bevisar att begreppslig redundans är borta (det är Step 3:s ansvar).
+- [ ] **Step 5:** Commit.
 
 ---
 
@@ -722,19 +727,24 @@ Per-modul-agenter är blinda för varandra. Detta steg körs **efter** att alla 
 
 Alla nya lektioner skrivs i den magra mallen och måste passera `npm run check`. Lägg in i rätt modulmapp med korrekt `ordning`.
 
+**Korrekthetsgrind för nytt innehåll (planens verkliga kvarvarande hål — användarfeedback).** De automatiska grindarna säger inget om huruvida WACC-formeln, combined ratio eller index-forskningen är *rätt förklarad*. Nyskriven text (C1 WACC/CAPM, C2 bank/försäkring/fastighet/råvara, C4 index) är mest benägen att få nya begreppsfel. Därför avslutas **varje Fas C-task** med ett obligatoriskt steg:
+
+> **Korrekthetsverifiering (oberoende):** dispatcha en *annan* underagent än författaren (en sakkunnig granskare) som adversariellt kontrollerar varje formel, definition och sifferpåstående mot `formelbilaga.md` och vedertagen finansteori. Den ska aktivt försöka *motbevisa*. Verkliga bolagssiffror kontrolleras mot den användarlevererade källan (aldrig agentens minne). Fel → tillbaka till författaren. Först grön verifiering → commit. Den oberoende **slutgranskaren (D4) lägger sin tyngd här.**
+
 - [ ] **Task C1 — Diskonteringsräntan.** Ny lektion i modul 14 (WACC, CAPM, riskfri = svenska 10-åringen, riskpremie ~4–5 %, hur man landar i ~9 %). Länkar till formelbilagan. Gate + build + commit.
 - [ ] **Task C2 — Sektormodul.** Ny modul (bank: räntenetto/kapitaltäckning/P/B/kreditförluster; försäkring: combined ratio/float; fastighet: substansvärde/EPRA/belåningsgrad; råvara: normaliserad vinst/kostnadskurva). Egen mapp `NN-sektoranalys`, frontmatter konsekvent. Gate + build + commit.
 - [ ] **Task C3 — Svenskt praktiklager.** Ny lektion(er): ISK/KF/depå, First North/Spotlight, rapportkadens, var svensk redovisning skiljer sig. Gate + build + commit.
 - [ ] **Task C4 — Indexhederlighet.** Ny lektion tidigt (efter modul 1) som möter index-frågan rakt + återbesök i capstonen. Ramas "för den som vill göra jobbet". Gate + build + commit.
 - [ ] **Task C5 — Källor.** Ny lektion: var i årsredovisningen man läser vad, Börsdata/screeners. Gate + build + commit.
 - [ ] **Task C6 — Fullständig(a) fallstudie(r).** 1–2 riktiga svenska bolag genom hela tratten med Ägarboken. **Siffror måste levereras av användaren eller en datakälla** (stilguidens policy) — agenten ramar in, hittar inte på. Markera siffror daterade. Gate + build + commit.
-- [ ] **Task C7 — Capstone-ombygge + 15.1/18.4.** Ifyllbar case-mall (ej prosa), master-checklista på ett ark, kör ett olönsamt tillväxtbolag genom tratten, visa hur DCF-antaganden blir falsifieringsvillkor, lös 18/19-ordningen. **Stäm av med användaren om 15.1/18.4 finns i en kanonisk källa** (Task A0): om ja, lägg in dem; om nej, författa 15.1 (tesen finns i 15.5) och besluta om 18.4 behövs. Gate (döda 15.1-refs ska bli gröna) + build + commit.
+- [ ] **Task C7 — Capstone-ombygge.** (15.1 och 18.4 är redan inlagda — döda 15.1-referenser ska därmed vara gröna; verifiera med `npm run check`.) Ifyllbar case-mall (ej prosa), master-checklista på ett ark, kör ett olönsamt tillväxtbolag genom tratten, visa hur DCF-antaganden blir falsifieringsvillkor, lös 18/19-ordningen. Gate + build + commit.
 
 ---
 
 ## FAS D — Polish, röst, verktyg, quiz, slutgrind
 
 - [ ] **Task D1 — Röst/korrektur.** Pass över hela kursen mot stilguidens mentor-ton; bryt långa meningar; rensa "moatad/moats". Gate + commit.
+  > **Rösten är människo-bedömd, inte maskinell (användarfeedback).** Strukturgrinden dödar bannlysta fraser och kapar långa meningar — det tar de värsta tecknen, men en lektion kan passera grinden och ändå vara platt. "Rösten är mätbar" är nödvändigt men inte tillräckligt. Lägg därför in en **mänsklig röstläsning på ett urval (t.ex. 1–2 lektioner per modul) vid varje milstolpe**, kalibrerat mot 19.9:s mentor-ton. Detta är ett krav vid varje milstolpe, inte bara i D1.
 - [ ] **Task D2 — Verktyget (Ägarboken).** Kalibrera om så poäng ramas som tankehjälp, inte dom; notis om att 0–4-skalan speglar egna bedömningar. (Om verktyget är `agarboken-analysverktyg.html` i repo-roten: integrera eller uppdatera enligt användarens önskemål.)
 - [ ] **Task D3 — Quiz på alla innehållslektioner.** Generera `quiz:` i frontmatter (mall i 1.1) via parallella agenter; quiz ska testa förståelse, inte återupprepa flaggor. Lägg en quiz-grind i `check-structure` (varje standardlektion har ≥3 frågor). Gate + build + commit.
 - [ ] **Task D4 — Oberoende slutgranskning.** Kör samma 8-delars kritiska granskning som baslinjen på en färsk ögonblicksbild (annan instans än den som skrev). Jämför mot acceptanskriterierna nedan.
@@ -744,10 +754,16 @@ Alla nya lektioner skrivs i den magra mallen och måste passera `npm run check`.
 
 ## Acceptanskriterier (maskinkontrollerbara där möjligt)
 
+**Maskinellt verifierbara:**
 - [ ] `npm run test:tools` grön (grindarna fungerar).
-- [ ] `npm run check` grön: integritet 0, döda referenser 0, strukturavvik 0, dedup 0 meningar i >2 lektioner.
+- [ ] `npm run check` grön: integritet 0 (inkl. manifest-korskoll åt båda håll), döda referenser 0, strukturavvik 0, **ordagrann** dedup 0 meningar i >2 lektioner.
 - [ ] `npm run build` grön; alla lektioner + nya moduler genereras.
 - [ ] De 8 korrekthetsfixarna gjorda och formelbilagan länkad från berörda lektioner.
+
+**Människo-/granskar-bedömda (grön grind räcker inte):**
+- [ ] **Nytt innehåll (C1/C2/C4 m.fl.) korrekthetsverifierat oberoende** mot formelbilagan — planens viktigaste kvarvarande risk.
+- [ ] **Begreppslig** redundans åtgärdad (B20 Step 3), inte bara ordagrann.
+- [ ] **Rösten** kalibrerad mot 19.9 enligt mänsklig urvalsläsning per milstolpe.
 - [ ] Lektioner finns för: diskonteringsränta, sektorundantag, svensk praktik, indexhederlighet, källor.
 - [ ] ≥1 fullständig fallstudie på ett verkligt bolag med daterade, källverifierade siffror.
 - [ ] Capstonen har ifyllbar case-mall + master-checklista + ett genomarbetat fall; 18/19-ordningen löst; inga döda 15.1-referenser.
