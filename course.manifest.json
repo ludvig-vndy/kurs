@@ -1,8 +1,12 @@
 {
   "seededFrom": "_MANIFEST.txt (verifierad filuppsättning)",
   "crosscheckedAgainst": "Fundamental_analys_kursstruktur.md",
-  "count": 107,
+  "count": 108,
   "lessons": [
+    {
+      "lektion": "1.0",
+      "titel": "Borde du ens plocka aktier?"
+    },
     {
       "lektion": "1.1",
       "titel": "Vad det innebär att äga en aktie"

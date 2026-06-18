@@ -21,6 +21,7 @@ const g = (raw, k) => {
 const rows = [];
 for (const f of await walk(base)) {
   const raw = await readFile(f, 'utf8');
+  if (g(raw, 'format') === 'referens') continue; // referenssidor är inte lektioner
   rows.push({
     ordning: Number(g(raw, 'ordning')),
     lektion: g(raw, 'lektion'),

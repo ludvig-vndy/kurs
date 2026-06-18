@@ -1,5 +1,6 @@
 # Verifierad filuppsattning (kalla for course.manifest.json). En rad per lektion.
 # lektion\ttitel\tpath
+1.0	Borde du ens plocka aktier?	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.0-borde-du-ens-plocka-aktier.md
 1.1	Vad det innebär att äga en aktie	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.1-vad-det-innebar-att-aga-en-aktie.md
 1.2	Pris vs värde	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.2-pris-vs-varde.md
 1.3	Tidshorisont och avkastningens källor	src/content/kurs/01-investeringsfilosofi-och-tankesatt/1.3-tidshorisont-och-avkastningens-kallor.md
