@@ -26,6 +26,7 @@ const totalLessons = lessons.length;
             </a>
           )
         }
+        <a class="cta-secondary" href="/agarboken.html">Öppna Ägarboken (analysverktyg)</a>
         <span class="hero__progress" data-home-progress hidden>
           <span data-home-pct>0%</span> klart
         </span>
@@ -131,6 +132,19 @@ const totalLessons = lessons.length;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+  .cta-secondary {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-decoration-color: var(--border-strong);
+    text-underline-offset: 3px;
+  }
+  .cta-secondary:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent-line);
   }
   .hero__progress {
     font-family: var(--font-sans);
