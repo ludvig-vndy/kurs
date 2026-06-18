@@ -74,8 +74,8 @@ const passMark = 80;
   </ol>
 
   <div class="quiz__actions">
-    <button type="button" class="btn btn--primary" data-check>Rätta svar</button>
-    <button type="button" class="btn btn--ghost" data-retry hidden>Försök igen</button>
+    <button type="button" class="btn btn--primary" data-check disabled>Rätta svar</button>
+    <button type="button" class="btn btn--ghost" data-retry hidden>Gör om</button>
   </div>
 
   <div class="quiz__result" data-result hidden role="status" aria-live="polite">
@@ -300,16 +300,21 @@ const passMark = 80;
   }
   .btn:active { transform: scale(0.98); }
   .btn--primary {
-    background: var(--accent);
-    color: var(--accent-contrast);
+    background: var(--text);
+    color: var(--bg);
   }
-  .btn--primary:hover { background: var(--accent-hover); }
+  .btn--primary:hover { opacity: 0.88; }
+  .btn--primary:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .btn--primary:disabled:hover { opacity: 0.35; }
   .btn--ghost {
     background: transparent;
-    border-color: var(--border-strong);
-    color: var(--text);
+    border-color: var(--border-2);
+    color: var(--muted);
   }
-  .btn--ghost:hover { border-color: var(--accent-line); color: var(--accent); }
+  .btn--ghost:hover { border-color: var(--mint); color: var(--mint); }
 
   .quiz__result {
     display: flex;
@@ -435,12 +440,26 @@ const passMark = 80;
     quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  function allAnswered(quiz: HTMLElement): boolean {
+    const questions = Array.from(quiz.querySelectorAll<HTMLElement>('[data-q]'));
+    return questions.every((q) => {
+      const inputs = Array.from(q.querySelectorAll<HTMLInputElement>('.opt__input'));
+      return inputs.some((i) => i.checked);
+    });
+  }
+
   function wire() {
     document.querySelectorAll<HTMLElement>('[data-quiz]').forEach((quiz) => {
       if (quiz.dataset.wired) return;
       quiz.dataset.wired = '1';
-      quiz.querySelector('[data-check]')!.addEventListener('click', () => grade(quiz));
+      const checkBtn = quiz.querySelector<HTMLButtonElement>('[data-check]')!;
+      checkBtn.addEventListener('click', () => grade(quiz));
       quiz.querySelector('[data-retry]')!.addEventListener('click', () => reset(quiz));
+
+      // Enable "Rätta svar" only when all questions have at least one answer
+      quiz.addEventListener('change', () => {
+        checkBtn.disabled = !allAnswered(quiz);
+      });
     });
   }
 

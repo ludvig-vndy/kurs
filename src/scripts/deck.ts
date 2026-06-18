@@ -2,6 +2,8 @@
    Ett steg per ##-sektion; `---` (hr) är en valfri manuell sidbrytning.
    Progressiv förbättring: utan JS visas allt som en vanlig artikel. */
 
+import { recordPosition } from './state';
+
 function makeSlide(nodes: Node[], type: string, extraClass = ''): HTMLElement {
   const s = document.createElement('section');
   s.className = `slide slide--${type} ${extraClass}`.trim();
@@ -120,9 +122,19 @@ function initDeck(deck: HTMLElement) {
   if (deck.dataset.built) return;
   deck.dataset.built = '1';
 
+  const lessonId = deck.dataset.lessonId || '';
+
   const stage = deck.querySelector<HTMLElement>('[data-deck-stage]');
   const fill = deck.querySelector<HTMLElement>('[data-deck-fill]');
   if (!stage) return;
+
+  // Topbar containers (may or may not be present)
+  const topbarDotsContainer = document.querySelector<HTMLElement>('[data-deck-dots]');
+  const topbarCounter = document.querySelector<HTMLElement>('[data-deck-counter]');
+
+  // Rail containers (may or may not be present)
+  const railStepEl = document.querySelector<HTMLElement>('[data-deck-rail-step]');
+  const railFillEl = document.querySelector<HTMLElement>('[data-deck-rail-fill]');
 
   const slides = buildSlides(stage);
   if (slides.length === 0) return;
@@ -140,7 +152,22 @@ function initDeck(deck: HTMLElement) {
   const prevBtn = controls.querySelector<HTMLButtonElement>('[data-deck-prev]')!;
   const nextBtn = controls.querySelector<HTMLButtonElement>('[data-deck-next]')!;
   const stepEl = controls.querySelector<HTMLElement>('[data-deck-step]')!;
-  const dots = Array.from(controls.querySelectorAll<HTMLButtonElement>('.deck-dot'));
+  const bottomDots = Array.from(controls.querySelectorAll<HTMLButtonElement>('.deck-dot'));
+
+  // Build topbar dots if container present
+  let topbarDots: HTMLButtonElement[] = [];
+  if (topbarDotsContainer) {
+    topbarDotsContainer.innerHTML = '';
+    for (let i = 0; i < slides.length; i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'deck-dot';
+      dot.dataset.go = String(i);
+      dot.setAttribute('aria-label', `Gå till steg ${i + 1}`);
+      topbarDotsContainer.appendChild(dot);
+      topbarDots.push(dot);
+    }
+  }
 
   let index = 0;
   const last = slides.length - 1;
@@ -154,14 +181,36 @@ function initDeck(deck: HTMLElement) {
     index = Math.max(0, Math.min(last, i));
     deck.dataset.dir = dir;
     slides.forEach((s, k) => s.classList.toggle('is-active', k === index));
-    dots.forEach((d, k) => {
+
+    // Update bottom dots
+    bottomDots.forEach((d, k) => {
       d.classList.toggle('is-active', k === index);
       d.classList.toggle('is-seen', k < index);
     });
-    stepEl.textContent = `${index + 1} / ${slides.length}`;
+
+    // Update topbar dots
+    topbarDots.forEach((d, k) => {
+      d.classList.toggle('is-active', k === index);
+      d.classList.toggle('is-seen', k < index);
+    });
+
+    const stepText = `${index + 1} / ${slides.length}`;
+    stepEl.textContent = stepText;
+
+    // Update topbar counter
+    if (topbarCounter) topbarCounter.textContent = stepText;
+
     prevBtn.disabled = index === 0;
     nextBtn.hidden = index === last;
     if (fill) fill.style.width = ((index + 1) / slides.length) * 100 + '%';
+
+    // Update rail step progress
+    if (railStepEl) railStepEl.textContent = stepText;
+    if (railFillEl) railFillEl.style.width = ((index + 1) / slides.length) * 100 + '%';
+
+    // Record position in localStorage
+    if (lessonId) recordPosition(lessonId, index);
+
     scrollToTop();
   }
 
@@ -179,7 +228,13 @@ function initDeck(deck: HTMLElement) {
 
   nextBtn.addEventListener('click', () => go('next'));
   prevBtn.addEventListener('click', () => go('prev'));
-  dots.forEach((d) =>
+  bottomDots.forEach((d) =>
+    d.addEventListener('click', () => {
+      const target = Number(d.dataset.go);
+      show(target, target >= index ? 'next' : 'prev');
+    })
+  );
+  topbarDots.forEach((d) =>
     d.addEventListener('click', () => {
       const target = Number(d.dataset.go);
       show(target, target >= index ? 'next' : 'prev');

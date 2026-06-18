@@ -136,13 +136,30 @@ table {
 }
 
 .prose blockquote {
-  margin: 0;
-  padding: var(--space-3) var(--space-5);
-  border-left: 3px solid var(--accent-line);
-  background: var(--accent-soft);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  color: var(--text);
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-5);
+  border-left: 2px solid var(--mint);
+  background: transparent;
+  border-radius: 0;
+  color: var(--prose);
+  font-family: var(--serif);
   font-style: italic;
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+}
+.prose blockquote::before {
+  content: 'TA MED DIG';
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--mint);
+  margin-bottom: var(--space-2);
+}
+.prose blockquote p {
+  margin: 0;
 }
 
 .prose code {
@@ -252,14 +269,14 @@ table {
 }
 
 /* ============================================================
-   Deck — bitesized steg (slides) per ##-sektion
+   Deck — editorial bitesized steg (slides) per ##-sektion.
    Stilarna är globala så att JS-skapade slides träffas.
    ============================================================ */
 .deck {
   position: relative;
 }
 
-/* Topp-progress (visas först när decket byggts) */
+/* Topp-progress (visas när decket byggts) */
 .deck__progress {
   display: none;
   position: sticky;
@@ -274,7 +291,7 @@ table {
 .deck__fill {
   height: 100%;
   width: 0;
-  background: var(--accent);
+  background: var(--mint);
   transition: width var(--dur-comp) var(--ease-out);
 }
 
@@ -301,16 +318,16 @@ table {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-5) 0;
+  padding: var(--space-6) 0;
 }
 .deck.is-ready .deck__stage > [data-src] {
   display: none;
 }
 
-/* Slides */
+/* Slides — editorial centered column */
 .slide {
   width: 100%;
-  max-width: var(--content-max);
+  max-width: 60ch;
   margin: 0 auto;
 }
 .deck .slide {
@@ -320,30 +337,58 @@ table {
   display: flex;
   flex-direction: column;
 }
+
+/* Intro slide: display title centered */
+.slide--intro {
+  text-align: left;
+  align-items: flex-start;
+}
+
+/* Body slides: editorial prose measure */
 .slide--body.prose > :first-child {
   margin-top: 0;
 }
 .slide--body.prose h2 {
   margin-top: 0;
+  font-family: var(--serif);
   font-size: var(--text-2xl);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--text);
 }
 .slide--body.prose {
-  font-size: var(--text-lg);
+  font-size: var(--prose-size);
+  line-height: 1.7;
+  color: var(--prose);
+}
+.slide--body.prose p {
+  color: var(--prose);
 }
 
+/* Quiz slide */
+.slide--quiz {
+  max-width: 680px;
+}
+
+/* Outro slide */
+.slide--outro {
+  max-width: 540px;
+}
+
+/* Slide entry animations */
 @keyframes slideEnterNext {
-  from { opacity: 0; transform: translateX(26px); }
+  from { opacity: 0; transform: translateX(22px); }
   to { opacity: 1; transform: none; }
 }
 @keyframes slideEnterPrev {
-  from { opacity: 0; transform: translateX(-26px); }
+  from { opacity: 0; transform: translateX(-22px); }
   to { opacity: 1; transform: none; }
 }
 .deck[data-dir='next'].is-ready .slide.is-active {
-  animation: slideEnterNext 340ms var(--ease-out);
+  animation: slideEnterNext 320ms var(--ease-out);
 }
 .deck[data-dir='prev'].is-ready .slide.is-active {
-  animation: slideEnterPrev 340ms var(--ease-out);
+  animation: slideEnterPrev 320ms var(--ease-out);
 }
 @media (prefers-reduced-motion: reduce) {
   .deck .slide.is-active {
@@ -351,18 +396,18 @@ table {
   }
 }
 
-/* Kontroller */
+/* ---- Bottom nav controls ---- */
 .deck.is-ready .deck__controls {
   display: flex;
   align-items: center;
   gap: var(--space-4);
   position: sticky;
   bottom: 0;
-  margin-top: var(--space-6);
-  padding: var(--space-4) 0;
+  margin-top: var(--space-7);
+  padding: var(--space-4) 0 var(--space-5);
   background: linear-gradient(
     to top,
-    var(--bg) 60%,
+    var(--bg) 65%,
     transparent
   );
 }
@@ -380,20 +425,20 @@ table {
   gap: var(--space-2);
 }
 
+/* Primary next: dark pill (background: var(--text), color: var(--bg)) */
 .deck-nav {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-family: var(--font-sans);
+  font-family: var(--sans);
   font-weight: 600;
   font-size: var(--text-base);
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-full);
   cursor: pointer;
-  border: 1px solid transparent;
+  border: none;
   transition:
     background var(--dur-micro) var(--ease-standard),
-    border-color var(--dur-micro) var(--ease-standard),
     color var(--dur-micro) var(--ease-standard),
     opacity var(--dur-micro) var(--ease-standard),
     transform var(--dur-micro) var(--ease-out);
@@ -407,58 +452,74 @@ table {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* "Fortsätt →" dark pill */
 .deck-nav--next {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--text);
+  color: var(--bg);
 }
 .deck-nav--next:hover {
-  background: var(--accent-hover);
+  opacity: 0.88;
   transform: translateX(2px);
 }
+/* "← Tillbaka" quiet text button */
 .deck-nav--prev {
   background: transparent;
-  color: var(--text-muted);
-  border-color: var(--border);
+  color: var(--muted);
+  border: none;
+  padding-left: 0;
 }
 .deck-nav--prev:hover {
   color: var(--text);
-  border-color: var(--border-strong);
 }
 .deck-nav--prev:disabled {
   opacity: 0;
   pointer-events: none;
 }
 
+/* Step dots — bottom controls */
 .deck-dots {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 .deck-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   padding: 0;
   border: none;
   border-radius: var(--radius-full);
-  background: var(--surface-2);
+  background: var(--faint);
   cursor: pointer;
   transition:
     width var(--dur-comp) var(--ease-out),
-    background var(--dur-micro) var(--ease-standard);
+    background var(--dur-micro) var(--ease-standard),
+    opacity var(--dur-micro) var(--ease-standard);
 }
 .deck-dot.is-seen {
-  background: var(--accent-line);
+  background: var(--mint);
+  opacity: 0.38;
 }
 .deck-dot.is-active {
-  width: 22px;
-  background: var(--accent);
+  width: 18px;
+  background: var(--mint);
+  opacity: 1;
 }
+
+/* Topbar dots (same class, smaller) */
+[data-deck-dots] .deck-dot {
+  width: 5px;
+  height: 5px;
+}
+[data-deck-dots] .deck-dot.is-active {
+  width: 14px;
+}
+
 .deck-step {
-  font-family: var(--font-sans);
+  font-family: var(--sans);
   font-size: var(--text-xs);
-  color: var(--text-faint);
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 
 @media (max-width: 640px) {
@@ -467,6 +528,9 @@ table {
   }
   .deck-nav {
     padding: var(--space-3);
+  }
+  .deck-nav--prev {
+    padding-left: 0;
   }
   .deck.is-ready {
     min-height: calc(100vh - 9rem);

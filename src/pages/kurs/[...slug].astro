@@ -1,12 +1,11 @@
 ---
 import { getCollection, render } from 'astro:content';
-import LessonLayout from '../../layouts/LessonLayout.astro';
-import Breadcrumb from '../../components/Breadcrumb.astro';
+import AppShell from '../../layouts/AppShell.astro';
 import LessonHeader from '../../components/LessonHeader.astro';
 import Quiz from '../../components/Quiz.astro';
 import MarkComplete from '../../components/MarkComplete.astro';
 import PrevNext from '../../components/PrevNext.astro';
-import { getAdjacent, readingTime } from '../../lib/course';
+import { getAdjacent, readingTime, getModulesInOrder } from '../../lib/course';
 
 export async function getStaticPaths() {
   const lessons = await getCollection('kurs');
@@ -21,17 +20,51 @@ const { Content } = await render(lesson);
 const { prev, next } = await getAdjacent(lesson.id);
 const minutes = readingTime(lesson.body);
 const d = lesson.data;
+const modules = await getModulesInOrder();
 ---
 
-<LessonLayout title={d.titel} currentId={lesson.id} deck>
-  <article class="deck" data-deck>
+<AppShell title={d.titel} active="lektion" maxWidth={760}>
+  <!-- Rail context: active lesson item + step-progress block -->
+  <div slot="rail-context" class="rail-lesson-ctx">
+    <a
+      href={`/kurs/${lesson.id}/`}
+      class="rail__item is-active"
+      aria-current="page"
+    >
+      <span class="rail__dot" aria-hidden="true"></span>
+      Lektion {d.lektion}
+    </a>
+    <div class="rail-steps">
+      <div class="rail-steps__label">LEKTIONENS STEG <span data-deck-rail-step></span></div>
+      <div class="rail-steps__track" aria-hidden="true">
+        <div class="rail-steps__fill" data-deck-rail-fill></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topbar: breadcrumb left, step-dots + counter right -->
+  <div class="lesson-topbar">
+    <nav class="lesson-topbar__crumbs" aria-label="Brödsmulor">
+      <a href="/hem" class="crumb-link">Hem</a>
+      <span class="crumb-sep" aria-hidden="true">›</span>
+      <span class="crumb-seg">Kapitel {d.modul}</span>
+      <span class="crumb-sep" aria-hidden="true">›</span>
+      <span class="crumb-seg crumb-seg--active">Lektion {d.lektion}</span>
+    </nav>
+    <div class="lesson-topbar__nav">
+      <div data-deck-dots class="topbar-dots"></div>
+      <span data-deck-counter class="topbar-counter"></span>
+    </div>
+  </div>
+
+  <!-- The deck article -->
+  <article class="deck" data-deck data-lesson-id={lesson.id}>
     <div class="deck__progress" aria-hidden="true">
       <div class="deck__fill" data-deck-fill></div>
     </div>
 
     <div class="deck__stage" data-deck-stage>
       <div data-src="intro">
-        <Breadcrumb del={d.del} modulTitel={d.modulTitel} lektion={d.lektion} />
         <LessonHeader
           titel={d.titel}
           niva={d.niva}
@@ -68,40 +101,146 @@ const d = lesson.data;
       </div>
     </div>
   </article>
-</LessonLayout>
+
+  <!-- Gating data for client-side guard -->
+  <script
+    type="application/json"
+    data-lesson-gate
+    set:html={JSON.stringify({
+      moduleKey: String(d.modul),
+      modules: modules.map((m) => ({ key: m.key, lessonIds: m.lessonIds })),
+    })}
+  ></script>
+</AppShell>
 
 <style>
+  /* Topbar */
+  .lesson-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-3) 0 var(--space-5);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .lesson-topbar__crumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--sans);
+    font-size: var(--text-xs);
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .crumb-link {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-micro) var(--ease-standard);
+  }
+  .crumb-link:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .crumb-sep {
+    color: var(--faint);
+  }
+  .crumb-seg {
+    color: var(--muted);
+  }
+  .crumb-seg--active {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .lesson-topbar__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .topbar-dots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .topbar-counter {
+    font-family: var(--sans);
+    font-size: var(--text-xs);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* Rail context */
+  .rail-lesson-ctx {
+    display: contents;
+  }
+  .rail-steps {
+    padding: 0 10px;
+    margin-bottom: 8px;
+  }
+  .rail-steps__label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .rail-steps__track {
+    height: 3px;
+    background: var(--faint);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+  .rail-steps__fill {
+    height: 100%;
+    width: 0%;
+    background: var(--mint);
+    border-radius: var(--radius-full);
+    transition: width var(--dur-comp) var(--ease-out);
+  }
+
+  /* Deck hint */
   .deck-hint {
-    font-family: var(--font-sans);
+    font-family: var(--sans);
     font-size: var(--text-sm);
-    color: var(--text-faint);
+    color: var(--muted);
     margin-top: var(--space-5);
   }
   .deck-hint strong {
-    color: var(--text-muted);
+    color: var(--text);
   }
+
+  /* Lesson end */
   .lesson-end {
     text-align: center;
     max-width: 540px;
     margin: 0 auto;
   }
   .lesson-end__kicker {
-    font-family: var(--font-sans);
+    font-family: var(--sans);
     font-size: var(--text-xs);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: var(--accent);
+    color: var(--mint);
   }
   .lesson-end__title {
+    font-family: var(--serif);
     font-size: var(--text-2xl);
+    font-weight: 300;
     margin: var(--space-2) 0 var(--space-4);
   }
   .lesson-end__skill {
-    font-family: var(--font-serif);
+    font-family: var(--serif);
     font-size: var(--text-md);
     line-height: 1.5;
-    color: var(--text-muted);
+    color: var(--muted);
     margin: 0 0 var(--space-5);
   }
   .lesson-end :global(.complete) {
@@ -116,4 +255,30 @@ const d = lesson.data;
 <script>
   import { setupDeck } from '../../scripts/deck';
   document.addEventListener('astro:page-load', setupDeck);
+</script>
+
+<script>
+  import { getAll } from '../../scripts/progress';
+  import { computeGate, isDevUnlocked } from '../../scripts/state';
+
+  document.addEventListener('astro:page-load', () => {
+    const el = document.querySelector<HTMLScriptElement>('[data-lesson-gate]');
+    if (!el) return;
+    let parsed: { moduleKey: string; modules: { key: string; lessonIds: string[] }[] };
+    try {
+      parsed = JSON.parse(el.textContent || '{}');
+    } catch {
+      return;
+    }
+    const { moduleKey, modules } = parsed;
+    if (!moduleKey || !modules) return;
+
+    const store = getAll();
+    const doneIds = Object.keys(store).filter((id) => store[id]?.done);
+    const gate = computeGate(modules, doneIds, isDevUnlocked());
+    const status = gate[moduleKey];
+    if (status === 'locked') {
+      location.replace('/oversikt');
+    }
+  });
 </script>
