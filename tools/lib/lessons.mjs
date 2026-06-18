@@ -35,11 +35,15 @@ export async function loadLessons(base = 'src/content/kurs') {
     const raw = await readFile(path, 'utf8');
     const { frontmatter, body } = parseFrontmatter(raw);
     const sections = [...body.matchAll(/^##\s+(.+)$/gm)].map((x) => x[1].trim());
+    // Antal quizfrågor: räkna "- fraga:" i frontmatter-blocket (CRLF-normaliserat).
+    const fmMatch = raw.replace(/\r\n/g, '\n').match(/^---\n([\s\S]*?)\n---/);
+    const quizCount = fmMatch ? (fmMatch[1].match(/^\s+-\s+fraga:/gm) || []).length : 0;
     lessons.push({
       path: path.split('\\').join('/'),
       frontmatter,
       body,
       sections,
+      quizCount,
       modul: frontmatter.modul,
       lektion: String(frontmatter.lektion ?? ''),
       del: frontmatter.del,

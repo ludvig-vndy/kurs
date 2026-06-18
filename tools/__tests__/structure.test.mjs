@@ -2,10 +2,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { checkStructure } from '../check-structure.mjs';
 
-const lax = { minWords: 5, maxWords: 5000 };
+const lax = { minWords: 5, maxWords: 5000, requireQuiz: false };
 
 test('clean standard lesson passes', async () => {
   assert.deepEqual(await checkStructure('tools/__tests__/fixtures/lean-ok', lax), []);
+});
+
+test('flags missing quiz when required', async () => {
+  const errors = await checkStructure('tools/__tests__/fixtures/lean-ok', { minWords: 5, maxWords: 5000, requireQuiz: true });
+  assert.ok(errors.some((e) => /quiz/.test(e)));
 });
 
 test('flags banned template phrase', async () => {

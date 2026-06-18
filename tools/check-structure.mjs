@@ -19,7 +19,7 @@ const BANNED = [
   'Tecknet: fråga',
 ];
 
-export async function checkStructure(base, { minWords = 700, maxWords = 1600 } = {}) {
+export async function checkStructure(base, { minWords = 700, maxWords = 1600, requireQuiz = true } = {}) {
   const lessons = await loadLessons(base);
   const errors = [];
   for (const l of lessons) {
@@ -36,6 +36,8 @@ export async function checkStructure(base, { minWords = 700, maxWords = 1600 } =
     const words = l.body.trim().split(/\s+/).filter(Boolean).length;
     if (words < minWords || words > maxWords)
       errors.push(`${l.path}: ordlängd ${words} utanför ${minWords}–${maxWords}`);
+    if (requireQuiz && (l.quizCount ?? 0) < 3)
+      errors.push(`${l.path}: saknar quiz (${l.quizCount ?? 0}/3 frågor)`);
   }
   return errors;
 }
