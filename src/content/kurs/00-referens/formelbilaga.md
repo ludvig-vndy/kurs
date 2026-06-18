@@ -22,6 +22,8 @@ bilagan någonsin skiljer sig: bilagan gäller.
 
 **EBITDA** = EBIT + av- och nedskrivningar (resultat före räntor, skatt, av- och nedskrivningar). Tar bort av- och nedskrivningar och döljer därmed kapitalintensitet — användbart men aldrig hela bilden; jämför alltid mot EBIT och capex.
 
+**EBITA** = EBIT + avskrivningar på (förvärvsrelaterade) immateriella tillgångar (resultat före räntor, skatt och nedskrivning/avskrivning av immateriella tillgångar). Vanligt rubrikmått hos serieförvärvare, eftersom det rensar bort den avskrivning som uppstår just av att förvärv bokförs — men kom ihåg att förvärven ändå kostade riktiga pengar (se ROIC inkl. vs exkl. goodwill).
+
 **Marginaler:** bruttomarginal = bruttoresultat / omsättning; rörelsemarginal = EBIT / omsättning; nettomarginal = nettoresultat / omsättning.
 
 ## Balansräkning och skuldsättning
@@ -98,8 +100,9 @@ merparten av totalvärdet — där sitter de farligaste antagandena.
 
 **Multiplar**
 - P/E = pris per aktie / vinst per aktie (equity-mått).
-- EV/EBIT och EV/EBITDA använder Enterprise Value (EV = börsvärde + nettoskuld) —
-  kapitalstruktur-neutralt, till skillnad från P/E.
+- EV/EBIT, EV/EBITDA och EV/EBITA använder Enterprise Value (EV = börsvärde +
+  nettoskuld) — kapitalstruktur-neutralt, till skillnad från P/E. EV/EBITA är
+  vanligt för serieförvärvare (EBITA rensar förvärvsavskrivningen).
 - P/S och P/B för bolag utan meningsfull vinst respektive tillgångstunga bolag.
 
 **Felmarginal (margin of safety)**

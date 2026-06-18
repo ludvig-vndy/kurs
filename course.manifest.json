@@ -1,7 +1,7 @@
 {
   "seededFrom": "_MANIFEST.txt (verifierad filuppsättning)",
   "crosscheckedAgainst": "Fundamental_analys_kursstruktur.md",
-  "count": 108,
+  "count": 109,
   "lessons": [
     {
       "lektion": "1.0",
@@ -434,6 +434,10 @@
     {
       "lektion": "19.9",
       "titel": "Syntes: så hittar du framtidens vinnare"
+    },
+    {
+      "lektion": "20.1",
+      "titel": "Lifco, räkenskapsåret 2025"
     }
   ]
 }

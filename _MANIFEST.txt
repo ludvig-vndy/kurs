@@ -108,3 +108,4 @@
 19.7	Grundare, insiderägande och teknologiskt försprång	src/content/kurs/19-att-hitta-framtidens-vinnare/19.7-grundare-insideragande-och-teknologiskt-forsprang.md
 19.8	Scenarioanalys och att dimensionera jakten	src/content/kurs/19-att-hitta-framtidens-vinnare/19.8-scenarioanalys-och-att-dimensionera-jakten.md
 19.9	Syntes: så hittar du framtidens vinnare	src/content/kurs/19-att-hitta-framtidens-vinnare/19.9-syntes-sa-hittar-du-framtidens-vinnare.md
+20.1	Lifco, räkenskapsåret 2025	src/content/kurs/20-fallstudie-lifco/20.1-lifco-rakenskapsaret-2025.md
