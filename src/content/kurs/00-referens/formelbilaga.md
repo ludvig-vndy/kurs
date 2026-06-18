@@ -16,6 +16,14 @@ Det här är kursens enda sanning för centrala definitioner och formler. Lektio
 länkar hit i stället för att förklara samma formel på nytt. Om en lektion och
 bilagan någonsin skiljer sig: bilagan gäller.
 
+## Resultatmått och marginaler
+
+**EBIT (rörelseresultat)** = resultat före räntor och skatt. Marginalen: rörelsemarginal = EBIT / omsättning.
+
+**EBITDA** = EBIT + av- och nedskrivningar (resultat före räntor, skatt, av- och nedskrivningar). Tar bort av- och nedskrivningar och döljer därmed kapitalintensitet — användbart men aldrig hela bilden; jämför alltid mot EBIT och capex.
+
+**Marginaler:** bruttomarginal = bruttoresultat / omsättning; rörelsemarginal = EBIT / omsättning; nettomarginal = nettoresultat / omsättning.
+
 ## Lönsamhet och kapitalavkastning
 
 **NOPAT (rörelseresultat efter skatt)**
