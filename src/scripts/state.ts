@@ -94,6 +94,7 @@ export function setDevUnlock(on: boolean): void {
 
 /** Läs ?unlock=1/0 och exponera window.__unlock(). Anropas en gång vid load. */
 export function initDevUnlock(): void {
+  if (typeof window === 'undefined') return;
   try {
     const q = new URL(location.href).searchParams.get('unlock');
     if (q === '1') setDevUnlock(true);
