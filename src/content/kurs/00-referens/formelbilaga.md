@@ -20,15 +20,15 @@ bilagan någonsin skiljer sig: bilagan gäller.
 
 **EBIT (rörelseresultat)** = resultat före räntor och skatt. Marginalen: rörelsemarginal = EBIT / omsättning.
 
-**EBITDA** = EBIT + av- och nedskrivningar (resultat före räntor, skatt, av- och nedskrivningar). Tar bort av- och nedskrivningar och döljer därmed kapitalintensitet — användbart men aldrig hela bilden; jämför alltid mot EBIT och capex.
+**EBITDA** = EBIT + av- och nedskrivningar (resultat före räntor, skatt, av- och nedskrivningar). Tar bort av- och nedskrivningar och döljer därmed kapitalintensitet, användbart men aldrig hela bilden; jämför alltid mot EBIT och capex.
 
-**EBITA** = EBIT + avskrivningar på (förvärvsrelaterade) immateriella tillgångar (resultat före räntor, skatt och nedskrivning/avskrivning av immateriella tillgångar). Vanligt rubrikmått hos serieförvärvare, eftersom det rensar bort den avskrivning som uppstår just av att förvärv bokförs — men kom ihåg att förvärven ändå kostade riktiga pengar (se ROIC inkl. vs exkl. goodwill).
+**EBITA** = EBIT + avskrivningar på (förvärvsrelaterade) immateriella tillgångar (resultat före räntor, skatt och nedskrivning/avskrivning av immateriella tillgångar). Vanligt rubrikmått hos serieförvärvare, eftersom det rensar bort den avskrivning som uppstår just av att förvärv bokförs, men kom ihåg att förvärven ändå kostade riktiga pengar (se ROIC inkl. vs exkl. goodwill).
 
 **Marginaler:** bruttomarginal = bruttoresultat / omsättning; rörelsemarginal = EBIT / omsättning; nettomarginal = nettoresultat / omsättning.
 
 ## Balansräkning och skuldsättning
 
-**Soliditet** = eget kapital / totala tillgångar. Hur stor del av tillgångarna som är finansierad med eget kapital — ju högre, desto mer motståndskraft.
+**Soliditet** = eget kapital / totala tillgångar. Hur stor del av tillgångarna som är finansierad med eget kapital, ju högre, desto mer motståndskraft.
 
 **Nettoskuld** = räntebärande skulder − kassa och likvida medel.
 
@@ -51,7 +51,7 @@ ROIC = NOPAT / investerat kapital.
 Investerat kapital = eget kapital + räntebärande skulder − kassa (förenklat).
 Värde skapas när ROIC > kapitalkostnaden (WACC), och förstörs när ROIC < WACC.
 
-**DuPont — håll isär de två nedbrytningarna**
+**DuPont, håll isär de två nedbrytningarna**
 - ROE = nettomarginal × kapitalomsättning × hävstång (bas: totala tillgångar och
   eget kapital). Hävstången kan blåsa upp ROE utan att verksamheten blivit bättre.
 - ROIC = NOPAT-marginal × omsättning på investerat kapital (bas: investerat kapital).
@@ -96,12 +96,12 @@ marknadsriskpremie historiskt ~4–5 %.
 Terminalvärde (vid slutet av prognosår n) = FCF(n+1) / (r − g),
 där g = evig tillväxttakt och r = diskonteringsränta. Kräver r > g.
 Terminalvärdet diskonteras tillbaka till nutid med 1/(1 + r)^n och utgör ofta
-merparten av totalvärdet — där sitter de farligaste antagandena.
+merparten av totalvärdet, där sitter de farligaste antagandena.
 
 **Multiplar**
 - P/E = pris per aktie / vinst per aktie (equity-mått).
 - EV/EBIT, EV/EBITDA och EV/EBITA använder Enterprise Value (EV = börsvärde +
-  nettoskuld) — kapitalstruktur-neutralt, till skillnad från P/E. EV/EBITA är
+  nettoskuld), kapitalstruktur-neutralt, till skillnad från P/E. EV/EBITA är
   vanligt för serieförvärvare (EBITA rensar förvärvsavskrivningen).
 - P/S = börsvärde / omsättning, för bolag utan meningsfull vinst.
 - P/B = pris per aktie / bokfört eget kapital per aktie (eller börsvärde / eget kapital), för tillgångstunga bolag (banker, fastighet, cykliskt). Jämförs med ROE: hög ROE motiverar högre P/B.
@@ -115,7 +115,7 @@ Skydd mot egna misstag och otur; större vid högre osäkerhet.
 **LTV (kundens livstidsvärde)**
 LTV ≈ (intäkt per kund × bruttomarginal) / churn (stabilt läge), helst diskonterad.
 Använd *inte* "årligt bidrag × fast antal år" annat än som medvetet förenklad,
-konservativ approximation — och säg då att den är det. Hög churn dödar LTV oavsett.
+konservativ approximation, och säg då att den är det. Hög churn dödar LTV oavsett.
 
 **CAC och LTV/CAC**
 CAC = total kundanskaffningskostnad / antal nya kunder (håll isär organisk och
@@ -129,7 +129,7 @@ omsättningstillväxt (%) + lönsamhetsmarginal (%) ≥ 40, där marginalen är
 **Operating leverage**
 Äkta operating leverage kommer från *fasta* kostnader (FoU, administration) som
 inte växer i takt med intäkten. Att försäljning & marknadsföring faller som andel
-av intäkten är skalfördel i kundanskaffning — inte ren operating leverage. Håll isär.
+av intäkten är skalfördel i kundanskaffning, inte ren operating leverage. Håll isär.
 
 **Burn rate och runway**
 Runway (antal månader) = likvida medel / nettoburn per månad.
