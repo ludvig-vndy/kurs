@@ -24,6 +24,18 @@ bilagan någonsin skiljer sig: bilagan gäller.
 
 **Marginaler:** bruttomarginal = bruttoresultat / omsättning; rörelsemarginal = EBIT / omsättning; nettomarginal = nettoresultat / omsättning.
 
+## Balansräkning och skuldsättning
+
+**Soliditet** = eget kapital / totala tillgångar. Hur stor del av tillgångarna som är finansierad med eget kapital — ju högre, desto mer motståndskraft.
+
+**Nettoskuld** = räntebärande skulder − kassa och likvida medel.
+
+**Nettoskuld/EBITDA** = nettoskuld / EBITDA. Hur många års rörelseresultat (före av- och nedskrivningar) skulden motsvarar.
+
+**Räntetäckningsgrad** = EBIT / räntekostnad. Hur många gånger rörelseresultatet täcker räntan.
+
+**Materiellt eget kapital** = eget kapital − goodwill − immateriella tillgångar. Det egna kapital som backas av påtagliga tillgångar.
+
 ## Lönsamhet och kapitalavkastning
 
 **NOPAT (rörelseresultat efter skatt)**
