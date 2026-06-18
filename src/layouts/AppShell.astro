@@ -1,0 +1,59 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Rail from '../components/Rail.astro';
+import BottomNav from '../components/BottomNav.astro';
+
+interface Props {
+  title: string;
+  active?: 'hem' | 'kurs' | 'verktyg' | 'lektion';
+  maxWidth?: number;
+}
+const { title, active = 'hem', maxWidth = 1000 } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <div class="app">
+    <div class="app__rail">
+      <Rail active={active}>
+        <slot name="rail-context" slot="context" />
+      </Rail>
+    </div>
+
+    <main class="app__main">
+      <div class="app__inner" style={`--maxw:${maxWidth}px`}>
+        <slot />
+      </div>
+    </main>
+
+    <BottomNav active={active} />
+  </div>
+</BaseLayout>
+
+<style>
+  .app__rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--rail-width);
+    z-index: 6;
+  }
+  .app__main {
+    margin-left: var(--rail-width);
+    min-height: 100vh;
+  }
+  .app__inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 54px clamp(40px, 5vw, 76px) 70px;
+  }
+  @media (max-width: 760px) {
+    .app__rail {
+      display: none;
+    }
+    .app__main {
+      margin-left: 0;
+    }
+    .app__inner {
+      padding: 32px clamp(18px, 5vw, 28px) 96px; /* botten-padding för bottenmenyn */
+    }
+  }
+</style>
