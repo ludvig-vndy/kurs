@@ -47,7 +47,7 @@ export async function checkIntegrity(base, manifestLektioner = null) {
   return errors;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   let manifest = null;
   try {
     const raw = await readFile('course.manifest.json', 'utf8');

@@ -40,7 +40,7 @@ export async function checkStructure(base, { minWords = 700, maxWords = 1600 } =
   return errors;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const errors = await checkStructure(process.argv[2] || 'src/content/kurs');
   errors.forEach((e) => console.error('✗', e));
   console.log(errors.length ? `\n${errors.length} strukturavvik` : '✓ struktur OK');

@@ -20,7 +20,7 @@ export function findDuplicateSentences(lessons, { minWords = 8, maxLessons = 2 }
     .sort((a, b) => b.count - a.count);
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const lessons = await loadLessons(process.argv[2] || 'src/content/kurs');
   const dups = findDuplicateSentences(lessons);
   dups.forEach((d) => console.error(`✗ ×${d.count}: "${d.sentence.slice(0, 70)}…"`));
