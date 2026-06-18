@@ -1,0 +1,548 @@
+---
+import AppShell from '../layouts/AppShell.astro';
+import { getLessonsInOrder, getModulesInOrder, lessonHref, readingTime } from '../lib/course';
+
+const lessons = await getLessonsInOrder();
+const modules = await getModulesInOrder();
+const total = lessons.length;
+
+const dashLessons = lessons.map((l) => ({
+  id: l.id,
+  moduleKey: String(l.data.modul),
+  lektion: l.data.lektion,
+  titel: l.data.titel,
+  modulTitel: l.data.modulTitel,
+  href: lessonHref(l),
+  minutes: readingTime(l.body),
+}));
+
+const gateModules = modules.map((m) => ({ key: m.key, lessonIds: m.lessonIds }));
+const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
+---
+
+<AppShell title="Hem — Fundamental aktieanalys" active="hem" maxWidth={1000}>
+  <!-- JSON data blobs for client script -->
+  <script type="application/json" data-dash-lessons set:html={JSON.stringify(dashLessons)} />
+  <script type="application/json" data-dash-modules set:html={JSON.stringify(gateModules)} />
+
+  <!-- ===== Header row ===== -->
+  <header class="dash-head" data-total={total}>
+    <div class="dash-head__left">
+      <h1 class="dash-greeting" data-greeting>Välkommen tillbaka</h1>
+      <p class="dash-date" data-date></p>
+    </div>
+    <div class="streak-chip" aria-label="Studiusvit">
+      <span class="streak-dot" aria-hidden="true"></span>
+      <span class="streak-label" data-streak>0 dagars svit</span>
+    </div>
+  </header>
+
+  <!-- ===== "Fortsätt där du slutade" card ===== -->
+  <a class="continue-card" data-continue-card href={firstHref} aria-label="Fortsätt kursen">
+    <div class="continue-card__body">
+      <div class="kicker kicker--mint">FORTSÄTT DÄR DU SLUTADE</div>
+      <div class="continue-title" data-continue-title>Börja kursen</div>
+      <div class="continue-meta" data-continue-meta>Lektion 1.1 · Börja här</div>
+    </div>
+    <span class="arrow-btn" aria-hidden="true">→</span>
+  </a>
+
+  <!-- ===== Stats row ===== -->
+  <div class="stats-grid" aria-label="Din statistik">
+    <div class="stat-card">
+      <div class="kicker">LEKTIONER KLARA</div>
+      <div class="stat-number" data-stat-done>0</div>
+      <div class="stat-sub">av {total}</div>
+    </div>
+    <div class="stat-card">
+      <div class="kicker">AV KURSEN</div>
+      <div class="stat-number" data-stat-pct>0%</div>
+      <div class="stat-sub">slutförd</div>
+    </div>
+    <div class="stat-card">
+      <div class="kicker">DAGARS SVIT</div>
+      <div class="stat-number" data-stat-streak>0</div>
+      <div class="stat-sub">dagar i rad</div>
+    </div>
+  </div>
+
+  <!-- ===== "Analysera ett bolag" section ===== -->
+  <div class="tool-section">
+    <div class="tool-section__head">
+      <h2 class="tool-heading">Analysera ett bolag</h2>
+      <span class="tool-tagline">När du är redo att värdera på riktigt</span>
+    </div>
+    <a class="tool-card" href="/verktyg" aria-label="Öppna Ägarboken – Analysverktyg">
+      <div class="tool-card__body">
+        <div class="kicker kicker--mint">ÄGARBOKEN · ANALYSVERKTYG</div>
+        <div class="tool-card__title">Sju steg innan du köper en aktie</div>
+        <p class="tool-card__text">
+          Du fyller i, poängen räknas ut medan du arbetar, och allt vägs ihop till en hållning — med krav på felmarginal. Tänk som ägare, inte aktiehandlare.
+        </p>
+        <div class="tool-tags">
+          <span class="tool-tag">Checklista</span>
+          <span class="tool-tag">Kvalitet</span>
+          <span class="tool-tag">Small cap</span>
+          <span class="tool-tag">Moat</span>
+          <span class="tool-tag">Ledning</span>
+          <span class="tool-tag">Risk</span>
+          <span class="tool-tag">Värdering</span>
+        </div>
+      </div>
+      <span class="arrow-btn" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <!-- ===== "Härnäst" row ===== -->
+  <div class="next-row">
+    <div class="next-row__left">
+      <div class="kicker">HÄRNÄST</div>
+      <a class="next-title" data-next-link href={firstHref}>
+        <span data-next-title>Börja kursen</span>
+      </a>
+    </div>
+    <a class="btn-outline" href="/oversikt">Se hela kursen</a>
+  </div>
+</AppShell>
+
+<style>
+  /* ===== Entrance animation ===== */
+  @keyframes riseF {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ===== Header row ===== */
+  .dash-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+    animation: riseF 0.6s cubic-bezier(0.21, 0.7, 0.18, 1) both;
+    animation-delay: 0.04s;
+  }
+
+  .dash-greeting {
+    margin: 0 0 8px;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(34px, 4vw, 46px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .dash-date {
+    margin: 0;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .streak-chip {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-full);
+    padding: 9px 16px;
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+
+  .streak-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+    flex: none;
+  }
+
+  .streak-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  /* ===== Continue card ===== */
+  .continue-card {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    border-radius: 18px;
+    padding: 28px 30px;
+    margin-bottom: 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.18s, box-shadow 0.18s;
+    animation: riseF 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
+    animation-delay: 0.1s;
+  }
+
+  .continue-card:hover {
+    border-color: var(--mint);
+    box-shadow: var(--shadow-md);
+  }
+
+  .continue-card__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .continue-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 1.12;
+    color: var(--text);
+    margin-bottom: 6px;
+    margin-top: 0;
+  }
+
+  .continue-meta {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ===== Stats grid ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 46px;
+    animation: riseF 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
+    animation-delay: 0.16s;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+
+  .stat-number {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--text);
+    margin-top: 8px;
+  }
+
+  .stat-sub {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ===== Shared kicker ===== */
+  .kicker {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .kicker--mint {
+    color: var(--mint);
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  /* ===== Arrow button ===== */
+  .arrow-btn {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--mint);
+    color: var(--on-mint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: var(--glow-mint);
+    transition: background 0.15s, transform 0.15s;
+  }
+
+  .continue-card:hover .arrow-btn,
+  .tool-card:hover .arrow-btn {
+    background: var(--mint-2);
+    transform: translateX(2px);
+  }
+
+  /* ===== Tool section ===== */
+  .tool-section {
+    animation: riseF 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
+    animation-delay: 0.22s;
+  }
+
+  .tool-section__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .tool-heading {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 24px;
+    color: var(--text);
+  }
+
+  .tool-tagline {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .tool-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    border-top: 2px solid var(--mint);
+    border-radius: 18px;
+    padding: 28px 30px;
+    margin-bottom: 46px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.18s;
+  }
+
+  .tool-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .tool-card__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tool-card__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.12;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .tool-card__text {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--prose);
+    max-width: 60ch;
+    margin: 0 0 18px;
+  }
+
+  .tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .tool-tag {
+    padding: 5px 11px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  /* ===== "Härnäst" row ===== */
+  .next-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid var(--border);
+    padding-top: 22px;
+    animation: riseF 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
+    animation-delay: 0.34s;
+  }
+
+  .next-row__left {
+    min-width: 0;
+  }
+
+  .next-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .next-title:hover {
+    color: var(--mint);
+  }
+
+  .btn-outline {
+    flex: none;
+    border: 1px solid var(--border-2);
+    background: transparent;
+    color: var(--text);
+    border-radius: var(--radius-full);
+    padding: 10px 20px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--mint);
+    background: var(--mint-soft);
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 760px) {
+    .dash-head {
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tool-section__head {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tool-tagline {
+      white-space: normal;
+    }
+
+    .continue-card,
+    .tool-card {
+      padding: 20px 18px;
+    }
+
+    .continue-title,
+    .tool-card__title {
+      font-size: 24px;
+    }
+
+    .next-row {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  }
+</style>
+
+<script>
+  import { getResumeTarget, getStreak, getDoneIds, META_EVENT } from '../scripts/state';
+  import { PROGRESS_EVENT } from '../scripts/progress';
+
+  function el<T extends HTMLElement = HTMLElement>(sel: string): T | null {
+    return document.querySelector<T>(sel);
+  }
+
+  function paint() {
+    const lessonsEl = el('[data-dash-lessons]');
+    const modulesEl = el('[data-dash-modules]');
+    if (!lessonsEl || !modulesEl) return;
+
+    const lessons = JSON.parse(lessonsEl.textContent || '[]') as Array<{
+      id: string;
+      moduleKey: string;
+      lektion: string;
+      titel: string;
+      modulTitel: string;
+      href: string;
+      minutes: number;
+    }>;
+    const modules = JSON.parse(modulesEl.textContent || '[]') as Array<{
+      key: string;
+      lessonIds: string[];
+    }>;
+    const total = lessons.length;
+
+    // Greeting + date
+    const h = new Date().getHours();
+    const greet = h < 10 ? 'God morgon' : h < 18 ? 'God dag' : 'God kväll';
+    const g = el('[data-greeting]');
+    if (g) g.textContent = greet;
+
+    const dEl = el('[data-date]');
+    if (dEl) {
+      let s = new Date().toLocaleDateString('sv-SE', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+      });
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      dEl.textContent = s;
+    }
+
+    // Stats
+    const doneIds = getDoneIds();
+    const doneCount = lessons.filter((l) => doneIds.includes(l.id)).length;
+    const pct = total ? Math.round((doneCount / total) * 100) : 0;
+    const streak = getStreak();
+
+    const sd = el('[data-stat-done]');
+    if (sd) sd.textContent = String(doneCount);
+    const sp = el('[data-stat-pct]');
+    if (sp) sp.textContent = pct + '%';
+    const ss = el('[data-stat-streak]');
+    if (ss) ss.textContent = String(streak);
+    const st = el('[data-streak]');
+    if (st) st.textContent = `${streak} dagars svit`;
+
+    // Resume / continue + next
+    const ordered = lessons.map((l) => ({ id: l.id, moduleKey: l.moduleKey }));
+    const target = getResumeTarget(ordered, modules);
+    const t = target ? lessons.find((l) => l.id === target.lessonId) : null;
+    const fallback = lessons[0];
+    const lesson = t || fallback;
+
+    if (lesson) {
+      const card = el<HTMLAnchorElement>('[data-continue-card]');
+      if (card) card.href = lesson.href;
+      const ct = el('[data-continue-title]');
+      if (ct) ct.textContent = lesson.titel;
+      const cm = el('[data-continue-meta]');
+      if (cm) cm.textContent = `Lektion ${lesson.lektion} · ${lesson.modulTitel}`;
+      const nt = el('[data-next-title]');
+      if (nt) nt.textContent = lesson.titel;
+      const nl = el<HTMLAnchorElement>('[data-next-link]');
+      if (nl) nl.href = lesson.href;
+    }
+  }
+
+  document.addEventListener('astro:page-load', paint);
+  window.addEventListener(META_EVENT, paint);
+  window.addEventListener(PROGRESS_EVENT, paint);
+</script>
