@@ -1,0 +1,61 @@
+---
+interface Props {
+  active?: 'hem' | 'kurs' | 'verktyg' | 'lektion';
+}
+const { active = 'hem' } = Astro.props;
+const ROUTES = { hem: '/', kurs: '/', verktyg: '/' };
+const items = [
+  { key: 'hem', label: 'Hem', href: ROUTES.hem },
+  { key: 'kurs', label: 'Kurs', href: ROUTES.kurs },
+  { key: 'verktyg', label: 'Verktyg', href: ROUTES.verktyg },
+] as const;
+---
+
+<nav class="bottomnav" aria-label="Bottenmeny">
+  {items.map((it) => (
+    <a
+      href={it.href}
+      class:list={['bottomnav__item', { 'is-active': active === it.key }]}
+      aria-current={active === it.key ? 'page' : undefined}
+    >
+      {it.label}
+    </a>
+  ))}
+</nav>
+
+<style>
+  .bottomnav {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 7px 4px;
+    align-items: stretch;
+  }
+  .bottomnav__item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 4px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--muted);
+    border-radius: 9px;
+  }
+  .bottomnav__item:hover {
+    text-decoration: none;
+  }
+  .bottomnav__item.is-active {
+    color: var(--text);
+    background: var(--mint-soft);
+  }
+  @media (max-width: 760px) {
+    .bottomnav {
+      display: flex;
+    }
+  }
+</style>

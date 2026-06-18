@@ -1,0 +1,206 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  active?: 'hem' | 'kurs' | 'verktyg' | 'lektion';
+}
+const { active = 'hem' } = Astro.props;
+
+// Fas 0: platshållarmål. Fas 2 byter till riktiga rutter.
+const ROUTES = { hem: '/', kurs: '/', verktyg: '/' };
+const items = [
+  { key: 'hem', label: 'Hem', href: ROUTES.hem },
+  { key: 'kurs', label: 'Kursöversikt', href: ROUTES.kurs },
+] as const;
+---
+
+<aside class="rail" aria-label="Sidomeny">
+  <div class="rail__top">
+    <a href={ROUTES.hem} class="brand" data-astro-prefetch>
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__text">Ägarboken</span>
+    </a>
+
+    <div class="rail__section-label">LÄRA</div>
+    <nav class="rail__group">
+      {items.map((it) => (
+        <a
+          href={it.href}
+          class:list={['rail__item', { 'is-active': active === it.key }]}
+          aria-current={active === it.key ? 'page' : undefined}
+        >
+          <span class="rail__dot" aria-hidden="true"></span>
+          {it.label}
+        </a>
+      ))}
+      <slot name="context" />
+    </nav>
+
+    <div class="rail__section-label">VERKTYG</div>
+    <nav class="rail__group">
+      <a
+        href={ROUTES.verktyg}
+        class:list={['rail__item', { 'is-active': active === 'verktyg' }]}
+        aria-current={active === 'verktyg' ? 'page' : undefined}
+      >
+        <span class="rail__dot" aria-hidden="true"></span>
+        Analysverktyg
+      </a>
+    </nav>
+  </div>
+
+  <div class="rail__bottom">
+    <button type="button" class="rail__dev" data-dev-toggle hidden aria-pressed="false">
+      DEV: lås upp allt
+    </button>
+    <div class="rail__bottom-row">
+      <ThemeToggle />
+      <span class="rail__profile">Du</span>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .rail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: var(--rail-width);
+    padding: 26px 18px;
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 8px;
+    margin-bottom: 34px;
+    color: var(--text);
+  }
+  .brand:hover {
+    text-decoration: none;
+  }
+  .brand__mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: var(--mint);
+    box-shadow: var(--glow-mint);
+    flex-shrink: 0;
+  }
+  .brand__text {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: var(--text-base);
+    letter-spacing: -0.01em;
+  }
+  .rail__section-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    padding: 0 10px;
+    margin: 0 0 10px;
+  }
+  .rail__group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 26px;
+  }
+  .rail__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 11px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--muted);
+    transition:
+      color var(--dur-micro) var(--ease-standard),
+      background var(--dur-micro) var(--ease-standard);
+  }
+  .rail__item:hover {
+    color: var(--text);
+    background: var(--surface);
+    text-decoration: none;
+  }
+  .rail__item.is-active {
+    color: var(--text);
+    background: var(--mint-soft);
+  }
+  .rail__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+    flex-shrink: 0;
+  }
+  .rail__item.is-active .rail__dot {
+    background: var(--mint);
+    opacity: 1;
+  }
+  .rail__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rail__dev {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--on-mint);
+    background: var(--mid);
+    border: none;
+    border-radius: 9px;
+    padding: 8px 10px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .rail__dev[aria-pressed='true']::after {
+    content: ' ✓';
+  }
+  .rail__bottom-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 0 4px;
+  }
+  .rail__profile {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--muted);
+  }
+</style>
+
+<script>
+  import { initDevUnlock, isDevUnlocked, setDevUnlock, META_EVENT } from '../scripts/state';
+
+  function paintDev() {
+    const on = isDevUnlocked();
+    document.querySelectorAll<HTMLElement>('[data-dev-toggle]').forEach((el) => {
+      el.hidden = !on;
+      el.setAttribute('aria-pressed', String(on));
+    });
+  }
+  function wireDev() {
+    document.querySelectorAll<HTMLButtonElement>('[data-dev-toggle]').forEach((btn) => {
+      if (btn.dataset.wired) return;
+      btn.dataset.wired = '1';
+      btn.addEventListener('click', () => setDevUnlock(!isDevUnlocked()));
+    });
+  }
+  document.addEventListener('astro:page-load', () => {
+    initDevUnlock();
+    wireDev();
+    paintDev();
+  });
+  window.addEventListener(META_EVENT, paintDev);
+</script>
