@@ -1,29 +1,51 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
 import AppShell from '../layouts/AppShell.astro';
-import { getLessonsInOrder, getModulesInOrder, lessonHref, readingTime } from '../lib/course';
 
-const lessons = await getLessonsInOrder();
-const modules = await getModulesInOrder();
-const total = lessons.length;
+// ---- Build Fokus lesson list from course.json ----
+const contentDir = path.resolve('content/fundamental-aktieanalys');
+const courseRaw = fs.readFileSync(path.join(contentDir, 'course.json'), 'utf8');
+const course = JSON.parse(courseRaw) as {
+  kapitel: Array<{
+    nummer: number;
+    titel: string;
+    lektioner: Array<{ lektion: string; titel: string; niva: string; tid_min: number; status: string; fil: string }>;
+  }>;
+};
 
-const dashLessons = lessons.map((l) => ({
-  id: l.id,
-  moduleKey: String(l.data.modul),
-  lektion: l.data.lektion,
-  titel: l.data.titel,
-  modulTitel: l.data.modulTitel,
-  href: lessonHref(l),
-  minutes: readingTime(l.body),
-}));
+interface DashLesson {
+  lektion: string;
+  titel: string;
+  niva: string;
+  tid_min: number;
+  kapitelTitel: string;
+  href: string;
+}
 
-const gateModules = modules.map((m) => ({ key: m.key, lessonIds: m.lessonIds }));
-const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
+const dashLessons: DashLesson[] = [];
+for (const kap of course.kapitel) {
+  for (const l of kap.lektioner) {
+    dashLessons.push({
+      lektion: l.lektion,
+      titel: l.titel,
+      niva: l.niva,
+      tid_min: l.tid_min,
+      kapitelTitel: kap.titel,
+      href: `/fokus/${l.lektion}`,
+    });
+  }
+}
+
+const fokusOrder = dashLessons.map((l) => l.lektion);
+const firstHref = dashLessons.length ? dashLessons[0].href : '/fokus';
+const total = dashLessons.length;
 ---
 
 <AppShell title="Hem: Fundamental aktieanalys" active="hem" maxWidth={1000}>
   <!-- JSON data blobs for client script -->
   <script type="application/json" data-dash-lessons set:html={JSON.stringify(dashLessons)} />
-  <script type="application/json" data-dash-modules set:html={JSON.stringify(gateModules)} />
+  <script type="application/json" data-fokus-order set:html={JSON.stringify(fokusOrder)} />
 
   <!-- ===== Header row ===== -->
   <header class="dash-head" data-total={total}>
@@ -42,7 +64,7 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
     <div class="continue-card__body">
       <div class="kicker kicker--mint">FORTSÄTT DÄR DU SLUTADE</div>
       <div class="continue-title" data-continue-title>Börja kursen</div>
-      <div class="continue-meta" data-continue-meta>Lektion 1.1 · Börja här</div>
+      <div class="continue-meta" data-continue-meta>Lektion 1.1 · Investeringsfilosofi</div>
     </div>
     <span class="arrow-btn" aria-hidden="true">→</span>
   </a>
@@ -72,7 +94,7 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
       <h2 class="tool-heading">Analysera ett bolag</h2>
       <span class="tool-tagline">När du är redo att värdera på riktigt</span>
     </div>
-    <a class="tool-card" href="/verktyg" aria-label="Öppna Ägarboken – Analysverktyg">
+    <a class="tool-card" href="/verktyg" aria-label="Öppna Ägarboken Analysverktyg">
       <div class="tool-card__body">
         <div class="kicker kicker--mint">ÄGARBOKEN · ANALYSVERKTYG</div>
         <div class="tool-card__title">Sju steg innan du köper en aktie</div>
@@ -93,16 +115,6 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
     </a>
   </div>
 
-  <!-- ===== Fokus entry ===== -->
-  <a class="fokus-card" href="/fokus" aria-label="Fokus: fundamental aktieanalys">
-    <div class="fokus-card__body">
-      <div class="kicker kicker--mint">NYTT</div>
-      <div class="fokus-card__title">Fokus: fundamental aktieanalys</div>
-      <p class="fokus-card__text">En lugn, stegvis lektionsupplevelse. Kapitel 1 är klart.</p>
-    </div>
-    <span class="fokus-card__arrow" aria-hidden="true">›</span>
-  </a>
-
   <!-- ===== "Härnäst" row ===== -->
   <div class="next-row">
     <div class="next-row__left">
@@ -111,7 +123,12 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
         <span data-next-title>Börja kursen</span>
       </a>
     </div>
-    <a class="btn-outline" href="/oversikt">Se hela kursen</a>
+    <a class="btn-outline" href="/fokus">Se hela kursen</a>
+  </div>
+
+  <!-- ===== Secondary markdown-course link ===== -->
+  <div class="markdown-link-row">
+    <a class="markdown-link" href="/oversikt">Visa hela textkursen (116 lektioner)</a>
   </div>
 </AppShell>
 
@@ -434,55 +451,28 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
     background: var(--mint-soft);
   }
 
-  /* ===== Fokus card ===== */
-  .fokus-card {
+  /* ===== Secondary markdown-course link ===== */
+  .markdown-link-row {
     display: flex;
-    align-items: center;
-    gap: 20px;
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-    border-left: 3px solid var(--mint);
-    border-radius: var(--radius-lg);
-    padding: 20px 22px;
-    margin-bottom: 28px;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.18s, box-shadow 0.18s;
-    animation: riseF 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.28s;
+    justify-content: center;
+    padding: 18px 0 4px;
   }
-  .fokus-card:hover {
-    box-shadow: var(--shadow-md);
-    border-color: var(--mint);
-  }
-  .fokus-card__body {
-    flex: 1;
-    min-width: 0;
-  }
-  .fokus-card__title {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: 20px;
-    line-height: 1.2;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .fokus-card__text {
-    margin: 0;
+
+  .markdown-link {
     font-family: var(--sans);
     font-weight: 500;
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--muted);
-    line-height: 1.45;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
   }
-  .fokus-card__arrow {
-    flex: none;
-    font-size: 22px;
-    color: var(--mint);
-    transition: transform 0.15s;
-  }
-  .fokus-card:hover .fokus-card__arrow {
-    transform: translateX(2px);
+
+  .markdown-link:hover {
+    color: var(--text);
+    border-color: var(--muted);
+    text-decoration: none;
   }
 
   /* ===== Mobile ===== */
@@ -523,8 +513,8 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
 </style>
 
 <script>
-  import { getResumeTarget, getStreak, getDoneIds, META_EVENT } from '../scripts/state';
-  import { PROGRESS_EVENT } from '../scripts/progress';
+  import { getFokusDone, firstIncomplete, FOKUS_EVENT } from '../scripts/fokus-progress';
+  import { getStreak, META_EVENT } from '../scripts/state';
 
   function el<T extends HTMLElement = HTMLElement>(sel: string): T | null {
     return document.querySelector<T>(sel);
@@ -532,22 +522,18 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
 
   function paint() {
     const lessonsEl = el('[data-dash-lessons]');
-    const modulesEl = el('[data-dash-modules]');
-    if (!lessonsEl || !modulesEl) return;
+    const orderEl = el('[data-fokus-order]');
+    if (!lessonsEl || !orderEl) return;
 
     const lessons = JSON.parse(lessonsEl.textContent || '[]') as Array<{
-      id: string;
-      moduleKey: string;
       lektion: string;
       titel: string;
-      modulTitel: string;
+      niva: string;
+      tid_min: number;
+      kapitelTitel: string;
       href: string;
-      minutes: number;
     }>;
-    const modules = JSON.parse(modulesEl.textContent || '[]') as Array<{
-      key: string;
-      lessonIds: string[];
-    }>;
+    const fokusOrder = JSON.parse(orderEl.textContent || '[]') as string[];
     const total = lessons.length;
 
     // Greeting + date
@@ -568,8 +554,8 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
     }
 
     // Stats
-    const doneIds = getDoneIds();
-    const doneCount = lessons.filter((l) => doneIds.includes(l.id)).length;
+    const done = getFokusDone();
+    const doneCount = done.filter((id) => fokusOrder.includes(id)).length;
     const pct = total ? Math.round((doneCount / total) * 100) : 0;
     const streak = getStreak();
 
@@ -582,28 +568,28 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
     const st = el('[data-streak]');
     if (st) st.textContent = `${streak} dagars svit`;
 
-    // Resume / continue + next
-    const ordered = lessons.map((l) => ({ id: l.id, moduleKey: l.moduleKey }));
-    const target = getResumeTarget(ordered, modules);
-    const t = target ? lessons.find((l) => l.id === target.lessonId) : null;
-    const fallback = lessons[0];
-    const lesson = t || fallback;
+    // Resume / continue + next: first incomplete, or first if all done
+    const incompleteId = firstIncomplete(fokusOrder);
+    const targetId = incompleteId ?? fokusOrder[0] ?? null;
+    const lesson = targetId ? lessons.find((l) => l.lektion === targetId) : null;
+    const fallback = lessons[0] ?? null;
+    const current = lesson || fallback;
 
-    if (lesson) {
+    if (current) {
       const card = el<HTMLAnchorElement>('[data-continue-card]');
-      if (card) card.href = lesson.href;
+      if (card) card.href = current.href;
       const ct = el('[data-continue-title]');
-      if (ct) ct.textContent = lesson.titel;
+      if (ct) ct.textContent = current.titel;
       const cm = el('[data-continue-meta]');
-      if (cm) cm.textContent = `Lektion ${lesson.lektion} · ${lesson.modulTitel}`;
+      if (cm) cm.textContent = `Lektion ${current.lektion} · ${current.kapitelTitel}`;
       const nt = el('[data-next-title]');
-      if (nt) nt.textContent = lesson.titel;
+      if (nt) nt.textContent = current.titel;
       const nl = el<HTMLAnchorElement>('[data-next-link]');
-      if (nl) nl.href = lesson.href;
+      if (nl) nl.href = current.href;
     }
   }
 
   document.addEventListener('astro:page-load', paint);
   window.addEventListener(META_EVENT, paint);
-  window.addEventListener(PROGRESS_EVENT, paint);
+  window.addEventListener(FOKUS_EVENT, paint);
 </script>

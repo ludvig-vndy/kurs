@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCourseTree, getLessonsInOrder, lessonHref } from '../lib/course';
+import { getCourseTree } from '../lib/course';
+
+const firstHref = '/fokus/1.1';
 
 const tree = await getCourseTree();
-const lessons = await getLessonsInOrder();
-const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
 const dels = tree.map((d) => ({
   del: d.del,
   lessons: d.modules.reduce((n, m) => n + m.lessons.length, 0),
@@ -16,18 +16,18 @@ const dels = tree.map((d) => ({
 const delLessons = Object.fromEntries(dels.map((d) => [d.del, d.lessons]));
 const chapterDefs = [
   {
-    title: 'Förstå & räkna på bolaget',
+    title: 'Forstå och räkna på bolaget',
     tagline: 'Affärsmodellen, årsredovisningen och hur de tre rapporterna hänger ihop.',
     dels: ['Grunden', 'Räkenskaperna'],
   },
   {
-    title: 'Bedöm kvalitet & värde',
-    tagline: 'Lönsamhet, vallgravar, ledning — och vad ett bolag faktiskt är värt.',
+    title: 'Bedöm kvalitet och värde',
+    tagline: 'Lönsamhet, vallgravar, ledning och vad ett bolag faktiskt är värt.',
     dels: ['Analys av kvalitet', 'Värdering'],
   },
   {
     title: 'Besluta som ägare',
-    tagline: 'Psykologi, risk, fallstudier och din egen process — hela vägen fram till köp.',
+    tagline: 'Psykologi, risk, fallstudier och din egen process hela vägen fram till köp.',
     dels: ['Psykologi', 'Avancerat', 'Capstone', 'Att hitta framtidens vinnare', 'Fallstudie', 'Sektoranalys', 'Praktik'],
   },
 ];
@@ -38,7 +38,7 @@ const chapters = chapterDefs.map((c) => ({
 }));
 ---
 
-<BaseLayout title="Ägarboken — Lär dig analysera aktier som en ägare" description="Fundamental aktieanalys, från grunden. Korta lektioner, riktiga övningar och ett analysverktyg du faktiskt använder före varje köp.">
+<BaseLayout title="Ägarboken: Lär dig analysera aktier som en ägare" description="Fundamental aktieanalys, från grunden. Korta lektioner, riktiga övningar och ett analysverktyg du faktiskt använder före varje köp.">
 
   <!-- ===================== TOPBAR ===================== -->
   <header class="topbar" id="topbar">
@@ -81,7 +81,7 @@ const chapters = chapterDefs.map((c) => ({
                 <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
-            <a href="/oversikt" class="btn-ghost">Se kursinnehållet</a>
+            <a href="/fokus" class="btn-ghost">Se kursinnehållet</a>
           </div>
         </div>
 
@@ -130,7 +130,7 @@ const chapters = chapterDefs.map((c) => ({
             <h3 class="step-card__title">Övningar &amp; kunskapskoll</h3>
             <p class="step-card__body">
               Varje modul avslutas med quiz och självskattning. Det är inte för att sätta
-              betyg — det är för att kunskapen faktiskt ska sätta sig.
+              betyg, utan för att kunskapen faktiskt ska sätta sig.
             </p>
           </div>
           <div class="step-card">
@@ -176,7 +176,7 @@ const chapters = chapterDefs.map((c) => ({
           <h2 class="tool-card__heading">Ägarboken, din checklista före varje köp</h2>
           <p class="tool-card__body">
             Det du lär dig i kursen samlas i ett verktyg: en strukturerad genomgång
-            av bolaget — affärsmodell, finanser, värdering och risker — innan du
+            av bolaget: affärsmodell, finanser, värdering och risker, innan du
             trycker på köp.
           </p>
           <a href="/verktyg" class="btn-primary">

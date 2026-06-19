@@ -2,6 +2,9 @@
    Models on deck.ts patterns: one step at a time, prev/next,
    clickable dots in topbar, arrow keys, reduced-motion support. */
 
+import { touchStreak } from './state';
+import { markFokusDone } from './fokus-progress';
+
 // Document-level arrow key listener set once per page lifecycle.
 let activeGo: ((dir: 'next' | 'prev') => void) | null = null;
 let keysBound = false;
@@ -60,6 +63,12 @@ function buildControls(
 function initFokus(article: HTMLElement) {
   if (article.dataset.built) return;
   article.dataset.built = '1';
+
+  // Read lesson id from the article's data-lektion attribute
+  const lessonId = article.dataset.lektion ?? '';
+
+  // Count this page visit toward the streak
+  touchStreak();
 
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -144,6 +153,8 @@ function initFokus(article: HTMLElement) {
     if (index === last) {
       nextBtn.textContent = 'Slutför lektionen';
       nextBtn.classList.add('fokus-nav--complete');
+      // Mark this lesson done when the learner reaches the last step
+      if (lessonId) markFokusDone(lessonId);
     } else {
       nextBtn.textContent = 'Fortsätt →';
       nextBtn.classList.remove('fokus-nav--complete');
