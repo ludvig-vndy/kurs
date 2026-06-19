@@ -67,21 +67,19 @@ Hela omskrivningsplanen (`docs/superpowers/plans/2026-06-18-kurs-bplus-till-aplu
 ### Redesign (live)
 Ny visuell riktning, deployad: tokens med Newsreader/Schibsted/Plex + mint/petrol, AppShell, `/hem` (dashboard), animerad landningssida, `/verktyg` (Ägarboken analysverktyg). Lämna detta ifred om inte ombedd.
 
-### Fokus-spelaren / JSON-stegformat (pågår — två kalibreringslektioner klara)
-Brief: `Brief_lektionsinnehall_v2.md`. Mål: transformera verifierade lektioner till ett stegbaserat JSON-format för en "Fokus"-lektionsspelare (steg: intro, reading, concept, dataviz, quiz; inline-datadriven grafik).
+### Fokus-spelaren / JSON-stegformat (innehåll klart — 51 lektioner, hela kursen)
+Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-fokus-full-course.md`. Mål: transformera verifierade lektioner till ett stegbaserat JSON-format för en "Fokus"-lektionsspelare (steg: intro, reading, concept, dataviz, quiz; inline-datadriven grafik).
 
-**Arkitektur (beslutad):** källan (de 115 .md) förblir sanningen; spelaren är en härledd, kurerad leverans av ~11 lektioner (kap 1-3). En JSON-fil per lektion under `content/fundamental-aktieanalys/`, plus `course.json` (kapitelträd). Spelaren laddar JSON och renderar steg utifrån `typ`-fältet.
+**Arkitektur (beslutad):** källan (de 115 .md) förblir sanningen; spelaren är en härledd leverans i `content/fundamental-aktieanalys/`, en JSON-fil per lektion + `course.json` (kapitelträd). Spelaren laddar JSON och renderar steg utifrån `typ`-fältet. Numreringen är spelarens egen (skiljer sig från huvudkursens); de ursprungliga 11 omnumrerades in i kursordningen.
 
 **Designmål / facit för renderaren:** `design_handoff_aktieanalys/` (Claude design-agentens high-fidelity-handoff). `Aktieanalys - Lektion (Fokus).dc.html` + `README.md` är spec för utseende och beteende (DC-format, läs som spec, inte kod). Hjältevisualer: `rutnat` (ägar-grid) och `linjediagram` (pris/värde). Quiz-tröskel 80%. Dubbla teman (mörkt "fokus" + ljust "ed") via `localStorage['agarboken-theme']`.
 
 **Gjort:**
-- `course.json` — kapitelträd kap 1-3, status `klar`/`kommande` per lektion.
-- `1.1-aga-en-aktie.json` + `1.2-pris-mot-varde.json` — **två kalibreringslektioner** (källor: `1.1-*` resp. `1.2-pris-vs-varde.md`). 5 steg vardera, 3 quizfrågor (2 single + 1 multi), `ratt` alltid som lista, dataviz illustrativt-märkt. Dashfria (verifierat). Tillsammans täcker de hela v1-visual-vokabulären: `rutnat`, `linjediagram` (1 serie i 1.1, 2 serier + markör i 1.2), `jamforelse`.
-- `RENDERER-BRIEF.md` — kontrakt för renderar-agenten, förankrat i design-handoffen (stegtyper, visual-objektet, quiz, hårda krav, fältnamns-mappning).
+- **Alla 51 lektioner i 16 kapitel producerade**, status `klar` i `course.json`. Sex visual-typer (`rutnat`, `linjediagram`, `jamforelse`, `stapeldiagram`, `flode`, `andel`). Flaggskeppscase 14.1 Lifco på riktiga daterade FY2025-tal (enda lektionen med verkliga bolagstal, ej illustrativ).
+- **Slutpass kört:** helhets-kontroll (variation, icke-redundans, symmetrisk pacing); jamforelse-frekvensen granskad (mestadels befogade skarpa kontraster, behållna), 6.1 gjord till text-concept (sträckt 5-element-form), 5.3 trimmad (dubbel stapel borttagen), diakriter återställda i 6.1/15.2/11.3.
+- `RENDERER-BRIEF.md` — kontrakt för renderar-agenten. `tools/check-fokus.mjs` — grind (ingår i `npm run check`); alla 51 gröna, dashfria.
 
-**Kvar:**
-1. **Renderar-agenten bygger renderaren** mot `RENDERER-BRIEF.md` + 1.1/1.2, i den live-satta designen (inline-SVG per `visual.typ`). Måste återrapportera vilka visual-typer som stöds i v1.
-2. **Transformera resten av kap 1-3** (9 lektioner) i samma format, mot bekräftat visual-stöd. Ren innehållstransform. Källmappning enligt briefen.
+**Kvar (renderar-agentens del):** wira `/fokus`-översikten mot `course.json`, verifiera att alla sex visual-typer ritar rätt på hela datan (särskilt `andel`, `flode`, `jamforelse`), deploya.
 
 **Kontraktsbeslut (låsta):** läsbara svenska fältnamn i datan (`typ`/`fraga`/`alternativ`/`ratt`/`forklaring`), inte prototypens terse (`q`/`exp`/`correct`); `ratt` alltid lista; illustrativt-märkning tillåten när verklig data saknas.
 

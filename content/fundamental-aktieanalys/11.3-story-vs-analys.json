@@ -4,87 +4,87 @@
   "titel": "Story vs analys",
   "niva": "Mellan",
   "tid_min": 9,
-  "mal": "Efter lektionen kan eleven behandla en lockande berättelse som en hypotes att pröva mot fundamenta, och skilja storleken på ett möjligt utfall fran sannolikheten för det.",
+  "mal": "Efter lektionen kan eleven behandla en lockande berättelse som en hypotes att pröva mot fundamenta, och skilja storleken på ett möjligt utfall från sannolikheten för det.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 11.3",
       "titel": "Story vs analys",
-      "ingress": "En fangslande berattelse far dig att kanna dig saker, och en lockande potential far dig att glomma oddsen. Ingen av dem ar ett bevis."
+      "ingress": "En fängslande berättelse får dig att känna dig säker, och en lockande potential får dig att glömma oddsen. Ingen av dem är ett bevis."
     },
     {
       "typ": "reading",
       "kicker": "KATEGORIFELET",
-      "lead": "Manniskor tanker i berattelser, inte i kalkylblad, och marknaden vet om det. Faran ar inte att berattelser ljuger. Manga ar sanna. Faran ar att berattelsen skoter overtygandet medan beviset saknas.",
-      "highlight": "Faran ar att berattelsen skoter overtygandet medan beviset saknas.",
+      "lead": "Människor tänker i berättelser, inte i kalkylblad, och marknaden vet om det. Faran är inte att berättelser ljuger. Många är sanna. Faran är att berättelsen sköter övertygandet medan beviset saknas.",
+      "highlight": "Faran är att berättelsen sköter övertygandet medan beviset saknas.",
       "brodtext": [
-        "Att kopa pa ett narrativ i stallet for pa vad analysen visar kallas story investing. Den visionara grundaren, den varldsforandrande tekniken, den enorma marknaden: ett levande narrativ biter sig fast pa ett satt som en nykter genomgang av fundamenta aldrig gor. Vi utvecklades for att bara kunskap i berattelser, sa de kanns overtygande och minnesvarda. Ett kalkylblad gor varken eller.",
-        "Det centrala felet ar ett slags kategorifel: hjarnan forvaxlar en berattelses overtygelsekraft med bevis for dess sannolikhet. Ju mer detaljerat och fangslande narrativet ar, desto sakrare verkar det, fast overtygelsekraft och sannolikhet inte har med varandra att gora. En stor berattelse kan vara osannolik. En trakig kan vara hogst sannolik."
+        "Att köpa på ett narrativ i stället för på vad analysen visar kallas story investing. Den visionära grundaren, den världsförändrande tekniken, den enorma marknaden: ett levande narrativ biter sig fast på ett sätt som en nykter genomgång av fundamenta aldrig gör. Vi utvecklades för att bära kunskap i berättelser, så de känns övertygande och minnesvärda. Ett kalkylblad gör varken eller.",
+        "Det centrala felet är ett slags kategorifel: hjärnan förväxlar en berättelses övertygelsekraft med bevis för dess sannolikhet. Ju mer detaljerat och fängslande narrativet är, desto säkrare verkar det, fast övertygelsekraft och sannolikhet inte har med varandra att göra. En stor berättelse kan vara osannolik. En tråkig kan vara högst sannolik."
       ],
-      "takeaway": "En fangslande historia ar ett skal att undersoka. Den motiverar aldrig betalningen."
+      "takeaway": "En fängslande historia är ett skäl att undersöka. Den motiverar aldrig betalningen."
     },
     {
       "typ": "concept",
-      "kicker": "TVA OLIKA SAKER",
-      "titel": "Berattelsen ar hypotesen, fundamenta ar testet",
+      "kicker": "TVÅ OLIKA SAKER",
+      "titel": "Berättelsen är hypotesen, fundamenta är testet",
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Berattelsen", "text": "Genererar iden och forklarar varfor ett bolag kan vara bra. Far starta en undersokning, men avslutar den aldrig." },
-          { "rubrik": "Analysen", "text": "Provar hypotesen mot fundamenta: affarsmodell, enhetsekonomi, konkurrensfordel, kassafloden, pris. Kors oavsett hur fangslande narrativet later." }
+          { "rubrik": "Berättelsen", "text": "Genererar idén och förklarar varför ett bolag kan vara bra. Får starta en undersökning, men avslutar den aldrig." },
+          { "rubrik": "Analysen", "text": "Prövar hypotesen mot fundamenta: affärsmodell, enhetsekonomi, konkurrensfördel, kassaflöden, pris. Körs oavsett hur fängslande narrativet låter." }
         ],
-        "figurtext": "En verklig mojlighet har en berattelse och starkande fundamenta. En falla har bara berattelsen."
+        "figurtext": "En verklig möjlighet har en berättelse och stärkande fundamenta. En fälla har bara berättelsen."
       },
-      "forklaring": "Var allra mest skeptisk nar berattelsen gor hela varderingsjobbet. Nar ett bolag har lite vinst eller kassaflode ar narrativet det enda som finns kvar att vardera pa, och en tillrackligt lockande berattelse kan da rattfardiga nastan vilket pris som helst. Sa bildas bubblor i berattelseaktier. Granska darfor saljande ledningar hardare, inte mjukare: de basta bolagen och de varsta bedragerierna berattar nastan likadant, och substansen ar det enda som skiljer."
+      "forklaring": "Var allra mest skeptisk när berättelsen gör hela värderingsjobbet. När ett bolag har lite vinst eller kassaflöde är narrativet det enda som finns kvar att värdera på, och en tillräckligt lockande berättelse kan då rättfärdiga nästan vilket pris som helst. Så bildas bubblor i berättelseaktier. Granska därför säljande ledningar hårdare, inte mjukare: de bästa bolagen och de värsta bedrägerierna berättar nästan likadant, och substansen är det enda som skiljer."
     },
     {
       "typ": "reading",
       "kicker": "POTENTIAL MOT SANNOLIKHET",
-      "lead": "Samma dragning aterkommer i en nara slakting. Nar du tittar pa en mojlighet fastnar blicken vid hur stor utbetalningen kan bli, medan den langt viktigare fragan, hur sannolik den ar, knappt registreras.",
+      "lead": "Samma dragning återkommer i en nära släkting. När du tittar på en möjlighet fastnar blicken vid hur stor utbetalningen kan bli, medan den långt viktigare frågan, hur sannolik den är, knappt registreras.",
       "highlight": "hur stor utbetalningen kan bli",
       "brodtext": [
-        "Varje satsning har tva dimensioner: hur stort utfallet kan bli, och hur sannolikt det utfallet ar. Bada vager lika tungt, for vardet ar storleken pa utbetalningen viktad efter dess sannolikhet. Men sinnet dras overvaldigande till storleken och forsummar oddset. En tiodubblingsdrom kanns lika overtygande oavsett om oddsen ar en procent eller femtio. Det ar samma mekanism som saljer lotter: det enorma priset ar latt att forestalla sig, den lilla chansen ignoreras.",
-        "Para darfor alltid magnitud med sannolikhet, och dom pa det sannolikhetsviktade resultatet. Hog potential ska inte undvikas, malet ar gynnsam asymmetri: stor potential, rimlig sannolikhet och begransad nedsida. Den kombinationen, en sund verksamhet kopt med felmarginal, ar sallsynt och vardefull. Nar du kanner spanningen infor en stor potential ar spanningen biasen i arbete, inte ett skal."
+        "Varje satsning har två dimensioner: hur stort utfallet kan bli, och hur sannolikt det utfallet är. Båda väger lika tungt, för värdet är storleken på utbetalningen viktad efter dess sannolikhet. Men sinnet dras överväldigande till storleken och försummar oddset. En tiodubblingsdröm känns lika övertygande oavsett om oddsen är en procent eller femtio. Det är samma mekanism som säljer lotter: det enorma priset är lätt att föreställa sig, den lilla chansen ignoreras.",
+        "Para därför alltid magnitud med sannolikhet, och döm på det sannolikhetsviktade resultatet. Hög potential ska inte undvikas, målet är gynnsam asymmetri: stor potential, rimlig sannolikhet och begränsad nedsida. Den kombinationen, en sund verksamhet köpt med felmarginal, är sällsynt och värdefull. När du känner spänningen inför en stor potential är spänningen biasen i arbete, inte ett skäl."
       ],
-      "takeaway": "Behandla inte det som ar mojligt som om det vore sannolikt. En stor uppsida ar ett skal att uppskatta oddsen noggrant, inget mer."
+      "takeaway": "Behandla inte det som är möjligt som om det vore sannolikt. En stor uppsida är ett skäl att uppskatta oddsen noggrant, inget mer."
     },
     {
       "typ": "quiz",
       "fragor": [
         {
           "typ": "single",
-          "fraga": "Vad ar det centrala kategorifelet som gor berattelser sa farliga vid investering?",
+          "fraga": "Vad är det centrala kategorifelet som gör berättelser så farliga vid investering?",
           "alternativ": [
-            "Att berattelser oftast ar osanna",
-            "Att hjarnan forvaxlar en berattelses overtygelsekraft med bevis for dess sannolikhet",
-            "Att data alltid ar viktigare an berattelser"
+            "Att berättelser oftast är osanna",
+            "Att hjärnan förväxlar en berättelses övertygelsekraft med bevis för dess sannolikhet",
+            "Att data alltid är viktigare än berättelser"
           ],
           "ratt": [1],
-          "forklaring": "Faran ar inte att berattelser ljuger, manga ar sanna. Faran ar att ett fangslande narrativ kanns sannolikt, fast overtygelsekraft och sannolikhet inte har med varandra att gora."
+          "forklaring": "Faran är inte att berättelser ljuger, många är sanna. Faran är att ett fängslande narrativ känns sannolikt, fast övertygelsekraft och sannolikhet inte har med varandra att göra."
         },
         {
           "typ": "single",
-          "fraga": "Nar ar en erfaren investerare allra mest skeptisk till en berattelse?",
+          "fraga": "När är en erfaren investerare allra mest skeptisk till en berättelse?",
           "alternativ": [
-            "Nar bolaget redan ar lonsamt",
-            "Nar narrativet gor hela varderingsjobbet, eftersom en tillrackligt lockande berattelse kan rattfardiga nastan vilket pris som helst",
-            "Nar berattelsen handlar om en trakig verksamhet"
+            "När bolaget redan är lönsamt",
+            "När narrativet gör hela värderingsjobbet, eftersom en tillräckligt lockande berättelse kan rättfärdiga nästan vilket pris som helst",
+            "När berättelsen handlar om en tråkig verksamhet"
           ],
           "ratt": [1],
-          "forklaring": "Nar ett bolag har lite vinst eller kassaflode ar narrativet det enda som finns kvar att vardera pa. En obegransad, obevisbar framtid kan motivera vilket pris som helst, vilket ar hur bubblor i berattelseaktier bildas."
+          "forklaring": "När ett bolag har lite vinst eller kassaflöde är narrativet det enda som finns kvar att värdera på. En obegränsad, obevisbar framtid kan motivera vilket pris som helst, vilket är hur bubblor i berättelseaktier bildas."
         },
         {
           "typ": "multi",
-          "fraga": "Vilka av dessa ar tecken pa sund disciplin infor en berattelse eller en stor potential?",
-          "underrubrik": "Valj alla som stammer",
+          "fraga": "Vilka av dessa är tecken på sund disciplin inför en berättelse eller en stor potential?",
+          "underrubrik": "Välj alla som stämmer",
           "alternativ": [
-            "Du behandlar berattelsen som en hypotes att prova mot fundamenta",
-            "Ditt framsta skal att aga ar att narrativet ar fangslande",
+            "Du behandlar berättelsen som en hypotes att pröva mot fundamenta",
+            "Ditt främsta skäl att äga är att narrativet är fängslande",
             "Du parar varje potential med en uppskattning av dess sannolikhet",
-            "Priset gar bara ihop om det storslagna basta fallet blir verklighet"
+            "Priset går bara ihop om det storslagna bästa fallet blir verklighet"
           ],
           "ratt": [0, 2],
-          "forklaring": "Disciplin ar att prova narrativet mot rakenskaperna och att vikta utfallet efter oddset. Att luta sig mot berattelsens dragningskraft, eller att prissatta drommen som om den vore en visshet, ar tvartom varningstecken."
+          "forklaring": "Disciplin är att pröva narrativet mot räkenskaperna och att vikta utfallet efter oddset. Att luta sig mot berättelsens dragningskraft, eller att prissätta drömmen som om den vore en visshet, är tvärtom varningstecken."
         }
       ]
     }

@@ -44,25 +44,10 @@
       "kicker": "BANAN",
       "titel": "Reinvesteringsförmåga: ROIC gånger bana",
       "brodtext": [
-        "En hög ROIC talar om att verksamheten tjänar god avkastning. Den talar inte om hur mycket värde som faktiskt växer med ränta på ränta. Det avgörs av hur stor del av vinsten bolaget kan plöja tillbaka till den höga avkastningen. Grovt blir den inre tillväxten ungefär ROIC gånger återinvesteringsgraden.",
+        "En hög ROIC talar om att verksamheten tjänar god avkastning. Den talar inte om hur mycket värde som faktiskt växer med ränta på ränta. Det avgörs av hur stor del av vinsten bolaget kan plöja tillbaka till den höga avkastningen. Grovt blir den inre tillväxten ungefär ROIC gånger återinvesteringsgraden: med ROIC 20 procent ger en återinvesteringsgrad på 80 procent runt 16 procents inre tillväxt, medan 20 procent ger runt 4 (illustrativt). Samma avkastning, helt olika ränta på ränta, där kassakon återför resten som kontanter.",
         "Det ger två sorters högkvalitativ verksamhet. Ränta-på-ränta-maskinen har hög ROIC och en lång bana, plöjer tillbaka det mesta till hög avkastning i många år, och växer värde internt. Kassakon har lika hög ROIC men är mättad, kan inte placera mer lönsamt, och återför överskottet. Båda är utmärkta, men ränta på ränta sker på olika ställen: i maskinen internt, i kassakon via kontanterna den lämnar tillbaka.",
         "Banan spelar lika stor roll som avkastningen, eftersom ränta på ränta beror på båda faktorerna multiplicerade. En sista varning knyter tillbaka till spreaden: ett bolag desperat att växa kan återinvestera tungt även när avkastningen på nya pengar fallit under kapitalkostnaden. Bevaka därför den inkrementella avkastningen på nyinvesterat kapital, inte bara genomsnittet. Den avslöjar om bolaget ännu återinvesterar till hög avkastning eller in i medelmåttighet."
       ]
-    },
-    {
-      "typ": "dataviz",
-      "titel": "Samma ROIC, helt olika ränta på ränta",
-      "underrubrik": "Två bolag med samma ROIC 20 procent. Banan, inte avkastningen, skiljer dem åt.",
-      "visual": {
-        "typ": "stapeldiagram",
-        "data": [
-          { "kategori": "Räntemaskin: inre tillväxt", "varde": 16, "accent": true },
-          { "kategori": "Kassako: inre tillväxt", "varde": 4 }
-        ],
-        "etiketter": "Inre tillväxt per år, procent (illustrativt)",
-        "figurtext": "Illustrativ. Inre tillväxt ungefär ROIC gånger återinvesteringsgrad: 20 gånger 80 procent ger runt 16, 20 gånger 20 procent ger runt 4. Kassakon återför resten som kontanter."
-      },
-      "slutsats": "För långsiktig ränta på ränta räcker det inte att fråga hur hög avkastningen är. Du måste fråga hur mycket som kan återinvesteras till den, och hur länge."
     },
     {
       "typ": "reading",
