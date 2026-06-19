@@ -4,6 +4,7 @@ import { checkRefs } from './check-refs.mjs';
 import { checkStructure } from './check-structure.mjs';
 import { loadLessons } from './lib/lessons.mjs';
 import { findDuplicateSentences } from './check-dedup.mjs';
+import { checkFokus } from './check-fokus.mjs';
 
 const base = process.argv[2] || 'src/content/kurs';
 
@@ -21,7 +22,9 @@ const dups = findDuplicateSentences(await loadLessons(base)).map(
   (d) => `×${d.count}: ${d.sentence.slice(0, 60)}…`
 );
 
-const groups = { integritet: integrity, referenser: refs, struktur: structure, dedup: dups };
+const fokus = checkFokus();
+
+const groups = { integritet: integrity, referenser: refs, struktur: structure, dedup: dups, fokus };
 let failed = 0;
 for (const [name, errs] of Object.entries(groups)) {
   console.log(`\n${errs.length ? '✗' : '✓'} ${name} (${errs.length})`);

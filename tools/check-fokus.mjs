@@ -87,17 +87,22 @@ function checkLesson(name, raw, errs) {
   if (quizCount !== 1) errs.push(`${name}: ska ha exakt ett quiz-steg (har ${quizCount})`);
 }
 
-function main() {
-  const files = readdirSync(DIR).filter((f) => f.endsWith('.json') && f !== 'course.json').sort();
+export function checkFokus(dir = DIR) {
+  const files = readdirSync(dir).filter((f) => f.endsWith('.json') && f !== 'course.json').sort();
   const errs = [];
-  for (const f of files) checkLesson(f, readFileSync(join(DIR, f), 'utf8').replace(/\r\n/g, '\n'), errs);
+  for (const f of files) checkLesson(f, readFileSync(join(dir, f), 'utf8').replace(/\r\n/g, '\n'), errs);
+  return errs;
+}
 
+function main() {
+  const count = readdirSync(DIR).filter((f) => f.endsWith('.json') && f !== 'course.json').length;
+  const errs = checkFokus();
   if (errs.length) {
     console.error(`FEL (${errs.length}):`);
     for (const e of errs) console.error('  - ' + e);
     process.exit(1);
   }
-  console.log(`OK: ${files.length} lektioner validerade (${files.join(', ')})`);
+  console.log(`OK: ${count} lektioner validerade`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
