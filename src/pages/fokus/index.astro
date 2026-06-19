@@ -31,6 +31,9 @@ interface Kurs {
 }
 
 const kurs: Kurs = JSON.parse(courseRaw);
+const klarCount = kurs.kapitel
+  .flatMap((k) => k.lektioner)
+  .filter((l) => l.status === 'klar').length;
 ---
 
 <AppShell title="Fundamental aktieanalys" active="kurs" maxWidth={880}>
@@ -45,6 +48,15 @@ const kurs: Kurs = JSON.parse(courseRaw);
   <div class="course-header">
     <h1 class="course-title">{kurs.titel}</h1>
     <p class="course-ingress">{kurs.beskrivning}</p>
+
+    <div class="course-progress" aria-label="Din progress">
+      <div class="course-progress__track" aria-hidden="true">
+        <div class="course-progress__fill" data-fokus-fill style="width:0%"></div>
+      </div>
+      <div class="course-progress__label">
+        <span data-fokus-count>0</span> av <span data-fokus-total>{klarCount}</span> lektioner klara
+      </div>
+    </div>
   </div>
 
   <!-- Chapter list -->
@@ -59,7 +71,10 @@ const kurs: Kurs = JSON.parse(courseRaw);
         <div class="lesson-list">
           {kap.lektioner.map((l) =>
             l.status === 'klar' ? (
-              <a class="lesson-row lesson-row--open" href={`/fokus/${l.lektion}`}>
+              <a class="lesson-row lesson-row--open" data-lesson-id={l.lektion} href={`/fokus/${l.lektion}`}>
+                <span class="lesson-row__check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                </span>
                 <span class="lesson-row__num">{l.lektion}</span>
                 <span class="lesson-row__title">{l.titel}</span>
                 <span class="lesson-row__niva">{l.niva}</span>
@@ -68,6 +83,7 @@ const kurs: Kurs = JSON.parse(courseRaw);
               </a>
             ) : (
               <div class="lesson-row lesson-row--kommande" aria-label={`${l.titel} (kommande)`}>
+                <span class="lesson-row__check lesson-row__check--placeholder" aria-hidden="true"></span>
                 <span class="lesson-row__num">{l.lektion}</span>
                 <span class="lesson-row__title">{l.titel}</span>
                 <span class="lesson-row__niva">{l.niva}</span>
@@ -135,6 +151,30 @@ const kurs: Kurs = JSON.parse(courseRaw);
     font-size: 17px;
     line-height: 1.6;
     color: var(--prose);
+  }
+  .course-progress {
+    margin-top: 24px;
+    max-width: 360px;
+  }
+  .course-progress__track {
+    height: 5px;
+    background: var(--surface-2);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+  .course-progress__fill {
+    height: 100%;
+    background: var(--mint);
+    border-radius: var(--radius-full);
+    transition: width var(--dur-comp) var(--ease-out);
+  }
+  .course-progress__label {
+    margin-top: 9px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
   }
 
   /* ---- Chapter list ---- */
@@ -210,6 +250,35 @@ const kurs: Kurs = JSON.parse(courseRaw);
     cursor: default;
   }
 
+  /* ---- Done check marker ---- */
+  .lesson-row__check {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--border-2);
+    border-radius: var(--radius-full);
+    display: grid;
+    place-items: center;
+    color: var(--on-mint);
+    transition: background var(--dur-comp) var(--ease-out), border-color var(--dur-comp) var(--ease-out);
+  }
+  .lesson-row__check svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+    transition: opacity var(--dur-comp) var(--ease-out);
+  }
+  .lesson-row[data-done='1'] .lesson-row__check {
+    background: var(--mint);
+    border-color: var(--mint);
+  }
+  .lesson-row[data-done='1'] .lesson-row__check svg {
+    opacity: 1;
+  }
+  .lesson-row__check--placeholder {
+    border-color: transparent;
+  }
+
   /* ---- Row cells ---- */
   .lesson-row__num {
     font-family: var(--sans);
@@ -277,3 +346,31 @@ const kurs: Kurs = JSON.parse(courseRaw);
     }
   }
 </style>
+
+<script>
+  import { getFokusDone, FOKUS_EVENT } from '../../scripts/fokus-progress';
+
+  function paint() {
+    const done = new Set(getFokusDone());
+    const rows = document.querySelectorAll<HTMLElement>('[data-lesson-id]');
+    let total = 0;
+    let n = 0;
+    rows.forEach((row) => {
+      total++;
+      const id = row.dataset.lessonId || '';
+      const isDone = done.has(id);
+      row.dataset.done = isDone ? '1' : '0';
+      if (isDone) n++;
+    });
+    const pct = total ? Math.round((n / total) * 100) : 0;
+    const fill = document.querySelector<HTMLElement>('[data-fokus-fill]');
+    if (fill) fill.style.width = pct + '%';
+    const countEl = document.querySelector<HTMLElement>('[data-fokus-count]');
+    if (countEl) countEl.textContent = String(n);
+    const totalEl = document.querySelector<HTMLElement>('[data-fokus-total]');
+    if (totalEl) totalEl.textContent = String(total);
+  }
+
+  document.addEventListener('astro:page-load', paint);
+  window.addEventListener(FOKUS_EVENT, paint);
+</script>
