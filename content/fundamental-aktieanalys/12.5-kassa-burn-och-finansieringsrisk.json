@@ -1,0 +1,111 @@
+{
+  "kapitel": 12,
+  "lektion": "12.5",
+  "titel": "Kassa, burn och finansieringsrisk",
+  "niva": "Avancerad",
+  "tid_min": 11,
+  "mal": "Efter lektionen kan eleven bedöma om ett olönsamt bolag når självfinansiering innan kassan tar slut, och hur stor finansieringsrisk och utspädning som hotar på vägen.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 12.5",
+      "titel": "Kassa, burn och finansieringsrisk",
+      "ingress": "För ett olönsamt bolag är överlevnad en kassafråga först och en affärsfråga sedan."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Ett olönsamt bolag konsumerar per definition kontanter, och kontanter är vad som håller det vid liv. Den existentiella frågan är om det når lönsamhet, eller åtminstone slutar bränna kassa, innan pengarna tar slut.",
+      "highlight": "kontanter är vad som håller det vid liv",
+      "brodtext": [
+        "Tre länkade idéer styr överlevnaden. Burn rate är hur mycket kassa bolaget konsumerar per period: gross burn är de totala utgifterna, net burn är utgifterna minus intäkterna. Det är net burn som tär på kassan. Runway är hur länge kassan räcker vid den takten: likvida medel delat med net burn per period.",
+        "Finansieringsrisk är faran och kostnaden av att behöva resa mer kapital innan bolaget är självförsörjande. Att resa pengar betyder att emittera nya aktier, vilket späder ut befintliga ägare. Även ett bolag med fantastisk produkt och sund enhetsekonomi kan utplåna sina aktieägare om kassan tar slut och det tvingas resa på hemska villkor, eller inte kan resa alls."
+      ],
+      "takeaway": "Räkna ut net burn och runway före allt annat. Fråga sedan om bolaget når lönsamhet innan kontanterna tar slut, och vad en framtvingad emission skulle kosta dig."
+    },
+    {
+      "typ": "concept",
+      "kicker": "STYRKA MOT SVAGHET",
+      "titel": "Priset du reser till avgör utspädningen",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Resa från styrka", "text": "Ett sunt pris från en valposition. Få aktier ges ut för pengarna, så utspädningen blir mild. Bolaget förhandlar från en stark balansräkning." },
+          { "rubrik": "Resa från svaghet", "text": "Ett kollapsat pris av nödvändighet, efter ett bakslag. Många fler aktier ges ut för samma belopp, så utspädningen blir svår, precis när ägarna redan är nere." }
+        ],
+        "figurtext": "Samma kapitalbehov, helt olika kostnad beroende på priset."
+      },
+      "forklaring": "Den nya ägarandel en emission ger är emissionsbeloppet delat på pre-money-värde plus emissionsbelopp. Ett lågt pre-money tvingar fram många fler aktier för samma pengar. Faran är en ond cirkel: ett bolag som gör besvikelse ser priset falla och tvingas sedan resa till det låga priset, och späder kraftigt precis när aktieägarna redan är nere."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Kassan faller mot noll",
+      "underrubrik": "Runway är hur länge kassan räcker, men banan avgör mer än ögonblicksbilden. Faller net burn böjer kassan mot en mjuk landning vid breakeven; stiger den tar pengarna slut snabbt.",
+      "visual": {
+        "typ": "linjediagram",
+        "serier": [
+          { "namn": "Fallande burn, når breakeven", "stil": "heldragen", "accent": true, "punkter": [100, 89, 80, 73, 68, 65, 63, 62, 62, 62, 62] },
+          { "namn": "Stigande burn, slut på kassa", "stil": "streckad", "punkter": [100, 88, 73, 56, 37, 16, 0, 0, 0, 0, 0] }
+        ],
+        "markor": { "serieIndex": 1, "punktIndex": 6, "etikett": "kassan slut" },
+        "figurtext": "Illustrativ. Kurvorna visar mönstret, inte verkliga belopp."
+      },
+      "slutsats": "Runway är inte statisk, eftersom burn ändras. Ett bolag med fallande net burn och en trovärdig breakeven inom runwayen är självbärande. Ett vars breakeven ligger längre bort än kontanterna räcker måste resa mer kapital, vilket introducerar finansieringsrisk."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Räkneexemplet: samma emission, dubbla priset",
+      "underrubrik": "Ett påhittat prenumerationsbolag med 9 Mkr i kassa och 3 Mkr i net burn har en runway på tre år. Accelererar burnen till 6 Mkr halveras runwayen och en emission blir nödvändig.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Resa 6 Mkr från styrka (pre-money 30)", "varde": 17 },
+          { "kategori": "Resa 6 Mkr från svaghet (pre-money 10)", "varde": 38, "accent": true }
+        ],
+        "etiketter": "Utspädning i procent av bolaget",
+        "figurtext": "Illustrativa tal ur exemplet. 6 / (30 + 6) ungefär 17 procent, 6 / (10 + 6) ungefär 38 procent."
+      },
+      "slutsats": "Samma emission på 6 Mkr kostar befintliga ägare omkring 17 eller 38 procent av bolaget, beroende helt på om den reses från styrka eller svaghet. Och kan bolaget inte resa alls, väntar konkurs trots sund ekonomi. Utspädning är den tysta avkastningsmördaren: en tiodubbling i bolagsvärde kan bli bara en femdubbling per aktie för dig om antalet aktier sväller, även när du hade rätt."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är skillnaden mellan gross burn och net burn, och vilket tär på kassan?",
+          "alternativ": [
+            "Gross burn är utgifter minus intäkter, och det tär på kassan",
+            "Net burn är utgifterna minus intäkterna, och det är net burn som tär på kassan",
+            "De är samma sak för olönsamma bolag"
+          ],
+          "ratt": [1],
+          "forklaring": "Gross burn är totala utgifter, net burn är utgifter minus intäkter. Runway räknas alltid på net, eftersom stigande intäkter krymper net burn även om gross är oförändrad."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är det mycket dyrare att resa kapital från svaghet än från styrka?",
+          "alternativ": [
+            "För att emissioner från svaghet beskattas hårdare",
+            "För att ett kollapsat pre-money-värde tvingar bolaget att ge ut många fler aktier för samma pengar, vilket späder kraftigt precis när ägarna redan är nere",
+            "För att man inte får resa kapital efter ett kursfall"
+          ],
+          "ratt": [1],
+          "forklaring": "Utspädningen är emissionsbeloppet delat på pre-money plus emissionsbelopp. Ett lågt pre-money ger en ond cirkel av kraftig utspädning, liden precis när aktieägarna redan är nere."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa hör till en sund bedömning av överlevnad och finansieringsrisk?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Du räknar ut net burn och runway före allt annat och bedömer om burn stiger eller faller",
+            "Du nöjer dig med kassasaldot utan att räkna ut burn och runway",
+            "Du prissätter värdet per aktie efter den utspädning du rimligen väntar dig",
+            "Du bortser från utspädning så länge tesen om bolaget är korrekt"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Disciplinen är att räkna net burn och runway, bedöma banan, och prissätta per aktie efter rimlig utspädning. Att stirra på kassasaldot eller ignorera utspädning är tvärtom vanliga misstag, en korrekt identifierad tiodubblare kan ge halva avkastningen om aktiestocken sväller."
+        }
+      ]
+    }
+  ]
+}

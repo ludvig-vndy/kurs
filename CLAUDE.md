@@ -83,7 +83,9 @@ Brief: `Brief_lektionsinnehall_v2.md`. Mål: transformera verifierade lektioner 
 1. **Renderar-agenten bygger renderaren** mot `RENDERER-BRIEF.md` + 1.1/1.2, i den live-satta designen (inline-SVG per `visual.typ`). Måste återrapportera vilka visual-typer som stöds i v1.
 2. **Transformera resten av kap 1-3** (9 lektioner) i samma format, mot bekräftat visual-stöd. Ren innehållstransform. Källmappning enligt briefen.
 
-**Kontraktsbeslut (låsta):** läsbara svenska fältnamn i datan (`typ`/`fraga`/`alternativ`/`ratt`/`forklaring`), inte prototypens terse (`q`/`exp`/`correct`); 5-stegsrytm; `ratt` alltid lista; illustrativt-märkning tillåten när verklig data saknas.
+**Kontraktsbeslut (låsta):** läsbara svenska fältnamn i datan (`typ`/`fraga`/`alternativ`/`ratt`/`forklaring`), inte prototypens terse (`q`/`exp`/`correct`); `ratt` alltid lista; illustrativt-märkning tillåten när verklig data saknas.
+
+**Balans grafik mot text (låst princip):** Innehållet avgör, inte en kvot. En graf förtjänar sin plats bara om den visar en form prosan inte kan (struktur, samband, proportion, förlopp, jämförelse, en överraskande storlek); annars text. `visual` är valfri på concept/dataviz, 3-7 steg. Grafik-tunga lektioner lär ut mekanik (läsa siffror), text-tunga lär ut omdöme och temperament (hur du beter dig); att varva dem är avsikten. Helheten bedöms på tre kontroller: variation (ingen visual-typ dominerar), icke-redundans (två lektioner visualiserar inte samma idé likadant), och **symmetrisk pacing**: vakta BÅDE långa text-rader (t.ex. psykologi) OCH långa grafik-rader (t.ex. räkenskaper kap 4, värdering kap 9), de senare ger graf-trötthet. Andningspausen i en grafik-svit är ett reading- eller concept-steg som kliver tillbaka till omdömet (vad säger siffran för dig), aldrig en pliktgraf inkilad bara för att bryta av. Projicerad fördelning ~28 grafik / ~21 text är ett utfall, inte ett mål: går en lektion tvärtemot projektionen vid transformen, följ lektionen.
 
 ---
 

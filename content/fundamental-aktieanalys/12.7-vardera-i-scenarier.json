@@ -1,0 +1,107 @@
+{
+  "kapitel": 12,
+  "lektion": "12.7",
+  "titel": "Att värdera i scenarier",
+  "niva": "Avancerad",
+  "tid_min": 11,
+  "mal": "Efter lektionen kan eleven sätta ett sannolikhetsvägt värde på ett bolag med en bred och osäker framtid genom att väga ihop scenarier efter deras odds.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 12.7",
+      "titel": "Att värdera i scenarier",
+      "ingress": "För ett bolag med osäker framtid är ett enda exakt värde falsk precision. Ett vägt intervall är det ärliga verktyget."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "För ett bolag utan vinst är framtiden inte en enda väg. Den är en bred solfjäder av utfall, från spektakulär framgång till konkurs, och du kan inte ärligt klämma in den i ett enda tal.",
+      "highlight": "Den är en bred solfjäder av utfall, från spektakulär framgång till konkurs",
+      "brodtext": [
+        "En enskild värdering, en DCF eller ett riktvärde, låtsas en precision som inte finns. Värre: den ankrar nästan alltid i det optimistiska fallet, drömmen om vad bolaget kunde bli, och blundar för risken att det misslyckas.",
+        "Gör i stället så här. Bygg några scenarier, värdera verksamheten i vart och ett, sätt en sannolikhet på vart och ett, och väg ihop dem till ett tal som uttryckligen rymmer konkursfallet. Då väger du storleken på varje utfall mot dess odds i stället för att förälska dig i bästa fallet."
+      ],
+      "takeaway": "Du försöker inte sätta ett exakt värde. Du väger hela solfjädern av framtider efter deras odds, och den vackraste blir aldrig den du förälskar dig i."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE STEG",
+      "titel": "Bygg, vikta, jämför",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Bygg från fundamenta", "text": "Spänn upp några scenarier, oftast tre: pessimistiskt (ofta konkurs, eget kapital nära noll), basfall (måttlig framgång) och optimistiskt (bolaget vinner stort). Värdera varje moget utfall och räkna tillbaka till idag." },
+          { "rubrik": "Vikta nyktert", "text": "Sätt en sannolikhet på varje fall, summerande till 100 procent. Detta är det svåraste steget. Frestelsen är att övervikta det levande optimistfallet; nykterheten är att våga ge konkurs en stor vikt." }
+        ],
+        "figurtext": "Det svåraste och viktigaste steget är oddsen, inte räkningen."
+      },
+      "forklaring": "Varje scenariovärde ska vila på verksamheten själv, mogen vinst gånger en rimlig multipel tillbakaräknat till idag, inte på en förhoppning. Sätt sedan oddsen nyktert: för ett spekulativt tidigt bolag är konkurs eller besvikelse oftast det troliga och drömutfallet det osannolika. Vågar du ge konkursfallet en stor vikt blir värderingen en uppskattning i stället för en efterhandsrationalisering av drömmen."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Konkursfallet tynger ned snittet",
+      "underrubrik": "Det sannolikhetsvägda värdet är varje scenarios värde gånger dess sannolikhet, summerat. Här ser du varje scenarios bidrag, inte dess fulla värde.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Optimistiskt (240 vid 20%)", "varde": 48 },
+          { "kategori": "Bas (80 vid 35%)", "varde": 28 },
+          { "kategori": "Konkurs (0 vid 45%)", "varde": 0 },
+          { "kategori": "Vägt värde", "varde": 76, "accent": true }
+        ],
+        "etiketter": "Bidrag till det vägda värdet, Mkr (illustrativt)",
+        "figurtext": "Illustrativa tal från ett tänkt bolag. Det optimistiska fallets fulla värde är 240 Mkr, men dess bidrag är bara 48 eftersom det bara är 20 procent troligt. Det vägda värdet 76 Mkr ligger långt under drömutfallets 240, just för att konkurs är så troligt."
+      },
+      "slutsats": "Jämför det vägda värdet mot priset, aldrig det optimistiska fallet mot priset. Ligger priset väl under det vägda värdet finns gynnsam asymmetri, och eftersom hela uppskattningen är grov kräver du en rejäl felmarginal ovanpå."
+    },
+    {
+      "typ": "concept",
+      "kicker": "EN OBEKVÄM SANNING",
+      "titel": "Ofta prissatt för framgång",
+      "brodtext": [
+        "För en potentiell framtida vinnare avslöjar det vägda värdet nästan alltid samma sak: eftersom marknaden redan prissätter en meningsfull chans till framgång ligger det vägda värdet ofta nära, eller till och med under, dagens pris. Aktien är prissatt för framgång, och det finns ingen felmarginal på det vägda värdet. En renodlad value-investerare skulle korrekt avstå.",
+        "Så varför ändå köpa? Kanten är en annan än i value investing. Den ligger i att vara tidig nog att fånga det optimistiska fallet, i fallets egen asymmetri (det kan vara flera gånger priset), och framför allt i att dimensionera varje satsning liten som del av en korg. Då blir de troliga misslyckandena överlevbara medan de få vinnarna bär resultatet. Din kant är asymmetri plus överlevnad över en korg, inte en rabatt på något enskilt."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför är ett enda exakt värde, en DCF eller ett riktvärde, ärligt sett fel för ett bolag utan vinst?",
+          "alternativ": [
+            "Det går inte att räkna ut matematiskt",
+            "Det låtsas en precision som inte finns och ankrar nästan alltid i det optimistiska fallet",
+            "Det underskattar alltid bolagets värde"
+          ],
+          "ratt": [1],
+          "forklaring": "Framtiden är en bred solfjäder av utfall. Ett enda tal blundar för den verkliga risken att bolaget misslyckas och ankrar oftast i drömmen om vad bolaget kunde bli."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur beräknas det sannolikhetsvägda värdet?",
+          "alternativ": [
+            "Genom att ta värdet i det optimistiska scenariot",
+            "Genom att ta medelvärdet av scenariovärdena utan hänsyn till odds",
+            "Varje scenarios värde gånger dess sannolikhet, summerat, med sannolikheter som summerar till 100 procent"
+          ],
+          "ratt": [2],
+          "forklaring": "Poängen är att ett konkursfall med hög sannolikhet drar det vägda värdet långt under det optimistiska fallet, så du inte prissätter drömmen som ett faktum."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa stämmer om att värdera en potentiell framtida vinnare i scenarier?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Det svåraste och viktigaste steget är att sätta nyktra odds, särskilt att våga ge konkursfallet en stor vikt",
+            "Bolaget är ofta prissatt för framgång, så det vägda värdet är sällan ett fynd mot priset",
+            "Du jämför det optimistiska fallet mot priset för att se om aktien är billig",
+            "Kanten ligger i asymmetri och i att dimensionera satsningen liten som del av en korg"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "Oddsen avgör allt, dessa bolag är oftast prissatta för framgång utan felmarginal, och kanten är asymmetri plus överlevnad över en korg. Att jämföra priset mot toppscenariot är tvärtom fällan att prissätta en möjlighet som en sannolikhet."
+        }
+      ]
+    }
+  ]
+}

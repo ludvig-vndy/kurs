@@ -1,0 +1,109 @@
+{
+  "kapitel": 12,
+  "lektion": "12.3",
+  "titel": "Enhetsekonomi och tillväxtkvalitet",
+  "niva": "Avancerad",
+  "tid_min": 11,
+  "mal": "Efter lektionen kan eleven bedöma om ett bolags tillväxt är ekonomiskt sund genom att väga livstidsvärdet per kund mot kostnaden att vinna den och pröva om det finns en trovärdig väg till lönsamhet.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 12.3",
+      "titel": "Enhetsekonomi och tillväxtkvalitet",
+      "ingress": "Frågan är aldrig bara hur snabbt ett bolag växer, utan om tillväxten skapar värde eller bara blåser upp omsättningen."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FÖRLUST ELLER INVESTERING",
+      "lead": "Ett olönsamt tillväxtbolag förlorar pengar av ett av två motsatta skäl: antingen investerar det medvetet i att vinna lönsamma kunder, eller så förlorar det pengar på varje kund redan från början. På rubriknivå ser de identiska ut.",
+      "highlight": "antingen investerar det medvetet i att vinna lönsamma kunder, eller så förlorar det pengar på varje kund redan från början",
+      "brodtext": [
+        "Det första fallet är en potentiellt fantastisk verksamhet som betalar i förväg för en framtid den redan kan se. Det andra är en värdefälla som skala bara gör värre. Verktyget som skiljer dem åt är enhetsekonomi: lönsamheten i en enda kund.",
+        "Du zoomar in från hela det förlustbringande bolaget till en enda kund och frågar om just den kunden är lönsam. Får du den frågan rätt är det skillnaden mellan att hitta en framtida vinnare och att finansiera en pengaförlorare."
+      ],
+      "takeaway": "Frågan är inte förlorar det pengar, utan är förlusten en investering i lönsamma kunder eller en strukturell defekt som skala fördjupar."
+    },
+    {
+      "typ": "concept",
+      "kicker": "KÄRNJÄMFÖRELSEN",
+      "titel": "Livstidsvärde mot anskaffningskostnad",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "LTV, livstidsvärde", "text": "Vad en kund är värd över sin livstid: ungefär intäkt per kund gånger bruttomarginal, delat på churn. Det är churn, andelen som lämnar per år, som sätter den verkliga livslängden och hög churn dödar LTV oavsett marginal." },
+          { "rubrik": "CAC, anskaffningskostnad", "text": "Den totala försäljnings- och marknadsföringsspenderingen för att vinna en kund. Återbetalningstiden, CAC delat på årlig bruttovinst, visar hur snabbt kontanter kommer tillbaka och hur kassakrävande tillväxten är." }
+        ],
+        "figurtext": "Kvoten LTV genom CAC är enhetsekonomins hjärta."
+      },
+      "forklaring": "Bekvämt över 1, med ett vanligt riktmärke kring 3x eller mer, betyder att varje kund är väl värd att anskaffa. Under 1 betyder att bolaget förstör värde med varje försäljning, och då gör tillväxt förlusten större i stället för mindre."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Samma rubrikförlust, motsatta verksamheter",
+      "underrubrik": "Två bolag med identisk livstidsvärde per kund men olika kostnad att vinna den. Bara enhetsekonomin avslöjar skillnaden.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Sund: LTV", "varde": 4000, "accent": true },
+          { "kategori": "Sund: CAC", "varde": 1000 },
+          { "kategori": "Trasig: LTV", "varde": 4000, "accent": true },
+          { "kategori": "Trasig: CAC", "varde": 5000 }
+        ],
+        "etiketter": "Kronor per kund (illustrativa)",
+        "figurtext": "Illustrativa tal ur exemplet. Sund modell: LTV/CAC 4,0x. Trasig modell: LTV/CAC 0,8x, förlust på varje kund."
+      },
+      "slutsats": "I det sunda fallet är förlusten en investering som betalar sig, varje anskaffad kund blir värd fyra gånger sin kostnad. I det trasiga fallet fördjupar varje ny kund förlusten, och ingen skala lagar det."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TILLVÄXTENS KVALITET",
+      "titel": "Sammansättande eller hyrd tillväxt",
+      "brodtext": [
+        "Sund enhetsekonomi säger att varje kund skapar värde. Tillväxtkvalitet säger om tillväxten är den sort som varar. Högkvalitativ tillväxt är hållbar, effektiv och i hög grad organisk: återkommande intäkter, kunder som stannar, och mycket tillväxt från mun-till-mun snarare än köpt.",
+        "Nyckeltalet är net revenue retention, NRR: intäkten i år från förra årets kunder, efter churn och expansion. Över 100 procent betyder att den befintliga basen som grupp växer av sig själv, utan en enda ny kund, det starkaste tecknet på sammansättande tillväxt.",
+        "Lågkvalitativ tillväxt är motsatsen: köpt genom dyr marknadsföring med dålig LTV mot CAC, eller engångs och icke-återkommande. Den dunstar i samma stund spenderingen upphör. Disciplinen är att titta förbi rubriktakten till tillväxtens kvalitet.",
+        "Pröva till sist att det finns en trovärdig väg till lönsamhet: vore bolaget lönsamt om det slutade anskaffa nya kunder? Finns ingen sådan väg är förlusten inte en investering utan en strukturell defekt. (Hur marginalen faktiskt vidgas med skala tar vi i nästa lektion, om operating leverage.)"
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad avgör om varje kund skapar värde i enhetsekonomin?",
+          "alternativ": [
+            "Att LTV bekvämt överstiger CAC, gärna kring 3x eller mer på konservativa antaganden",
+            "Att bolaget växer omsättningen snabbare än konkurrenterna",
+            "Att marknadsföringsbudgeten är större än FoU-budgeten"
+          ],
+          "ratt": [0],
+          "forklaring": "Om livstidsvärdet bekvämt överstiger anskaffningskostnaden bygger tillväxt en lönsam framtid. Är LTV under eller knappt över CAC multiplicerar tillväxt bara förluster."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför kan ett bolag med utmärkt enhetsekonomi ändå rapportera stora förluster?",
+          "alternativ": [
+            "För att enhetsekonomi alltid är missvisande",
+            "För att anskaffningskostnaden betalas i förväg medan kundens bruttovinst kommer in över år, så snabb tillväxt ger stora rapporterade förluster",
+            "För att bruttomarginalen måste vara negativ under tillväxt"
+          ],
+          "ratt": [1],
+          "forklaring": "Förlusten är då en investering. Rensa bort tillväxtspenderingen och fråga om bolaget vore lönsamt om det slutade anskaffa kunder."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är tecken på högkvalitativ, sund tillväxt?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Net revenue retention över 100 procent, den befintliga basen växer av sig själv",
+            "All tillväxt köpt genom dyr marknadsföring med svag LTV mot CAC",
+            "En trovärdig väg till lönsamhet via operativ hävstång",
+            "Rubriktillväxttakten är hög, oavsett om varje kund skapar värde"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Högkvalitativ tillväxt är hållbar och effektiv: en sammansättande bas med NRR över 100 procent och en trovärdig väg till vinst. Köpt och skör tillväxt, eller att luta sig mot enbart takten, är tvärtom varningstecken."
+        }
+      ]
+    }
+  ]
+}

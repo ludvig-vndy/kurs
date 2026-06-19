@@ -1,0 +1,98 @@
+{
+  "kapitel": 12,
+  "lektion": "12.1",
+  "titel": "Multibagger-linsen",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen förstår eleven varför vanliga värderingsverktyg sviker för små olönsamma tillväxtbolag, och hur den asymmetriska multibagger-linsen gör att några få vinnare kan bära många förluster.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 12.1",
+      "titel": "Multibagger-linsen",
+      "ingress": "En aktie som kan tiodubblas ser sällan billig eller ens bra ut på vanliga mått när möjligheten är som störst. Att se den kräver en annan lins."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EN ANNAN SORTS ANALYS",
+      "lead": "När räkenskaperna väl ser omisskännligt bra ut ligger merparten av avkastningen redan i priset. De lätta pengarna togs av dem som såg det tidigt.",
+      "highlight": "merparten av avkastningen redan i priset",
+      "brodtext": [
+        "Det mesta i fundamental analys förutsätter ett bolag med facit: vinster att värdera, marginaler att bedöma, en historik att förlänga. Ta bort facit, och verktygslådan slutar fungera. Små olönsamma tillväxtbolag har sitt värde nästan helt i framtiden, i vad verksamheten kan bli, och då viker sig de vanliga måtten eller pekar åt fel håll.",
+        "För att fånga den stora avkastningen måste du känna igen vinnaren medan den fortfarande är liten, olönsam och obevisad. Beviset är då kvalitativt. Frågan flyttar från vad det här tjänar nu till vad det här kan bli, och vilka tidiga tecken som skulle berätta att det är på väg."
+      ],
+      "takeaway": "Du dömer inte ett tidigt bolag på dagens vinst. Du bedömer framtiden direkt och letar efter tecknen som föregår bra siffror."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TVÅ LINSER",
+      "titel": "Det mogna bolagets mått mot tillväxtbolagets",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Vanliga värderingsmått", "text": "P/E kräver en vinst som saknas, marginalen är negativ med flit, och en kort turbulent historik går inte att förlänga. Linsen ger ett säkert men oanvändbart utlåtande: undvik." },
+          { "rubrik": "Tillväxtlinsen", "text": "Bedömer framtiden direkt: är marknaden verklig och stor, fungerar enhetsekonomin, finns produktkärlek och ett försprång. Ledande tecken som orsakar bra siffror innan de syns." }
+        ],
+        "figurtext": "Samma bolag, två linser. Den ena dömer på det som saknas, den andra på det som kan bli."
+      },
+      "forklaring": "Vanliga mått missläser ett tidigt bolag systematiskt. Negativa marginaler kan vara ett val, medveten spendering för att fånga en stor marknad. Att döma bolaget på dagens lönsamhet bekräftar bara att det är tidigt. Det säger nästan inget om huruvida det kommer lyckas. Detta är inte value investing: det finns ingen felmarginal på nuvarande siffror, så värderegler som förkastar varje tidig vinnare hör inte hemma här."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Asymmetrin som gör jakten rationell",
+      "underrubrik": "En position kan bara förlora insatsen en gång, men en sann vinnare ger många gånger den. Några få vinnare bär resultatet.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "6 förlorare", "varde": -6 },
+          { "kategori": "2 jämnt ut", "varde": 2 },
+          { "kategori": "1 vinnare", "varde": 5 },
+          { "kategori": "1 vinnare", "varde": 12, "accent": true }
+        ],
+        "etiketter": "Utfall i enheter av tio satsade",
+        "figurtext": "Illustrativ. Tio lika små satsningar: sex går mot noll, två ger tillbaka insatsen, en ger 5 gånger och en 12 gånger. Tio satsade enheter slutar runt 19, trots att de flesta var fel."
+      },
+      "slutsats": "Du måste vara tidig för att fånga multipeln, och dimensionerad som en korg så att det att ha fel för det mesta blir både överlevbart och lönsamt. Den höga misslyckandefrekvensen blir då en sak du hanterar med storleken på posterna, inte ett skäl att hålla dig borta."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför måste en multibagger-jägare känna igen vinnaren medan bolaget fortfarande är litet och olönsamt?",
+          "alternativ": [
+            "När räkenskaperna ser omisskännligt bra ut ligger merparten av avkastningen redan i priset",
+            "Små bolag är alltid billigare per krona vinst än stora",
+            "Olönsamma bolag betalar lägre skatt och behåller mer av vinsten"
+          ],
+          "ratt": [0],
+          "forklaring": "Räkenskaper är eftersläpande. När höga vinster och lång historik väl syns har de tidiga redan fångat uppgången, så den stora avkastningen kräver att man ser det före marknaden."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är P/E i regel oanvändbart för ett litet olönsamt tillväxtbolag?",
+          "alternativ": [
+            "P/E kräver en vinst, och ett olönsamt bolag har ingen, så talet blir odefinierat eller meningslöst",
+            "P/E överskattar alltid värdet på tillväxtbolag",
+            "P/E fungerar bara för bolag noterade utomlands"
+          ],
+          "ratt": [0],
+          "forklaring": "Utan vinst saknar P/E nämnare och blir odefinierat. Värdet ligger i framtiden, inte i dagens obefintliga vinst, så måttet säger ingenting om huruvida bolaget kommer lyckas."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av följande är ledande indikatorer som föregår fantastiska räkenskaper?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Product-market fit och en stor, växande marknad",
+            "En skalbar modell med sund enhetsekonomi och ett verkligt försprång",
+            "Höga rapporterade vinster och lång historik av lönsamhet",
+            "Ett enda exakt DCF-värde som visar att aktien är billig idag"
+          ],
+          "ratt": [0, 1],
+          "forklaring": "Marknad, product-market fit, skalbarhet, enhetsekonomi, team och försprång orsakar bra siffror innan de syns. Höga vinster och lång historik är eftersläpande effekter, och ett exakt DCF-värde ger falsk precision i en kategori som kräver intervall och sannolikheter."
+        }
+      ]
+    }
+  ]
+}

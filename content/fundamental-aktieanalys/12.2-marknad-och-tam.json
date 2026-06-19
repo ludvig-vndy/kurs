@@ -1,0 +1,97 @@
+{
+  "kapitel": 12,
+  "lektion": "12.2",
+  "titel": "Marknad, problem och TAM",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven skilja en stor marknad från ett bolag som faktiskt kan vinna den, uppskatta marknaden nerifrån och upp och läsa product-market fit från kundernas beteende.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 12.2",
+      "titel": "Marknad, problem och TAM",
+      "ingress": "I ett tidigt bolag ligger värdet i framtiden, och den första frågan är också den svåraste: finns en stor möjlighet, och kan just det här bolaget fånga den?"
+    },
+    {
+      "typ": "reading",
+      "kicker": "TRE SAKER MÅSTE HÅLLA",
+      "lead": "Tre saker måste alla vara sanna för att framtiden ska vara värd något. Det måste finnas ett verkligt problem som bolaget löser, marknaden måste vara stor nog att spela roll, och det här bolaget måste kunna vinna en meningsfull andel av den.",
+      "highlight": "marknaden måste vara stor nog att spela roll, och det här bolaget måste kunna vinna en meningsfull andel av den",
+      "brodtext": [
+        "Investerare förförs rutinmässigt av en av de tre, oftast enorm marknad, och blundar för de andra. En enorm marknad är värdelös om bolaget inte kan ta den, eller om problemet inte är verkligt. Ett fantastiskt bolag som löser ett icke-problem kommer ingenstans. Bedöm de tre var för sig och hårt.",
+        "Färdigheten är att skilja är marknaden stor från kan det här bolaget vinna den. Det är två mycket olika frågor, och den andra är där de flesta berättelser brister. Storleken är den förföriska delen, vinnandet är det svåra och avgörande."
+      ],
+      "takeaway": "Var som mest skeptisk mot påståendet enorm marknad. Det är det mest förföriska och det minst tillräckliga."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FRÅN PROBLEM TILL FIT",
+      "titel": "Är problemet verkligt, och vill kunderna stanna",
+      "visual": {
+        "typ": "flode",
+        "noder": [
+          { "etikett": "Verkligt problem" },
+          { "etikett": "Produkt som löser det", "operator": "plus" },
+          { "etikett": "Product-market fit", "operator": "likamed", "accent": true }
+        ],
+        "figurtext": "Konceptuell kedja: efterfrågan som finns oavsett bolaget, en produkt som möter den, och kunder som stannar kvar."
+      },
+      "forklaring": "De starkaste tidiga bolagen löser ett verkligt, brådskande problem som kunder betalar för att slippa, inte en lösning som söker ett problem. Product-market fit betyder att produkten löser problemet så väl att kunder börjar använda den, stannar och berättar för andra. Den läses från beteende, inte från grundarens entusiasm: stannar kunderna, expanderar de sin spendering, kommer tillväxten organiskt och billigt? Hög churn avslöjar svag fit hur stor marknaden än är."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Marknaden krymper från rubrik till nåbar bit",
+      "underrubrik": "Rubrikens totala marknad inkluderar kunder bolaget aldrig når. Uppskatta i stället nerifrån och upp: rimligt antal nåbara kunder gånger realistisk intäkt per kund.",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Rubrikmarknad" },
+          { "etikett": "Adresserbar marknad (nerifrån och upp)" },
+          { "etikett": "Bolagets fångade andel idag", "accent": true }
+        ],
+        "figurtext": "Illustrativ, påhittat bolag. Exempel: rubrik på flera hundra miljarder, en nerifrån-uppskattning på cirka 6 mdkr (500 000 nåbara kunder gånger cirka 12 000 kr per år), bolaget vid cirka 50 Mkr har fångat under 1 procent."
+      },
+      "slutsats": "En verklig men liten adresserbar marknad sätter ett tak på möjligheten oavsett hur gott bolaget är. Bekräfta att product-market fit är verklig först, dimensionera sedan möjligheten."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilka tre saker måste alla vara sanna för att ett tidigt bolags framtid ska vara värd något?",
+          "alternativ": [
+            "Stark balansräkning, låg värdering och hög utdelning",
+            "Ett verkligt problem, en tillräckligt stor adresserbar marknad, och att just det här bolaget kan vinna en meningsfull andel",
+            "Erfaren ledning, lågt P/E och positivt kassaflöde"
+          ],
+          "ratt": [1],
+          "forklaring": "Sviker det första lagret, problem, marknad eller förmåga att vinna, spelar inget annat någon roll. Alla tre måste hålla samtidigt."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är det trovärdiga sättet att uppskatta den adresserbara marknaden?",
+          "alternativ": [
+            "Uppifrån: en stor branschsiffra där även 1 procent vore enormt",
+            "Nerifrån och upp: realistiskt antal nåbara kunder gånger en realistisk intäkt per kund",
+            "Genom att anta att bolaget tar hela branschen"
+          ],
+          "ratt": [1],
+          "forklaring": "Rubrikens totala marknad är ofta uppblåst och inkluderar kunder bolaget aldrig når. En nykter uppskattning nerifrån och upp slår en svepande siffra uppifrån och ner."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är tecken på verklig product-market fit eller ett starkt tidigt case?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Hög retention, kunder stannar kvar år efter år",
+            "Net revenue retention över 100 procent, befintliga kunder expanderar sin spendering",
+            "Caset vilar främst på rubrikmarknadens storlek",
+            "Tillväxten kommer organiskt och billigt, via mun-till-mun"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "Product-market fit läses från beteende: retention, expansion över 100 procent och billig organisk tillväxt. Att luta sig mot rubrikmarknadens storlek är tvärtom ett varningstecken."
+        }
+      ]
+    }
+  ]
+}

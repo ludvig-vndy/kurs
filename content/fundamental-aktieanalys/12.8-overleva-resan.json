@@ -1,0 +1,105 @@
+{
+  "kapitel": 12,
+  "lektion": "12.8",
+  "titel": "Att överleva resan",
+  "niva": "Avancerad",
+  "tid_min": 11,
+  "mal": "Efter lektionen kan eleven tåla djupa kursfall på vägen mot en multibagger, skilja en bra förlust där tesen håller från en dålig där tesen brustit, och dimensionera positionen så att hög osäkerhet aldrig ruinerar portföljen.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 12.8",
+      "titel": "Att överleva resan",
+      "ingress": "Även de slutliga vinnarna faller hårt på vägen upp. Att fånga deras avkastning kräver att du överlever turbulensen utan att paniksälja en intakt verksamhet eller hålla fast vid ett brustet case."
+    },
+    {
+      "typ": "reading",
+      "kicker": "RESAN ÄR SKAKIG",
+      "lead": "För att fånga vinsten i en tidig vinnare måste du överleva resan. De slutliga storvinnarna faller rutinmässigt 50 procent, ibland 70 till 80, en eller flera gånger innan de lyckas.",
+      "highlight": "För att fånga vinsten i en tidig vinnare måste du överleva resan.",
+      "brodtext": [
+        "Tidiga tillväxtbolag svänger våldsamt, långt mer än mogna, eftersom värdet vilar på en osäker framtid som marknaden ständigt omgissar. Ett fall på 50 procent eller mer kan drabba en slutlig storvinnare utan att något fundamentalt ändrats. Det är volatilitet, priset som rör sig, inte värdet.",
+        "Behandlar du varje fall som en katastrof skakas du ut ur dina bästa investeringar före utdelningen. Men varje stort fall är ändå inte en svacka att hålla igenom. Ibland är ett fallande pris marknaden som helt korrekt inser att caset är brustet. Den svåra färdigheten är att skilja de två."
+      ],
+      "takeaway": "Får du det rätt håller du vinnare genom stormen och skär förlorare. Får du det fel panikar du ut ur en framtida vinnare eller rider ett misslyckande hela vägen till noll."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VOLATILITET ELLER BRYTNING",
+      "titel": "Bra förlust mot dålig förlust",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Bra förlust (volatilitet)", "text": "Verksamheten är intakt. Bolaget vinner fortfarande sin marknad, enhetsekonomin håller och kassan räcker. Inget falsifieringsvillkor har utlösts. Fallet speglar stämning eller en tillväxtaktieomvärdering. Rätt handling: håll, kanske fyll på." },
+          { "rubrik": "Dålig förlust (försämring)", "text": "Något verkligt har gått fel. Tillväxten har stannat, enhetsekonomin har visat sig trasig, eller kassan sinar och utspädning hotar. Ett skrivet falsifieringsvillkor har utlösts. Rätt handling: sälj oavsett förlusten, för det lägre priset kan fortfarande vara för högt." }
+        ],
+        "figurtext": "Fallet ser identiskt ut på skärmen. Bara verksamheten avgör vilket det är."
+      },
+      "forklaring": "Eftersom det stämmer att stora vinnare faller hårt är den sanningen lätt att missbruka som ursäkt att hålla eller köpa vilket fallande bolag som helst, även de som går under. Du skiljer dem genom att ignorera priset och fråga om den fundamentala tesen ändrats. Prisfallet är bara avtryckaren att göra jobbet. Svaret kommer från verksamheten, inte från diagrammet."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Vinnarens ojämna väg",
+      "underrubrik": "En slutlig vinnare stiger inte i en rak linje. Den går upp via flera djupa ras, var och ett magvändande i stunden.",
+      "visual": {
+        "typ": "linjediagram",
+        "serier": [
+          { "namn": "Kurs", "stil": "heldragen", "accent": true, "punkter": [10, 24, 12, 30, 16, 42, 22, 55, 34, 70, 88] }
+        ],
+        "figurtext": "Illustrativ. Punkterna visar mönstret av djupa drawdowns på vägen upp, inte verkliga kurser."
+      },
+      "slutsats": "Volatilitet i sig är inget tecken på misslyckande, utan den oundvikliga turbulensen i att äga en osäker framtid. Ditt mest tillförlitliga försvar mot att gissa fel mitt i ett ras är en skriven tes med uttryckliga falsifieringsvillkor, en måttstock satt när du var lugn. Du läser om tesen och kontrollerar en sak: har ett villkor faktiskt utlösts, eller har bara priset rört sig?"
+    },
+    {
+      "typ": "reading",
+      "kicker": "DIMENSIONERA FÖR ATT ÖVERLEVA",
+      "lead": "Att överleva resan handlar om struktur lika mycket som psykologi. Positionen måste vara liten nog att volatiliteten är uthärdlig och en total förlust på vilket enskilt namn som helst är överlevbar.",
+      "highlight": "Positionen måste vara liten nog att volatiliteten är uthärdlig och en total förlust på vilket enskilt namn som helst är överlevbar.",
+      "brodtext": [
+        "Storleken sätts av nedsidan, alltså vad du förlorar om bolaget misslyckas, inte av hur rafflande uppsidan känns. Eftersom konkurs är ett troligt utfall för var och en av de här bolagen får ingen enskild position vara stor nog att ruinera dig. I praktiken landar det ofta på några få procent av portföljen som mest, ibland mindre (illustrativt), satt så att en nolla är en överlevbar förlust och inte en katastrof.",
+        "Eftersom uppsidan kan vara stor kan även en liten position bidra rejält om den vinner. Det öppnar för korgen: flera små positioner spridda över kategorin, var och en dimensionerad att vara överlevbar. Logiken är asymmetri på portföljnivå. Varje position kan bara förlora det insatta, medan vinnarna kan mångdubblas. Några få vinnare väger mer än upp de många som sviker, och inget enskilt misslyckande spelar roll."
+      ],
+      "takeaway": "Allt detta tjänar överlevnad: att stanna kvar i spelet tillräckligt länge för att de få stora vinnarna ska hinna framträda och bära portföljen. Dimensioneringen avgör hur du klarar bedömningen, för den som satsade för stort panikar och kan ruineras om caset visar sig brustet."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är den svåra färdigheten när ett tidigt tillväxtbolag faller kraftigt?",
+          "alternativ": [
+            "Att alltid sälja vid ett fall på över 50 procent",
+            "Att skilja vanlig volatilitet, där verksamheten är intakt och bara priset svänger, från permanent försämring, där tesen genuint brustit",
+            "Att alltid köpa mer eftersom vinnare faller hårt"
+          ],
+          "ratt": [1],
+          "forklaring": "Får du det rätt håller du vinnare genom stormen och skär förlorare. Får du det fel panikar du ut ur en vinnare eller rider ett misslyckande till noll. Svaret kommer från verksamheten, inte från diagrammet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad sätter storleken på en position i ett tidigt olönsamt bolag?",
+          "alternativ": [
+            "Hur rafflande uppsidan känns och hur stor marknaden är",
+            "Nedsidan, alltså vad du förlorar om bolaget misslyckas, och den höga konkurssannolikheten",
+            "Hur mycket kursen redan har stigit"
+          ],
+          "ratt": [1],
+          "forklaring": "Eftersom konkurs är ett troligt utfall för var och en får ingen enskild position vara stor nog att ruinera dig. Storleken sätts av nedsidan, inte drömmen. Testfrågan: om positionen gick till noll, vore det en överlevbar förlust eller en katastrof?"
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa hör till att överleva resan på ett disciplinerat sätt?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Du går tillbaka till verksamheten och din skrivna tes vid ett ras, inte till kursdiagrammet",
+            "Du använder att vinnare är volatila som ursäkt att hålla eller köpa vilket fallande bolag som helst",
+            "Du tar exponering mot kategorin genom en korg av små, överlevbara positioner i stället för en stor",
+            "Du säljer oavsett förlusten när ett skrivet falsifieringsvillkor faktiskt har utlösts"
+          ],
+          "ratt": [0, 2, 3],
+          "forklaring": "Disciplin är att döma på fundamenta mot en skriven tes, att dimensionera litet i en korg, och att skära ett brustet case när ett villkor utlösts. Att låta vinnare är volatila bli en ursäkt att blunda för verklig försämring är tvärtom det farliga felet."
+        }
+      ]
+    }
+  ]
+}
