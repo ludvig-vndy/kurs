@@ -1,0 +1,103 @@
+{
+  "kapitel": 16,
+  "lektion": "16.1",
+  "titel": "Källor, verktyg och svensk praktik",
+  "niva": "Nybörjare",
+  "tid_min": 9,
+  "mal": "Efter lektionen vet eleven var data och rapporter finns och hur källor rangordnas, och förstår mekaniken bakom konton, listor och skatt för en svensk privatinvesterare.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 16.1",
+      "titel": "Källor, verktyg och svensk praktik",
+      "ingress": "Var du hämtar uppgifterna, hur mycket du litar på var och en, och hur konton, listor och skatt fungerar i den svenska verkligheten runt investeringen."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KÄLLHIERARKIN",
+      "lead": "En analys är aldrig bättre än källan den vilar på. Överst står primärkällan: bolagets egen reviderade rapport. Under den ligger sammanställande databaser, snabba och oftast rätt men ändå andrahandskällor. Längst ner ligger nyhetsrubriker och analytikerkommentarer.",
+      "highlight": "En analys är aldrig bättre än källan den vilar på.",
+      "brodtext": [
+        "En rubrik om att ett bolag slår förväntningarna är någon annans sammanfattning av någon annans tolkning av en siffra du aldrig sett. Kan du gå till primärkällan har du en av de billigaste fördelar som finns, eftersom förvånansvärt få orkar öppna originaldokumentet och läsa det själva.",
+        "Inne i årsredovisningen vet du vart du går för varje fråga. VD-ordet läser du för ton, men behandlar som den mest tillrättalagda delen. Resultaträkningen visar lönsamheten över en period, balansräkningen ställningen vid en tidpunkt, och kassaflödesanalysen om vinsten faktiskt blir kontanter. Noterna är där detaljen och ofta den verkliga sanningen gömmer sig, och revisionsberättelsen är en oberoende parts omdöme om bilden är rättvisande."
+      ],
+      "takeaway": "Ju längre från primärkällan en uppgift kommer, desto mer skepsis. För de tal som bär din slutsats går du alltid till bolagets egen rapport och kontrollerar själv."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VERKTYG OCH RAPPORTER",
+      "lead": "Databasen och screenern är sökverktyg, inte analys. De pekar ut var du ska titta, men talar aldrig om vad du ska tycka. En screener filtrerar fram en hanterbar lista kandidater ur tusentals bolag, och en tjänst som Börsdata samlar historiska nyckeltal som omsättning, marginaler, ROIC och skuldsättning på ett ställe.",
+      "highlight": "Databasen och screenern är sökverktyg, inte analys.",
+      "brodtext": [
+        "En enskild årssiffra säger nästan ingenting; en tioårstrend i marginal eller ROIC avslöjar verksamhetens karaktär. Arbetsflödet följer hierarkin baklänges: screena fram en bunt, granska trenderna i databasen, och öppna sedan den faktiska årsredovisningen först när ett bolag passerat filtren.",
+        "Håll också isär vilket dokument du läser. Kvartalsrapporten är en kortare avstämning varje kvartal, ofta oreviderad och med mindre detalj. Bokslutskommunikén är helårets sammanfattning som kommer snabbt efter årets slut, men komprimerad. Den fullständiga årsredovisningen kommer senare, är reviderad och innehåller hela uppsättningen noter och revisionsberättelsen."
+      ],
+      "takeaway": "Den vanligaste fällan är att låta ett snyggt databasdiagram ersätta läsningen av rapporten. Diagrammet visar att något hände, bara rapporten och noterna visar varför."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD SOM BESKATTAS",
+      "titel": "Depå mot schablonkonto i mekanik",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Vanlig depå", "text": "Du äger aktierna direkt. Reavinstskatt tas ut på den realiserade vinsten när du säljer, och förluster får kvittas mot vinster. Ett byte utlöser alltså vinstskatt här och nu." },
+          { "rubrik": "ISK och KF", "text": "Hela kapitalet schablonbeskattas löpande oavsett om du sålt med vinst. Du kan ombalansera utan reavinstskatt, men det finns ingen förlustkvittning eftersom realiserade vinster och förluster inte beskattas." }
+        ],
+        "figurtext": "Skillnaden sitter i vad som beskattas: realiserad vinst i depån, kapitalet i schablonkontot."
+      },
+      "forklaring": "Schablonen byggs på statslåneräntan plus ett påslag och ger en årlig skatt på innehavets värde. Den exakta satsen ändras varje år när statslåneräntan rör sig, så lär dig mekanismen och slå upp årets aktuella sats när du räknar, i stället för att bära ett gammalt tal i huvudet. Schablon är dock inte skattefrihet, det är en skatt på kapitalet. KF och ISK liknar varandra i schablonlogiken men skiljer sig i juridisk form: i en KF äger formellt försäkringsbolaget aktierna åt dig, vilket bland annat påverkar röstning på stämmor och hanteringen av utländsk källskatt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "LISTOR OCH KADENS",
+      "lead": "Listan är en signal om mognad och genomlysning. Huvudlistan är den reglerade Stockholmsbörsen, indelad i Large, Mid och Small Cap, med högst krav på notering och rapportering. Handelsplattformar som First North och Spotlight är förenklade noteringar med lägre krav, vanliga för små tillväxtbolag.",
+      "highlight": "Listan är en signal om mognad och genomlysning.",
+      "brodtext": [
+        "Lägre krav betyder lägre tröskel för bolaget, men också typiskt högre risk och mindre genomlyst information för dig. För ett litet och tidigt bolag höjer du därför granskningen i stället för att sänka den.",
+        "Rapportkadensen är din kalender. Svenska börsbolag rapporterar kvartalsvis: tre delårsrapporter under året och så bokslutskommunikén och årsredovisningen för helåret. Kring rapportdagarna rör sig kurserna ofta kraftigt eftersom mycket information kommer på en gång."
+      ],
+      "takeaway": "Du vet ungefär när nästa rapport kommer, läser primärkällan själv när den landar, och rycks inte med av den första rubriken eller den första kursrörelsen."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "I vilken del av årsredovisningen ser du om vinsten faktiskt blir pengar?",
+          "alternativ": [
+            "VD-ordet",
+            "Resultaträkningen",
+            "Kassaflödesanalysen"
+          ],
+          "ratt": [2],
+          "forklaring": "Kassaflödesanalysen visar de faktiska kontantrörelserna. Resultaträkningen visar lönsamheten över perioden men inte om vinsten blir kontanter."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur är schablonbeskattningen i ISK och KF konstruerad?",
+          "alternativ": [
+            "Som en fast procentsats på varje försäljning du gör under året",
+            "Som en årlig skatt på innehavets värde, byggd på statslåneräntan plus ett påslag",
+            "Som en skatt som bara tas ut de år du realiserar en vinst"
+          ],
+          "ratt": [1],
+          "forklaring": "Schablonen byggs på statslåneräntan plus ett påslag och ger en årlig skatt på kapitalets värde, inte på realiserad vinst. Den exakta satsen ändras varje år, så slå upp årets aktuella sats."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är tecken på sund källdisciplin?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "De tal som bär din slutsats hämtas från primärkällan, inte från en rubrik eller ett databasdiagram",
+            "Du behandlar en screen-träff som en köprekommendation och hoppar över granskningen",
+            "Du använder screener och databas för att smalna av, men granskar kandidaten själv i årsredovisningen",
+            "Du läser bokslutskommunikéns rubriker och tror att du sett hela året fast noterna ännu inte kommit"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Disciplin är att låta sökverktygen leda fram men alltid låta primärkällan avgöra. Att lita på en screen-träff eller stanna vid komprimerade rubriker är tvärtom varningstecken."
+        }
+      ]
+    }
+  ]
+}

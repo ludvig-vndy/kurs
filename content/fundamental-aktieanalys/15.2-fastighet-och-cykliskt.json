@@ -1,0 +1,107 @@
+{
+  "kapitel": 15,
+  "lektion": "15.2",
+  "titel": "Fastighet och cykliskt",
+  "niva": "Avancerad",
+  "tid_min": 11,
+  "mal": "Efter lektionen kan eleven analysera fastighetsbolag genom substansvarde, belaningsgrad och driftnetto, och cykliska bolag genom normaliserad vinst over hela cykeln utan att ga i topp- eller bottenfallan.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 15.2",
+      "titel": "Fastighet och cykliskt",
+      "ingress": "Tva sektorer dar standardramverket leder vilse, fastigheter och cykliska bolag, krever varsitt eget set matt for att vinsten inte ska lasa dig i stallet for tvartom."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FASTIGHET",
+      "lead": "En fastighets redovisade vinst domineras av nagot som inte alls ar drift: orealiserade vardeforandringar pa fastigheterna. Las forvaltningsresultatet separat.",
+      "highlight": "En fastighets redovisade vinst domineras av nagot som inte alls ar drift",
+      "brodtext": [
+        "Dela resultatet i tva delar som har nastan ingenting med varandra att gora. Forvaltningsresultatet ar den rena intjaningen: hyresintakter minus drift och underhall (det ger driftnettot), minus administration, minus rantor. Det ar fastighetsbolagets motsvarighet till rorelseresultat efter ranta, och dar laser du hur det gar pa riktigt.",
+        "Vardeforandringarna ar den andra delen. Fastigheter redovisas till verkligt varde, sa portfoljen skrivs upp och ned mot marknadens avkastningskrav utan att en krona bytt hander. De svangningarna ar ofta storre an hela forvaltningsresultatet. Nar en fastighetsvinst exploderar eller kollapsar kommer rorelsen nastan alltid harifran, medan driften star still."
+      ],
+      "takeaway": "Las aldrig den redovisade vinsten forst. Ga till forvaltningsresultatet och fraga vad driften tjanar, och hur det utvecklats per aktie over flera ar."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SUBSTANS OCH RANTA",
+      "titel": "Substansvarde, belaningsgrad och den sammankopplade rantekansligheten",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Lan (belaningsgrad)", "varde": 60 },
+          { "etikett": "Substansvarde (till agarna)", "varde": 40, "accent": true }
+        ],
+        "figurtext": "Illustrativt. Fastighetsvarde 10 000, lan 6 000, substans 4 000. Belaningsgrad 60 procent."
+      },
+      "forklaring": "For att mata vad bolaget ar vart anvander du substansvardet, inte vinsten: tillgangarnas verkliga varde minus skulderna, ungefar vad som blir kvar till agarna. Aktien handlas med premie eller rabatt mot det. En rabatt mot ett uppblast substansvarde ar ingen rabatt: granska vilket avkastningskrav bolaget sjalvt anvant pa sina hus. Belaningsgraden mot rantebindningen avgor hur hart stigande rantor slar. Nar ranta stiger ater rantan forvaltningsresultatet medan hogre avkastningskrav sanker fastighetsvardet, belaningsgraden och substansen pa en gang."
+    },
+    {
+      "typ": "reading",
+      "kicker": "CYKLISKT",
+      "lead": "For ett cykliskt bolag sager ett enskilt ars vinst nastan ingenting. Intjaningen svanger valdsamt med en konjunktur och ett ravarupris bolaget inte kan styra.",
+      "highlight": "ett enskilt ars vinst nastan ingenting",
+      "brodtext": [
+        "Stal, gruvor, basindustri, skog, kemi, allt som lever pa ett ravarupris. Kostnaderna ar ganska fasta, sa varje rorelse i priset slar rakt igenom till vinsten med havstang. Pa toppen tjanar bolaget enormt, i dalen lite eller inget. Slutar du fraga vad bolaget tjanar nu och borjar fraga vad det tjanar over en hel cykel, och om det overlever dalen, far du den fraga som haller.",
+        "Det forsta verktyget ar darfor normaliserad vinst: en uppskattning av vad bolaget tjanar i snitt over cykeln, medvetet bortseende fran bade rekordaret och krisaret. Det andra ar positionen pa kostnadskurvan. Ravarupriset ar gemensamt, men kostnaden skiljer sig. Nar priset faller gar hogkostnadsproducenterna forst med forlust, medan lagkostnadsproducenter overlever och kan komma ut starkare."
+      ],
+      "takeaway": "Vakta mest av allt kapitaldisciplinen. Den disciplinerade ledningen haller igen pa expansion i euforin pa toppen och investerar nar andra ar radda."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Lagt P/E pa toppvinsten ar fallan",
+      "underrubrik": "Vinsten gar i vagor runt en normaliserad mittpunkt. Ett lagt P/E pa toppen bygger pa en vinst som snart inte finns.",
+      "visual": {
+        "typ": "linjediagram",
+        "serier": [
+          { "namn": "Normaliserad vinst", "stil": "heldragen", "accent": true, "punkter": [800, 800, 800, 800, 800, 800, 800, 800, 800] },
+          { "namn": "Redovisad vinst", "stil": "streckad", "punkter": [500, 1100, 1800, 2000, 1400, 800, 500, 300, 600] }
+        ],
+        "markor": { "serieIndex": 1, "punktIndex": 3, "etikett": "P/E 5, farligt" },
+        "figurtext": "Illustrativt. Toppvinst 2 000 ger P/E 5, men pa normaliserad vinst 800 ar P/E 12,5, en helt vanlig vardering."
+      },
+      "slutsats": "Rakna alltid P/E pa normaliserad vinst. For cykliska bolag ar talet ofta bakvant: lagt vid toppen (farligt), hogt vid botten (mojligt lage). Nar vinsten svanger for vilt ger P/B en lugnare lins."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varfor kan ett fastighetsbolags redovisade vinst dubblas ett ar och rasa nasta, fast hyresgaster och hus ar desamma?",
+          "alternativ": [
+            "Hyrorna andras kraftigt varje kvartal",
+            "Resultatet domineras av orealiserade vardeforandringar pa fastigheterna, som svanger med marknadens avkastningskrav",
+            "Bolaget byter redovisningsprincip varje ar"
+          ],
+          "ratt": [1],
+          "forklaring": "Fastigheter redovisas till verkligt varde, sa portfoljen skrivs upp och ned mot marknadens humor utan att en krona bytt hander. Driften kan sta still."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varfor ar ett lagt P/E-tal pa ett cykliskt bolag ofta en varningssignal snarare an ett fynd?",
+          "alternativ": [
+            "P/E raknas pa toppvinsten, som ar pa vag att falla, sa det billiga talet bygger pa en vinst som snart inte finns",
+            "Lagt P/E betyder alltid att bolaget ar pa vag i konkurs",
+            "Cykliska bolag redovisar aldrig nagon vinst"
+          ],
+          "ratt": [0],
+          "forklaring": "Pa toppen ar vinsten rekordhog, sa aven ett normalt pris ger lagt P/E. Nar cykeln vander rasar vinsten. Rakna alltid P/E pa normaliserad vinst."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa ar sunda satt att lasa dessa tva sektorer?",
+          "underrubrik": "Valj alla som stammer",
+          "alternativ": [
+            "Las fastighetsbolagets forvaltningsresultat separat fran vardeforandringarna",
+            "Behandla en stor rabatt mot substansvardet som ett sakert fynd utan att granska bolagets avkastningskrav",
+            "Vardera cykliska bolag pa normaliserad vinst over hela cykeln, inte pa ett enskilt ars vinst",
+            "Las en cyklikers laga P/E pa toppvinsten som ett kop"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Forvaltningsresultatet visar fastighetens drift, och normaliserad vinst visar cyklikerns verkliga intjaning. En orgranskad substansrabatt och ett lagt P/E pa toppvinsten ar tvartom de klassiska fallorna."
+        }
+      ]
+    }
+  ]
+}

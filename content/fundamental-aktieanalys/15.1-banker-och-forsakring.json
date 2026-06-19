@@ -1,0 +1,97 @@
+{
+  "kapitel": 15,
+  "lektion": "15.1",
+  "titel": "Banker och försäkring",
+  "niva": "Avancerad",
+  "tid_min": 11,
+  "mal": "Efter lektionen vet eleven varför banker och försäkringsbolag inte kan läsas med standardramverket, och kan använda sektorns egna mätstickor: räntenetto, K/I-tal, kreditförluster och kapitaltäckning för bank, combined ratio och float för försäkring.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 15.1",
+      "titel": "Banker och försäkring",
+      "ingress": "I dessa bolag är skuld och risk inte faror vid sidan av rörelsen, de är själva affären. Därför byter du mätsticka."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DE BRYTER RAMVERKET",
+      "lead": "En bank tjänar pengar på att låna. Ett försäkringsbolag säljer en produkt vars verkliga kostnad det inte känner när det säljer den.",
+      "highlight": "En bank tjänar pengar på att låna.",
+      "brodtext": [
+        "Öppnar du en banks årsredovisning med kursens vanliga verktyg känns något trasigt: skuldsättningen är enorm och soliditeten ligger på några få procent. Men en bank tar in inlåning och kapital billigt och lånar ut det dyrare, så hög skuldsättning är inte en röd flagga, det är affärsmodellen. Den verkliga risken sitter på andra ställen än du är van vid: i kvaliteten på utlåningen och i styrkan i kapitalet.",
+        "Ett försäkringsbolag får in premien i dag men vet inte förrän långt senare vad skadorna faktiskt blir. Den redovisade vinsten ett enskilt år är därför delvis en gissning om framtida skador. Det är lätt att placera in bolaget i facket stabilt och defensivt, men det döljer både var pengarna tjänas och var riskerna sitter."
+      ],
+      "takeaway": "Läs aldrig en bank eller ett försäkringsbolag som ett vanligt bolag. Byt mätsticka innan du dömer."
+    },
+    {
+      "typ": "concept",
+      "kicker": "BANKENS MÄTSTICKOR",
+      "titel": "Räntenetto, kostnad, kreditförluster, kapital",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Hur banken tjänar pengar", "text": "Räntenettot är ränteintäkter minus räntekostnader, skillnaden mellan vad banken får på utlåningen och betalar för sin finansiering. Provisionsnettot är avgifter som inte är ränta och är ofta stabilare. K/I-talet, kostnad genom intäkt, mäter effektivitet: lägre är bättre." },
+          { "rubrik": "Var banken lever eller dör", "text": "Kreditförluster uppstår när låntagare inte betalar. Reserveringen mot dem är en bedömning som frestas hållas låg i goda tider. Motståndskraften mäts med kapitaltäckning, främst CET1-kvoten: kärnkapital delat med riskvägda tillgångar." }
+        ],
+        "figurtext": "Bankens fyra nyckeltal, från intäkt till motståndskraft."
+      },
+      "forklaring": "Det som dödar banker är dåliga lån, sällan dålig drift. En bank kan se lysande lönsam ut sent i en högkonjunktur bara för att förlusterna ännu inte kommit. Var därför som mest skeptisk när det ser som bäst ut, och läs CET1-kvotens marginal till myndighetskravet som bankens verkliga säkerhetsmarginal. Banker värderas oftast på P/B och ROE i stället för P/E, eftersom vinsten svänger med cykliska reserveringar och skuld är råvaran."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Försäkringens nyckeltal: combined ratio",
+      "underrubrik": "Combined ratio är skadeprocent plus omkostnadsprocent. Under 100 betyder lönsam teckning, över 100 betyder förlust på försäkringen.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Disciplinerat bolag", "varde": 94, "accent": true },
+          { "kategori": "Gräns", "varde": 100 },
+          { "kategori": "Jagande bolag", "varde": 103 }
+        ],
+        "etiketter": "Combined ratio i procent",
+        "figurtext": "Illustrativa tal. Under 100 tjänar bolaget pengar på teckningen, över 100 betalar det för sin float."
+      },
+      "slutsats": "Mellan inbetald premie och utbetald skada sitter bolaget på float, andras pengar som det får placera under tiden. Med combined ratio under 100 får bolaget i praktiken betalt för att hålla floaten. Men vinsten ett enskilt år svänger med reservsättning, stora skadehändelser och försäkringscykeln, så stabil efterfrågan ger inte stabil lönsamhet. Läs lönsamheten över en hel cykel, inte ett lugnt år."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför är hög skuldsättning inte automatiskt en röd flagga i en bank?",
+          "alternativ": [
+            "Att låna in billigt och låna ut dyrare är själva affärsmodellen, inte en risk vid sidan av rörelsen",
+            "Banker behöver inte betala tillbaka sin inlåning",
+            "Skulderna i en bank är alltid statligt garanterade"
+          ],
+          "ratt": [0],
+          "forklaring": "En bank tjänar pengar på att låna, så hög skuldsättning är affärsmodellen. Därför byter man mätsticka från soliditet till kapitaltäckning, främst CET1-kvoten."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad betyder en combined ratio under 100 procent?",
+          "alternativ": [
+            "Bolaget tjänar pengar på själva försäkringsaffären, det tar in mer i premier än det betalar i skador och kostnader",
+            "Bolaget går med förlust på teckningen och måste tjäna in det på placeringar",
+            "Bolaget har för lite kapital för att teckna fler försäkringar"
+          ],
+          "ratt": [0],
+          "forklaring": "Under 100 procent betyder lönsam teckning. Då får bolaget dessutom betalt för att hålla och placera sin float. Över 100 betyder förlust på försäkringen som måste täckas på annat håll."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av följande är varningstecken i dessa bolag?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "En banks utlåning växer klart snabbare än marknaden",
+            "En banks CET1-kvot ligger nära myndighetens golv",
+            "Ett försäkringsbolag fyller gång på gång på reserverna i efterhand",
+            "En bank värderas på P/B och ROE i stället för enbart P/E"
+          ],
+          "ratt": [0, 1, 2],
+          "forklaring": "Snabb utlåningstillväxt och en tunn kapitalbuffert signalerar uppbyggd risk i en bank, och återkommande reservpåfyllning avslöjar att ett försäkringsbolags tidigare vinster var för optimistiska. Att värdera en bank på P/B och ROE är däremot korrekt metod, inte ett varningstecken."
+        }
+      ]
+    }
+  ]
+}
