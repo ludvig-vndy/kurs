@@ -443,6 +443,13 @@ const PASS_MARK = 80;
     inherits: false;
     initial-value: 0;
   }
+
+  /* The `hidden` attribute must win over the display:flex above, so feedback
+     and the result panel stay hidden until grading. */
+  .fq-q__feedback[hidden],
+  .fq__result[hidden] {
+    display: none;
+  }
 </style>
 
 <script>
