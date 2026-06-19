@@ -1,0 +1,84 @@
+{
+  "kapitel": 3,
+  "lektion": "3.1",
+  "titel": "Årsredovisningens delar",
+  "niva": "Nybörjare",
+  "tid_min": 8,
+  "mal": "Efter lektionen vet eleven vilka delar en årsredovisning består av, vad varje del är till för och var olika sorters svar bor.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 3.1",
+      "titel": "Årsredovisningens delar",
+      "ingress": "Årsredovisningen är den enskilt viktigaste primärkällan om ett bolag. Att veta var varje sorts sanning bor är en grundfärdighet."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAR SVAREN BOR",
+      "lead": "Allt seriöst arbete springer ur årsredovisningen. Det användbara är att delarna går att ordna på en skala, från mest tillrättalagd och minst pålitlig till minst tillrättalagd och mest pålitlig.",
+      "highlight": "delarna går att ordna på en skala",
+      "brodtext": [
+        "VD-ordet är ledningens egen berättelse om året, marknadsföring lindad runt fakta. Det säger vad ledningen vill att du ska fokusera på, användbart för ton och prioriteringar men den mest formade delen. Förvaltningsberättelsen är en mer reglerad och saklig redogörelse för verksamheten, riskerna, den föreslagna utdelningen och väsentliga händelser.",
+        "De tre rapporterna är hjärtat med standardiserade, reviderade siffror: resultaträkningen visar lönsamheten över en period, balansräkningen den finansiella ställningen vid en tidpunkt, kassaflödesanalysen de faktiska kontantrörelserna. Noterna är där detaljen, och ofta sanningen, bor: redovisningsprinciper, skuldvillkor, segmentsuppdelningar och vad som ligger inuti raderna. Revisionsberättelsen är revisorns omdöme om huruvida bilden är rättvisande.",
+        "Den vana läsordningen är ofta bakvänd mot hur dokumentet är tryckt. Skumma VD-ordet för tonen, gå sedan rakt till kassaflödet och noterna, och läs den polerade berättelsen sist, så att historien inte hinner ankra dig innan du sett fakta."
+      ],
+      "takeaway": "Behandla årsredovisningen som bevis att förhöra, inte en historia att suga åt sig. Se siffran innan du läser meningen om den."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DOKUMENTETS DELAR",
+      "titel": "Från ledningens ord till revisorns omdöme",
+      "visual": {
+        "typ": "flode",
+        "noder": [
+          { "etikett": "Förvaltningsberättelse" },
+          { "etikett": "De tre rapporterna" },
+          { "etikett": "Noterna" },
+          { "etikett": "Revisionsberättelse", "accent": true }
+        ],
+        "figurtext": "Huvuddelarna i den ordning de återkommer i nästan varje bolag."
+      },
+      "forklaring": "Samma huvuddelar återkommer i nästan varje årsredovisning. Förvaltningsberättelsen ramar in verksamheten, de tre rapporterna bär de reviderade siffrorna, noterna förklarar vad som ligger inuti raderna, och revisionsberättelsen är en oberoende parts omdöme om att bilden är rättvisande. En ren revisionsberättelse är det normala; allt annat är en allvarlig signal."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilken del av årsredovisningen är mest tillrättalagd och därmed minst pålitlig?",
+          "alternativ": [
+            "VD-ordet",
+            "Kassaflödesanalysen",
+            "Revisionsberättelsen"
+          ],
+          "ratt": [0],
+          "forklaring": "VD-ordet ligger längst ut på den polerade änden av skalan, marknadsföring lindad runt fakta, medan rapporterna och revisionsberättelsen är mer pålitliga."
+        },
+        {
+          "typ": "single",
+          "fraga": "Du vill veta hur ett bolags omsättning intäktsförs och när dess skulder förfaller. Var bor de svaren?",
+          "alternativ": [
+            "I VD-ordet",
+            "I noterna",
+            "I förvaltningsberättelsen"
+          ],
+          "ratt": [1],
+          "forklaring": "Detaljen, redovisningsprinciper och skuldvillkor, bor i noterna. Rapporternas rader sammanfattar bara, och noterna förklarar vad som ligger inuti dem."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Ett VD-ord lyfter en rekordvinst upp 15 procent. Vilka kontroller gör en erfaren läsare för att pröva påståendet?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Kollar i resultaträkningen om även rörelseresultatet steg eller om hela ökningen kom från en post",
+            "Letar i noterna efter engångsposter som en fastighetsförsäljning",
+            "Litar på siffran eftersom den står i VD-ordet",
+            "Kollar om rörelsekassaflödet steg i takt med vinsten"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "Att korskolla rubriksiffran mot rörelseresultat, noternas engångsposter och kassaflödet avslöjar om rekordet är verkligt eller en illusion skapad av en engångspost."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "kapitel": 2,
+  "lektion": "2.3",
+  "titel": "Enhetsekonomi och tillväxt",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven avgöra om en enda enhet i ett bolag tjänar pengar, och därmed om tillväxt skapar eller förstör värde, samt skilja hållbar och lönsam tillväxt från köpt eller engångsartad.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 2.3",
+      "titel": "Enhetsekonomi och tillväxt",
+      "ingress": "Aggregerade siffror kan dölja om verksamheten fungerar. Bryt ned bolaget till en enda enhet, så ser du om tillväxt bygger värde eller bara större förluster."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Tjänar EN enhet pengar, och gör fler enheter helheten bättre eller sämre? Ett bolag kan växa omsättningen och till och med visa vinst medan varje enskild enhet, varje kund, butik eller maskin, går med förlust uppburet av något tillfälligt.",
+      "highlight": "Tjänar EN enhet pengar, och gör fler enheter helheten bättre eller sämre?",
+      "brodtext": [
+        "Bryt ned verksamheten till dess minsta repeterbara enhet och definiera den rätt först: för ett prenumerationsbolag är enheten en kund, för en butikskedja en butik, för en tillverkare kanske en produktlinje eller en fabrik. Ställ sedan en fråga: ger den här enheten över sin livstid in mer än den kostar?",
+        "Kärntalet är bidraget per enhet, intäkten från en enhet minus de rörliga och direkta kostnaderna för just den enheten. Det är vad varje enhet bidrar med för att täcka fasta kostnader och vinst. Är en enhet lönsam på egen hand är det bra att skala. Går en enhet med förlust förlorar skalning bara pengar snabbare, hur fort omsättningen än växer."
+      ],
+      "takeaway": "Ignorera den aggregerade historien tills du förstått en enda enhet. Visa mig ekonomin för en enda kund eller butik, sedan kan jag tänka på en miljon av dem."
+    },
+    {
+      "typ": "concept",
+      "kicker": "MOTORN PÅ MINSTA SKALA",
+      "titel": "Intäkt minus kostnad är vinst per enhet",
+      "visual": {
+        "typ": "flode",
+        "noder": [
+          { "etikett": "Intäkt per enhet" },
+          { "etikett": "Direkta kostnader", "operator": "minus" },
+          { "etikett": "Bidrag per enhet", "operator": "likamed", "accent": true }
+        ],
+        "figurtext": "Enhetens motor: vad en enda enhet ger in minus vad den kostar."
+      },
+      "forklaring": "Miljonen enheter ärver den enskilda enhetens ekonomi. Är grundenheten lönsam tillför varje ny enhet värde och du vill att bolaget växer fort. Är grundenheten trasig blir skalan bara ett större hål, och snabbare tillväxt betyder snabbare kapitalbränning. Ett bolag kan se olönsamt ut idag för att det spenderar tungt på att vinna nya enheter; är enhetsekonomin sund är den förlusten en investering, är den inte sund är det bara en förlust."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Samma marknad, motsatta utfall",
+      "underrubrik": "En stor slutmarknad förstärker bara det som redan är sant om enheten. Lönsam enhet plus stor marknad bygger värde, trasig enhet plus stor marknad bränner kapital.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Sund enhet: bidrag", "varde": 30, "accent": true },
+          { "kategori": "Trasig enhet: bidrag", "varde": -20 }
+        ],
+        "etiketter": "Bidrag per enhet, illustrativa enheter",
+        "figurtext": "Illustrativa tal som visar principen, inte verkliga siffror. Positivt bidrag skalar till värde, negativt bidrag skalar till förlust."
+      },
+      "slutsats": "Var djupt misstänksam mot tillväxt som kommer av att spendera mer på allt sämre enheter. Fråga om den marginella enheten, nästa kund eller butik som läggs till, är lika bra som genomsnittet, eftersom tillväxt ofta betyder att skrapa allt längre ned i efterfrågan."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TILLVÄXTENS KÄLLOR",
+      "titel": "Var kommer tillväxten ifrån och håller den?",
+      "brodtext": [
+        "Sund enhetsekonomi säger om det är värt att växa. Nästa fråga är vad som driver tillväxten, för källorna väger olika tungt. Omsättning växer genom pris, volym, nya kunder, nya marknader, nya produkter eller förvärv. Några kan upprepas år efter år, andra är engångsartade: du kan bara höja priset en bit och bara expandera till ett visst antal marknader.",
+        "Tre frågor reder ut vad du har framför dig. Är tillväxten organisk eller förvärvad? Organisk speglar oftast en sund, efterfrågad verksamhet, medan förvärvad kan maskera en stagnerande kärna och kostar riktiga pengar. Är den av hög kvalitet? Den bästa tillväxten är lönsam och kapitalsnål, den lägger till omsättning utan att proportionerligt lägga till kostnad. Och håller den? Frågan att ställa är enkel: kan samma källa fortfarande driva tillväxt om fem år?",
+        "En signal sticker ut. Prissättningskraft, förmågan att höja priser utan att tappa kunder, är en av de högsta tillväxtkällorna eftersom en prishöjning nästan inte kräver någon ny kostnad och därför nästan helt rinner ned till vinsten. Acceptera aldrig ett rubriktal för tillväxt utan att bryta ned det: ett aggregerat tal är ett svar utan motivering, och motiveringen är det enda som säger om tillväxten håller."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Ett bolag har trasig enhetsekonomi, varje enhet går med förlust, men en mycket stor slutmarknad. Vad gör snabb tillväxt då?",
+          "alternativ": [
+            "Bränner kapital snabbare, eftersom skalan bara mångfaldigar den förlust som redan finns i varje enhet",
+            "Räddar bolaget, eftersom stordriftsfördelar alltid gör enheten lönsam till slut",
+            "Saknar betydelse, eftersom en stor marknad i sig garanterar vinst"
+          ],
+          "ratt": [0],
+          "forklaring": "Miljonen enheter ärver den enskilda enhetens ekonomi. Trasig enhetsekonomi plus en stor marknad är ett effektivt sätt att bränna kapital, eftersom den stora marknaden bara förstärker det som redan är sant om enheten."
+        },
+        {
+          "typ": "single",
+          "fraga": "Två bolag växer båda omsättningen 20 procent. A växer organiskt med stabila marginaler, B:s organiska kärna är platt och hela ökningen kom från ett dyrt förvärv. Varför kan B vänta en otrevlig överraskning?",
+          "alternativ": [
+            "Tillväxten var köpt och kan vara noll nästa år utan något kvar att förvärva, så ett högt tillväxtpris förutsatte en motor som inte snurrar",
+            "Förvärvad tillväxt syns inte alls på omsättningsraden och är därför olaglig att redovisa",
+            "Bolag B kommer alltid att växa snabbare än A tack vare förvärvet"
+          ],
+          "ratt": [0],
+          "forklaring": "Organisk och förvärvad tillväxt ser likadana ut på omsättningsraden men skiljer sig i kvalitet. B:s stagnerande kärna överklistrad med förvärv kan ge noll tillväxt nästa år, och den som betalat hög multipel överraskas."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är tecken på sund tillväxt värd att betala för?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Varje enhet är tydligt lönsam och enhetsekonomin förbättras snarare än försämras med skala",
+            "Tillväxten kräver lite extra kapital och vinsten växer minst lika snabbt som omsättningen",
+            "Tillväxten kommer mest från förvärv medan den organiska kärnan är platt",
+            "Varje års tillväxt kräver allt större marknadsföring bara för att hålla samma takt"
+          ],
+          "ratt": [0, 1],
+          "forklaring": "Sund tillväxt vilar på en lönsam enhet och är organisk, lönsam och kapitalsnål. Att luta sig mot förvärv över en platt kärna eller på stigande spendering bara för att hålla takten är tvärtom varningstecken."
+        }
+      ]
+    }
+  ]
+}

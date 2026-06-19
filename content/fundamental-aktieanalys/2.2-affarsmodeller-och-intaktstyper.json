@@ -1,0 +1,97 @@
+{
+  "kapitel": 2,
+  "lektion": "2.2",
+  "titel": "Affärsmodeller och intäktstyper",
+  "niva": "Nybörjare",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven känna igen ett bolags affärsmodell och bedöma hur intäktens karaktär, återkommande mot cyklisk mot engångs, styr hur förutsägbar och värdefull verksamheten är.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 2.2",
+      "titel": "Affärsmodeller och intäktstyper",
+      "ingress": "Två bolag kan ha exakt samma omsättning och ändå vara olika mycket värda. Skillnaden ligger i intäktens karaktär."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Olika affärsmodeller har fundamentalt olika ekonomi, förutsägbarhet och värde, även vid exakt samma omsättning. Det är en av de första sakerna som skiljer den som vet vad du tittar på från den som bara läser tal.",
+      "highlight": "Olika affärsmodeller har fundamentalt olika ekonomi, förutsägbarhet och värde, även vid exakt samma omsättning.",
+      "brodtext": [
+        "En handfull modeller återkommer. Engångsförsäljning, där kunden köper en gång och du måste vinna nästa försäljning på nytt, som en möbeltillverkare. Prenumeration eller återkommande, där kunden betalar regelbundet för fortlöpande tillgång, som mjukvara, streaming eller ett gym. Transaktion eller marknadsplats, där du tar en andel av affärer mellan andra. Licens eller royalty, där du äger något andra betalar för att använda. Kapitalintensiv produktion, där du bygger dyra tillgångar för att tillverka varor, som ett stålverk eller ett telekomnät.",
+        "Var och en har sin egen rytm i intäkterna och sin egen grad av förutsägbarhet. Återkommande och prenumeration ger hög förutsägbarhet, eftersom du börjar varje år med större delen av förra årets intäkt redan i hus. Engångsförsäljning ger låg, eftersom du börjar nära noll varje period. Det är avgörande för värderingen: förutsägbar intäkt förtjänar en högre multipel.",
+        "Klassificera modellen först, lägg sedan på rätt lins. En läkare ställer diagnos innan behandlingen skrivs ut, och du gör likadant. Det du aldrig gör är att läsa samma rubrik på samma sätt oavsett modell. Tjugo procents tillväxt betyder vitt skilda saker i en klibbig återkommande modell, där det mesta redan är låst, och i en engångsmodell som måste vinna varje försäljning på nytt nästa år."
+      ],
+      "takeaway": "Se modellen bakom siffrorna först. Samma omsättningssiffra betyder olika saker beroende på om intäkten återkommer eller måste vinnas på nytt."
+    },
+    {
+      "typ": "concept",
+      "kicker": "INTÄKTENS KARAKTÄR",
+      "titel": "Återkommande mot cyklisk",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Återkommande", "text": "Folk betalar sitt abonnemang, sin försäkring och sin elräkning i goda tider som dåliga. Intäkten håller genom lågkonjunkturer för att den är kontrakterad, nödvändig eller klibbig. Golvet är högt." },
+          { "rubrik": "Cyklisk", "text": "Intäkten stiger och faller med konjunkturen, som bygg, bilar, stål, reklam eller lyxvaror. I en högkonjunktur ser bolaget fantastiskt ut, i en nedgång kan samma intäkt halveras." }
+        ],
+        "figurtext": "Återkommande mot cyklisk är ett spektrum, inte två fack: kontrakterad intäkt i ena änden, djupt cykliskt i den andra."
+      },
+      "forklaring": "Stabil, återkommande intäkt är värd långt mer per krona än intäkt som svänger våldsamt med ekonomin, eftersom förutsägbarhet sänker risken. Den prövande frågan: vad händer med intäkten i en rejäl lågkonjunktur? Är svaret inte mycket är golvet högt. Är svaret den kan halveras håller du ett cykliskt bolag och måste behandla det som ett."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Cyklikens fälla i multipeln",
+      "underrubrik": "Vid en cyklisk topp är vinsten hög, så P/E ser lågt ut och läses som billigt. Men toppvinsten är på väg att falla.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Topp", "varde": 10, "accent": true },
+          { "kategori": "Mittcykel", "varde": 5 },
+          { "kategori": "Botten", "varde": 1 }
+        ],
+        "etiketter": "Vinst per aktie (kr) över cykeln",
+        "figurtext": "Illustrativ. Vid pris 80 kr ger toppvinsten 10 kr ett P/E på 8, men mittcykelvinsten 5 kr ger det sanna P/E-talet 16."
+      },
+      "slutsats": "För cykliska bolag analyserar du normaliserad vinst, alltså mittcykel, inte senaste toppen eller botten. Du bevakar också balansräkningen hårt, eftersom ett cykliskt bolag med tung skuld kan gå under i en nedgång innan cykeln hinner vända. En återkommande-intäkt-värdering betalas aldrig för cyklisk vinst, hur stadig den råkar se ut just nu."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Två bolag växer båda 20 procent i år och har samma omsättning. Det ena är prenumererad mjukvara med låg churn, det andra säljer skräddarsydda engångsprojekt. Varför är det ett misstag att jämföra deras P/E-tal rakt av?",
+          "alternativ": [
+            "Förutsägbar, återkommande intäkt förtjänar en högre multipel än volatil intäkt som måste vinnas på nytt varje år",
+            "Mjukvarubolag har alltid lägre P/E än projektbolag",
+            "P/E går aldrig att använda för att jämföra två bolag"
+          ],
+          "ratt": [0],
+          "forklaring": "En krona förutsägbar återkommande intäkt är värd mer än en krona volatil engångsintäkt, så marknaden betalar rutinmässigt högre multiplar för den förra. Samma omsättningssiffra vilar på olika grund."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ett cykliskt bolag handlas till P/E 8 vid en konjunkturtopp och ser därför billigt ut. Varför är det ofta en fälla?",
+          "alternativ": [
+            "Toppvinsten i nämnaren är på väg att falla, så det låga P/E-talet bygger på en vinst som inte består",
+            "Cykliska bolag bör alltid handlas till högre P/E än stabila bolag",
+            "Ett P/E på 8 är matematiskt omöjligt för ett lönsamt bolag"
+          ],
+          "ratt": [0],
+          "forklaring": "Vid en cyklisk topp är vinsten hög, så P/E ser lågt ut, men toppvinsten faller snart. Det skenbart billiga köpet är därför farligt. Normalisera till mittcykelvinst innan du läser multipeln."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka påståenden stämmer med lektionens syn på intäkter och affärsmodeller?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Återkommande intäkt ger normalt hög förutsägbarhet eftersom året börjar med stor del av förra årets intäkt i hus",
+            "Cykliska bolag är alltid sämre investeringar än återkommande",
+            "Rätt metod är att klassificera modellen först och sedan lägga på de nyckeltal som driver just den"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Återkommande modeller ger hög förutsägbarhet, och man klassificerar först och väljer lins sedan. Men cykliskt är inte alltid sämre: ett cykliskt bolag köpt nära botten av någon som förstår cykeln kan vara en utmärkt investering."
+        }
+      ]
+    }
+  ]
+}
