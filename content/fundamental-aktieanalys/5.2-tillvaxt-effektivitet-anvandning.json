@@ -1,0 +1,97 @@
+{
+  "kapitel": 5,
+  "lektion": "5.2",
+  "titel": "Tillväxt, effektivitet och rätt användning",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven läsa tillväxttal och effektivitetstal efter kvalitet i stället för rubrik, och undvika den vanligaste fällan: att dra en slutsats av ett ensamt tal ur kontext.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 5.2",
+      "titel": "Tillväxt, effektivitet och rätt användning",
+      "ingress": "Ett nyckeltal säger nästan ingenting förrän du frågar vilken sorts tillväxt det är, hur hårt kapitalet arbetar, och i vilken kontext talet ska läsas."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Ett nyckeltal i sig är meningslöst. Det blir information först när det sätts i kontext.",
+      "highlight": "Ett nyckeltal i sig är meningslöst.",
+      "brodtext": [
+        "Det vanligaste analysmisstaget är att dra en slutsats av ett tal i isolering. P/E är 8, alltså billigt. Marginalen är 30 procent, alltså fint. Skulden är 3x, alltså riskfyllt. Var och en kan vara helt fel utan kontext.",
+        "Ett enskilt tal behöver tre sorters kontext för att bli en signal. Trend över tid: riktningen betyder oftast mer än nivån. Kollegor och bransch: ett tal är högt eller lågt bara mot rätt riktmärke. Affärsmodell: vissa tal är meningslösa för vissa modeller, churn för abonnemang, lageromsättning för en handlare.",
+        "Ovanpå kontexten kommer två vanor. Kombinera talen så att de korskollar varandra, inget enskilt fångar en verksamhet. Och minns att nyckeltal beskriver, de beslutar inte. Talet reser en fråga att undersöka. Marginalen föll är startpunkten för ett varför, inget annat."
+      ],
+      "takeaway": "Nyckeltalet är röken, verksamheten är elden. Talet säger dig var du ska titta. Slutsatsen drar du själv."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TILLVÄXTENS KVALITET",
+      "titel": "Samma takt, helt olika värde",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Högkvalitativ tillväxt", "text": "Organisk ur den befintliga verksamheten, lönsam med stabila eller stigande marginaler, och hållbar ur en repeterbar källa. Vinst och kontanter växer minst lika snabbt som omsättningen. Värd en premie." },
+          { "rubrik": "Lågkvalitativ tillväxt", "text": "Köpt genom förvärv som maskerar en platt kärna, olönsam med fallande marginaler, eller engångsartad. Finansierad med skuld och nya aktier. Möjligen värdeförstörande, inte värd en hög multipel." }
+        ],
+        "figurtext": "Samma rubriktakt kan vara endera. Kvaliteten avgör, inte takten."
+      },
+      "forklaring": "En tillväxttakt ensam säger nästan ingenting förrän du delat den i organisk mot förvärvad, lönsam mot olönsam, hållbar mot engångsartad. För mjukvaru- och tillväxtbolag är regeln om 40 en lins: omsättningstillväxt plus lönsamhetsmarginal i procent bör överstiga ungefär 40, där marginalen är FCF- eller rörelsemarginal, inte nettovinstmarginal. Den tvingar fram en samlad bedömning av tillväxt och lönsamhet. Behandla den som en tumregel."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Två vägar till samma avkastning",
+      "underrubrik": "Avkastning på kapital drivs av marginal gånger omsättningshastighet. Ett lyxvarumärke och en lågprishandlare kan nå samma ROA på helt olika sätt.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Märke: marginal 20%", "varde": 10 },
+          { "kategori": "Volym: marginal 4%", "varde": 10, "accent": true }
+        ],
+        "etiketter": "Avkastning på tillgångar i procent (ROA)",
+        "figurtext": "Illustrativa tal. Märke: 20% x 0,5 = 10. Volym: 4% x 2,5 = 10. Faller Volyms omsättning till 2,0x blir ROA 8 procent."
+      },
+      "slutsats": "Märke gör få försäljningar med feta marginaler, Volym tunna marginaler men cyklar kapitalet fem gånger så snabbt. Döm var och en på produkten av marginal och omsättningshastighet, inte på en faktor. Faller omsättningshastigheten medan marginalen håller är det en tidig varning: stigande lager kan signalera svagare efterfrågan innan det syns i vinsten."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "multi",
+          "fraga": "Vilka tre frågor avgör en tillväxttakts kvalitet?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Är tillväxten organisk eller förvärvad?",
+            "Är tillväxten lönsam eller olönsam?",
+            "Är tillväxten hållbar eller engångsartad?",
+            "Är tillväxten högre eller lägre än inflationen?"
+          ],
+          "ratt": [0, 1, 2],
+          "forklaring": "Högkvalitativ tillväxt är organisk, lönsam och hållbar. En takt säger nästan ingenting förrän du ställt de tre frågorna. Jämförelse med inflationen ingår inte i ramverket."
+        },
+        {
+          "typ": "single",
+          "fraga": "Bolag Märke har nettomarginal 20 procent och kapitalomsättning 0,5x. Vad blir ungefär avkastningen på tillgångar?",
+          "alternativ": [
+            "10 procent",
+            "20 procent",
+            "40 procent"
+          ],
+          "ratt": [0],
+          "forklaring": "Avkastning på tillgångar ungefär lika med nettomarginal gånger tillgångsomsättning, alltså 20 procent gånger 0,5 lika med 10 procent. En hög marginal med låg omsättningshastighet kan ge samma avkastning som en låg marginal med hög."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ett cykliskt bolag handlas till P/E 8 på toppen av sin cykel. Hur ska det låga talet tolkas?",
+          "alternativ": [
+            "Som dyrt, eftersom vinsten är på en topp och är på väg att falla",
+            "Som billigt, eftersom ett lågt P/E alltid signalerar ett fynd",
+            "Som rättvist värderat, eftersom P/E 8 ligger nära marknadssnittet"
+          ],
+          "ratt": [0],
+          "forklaring": "För ett cykliskt bolag på toppen är vinsten tillfälligt hög, så ett lågt P/E är i själva verket dyrt. Samma tal kan betyda billigt eller dyrt beroende på kontext."
+        }
+      ]
+    }
+  ]
+}

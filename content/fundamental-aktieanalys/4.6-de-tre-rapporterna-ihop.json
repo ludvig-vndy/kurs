@@ -1,0 +1,107 @@
+{
+  "kapitel": 4,
+  "lektion": "4.6",
+  "titel": "De tre rapporterna ihop",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven följa en händelse genom resultaträkning, balansräkning och kassaflöde och väga ihop dem till en bedömning av bolaget.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 4.6",
+      "titel": "De tre rapporterna ihop",
+      "ingress": "Resultaträkning, balansräkning och kassaflöde är inte tre dokument. De är tre vyer av samma verklighet, och de griper mekaniskt in i varandra."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Tre länkar håller ihop rapporterna. Nettovinsten minus utdelning ökar eget kapital. Kassaflödet startar i vinsten och stämmer av den till kontanter. Nettoförändringen av kontanter är lika med förändringen av kassaraden på balansräkningen.",
+      "highlight": "Tre länkar håller ihop rapporterna.",
+      "brodtext": [
+        "Resultaträkningen är bron som höjer eller sänker eget kapital över året: eget kapital vid årets slut är eget kapital vid start plus vinst minus utdelning. Kassaflödesanalysen börjar i nettovinsten och justerar för icke kontanta poster som avskrivningar och för förändringar i rörelsekapital. Och posterna under investering och finansiering ändrar sina motsvarigheter på balansräkningen: capex höjer anläggningstillgångarna, ny upplåning höjer skulderna, återköp sänker eget kapital.",
+        "Det som binder ihop allt är att balansräkningen alltid balanserar. Varje transaktion har två sidor, så varje förändring måste flöda igenom konsekvent. En enda affär krusar genom alla tre rapporterna. Eftersom de måste stämma överens blir varje inkonsekvens en signal."
+      ],
+      "takeaway": "Läs aldrig en rapport ensam. Spåra varje siffra vidare och kontrollera att de tre berättar samma historia."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FÖRSTA LÄNKEN",
+      "titel": "Vinsten flödar in i eget kapital",
+      "visual": {
+        "typ": "flode",
+        "noder": [
+          { "etikett": "Eget kapital vid start" },
+          { "etikett": "Vinst", "operator": "plus" },
+          { "etikett": "Utdelning", "operator": "minus" },
+          { "etikett": "Eget kapital vid slut", "operator": "likamed", "accent": true }
+        ],
+        "figurtext": "Resultaträkningen är bron mellan ingående och utgående eget kapital."
+      },
+      "forklaring": "Resultaträkningen lyfter eller sänker balansräkningens eget kapital över året. Redovisar ett bolag nettovinst men eget kapital inte växer ungefär som vinst minus utdelning, utan nyemission, då skaver något och glappet är en signal att gräva i."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Vinst utan kontanter",
+      "underrubrik": "En försäljning på kredit lyfter vinsten men inte kassan samma period.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Vinst i resultaträkningen", "varde": 100, "accent": true },
+          { "kategori": "Rörelsekapitaljustering", "varde": -100 },
+          { "kategori": "Operativt kassaflöde", "varde": 0 }
+        ],
+        "etiketter": "Effekt av en kreditförsäljning på 100, samma period",
+        "figurtext": "Illustrativa tal. Vinst plus 100, kundfordringar plus 100, kassaflöde 0."
+      },
+      "slutsats": "Säljer ett bolag varor på kredit för 100 stiger vinsten med 100, men pengarna har inte kommit in. Kundfordringarna ökar, rörelsekapitaljusteringen blir minus 100 och operativt kassaflöde blir 0. Kassaflödet visar ärligt att inga pengar ännu kommit in."
+    },
+    {
+      "typ": "concept",
+      "kicker": "EN HÄNDELSE, TRE ANSIKTEN",
+      "titel": "Mönstret över rapporterna är diagnosen",
+      "brodtext": [
+        "Samma ekonomiska händelse landar olika i de tre rapporterna. Tänk dig ett bolag som växer hårt och säljer mer på generösa kreditvillkor. I resultaträkningen stiger intäkt och vinst. På balansräkningen sväller kundfordringar och lager, alltså rörelsekapitalet, och om tillväxten lånefinansieras stiger även skuldsidan. I kassaflödet binder det växande rörelsekapitalet kontanter, så operativt kassaflöde släpar efter vinsten, och med capex kan fritt kassaflöde bli negativt.",
+        "Inget av ansiktena ljuger, de beskriver samma sak ur olika vinklar. Lönsam försäljning och svällande balansräkning och dränerad kassa kan alla vara sanna samtidigt. Det är kombinationen, inte den enskilda rapporten, som ställer diagnosen: växer bolaget självfinansierande, eller köper det tillväxt med kapital det inte själv genererar? Drar vyerna isär, en stark resultaträkning motsagd av ett svagt kassaflöde, blir du nyfiken snarare än avvisande och kräver en förklaring du tror på."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilken länk beskriver kopplingen mellan resultaträkningen och balansräkningen?",
+          "alternativ": [
+            "Nettovinsten minus utdelning ökar de balanserade vinstmedlen inom eget kapital",
+            "Avskrivningar läggs tillbaka för att stämma av vinsten mot kontanter",
+            "Nettoförändringen av kontanter är lika med förändringen av kassaraden"
+          ],
+          "ratt": [0],
+          "forklaring": "Resultaträkningen är bron som höjer eller sänker eget kapital över året: eget kapital vid årets slut är eget kapital vid start plus vinst minus utdelning."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ett bolag säljer varor på kredit för 100. Vad blir det operativa kassaflödet av just den affären samma period?",
+          "alternativ": [
+            "Plus 100, eftersom vinsten ökar med 100",
+            "0, eftersom rörelsekapitaljusteringen minus 100 tar ut vinsten plus 100",
+            "Minus 100, eftersom kundfordringarna ökar"
+          ],
+          "ratt": [1],
+          "forklaring": "Vinsten stiger med 100 men pengarna har inte kommit in, så kundfordringar ökar och rörelsekapitaljusteringen blir minus 100. Summan blir 0, kassaflödet visar ärligt att inga pengar ännu kommit in."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av följande är tecken på att de tre rapporterna hänger ihop på ett trovärdigt sätt?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Vinsten flödar rent in i ett växande eget kapital efter utdelning",
+            "Nettoförändringen av kontanter matchar kassaraden på balansräkningen",
+            "Tillgångarna växer utan någon synlig finansieringskälla"
+          ],
+          "ratt": [0, 1],
+          "forklaring": "Konsekvens är grönt: vinst som blir eget kapital och en kontantförändring som matchar kassaraden. Tillgångar som växer utan finansieringskälla är tvärtom en röd flagga."
+        }
+      ]
+    }
+  ]
+}

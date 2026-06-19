@@ -1,0 +1,106 @@
+{
+  "kapitel": 4,
+  "lektion": "4.5",
+  "titel": "Goodwill och eget kapital",
+  "niva": "Mellan",
+  "tid_min": 9,
+  "mal": "Efter lektionen kan eleven läsa balansräkningens mjuka poster kritiskt: bedöma kvaliteten i goodwill och immateriella tillgångar, räkna materiellt eget kapital, och se om kapitalet byggts internt eller tillförts utifrån.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 4.5",
+      "titel": "Goodwill och eget kapital",
+      "ingress": "Frågan är inte bara hur mycket eget kapital ett bolag har, utan vad det består av och hur det byggdes."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TILLGÅNGARNAS KVALITET",
+      "lead": "En stor del av många bolags tillgångar är inte fysisk alls. Den är goodwill och immateriella tillgångar, redovisningsposter som oftast uppstått genom förvärv.",
+      "highlight": "En stor del av många bolags tillgångar är inte fysisk alls.",
+      "brodtext": [
+        "Goodwill uppstår när ett bolag betalar mer för en verksamhet än det verkliga värdet av dess identifierbara nettotillgångar. Betalar du 1 000 för ett bolag vars nettotillgångar är värda 300 blir 700 goodwill. Ju mer ett bolag överbetalar för förvärv, desto mer goodwill staplas upp. Andra immateriella tillgångar är patent, varumärken, kundrelationer och aktiverad utveckling. Till skillnad från en fabrik eller kontanter har goodwill inget självständigt andrahandsvärde. Den är resten av ett köppris.",
+        "Goodwill skrivs inte av stadigt. I stället prövas den för nedskrivning och skrivs ned när den förvärvade verksamheten är värd mindre än sitt bokförda värde. De nedskrivningarna kommer ofta i dåliga tider, allt på en gång, och bekräftar att tidigare affärer förstörde värde. En nedskrivning är ett erkännande, i redovisningsform, att bolaget överbetalade."
+      ],
+      "takeaway": "Dela mentalt balansräkningen i verkligt stöd och goodwill eller immateriellt, och titta på materiellt eget kapital: eget kapital minus goodwill och immateriella tillgångar."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DEN IHÅLIGA-KAPITAL-FÄLLAN",
+      "titel": "En kudde som kan avdunsta",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Materiellt stöd", "text": "Kontanter, användbar egendom och utrustning backar verkligen verksamheten. De försvinner inte med en redovisningspost." },
+          { "rubrik": "Mjuka poster", "text": "Goodwill och immateriella tillgångar kan skrivas ned över en natt om tidigare affärer blev en besvikelse, utan att en enda krona kontanter rör sig." }
+        ],
+        "figurtext": "Samma rubriksiffra för eget kapital kan dölja olika kvalitet under ytan."
+      },
+      "forklaring": "Ett bolag kan redovisa 500 i eget kapital, men om 400 av det är goodwill är det materiella egna kapitalet bara 100. Skrivs goodwillen ned kan kudden du räknade med till stor del försvinna. Därför räcker inte frågan hur mycket eget kapital, du måste fråga: eget kapital bestående av vad?"
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Bakom rubriksiffran",
+      "underrubrik": "Två bolag redovisar samma 500 Mkr i eget kapital. Andelen goodwill och immateriellt avgör hur verklig kudden är.",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Materiellt eget kapital", "varde": 80, "accent": true },
+          { "etikett": "Goodwill och immateriellt", "varde": 420 }
+        ],
+        "figurtext": "Illustrativt: Bolag Uppblåst, eget kapital 500 Mkr varav 420 Mkr goodwill och immateriellt. Materiellt eget kapital blir 80 Mkr."
+      },
+      "slutsats": "Skrivs 300 Mkr goodwill ned faller Uppblåsts egna kapital från 500 till 200 över en natt, en kollaps på 60 procent i kudden, utan att en krona kontanter bytt händer. Ett bolag med lite goodwill påverkas knappt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EGET KAPITALETS SAMMANSÄTTNING",
+      "lead": "Eget kapital bär en historia. Den historien berättar om bolaget byggde sitt värde självt eller fick det överlämnat.",
+      "highlight": "Eget kapital bär en historia.",
+      "brodtext": [
+        "Eget kapital har två huvudkällor. Inbetalt kapital är pengar investerare lagt in genom att köpa nya aktier. Balanserade vinstmedel är den ackumulerade vinst verksamheten tjänat och valt att behålla. Båda ökar det egna kapitalet, men de betyder motsatta saker: balanserade vinstmedel är värde verksamheten genererade själv, inbetalt kapital är värde tillfört utifrån, och när det tas in genom nya aktier späder det ut befintliga ägare.",
+        "Utspädning är den avgörande ägarlinsen. Ger ett bolag ut nya aktier delas det totala värdet på fler aktier, så att varje befintlig aktie representerar en mindre bit. Därför kan totaler ljuga. Total nettovinst kan stiga medan vinsten per aktie stagnerar eller faller, om bolaget gett ut aktier längs vägen. Som ägare avgörs din avkastning av talen per aktie. Det omvända till emission är återköp, som krymper antalet aktier och koncentrerar ägandet."
+      ],
+      "takeaway": "Riktningen på antalet aktier är signalen. Stigande betyder utspädning, fallande betyder koncentration. Håll särskilt utkik efter aktiebaserad ersättning och konvertibler som källor till löpande utspädning."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "När uppstår goodwill på balansräkningen?",
+          "alternativ": [
+            "När ett bolag betalar mer för en verksamhet än det verkliga värdet av dess identifierbara nettotillgångar",
+            "När ett bolag tjänar mer än väntat under ett år",
+            "När ett bolag investerar i ny utrustning"
+          ],
+          "ratt": [0],
+          "forklaring": "Goodwill är överskottet mellan köpeskillingen och det verkliga värdet av de identifierbara nettotillgångarna. Betalar du 1 000 för ett bolag vars nettotillgångar är värda 300 blir 700 goodwill."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ett bolag redovisar 500 Mkr i eget kapital, varav 420 Mkr är goodwill och immateriella tillgångar. Vad är det materiella egna kapitalet?",
+          "alternativ": [
+            "500 Mkr",
+            "80 Mkr",
+            "920 Mkr"
+          ],
+          "ratt": [1],
+          "forklaring": "Materiellt eget kapital är eget kapital minus goodwill och immateriella tillgångar: 500 minus 420 = 80 Mkr. Det visar den hårdare kudden under de mjuka posterna."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är källor till löpande utspädning som du bör hålla utkik efter?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Aktiebaserad ersättning",
+            "Konvertibler",
+            "Återköp av egna aktier",
+            "Nyemissioner till låga priser"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "Aktiebaserad ersättning, konvertibler och nyemissioner ökar antalet aktier och späder ut ägarna. Återköp är tvärtom motsatsen, det krymper antalet aktier och koncentrerar ägandet."
+        }
+      ]
+    }
+  ]
+}
