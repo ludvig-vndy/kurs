@@ -1,0 +1,87 @@
+{
+  "kapitel": 6,
+  "lektion": "6.2",
+  "titel": "Bedöma och se moaten i siffrorna",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven bedöma en moats styrka och riktning och verifiera den i räkenskaperna, där en verklig fördel syns som uthålligt hög ROIC och stabila marginaler över många år.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 6.2",
+      "titel": "Bedöma och se moaten i siffrorna",
+      "ingress": "En moat är en berättelse om skyddad avkastning. Det du köper är hur länge skyddet håller, och en verklig fördel måste synas i räkenskaperna."
+    },
+    {
+      "typ": "reading",
+      "kicker": "STYRKA OCH RIKTNING",
+      "lead": "En moat har två dimensioner du bedömer var för sig: bredd, hur svår barriären är att korsa, och riktning, åt vilket håll den rör sig. Riktningen väger tyngst, för det du köper är framtiden för avkastningen.",
+      "highlight": "bredd, hur svår barriären är att korsa, och riktning, åt vilket håll den rör sig",
+      "brodtext": [
+        "Bredd handlar om hur dyr, långsam eller nära nog omöjlig barriären är för en konkurrent att ta sig över. Riktning handlar om trenden: stärks eller försvagas krafterna bakom fördelen. En bred men krympande moat kan vara farligare än en smal men stabil, eftersom erosion ofta accelererar så snart den börjat.",
+        "Den vanligaste vallgravsmördaren är teknisk förändring, följt av skiften i kundbeteende, av- eller omreglering och kapitalstarka nya aktörer. Historien är full av brutna fördelar som såg solida ut ända fram till skiftet: dagstidningarnas radannonser, Kodaks fotofilm, Nokia och BlackBerry. De bästa bolagen breddar i stället aktivt sin moat; ett bolag som slutat investera och skördar fördelen för kortsiktig vinst är ofta ett vars fördel redan börjat brytas."
+      ],
+      "takeaway": "Nöj dig inte med frågan om en moat finns. Fråga hur bred den är och åt vilket håll den är på väg."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VERIFIERA I SIFFRORNA",
+      "titel": "Räkenskaperna är domen över berättelsen",
+      "forklaring": "En moat är i grunden en berättelse, och berättelser kan vara önsketänkande. Disciplinen som håller dig ärlig är att verifiera fördelen i siffrorna. Logiken är enkel: en moat skyddar hög avkastning från konkurrens, så beviset på att den finns är att den höga avkastningen överlevde, år efter år, trots konkurrensen. Det finansiella fingeravtrycket har fyra drag: hög ROIC upprätthållen över tio år och mer, höga och stabila brutto- och rörelsemarginaler, påvisbar prissättningskraft, och stabilitet genom nedgångar. Säger berättelse och siffror olika saker, lita på siffrorna."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Uthålligheten avgör, inte nivån idag",
+      "underrubrik": "Två bolag kan visa samma ROIC i år. Det som skiljer dem är banan över tid: en fördel som håller mot en som tyst eroderar.",
+      "visual": {
+        "typ": "linjediagram",
+        "serier": [
+          { "namn": "Bred, växande moat", "stil": "heldragen", "accent": true, "punkter": [20, 20, 21, 21, 22, 22, 22, 22, 22, 22, 22] },
+          { "namn": "Eroderande moat", "stil": "streckad", "punkter": [18, 18, 17, 17, 16, 15, 14, 13, 12, 11, 10] }
+        ],
+        "figurtext": "Illustrativ. ROIC i procent över tio år. En uthållig fördel håller avkastningen hög, en eroderande glider tyst nedåt mot kapitalkostnaden."
+      },
+      "slutsats": "En ögonblicksbild gör de två bolagen lika. Trenden avslöjar en ränta-på-ränta-maskin och en smältande isbit. Stabila eller stigande marginaler och ROIC signalerar en moat som håller, en tyst flerårig nedgång är den tidiga varningen på en som börjat brytas. Men siffrorna blickar bakåt, så kombinera dem alltid med frågan vad som skulle kunna bryta fördelen härnäst."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför kan en bred men krympande moat vara farligare än en smal men stabil?",
+          "alternativ": [
+            "Det är riktningen, inte den nuvarande bredden, som avgör avkastningens framtid",
+            "En bred moat är alltid dyrare att underhålla än en smal",
+            "Smala moats syns aldrig i räkenskaperna"
+          ],
+          "ratt": [0],
+          "forklaring": "Det du köper är framtiden för avkastningen, och erosion accelererar ofta så snart den börjat. Därför väger riktningen tyngre än dagens bredd."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket finansiellt avtryck väger tyngst som bevis på att en verklig moat finns?",
+          "alternativ": [
+            "Hög ROIC upprätthållen över tio år och mer",
+            "En enstaka kvartalsrapport med rekordvinst",
+            "Snabbt stigande omsättning under det senaste året"
+          ],
+          "ratt": [0],
+          "forklaring": "Hög ROIC som hållit i ett decennium väger tyngst, just för att konkurrens som hade kunnat erodera avkastningen inte har gjort det. Ett enstaka bra år räcker inte."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa stärker tilltron till att en moat är verklig och hållbar?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Höga och stabila marginaler och ROIC som hållit genom nedgångar",
+            "Bolaget har slutat investera i fördelen och skördar den för kortsiktig vinst",
+            "Påvisbar prissättningskraft, priser som höjts utan att kunder försvunnit",
+            "Berättelsen om en bred moat trots en flerårig nedgång i marginaler och ROIC"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Avkastning som håller genom nedgångar visar att fördelen är strukturell, och prissättningskraft bekräftar att kunderna stannar. Att skörda fördelen eller hävda den trots eroderande siffror är tvärtom varningstecken; lita på siffrorna framför berättelsen."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "kapitel": 7,
+  "lektion": "7.2",
+  "titel": "Kapitalallokering",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven bedöma hur en ledning fördelar bolagets kontanter mellan de fem alternativen, och avgöra vad som skapar respektive förstör värde per aktie.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 7.2",
+      "titel": "Kapitalallokering",
+      "ingress": "Vad ledningen gör med bolagets kontanter avgör ofta lika mycket som verksamheten själv, och är förmodligen dess enskilt viktigaste ansvar."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DISCIPLINEN",
+      "lead": "Ett bolag som tjänar pengar har i grunden fem saker det kan göra med kontanterna: återinvestera i verksamheten, förvärva andra bolag, betala av skuld, dela ut, och köpa tillbaka egna aktier. Kapitalallokering är disciplinen att välja bland dem så att värdet per aktie växer mest.",
+      "highlight": "Kapitalallokering är disciplinen att välja bland dem så att värdet per aktie växer mest.",
+      "brodtext": [
+        "Den styrande principen är avkastningen på den sista kronan. En rationell allokerare frågar, för varje krona: var skapar den här mest värde per aktie, och riktar den dit. Kan verksamheten återinvestera till hög avkastning är det motorn i en ränta-på-ränta-maskin. Kan den inte placera en krona över sin kapitalkostnad skapar det mer värde att återföra den än att tvinga fram lågavkastande tillväxt.",
+        "De bästa allokerarna är osentimentala och flexibla. De återinvesterar tungt när avkastningen är hög, köper tillbaka aktier när de är billiga, gör förvärv bara till goda priser, amorterar när det är klokt, och återför kontanter när de inte har något bättre för sig. Egot styr dem inte: de jagar inte storlek för storlekens skull."
+      ],
+      "takeaway": "Två i grunden identiska verksamheter kan ge vitt skilda ägaravkastningar, enbart utifrån hur skickligt deras ledare fördelar kapitalet."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DE FEM ALTERNATIVEN",
+      "titel": "Vart kontanterna går",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Återinvestera", "varde": 30, "accent": true },
+          { "etikett": "Förvärva", "varde": 20 },
+          { "etikett": "Betala av skuld", "varde": 15 },
+          { "etikett": "Dela ut", "varde": 20 },
+          { "etikett": "Återköp", "varde": 15 }
+        ],
+        "figurtext": "De fem alternativen för bolagets kontanter. Andelarna är illustrativa, inte en rekommenderad fördelning."
+      },
+      "forklaring": "Var och en har sin egen avkastningsprofil. Återinvestering är kraftfullast när bolaget kan plöja tillbaka kapital till hög avkastning med en lång bana framför sig. Att betala av skuld avriskar och ger en avkastning lika med den sparade räntan. Utdelning och återköp återför kontanter när bolaget inte kan återinvestera väl. Förvärv kan skapa värde till vettiga priser, men förstör det oftast genom överbetalning. Disciplinen ligger i att jämföra alternativen ärligt, utan böjelse för tillväxt som förstör värde."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Förvärv: pris avgör, inte storlek",
+      "underrubrik": "Ett förvärv skapar värde bara om köparen betalar mindre än verksamheten är värd för den. Överbetalning är normalfallet.",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Disciplinerad serieförvärvare", "text": "Köper små, ofta oglamorösa verksamheter till låga multiplar, ofta, och plöjer tillbaka kassaflödet i fler likadana affärer. Koncernens ROIC håller, och värdet per aktie växer med ränta på ränta." },
+          { "rubrik": "Imperiebyggare", "text": "Gör stora, dyra affärer för att växa snabbt, överbetalar, staplar på goodwill och skuld, och jagar storlek. Omsättningen skjuter i höjden men värdet per aktie går ingenstans." }
+        ],
+        "figurtext": "Samma etikett, förvärvsbolag, men motsatt kvalitet."
+      },
+      "slutsats": "Överbetalning lämnar spår: svällande goodwill, stigande skuld, fler aktier, fallande ROIC och goodwillnedskrivningar. Bedöm en förvärvare på priset den betalar och avkastningen den tjänar, inte på hur mycket den köper."
+    },
+    {
+      "typ": "reading",
+      "kicker": "ÅTERFÖRA KONTANTER",
+      "lead": "Ett återköp är bara bolaget som köper en av sina egna aktier, så priset är allt. Det skapar värde om aktien köps under sitt värde, och förstör värde om priset ligger över.",
+      "highlight": "priset är allt",
+      "brodtext": [
+        "Här lurar det vanligaste misslyckandet, den procykliska återköpsfällan: bolag köper tungt när verksamheten blomstrar och aktien är hög, och slutar när aktien är billig i en nedgång. Att köpa högt och inte lågt förstör värde. De bästa allokerarna gör tvärtom.",
+        "För utdelning är hållbarhet i stället nyckelfrågan. En utdelning är värdefull bara om den är bekvämt täckt av fritt kassaflöde med marginal. En andel nära eller över 100 procent, eller en lånefinansierad utdelning, är en risk. En hög direktavkastning imponerar inte, hållbarheten bakom den gör det."
+      ],
+      "takeaway": "Den disciplinerade allokeraren väljer rationellt: återköp när aktien är billig, utdelning när den inte är det eller när ägarna värdesätter pålitlig inkomst."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är den styrande principen när en rationell allokerare väljer mellan de fem alternativen?",
+          "alternativ": [
+            "Att alltid prioritera tillväxt, eftersom större bolag är mer värda",
+            "Avkastningen på den sista kronan, alltså var den skapar mest värde per aktie",
+            "Att fördela kontanterna jämnt över alla fem för att sprida risken"
+          ],
+          "ratt": [1],
+          "forklaring": "Den rationella allokeraren frågar för varje krona var den skapar mest värde per aktie. Kan kapitalet inte placeras över kapitalkostnaden skapar det mer värde att återföra det än att tvinga fram lågavkastande tillväxt."
+        },
+        {
+          "typ": "single",
+          "fraga": "När skapar ett återköp av egna aktier värde?",
+          "alternativ": [
+            "Alltid, eftersom färre aktier alltid är bättre för ägarna",
+            "Bara när bolaget köper sin aktie under dess värde",
+            "När aktien är som dyrast och bolaget har mest självförtroende"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett återköp är bolaget som köper en av sina egna aktier, så priset är allt. Det skapar värde under aktiens värde och förstör värde över. Den procykliska fällan är att köpa högt och sluta lågt."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka finansiella spår avslöjar ofta en imperiebyggare som överbetalat?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "En balansräkning som sväller av goodwill, stigande skuld och fler aktier",
+            "Koncernens ROIC som faller när affärerna görs",
+            "Goodwillnedskrivningar som i efterhand erkänner att en affär förstörde värde",
+            "Snabbt växande omsättning från de stora affärerna"
+          ],
+          "ratt": [0, 1, 2],
+          "forklaring": "Överbetalning lämnar spår: svällande goodwill, stigande skuld och utspädning, fallande ROIC, och goodwillnedskrivningar. Snabbt växande omsättning säger inget om värdet per aktie, det är just det imperiebyggaren jagar."
+        }
+      ]
+    }
+  ]
+}

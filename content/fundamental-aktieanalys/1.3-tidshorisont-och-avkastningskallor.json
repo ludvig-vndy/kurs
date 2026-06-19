@@ -1,0 +1,108 @@
+{
+  "kapitel": 1,
+  "lektion": "1.3",
+  "titel": "Tidshorisont och avkastningens källor",
+  "niva": "Nybörjare",
+  "tid_min": 9,
+  "mal": "Efter lektionen kan eleven bryta ned sin avkastning i vinsttillväxt, utdelning och multipelförändring, och se hur tidshorisonten flyttar tyngdpunkten från det marknaden bestämmer till det verksamheten levererar.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 1.3",
+      "titel": "Tidshorisont och avkastningens källor",
+      "ingress": "Hur länge du tänker äga en aktie avgör i tysthet varifrån din avkastning kommer, och om du kan analysera den eller bara hoppas."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Över en kort period handlar avkastningen mest om humör: bestämde sig marknaden för att betala mer eller mindre för samma bolag. Över en lång period handlar den mest om verksamheten: tjänade bolaget mer och delade ut mer under åren.",
+      "highlight": "Över en kort period handlar avkastningen mest om humör",
+      "brodtext": [
+        "Din tidshorisont är den enskilt största faktorn som avgör vilken strategi som ens är möjlig för dig, och de flesta väljer den aldrig medvetet. Horisonten avgör i tysthet vilka bolag som är vettiga, hur mycket svängningar du står ut med, och om ränta på ränta över huvud taget får verka. Två investerare kan köpa exakt samma aktie: den ena tjänar pengar, den andra förlorar, på grund av hur länge de tänkte behålla den.",
+        "På kort sikt är du utlämnad åt stämningsläget, som ingen kan förutsäga. På lång sikt är du knuten till fundamenta, som du kan analysera. En lång horisont flyttar dig från den del du inte kan styra till den du kan."
+      ],
+      "takeaway": "Gör horisonten till ett medvetet val i stället för en slump, för den avgör om du kan analysera din avkastning eller bara hoppas på den."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE KÄLLOR",
+      "titel": "Varifrån avkastningen faktiskt kommer",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Vinsttillväxt", "varde": 45, "accent": true },
+          { "etikett": "Utdelning", "varde": 20, "accent": true },
+          { "etikett": "Multipelförändring", "varde": 35 }
+        ],
+        "figurtext": "Illustrativa proportioner. Vinsttillväxt och utdelning går att analysera, multipelförändringen styrs av marknadens humör."
+      },
+      "forklaring": "Avkastningen har tre källor: vinsttillväxt, utdelning och förändring i multipeln, alltså vad marknaden betalar per krona vinst. De två första bottnar i verksamheten och går att bedöma i förväg. Den tredje är marknadens stämningsläge, som ingen kan förutsäga. Tiden förändrar källornas inbördes vikt dramatiskt."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Samma verksamhet, två olika år",
+      "underrubrik": "Över ett år kan multipelförändringen överväldiga allt. Över tio år gör verksamheten det tunga jobbet och humöret hamnar i bakgrunden.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Ett år, multipeln faller", "varde": -12, "accent": true },
+          { "kategori": "Ett år, multipeln oförändrad", "varde": 10 },
+          { "kategori": "Per år över tio år", "varde": 10 }
+        ],
+        "etiketter": "Ungefärlig årsavkastning i procent",
+        "figurtext": "Illustrativt räkneexempel. Vinsten växer 10 procent. Faller multipeln från P/E 15 till P/E 12 blir ettårsavkastningen omkring minus 12 procent, samma goda verksamhet men ett negativt år."
+      },
+      "slutsats": "Ju längre du håller, desto mer är din avkastning bolagets egen prestation och desto mindre marknadens åsikt om den. Ränta på ränta är motorn som bara går på tid, och nästan all magi sker sent."
+    },
+    {
+      "typ": "reading",
+      "kicker": "OMDÖMET",
+      "lead": "Tålamod är inte en dygd i sig. Det är en multiplikator, och den multiplicerar med vad verksamheten är.",
+      "highlight": "Tålamod är inte en dygd i sig.",
+      "brodtext": [
+        "En lång horisont är en strukturell fördel, ibland kallad tidsarbitrage. De flesta på marknaden tänker i kvartal, och den kortsiktigheten skapar felprissättningar: bolag dumpas för att nästa kvartal ser svagt ut fastän nästa decennium ser fint ut. Med en äkta lång horisont kan du köpa det de otåliga slänger ifrån sig.",
+        "Men acceptera den hårda sanningen: en lång horisont hjälper bara om verksamheten är uthållig. Tålamod med en verksamhet som växer med ränta på ränta är en superkraft. Tålamod med en verksamhet i förfall är bara ett långsamt sätt att se värdet avdunsta. Du har bara råd att vara tålmodig med något som är värt att vänta på."
+      ],
+      "takeaway": "Bestäm en horisont för varje innehav och ett skäl till att den passar verksamheten, annars är din långsiktighet bara hopp."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad driver mest av avkastningen på kort sikt jämfört med lång sikt?",
+          "alternativ": [
+            "Verksamheten på kort sikt, humöret på lång sikt",
+            "Humöret (multipeln) på kort sikt, verksamheten på lång sikt",
+            "Utdelningar på kort sikt, multipeln på lång sikt"
+          ],
+          "ratt": [1],
+          "forklaring": "Kort sikt domineras av marknadens humör, alltså multipelförändringar. Ju längre du håller, desto mer blir avkastningen bolagets egen prestation: vinsttillväxt och utdelning."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ett bolag växer vinsten 10 procent på ett år men aktien faller. Vad har troligen hänt?",
+          "alternativ": [
+            "Bolaget delade ut för mycket",
+            "Marknaden värderade ned multipeln, till exempel från P/E 18 till 14",
+            "Vinsttillväxt sänker alltid kursen på kort sikt"
+          ],
+          "ratt": [1],
+          "forklaring": "Över ett år kan multipelförändringen överväldiga allt. God verksamhet kan ge ett negativt år om marknaden blir nervös och betalar mindre per krona vinst."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av avkastningens tre källor går att analysera i förväg, snarare än att bara hoppas på?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Vinsttillväxt",
+            "Utdelning",
+            "Multipelförändring"
+          ],
+          "ratt": [0, 1],
+          "forklaring": "Vinsttillväxt och utdelning bottnar i verksamheten och går att bedöma. Multipelförändringen är marknadens stämningsläge, som ingen kan förutsäga, därför går den inte att analysera fram."
+        }
+      ]
+    }
+  ]
+}

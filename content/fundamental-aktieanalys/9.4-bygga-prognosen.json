@@ -1,0 +1,110 @@
+{
+  "kapitel": 9,
+  "lektion": "9.4",
+  "titel": "Att bygga prognosen",
+  "niva": "Avancerad",
+  "tid_min": 11,
+  "mal": "Efter lektionen kan eleven bygga en hederlig kassaflödesprognos med antaganden om tillväxt och marginaler förankrade i historik och affärslogik i stället för i önsketänkande.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 9.4",
+      "titel": "Att bygga prognosen",
+      "ingress": "Maskinen är bara så bra som talen du matar in. Diskonteringen är aritmetik, men prognosen är omdöme, och det är där självbedrägeriet bor."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "En prognos är disciplinerat affärsomdöme satt i siffror. Varje antagande om tillväxt, marginal och återinvestering ska gå att förankra i vad verksamheten gjort och i dess kvalitet, aldrig i vad du hoppas.",
+      "highlight": "En prognos är disciplinerat affärsomdöme satt i siffror.",
+      "brodtext": [
+        "För att projicera fritt kassaflöde antar du några drivkrafter och bygger kassaflödet år för år ur dem: omsättningens tillväxt, rörelsemarginalen, skatten och återinvesteringen. Var och en kräver ett uttalat antagande, och tillväxten är oftast den viktigaste och den mest missbrukade.",
+        "Det är här din kvalitetsanalys betalar sig. Vad har tillväxten faktiskt varit? Vilka marginaler har verksamheten hållit, och stödjer dess vallgrav dem framåt? En verksamhet med hög avkastning och lång bana kan motivera högre, mer uthållig tillväxt. En svag verksamhet kan det inte. Låt prognosen bli det finansiella uttrycket för ditt kvalitetsomdöme."
+      ],
+      "takeaway": "Få verksamheter växer snabbt för evigt. Konkurrens och storlek bromsar dem, så en hederlig prognos låter tillväxten avta mot en hållbar takt."
+    },
+    {
+      "typ": "concept",
+      "kicker": "INTERN KONSISTENS",
+      "titel": "Tillväxt måste finansieras",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Hederlig prognos", "text": "Tillväxt, marginaler och återinvestering förankrade i historik och kvalitet. Tillväxten finansieras av rimlig återinvestering till en trolig avkastning på det nya kapitalet." },
+          { "rubrik": "Internt inkonsekvent", "text": "Hög tillväxt parad med nära noll investeringar. Mer omsättning binder mer rörelsekapital och mer kapacitet, så att låta bolaget växa snabbt nästan gratis går inte ihop." }
+        ],
+        "figurtext": "Tillväxt, återinvestering och avkastning måste hänga ihop."
+      },
+      "forklaring": "Du kan inte anta hög tillväxt och nära noll investeringar samtidigt. Knyt ihop tillväxt, återinvestering och avkastning, och kontrollera att den implicerade avkastningen på det nya kapitalet håller. En prognos som låter bolaget växa snabbt nästan gratis är inte hederlig, bara optimistisk."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Banan som mattas av",
+      "underrubrik": "En hederlig prognos låter tillväxten avta mot en hållbar takt. Ett bolag som gjorde 100 Mkr i fritt kassaflöde och vuxit runt 8 procent om året projiceras med samma takt i fem år.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "År 1", "varde": 108 },
+          { "kategori": "År 2", "varde": 117 },
+          { "kategori": "År 3", "varde": 126 },
+          { "kategori": "År 4", "varde": 136 },
+          { "kategori": "År 5", "varde": 147, "accent": true }
+        ],
+        "etiketter": "Fritt kassaflöde, Mkr",
+        "figurtext": "Illustrativ. Påhittade tal för att visa principen: 8 procent om året från 100 Mkr."
+      },
+      "slutsats": "De här 8 procenten måste finansieras: prognosen antar implicit att bolaget plöjer tillbaka nog för att bära mer omsättning varje år. Antog du i stället 8 procents tillväxt med nära noll återinvestering vore prognosen internt inkonsekvent."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TVÅ SYNDER",
+      "lead": "Två klassiska synder lurar längs vägen. Hockeyklubban antar att en kämpande verksamhet plötsligt accelererar utan konkret skäl. Naiv extrapolering projicerar ett toppår eller en tillfälligt het takt rakt ut i oändligheten. Båda blåser upp värdet.",
+      "highlight": "Båda blåser upp värdet.",
+      "brodtext": [
+        "Ställ den hederliga prognosen mot en hockeyklubba. Den disciplinerade projicerar 8 procent och når runt 147 Mkr år fem. Den överoptimistiska antar att tillväxten accelererar till 20 procent med vidgande marginaler, vilket trycker upp fritt kassaflöde år fem till runt 250 Mkr i stället, helt utan grund för accelerationen. Samma verksamhet, men hockeyklubban antar en framtid bevisen inte bär.",
+        "Prognosen är platsen där din egen optimism är farligast, så var medvetet misstänksam mot dig själv. Eftersom optimism är standardläget bör du luta konservativt och välja antaganden du vore bekväm att försvara rad för rad. Bygg gärna ett medvetet konservativt grundfall först och använd det som ankare, innan du ens tittar på de gladare scenarierna."
+      ],
+      "takeaway": "Felet sitter i prognosen som tyst antar storhet, långt från diskonteringen. Får du prognosen ärlig spelar resten mindre roll. Får du den att ljuga spelar resten ingen roll alls."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad menas med en hockeyklubba i en prognos?",
+          "alternativ": [
+            "Att låta tillväxten avta mot en hållbar takt över tid",
+            "Att anta att en kämpande verksamhet plötsligt accelererar utan konkret skäl",
+            "Att prognostisera fritt kassaflöde i stället för vinst"
+          ],
+          "ratt": [1],
+          "forklaring": "Hockeyklubban antar att tillväxt och marginaler hoppar uppåt utan grund i bevisen, och blåser därmed upp värdet. Hederlig prognostisering låter i stället tillväxten avta mot en hållbar takt."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är hög tillväxt parad med nära noll återinvestering en intern inkonsekvens?",
+          "alternativ": [
+            "För att tillväxt kräver kapital: mer omsättning binder mer rörelsekapital och kräver mer kapacitet",
+            "För att återinvestering alltid sänker marginalen",
+            "För att skatten då blir för hög"
+          ],
+          "ratt": [0],
+          "forklaring": "Tillväxt måste finansieras. En prognos som låter bolaget växa snabbt nästan gratis är internt inkonsekvent: tillväxt, återinvestering och avkastning måste hänga ihop."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa kännetecknar en hederlig prognos?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Tillväxt och marginaler förankrade i verksamhetens faktiska historik och kvalitet",
+            "Tillväxt som avtar mot en hållbar takt i stället för en förlängd het period",
+            "Marginaler som vidgas utan att konkurrensen skulle tillåta det",
+            "Ett konservativt grundfall du vore bekväm att motivera rad för rad"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "En hederlig prognos förankras i historik och kvalitet, låter tillväxten avta mot en hållbar takt och vilar på ett försvarbart konservativt grundfall. Marginaler som vidgas utan stöd i konkurrensen är tvärtom ett varningstecken."
+        }
+      ]
+    }
+  ]
+}
