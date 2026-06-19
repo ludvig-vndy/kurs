@@ -20,7 +20,7 @@ const gateModules = modules.map((m) => ({ key: m.key, lessonIds: m.lessonIds }))
 const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
 ---
 
-<AppShell title="Hem — Fundamental aktieanalys" active="hem" maxWidth={1000}>
+<AppShell title="Hem: Fundamental aktieanalys" active="hem" maxWidth={1000}>
   <!-- JSON data blobs for client script -->
   <script type="application/json" data-dash-lessons set:html={JSON.stringify(dashLessons)} />
   <script type="application/json" data-dash-modules set:html={JSON.stringify(gateModules)} />
@@ -77,7 +77,7 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
         <div class="kicker kicker--mint">ÄGARBOKEN · ANALYSVERKTYG</div>
         <div class="tool-card__title">Sju steg innan du köper en aktie</div>
         <p class="tool-card__text">
-          Du fyller i, poängen räknas ut medan du arbetar, och allt vägs ihop till en hållning — med krav på felmarginal. Tänk som ägare, inte aktiehandlare.
+          Du fyller i, poängen räknas ut medan du arbetar, och allt vägs ihop till en hållning med krav på felmarginal. Tänk som ägare, inte aktiehandlare.
         </p>
         <div class="tool-tags">
           <span class="tool-tag">Checklista</span>
@@ -92,6 +92,16 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
       <span class="arrow-btn" aria-hidden="true">→</span>
     </a>
   </div>
+
+  <!-- ===== Fokus entry ===== -->
+  <a class="fokus-card" href="/fokus" aria-label="Fokus: fundamental aktieanalys">
+    <div class="fokus-card__body">
+      <div class="kicker kicker--mint">NYTT</div>
+      <div class="fokus-card__title">Fokus: fundamental aktieanalys</div>
+      <p class="fokus-card__text">En lugn, stegvis lektionsupplevelse. Kapitel 1 ar klart.</p>
+    </div>
+    <span class="fokus-card__arrow" aria-hidden="true">›</span>
+  </a>
 
   <!-- ===== "Härnäst" row ===== -->
   <div class="next-row">
@@ -422,6 +432,57 @@ const firstHref = lessons.length ? lessonHref(lessons[0]) : '/oversikt';
   .btn-outline:hover {
     border-color: var(--mint);
     background: var(--mint-soft);
+  }
+
+  /* ===== Fokus card ===== */
+  .fokus-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    border-left: 3px solid var(--mint);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    margin-bottom: 28px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.18s, box-shadow 0.18s;
+    animation: riseF 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
+    animation-delay: 0.28s;
+  }
+  .fokus-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--mint);
+  }
+  .fokus-card__body {
+    flex: 1;
+    min-width: 0;
+  }
+  .fokus-card__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .fokus-card__text {
+    margin: 0;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .fokus-card__arrow {
+    flex: none;
+    font-size: 22px;
+    color: var(--mint);
+    transition: transform 0.15s;
+  }
+  .fokus-card:hover .fokus-card__arrow {
+    transform: translateX(2px);
   }
 
   /* ===== Mobile ===== */

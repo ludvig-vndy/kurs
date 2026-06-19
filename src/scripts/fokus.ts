@@ -160,7 +160,7 @@ function initFokus(article: HTMLElement) {
       }
     } else {
       if (index === 0) {
-        window.location.href = '/oversikt';
+        window.location.href = '/fokus';
       } else {
         show(index - 1, 'prev');
       }

@@ -1,0 +1,279 @@
+---
+import AppShell from '../../layouts/AppShell.astro';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+const courseRaw = readFileSync(
+  path.resolve(process.cwd(), 'content/fundamental-aktieanalys/course.json'),
+  'utf-8'
+);
+
+interface Lektion {
+  lektion: string;
+  titel: string;
+  niva: string;
+  tid_min: number;
+  status: 'klar' | 'kommande';
+  fil: string;
+}
+
+interface Kapitel {
+  nummer: number;
+  titel: string;
+  lektioner: Lektion[];
+}
+
+interface Kurs {
+  kurs: string;
+  titel: string;
+  beskrivning: string;
+  kapitel: Kapitel[];
+}
+
+const kurs: Kurs = JSON.parse(courseRaw);
+---
+
+<AppShell title="Fundamental aktieanalys" active="kurs" maxWidth={880}>
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Brodsmula">
+    <a href="/hem" class="breadcrumb__link">Hem</a>
+    <span class="breadcrumb__sep" aria-hidden="true">›</span>
+    <span class="breadcrumb__current">Fokus</span>
+  </nav>
+
+  <!-- Course header -->
+  <div class="course-header">
+    <h1 class="course-title">{kurs.titel}</h1>
+    <p class="course-ingress">{kurs.beskrivning}</p>
+  </div>
+
+  <!-- Chapter list -->
+  <div class="chapter-list">
+    {kurs.kapitel.map((kap) => (
+      <div class="chapter">
+        <div class="chapter__head">
+          <span class="chapter__kicker">KAPITEL {kap.nummer}</span>
+          <h2 class="chapter__title">{kap.titel}</h2>
+        </div>
+
+        <div class="lesson-list">
+          {kap.lektioner.map((l) =>
+            l.status === 'klar' ? (
+              <a class="lesson-row lesson-row--open" href={`/fokus/${l.lektion}`}>
+                <span class="lesson-row__num">{l.lektion}</span>
+                <span class="lesson-row__title">{l.titel}</span>
+                <span class="lesson-row__niva">{l.niva}</span>
+                <span class="lesson-row__time">{l.tid_min} min</span>
+                <span class="lesson-row__arrow" aria-hidden="true">›</span>
+              </a>
+            ) : (
+              <div class="lesson-row lesson-row--kommande" aria-label={`${l.titel} (kommande)`}>
+                <span class="lesson-row__num">{l.lektion}</span>
+                <span class="lesson-row__title">{l.titel}</span>
+                <span class="lesson-row__niva">{l.niva}</span>
+                <span class="lesson-row__time">{l.tid_min} min</span>
+                <span class="lesson-row__lock" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  Kommande
+                </span>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</AppShell>
+
+<style>
+  /* ---- Breadcrumb ---- */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 28px;
+    color: var(--muted);
+  }
+  .breadcrumb__link {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--dur-micro) var(--ease-standard);
+  }
+  .breadcrumb__link:hover {
+    color: var(--text);
+  }
+  .breadcrumb__sep {
+    color: var(--faint);
+  }
+  .breadcrumb__current {
+    color: var(--text);
+  }
+
+  /* ---- Course header ---- */
+  .course-header {
+    margin-bottom: 48px;
+  }
+  .course-title {
+    margin: 0 0 14px;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .course-ingress {
+    margin: 0;
+    max-width: 56ch;
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--prose);
+  }
+
+  /* ---- Chapter list ---- */
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  /* ---- Chapter ---- */
+  .chapter__head {
+    margin-bottom: 12px;
+  }
+  .chapter__kicker {
+    display: block;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .chapter__title {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  /* ---- Lesson list ---- */
+  .lesson-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  /* ---- Lesson row base ---- */
+  .lesson-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .lesson-row:last-child {
+    border-bottom: none;
+  }
+
+  /* ---- Open (klar) row ---- */
+  .lesson-row--open {
+    text-decoration: none;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s var(--ease-standard);
+  }
+  .lesson-row--open:hover {
+    background: var(--mint-soft);
+    text-decoration: none;
+  }
+  .lesson-row--open:hover .lesson-row__arrow {
+    color: var(--mint);
+    transform: translateX(2px);
+  }
+
+  /* ---- Kommande row ---- */
+  .lesson-row--kommande {
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  /* ---- Row cells ---- */
+  .lesson-row__num {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 28px;
+    flex-shrink: 0;
+  }
+  .lesson-row__title {
+    flex: 1;
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.35;
+    color: var(--text);
+  }
+  .lesson-row__niva {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .lesson-row__time {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 44px;
+    text-align: right;
+  }
+  .lesson-row__arrow {
+    color: var(--faint);
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: color 0.15s, transform 0.15s;
+  }
+  .lesson-row__lock {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 640px) {
+    .lesson-row {
+      padding: 13px 16px;
+      gap: 10px;
+    }
+    .lesson-row__niva {
+      display: none;
+    }
+    .chapter__title {
+      font-size: 22px;
+    }
+  }
+</style>
