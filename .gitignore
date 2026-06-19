@@ -19,3 +19,8 @@ shots/
 shot.mjs
 
 KURS-EXPORT.md
+
+# LanguageTool (lokal grammatikmotor, ~250MB, ej i git)
+.lt/
+# rost-pass artefakter
+rost*.csv
