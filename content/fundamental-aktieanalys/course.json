@@ -1,35 +1,153 @@
 {
   "kurs": "fundamental-aktieanalys",
   "titel": "Fundamental aktieanalys",
-  "beskrivning": "Lär dig att värdera bolag och tänka som en ägare, från grunderna till värdering i praktiken.",
+  "beskrivning": "Lär dig att värdera bolag och tänka som en ägare, från grunderna till värdering, risk och praktik.",
   "kapitel": [
     {
       "nummer": 1,
       "titel": "Investeringsfilosofi",
       "lektioner": [
         { "lektion": "1.1", "titel": "Vad det innebär att äga en aktie", "niva": "Nybörjare", "tid_min": 8, "status": "klar", "fil": "1.1-aga-en-aktie.json" },
-        { "lektion": "1.2", "titel": "Pris mot värde", "niva": "Nybörjare", "tid_min": 8, "status": "klar", "fil": "1.2-pris-mot-varde.json" }
+        { "lektion": "1.2", "titel": "Pris mot värde", "niva": "Nybörjare", "tid_min": 8, "status": "klar", "fil": "1.2-pris-mot-varde.json" },
+        { "lektion": "1.3", "titel": "Tidshorisont och avkastningens källor", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "1.3-tidshorisont-och-avkastningskallor.json" },
+        { "lektion": "1.4", "titel": "Filosofi och kompetenscirkel", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "1.4-filosofi-och-kompetenscirkel.json" }
       ]
     },
     {
       "nummer": 2,
-      "titel": "Att läsa ett bolag",
+      "titel": "Affärsmodeller",
       "lektioner": [
-        { "lektion": "2.1", "titel": "Resultaträkningen", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "2.1-resultatrakningen.json" },
-        { "lektion": "2.2", "titel": "Balansräkningen", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "2.2-balansrakningen.json" },
-        { "lektion": "2.3", "titel": "Kassaflödet", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "2.3-kassaflodet.json" },
-        { "lektion": "2.4", "titel": "Nyckeltal som faktiskt betyder något", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "2.4-nyckeltal.json" }
+        { "lektion": "2.1", "titel": "Hur ett bolag tjänar pengar", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "2.1-hur-ett-bolag-tjanar-pengar.json" },
+        { "lektion": "2.2", "titel": "Affärsmodeller och intäktstyper", "niva": "Nybörjare", "tid_min": 10, "status": "kommande", "fil": "2.2-affarsmodeller-och-intaktstyper.json" },
+        { "lektion": "2.3", "titel": "Enhetsekonomi och tillväxt", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "2.3-enhetsekonomi-och-tillvaxt.json" }
       ]
     },
     {
       "nummer": 3,
+      "titel": "Årsredovisningen",
+      "lektioner": [
+        { "lektion": "3.1", "titel": "Årsredovisningens delar", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "3.1-arsredovisningens-delar.json" },
+        { "lektion": "3.2", "titel": "Läsa mellan raderna", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "3.2-lasa-mellan-raderna.json" }
+      ]
+    },
+    {
+      "nummer": 4,
+      "titel": "Räkenskaperna",
+      "lektioner": [
+        { "lektion": "4.1", "titel": "Resultaträkningen", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "4.1-resultatrakningen.json" },
+        { "lektion": "4.2", "titel": "Balansräkningen", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "4.2-balansrakningen.json" },
+        { "lektion": "4.3", "titel": "Kassaflödet", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "4.3-kassaflodet.json" },
+        { "lektion": "4.4", "titel": "Vinstkvalitet och varningslampor", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "4.4-vinstkvalitet-och-varningslampor.json" },
+        { "lektion": "4.5", "titel": "Goodwill och eget kapital", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "4.5-goodwill-och-eget-kapital.json" },
+        { "lektion": "4.6", "titel": "De tre rapporterna ihop", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "4.6-de-tre-rapporterna-ihop.json" }
+      ]
+    },
+    {
+      "nummer": 5,
+      "titel": "Nyckeltal och kapitalavkastning",
+      "lektioner": [
+        { "lektion": "5.1", "titel": "Marginaler och ROIC", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "5.1-nyckeltal.json" },
+        { "lektion": "5.2", "titel": "Tillväxt, effektivitet och rätt användning", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "5.2-tillvaxt-effektivitet-anvandning.json" },
+        { "lektion": "5.3", "titel": "ROIC i djupet", "niva": "Avancerad", "tid_min": 11, "status": "kommande", "fil": "5.3-roic-i-djupet.json" }
+      ]
+    },
+    {
+      "nummer": 6,
+      "titel": "Konkurrensfördelar (moats)",
+      "lektioner": [
+        { "lektion": "6.1", "titel": "Vad en moat är och typerna", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "6.1-vad-en-moat-ar.json" },
+        { "lektion": "6.2", "titel": "Bedöma och se moaten i siffrorna", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "6.2-moat-i-siffrorna.json" }
+      ]
+    },
+    {
+      "nummer": 7,
+      "titel": "Ledning och kapitalallokering",
+      "lektioner": [
+        { "lektion": "7.1", "titel": "Att bedöma en ledning", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "7.1-bedoma-en-ledning.json" },
+        { "lektion": "7.2", "titel": "Kapitalallokering", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "7.2-kapitalallokering.json" }
+      ]
+    },
+    {
+      "nummer": 8,
+      "titel": "Värderingsgrunder",
+      "lektioner": [
+        { "lektion": "8.1", "titel": "Vad är värde?", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "8.1-vad-ar-varde.json" },
+        { "lektion": "8.2", "titel": "Pengars tidsvärde och diskontering", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "8.2-pengars-tidsvarde-och-diskontering.json" }
+      ]
+    },
+    {
+      "nummer": 9,
       "titel": "Värdering i praktiken",
       "lektioner": [
-        { "lektion": "3.1", "titel": "Vad är värde?", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "3.1-vad-ar-varde.json" },
-        { "lektion": "3.2", "titel": "Multiplar och deras fällor", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "3.2-multiplar.json" },
-        { "lektion": "3.3", "titel": "Diskonterat kassaflöde", "niva": "Avancerad", "tid_min": 12, "status": "klar", "fil": "3.3-dcf.json" },
-        { "lektion": "3.4", "titel": "Säkerhetsmarginal", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "3.4-sakerhetsmarginal.json" },
-        { "lektion": "3.5", "titel": "Att sätta ett riktpris", "niva": "Avancerad", "tid_min": 12, "status": "klar", "fil": "3.5-riktpris.json" }
+        { "lektion": "9.1", "titel": "Multiplar och deras fällor", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "9.1-multiplar.json" },
+        { "lektion": "9.2", "titel": "Relativvärdering och jämförelser", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "9.2-relativvardering.json" },
+        { "lektion": "9.3", "titel": "Diskonterat kassaflöde", "niva": "Avancerad", "tid_min": 12, "status": "klar", "fil": "9.3-dcf.json" },
+        { "lektion": "9.4", "titel": "Att bygga prognosen", "niva": "Avancerad", "tid_min": 11, "status": "kommande", "fil": "9.4-bygga-prognosen.json" },
+        { "lektion": "9.5", "titel": "Att sätta ett riktpris", "niva": "Avancerad", "tid_min": 12, "status": "klar", "fil": "9.5-riktpris.json" }
+      ]
+    },
+    {
+      "nummer": 10,
+      "titel": "Risk och felmarginal",
+      "lektioner": [
+        { "lektion": "10.1", "titel": "Vad risk faktiskt är", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "10.1-vad-risk-ar.json" },
+        { "lektion": "10.2", "titel": "Säkerhetsmarginal", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "10.2-sakerhetsmarginal.json" },
+        { "lektion": "10.3", "titel": "Kartlägga fel och tänka i sannolikheter", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "10.3-kartlagga-fel-och-sannolikheter.json" }
+      ]
+    },
+    {
+      "nummer": 11,
+      "titel": "Investeringspsykologi",
+      "lektioner": [
+        { "lektion": "11.1", "titel": "Flock, rädsla och girighet", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "11.1-flock-radsla-girighet.json" },
+        { "lektion": "11.2", "titel": "Tankefällor", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "11.2-tankefallor.json" },
+        { "lektion": "11.3", "titel": "Story vs analys", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "11.3-story-vs-analys.json" },
+        { "lektion": "11.4", "titel": "Bygga ett system: position sizing och ödmjukhet", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "11.4-position-sizing-och-odmjukhet.json" }
+      ]
+    },
+    {
+      "nummer": 12,
+      "titel": "Tillväxtbolag",
+      "lektioner": [
+        { "lektion": "12.1", "titel": "Multibagger-linsen", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "12.1-multibagger-linsen.json" },
+        { "lektion": "12.2", "titel": "Marknad, problem och TAM", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "12.2-marknad-och-tam.json" },
+        { "lektion": "12.3", "titel": "Enhetsekonomi och tillväxtkvalitet", "niva": "Avancerad", "tid_min": 11, "status": "klar", "fil": "12.3-enhetsekonomi-och-tillvaxtkvalitet.json" },
+        { "lektion": "12.4", "titel": "Skalbarhet och operating leverage", "niva": "Avancerad", "tid_min": 10, "status": "klar", "fil": "12.4-skalbarhet-och-operating-leverage.json" },
+        { "lektion": "12.5", "titel": "Kassa, burn och finansieringsrisk", "niva": "Avancerad", "tid_min": 11, "status": "klar", "fil": "12.5-kassa-burn-och-finansieringsrisk.json" },
+        { "lektion": "12.6", "titel": "Grundare, ägande och försprång", "niva": "Mellan", "tid_min": 9, "status": "klar", "fil": "12.6-grundare-och-agande.json" },
+        { "lektion": "12.7", "titel": "Att värdera i scenarier", "niva": "Avancerad", "tid_min": 11, "status": "klar", "fil": "12.7-vardera-i-scenarier.json" },
+        { "lektion": "12.8", "titel": "Att överleva resan", "niva": "Avancerad", "tid_min": 11, "status": "klar", "fil": "12.8-overleva-resan.json" }
+      ]
+    },
+    {
+      "nummer": 13,
+      "titel": "Din investeringsprocess",
+      "lektioner": [
+        { "lektion": "13.1", "titel": "Från idé till case", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "13.1-fran-ide-till-case.json" },
+        { "lektion": "13.2", "titel": "Bevaka, ompröva, sälja", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "13.2-bevaka-omprova-salja.json" }
+      ]
+    },
+    {
+      "nummer": 14,
+      "titel": "Fallstudie: Lifco",
+      "lektioner": [
+        { "lektion": "14.1", "titel": "Lifco, räkenskapsåret 2025", "niva": "Avancerad", "tid_min": 14, "status": "kommande", "fil": "14.1-lifco-2025.json" }
+      ]
+    },
+    {
+      "nummer": 15,
+      "titel": "Sektoranalys",
+      "lektioner": [
+        { "lektion": "15.1", "titel": "Banker och försäkring", "niva": "Avancerad", "tid_min": 11, "status": "kommande", "fil": "15.1-banker-och-forsakring.json" },
+        { "lektion": "15.2", "titel": "Fastighet och cykliskt", "niva": "Avancerad", "tid_min": 11, "status": "kommande", "fil": "15.2-fastighet-och-cykliskt.json" }
+      ]
+    },
+    {
+      "nummer": 16,
+      "titel": "Praktik och avslut",
+      "lektioner": [
+        { "lektion": "16.1", "titel": "Källor, verktyg och svensk praktik", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "16.1-kallor-verktyg-praktik.json" },
+        { "lektion": "16.2", "titel": "Din resa härifrån", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "16.2-din-resa-harifran.json" }
       ]
     }
   ]

@@ -1,6 +1,6 @@
 {
-  "kapitel": 2,
-  "lektion": "2.1",
+  "kapitel": 4,
+  "lektion": "4.1",
   "titel": "Resultaträkningen",
   "niva": "Nybörjare",
   "tid_min": 10,
@@ -8,7 +8,7 @@
   "steg": [
     {
       "typ": "intro",
-      "kicker": "LEKTION 2.1",
+      "kicker": "LEKTION 4.1",
       "titel": "Resultaträkningen",
       "ingress": "Resultaträkningen svarar på en fråga: tjänade verksamheten pengar i år, och hur? Hela svaret ligger i vägen ned till sista raden."
     },

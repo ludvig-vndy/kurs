@@ -1,6 +1,6 @@
 {
-  "kapitel": 3,
-  "lektion": "3.3",
+  "kapitel": 9,
+  "lektion": "9.3",
   "titel": "Diskonterat kassaflöde",
   "niva": "Avancerad",
   "tid_min": 12,
@@ -8,7 +8,7 @@
   "steg": [
     {
       "typ": "intro",
-      "kicker": "LEKTION 3.3",
+      "kicker": "LEKTION 9.3",
       "titel": "Diskonterat kassaflöde",
       "ingress": "En DCF räknar inte fram det rätta priset. Den tvingar dig att säga högt vad du faktiskt tror om framtida kassaflöden, och visar var värdet kommer ifrån."
     },

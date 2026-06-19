@@ -1,6 +1,6 @@
 {
-  "kapitel": 3,
-  "lektion": "3.5",
+  "kapitel": 9,
+  "lektion": "9.5",
   "titel": "Att sätta ett riktpris",
   "niva": "Avancerad",
   "tid_min": 12,
@@ -8,7 +8,7 @@
   "steg": [
     {
       "typ": "intro",
-      "kicker": "LEKTION 3.5",
+      "kicker": "LEKTION 9.5",
       "titel": "Att sätta ett riktpris",
       "ingress": "Ett riktpris är inte en exakt siffra utan ett intervall, en bedömning du håller mot priset, inte ett facit du jagar."
     },

@@ -1,6 +1,6 @@
 {
-  "kapitel": 2,
-  "lektion": "2.2",
+  "kapitel": 4,
+  "lektion": "4.2",
   "titel": "Balansräkningen",
   "niva": "Nybörjare",
   "tid_min": 10,
@@ -8,7 +8,7 @@
   "steg": [
     {
       "typ": "intro",
-      "kicker": "LEKTION 2.2",
+      "kicker": "LEKTION 4.2",
       "titel": "Balansräkningen",
       "ingress": "Resultaträkningen visar hur året gick. Balansräkningen visar hur stark ställningen är just nu, och om bolaget kan överleva sina egna misstag."
     },

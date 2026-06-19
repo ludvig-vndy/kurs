@@ -1,6 +1,6 @@
 {
-  "kapitel": 3,
-  "lektion": "3.1",
+  "kapitel": 8,
+  "lektion": "8.1",
   "titel": "Vad är värde?",
   "niva": "Mellan",
   "tid_min": 10,
@@ -8,7 +8,7 @@
   "steg": [
     {
       "typ": "intro",
-      "kicker": "LEKTION 3.1",
+      "kicker": "LEKTION 8.1",
       "titel": "Vad är värde?",
       "ingress": "Ett bolag är värt de kontanter det kommer att ge sina ägare i framtiden, räknade i dagens pengar. Resten är ledtrådar till just den summan."
     },

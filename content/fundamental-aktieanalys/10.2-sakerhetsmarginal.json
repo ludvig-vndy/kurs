@@ -1,6 +1,6 @@
 {
-  "kapitel": 3,
-  "lektion": "3.4",
+  "kapitel": 10,
+  "lektion": "10.2",
   "titel": "Säkerhetsmarginal",
   "niva": "Mellan",
   "tid_min": 8,
@@ -8,7 +8,7 @@
   "steg": [
     {
       "typ": "intro",
-      "kicker": "LEKTION 3.4",
+      "kicker": "LEKTION 10.2",
       "titel": "Säkerhetsmarginal",
       "ingress": "Din uppskattning av ett bolags värde är en kvalificerad åsikt, inte ett facit. Felmarginalen är hur du ändå tål att ha fel."
     },

@@ -1,6 +1,6 @@
 {
-  "kapitel": 2,
-  "lektion": "2.3",
+  "kapitel": 4,
+  "lektion": "4.3",
   "titel": "Kassaflödet",
   "niva": "Nybörjare",
   "tid_min": 10,
@@ -8,7 +8,7 @@
   "steg": [
     {
       "typ": "intro",
-      "kicker": "LEKTION 2.3",
+      "kicker": "LEKTION 4.3",
       "titel": "Kassaflödet",
       "ingress": "Vinst är en åsikt, kontanter är ett faktum. Bolag går nästan aldrig omkull av brist på vinst, de går omkull av brist på kontanter."
     },
