@@ -9,7 +9,7 @@ Plattform för en svenskspråkig kurs i fundamental aktieanalys. Astro-byggd sta
 - **Stack:** Astro 5 (static output), content collections med Zod-schema, View Transitions (ClientRouter). Inga ramverk utöver det. Endast `astro` + `@astrojs/mdx` som beroenden; `playwright` som dev-dep.
 - **Deploy:** Cloudflare Pages, projekt `kurs` -> `kurs-7m8.pages.dev`. Deployas med **wrangler** (`wrangler pages deploy`), inte via GitHub-push.
 - **Lösenord:** Sajten är lösenordsskyddad i `functions/_middleware.js` (Pages Function). Lösen: `env.SITE_PASSWORD || 'kurs2026'`. Cookie: `kurs_auth`.
-- **Aktuell gren:** `redesign/phase-0-foundation` (huvudgren: `main`).
+- **Aktuell gren:** `trunk` (huvudgren: `main`).
 - **Commit-trailer:** avsluta commits med `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
 
 ---
@@ -64,22 +64,26 @@ Hela omskrivningsplanen (`docs/superpowers/plans/2026-06-18-kurs-bplus-till-aplu
 - **115 lektioner, 22 moduler.** Flaggskeppscase: `src/content/kurs/20-fallstudie-lifco/` (källa: `docs/case-sources/fall-lifco-2025.md`).
 - Kanoniska formler: `src/content/kurs/00-referens/formelbilaga.md` (format: referens).
 
-### Redesign (pågår, denna gren)
-Ny visuell riktning: tokens med Newsreader/Schibsted/Plex + mint/petrol, AppShell, `/hem` (dashboard), animerad landningssida, `/verktyg` (Ägarboken analysverktyg). Lämna detta ifred om inte ombedd.
+### Redesign (live)
+Ny visuell riktning, deployad: tokens med Newsreader/Schibsted/Plex + mint/petrol, AppShell, `/hem` (dashboard), animerad landningssida, `/verktyg` (Ägarboken analysverktyg). Lämna detta ifred om inte ombedd.
 
-### Fokus-spelaren / JSON-stegformat (pågår — kalibrering klar)
+### Fokus-spelaren / JSON-stegformat (pågår — två kalibreringslektioner klara)
 Brief: `Brief_lektionsinnehall_v2.md`. Mål: transformera verifierade lektioner till ett stegbaserat JSON-format för en "Fokus"-lektionsspelare (steg: intro, reading, concept, dataviz, quiz; inline-datadriven grafik).
 
 **Arkitektur (beslutad):** källan (de 115 .md) förblir sanningen; spelaren är en härledd, kurerad leverans av ~11 lektioner (kap 1-3). En JSON-fil per lektion under `content/fundamental-aktieanalys/`, plus `course.json` (kapitelträd). Spelaren laddar JSON och renderar steg utifrån `typ`-fältet.
 
+**Designmål / facit för renderaren:** `design_handoff_aktieanalys/` (Claude design-agentens high-fidelity-handoff). `Aktieanalys - Lektion (Fokus).dc.html` + `README.md` är spec för utseende och beteende (DC-format, läs som spec, inte kod). Hjältevisualer: `rutnat` (ägar-grid) och `linjediagram` (pris/värde). Quiz-tröskel 80%. Dubbla teman (mörkt "fokus" + ljust "ed") via `localStorage['agarboken-theme']`.
+
 **Gjort:**
-- `content/fundamental-aktieanalys/course.json` — kapitelträd kap 1-3, status `klar`/`kommande` per lektion.
-- `content/fundamental-aktieanalys/1.2-pris-mot-varde.json` — **kalibreringslektion** (källa: `1.2-pris-vs-varde.md`). 5 steg, 3 quizfrågor (2 single + 1 multi), `ratt` alltid som lista, dataviz illustrativt-markerad. Dashfri (verifierat).
+- `course.json` — kapitelträd kap 1-3, status `klar`/`kommande` per lektion.
+- `1.1-aga-en-aktie.json` + `1.2-pris-mot-varde.json` — **två kalibreringslektioner** (källor: `1.1-*` resp. `1.2-pris-vs-varde.md`). 5 steg vardera, 3 quizfrågor (2 single + 1 multi), `ratt` alltid som lista, dataviz illustrativt-märkt. Dashfria (verifierat). Tillsammans täcker de hela v1-visual-vokabulären: `rutnat`, `linjediagram` (1 serie i 1.1, 2 serier + markör i 1.2), `jamforelse`.
+- `RENDERER-BRIEF.md` — kontrakt för renderar-agenten, förankrat i design-handoffen (stegtyper, visual-objektet, quiz, hårda krav, fältnamns-mappning).
 
 **Kvar:**
-1. **Lås stegschemat.** Väntar på användarens godkännande av 1.2 som mall (fältnamn, 5-stegsrytm, `ratt` som lista, tillåtna visual-typer: `jamforelse`, `stapeldiagram`, ev. `flode`/`andel`/`linjediagram`, illustrativt-markering tillåten).
-2. **Transformera resten av kap 1-3** (9 lektioner) i samma format. Ren innehållstransform, oberoende av renderaren. Källmappning enligt briefen.
-3. **Bygg renderaren** i den nya sajten. **Beslutat att vänta till deploy av nya sajten** så den byggs mot faktiskt tema/komponenter i stället för att gissa. Måste kunna rendera varje `visual.typ` (inline-SVG).
+1. **Renderar-agenten bygger renderaren** mot `RENDERER-BRIEF.md` + 1.1/1.2, i den live-satta designen (inline-SVG per `visual.typ`). Måste återrapportera vilka visual-typer som stöds i v1.
+2. **Transformera resten av kap 1-3** (9 lektioner) i samma format, mot bekräftat visual-stöd. Ren innehållstransform. Källmappning enligt briefen.
+
+**Kontraktsbeslut (låsta):** läsbara svenska fältnamn i datan (`typ`/`fraga`/`alternativ`/`ratt`/`forklaring`), inte prototypens terse (`q`/`exp`/`correct`); 5-stegsrytm; `ratt` alltid lista; illustrativt-märkning tillåten när verklig data saknas.
 
 ---
 
