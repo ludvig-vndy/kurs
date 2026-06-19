@@ -10,6 +10,32 @@ const dels = tree.map((d) => ({
   lessons: d.modules.reduce((n, m) => n + m.lessons.length, 0),
   modules: d.modules.length,
 }));
+
+// Säljsektionen ramar in kursen som tre kapitel (matchar startside-designen).
+// Varje kapitel grupperar några av kursens delar; lektionsantalet räknas ur datan.
+const delLessons = Object.fromEntries(dels.map((d) => [d.del, d.lessons]));
+const chapterDefs = [
+  {
+    title: 'Förstå & räkna på bolaget',
+    tagline: 'Affärsmodellen, årsredovisningen och hur de tre rapporterna hänger ihop.',
+    dels: ['Grunden', 'Räkenskaperna'],
+  },
+  {
+    title: 'Bedöm kvalitet & värde',
+    tagline: 'Lönsamhet, vallgravar, ledning — och vad ett bolag faktiskt är värt.',
+    dels: ['Analys av kvalitet', 'Värdering'],
+  },
+  {
+    title: 'Besluta som ägare',
+    tagline: 'Psykologi, risk, fallstudier och din egen process — hela vägen fram till köp.',
+    dels: ['Psykologi', 'Avancerat', 'Capstone', 'Att hitta framtidens vinnare', 'Fallstudie', 'Sektoranalys', 'Praktik'],
+  },
+];
+const chapters = chapterDefs.map((c) => ({
+  title: c.title,
+  tagline: c.tagline,
+  lessons: c.dels.reduce((n, name) => n + (delLessons[name] || 0), 0),
+}));
 ---
 
 <BaseLayout title="Ägarboken — Lär dig analysera aktier som en ägare" description="Fundamental aktieanalys, från grunden. Korta lektioner, riktiga övningar och ett analysverktyg du faktiskt använder före varje köp.">
@@ -124,14 +150,15 @@ const dels = tree.map((d) => ({
       <div class="section__inner">
         <p class="kicker" data-reveal>KURSINNEHÅLL</p>
         <h2 class="section__heading" data-reveal data-reveal-delay="60">
-          Sex delar som bygger omdömet
+          Tre kapitel som bygger omdömet
         </h2>
         <div class="del-grid" data-reveal-children>
-          {dels.map((d, i) => (
+          {chapters.map((c, i) => (
             <div class="del-card">
-              <span class="del-card__kicker">DEL {i + 1}</span>
-              <h3 class="del-card__title">{d.del}</h3>
-              <p class="del-card__meta">{d.lessons} lektioner · {d.modules} moduler</p>
+              <span class="del-card__kicker">KAPITEL {i + 1}</span>
+              <h3 class="del-card__title">{c.title}</h3>
+              <p class="del-card__meta">{c.tagline}</p>
+              <p class="del-card__meta del-card__count">{c.lessons} lektioner</p>
             </div>
           ))}
         </div>
@@ -574,6 +601,14 @@ const dels = tree.map((d) => ({
     font-size: var(--text-xs);
     color: var(--muted);
     margin: 0;
+  }
+  .del-card__meta + .del-card__meta {
+    margin-top: 10px;
+  }
+  .del-card__count {
+    color: var(--mint);
+    font-weight: 600;
+    letter-spacing: 0.02em;
   }
 
   /* ===================== VERKTYGET ===================== */
