@@ -39,6 +39,15 @@ Du bygger renderaren som ritar steg-JSON-lektionerna i den nya designen. **Datan
 
 Möter du en `visual.typ` du inte stödjer: rendera `figurtext` som fallback, krascha inte.
 
+## Text-tunga lektioner (formatet flexar)
+
+Stegen är en riktlinje, inte en tvångströja. Låt innehållet avgöra balansen, tvinga aldrig fram en graf för att fylla ett steg.
+
+- **Stegen är valfria.** En lektion behöver inte ha alla fem. En text-tung lektion kan vara `intro` + flera `reading` + `quiz`, utan `concept`/`dataviz`. Behåll ordningen (de steg som finns kommer i samma relativa ordning).
+- **`visual` är valfritt på `concept`/`dataviz`.** Utelämna `visual` helt för ett rent text-steg, renderaren visar då bara texten (ingen tom grafik-lucka).
+- **`concept`/`dataviz` tar valfritt `brodtext[]`** (array av stycken) för prosa, utöver/istället för `forklaring`/`slutsats`. Använd det när ett steg bär ett resonemang snarare än en form.
+- Källan styr högen: siffror/tabell/räkneexempel/tvåbolags-fall finns det form att rita (grafik-tung), annars bär prosan (text-tung).
+
 ## Quiz (`quiz.fragor[]`)
 
 ```jsonc

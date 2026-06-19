@@ -207,7 +207,7 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
 
         if (s.typ === 'concept') {
           return (
-            <section class="step step--concept" data-step data-typ="concept" aria-label={`Steg ${i + 1}: Koncept`}>
+            <section class:list={['step', 'step--concept', { 'step--text-only': !s.visual }]} data-step data-typ="concept" aria-label={`Steg ${i + 1}: Koncept`}>
               <div class="step__inner step__inner--centered">
                 {s.kicker && (
                   <div class="step-kicker">{s.kicker}</div>
@@ -232,6 +232,13 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                     <p class="visual-fallback">{s.visual.figurtext}</p>
                   )
                 )}
+                {s.brodtext && s.brodtext.length > 0 && (
+                  <div class="step-prose">
+                    {s.brodtext.map((p) => (
+                      <p>{p}</p>
+                    ))}
+                  </div>
+                )}
                 {s.forklaring && (
                   <p class="step-forklaring">{s.forklaring}</p>
                 )}
@@ -242,7 +249,7 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
 
         if (s.typ === 'dataviz') {
           return (
-            <section class="step step--dataviz" data-step data-typ="dataviz" aria-label={`Steg ${i + 1}: Dataviz`}>
+            <section class:list={['step', 'step--dataviz', { 'step--text-only': !s.visual }]} data-step data-typ="dataviz" aria-label={`Steg ${i + 1}: Dataviz`}>
               <div class="step__inner step__inner--centered">
                 {s.titel && (
                   <h2 class="step-title step-title--dataviz">{s.titel}</h2>
@@ -266,6 +273,13 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                   ) : (
                     <p class="visual-fallback">{s.visual.figurtext}</p>
                   )
+                )}
+                {s.brodtext && s.brodtext.length > 0 && (
+                  <div class="step-prose">
+                    {s.brodtext.map((p) => (
+                      <p>{p}</p>
+                    ))}
+                  </div>
                 )}
                 {s.slutsats && (
                   <p class="step-slutsats">{s.slutsats}</p>
@@ -598,6 +612,27 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
     color: var(--prose);
     max-width: 44ch;
     margin: var(--space-5) auto 0;
+  }
+
+  /* ── Prose paragraphs on concept/dataviz (text-heavy lessons) ───────── */
+  .step-prose {
+    max-width: 58ch;
+    margin: var(--space-5) auto 0;
+    text-align: left;
+  }
+  .step-prose p {
+    font-family: var(--serif);
+    font-size: var(--prose-size);
+    line-height: 1.7;
+    color: var(--prose);
+    margin: 0;
+  }
+  .step-prose p + p {
+    margin-top: 1.1em;
+  }
+  /* When a concept/dataviz step has no visual, give the text more breathing room. */
+  .step--text-only .step-prose {
+    margin-top: var(--space-6);
   }
 
   /* ── Visual fallback (unknown visual.typ) ───────────────────────────── */
