@@ -5,6 +5,9 @@ import AppShell from '../../layouts/AppShell.astro';
 import Rutnat from '../../components/fokus/Rutnat.astro';
 import Linjediagram from '../../components/fokus/Linjediagram.astro';
 import Jamforelse from '../../components/fokus/Jamforelse.astro';
+import Stapeldiagram from '../../components/fokus/Stapeldiagram.astro';
+import Flode from '../../components/fokus/Flode.astro';
+import Andel from '../../components/fokus/Andel.astro';
 import FokusQuiz from '../../components/fokus/FokusQuiz.astro';
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -76,23 +79,23 @@ export async function getStaticPaths() {
   const courseRaw = fs.readFileSync(path.join(contentDir, 'course.json'), 'utf8');
   const course: CourseJson = JSON.parse(courseRaw);
 
-  // Collect all klar lessons in order, loading their JSON
-  const klarLessons: { lektion: string; lesson: LessonJson }[] = [];
+  // Collect all lessons whose fil exists (regardless of status), in course order
+  const builtLessons: { lektion: string; lesson: LessonJson }[] = [];
   for (const kapitel of course.kapitel) {
     for (const l of kapitel.lektioner) {
-      if (l.status === 'klar' && l.fil) {
+      if (l.fil) {
         const filPath = path.join(contentDir, l.fil);
         if (fs.existsSync(filPath)) {
           const lesson: LessonJson = JSON.parse(fs.readFileSync(filPath, 'utf8'));
-          klarLessons.push({ lektion: l.lektion, lesson });
+          builtLessons.push({ lektion: l.lektion, lesson });
         }
       }
     }
   }
 
-  return klarLessons.map(({ lektion, lesson }, idx) => {
-    const prev = idx > 0 ? klarLessons[idx - 1] : null;
-    const next = idx < klarLessons.length - 1 ? klarLessons[idx + 1] : null;
+  return builtLessons.map(({ lektion, lesson }, idx) => {
+    const prev = idx > 0 ? builtLessons[idx - 1] : null;
+    const next = idx < builtLessons.length - 1 ? builtLessons[idx + 1] : null;
     return {
       params: { lektion },
       props: {
@@ -219,6 +222,12 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                     <Linjediagram visual={s.visual as any} />
                   ) : s.visual.typ === 'jamforelse' ? (
                     <Jamforelse visual={s.visual as any} />
+                  ) : s.visual.typ === 'stapeldiagram' ? (
+                    <Stapeldiagram visual={s.visual as any} />
+                  ) : s.visual.typ === 'flode' ? (
+                    <Flode visual={s.visual as any} />
+                  ) : s.visual.typ === 'andel' ? (
+                    <Andel visual={s.visual as any} />
                   ) : (
                     <p class="visual-fallback">{s.visual.figurtext}</p>
                   )
@@ -248,6 +257,12 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                     <Linjediagram visual={s.visual as any} />
                   ) : s.visual.typ === 'jamforelse' ? (
                     <Jamforelse visual={s.visual as any} />
+                  ) : s.visual.typ === 'stapeldiagram' ? (
+                    <Stapeldiagram visual={s.visual as any} />
+                  ) : s.visual.typ === 'flode' ? (
+                    <Flode visual={s.visual as any} />
+                  ) : s.visual.typ === 'andel' ? (
+                    <Andel visual={s.visual as any} />
                   ) : (
                     <p class="visual-fallback">{s.visual.figurtext}</p>
                   )
