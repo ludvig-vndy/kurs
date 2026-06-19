@@ -1,0 +1,586 @@
+---
+interface Fraga {
+  typ: 'single' | 'multi';
+  fraga: string;
+  underrubrik?: string;
+  alternativ: string[];
+  ratt: number[];
+  forklaring: string;
+}
+
+interface Props {
+  fragor: Fraga[];
+  lektionId?: string;
+}
+
+const { fragor, lektionId = '' } = Astro.props;
+const PASS_MARK = 80;
+---
+
+<div class="fq" data-fokus-quiz data-lektion={lektionId} data-pass={PASS_MARK}>
+  <header class="fq__head">
+    <div class="fq__kicker">KUNSKAPSKOLL</div>
+    <h2 class="fq__title">Testa dig själv</h2>
+    <p class="fq__lede">
+      {fragor.length} {fragor.length === 1 ? 'fråga' : 'frågor'}. Godkänt vid {PASS_MARK}% rätt.
+    </p>
+  </header>
+
+  <ol class="fq__list">
+    {fragor.map((q, qi) => (
+      <li
+        class="fq-q"
+        data-fq-q
+        data-ratt={JSON.stringify(q.ratt)}
+        data-multi={String(q.typ === 'multi')}
+      >
+        <fieldset class="fq-q__fieldset">
+          <legend class="fq-q__legend">
+            <span class="fq-q__num" aria-hidden="true">{qi + 1}</span>
+            <span class="fq-q__text">{q.fraga}</span>
+          </legend>
+          {q.underrubrik && (
+            <p class="fq-q__sub">{q.underrubrik}</p>
+          )}
+          <div
+            class="fq-opts"
+            role={q.typ === 'multi' ? 'group' : 'radiogroup'}
+            aria-label={q.fraga}
+          >
+            {q.alternativ.map((alt, oi) => (
+              <label class="fq-opt" data-fq-opt data-i={oi}>
+                <input
+                  class="fq-opt__input"
+                  type={q.typ === 'multi' ? 'checkbox' : 'radio'}
+                  name={`fq-${lektionId || 'q'}-${qi}`}
+                  value={oi}
+                />
+                <span class="fq-opt__marker" aria-hidden="true" />
+                <span class="fq-opt__text">{alt}</span>
+                <span class="fq-opt__icon" aria-hidden="true">
+                  <svg class="fq-icon-ok" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+                  <svg class="fq-icon-no" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+                </span>
+              </label>
+            ))}
+          </div>
+          <div class="fq-q__feedback" data-fq-feedback hidden aria-live="polite">
+            <span class="fq-q__verdict" data-fq-verdict></span>
+            <span class="fq-q__why">{q.forklaring}</span>
+          </div>
+        </fieldset>
+      </li>
+    ))}
+  </ol>
+
+  <div class="fq__actions">
+    <button type="button" class="fq-btn fq-btn--primary" data-fq-check disabled>Rätta svar</button>
+    <button type="button" class="fq-btn fq-btn--ghost" data-fq-retry hidden>Gör om</button>
+  </div>
+
+  <div class="fq__result" data-fq-result hidden role="status" aria-live="polite">
+    <div class="fq-result__ring" data-fq-ring>
+      <span class="fq-result__pct" data-fq-pct>0%</span>
+    </div>
+    <div class="fq-result__body">
+      <strong class="fq-result__head" data-fq-head></strong>
+      <span class="fq-result__sub" data-fq-sub></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ── Container ──────────────────────────────────────────────────────── */
+  .fq {
+    width: 100%;
+    font-family: var(--sans);
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────────── */
+  .fq__head {
+    margin-bottom: var(--space-7);
+    text-align: center;
+  }
+  .fq__kicker {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 20px;
+  }
+  .fq__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(30px, 3.6vw, 40px);
+    line-height: 1.1;
+    color: var(--text);
+    margin: 0 0 12px;
+  }
+  .fq__lede {
+    font-size: var(--text-sm);
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── Question list ──────────────────────────────────────────────────── */
+  .fq__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    text-align: left;
+  }
+
+  /* ── Question item ──────────────────────────────────────────────────── */
+  .fq-q__fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  .fq-q__legend {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 10px;
+    padding: 0;
+    width: 100%;
+  }
+  .fq-q__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--mint-soft);
+    color: var(--mint);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+  }
+  .fq-q__text {
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.4;
+    color: var(--text);
+  }
+  .fq-q__sub {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    margin: -2px 0 14px 34px;
+    padding: 0;
+  }
+
+  /* ── Options ────────────────────────────────────────────────────────── */
+  .fq-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fq-opt {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 13px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    cursor: pointer;
+    transition:
+      border-color var(--dur-micro) var(--ease-standard),
+      background var(--dur-micro) var(--ease-standard);
+  }
+  .fq-opt:hover {
+    border-color: var(--border-2);
+  }
+
+  /* Visually-hidden real input */
+  .fq-opt__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* Custom marker */
+  .fq-opt__marker {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--border-2);
+    border-radius: var(--radius-full);
+    transition:
+      border-color var(--dur-micro) var(--ease-standard),
+      box-shadow var(--dur-micro) var(--ease-standard);
+  }
+  /* Checkbox marker = rounded square */
+  [data-multi='true'] .fq-opt__marker {
+    border-radius: var(--radius-sm);
+  }
+
+  /* Checked state */
+  .fq-opt:has(.fq-opt__input:checked) {
+    border-color: var(--mint);
+    background: var(--mint-soft);
+  }
+  .fq-opt:has(.fq-opt__input:checked) .fq-opt__marker {
+    border-color: var(--mint);
+    box-shadow: inset 0 0 0 4px var(--mint);
+  }
+  [data-multi='true'] .fq-opt:has(.fq-opt__input:checked) .fq-opt__marker {
+    box-shadow: inset 0 0 0 9px var(--mint);
+  }
+
+  /* Keyboard focus */
+  .fq-opt:has(.fq-opt__input:focus-visible) {
+    outline: 2px solid var(--mint);
+    outline-offset: 2px;
+  }
+
+  .fq-opt__text {
+    font-family: var(--serif);
+    font-size: var(--prose-size);
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  /* Result icons (shown after grading) */
+  .fq-opt__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: none;
+  }
+  .fq-opt__icon svg {
+    width: 20px;
+    height: 20px;
+    display: none;
+  }
+  .fq-icon-ok { stroke: var(--good); }
+  .fq-icon-no { stroke: var(--bad); }
+
+  /* ── Post-grading states ─────────────────────────────────────────── */
+  .fq.is-graded .fq-opt {
+    cursor: default;
+    pointer-events: none;
+  }
+  /* Correct option (always shown green after grading) */
+  .fq-opt.is-correct {
+    border-color: var(--good);
+    background: var(--good-soft);
+  }
+  .fq-opt.is-correct .fq-opt__icon { display: block; }
+  .fq-opt.is-correct .fq-icon-ok { display: block; }
+
+  /* Wrong-selected option */
+  .fq-opt.is-wrong {
+    border-color: var(--bad);
+    background: var(--bad-soft);
+  }
+  .fq-opt.is-wrong .fq-opt__icon { display: block; }
+  .fq-opt.is-wrong .fq-icon-no { display: block; }
+  .fq-opt.is-wrong {
+    animation: fq-shake 250ms var(--ease-standard);
+  }
+  .fq-opt.is-correct.is-picked {
+    animation: fq-pop 220ms var(--ease-out);
+  }
+  @keyframes fq-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+  @keyframes fq-pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.025); }
+    100% { transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fq-opt.is-wrong,
+    .fq-opt.is-correct.is-picked {
+      animation: none;
+    }
+  }
+
+  /* ── Per-question feedback ──────────────────────────────────────── */
+  .fq-q__feedback {
+    margin-top: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .fq-q__verdict {
+    font-weight: 600;
+  }
+  .fq-q__verdict[data-ok='true'] { color: var(--good); }
+  .fq-q__verdict[data-ok='false'] { color: var(--bad); }
+  .fq-q__why {
+    color: var(--muted);
+    font-family: var(--sans);
+  }
+
+  /* ── Action row ─────────────────────────────────────────────────── */
+  .fq__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+    flex-wrap: wrap;
+  }
+  .fq-btn {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 38px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition:
+      background var(--dur-micro) var(--ease-standard),
+      opacity var(--dur-micro) var(--ease-standard),
+      transform var(--dur-micro) var(--ease-out),
+      border-color var(--dur-micro) var(--ease-standard);
+  }
+  .fq-btn:active { transform: scale(0.98); }
+  .fq-btn--primary {
+    background: var(--text);
+    color: var(--bg);
+    border-color: transparent;
+  }
+  .fq-btn--primary:hover:not(:disabled) { opacity: 0.88; }
+  .fq-btn--primary:disabled {
+    opacity: 0.32;
+    cursor: not-allowed;
+  }
+  .fq-btn--ghost {
+    background: transparent;
+    border-color: var(--border-2);
+    color: var(--muted);
+    padding: 13px 24px;
+  }
+  .fq-btn--ghost:hover {
+    border-color: var(--mint);
+    color: var(--mint);
+  }
+
+  /* ── Result panel ───────────────────────────────────────────────── */
+  .fq__result {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+  }
+  .fq-result__ring {
+    --pct: 0;
+    position: relative;
+    width: 76px;
+    height: 76px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(
+      var(--ring-color, var(--mint)) calc(var(--pct) * 1%),
+      var(--surface-2) 0
+    );
+    transition: --pct var(--dur-comp) var(--ease-out);
+  }
+  .fq-result__ring::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+  }
+  .fq-result__pct {
+    position: relative;
+    z-index: 1;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-size: var(--text-md);
+    color: var(--text);
+  }
+  .fq-result__body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .fq-result__head {
+    font-family: var(--serif);
+    font-size: var(--text-lg);
+    font-weight: 400;
+    color: var(--text);
+  }
+  .fq-result__sub {
+    font-family: var(--sans);
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+
+  @property --pct {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+  }
+</style>
+
+<script>
+  function gradeQuiz(fq: HTMLElement): void {
+    const questions = Array.from(fq.querySelectorAll<HTMLElement>('[data-fq-q]'));
+    let correctCount = 0;
+
+    questions.forEach((q) => {
+      const ratt: number[] = JSON.parse(q.dataset.ratt || '[]');
+      const inputs = Array.from(q.querySelectorAll<HTMLInputElement>('.fq-opt__input'));
+      const picked = inputs.filter((i) => i.checked).map((i) => Number(i.value));
+
+      const rattSet = new Set(ratt);
+      const pickedSet = new Set(picked);
+      const isRight =
+        picked.length === ratt.length &&
+        [...rattSet].every((r) => pickedSet.has(r));
+
+      if (isRight) correctCount++;
+
+      // Mark each option
+      inputs.forEach((input) => {
+        const opt = input.closest<HTMLElement>('.fq-opt');
+        if (!opt) return;
+        const idx = Number(input.value);
+        const shouldBeCorrect = rattSet.has(idx);
+        const wasPicked = pickedSet.has(idx);
+        opt.classList.toggle('is-correct', shouldBeCorrect);
+        opt.classList.toggle('is-wrong', wasPicked && !shouldBeCorrect);
+        if (wasPicked) opt.classList.add('is-picked');
+      });
+
+      // Per-question feedback
+      const fb = q.querySelector<HTMLElement>('[data-fq-feedback]');
+      const verdict = q.querySelector<HTMLElement>('[data-fq-verdict]');
+      if (fb && verdict) {
+        verdict.textContent = isRight ? 'Rätt' : picked.length ? 'Inte riktigt' : 'Obesvarad';
+        verdict.dataset.ok = String(isRight);
+        fb.hidden = false;
+      }
+    });
+
+    const total = questions.length;
+    const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+    const passMark = Number(fq.dataset.pass || '80');
+    const passed = pct >= passMark;
+
+    fq.classList.add('is-graded');
+
+    // Update result panel
+    const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
+    const ringEl = fq.querySelector<HTMLElement>('[data-fq-ring]');
+    const pctEl = fq.querySelector<HTMLElement>('[data-fq-pct]');
+    const headEl = fq.querySelector<HTMLElement>('[data-fq-head]');
+    const subEl = fq.querySelector<HTMLElement>('[data-fq-sub]');
+
+    if (ringEl) {
+      ringEl.style.setProperty('--pct', String(pct));
+      ringEl.style.setProperty('--ring-color', passed ? 'var(--good)' : 'var(--bad)');
+    }
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (headEl) headEl.textContent = passed ? 'Godkänt!' : 'Nästan där';
+    if (subEl) {
+      subEl.textContent = `${correctCount} av ${total} rätt${passed ? '' : ` - ${passMark}% krävs`}`;
+    }
+    if (resultEl) resultEl.hidden = false;
+
+    // Swap buttons
+    const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
+    const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
+    if (checkBtn) checkBtn.hidden = true;
+    if (retryBtn) retryBtn.hidden = false;
+
+    // Persist best score to localStorage
+    const lektionId = fq.dataset.lektion;
+    if (lektionId) {
+      try {
+        const key = `kurs:fokus:${lektionId}`;
+        const prev = Number(localStorage.getItem(key) || '0');
+        if (pct > prev) localStorage.setItem(key, String(pct));
+      } catch (_) {
+        // localStorage may be unavailable
+      }
+    }
+
+    resultEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetQuiz(fq: HTMLElement): void {
+    fq.classList.remove('is-graded');
+
+    fq.querySelectorAll<HTMLInputElement>('.fq-opt__input').forEach((i) => {
+      i.checked = false;
+    });
+    fq.querySelectorAll<HTMLElement>('.fq-opt').forEach((o) => {
+      o.classList.remove('is-correct', 'is-wrong', 'is-picked');
+    });
+    fq.querySelectorAll<HTMLElement>('[data-fq-feedback]').forEach((f) => {
+      f.hidden = true;
+    });
+
+    const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
+    const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
+    const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
+
+    if (resultEl) resultEl.hidden = true;
+    if (checkBtn) { checkBtn.hidden = false; checkBtn.disabled = true; }
+    if (retryBtn) retryBtn.hidden = true;
+
+    fq.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function allAnswered(fq: HTMLElement): boolean {
+    const questions = Array.from(fq.querySelectorAll<HTMLElement>('[data-fq-q]'));
+    return questions.every((q) => {
+      const inputs = Array.from(q.querySelectorAll<HTMLInputElement>('.fq-opt__input'));
+      return inputs.some((i) => i.checked);
+    });
+  }
+
+  function wireQuiz(fq: HTMLElement): void {
+    if (fq.dataset.wired) return;
+    fq.dataset.wired = '1';
+
+    const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
+    const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
+
+    checkBtn?.addEventListener('click', () => gradeQuiz(fq));
+    retryBtn?.addEventListener('click', () => resetQuiz(fq));
+
+    fq.addEventListener('change', () => {
+      if (checkBtn) checkBtn.disabled = !allAnswered(fq);
+    });
+  }
+
+  function initAll(): void {
+    document.querySelectorAll<HTMLElement>('[data-fokus-quiz]').forEach(wireQuiz);
+  }
+
+  document.addEventListener('astro:page-load', initAll);
+</script>

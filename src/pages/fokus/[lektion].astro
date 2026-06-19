@@ -5,6 +5,7 @@ import AppShell from '../../layouts/AppShell.astro';
 import Rutnat from '../../components/fokus/Rutnat.astro';
 import Linjediagram from '../../components/fokus/Linjediagram.astro';
 import Jamforelse from '../../components/fokus/Jamforelse.astro';
+import FokusQuiz from '../../components/fokus/FokusQuiz.astro';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -262,27 +263,8 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
         if (s.typ === 'quiz') {
           return (
             <section class="step step--quiz" data-step data-typ="quiz" data-fokus-quiz aria-label={`Steg ${i + 1}: Kunskapskoll`}>
-              <div class="step__inner step__inner--centered">
-                <div class="quiz-header">
-                  <div class="step-kicker">KUNSKAPSKOLL</div>
-                  <h2 class="step-title step-title--quiz">Testa dig sjalv</h2>
-                </div>
-                {s.fragor && s.fragor.map((q, qi) => (
-                  <div class="quiz-question">
-                    <div class="quiz-question__text">
-                      <span class="quiz-question__num">{qi + 1}</span>
-                      {q.fraga}
-                    </div>
-                    {q.underrubrik && (
-                      <div class="quiz-question__sub">{q.underrubrik}</div>
-                    )}
-                    <ul class="quiz-alts" role="list">
-                      {q.alternativ.map((alt) => (
-                        <li class="quiz-alt">{alt}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+              <div class="step__inner step__inner--left">
+                <FokusQuiz fragor={s.fragor ?? []} lektionId={lesson.lektion} />
               </div>
             </section>
           );
