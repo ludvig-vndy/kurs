@@ -15,21 +15,21 @@
       "nummer": 2,
       "titel": "Att läsa ett bolag",
       "lektioner": [
-        { "lektion": "2.1", "titel": "Resultaträkningen", "niva": "Nybörjare", "tid_min": 10, "status": "kommande", "fil": "2.1-resultatrakningen.json" },
-        { "lektion": "2.2", "titel": "Balansräkningen", "niva": "Nybörjare", "tid_min": 10, "status": "kommande", "fil": "2.2-balansrakningen.json" },
-        { "lektion": "2.3", "titel": "Kassaflödet", "niva": "Nybörjare", "tid_min": 10, "status": "kommande", "fil": "2.3-kassaflodet.json" },
-        { "lektion": "2.4", "titel": "Nyckeltal som faktiskt betyder något", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "2.4-nyckeltal.json" }
+        { "lektion": "2.1", "titel": "Resultaträkningen", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "2.1-resultatrakningen.json" },
+        { "lektion": "2.2", "titel": "Balansräkningen", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "2.2-balansrakningen.json" },
+        { "lektion": "2.3", "titel": "Kassaflödet", "niva": "Nybörjare", "tid_min": 10, "status": "klar", "fil": "2.3-kassaflodet.json" },
+        { "lektion": "2.4", "titel": "Nyckeltal som faktiskt betyder något", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "2.4-nyckeltal.json" }
       ]
     },
     {
       "nummer": 3,
       "titel": "Värdering i praktiken",
       "lektioner": [
-        { "lektion": "3.1", "titel": "Vad är värde?", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "3.1-vad-ar-varde.json" },
-        { "lektion": "3.2", "titel": "Multiplar och deras fällor", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "3.2-multiplar.json" },
-        { "lektion": "3.3", "titel": "Diskonterat kassaflöde", "niva": "Avancerad", "tid_min": 12, "status": "kommande", "fil": "3.3-dcf.json" },
-        { "lektion": "3.4", "titel": "Säkerhetsmarginal", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "3.4-sakerhetsmarginal.json" },
-        { "lektion": "3.5", "titel": "Att sätta ett riktpris", "niva": "Avancerad", "tid_min": 12, "status": "kommande", "fil": "3.5-riktpris.json" }
+        { "lektion": "3.1", "titel": "Vad är värde?", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "3.1-vad-ar-varde.json" },
+        { "lektion": "3.2", "titel": "Multiplar och deras fällor", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "3.2-multiplar.json" },
+        { "lektion": "3.3", "titel": "Diskonterat kassaflöde", "niva": "Avancerad", "tid_min": 12, "status": "klar", "fil": "3.3-dcf.json" },
+        { "lektion": "3.4", "titel": "Säkerhetsmarginal", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "3.4-sakerhetsmarginal.json" },
+        { "lektion": "3.5", "titel": "Att sätta ett riktpris", "niva": "Avancerad", "tid_min": 12, "status": "klar", "fil": "3.5-riktpris.json" }
       ]
     }
   ]
