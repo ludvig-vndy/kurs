@@ -39,13 +39,13 @@ function buildControls(
   prevBtn.type = 'button';
   prevBtn.className = 'fokus-nav fokus-nav--prev';
   prevBtn.dataset.fokusPrev = '';
-  prevBtn.textContent = 'Tillbaka';
+  prevBtn.textContent = '← Tillbaka';
 
   const nextBtn = document.createElement('button');
   nextBtn.type = 'button';
   nextBtn.className = 'fokus-nav fokus-nav--next';
   nextBtn.dataset.fokusNext = '';
-  nextBtn.textContent = 'Fortsatt';
+  nextBtn.textContent = 'Fortsätt →';
 
   if (noMotion) {
     prevBtn.style.transition = 'none';
@@ -91,7 +91,7 @@ function initFokus(article: HTMLElement) {
       dot.type = 'button';
       dot.className = 'fokus-dot';
       dot.dataset.go = String(i);
-      dot.setAttribute('aria-label', `Ga till steg ${i + 1}`);
+      dot.setAttribute('aria-label', `Gå till steg ${i + 1}`);
       dotsContainer.appendChild(dot);
       topbarDots.push(dot);
     }
@@ -131,20 +131,20 @@ function initFokus(article: HTMLElement) {
 
     // Update prev button
     if (index === 0) {
-      prevBtn.textContent = 'Till kursoversikte';
+      prevBtn.textContent = '← Till kursöversikten';
       prevBtn.classList.add('fokus-nav--overview');
     } else {
-      prevBtn.textContent = 'Tillbaka';
+      prevBtn.textContent = '← Tillbaka';
       prevBtn.classList.remove('fokus-nav--overview');
     }
     prevBtn.removeAttribute('disabled');
 
     // Update next button
     if (index === last) {
-      nextBtn.textContent = 'Slutfor lektionen';
+      nextBtn.textContent = 'Slutför lektionen';
       nextBtn.classList.add('fokus-nav--complete');
     } else {
-      nextBtn.textContent = 'Fortsatt';
+      nextBtn.textContent = 'Fortsätt →';
       nextBtn.classList.remove('fokus-nav--complete');
     }
 
