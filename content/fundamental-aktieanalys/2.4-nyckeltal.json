@@ -38,22 +38,6 @@
       "forklaring": "ROIC är NOPAT delat med investerat kapital, där NOPAT är EBIT gånger (1 minus skattesatsen). Eftersom både täljare och nämnare är rensade från finansiering mäter måttet driften själv, oberoende av hur bolaget lånat. En hög ROIC kommer från feta marginaler, snabb kapitalomsättning, eller båda. En enskild årssiffra säger nästan ingenting, det är nivån och trenden över fem till tio år som skiljer en verklig moat från en tillfällig medvind."
     },
     {
-      "typ": "dataviz",
-      "titel": "Vad som överlever genom kedjan",
-      "underrubrik": "Av varje försäljningskrona blir mindre och mindre kvar för varje steg ned i resultaträkningen. Gapen mellan stegen bär informationen.",
-      "visual": {
-        "typ": "stapeldiagram",
-        "data": [
-          { "kategori": "Bruttomarginal", "varde": 60 },
-          { "kategori": "Rörelsemarginal", "varde": 25 },
-          { "kategori": "Nettomarginal", "varde": 18, "accent": true }
-        ],
-        "etiketter": "Andel av omsättningen kvar (procent)",
-        "figurtext": "Illustrativa tal."
-      },
-      "slutsats": "Den högre bruttomarginalen plus stramare rörelsespenderande gör att mer behålls vid varje steg. I samma bransch är ett sådant gap en stark signal på en verklig fördel, värd att undersöka närmare."
-    },
-    {
       "typ": "quiz",
       "fragor": [
         {

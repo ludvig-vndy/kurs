@@ -38,22 +38,6 @@
       "forklaring": "Varje värdering bygger på gissningar om framtiden: tillväxt, marginaler, hur länge konkurrensfördelen håller, vilken diskonteringsränta som är rätt. Eftersom ingen känner framtiden är utfallet en åsikt i ett intervall. Den största faran är falsk precision, att förväxla en kalkyls skenbara exakthet med träffsäkerhet."
     },
     {
-      "typ": "dataviz",
-      "titel": "Samma bolag, olika antaganden",
-      "underrubrik": "Flexa antagandena inom rimliga gränser och värdet rör sig brett. Just därför är det ärliga svaret ett intervall, och felmarginalen ditt skydd.",
-      "visual": {
-        "typ": "stapeldiagram",
-        "data": [
-          { "kategori": "Konservativt", "varde": 75 },
-          { "kategori": "Basfall", "varde": 100 },
-          { "kategori": "Optimistiskt", "varde": 140, "accent": true }
-        ],
-        "etiketter": "Uppskattat värde per aktie (kr)",
-        "figurtext": "Illustrativa tal."
-      },
-      "slutsats": "Samma bolag, samma analytiker, men värdet sträcker sig från runt 75 till runt 140 kr, drivet av små ändringar som var och en är rimlig. Du behöver inte pricka ett exakt tal, du behöver intervallet och ett pris tydligt under det."
-    },
-    {
       "typ": "quiz",
       "fragor": [
         {

@@ -38,19 +38,6 @@
       "forklaring": "Ett bolags ägande är uppdelat i andelar. Äger du hundra aktier av tio miljoner äger du en hundratusendel av allt: kassan, varumärket, maskinerna, och varje krona bolaget tjänar från och med nu."
     },
     {
-      "typ": "dataviz",
-      "titel": "Verksamheten gör jobbet",
-      "underrubrik": "Värdet av 100 aktier över sju år om vinsten växer ungefär 10 procent om året. Illustrativt.",
-      "visual": {
-        "typ": "linjediagram",
-        "serier": [
-          { "namn": "Värde av innehavet", "stil": "heldragen", "accent": true, "punkter": [25, 31, 37, 43, 51, 59, 68, 78] }
-        ],
-        "figurtext": "Illustrativ. Ungefär en fördubbling, driven av vinsttillväxten."
-      },
-      "slutsats": "Pengarna fördubblades ungefär, och orsaken var verksamheten, inte marknadens humör."
-    },
-    {
       "typ": "quiz",
       "fragor": [
         {

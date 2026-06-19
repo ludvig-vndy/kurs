@@ -25,16 +25,8 @@
     },
     {
       "typ": "concept",
-      "kicker": "PUNKT MOT INTERVALL",
-      "titel": "Ett riktpris är ett spann, inte en siffra",
-      "visual": {
-        "typ": "jamforelse",
-        "element": [
-          { "rubrik": "Riktpris som punkt", "text": "En enda siffra presenterad som ett facit. Den prydliga basfallssiffran ger en falsk känsla av träffsäkerhet, en synvilla av exakthet som modellen aldrig hade täckning för." },
-          { "rubrik": "Riktpris som intervall", "text": "Ett spann byggt av konservativt, bas- och optimistiskt fall. Det säger inte exakt vad bolaget är värt, men om priset är tydligt billigt, ungefär rättvist eller dyrt." }
-        ],
-        "figurtext": "Riktpris som punkt mot riktpris som intervall."
-      },
+      "kicker": "VARFÖR SPANNET ÄR BRETT",
+      "titel": "Små antaganden, stora svängningar",
       "forklaring": "Två saker gör spannet brett. Varje antagande multipliceras genom många år, så små skillnader sammansätts, och merparten av värdet sitter ofta i slutvärdet, vars nämnare reagerar dramatiskt på små ändringar. Därför är en enda siffra meningslös och ett intervall nödvändigt."
     },
     {
