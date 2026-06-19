@@ -1,0 +1,95 @@
+{
+  "kapitel": 11,
+  "lektion": "11.2",
+  "titel": "Tankefällor",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen känner eleven igen bekräftelsebias, ankring och sunk cost i sitt eget beteende och vet hur var och en förvränger ett beslut.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 11.2",
+      "titel": "Tankefällor",
+      "ingress": "De dyraste misstagen i en portfölj sitter sällan i analysen. De sitter i sinnet som missbrukar den. Tre fällor återkommer: bekräftelsebias, ankring och sunk cost."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FÄLLA 1: BEKRÄFTELSEBIAS",
+      "lead": "I samma sekund som du tar en position börjar hjärnan behandla bevis asymmetriskt. Bekräftande information tas emot lätt, motsägande granskas hårt eller glöms.",
+      "highlight": "hjärnan behandla bevis asymmetriskt",
+      "brodtext": [
+        "Du köper en aktie, och utan att märka det börjar du filtrera världen så att den passar. De positiva analyserna läses, de negativa hoppas över. Varje god nyhet tolkas som upprättelse, varje varning som brus. Så blir investerare förälskade i sina innehav och sitter kvar genom försämrade fundamenta. Förlusten kommer inte av att informationen saknades, den fanns där hela tiden, utan av att biasen sorterade bort den.",
+        "Ägande och ego förstärker allt. När du köpt, och kanske berättat för andra, knyts din stolthet till att ha rätt, och sinnet böjer hellre bevisen tyst än känner nederlaget. Det är ett normalt fungerande sinne som skyddar sin sammanhållning, inte dumhet. Motgiftet är att förbli analytiker av dina innehav, aldrig deras advokat: bygg aktivt det starkaste caset mot din egen position och skriv ner i förväg vad som skulle bevisa tesen fel."
+      ],
+      "takeaway": "Kan du inte formulera ett ärligt argument mot något du äger, har du förmodligen slutat analysera och börjat försvara."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FÄLLA 2: ANKRING",
+      "lead": "En aktie har fallit från 300 till 150 och det första du tänker är halva priset, alltså billig. Där har du jämfört priset mot dess egen historik, inte mot vad verksamheten är värd.",
+      "highlight": "jämfört priset mot dess egen historik, inte mot vad verksamheten är värd",
+      "brodtext": [
+        "Sinnet avskyr att bedöma i absoluta termer och griper vilken referenspunkt som helst till hands, även en irrelevant. Ett tidigare pris är perfekt bränsle: tydligt, lätt att minnas, lätt att jämföra mot. Men aktien vet inte var den har varit. Prishistoriken saknar kausal koppling till värdet. En aktie som fallit blir billig först om dagens pris ligger under vad verksamheten är värd, och den siffran måste komma från din egen värdering, inte från kurshistoriken.",
+        "Var särskilt vaksam på billig för att den fallit. Ett fallande pris speglar ofta ett genuint försämrat värde, ett brustet case eller en värdefälla, inte en rabatt. Motgiftet är att byta ankare: förankra i värde, gör din egen uppskattning och döm varje pris mot den. Då blir den enda frågan om priset ligger under värdet, och den gamla toppen slutar spela roll."
+      ],
+      "takeaway": "Att du minns ett tal gör det inte relevant. Minnesvärdhet och relevans är olika saker."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FÄLLA 3: SUNK COST",
+      "lead": "Det du redan förlorat är borta. Det har exakt noll bäring på om du ska behålla eller sälja från och med nu.",
+      "highlight": "Det du redan förlorat är borta.",
+      "brodtext": [
+        "Ändå håller smärtan av att realisera en förlust, och oviljan att medge ett misstag, dig kvar i försämrade innehav långt förbi den punkt där förnuftet säger sälj. Hjärnan blandar ihop två skilda frågor: var det ett bra beslut att köpa, en gången fråga som nu är likgiltig, och är det bra att äga härifrån, den enda som spelar roll. Att fylla på ett brustet case för att sänka snittet är samma fälla, eftersom det enda skälet att köpa mer då är positionen du redan sitter med.",
+        "Motgiftet är en enda framåtblickande vana. Fråga om varje innehav: med det jag vet i dag, och till dagens pris, skulle jag köpa det här om jag inte redan ägde det? Är svaret ja förtjänar positionen sin plats, oavsett om du ligger på plus eller minus. Är svaret nej är den en kandidat att sälja, hur mycket du än förlorat. Att sälja är då inte att realisera en förlust utan att flytta kapital dit det arbetar bäst härifrån."
+      ],
+      "takeaway": "Marknaden är likgiltig inför vad du betalade. Döm varje håll-eller-sälj-beslut framåt, inte bakåt."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DET GEMENSAMMA MÖNSTRET",
+      "titel": "Tre fällor, ett misstag",
+      "forklaring": "Alla tre fäller dig på samma sätt: en bekväm referens får ersätta en ärlig bedömning av nuläget. Bekräftelsebias låter den tes du redan tagit filtrera bevisen. Ankring låter ett gammalt pris ersätta en värdering. Sunk cost låter det du redan lagt ner ersätta frågan om innehavet är värt att äga härifrån. Gemensamt motgift: döm positionen på bevisen och på framtiden, inte på det förflutna eller på vad du önskar var sant."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är kärnan i bekräftelsebias när du väl tagit en position?",
+          "alternativ": [
+            "Att du saknar information om bolaget",
+            "Att hjärnan börjar behandla bevis asymmetriskt: bekräftande tas emot lätt, motsägande granskas hårt eller glöms",
+            "Att du medvetet ljuger för dig själv"
+          ],
+          "ratt": [1],
+          "forklaring": "Förlusten kommer inte av att informationen saknades, den fanns där, utan av att biasen sorterade bort den. Det är ett normalt sinne som skyddar sin sammanhållning, inte dumhet."
+        },
+        {
+          "typ": "single",
+          "fraga": "En aktie har fallit från 300 till 150 och du tänker halva priset, alltså billig. Vilket fel gör du?",
+          "alternativ": [
+            "Du jämför priset mot dess egen historik i stället för mot vad verksamheten är värd",
+            "Du räknar fel på procenten",
+            "Du borde ha köpt redan vid 300"
+          ],
+          "ratt": [0],
+          "forklaring": "Aktien vet inte var den har varit. Prishistoriken saknar kausal koppling till värdet. Den enda relevanta frågan är om 150 ligger under vad verksamheten är värd, vilket måste komma från din egen värdering."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är motgift mot tankefällorna?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Bygg aktivt det starkaste caset mot din egen position",
+            "Döm priset mot din egen uppskattning av värdet, inte mot tidigare kurser",
+            "Håll en förlorare tills du är tillbaka på noll så att förlusten inte känns verklig",
+            "Fråga om varje innehav: skulle jag köpa det här till dagens pris om jag inte redan ägde det?"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "Att jaga motbevis, förankra i värde och döma varje innehav framåt motverkar bekräftelsebias, ankring och sunk cost. Att hålla kvar bara för att slippa erkänna en förlust är tvärtom sunk cost satt i system."
+        }
+      ]
+    }
+  ]
+}
