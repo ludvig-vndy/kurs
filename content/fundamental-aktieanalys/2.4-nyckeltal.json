@@ -1,0 +1,98 @@
+{
+  "kapitel": 2,
+  "lektion": "2.4",
+  "titel": "Nyckeltal som faktiskt betyder något",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven läsa marginaler och ROIC och veta vad de säger om ett bolags kvalitet.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 2.4",
+      "titel": "Nyckeltal som faktiskt betyder något",
+      "ingress": "Marginaler och ROIC är där kvalitet visar sig först. Lär dig läsa dem så slutar de vara siffror och blir en diagnos av verksamheten."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Marginalen säger hur mycket av varje försäljningskrona som blir vinst, men det verkligt användbara är inte ett tal, det är kedjan: hur mycket som överlever från brutto till rörelse till netto.",
+      "highlight": "det verkligt användbara är inte ett tal, det är kedjan",
+      "brodtext": [
+        "Det finns tre marginaler, var och en ett steg längre ned i resultaträkningen. Bruttomarginalen kommer efter den direkta varukostnaden. Rörelsemarginalen kommer efter kostnaderna att driva verksamheten, alltså EBIT genom omsättning. Nettomarginalen kommer efter allt, inklusive ränta och skatt. Gapen mellan stegen bär informationen: gapet mellan brutto och rörelse visar vad bolaget spenderar på att driva sig självt, gapet mellan rörelse och netto visar bettet från ränta och skatt.",
+        "Tre linser gör avläsningen skarp. Trenden betyder oftast mer än nivån: en rörelsemarginal som expanderar signalerar hävstång eller prissättningskraft, en som pressas signalerar konkurrens eller kostnadstryck. Jämförelsen ger nivån mening, ett tal är bara högt eller lågt mot rätt branschkollegor. Stabiliteten är i sig en kvalitetssignal. Var dessutom vaksam på vad som smickrar en marginal, och stäm alltid av en marginalförbättring mot kassaflödet."
+      ],
+      "takeaway": "Läs marginaler som en kedja och över tid, mot kollegor, aldrig som en enskild siffra. Kontanterna ljuger sällan, så stäm av mot kassaflödet."
+    },
+    {
+      "typ": "concept",
+      "kicker": "ROIC",
+      "titel": "Skapar värde mot förstör värde",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Hög ROIC, skapar värde", "text": "Verksamheten tjänar hög avkastning på kapitalet den binder och kan växa billigare utan att ständigt tigga efter nytt kapital. Ihållande hög ROIC är det finansiella fingeravtrycket av en moat." },
+          { "rubrik": "Låg ROIC, förstör värde", "text": "Avkastningen ligger lågt, kanske under kapitalkostnaden, och tillväxt ovanpå låg ROIC bränner kapital snarare än skapar värde. Kapitaltunga modeller tjänar typiskt lågt hur skickligt de än drivs." }
+        ],
+        "figurtext": "ROIC mot kapitalkostnaden: var avkastningen avgör om värde skapas eller förstörs."
+      },
+      "forklaring": "ROIC är NOPAT delat med investerat kapital, där NOPAT är EBIT gånger (1 minus skattesatsen). Eftersom både täljare och nämnare är rensade från finansiering mäter måttet driften själv, oberoende av hur bolaget lånat. En hög ROIC kommer från feta marginaler, snabb kapitalomsättning, eller båda. En enskild årssiffra säger nästan ingenting, det är nivån och trenden över fem till tio år som skiljer en verklig moat från en tillfällig medvind."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Vad som överlever genom kedjan",
+      "underrubrik": "Av varje försäljningskrona blir mindre och mindre kvar för varje steg ned i resultaträkningen. Gapen mellan stegen bär informationen.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Bruttomarginal", "varde": 60 },
+          { "kategori": "Rörelsemarginal", "varde": 25 },
+          { "kategori": "Nettomarginal", "varde": 18, "accent": true }
+        ],
+        "etiketter": "Andel av omsättningen kvar (procent)",
+        "figurtext": "Illustrativa tal."
+      },
+      "slutsats": "Den högre bruttomarginalen plus stramare rörelsespenderande gör att mer behålls vid varje steg. I samma bransch är ett sådant gap en stark signal på en verklig fördel, värd att undersöka närmare."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Ett bolag har hög bruttomarginal men låg rörelsemarginal. Vad säger gapet mellan dem oftast?",
+          "alternativ": [
+            "Att bolaget har stora kostnader för att driva och sälja, till exempel marknadsföring eller försäljning",
+            "Att bolaget betalar mycket i ränta och skatt",
+            "Att den direkta varukostnaden är ovanligt hög"
+          ],
+          "ratt": [0],
+          "forklaring": "Gapet mellan brutto och rörelse visar vad bolaget spenderar på att driva sig självt, alltså försäljning, administration och utveckling. Ränta och skatt syns först i gapet mellan rörelse och netto."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur definieras ROIC?",
+          "alternativ": [
+            "Nettovinst delat med eget kapital",
+            "NOPAT delat med investerat kapital",
+            "EBIT delat med totala tillgångar",
+            "Fritt kassaflöde delat med omsättning"
+          ],
+          "ratt": [1],
+          "forklaring": "ROIC är NOPAT delat med investerat kapital. Eftersom både täljare och nämnare är rensade från finansiering mäter måttet driften själv, oberoende av hur bolaget lånat."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är gröna tecken när du läser marginaler och ROIC?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Hög rörelsemarginal som är stabil eller expanderar över flera år",
+            "En marginalförbättring som inte syns i kassaflödet",
+            "Hög ROIC som håller över många år och drivs av verkliga marginaler och kapitaleffektivitet",
+            "En kapitalhungrig verksamhet vars tillväxt kräver allt mer kapital till allt lägre avkastning"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Stabila eller expanderande marginaler och en uthållig hög ROIC driven av verklig drift är kvalitetssignaler. En marginalförbättring utan stöd i kassaflödet och tillväxt på allt lägre avkastning är tvärtom varningstecken."
+        }
+      ]
+    }
+  ]
+}

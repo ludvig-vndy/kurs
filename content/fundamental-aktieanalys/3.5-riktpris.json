@@ -1,0 +1,97 @@
+{
+  "kapitel": 3,
+  "lektion": "3.5",
+  "titel": "Att sätta ett riktpris",
+  "niva": "Avancerad",
+  "tid_min": 12,
+  "mal": "Efter lektionen kan eleven sätta ett riktprisintervall via scenarier och känslighet, och hålla det som en bedömning, inte ett facit.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 3.5",
+      "titel": "Att sätta ett riktpris",
+      "ingress": "Ett riktpris är inte en exakt siffra utan ett intervall, en bedömning du håller mot priset, inte ett facit du jagar."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Bygg aldrig en värdering för att få ett tal. Bygg den för att få ett intervall. Du flexar de viktiga antagandena medvetet, tillväxt, marginaler, diskonteringsränta och evig tillväxt, och ser hur värdet rör sig. Det förvandlar en värdering från falsk precision till ett ärligt verktyg.",
+      "highlight": "Bygg aldrig en värdering för att få ett tal. Bygg den för att få ett intervall.",
+      "brodtext": [
+        "I praktiken bygger du några scenarier. Ett konservativt fall med försiktiga antaganden, ett basfall med dina bästa gissningar, och ett optimistiskt fall där saker går bra. Var och en ger ett värde, och tillsammans ger de ett intervall i stället för en punkt. Poängen är inte fler decimaler, utan att förstå spannet av möjliga värden och vilka antaganden som driver det.",
+        "Disciplinen ligger i att bygga sammanhängande scenarier, inte lösryckta tal. Varje scenario ska vara internt konsekvent: ett svagare bolag har gärna både lägre tillväxt och högre risk. Det du ska undvika är att stapla de mest optimistiska antagandena på varje rad och få ett värde som är osannolikt på alla sätt samtidigt."
+      ],
+      "takeaway": "Du behöver aldrig ett exakt riktpris. Du behöver intervallet och ett pris klart under det."
+    },
+    {
+      "typ": "concept",
+      "kicker": "PUNKT MOT INTERVALL",
+      "titel": "Ett riktpris är ett spann, inte en siffra",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Riktpris som punkt", "text": "En enda siffra presenterad som ett facit. Den prydliga basfallssiffran ger en falsk känsla av träffsäkerhet, en synvilla av exakthet som modellen aldrig hade täckning för." },
+          { "rubrik": "Riktpris som intervall", "text": "Ett spann byggt av konservativt, bas- och optimistiskt fall. Det säger inte exakt vad bolaget är värt, men om priset är tydligt billigt, ungefär rättvist eller dyrt." }
+        ],
+        "figurtext": "Riktpris som punkt mot riktpris som intervall."
+      },
+      "forklaring": "Två saker gör spannet brett. Varje antagande multipliceras genom många år, så små skillnader sammansätts, och merparten av värdet sitter ofta i slutvärdet, vars nämnare reagerar dramatiskt på små ändringar. Därför är en enda siffra meningslös och ett intervall nödvändigt."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Tre scenarier, ett riktprisintervall",
+      "underrubrik": "Samma bolag, samma analytiker, men värdet per aktie sträcker sig från det konservativa till det optimistiska fallet, kring ett troligt basfall.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Pessimistiskt", "varde": 10.4 },
+          { "kategori": "Troligt", "varde": 15.2, "accent": true },
+          { "kategori": "Optimistiskt", "varde": 23.9 }
+        ],
+        "etiketter": "Riktpris per aktie (kr), illustrativt",
+        "figurtext": "Illustrativa tal."
+      },
+      "slutsats": "Sanningen om värdet är inte 15,16 kr, utan någonstans runt 10 till 24 kr, troligen kring 15. Håll sedan priset mot spannet: ligger det under till och med det konservativa fallet finns en verklig felmarginal, ligger det bara inom det optimistiska krävs att allt går rätt."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är poängen med att sätta ett riktpris som ett intervall i stället för en enda siffra?",
+          "alternativ": [
+            "Att få fram fler decimaler i det exakta värdet",
+            "Att flexa antagandena och få ett spann av troliga värden, samt förstå vad som driver dem",
+            "Att eliminera all osäkerhet i värderingen"
+          ],
+          "ratt": [1],
+          "forklaring": "I stället för att låtsas att modellen ger ett exakt tal flexar du antagandena och ser hur värdet rör sig. Det ger ett intervall och en känsla för vilka antaganden som driver det, i stället för falsk precision."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur använder du riktprisintervallet tillsammans med felmarginalen?",
+          "alternativ": [
+            "Du köper så länge priset ligger inom det optimistiska fallet",
+            "Du ignorerar intervallet och köper på basfallssiffran",
+            "Du vill köpa till ett pris under till och med ditt konservativa fall"
+          ],
+          "ratt": [2],
+          "forklaring": "Ligger priset under även det konservativa fallet är aktien tydligt billig med en verklig marginal, du är skyddad även om antagandena var för rosiga. Ligger det bara inom det optimistiska fallet finns ingen marginal."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vad kännetecknar ett väl satt riktpris?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Antagandena medvetet flexade till ett intervall, byggt av internt konsekventa scenarier",
+            "De mest optimistiska antagandena staplade på varje enskild rad",
+            "En tydlig bild av vilka antaganden som driver värdet mest",
+            "En enda siffra på öret presenterad som ett facit"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Ett gott riktpris är ett intervall av internt konsekventa scenarier och en förståelse för vilka antaganden som driver värdet. Att stapla optimism på varje rad eller presentera en exakt siffra som facit är tvärtom varningstecken."
+        }
+      ]
+    }
+  ]
+}

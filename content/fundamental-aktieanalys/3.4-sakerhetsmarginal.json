@@ -1,0 +1,96 @@
+{
+  "kapitel": 3,
+  "lektion": "3.4",
+  "titel": "Säkerhetsmarginal",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "mal": "Efter lektionen förstår eleven felmarginalen (margin of safety): att köpa tillräckligt under sin värdeuppskattning för att tåla att ha fel.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 3.4",
+      "titel": "Säkerhetsmarginal",
+      "ingress": "Din uppskattning av ett bolags värde är en kvalificerad åsikt, inte ett facit. Felmarginalen är hur du ändå tål att ha fel."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Du skyddar dig genom att köpa till ett pris bekvämt under din värdeuppskattning. Glappet däremellan är din buffert mot att ha fel: mot för optimistiska antaganden, mot otur, mot det du inte kunde förutse.",
+      "highlight": "Du skyddar dig genom att köpa till ett pris bekvämt under din värdeuppskattning.",
+      "brodtext": [
+        "Logiken är ödmjuk och därför stark. Din uppskattning av ett bolags värde är en kvalificerad åsikt, inte ett facit, och framtiden är okänd. Ju större rabatt mot värdet, desto mer kan gå snett medan du ändå undviker permanent förlust. Felmarginalen är hur du förvandlar en oundvikligen felbar analys till en investering som tål att du ibland har fel.",
+        "Hur stor marginal du behöver skalar med osäkerheten. För en stabil, förutsägbar verksamhet du förstår väl kan en mindre rabatt räcka. För en svårare, mer svårbedömd verksamhet bör du kräva en betydligt större. Marginalen kalibreras mot ditt självförtroende, och det självförtroendet ska vara ärligt grundat."
+      ],
+      "takeaway": "Det svåraste är att en genuin rabatt inte alltid finns. Då är det disciplinerade draget att vänta, hålla kontanter eller befintliga innehav, tills ett pris faktiskt erbjuder en marginal."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TVÅ JOBB PÅ EN GÅNG",
+      "titel": "Rabatten gör dubbelt arbete",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Köpa till värde", "text": "Tunn eller obefintlig rabatt. Är du det minsta för optimistisk, eller går något snett, förlorar du pengar. Du satsar helt enkelt på att ha rätt." },
+          { "rubrik": "Köpa under värde", "text": "En tjock buffert mot misstag och otur. Bufferten absorberar en del av slaget innan det blir en förlust, och billigheten lämnar samtidigt mer uppsida när priset söker sig mot värdet." }
+        ],
+        "figurtext": "Felmarginalen ger både skydd och avkastning på en gång."
+      },
+      "forklaring": "Var din uppskattning för optimistisk köpte du ändå under det verkliga värdet, och händer något oturligt absorberar rabatten en del av slaget innan den blir en förlust. Poängen är inte att hitta saker värda exakt vad du betalar, utan att köpa så långt under värdet att du står skyddad även när du har fel."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Glappet är din buffert",
+      "underrubrik": "Köper du under din uppskattning är skillnaden mellan värde och pris själva säkerhetsmarginalen.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Uppskattat värde", "varde": 100, "accent": true },
+          { "kategori": "Köppris", "varde": 60 }
+        ],
+        "etiketter": "Kronor per aktie",
+        "figurtext": "Illustrativa tal. Skillnaden, 40 kr, är en felmarginal på 40 procent."
+      },
+      "slutsats": "Tror du att ett bolag är värt runt 100 och köper i 60, är felmarginalen 40 procent, en buffert på 40 kr per aktie. Samma verksamhet i 60 i stället för nära värdet förvandlar investeringen från nästan inget skydd till en tjock buffert plus rejäl uppsida."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är en felmarginal (margin of safety)?",
+          "alternativ": [
+            "Att köpa till ett pris bekvämt under din uppskattning av värdet",
+            "Att bara köpa aktier som svänger lite i pris",
+            "Att sprida köpet över flera tillfällen för att snitta in sig"
+          ],
+          "ratt": [0],
+          "forklaring": "Felmarginalen är glappet mellan ett konservativt uppskattat värde och priset du betalar. Den bufferten skyddar mot att du har fel och mot otur."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur bör storleken på den felmarginal du kräver bestämmas?",
+          "alternativ": [
+            "Den ska alltid vara exakt 50 procent oavsett bolag",
+            "Den ska skala med osäkerheten: större rabatt för svårbedömda bolag, mindre där förståelsen är genuin",
+            "Den ska vara större ju mer aktiens pris svänger"
+          ],
+          "ratt": [1],
+          "forklaring": "Marginalen kalibreras mot ditt ärligt grundade självförtroende. Ett stabilt bolag inom din kompetenscirkel kräver mindre buffert än ett svårbedömt."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa hör till en sund tillämpning av felmarginalen?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Du köper bara med en meningsfull rabatt mot en konservativ uppskattning av värdet",
+            "Du kräver samma lilla marginal för en riskabel verksamhet som för en säker",
+            "Du väntar tålmodigt på en verklig rabatt i stället för att tvinga fram ett köp",
+            "Du köper till rättvist värde och intalar dig att det egentligen är billigt"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Disciplin är en meningsfull rabatt mot ett konservativt värde och tålamodet att vänta på den. Samma lilla marginal för det riskabla, eller otålighet förklädd till övertygelse, är tvärtom varningstecken."
+        }
+      ]
+    }
+  ]
+}

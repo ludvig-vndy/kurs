@@ -1,0 +1,103 @@
+{
+  "kapitel": 3,
+  "lektion": "3.2",
+  "titel": "Multiplar och deras fällor",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven använda de vanligaste multiplarna på rätt sorts bolag och känna igen de fällor som får billigt att se ut som ett fynd.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 3.2",
+      "titel": "Multiplar och deras fällor",
+      "ingress": "Multiplar är det språk marknaden pratar värdering på, men fel multipel på fel bolag ger ett självsäkert och vilseledande svar."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "En multipel är ett pris delat med ett fundamentalt mått, och den är inte ett mått på dyrt eller billigt. Den är en sammanfattning av marknadens förväntningar på tillväxt, risk och avkastning på kapital. Att se vad som ligger bakom talet är vad som låter dig avgöra om multipeln är motiverad.",
+      "highlight": "den är inte ett mått på dyrt eller billigt",
+      "brodtext": [
+        "De vanligaste multiplarna faller i två familjer. Equity-multiplar byggs på börsvärdet: P/E, P/S och P/B ser bolaget ur aktieägarens stol, efter att långivarna fått sitt. EV-multiplar byggs på rörelsevärdet, Enterprise Value, alltså börsvärde plus nettoskuld, och hit hör EV/EBIT och EV/EBITDA. Den avgörande skillnaden: EV-multiplar tar hänsyn till skulden, equity-multiplar gör det inte.",
+        "Därför vänder en hög multipel inte alltid på intuitionen. Ett bolag på 25 gånger vinsten kan vara billigare än ett på 10, om det första växer snabbt med hög avkastning på kapital och det andra krymper. Du kan aldrig döma billigt eller dyrt på multipeln ensam, utan måste fråga om den är motiverad av utsikterna."
+      ],
+      "takeaway": "En multipel pekar dig mot något att undersöka. Den avgör inte saken, och en låg multipel förtjänar misstanke, inte entusiasm."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SAMMA VINST, OLIKA TAL",
+      "titel": "Skulden snedvrider P/E, EV/EBIT neutraliserar den",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Bolag A, skuldfritt",
+            "text": "Samma verksamhet och samma rörelseresultat som Bolag B. Utan räntekostnad blir vinsten efter skatt högre, så P/E ser dyrare ut. EV/EBIT mäter hela verksamheten oavsett finansiering."
+          },
+          {
+            "rubrik": "Bolag B, belånat",
+            "text": "Identisk verksamhet, men finansierad med nettoskuld. Räntor äter av vinsten och skulden krymper börsvärdet, så P/E ser lägre ut. EV/EBIT visar samma operativa värdering som Bolag A."
+          }
+        ],
+        "figurtext": "P/E snedvrids av skuld, EV/EBIT är kapitalstruktur-neutral."
+      },
+      "forklaring": "Två i grunden identiska verksamheter får olika P/E enbart för att den ena lånat mer, eftersom vinsten per aktie är efter räntor. EV-multiplar räknar in nettoskulden i täljaren och bygger på resultat före räntor i nämnaren, så båda sidor är rensade från finansiering. Just därför lutar proffs mot EV/EBIT när de jämför bolag med olika skuldsättning."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Lågt P/E är inte alltid billigt",
+      "underrubrik": "Tre bolag med skenbart lågt P/E. Tar man hänsyn till vad som ligger bakom talet ser bilden annorlunda ut.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Bolag A, cyklisk topp", "varde": 5, "accent": true },
+          { "kategori": "Bolag B, strukturell nedgång", "varde": 7 },
+          { "kategori": "Bolag C, stabilt", "varde": 12 }
+        ],
+        "etiketter": "P/E (gånger vinsten)",
+        "figurtext": "Illustrativa tal. Bolag A och B ser billigast ut men är fällor, deras låga multipel är låg av en anledning."
+      },
+      "slutsats": "Bolag A handlas på rekordvinst vid en konjunkturtopp, så det låga P/E kollapsar när cykeln vänder. Bolag B krymper strukturellt och blir dyrare för varje år. En låg multipel speglar oftast verkliga problem, och botemedlet mot cykliska fällor är att värdera på normaliserad vinst mitt i cykeln, inte på toppvinsten."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är den avgörande skillnaden mellan equity-multiplar som P/E och EV-multiplar som EV/EBIT?",
+          "alternativ": [
+            "EV-multiplar tar hänsyn till skulden och är kapitalstruktur-neutrala, medan equity-multiplar inte gör det",
+            "Equity-multiplar är alltid lägre än EV-multiplar för samma bolag",
+            "EV-multiplar kan bara användas på olönsamma bolag"
+          ],
+          "ratt": [0],
+          "forklaring": "EV är börsvärde plus nettoskuld och EBIT respektive EBITDA är resultat före räntor, så båda sidor är rensade från finansiering. P/E bygger på vinst efter räntor och snedvrids därför av skuldsättningen."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är ett lågt P/E på ett cykliskt bolag vid en konjunkturtopp en fälla snarare än ett fynd?",
+          "alternativ": [
+            "Lågt P/E betyder alltid att aktien är billig",
+            "Vid toppen är vinsten rekordhög, så P/E ser lågt ut, men vinsten är på väg ned och multipeln kollapsar när cykeln vänder",
+            "Cykliska bolag har alltid för högt P/E vid toppen"
+          ],
+          "ratt": [1],
+          "forklaring": "För cykliska bolag är P/E ofta bakvänt, lågt vid toppen och högt vid botten. Botemedlet är att värdera på normaliserad vinst mitt i cykeln, inte på toppvinsten."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av följande stämmer med hur multiplar bör väljas och tolkas?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "EV/EBIT passar för att jämföra bolag med olika skuldsättning",
+            "P/B är mest relevant för banker och tillgångstunga bolag",
+            "Ett lågt P/E betyder alltid att aktien är ett fynd",
+            "En låg multipel bör antas vara motiverad tills du kan förklara varför marknaden har fel"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "EV/EBIT neutraliserar skulden och passar jämförelser, och P/B är relevant där bokförda värden ligger nära verkligt värde, som banker. En låg multipel är ofta låg av en anledning, så standardantagandet bör vara att rabatten är motiverad tills motsatsen kan visas."
+        }
+      ]
+    }
+  ]
+}

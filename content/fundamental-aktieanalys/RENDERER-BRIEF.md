@@ -28,13 +28,16 @@ Du bygger renderaren som ritar steg-JSON-lektionerna i den nya designen. **Datan
 
 ## Visual-objektet (`concept.visual`, `dataviz.visual`)
 
-`switch` på `visual.typ`. Alla visuals har `typ` + `figurtext`. **v1 stödjer dessa (alla finns i designen):**
+`switch` på `visual.typ`. Alla visuals har `typ` + `figurtext`. **v1 stödjer dessa sex:**
 
 - **`rutnat`** (designens ägar-visual, steg 3) — `kolumner` (int), `celler` (int), `markerad` (index, 0-baserad), `etikett` (text i markerad cell, t.ex. "DU"). Rita rutnät, en cell mint med pop-in stagger. Ex: `{ "typ":"rutnat", "kolumner":7, "celler":28, "markerad":9, "etikett":"DU", "figurtext":"..." }`.
-- **`linjediagram`** (designens pris/värde-graf, steg 4) — `serier[]` av `{ namn, stil:"heldragen"|"streckad", accent?:bool, punkter:[y-värden 0..100] }` (x implicit per index). Valfri `markor: { serieIndex, punktIndex, etikett }` (t.ex. "köpläge"-punkt). Legend från `serier[].namn`/`stil`. Heldragen accent-linje ritas via `stroke-dashoffset`-animering, streckad = `var(--line-price)`. Se `1.2-pris-mot-varde.json`.
-- **`jamforelse`** (enkel, ej i prototypen men trivial) — `element[]` av `{ rubrik, text }` (oftast 2 kort mot varandra).
+- **`linjediagram`** (designens pris/värde-graf, steg 4) — `serier[]` av `{ namn, stil:"heldragen"|"streckad", accent?:bool, punkter:[y-värden 0..100] }` (x implicit per index). Valfri `markor: { serieIndex, punktIndex, etikett }` (t.ex. "köpläge"-punkt). Legend från `serier[].namn`/`stil`. Se `1.1` (1 serie) och `1.2` (2 serier + markör).
+- **`jamforelse`** — `element[]` av `{ rubrik, text }` (oftast 2 kort mot varandra). Se `1.2`.
+- **`stapeldiagram`** — `data[]` av `{ kategori, varde, accent?:bool }`, `etiketter` (vad värdena visar, ev. enhet), `figurtext`. `varde` kan vara negativt (nollinje i mitten). `accent:true` framhäver en stapel. Datagraf: använd tal ur källan eller märk som illustrativt i `figurtext`.
+- **`flode`** — `noder[]` av `{ etikett, operator?: "minus"|"plus"|"likamed", accent?:bool }` (3 till 5 noder), `figurtext`. Rita som kedja: intäkt, minus kostnad, lika med resultat. `accent` på slutnoden. (Konceptuell, får konstrueras fritt.)
+- **`andel`** — `delar[]` av `{ etikett, varde, accent?:bool }` (värdena är proportioner, renderaren normaliserar till 100%), `figurtext`. Rita som 100%-staplad stapel eller ring, t.ex. eget kapital mot skulder. (Konceptuell.)
 
-Framtida (be om dem innan jag producerar data som kräver dem): `stapeldiagram`, `flode`, `andel`. Möter du en `visual.typ` du inte stödjer: rendera `figurtext` som fallback, krascha inte.
+Möter du en `visual.typ` du inte stödjer: rendera `figurtext` som fallback, krascha inte.
 
 ## Quiz (`quiz.fragor[]`)
 

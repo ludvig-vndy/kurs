@@ -1,0 +1,95 @@
+{
+  "kapitel": 2,
+  "lektion": "2.2",
+  "titel": "Balansräkningen",
+  "niva": "Nybörjare",
+  "tid_min": 10,
+  "mal": "Efter lektionen förstår eleven balansräkningens två sidor, att tillgångar är lika med skulder plus eget kapital, och vad soliditet säger om hur tjock kapitalkudden är.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 2.2",
+      "titel": "Balansräkningen",
+      "ingress": "Resultaträkningen visar hur året gick. Balansräkningen visar hur stark ställningen är just nu, och om bolaget kan överleva sina egna misstag."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Balansräkningen vilar på en enda ekvation: tillgångar lika med skulder plus eget kapital. Allt bolaget äger betalades antingen med pengar det är skyldigt andra eller med pengar som tillhör ägarna.",
+      "highlight": "tillgångar lika med skulder plus eget kapital",
+      "brodtext": [
+        "Flyttar du om den blir den tydligare: eget kapital lika med tillgångar minus skulder. Ägarnas andel är det som är kvar när du drar det skyldiga från det ägda. Ekvationen balanserar alltid, per konstruktion. Varje krona i tillgångar är finansierad av antingen en skuld eller eget kapital.",
+        "Balansräkningen visar därför inte bara vad bolaget har, utan hur det är finansierat: blandningen av andras pengar mot ägarnas pengar. Den mixen avgör motståndskraften. Ett bolag finansierat mest med eget kapital är robust och kan inte tvingas in i problem av långivare. Ett bolag finansierat mest med skuld är skört, med fasta åtaganden som måste betalas oavsett hur verksamheten går."
+      ],
+      "takeaway": "Du läser balansräkningen för att svara på två frågor: kan det här bolaget överleva ett dåligt år, och vem har krav före mig? Aktieägaren står sist i kön, långivarna får betalt först."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TVÅ SIDOR SOM BALANSERAR",
+      "titel": "Det ägda mot det finansierade",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Tillgångar", "text": "Vad bolaget kontrollerar: kassa, kundfordringar och lager (omsättningstillgångar, som blir kontanter inom ett år), plus byggnader, utrustning, goodwill och immateriella tillgångar (anläggningstillgångar, med längre livslängd)." },
+          { "rubrik": "Skulder plus eget kapital", "text": "Hur tillgångarna finansierats. Skulder är vad bolaget är skyldigt: leverantörsskulder och kortfristig skuld plus långfristig skuld och avsättningar. Eget kapital är ägarnas rest: inbetalt aktiekapital plus balanserade vinstmedel." }
+        ],
+        "figurtext": "Sidorna balanserar alltid, per konstruktion: tillgångar lika med skulder plus eget kapital."
+      },
+      "forklaring": "Vänster sida visar vad bolaget äger, höger sida visar vem som betalat för det. Eftersom varje tillgång måste vara finansierad av antingen en skuld eller eget kapital är de två sidorna alltid lika stora. Skillnaden i mixen, andras pengar mot ägarnas, avgör hur motståndskraftigt bolaget är."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Kapitalkudden mäts som soliditet",
+      "underrubrik": "Soliditet är eget kapital delat med totala tillgångar. Den mäter hur stor del av tillgångarna som ägarna själva har finansierat, alltså hur tjock bufferten mot förluster är.",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Eget kapital", "varde": 40, "accent": true },
+          { "etikett": "Skulder", "varde": 60 }
+        ],
+        "figurtext": "Illustrativ. Ett bolag med tillgångar 1 000 och skulder 600 har eget kapital 400, alltså soliditet 40 procent."
+      },
+      "slutsats": "Hög soliditet betyder en tjock buffert som kan absorbera chocker; låg soliditet betyder en tunn kudde. När tillgångarna faller absorberar det egna kapitalet hela förlusten, eftersom skulderna är fasta och inte krymper. Skilj soliditet (långsiktig stabilitet) från likviditet (kortsiktig betalningsförmåga): ett bolag kan vara solvent men illikvitt och ändå knäckas."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Ett bolag har totala tillgångar på 1 000 Mkr och totala skulder på 600 Mkr. Vad är soliditeten?",
+          "alternativ": [
+            "60 procent",
+            "40 procent",
+            "67 procent"
+          ],
+          "ratt": [1],
+          "forklaring": "Eget kapital är 1 000 minus 600, alltså 400. Soliditet är eget kapital genom totala tillgångar: 400 delat på 1 000, alltså 40 procent."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför kan ett bolag vara solvent (ha hög soliditet) men ändå knäckas?",
+          "alternativ": [
+            "För att skulderna alltid förfaller på en gång",
+            "För att det kan vara illikvitt och sakna kontanter att betala kortsiktiga räkningar med",
+            "För att eget kapital alltid är bokfört värde"
+          ],
+          "ratt": [1],
+          "forklaring": "Soliditet är långsiktig stabilitet, likviditet är kortsiktig betalningsförmåga. Ett bolag kan ha tillgångar men ändå sakna kontanter just nu, och det kan knäcka det."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är giltiga varningstecken i en balansräkning?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Låg soliditet jämfört med branschkollegor",
+            "En stor andel av tillgångarna som är goodwill snarare än produktiv egendom",
+            "Hög andel eget kapital i finansieringen",
+            "Tung skuld i förhållande till eget kapital med volatila vinster"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "Tunn kudde, goodwilltunga tillgångar och hög skuld med ostadiga vinster är alla skörhetstecken. Hög andel eget kapital är tvärtom ett styrketecken."
+        }
+      ]
+    }
+  ]
+}

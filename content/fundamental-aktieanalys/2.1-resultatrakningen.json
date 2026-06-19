@@ -1,0 +1,103 @@
+{
+  "kapitel": 2,
+  "lektion": "2.1",
+  "titel": "Resultaträkningen",
+  "niva": "Nybörjare",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven läsa en resultaträkning uppifrån och ned och förstå vad varje rad betyder.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 2.1",
+      "titel": "Resultaträkningen",
+      "ingress": "Resultaträkningen svarar på en fråga: tjänade verksamheten pengar i år, och hur? Hela svaret ligger i vägen ned till sista raden."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Resultaträkningen är en trappa. Du börjar med omsättningen högst upp och drar av kostnader i lager, ett i taget, tills du når vinsten längst ned. Den läses uppifrån och ned, inte nedifrån, för nettoresultatet ensamt säger nästan ingenting. Det är hur du tar dig ned till sista raden som avslöjar vinstens källa och kvalitet.",
+      "highlight": "Resultaträkningen är en trappa.",
+      "brodtext": [
+        "Tänk dig två bolag med exakt samma sista rad. Det ena tjänade sina pengar på en frisk kärnverksamhet, det andra på att sälja en fastighet ett år då rörelsen gick med förlust. Samma siffra, två helt olika bolag. Den som bara läste sista raden köpte det sämre av dem utan att veta om det.",
+        "Varje lager skalar bort en egen sorts kostnad och varje delsumma svarar på en egen fråga. Omsättningen är toppraden, men säger inget om lönsamhet på egen hand. Bruttoresultatet avslöjar produktens grundekonomi. Rörelseresultatet är vinsten från den faktiska verksamheten, det renaste måttet på hur kärnverksamheten presterar. Nettoresultatet är vad som är kvar för ägarna när allt är betalt, inklusive räntor, skatt och engångsposter."
+      ],
+      "takeaway": "Läs trappan uppifrån och ned, men bedöm den från rörelseresultatet. Bli varken upprymd eller orolig av sista raden förrän du sett vad som ligger ovanför den."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRAPPAN, STEG FÖR STEG",
+      "titel": "Från omsättning till nettoresultat",
+      "visual": {
+        "typ": "flode",
+        "noder": [
+          { "etikett": "Omsättning" },
+          { "etikett": "Kostnad för sålda varor", "operator": "minus" },
+          { "etikett": "Bruttoresultat", "operator": "likamed" },
+          { "etikett": "Rörelsekostnader", "operator": "minus" },
+          { "etikett": "Rörelseresultat", "operator": "likamed" },
+          { "etikett": "Räntor och skatt", "operator": "minus" },
+          { "etikett": "Nettoresultat", "operator": "likamed", "accent": true }
+        ],
+        "figurtext": "Resultaträkningens kedja, från toppraden ned till vad ägarna får."
+      },
+      "forklaring": "Bruttoresultatet, omsättning minus den direkta kostnaden för det sålda, sätter taket för all lönsamhet under sig: varje kostnad längre ned tas ur det bruttoraden lämnar kvar. Rörelseresultatet (EBIT) är verksamheten före räntor och skatt. Var misstänksam när nettoresultat och rörelseresultat berättar olika historier, för gapet är nästan alltid engångsposter eller finansiella poster."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Vad som överlever på vägen ned",
+      "underrubrik": "Av varje krona i försäljning skalas en del bort på varje nivå. Det som når ägarna är bara en bråkdel av toppraden.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Omsättning", "varde": 1000 },
+          { "kategori": "Bruttoresultat", "varde": 400 },
+          { "kategori": "Rörelseresultat", "varde": 150 },
+          { "kategori": "Nettoresultat", "varde": 95, "accent": true }
+        ],
+        "etiketter": "Belopp i Mkr",
+        "figurtext": "Illustrativa tal."
+      },
+      "slutsats": "Det största läckaget sitter högt upp, i kostnaden för sålda varor, därnäst i rörelsekostnaderna. Sedan tar räntor och skatt sitt innan ägarna ser något. Bedöm verksamheten från rörelseresultatet och spåra vad som händer under det."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför läser man resultaträkningen uppifrån och ned i stället för att börja med sista raden?",
+          "alternativ": [
+            "För att vägen ned till nettoresultatet avslöjar vinstens källa och kvalitet",
+            "För att sista raden alltid innehåller redovisningsfel",
+            "För att omsättningen är det enda måttet på lönsamhet"
+          ],
+          "ratt": [0],
+          "forklaring": "Nettoresultatet ensamt säger lite. Två bolag kan visa samma sista rad men ha helt olika vinstkvalitet, och det är hur du tar dig ned till den som avslöjar källan."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket resultatmått ger den renaste bilden av hur själva kärnverksamheten presterar, före finansiering och skatt?",
+          "alternativ": [
+            "Nettoresultatet",
+            "Rörelseresultatet (EBIT)",
+            "Resultat före skatt"
+          ],
+          "ratt": [1],
+          "forklaring": "Rörelseresultatet visar verksamheten före räntor och skatt. Nettoresultatet visar verksamheten plus finansiering, skatt och engångsposter."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är varningstecken när du läser en resultaträkning?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Nettoresultatet ligger klart över rörelseresultatet, drivet av engångsposter eller finansiella poster",
+            "Omsättningen stiger medan rörelseresultatet står stilla eller faller",
+            "Rörelseresultatet växer minst i takt med omsättningen, helst snabbare",
+            "Nettoresultatet drivs rent av rörelseresultatet, med minimala engångsposter"
+          ],
+          "ratt": [0, 1],
+          "forklaring": "Ett gap där netto ligger över rörelse, och omsättning som stiger utan att rörelseresultatet följer med, är tecken på låg vinstkvalitet och marginalpress. De två sista beskriver tvärtom en frisk trappa."
+        }
+      ]
+    }
+  ]
+}

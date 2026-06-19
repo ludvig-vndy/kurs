@@ -1,0 +1,103 @@
+{
+  "kapitel": 3,
+  "lektion": "3.3",
+  "titel": "Diskonterat kassaflöde",
+  "niva": "Avancerad",
+  "tid_min": 12,
+  "mal": "Efter lektionen förstår eleven DCF-modellens logik: att prognostisera framtida kassaflöden och diskontera dem till ett nuvärde idag.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 3.3",
+      "titel": "Diskonterat kassaflöde",
+      "ingress": "En DCF räknar inte fram det rätta priset. Den tvingar dig att säga högt vad du faktiskt tror om framtida kassaflöden, och visar var värdet kommer ifrån."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "En DCF förverkligar definitionen av värde rakt av: värdet av en verksamhet är nuvärdet av de kontanter den kommer ge dig. Den gör det i tre steg, och lägger varje antagande på bordet i stället för att gömma dem bakom en multipel.",
+      "highlight": "värdet av en verksamhet är nuvärdet av de kontanter den kommer ge dig",
+      "brodtext": [
+        "Först prognostiserar du det fria kassaflödet för var och ett av de närmaste åren, den explicita prognosperioden, oftast fem till tio år. Sedan fångar du allt liv bortom prognosen i ett enda terminalvärde, oftast med Gordons tillväxtformel som antar en blygsam evig tillväxttakt. Till sist diskonterar du allt, både prognosens kassaflöden och terminalvärdet, tillbaka till idag med en ränta som speglar risk och pengars tidsvärde, och summerar.",
+        "Den summan är rörelsevärdet, värdet på hela verksamheten. En DCF byggd på fritt kassaflöde till hela bolaget ger alltid rörelsevärde, eftersom de kassaflödena tillfaller både långivare och ägare och därför diskonteras med WACC. För att nå värdet per aktie drar du bort nettoskulden och delar på antalet aktier.",
+        "Två antaganden bortom själva prognosen driver vanligen merparten av värdet och är samtidigt svårast att förankra: diskonteringsräntan och terminalvärdet. Diskonteringsräntan översätter all framtida kontant till idag, så en liten ändring svänger värdet kraftigt. Terminalvärdet vilar på en gissning om en oändlig framtid och utgör i ett typiskt fall långt mer än hälften av totalvärdet."
+      ],
+      "takeaway": "Värdet ligger i tydligheten en DCF tvingar fram, inte i decimalen den producerar. Behandla utfallet som en uppskattning i ett intervall, aldrig som ett orakel."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE BYGGSTENAR",
+      "titel": "Prognos, terminalvärde, diskontering",
+      "visual": {
+        "typ": "flode",
+        "noder": [
+          { "etikett": "Prognostisera kassaflöden" },
+          { "etikett": "Diskontera till nuvärde", "operator": "plus" },
+          { "etikett": "Terminalvärde", "operator": "likamed" },
+          { "etikett": "Bolagets värde", "accent": true }
+        ],
+        "figurtext": "DCF i tre steg: prognos och diskontering plus terminalvärde ger bolagets värde."
+      },
+      "forklaring": "En DCF prognostiserar fritt kassaflöde under en explicit period, fångar allt liv därefter i ett terminalvärde, och diskonterar sedan allt tillbaka till idag och summerar. De tre byggstenarna är alltid desamma, och svaret är aldrig bättre än antagandena bakom dem. Diskontering betyder att ett framtida belopp delas på (1 + r) upphöjt till antal år, så pengar längre fram väger mindre idag."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Diskontering plattar ut framtiden",
+      "underrubrik": "Kassaflödet växer varje år, men diskonterat till idag krymper varje belopp ju längre fram det ligger.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "År 1", "varde": 108 },
+          { "kategori": "År 1 nuvärde", "varde": 98, "accent": true },
+          { "kategori": "År 3", "varde": 126 },
+          { "kategori": "År 3 nuvärde", "varde": 95, "accent": true },
+          { "kategori": "År 5", "varde": 147 },
+          { "kategori": "År 5 nuvärde", "varde": 91, "accent": true }
+        ],
+        "etiketter": "Fritt kassaflöde i Mkr: belopp respektive år mot dess nuvärde idag.",
+        "figurtext": "Illustrativa tal. Vid 8 procents tillväxt och 10 procents diskontering tar tillväxt och diskontering nästan ut varandra, så nuvärdena blir platta."
+      },
+      "slutsats": "Att växa 8 procent och diskontera 10 procent tar nästan ut varandra: framtida kassaflöden ser stora ut, men deras nuvärde idag är blygsamt. Därför hamnar ofta merparten av en DCF i terminalvärdet."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilka är de tre byggstenarna i en DCF, i rätt ordning?",
+          "alternativ": [
+            "Prognos av fritt kassaflöde, terminalvärde, diskontering till nuvärde",
+            "Vinst, utdelning, återköp",
+            "Multipel, tillväxt, marginal"
+          ],
+          "ratt": [0],
+          "forklaring": "En DCF prognostiserar fritt kassaflöde under en explicit period, fångar allt liv därefter i ett terminalvärde, och diskonterar sedan allt tillbaka till idag och summerar."
+        },
+        {
+          "typ": "single",
+          "fraga": "En DCF på fritt kassaflöde till hela bolaget, diskonterad med WACC, ger direkt vilket värde?",
+          "alternativ": [
+            "Värdet på det egna kapitalet, alltså värdet per aktie",
+            "Rörelsevärdet, hela verksamhetens värde",
+            "Marknadsvärdet på skulden"
+          ],
+          "ratt": [1],
+          "forklaring": "Kassaflödet till hela bolaget tillfaller både långivare och ägare och diskonteras med WACC, så summan blir rörelsevärdet. Först efter avdrag för nettoskuld och delning på aktierna får du ett värde per aktie."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa stämmer om terminalvärdet och diskonteringsräntan?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Terminalvärdet utgör i ett typiskt fall mer än hälften av totalvärdet",
+            "En liten ändring i diskonteringsräntan svänger värdet kraftigt",
+            "Den eviga tillväxten bör sättas nära diskonteringsräntan",
+            "Terminalvärdet och diskonteringsräntan är de mest osäkra antagandena"
+          ],
+          "ratt": [0, 1, 3],
+          "forklaring": "Terminalvärdet dominerar ofta totalvärdet, och både det och räntan är svårast att förankra, så små ändringar svänger värdet mycket. Att sätta den eviga tillväxten nära räntan krymper nämnaren och får terminalvärdet att explodera, vilket är ett varningstecken, inte ett mål."
+        }
+      ]
+    }
+  ]
+}

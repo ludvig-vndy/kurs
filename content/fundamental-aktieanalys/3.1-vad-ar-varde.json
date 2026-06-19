@@ -1,0 +1,96 @@
+{
+  "kapitel": 3,
+  "lektion": "3.1",
+  "titel": "Vad är värde?",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "mal": "Efter lektionen förstår eleven att ett bolags värde är nuvärdet av dess framtida kassaflöden, och att en värdering är en informerad bedömning, inte ett facit.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 3.1",
+      "titel": "Vad är värde?",
+      "ingress": "Ett bolag är värt de kontanter det kommer att ge sina ägare i framtiden, räknade i dagens pengar. Resten är ledtrådar till just den summan."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "En verksamhet är värd nuvärdet av alla kontanter den kommer att ge sina ägare under sin livstid. En aktie är din andel av de framtida kontanterna. Allt annat, vinsten, det bokförda värdet, en multipel, tillväxten, spelar roll bara i den mån det säger något om den framtida kontantströmmen.",
+      "highlight": "En verksamhet är värd nuvärdet av alla kontanter den kommer att ge sina ägare under sin livstid.",
+      "brodtext": [
+        "Kassaflödesvärdering, DCF, är inte en metod bland andra, den är själva definitionen av värde: nuvärdet av förväntade framtida fria kassaflöden, diskonterade till idag med en ränta som speglar deras risk och pengars tidsvärde. Tre saker följer direkt. En verksamhet som ger mer framtida kontanter är värd mer, en som ger dem tidigare är värd mer, och en vars kontanter är osäkrare är värd mindre, eftersom de diskonteras hårdare.",
+        "Varför är då varje annan metod en genväg till detta? För att de alla försöker komma åt samma tal. Att betala 15 gånger vinsten antar tyst en viss ström av framtida kontanter och en viss diskonteringsränta. En DCF försöker modellera kontanterna uttryckligen i stället. Olika linser, samma underliggande sak. Därför är vinst och bokfört värde bara ofullkomliga ledtrådar, aldrig värde i sig: vinsten approximerar kassaflöde men kan glida isär från det, och bokfört värde registrerar historisk kostnad, inte framtida intjäning."
+      ],
+      "takeaway": "Vill du värdera något, börja med att uppskatta de framtida kontanterna det kommer att producera. Allt annat är en ledtråd till dem."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VÄRDE MOT FACIT",
+      "titel": "En bedömning, inte ett tal på öret",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Värde", "text": "Nuvärdet av de kontanter verksamheten kommer att ge sina ägare. Det vilar på antaganden om en okänd framtid, så det ärliga svaret är ett intervall, inte en punkt." },
+          { "rubrik": "Facit", "text": "En siffra på öret som en modell spottar ut. Decimalerna känns auktoritativa, men de är brus: modellen tillför ingen säkerhet, den fortplantar bara din osäkerhet." }
+        ],
+        "figurtext": "Värde är en informerad åsikt, inte ett facit."
+      },
+      "forklaring": "Varje värdering bygger på gissningar om framtiden: tillväxt, marginaler, hur länge konkurrensfördelen håller, vilken diskonteringsränta som är rätt. Eftersom ingen känner framtiden är utfallet en åsikt i ett intervall. Den största faran är falsk precision, att förväxla en kalkyls skenbara exakthet med träffsäkerhet."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Samma bolag, olika antaganden",
+      "underrubrik": "Flexa antagandena inom rimliga gränser och värdet rör sig brett. Just därför är det ärliga svaret ett intervall, och felmarginalen ditt skydd.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Konservativt", "varde": 75 },
+          { "kategori": "Basfall", "varde": 100 },
+          { "kategori": "Optimistiskt", "varde": 140, "accent": true }
+        ],
+        "etiketter": "Uppskattat värde per aktie (kr)",
+        "figurtext": "Illustrativa tal."
+      },
+      "slutsats": "Samma bolag, samma analytiker, men värdet sträcker sig från runt 75 till runt 140 kr, drivet av små ändringar som var och en är rimlig. Du behöver inte pricka ett exakt tal, du behöver intervallet och ett pris tydligt under det."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är ett bolag i grunden värt?",
+          "alternativ": [
+            "Nuvärdet av alla kontanter det kommer att ge sina ägare i framtiden",
+            "Summan av dess bokförda tillgångar minus skulder",
+            "Den senaste årsvinsten gånger en branschmultipel"
+          ],
+          "ratt": [0],
+          "forklaring": "Värde är de framtida kontanterna räknade i dagens pengar. Vinst, bokfört värde och multiplar är bara ledtrådar till just den summan."
+        },
+        {
+          "typ": "single",
+          "fraga": "En modell spottar ut värdet 172,43 kr. Vad är den klokaste reaktionen?",
+          "alternativ": [
+            "Lita på decimalerna, modellen har räknat exakt",
+            "Se det som falsk precision: svaret är bara så bra som antagandena bakom",
+            "Köpa direkt om priset är under 172,43 kr"
+          ],
+          "ratt": [1],
+          "forklaring": "Decimalerna är brus. Modellen tillför ingen säkerhet utan fortplantar bara din osäkerhet, så det ärliga svaret är ett luddigt intervall, inte ett tal på öret."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av följande är drivkrafter som ökar ett bolags värde?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Mer framtida kontanter",
+            "Kontanter som kommer tidigare",
+            "Högre osäkerhet i kontanterna"
+          ],
+          "ratt": [0, 1],
+          "forklaring": "En verksamhet som ger mer framtida kontanter, och ger dem tidigare, är värd mer. Osäkrare kontanter diskonteras hårdare och sänker tvärtom värdet."
+        }
+      ]
+    }
+  ]
+}

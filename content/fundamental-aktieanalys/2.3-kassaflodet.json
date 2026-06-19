@@ -1,0 +1,100 @@
+{
+  "kapitel": 2,
+  "lektion": "2.3",
+  "titel": "Kassaflödet",
+  "niva": "Nybörjare",
+  "tid_min": 10,
+  "mal": "Efter lektionen kan eleven läsa de tre flödena, löpande, investering och finansiering, fram till fritt kassaflöde, och förstå varför kassaflödet säger mer om ett bolags hälsa än den redovisade vinsten.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 2.3",
+      "titel": "Kassaflödet",
+      "ingress": "Vinst är en åsikt, kontanter är ett faktum. Bolag går nästan aldrig omkull av brist på vinst, de går omkull av brist på kontanter."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Vinst är en åsikt, kontanter är ett faktum. Redovisad vinst vilar på dussintals bedömningar: när en intäkt bokförs, hur snabbt en tillgång skrivs av, vad som aktiveras. Kontanter är mycket svårare att putsa, pengarna kom antingen in på kontot eller inte.",
+      "highlight": "Vinst är en åsikt, kontanter är ett faktum.",
+      "brodtext": [
+        "Vinst beräknas på periodiserad basis: du bokför en intäkt när du tjänat in den, oavsett när pengarna rör sig. Du kan därför bokföra en försäljning som vinst innan kunden betalat, och du kan lägga kontanter på lager eller en maskin utan att det direkt slår mot resultatet. Kassaflödet skalar bort bedömningarna och visar vad som verkligen hände med pengarna.",
+        "Två saker följer av detta. Det första är överlevnad: solvens handlar om kontanter, inte vinst. Ett lönsamt bolag som får slut på pengar går omkull precis lika säkert som ett olönsamt. Det andra är vinstkvalitet, det renaste enskilda testet du har: omvandlas nettovinsten pålitligt till operativt kassaflöde? Gör den det är vinsten verklig. Överstiger vinsten år efter år det operativa kassaflödet är den av låg kvalitet."
+      ],
+      "takeaway": "Följ kontanterna. När vinst och kassaflöde säger olika saker, lita på kontanterna."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DE TRE FLÖDENA",
+      "titel": "Från drift till fritt kassaflöde",
+      "visual": {
+        "typ": "flode",
+        "noder": [
+          { "etikett": "Löpande verksamhet" },
+          { "etikett": "Investeringar", "operator": "minus" },
+          { "etikett": "Finansiering" },
+          { "etikett": "Fritt kassaflöde", "operator": "likamed", "accent": true }
+        ],
+        "figurtext": "Kassaflödet delas i tre flöden. Fritt kassaflöde är operativt kassaflöde minus capex."
+      },
+      "forklaring": "Löpande verksamhet är motorn: kontanter ur den faktiska driften. Investeringsverksamhet är vad som läggs på långsiktiga tillgångar, främst capex och förvärv, oftast ett utflöde. Finansieringsverksamhet är kontanter till och från kapitalförsörjarna: lån, aktier, utdelning. Det avgörande är vad som blir kvar: fritt kassaflöde är operativt kassaflöde minus capex, de kontanter som genuint är tillgängliga för ägarna efter att verksamheten gjort de investeringar den behöver."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Var kontanterna kommer ifrån, och vad som blir fritt",
+      "underrubrik": "Driften drar in kontanter, investeringarna använder en del, och det som blir kvar efter capex är fritt kassaflöde.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Löpande", "varde": 180, "accent": true },
+          { "kategori": "Investeringar", "varde": -90 },
+          { "kategori": "Finansiering", "varde": -70 },
+          { "kategori": "Fritt kassaflöde", "varde": 90, "accent": true }
+        ],
+        "etiketter": "Mkr per flöde",
+        "figurtext": "Illustrativa tal. Mönstret för ett friskt bolag, inte verkliga siffror."
+      },
+      "slutsats": "Ett friskt bolag bärs av driften: löpande kassaflöde täcker investeringarna och lämnar ett överskott. Bedöm aldrig kontanter på enbart nettoförändringen, läs var de kom ifrån."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför går lönsamma bolag ibland omkull?",
+          "alternativ": [
+            "För att de redovisar för låg vinst",
+            "För att de får slut på kontanter, även om resultaträkningen ser fin ut",
+            "För att avskrivningarna är för höga"
+          ],
+          "ratt": [1],
+          "forklaring": "Solvens handlar om kontanter, inte vinst. Ett lönsamt bolag vars kunder inte betalar eller som överinvesterar kan få slut på pengar och gå omkull."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur beräknas fritt kassaflöde i sin enklaste form?",
+          "alternativ": [
+            "Nettovinst minus utdelning",
+            "Operativt kassaflöde minus capex",
+            "EBITDA minus skatt"
+          ],
+          "ratt": [1],
+          "forklaring": "Fritt kassaflöde är operativt kassaflöde minus capex, alltså de kontanter som blir kvar efter att verksamheten gjort de investeringar den behöver för att fortsätta rulla."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vad kännetecknar ett friskt kassaflödesmönster?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Operativt kassaflöde som täcker investeringarna och ändå lämnar ett överskott",
+            "Svagt operativt kassaflöde som hålls uppe av ständiga finansieringsinflöden",
+            "Negativt finansieringsflöde ur en styrkeposition, där överskott återförs till ägarna",
+            "Kontanter som bara står sig för att bolaget hela tiden tar in lån och eget kapital"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Hälsa är att driften bär bolaget: starkt operativt kassaflöde täcker investeringarna och lämnar överskott som återförs. Att hänga på finansieringskranen för att hålla totalen uppe är tvärtom en röd flagga."
+        }
+      ]
+    }
+  ]
+}
