@@ -2,6 +2,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import AppShell from '../../layouts/AppShell.astro';
+import Rutnat from '../../components/fokus/Rutnat.astro';
+import Linjediagram from '../../components/fokus/Linjediagram.astro';
+import Jamforelse from '../../components/fokus/Jamforelse.astro';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -209,12 +212,15 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                   <h2 class="step-title step-title--concept">{s.titel}</h2>
                 )}
                 {s.visual && (
-                  <div
-                    class="visual-placeholder"
-                    data-visual-typ={s.visual.typ}
-                  >
-                    <span class="visual-placeholder__text">{s.visual.figurtext}</span>
-                  </div>
+                  s.visual.typ === 'rutnat' ? (
+                    <Rutnat visual={s.visual as any} />
+                  ) : s.visual.typ === 'linjediagram' ? (
+                    <Linjediagram visual={s.visual as any} />
+                  ) : s.visual.typ === 'jamforelse' ? (
+                    <Jamforelse visual={s.visual as any} />
+                  ) : (
+                    <p class="visual-fallback">{s.visual.figurtext}</p>
+                  )
                 )}
                 {s.forklaring && (
                   <p class="step-forklaring">{s.forklaring}</p>
@@ -235,12 +241,15 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                   <p class="step-underrubrik">{s.underrubrik}</p>
                 )}
                 {s.visual && (
-                  <div
-                    class="visual-placeholder"
-                    data-visual-typ={s.visual.typ}
-                  >
-                    <span class="visual-placeholder__text">{s.visual.figurtext}</span>
-                  </div>
+                  s.visual.typ === 'rutnat' ? (
+                    <Rutnat visual={s.visual as any} />
+                  ) : s.visual.typ === 'linjediagram' ? (
+                    <Linjediagram visual={s.visual as any} />
+                  ) : s.visual.typ === 'jamforelse' ? (
+                    <Jamforelse visual={s.visual as any} />
+                  ) : (
+                    <p class="visual-fallback">{s.visual.figurtext}</p>
+                  )
                 )}
                 {s.slutsats && (
                   <p class="step-slutsats">{s.slutsats}</p>
@@ -592,6 +601,19 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
     color: var(--prose);
     max-width: 44ch;
     margin: var(--space-5) auto 0;
+  }
+
+  /* ── Visual fallback (unknown visual.typ) ───────────────────────────── */
+  .visual-fallback {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--muted);
+    text-align: center;
+    padding: var(--space-5) 0;
+    margin: 0 auto;
+    max-width: 46ch;
   }
 
   /* ── Visual placeholder (replaced by RB-2) ──────────────────────────── */

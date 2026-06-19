@@ -1,0 +1,307 @@
+---
+// Linjediagram — inline SVG line chart visual.
+// Heldragen (accent) series: smooth Catmull-Rom curve + draw-on animation.
+// Streckad (price) series: straight polyline, dashed, fade in.
+// Optional markor: filled circle + label at a specific point.
+
+interface Serie {
+  namn: string;
+  stil: 'heldragen' | 'streckad';
+  accent?: boolean;
+  punkter: number[];
+}
+
+interface Markor {
+  serieIndex: number;
+  punktIndex: number;
+  etikett: string;
+}
+
+interface LinjediagramVisual {
+  typ: 'linjediagram';
+  serier: Serie[];
+  markor?: Markor;
+  figurtext: string;
+}
+
+interface Props {
+  visual: LinjediagramVisual;
+}
+
+const { visual } = Astro.props;
+const { serier, markor, figurtext } = visual;
+
+// SVG coordinate system
+const VW = 640;
+const VH = 260;
+const PAD_L = 24;
+const PAD_R = 24;
+const PAD_T = 24;
+const PAD_B = 24;
+
+const chartW = VW - PAD_L - PAD_R;
+const chartH = VH - PAD_T - PAD_B;
+
+// Map a serie's punkter to SVG [x, y] coords.
+// All series share the same x-span based on the longest series.
+const maxLen = Math.max(...serier.map(s => s.punkter.length));
+
+function getPoints(punkter: number[]): [number, number][] {
+  const n = maxLen > 1 ? maxLen - 1 : 1;
+  return punkter.map((y, i) => {
+    const x = PAD_L + (i / n) * chartW;
+    // y 0..100; 0 = bottom, 100 = top
+    const svgY = PAD_T + chartH - (y / 100) * chartH;
+    return [x, svgY];
+  });
+}
+
+// Catmull-Rom to cubic bezier for smooth curve.
+// Returns an SVG path "d" string.
+function catmullRomPath(pts: [number, number][]): string {
+  if (pts.length < 2) return '';
+  if (pts.length === 2) {
+    return `M ${pts[0][0]},${pts[0][1]} L ${pts[1][0]},${pts[1][1]}`;
+  }
+
+  // Build cubic bezier from Catmull-Rom with alpha=0.5 (centripetal)
+  const tension = 0.5;
+  let d = `M ${pts[0][0]},${pts[0][1]}`;
+
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+
+    const cp1x = p1[0] + (p2[0] - p0[0]) * tension / 3;
+    const cp1y = p1[1] + (p2[1] - p0[1]) * tension / 3;
+    const cp2x = p2[0] - (p3[0] - p1[0]) * tension / 3;
+    const cp2y = p2[1] - (p3[1] - p1[1]) * tension / 3;
+
+    d += ` C ${cp1x.toFixed(2)},${cp1y.toFixed(2)} ${cp2x.toFixed(2)},${cp2y.toFixed(2)} ${p2[0]},${p2[1]}`;
+  }
+  return d;
+}
+
+// Straight polyline "points" attribute string.
+function polylinePoints(pts: [number, number][]): string {
+  return pts.map(([x, y]) => `${x},${y}`).join(' ');
+}
+
+// Compute all series points up front.
+const allSeriesPts = serier.map(s => getPoints(s.punkter));
+
+// Compute marker position if present.
+let markorPt: [number, number] | null = null;
+if (markor) {
+  const pts = allSeriesPts[markor.serieIndex];
+  if (pts && pts[markor.punktIndex] !== undefined) {
+    markorPt = pts[markor.punktIndex];
+  }
+}
+---
+
+<div class="linjediagram">
+  <svg
+    class="linjediagram__svg"
+    viewBox={`0 0 ${VW} ${VH}`}
+    aria-label="Linjediagram"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {serier.map((serie, si) => {
+      const pts = allSeriesPts[si];
+      if (serie.stil === 'heldragen') {
+        const d = catmullRomPath(pts);
+        return (
+          <path
+            class="linjediagram__line linjediagram__line--heldragen"
+            d={d}
+            stroke="var(--mint)"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+            pathLength="1"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+        );
+      } else {
+        const pts_str = polylinePoints(pts);
+        return (
+          <polyline
+            class="linjediagram__line linjediagram__line--streckad"
+            points={pts_str}
+            stroke="var(--line-price)"
+            stroke-width="2"
+            stroke-dasharray="5 5"
+            fill="none"
+          />
+        );
+      }
+    })}
+
+    {markorPt && (
+      <g class="linjediagram__markor">
+        <circle
+          cx={markorPt[0]}
+          cy={markorPt[1]}
+          r="5"
+          fill="var(--mint)"
+        />
+        <text
+          x={markorPt[0]}
+          y={markorPt[1] + 18}
+          text-anchor="middle"
+          font-family="var(--sans)"
+          font-size="11"
+          fill="var(--mint)"
+        >{markor!.etikett}</text>
+      </g>
+    )}
+  </svg>
+
+  <!-- Legend -->
+  <div class="linjediagram__legend" aria-hidden="true">
+    {serier.map((serie) => (
+      <div class="linjediagram__legend-item">
+        {serie.stil === 'heldragen' ? (
+          <svg class="linjediagram__swatch" width="24" height="10" aria-hidden="true">
+            <line x1="0" y1="5" x2="24" y2="5" stroke="var(--mint)" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        ) : (
+          <svg class="linjediagram__swatch" width="24" height="10" aria-hidden="true">
+            <line x1="0" y1="5" x2="24" y2="5" stroke="var(--line-price)" stroke-width="2" stroke-dasharray="4 3" />
+          </svg>
+        )}
+        <span class="linjediagram__legend-namn">{serie.namn}</span>
+      </div>
+    ))}
+  </div>
+
+  {figurtext && (
+    <p class="linjediagram__figurtext">{figurtext}</p>
+  )}
+</div>
+
+<style is:global>
+  /* ── Linjediagram keyframes ──────────────────────────────────────────── */
+  @keyframes linje-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes linje-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes linje-pop {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+
+<style>
+  .linjediagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: var(--space-4) 0;
+  }
+
+  .linjediagram__svg {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Lines: hidden by default (will animate when step becomes active) */
+  .linjediagram__line--heldragen {
+    stroke-dashoffset: 1;
+  }
+
+  .linjediagram__line--streckad {
+    opacity: 0;
+  }
+
+  .linjediagram__markor {
+    opacity: 0;
+    transform-origin: center;
+  }
+
+  /* Animate when parent step is active */
+  :global(.step.is-active) .linjediagram__line--heldragen {
+    animation: linje-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+  }
+
+  :global(.step.is-active) .linjediagram__line--streckad {
+    animation: linje-fade 0.6s ease 0.15s forwards;
+  }
+
+  :global(.step.is-active) .linjediagram__markor {
+    animation: linje-pop 0.35s cubic-bezier(0.21, 0.7, 0.18, 1) 0.7s both;
+    transform-box: fill-box;
+  }
+
+  /* Legend */
+  .linjediagram__legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .linjediagram__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .linjediagram__swatch {
+    flex-shrink: 0;
+  }
+
+  .linjediagram__legend-namn {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .linjediagram__figurtext {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+    text-align: center;
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  /* Reduced motion: draw lines instantly, show all at rest */
+  @media (prefers-reduced-motion: reduce) {
+    .linjediagram__line--heldragen {
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+    .linjediagram__line--streckad {
+      opacity: 1 !important;
+      animation: none !important;
+    }
+    .linjediagram__markor {
+      opacity: 1 !important;
+      animation: none !important;
+    }
+  }
+</style>

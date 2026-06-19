@@ -1,0 +1,97 @@
+---
+// Jamforelse — side-by-side comparison cards visual.
+// Props: visual object matching the "jamforelse" contract.
+
+interface JamforelseElement {
+  rubrik: string;
+  text: string;
+}
+
+interface JamforelseVisual {
+  typ: 'jamforelse';
+  element: JamforelseElement[];
+  figurtext: string;
+}
+
+interface Props {
+  visual: JamforelseVisual;
+}
+
+const { visual } = Astro.props;
+const { element, figurtext } = visual;
+---
+
+<div class="jamforelse">
+  <div class="jamforelse__grid" style={`--n-cards:${element.length};`}>
+    {element.map((el) => (
+      <div class="jamforelse__card">
+        <div class="jamforelse__rubrik">{el.rubrik}</div>
+        <p class="jamforelse__text">{el.text}</p>
+      </div>
+    ))}
+  </div>
+  {figurtext && (
+    <p class="jamforelse__figurtext">{figurtext}</p>
+  )}
+</div>
+
+<style>
+  .jamforelse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: var(--space-4) 0;
+  }
+
+  .jamforelse__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--n-cards, 2), 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  @media (max-width: 640px) {
+    .jamforelse__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .jamforelse__card {
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: left;
+  }
+
+  .jamforelse__rubrik {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--mint);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .jamforelse__text {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--prose);
+    margin: 0;
+  }
+
+  .jamforelse__figurtext {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+    text-align: center;
+    max-width: 46ch;
+    margin: 0;
+  }
+</style>
