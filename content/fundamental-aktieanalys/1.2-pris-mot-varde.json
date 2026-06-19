@@ -1,0 +1,95 @@
+{
+  "kapitel": 1,
+  "lektion": "1.2",
+  "titel": "Pris mot värde",
+  "niva": "Nybörjare",
+  "tid_min": 8,
+  "mal": "Efter lektionen kan eleven skilja på vad en aktie kostar och vad den är värd, och fatta beslut utifrån gapet mellan dem.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 1.2",
+      "titel": "Pris mot värde",
+      "ingress": "Skillnaden mellan vad en aktie kostar och vad den är värd är det som skiljer investering från spel."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRUNDEN",
+      "lead": "Pris är vad du betalar. Värde är vad du får. Priset är ett faktum, det står på skärmen och vem som helst kan läsa det. Värdet är en bedömning: din uppskattning av vad verksamheten är värd, baserat på de pengar den kommer att producera.",
+      "highlight": "Pris är vad du betalar. Värde är vad du får.",
+      "brodtext": [
+        "För det mesta ligger de två nära varandra, eftersom marknaden oftast är hyfsat förnuftig. Men ibland trycker rädsla ned priset under värdet, och då blir saker rea. Ibland trycker girighet upp priset över värdet, och då blir saker dyra.",
+        "En bra investerare köper när priset ligger under den egna uppskattningen av värdet, och avstår eller säljer när priset ligger långt över. Värde är dessutom ett intervall, inte en exakt punkt: ett grovt spann räcker för att se om priset är billigt, rimligt eller dyrt."
+      ],
+      "takeaway": "Du försöker inte förutsäga priset. Du uppskattar värdet och väntar tills priset erbjuder ett gap."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TVÅ OLIKA SAKER",
+      "titel": "Priset rör sig, värdet ligger still",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Pris", "text": "Ett faktum på skärmen. Sätts av dem som råkar handla idag och kan svänga på en rubrik, ett fondutflöde eller en våg av humör." },
+          { "rubrik": "Värde", "text": "En bedömning. Nuvärdet av de pengar verksamheten kommer att ge sina ägare, och det rör sig långsamt." }
+        ],
+        "figurtext": "Pris mot värde, två skilda storheter."
+      },
+      "forklaring": "Priset sätts av den marginella köparen och säljaren och kan hoppa flera procent på en dag utan att något i verksamheten ändrats. Värdet är jämförelsevis stabilt. Den skillnaden i rörlighet är precis där möjligheten bor."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Samma vinst, motsatta utfall",
+      "underrubrik": "Två bolag tjänar båda 10 kr per aktie. Priset du betalar avgör resten.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Bolag A, P/E 40", "varde": -50 },
+          { "kategori": "Bolag B, P/E 7", "varde": 43 }
+        ],
+        "etiketter": "Ungefärlig kursförändring när multipeln normaliseras, i procent",
+        "figurtext": "Illustrativa tal ur lektionens exempel."
+      },
+      "slutsats": "Det dyra kvalitetsbolaget kan nästan halveras trots fortsatt vinst, medan det oälskade bolaget stiger, helt på grund av priset du betalade i förhållande till värdet."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är den avgörande skillnaden mellan pris och värde?",
+          "alternativ": [
+            "Pris är vad du betalar, värde är vad du får",
+            "Pris gäller på kort sikt, värde gäller bara historiskt",
+            "Pris sätts av bolaget, värde sätts av marknaden"
+          ],
+          "ratt": [0],
+          "forklaring": "Priset är ett faktum på skärmen. Värdet är en bedömning av de pengar verksamheten kommer att producera. Besluten fattas på gapet mellan dem."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ett oälskat bolag växer bara 3 procent om året men handlas till P/E 7. Varför kan det ändå vara ett bra köp?",
+          "alternativ": [
+            "För att låg tillväxt alltid ger hög avkastning",
+            "För att priset redan förutsätter att bolaget inte kommer någonstans, så även en blygsam omvärdering lönar sig",
+            "För att P/E 7 garanterar att aktien är billig"
+          ],
+          "ratt": [1],
+          "forklaring": "När pessimismen redan är inbakad i priset kan även en liten uppvärdering, säg från P/E 7 till 10, ge stark avkastning innan tillväxt ens räknas in."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är tecken på sund prisdisciplin? (Välj alla som stämmer)",
+          "alternativ": [
+            "Du har ett grovt intervall för vad verksamheten är värd, oberoende av dagens pris",
+            "Ditt enda argument för att köpa är att kursen har stigit",
+            "Du kan säga vilken avkastning dagens pris implicerar",
+            "Du kallar en aktie billig bara för att den fallit från en gammal topp"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Disciplin är en egen värdeuppskattning oberoende av kursen och en uppfattning om implicerad avkastning. Att luta sig mot kursrörelsen eller en gammal topp är tvärtom varningstecken."
+        }
+      ]
+    }
+  ]
+}
