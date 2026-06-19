@@ -52,7 +52,8 @@ function buildControls(
     nextBtn.style.transition = 'none';
   }
 
-  nav.append(prevBtn, nextBtn);
+  // Primär (Fortsätt) överst, sekundär (Tillbaka) under.
+  nav.append(nextBtn, prevBtn);
   return { nav, prevBtn, nextBtn };
 }
 
