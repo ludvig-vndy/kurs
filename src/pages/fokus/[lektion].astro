@@ -262,7 +262,7 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
 
         if (s.typ === 'quiz') {
           return (
-            <section class="step step--quiz" data-step data-typ="quiz" data-fokus-quiz aria-label={`Steg ${i + 1}: Kunskapskoll`}>
+            <section class="step step--quiz" data-step data-typ="quiz" aria-label={`Steg ${i + 1}: Kunskapskoll`}>
               <div class="step__inner step__inner--left">
                 <FokusQuiz fragor={s.fragor ?? []} lektionId={lesson.lektion} />
               </div>
