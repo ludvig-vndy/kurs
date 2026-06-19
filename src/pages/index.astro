@@ -1,8 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCourseTree } from '../lib/course';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 
-const firstHref = '/fokus/1.1';
+// Första Fokus-lektionen ur course.json (inga hårdkodade lektionsnummer).
+const fokusCourse = JSON.parse(
+  readFileSync(path.resolve('content/fundamental-aktieanalys/course.json'), 'utf8')
+) as { kapitel: Array<{ lektioner: Array<{ lektion: string }> }> };
+const firstFokus = fokusCourse?.kapitel?.[0]?.lektioner?.[0]?.lektion;
+const firstHref = firstFokus ? `/fokus/${firstFokus}` : '/fokus';
 
 const tree = await getCourseTree();
 const dels = tree.map((d) => ({

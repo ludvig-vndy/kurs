@@ -29,7 +29,10 @@ const VH = 260;
 const PAD_L = 8;
 const PAD_R = 8;
 const PAD_T = 20;
-const PAD_B = 40; // space for category labels
+// Negative bars put their value label below the zero line, so reserve more bottom
+// room and push the category labels to the very bottom to avoid a collision.
+const hasNeg = data.some((d) => d.varde < 0);
+const PAD_B = hasNeg ? 58 : 40;
 
 const chartW = VW - PAD_L - PAD_R;
 const chartH = VH - PAD_T - PAD_B;
@@ -126,7 +129,7 @@ function fmt(v: number): string {
         <text
           class="stapeldiagram__cat-label"
           x={bar.x + barW / 2}
-          y={VH - PAD_B + 16}
+          y={hasNeg ? VH - 6 : VH - PAD_B + 16}
           text-anchor="middle"
           font-family="var(--sans)"
           font-size="11"
