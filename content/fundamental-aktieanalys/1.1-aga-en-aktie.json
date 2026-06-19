@@ -1,0 +1,93 @@
+{
+  "kapitel": 1,
+  "lektion": "1.1",
+  "titel": "Vad det innebär att äga en aktie",
+  "niva": "Nybörjare",
+  "tid_min": 8,
+  "mal": "Efter lektionen kan eleven formulera vad man faktiskt köper när man köper en aktie, och börjar tänka som ägare i stället för spekulant.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION ETT",
+      "titel": "Vad det innebär att äga en aktie",
+      "ingress": "Allt i den här kursen vilar på en enda idé. Vi börjar där."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DET SPELAR ROLL",
+      "lead": "Nästan varje dyrt misstag en privat investerare gör går att spåra tillbaka till en enda glömd sak: en aktie är en bit av ett företag. Inte en siffra på en skärm, inte en lott.",
+      "highlight": "en aktie är en bit av ett företag.",
+      "brodtext": [
+        "De som håller den tanken framför sig beter sig som ägare och klarar sig bra över åren. De som glömmer den beter sig som spelare och blir straffade av sina egna nerver: de säljer sina bästa innehav av rädsla och köper sina sämsta av girighet.",
+        "På kort sikt är marknaden en röstmaskin, en popularitetstävling. På lång sikt är den en vågmaskin som väger faktiska resultat. Över dagar speglar kursen stämningar, över år rör den sig mot verksamhetens värde."
+      ],
+      "takeaway": "Du behandlar dina aktier som företag, inte som siffror på en skärm."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SÅ FUNGERAR DET",
+      "titel": "Du köper en bit av bolaget",
+      "visual": {
+        "typ": "rutnat",
+        "kolumner": 7,
+        "celler": 28,
+        "markerad": 9,
+        "etikett": "DU",
+        "figurtext": "En aktie är en liten men fullt verklig del av allt bolaget äger och tjänar. Den gröna rutan är din."
+      },
+      "forklaring": "Ett bolags ägande är uppdelat i andelar. Äger du hundra aktier av tio miljoner äger du en hundratusendel av allt: kassan, varumärket, maskinerna, och varje krona bolaget tjänar från och med nu."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Verksamheten gör jobbet",
+      "underrubrik": "Värdet av 100 aktier över sju år om vinsten växer ungefär 10 procent om året. Illustrativt.",
+      "visual": {
+        "typ": "linjediagram",
+        "serier": [
+          { "namn": "Värde av innehavet", "stil": "heldragen", "accent": true, "punkter": [25, 31, 37, 43, 51, 59, 68, 78] }
+        ],
+        "figurtext": "Illustrativ. Ungefär en fördubbling, driven av vinsttillväxten."
+      },
+      "slutsats": "Pengarna fördubblades ungefär, och orsaken var verksamheten, inte marknadens humör."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad köper du egentligen när du köper en aktie?",
+          "alternativ": [
+            "En lapp vars pris rör sig på en skärm",
+            "En ägarandel i ett riktigt företag",
+            "Ett löfte från börsen om avkastning"
+          ],
+          "ratt": [1],
+          "forklaring": "En aktie är en ägarandel i ett bolag, en bit av dess tillgångar och framtida vinster. Inget annat."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad säger aktiekursen?",
+          "alternativ": [
+            "Vad andelen är värd",
+            "Vad någon är villig att betala just nu"
+          ],
+          "ratt": [1],
+          "forklaring": "Kursen är priset i ögonblicket, inte värdet. Gapet mellan pris och värde är din möjlighet."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa stämmer in på att tänka som ägare?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Bedöma innehavet efter hur verksamheten går",
+            "Sälja så fort kursen faller",
+            "Behandla kursen som ett erbjudande du får svara på",
+            "Köpa något du inte kan beskriva i en mening"
+          ],
+          "ratt": [0, 2],
+          "forklaring": "Ägaren följer verksamheten och ser kursen som ett frivilligt erbjudande, inte en order att lyda."
+        }
+      ]
+    }
+  ]
+}

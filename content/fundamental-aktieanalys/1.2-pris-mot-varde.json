@@ -39,18 +39,18 @@
     },
     {
       "typ": "dataviz",
-      "titel": "Samma vinst, motsatta utfall",
-      "underrubrik": "Två bolag tjänar båda 10 kr per aktie. Priset du betalar avgör resten.",
+      "titel": "I gapet bor möjligheten",
+      "underrubrik": "Priset svänger runt värdet. När priset faller tydligt under värdet uppstår ett köpläge.",
       "visual": {
-        "typ": "stapeldiagram",
-        "data": [
-          { "kategori": "Bolag A, P/E 40", "varde": -50 },
-          { "kategori": "Bolag B, P/E 7", "varde": 43 }
+        "typ": "linjediagram",
+        "serier": [
+          { "namn": "Värde", "stil": "heldragen", "accent": true, "punkter": [25, 30, 34, 39, 45, 50, 56, 62, 68, 73, 78] },
+          { "namn": "Pris", "stil": "streckad", "punkter": [22, 38, 20, 44, 28, 52, 36, 60, 44, 70, 62] }
         ],
-        "etiketter": "Ungefärlig kursförändring när multipeln normaliseras, i procent",
-        "figurtext": "Illustrativa tal ur lektionens exempel."
+        "markor": { "serieIndex": 1, "punktIndex": 4, "etikett": "köpläge" },
+        "figurtext": "Illustrativ. Punkterna visar mönstret, inte verkliga kurser."
       },
-      "slutsats": "Det dyra kvalitetsbolaget kan nästan halveras trots fortsatt vinst, medan det oälskade bolaget stiger, helt på grund av priset du betalade i förhållande till värdet."
+      "slutsats": "Ett köpläge är inte när priset stigit, utan när det fallit tydligt under värdet du redan uppskattat."
     },
     {
       "typ": "quiz",
@@ -79,7 +79,8 @@
         },
         {
           "typ": "multi",
-          "fraga": "Vilka av dessa är tecken på sund prisdisciplin? (Välj alla som stämmer)",
+          "fraga": "Vilka av dessa är tecken på sund prisdisciplin?",
+          "underrubrik": "Välj alla som stämmer",
           "alternativ": [
             "Du har ett grovt intervall för vad verksamheten är värd, oberoende av dagens pris",
             "Ditt enda argument för att köpa är att kursen har stigit",
