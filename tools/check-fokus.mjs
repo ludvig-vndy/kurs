@@ -39,7 +39,7 @@ function checkLesson(name, raw, errs) {
   }
   if (!isArr(data.steg)) return;
 
-  if (data.steg.length < 4 || data.steg.length > 6) errs.push(`${name}: ${data.steg.length} steg (ska vara 4 till 6)`);
+  if (data.steg.length < 3 || data.steg.length > 7) errs.push(`${name}: ${data.steg.length} steg (ska vara 3 till 7)`);
 
   let quizCount = 0;
   data.steg.forEach((s, i) => {
@@ -59,13 +59,13 @@ function checkLesson(name, raw, errs) {
     } else if (s.typ === 'concept') {
       if (!isStr(s.kicker)) errs.push(`${w}: kicker saknas`);
       if (!isStr(s.titel)) errs.push(`${w}: titel saknas`);
-      checkVisual(s.visual, w, errs);
-      if (!isStr(s.forklaring)) errs.push(`${w}: forklaring saknas`);
+      if (s.visual !== undefined) checkVisual(s.visual, w, errs); // visual valfri (text-tung lektion)
+      if (!isStr(s.forklaring) && !(isArr(s.brodtext) && s.brodtext.length)) errs.push(`${w}: forklaring eller brodtext krävs`);
     } else if (s.typ === 'dataviz') {
       if (!isStr(s.titel)) errs.push(`${w}: titel saknas`);
       if (!isStr(s.underrubrik)) errs.push(`${w}: underrubrik saknas`);
-      checkVisual(s.visual, w, errs);
-      if (!isStr(s.slutsats)) errs.push(`${w}: slutsats saknas`);
+      if (s.visual !== undefined) checkVisual(s.visual, w, errs); // visual valfri
+      if (!isStr(s.slutsats) && !(isArr(s.brodtext) && s.brodtext.length)) errs.push(`${w}: slutsats eller brodtext krävs`);
     } else if (s.typ === 'quiz') {
       quizCount++;
       if (!isArr(s.fragor) || s.fragor.length !== 3) errs.push(`${w}: quiz ska ha exakt 3 frågor`);
