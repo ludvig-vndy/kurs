@@ -3,8 +3,8 @@
   "lektion": "4.4",
   "titel": "Vinstkvalitet och varningslampor",
   "niva": "Mellan",
-  "tid_min": 10,
-  "mal": "Efter lektionen kan eleven bedöma om en redovisad vinst är verklig, genom att granska justeringar, intäktsredovisning och gapet mot kassaflödet.",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven bedöma om en redovisad vinst är verklig, genom att granska justerade resultat, intäktsredovisning och gapet mellan vinst och kassaflöde över flera år.",
   "steg": [
     {
       "typ": "intro",
@@ -14,41 +14,101 @@
     },
     {
       "typ": "reading",
-      "kicker": "JUSTERADE RESULTAT",
-      "lead": "Utgå från det redovisade resultatet. De justerade siffrorna är ett påstående du ska pröva.",
+      "kicker": "DE TVÅ RESULTATEN",
+      "lead": "Utgå från det redovisade, lagstadgade resultatet. De justerade siffrorna är ett påstående du ska pröva.",
       "highlight": "De justerade siffrorna är ett påstående du ska pröva.",
       "brodtext": [
-        "Öppna nästan vilken kvartalsrapport som helst och du möts av två resultat: det officiella och, oftast med större bokstäver, ett justerat där ledningen rensat bort poster den kallar engångs. Ibland är det legitimt. En verklig engångshändelse ska inte snedvrida din bild av den löpande verksamheten. Men minst lika ofta är justeringen ett verktyg för att få ett svagt år att se starkt ut, genom att etikettera återkommande kostnader som exceptionella.",
-        "Granska varje justering med samma fråga: är det här verkligt engångsartat, eller en återkommande kostnad i förklädnad? Den tydligaste röda flaggan är samma exceptionella post som kommer tillbaka varje år. Omstrukturering som aldrig tar slut är helt enkelt kostnaden för att driva verksamheten. Var också misstänksam när det justerade talet alltid ligger över det redovisade: ärliga justeringar går åt båda håll och rensar bort engångsvinster lika väl som engångsförluster.",
-        "Ett vanligt grepp är att räkna bort aktierelaterad ersättning. Men det är en verklig kostnad, den späder ut ägarna, och en professionell räknar in den. Försvaret är detsamma mot allt detta: förankra i det redovisade resultatet och se på varje justering med skepsis."
+        "Öppna nästan vilken kvartalsrapport som helst och du möts av två resultat: det officiella och, oftast med större bokstäver, ett justerat där ledningen rensat bort poster den kallar engångs eller jämförelsestörande. Ibland är det legitimt och till och med hjälpsamt. En verklig engångshändelse, som en förlikning eller vinsten från att sälja en byggnad, ska inte snedvrida din bild av den löpande verksamheten. Men minst lika ofta är justeringen ett verktyg för att få ett svagt år att se starkt ut, genom att etikettera verkliga, återkommande kostnader som exceptionella.",
+        "Problemet är att det är ledningen själv som bestämmer vad som räknas som engångs, och frestelsen att utesluta allt som ser dåligt ut är stark, även när det återkommer varje år. Här möter bolagets spin siffrorna direkt, och här vilseleds många investerare tyst. Att skilja den ärliga justeringen från dimridån är därför en av de mest praktiska färdigheterna i att läsa en resultaträkning."
       ],
-      "takeaway": "Sanningen ligger oftast närmare det redovisade talet än det smickrande justerade. Bara verkligt engångsartade poster är försvarbara att lägga tillbaka."
+      "takeaway": "Förankra i det redovisade talet och se på varje justering med skepsis. Sanningen ligger oftast närmare den redovisade siffran än den smickrande justerade."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM FÅR JUSTERAS BORT",
+      "lead": "Granska varje justering med samma fråga: är det här verkligt engångsartat, eller en återkommande kostnad i förklädnad?",
+      "highlight": "är det här verkligt engångsartat, eller en återkommande kostnad i förklädnad?",
+      "brodtext": [
+        "En verklig engångspost är rimlig att rensa bort när du bedömer den löpande verksamheten: en förlust från en fabriksbrand, en vinst från att avyttra en byggnad, kostnaden för en enskild stor omstrukturering. Men några mönster avslöjar missbruk, och de är värda att kunna utantill. Den tydligaste röda flaggan av alla är samma exceptionella post som kommer tillbaka varje år. Omstrukturering som aldrig tar slut, eviga integrationskostnader, återkommande nedskrivningar: en engångspost som dyker upp år efter år är helt enkelt kostnaden för att driva verksamheten. Bevaka mönstret över flera år, inte ett enskilt.",
+        "Det andra mönstret är asymmetrin. Ärliga justeringar går åt båda håll och rensar bort engångsvinster lika väl som engångsförluster. Missbrukad justering rensar bort förluster men behåller vinster, och gör därför alltid det justerade talet högre än det redovisade. Ligger ett bolags justerade siffra konsekvent över den redovisade, var misstänksam.",
+        "Det tredje är återläggningen av aktierelaterad ersättning. Många bolag räknar bort aktiebaserad lön ur det justerade resultatet, men det är en verklig kostnad, den späder ut ägarna. Att behandla den som ingen riktig kostnad smickrar vinsten, och en professionell räknar in den som den kostnad den är."
+      ],
+      "takeaway": "Bara verkligt engångsartade poster är försvarbara att lägga tillbaka. Återkommande engångsposter, ensidiga justeringar och bortrensad aktieersättning är varningstecken."
+    },
+    {
+      "typ": "reading",
+      "kicker": "RÄKNA EXEMPLET SJÄLV",
+      "lead": "Ett justerat tal på 110 mot ett redovisat på 60 låter starkt, tills du öppnar vad de 50 i justeringar består av.",
+      "highlight": "tills du öppnar vad de 50 i justeringar består av",
+      "brodtext": [
+        "Ett bolag redovisar ett rörelseresultat på 60 och presenterar samtidigt ett justerat rörelseresultat på 110, med presentationen ledd av de 110 (siffror illustrativa). Vad justerades bort? Omstrukturering: 25. Men en blick på tidigare år visar 22, 28 och 24 i omstrukturering de tre föregående åren. Posten finns där varje år, alltså en löpande kostnad, inte en engångskostnad. Aktierelaterad ersättning: 15. En verklig kostnad som späder ut ägarna. En engångsförlust från att lägga ned en avvecklad produktlinje: 10. Den är rimlig att utesluta.",
+        "Av de 50 i justeringar är alltså bara 10 en försvarbar engångspost. Ett rättvist underliggande resultat ligger närmare 60 plus 10, alltså 70. Ledningens 110 överskattar den verkliga intjäningsförmågan med ungefär 40, lejonparten av hela justeringen. En investerare som värderade bolaget på 110-siffran skulle betala för vinst som inte finns. De redovisade 60, putsade uppåt bara för den verkliga engångsposten, ligger långt närmare sanningen."
+      ],
+      "takeaway": "Lägg bara tillbaka de verkligt engångsartade posterna och räkna aktieersättning som en kostnad. Bygg din egen siffra i stället för att bli såld ledningens."
     },
     {
       "typ": "reading",
       "kicker": "INTÄKTEN SOM TOPPRAD",
-      "lead": "Behandla omsättningsraden som något att verifiera, inte att lita på. Kontanter är svåra att förfalska.",
-      "highlight": "Kontanter är svåra att förfalska.",
+      "lead": "Behandla omsättningsraden som något att verifiera, inte att lita på. Det gäller dubbelt när tillväxten är förvånansvärt stark eller jämn.",
+      "highlight": "Behandla omsättningsraden som något att verifiera, inte att lita på.",
       "brodtext": [
-        "Omsättningen är toppraden som allt annat flödar från. Bokför ett bolag intäkter för tidigt blåses varje rad under upp på samma gång: vinst, marginaler, tillväxt. Den ärliga principen är enkel. Du redovisar intäkt när du faktiskt levererat och förtjänat pengarna. Ett underskrivet avtal räcker inte, en skickad låda räcker inte, en förskottsbetalning för något ännu ej levererat räcker inte.",
-        "Klassiska manipulationsmönster är värda att känna igen. Överleverans till återförsäljare, så kallad channel stuffing, trycker ut produkt till distributörer nära periodslut och bokför det som försäljning, trots att den inte sålts vidare till slutkund. Att bokföra långa avtal i förskott redovisar flera års intäkt på en gång. Att rapportera bruttobelopp fast bolaget bara är en agent blåser upp omsättningsraden utan en krona mer vinst.",
-        "Huvudverktyget mot allt detta är korskontrollen mot kassaflödet. Verklig intäkt blir förr eller senare till kontanter. Stiger omsättning och vinst men det operativa kassaflödet inte följer med, kan intäkten vara fiktiv eller för tidig, och gapet syns oftast som svällande kundfordringar, alltså pengar som är skyldiga men inte kommer in. En ändring i principen för intäktsredovisning är slutligen en blinkande lampa i sig."
+        "Omsättningen är toppraden som allt annat flödar från. Bokför ett bolag intäkter för tidigt blåses varje rad under upp på samma gång: vinst, marginaler, tillväxt. Därför är intäktsredovisning den enskilt vanligaste platsen för både aggressiv redovisning och rent bedrägeri. Den ärliga principen är enkel: du redovisar intäkt när du faktiskt levererat varan eller tjänsten och förtjänat pengarna. Ett underskrivet avtal räcker inte, en skickad låda räcker inte, en förskottsbetalning för något ännu ej levererat räcker inte. Kärnfrågan är om bolaget verkligen förtjänat intäkten den här perioden, genom att leverera det det lovat.",
+        "Några klassiska manipulationsmönster är värda att känna igen. Överleverans till återförsäljare, så kallad channel stuffing, trycker ut produkt till distributörer nära periodslut och bokför det som försäljning, trots att den inte sålts vidare till slutkund och kan komma i retur. Att bokföra långa avtal i förskott redovisar flera års avtalsintäkt på en gång. Att rapportera bruttobelopp fast bolaget bara är en agent som tjänar en provision blåser upp omsättningsraden utan en krona mer vinst. Och skenförsäljning till närstående tillverkar intäkt ur intet.",
+        "Huvudverktyget mot allt detta är korskontrollen mot kassaflödet. Verklig intäkt blir förr eller senare till kontanter. Stiger omsättning och vinst men det operativa kassaflödet inte följer med, kan intäkten vara fiktiv eller för tidig, och gapet syns oftast som svällande kundfordringar, alltså pengar som är skyldiga men inte kommer in. Därför bevakar du kundfordringar som växer mycket snabbare än omsättningen. En ändring i principen för intäktsredovisning, särskilt en som tidigarelägger intäkter, är slutligen en blinkande lampa i sig."
       ],
       "takeaway": "När redovisad omsättning och kontanter glider isär litar du på kontanterna. Bevaka kundfordringar som växer mycket snabbare än omsättningen."
     },
     {
-      "typ": "concept",
+      "typ": "reading",
+      "kicker": "EXEMPEL: TILLVÄXT UTAN KONTANTER",
+      "lead": "På pappret en stjärna på 30 procents tillväxt. I kassaflödet och balansräkningen en varning.",
+      "highlight": "På pappret en stjärna på 30 procents tillväxt.",
+      "brodtext": [
+        "Ett bolag visar vacker tillväxt (siffror illustrativa). År 1: omsättning 1 000, operativt kassaflöde 150, kundfordringar 200. År 2: omsättning 1 300, alltså plus 30 procent, och redovisad vinst kraftigt upp. Men det operativa kassaflödet är bara 90, alltså nedåt trots den högre vinsten, och kundfordringarna har hoppat till 420.",
+        "Omsättningen växte 30 procent, men fordringarna mer än fördubblades, från 200 till 420. Sätt siffror på det: fordringarna gick från 20 procent av omsättningen till 32 procent, en kraftig försämring. Bolaget bokför försäljning det inte driver in; intäkten staplas upp som skuldsedlar i stället för kontanter. Mycket av den glänsande tillväxten kan alltså vara för tidig eller lågkvalitativ intäkt. Resultaträkningen sa tillväxt. Kontanterna och balansräkningen sa var försiktig. Det är kontanterna och balansräkningen som har rätt."
+      ],
+      "takeaway": "Ställ omsättning, operativt kassaflöde och kundfordringar bredvid varandra över flera år. Växer fordringarna snabbare än försäljningen medan kontanterna släpar är tillväxten misstänkt."
+    },
+    {
+      "typ": "reading",
       "kicker": "DÄR ALLT MÖTS",
+      "lead": "Gapet mellan redovisad vinst och kassaflöde är det enskilt mest pålitliga tidiga varningssystemet i hela analysen.",
+      "highlight": "Gapet mellan redovisad vinst och kassaflöde är det enskilt mest pålitliga tidiga varningssystemet i hela analysen.",
+      "brodtext": [
+        "Nästan varje större redovisningsskandal i historien var synlig, ofta flera år i förväg, i divergensen mellan en stigande redovisad vinst och ett stillastående eller fallande kassaflöde. I ett friskt bolag rör sig vinst och operativt kassaflöde tillsammans över tid; vinsten blir till kontanter. När de glider isär ska du undersöka varför, för gapet måste förklaras av något.",
+        "Börja med att skilja godartad divergens från elakartad, för varje gap är inte illvilligt. Ett snabbväxande bolag som binder kontanter i rörelsekapital eller investerar tungt i tillväxt kan helt legitimt visa vinst över kontanter en tid. Nyckeln är om orsaken är förklarlig och tillfällig, eller ihållande och oförklarad.",
+        "Sedan finns de elakartade mönstren. Intäkt bokförd men inte indriven, så att fordringarna sväller medan kontanterna släpar, var kärnan i Toshibas skandal. Driftskostnader som aktiveras på balansräkningen i stället för att kostnadsföras blåste upp WorldComs vinst tills bedrägeriet fällde bolaget 2002. I de mest extrema fallen finns kontanterna inte ens: Wirecard redovisade ett stort kontantbelopp som visade sig inte existera, och kollapsade 2020. Carillion och Enron redovisade vinster medan de faktiska kontanterna rann ut, och föll 2018 respektive 2001. Tråden genom alla fallen är densamma: kontanterna matchade aldrig vinsten, och gapet var varningen."
+      ],
+      "takeaway": "Läs gapet över flera år, aldrig ett enskilt. När vinsten konsekvent springer ifrån kontanterna är ditt första antagande inte fint bolag, utan en fråga: vad orsakar det, och är det godartat eller elakartat?"
+    },
+    {
+      "typ": "dataviz",
       "titel": "När vinst och kassaflöde glider isär",
+      "underrubrik": "Redovisad nettovinst stiger jämnt varje år medan det operativa kassaflödet faller. Över fem år öppnar sig ett gap på nära 290.",
+      "visual": {
+        "typ": "linjediagram",
+        "serier": [
+          { "namn": "Redovisad vinst", "stil": "heldragen", "accent": true, "punkter": [80, 95, 110, 130, 150] },
+          { "namn": "Operativt kassaflöde", "stil": "streckad", "punkter": [70, 65, 55, 45, 40] }
+        ],
+        "markor": { "serieIndex": 1, "punktIndex": 4, "etikett": "gap" },
+        "figurtext": "Illustrativa tal över fem år. Kumulativt cirka 565 i redovisad vinst mot cirka 275 i operativt kassaflöde."
+      },
+      "slutsats": "Vinst och kontanter rör sig åt motsatt håll, vilket aldrig borde hända i en frisk verksamhet. Gräver man finner man orsaken i svällande fordringar och lager eller aktiverade kostnader. Följer du bara vinstlinjen ser du en framgångssaga; bevakar du gapet ser du en vinst som blir alltmer fiktiv."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SÅLLNINGEN",
+      "titel": "Hög mot låg vinstkvalitet",
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Hög vinstkvalitet", "text": "Vinst och operativt kassaflöde stiger tillsammans genom åren. Justeringar är sparsamma och symmetriska. Kundfordringar växer i takt med eller långsammare än omsättningen. Kontanterna bekräftar vinsthistorien." },
-          { "rubrik": "Låg vinstkvalitet", "text": "Vinsten lever sitt eget liv ovanför kontanterna. Det justerade talet ligger alltid över det redovisade, återkommande engångsposter dyker upp, fordringarna sväller och kassaflödet släpar. Vinsten närmar sig fiktion." }
+          { "rubrik": "Hög vinstkvalitet", "text": "Vinst och operativt kassaflöde stiger tillsammans genom åren. Justeringar är sparsamma och symmetriska, och ligger nära det redovisade talet. Kundfordringar växer i takt med eller långsammare än omsättningen. Det kumulativa kassaflödet följer ungefär den kumulativa vinsten. Kontanterna bekräftar vinsthistorien." },
+          { "rubrik": "Låg vinstkvalitet", "text": "Vinsten lever sitt eget liv ovanför kontanterna. Det justerade talet ligger alltid över det redovisade, återkommande engångsposter dyker upp år efter år, fordringarna sväller snabbare än omsättningen och kassaflödet släpar. Ett vidgande flerårsgap där vinsten överstiger kontanterna. Vinsten närmar sig fiktion." }
         ],
-        "figurtext": "Vinstkvalitet, hög mot låg. Skillnaden bor i om kontanterna följer vinsten."
+        "figurtext": "Vinstkvalitet, hög mot låg. Skillnaden bor i om kontanterna följer vinsten över tid."
       },
-      "forklaring": "Gapet mellan redovisad vinst och kassaflöde är det enskilt mest pålitliga tidiga varningssystemet i hela analysen. I ett friskt bolag rör sig vinst och operativt kassaflöde tillsammans över tid. Ett ihållande och vidgande gap där vinsten konsekvent överstiger kontanterna är det klassiska fingeravtrycket av problem. Skilj godartad divergens, som tillväxt eller växande rörelsekapital som förklarar gapet en tid, från elakartad: intäkt bokförd men inte indriven, driftskostnader som aktiveras på balansräkningen, eller i de värsta fallen kontanter som inte ens finns. Läs det alltid som ett flerårsmönster, aldrig ett enskilt år. Huvudkorskollen är enkel: det kumulativa operativa kassaflödet bör ungefär följa den kumulativa nettovinsten."
+      "forklaring": "De tre varningslamporna är samma larm sett från olika håll: justerade resultat som alltid smickrar, intäktsredovisning som inte blir till kontanter, och ett gap mellan vinst och kassaflöde som vidgas över åren. Huvudkorskollen knyter ihop dem: det kumulativa operativa kassaflödet bör ungefär följa den kumulativa nettovinsten. Redovisar ett bolag 500 i kumulativ vinst men bara 200 i kumulativt kassaflöde över fem år ska du fråga hårt vart de andra 300 tog vägen, och om vinsten någonsin var verklig. Läs det alltid som ett flerårsmönster, aldrig ett enskilt år. Ett bolag vars vinster inte blir kontanter får antingen intensiv granskning eller läggs åt sidan."
     },
     {
       "typ": "quiz",
@@ -62,18 +122,40 @@
             "En vinst från en avyttring som rensas bort"
           ],
           "ratt": [1],
-          "forklaring": "Omstrukturering som aldrig tar slut är helt enkelt kostnaden för att driva verksamheten. En engångspost som kommer tillbaka år efter år är inte engångs."
+          "forklaring": "Omstrukturering som aldrig tar slut är helt enkelt kostnaden för att driva verksamheten. En engångspost som kommer tillbaka år efter år är inte engångs. Verkliga engångsposter, åt båda håll, är däremot rimliga att rensa bort."
         },
         {
           "typ": "single",
-          "fraga": "Vilket är huvudverktyget för att avslöja aggressiv eller fiktiv intäktsredovisning?",
+          "fraga": "Ledningen visar ett justerat rörelseresultat på 110 mot ett redovisat på 60. Av 50 i justeringar är bara 10 en verklig engångspost, resten är återkommande omstrukturering och aktieersättning. Var ligger ett rättvist underliggande resultat?",
           "alternativ": [
-            "Att jämföra omsättningen med konkurrenternas",
-            "Att korskontrollera omsättningen mot det operativa kassaflödet och kundfordringarna",
-            "Att läsa enbart sista raden i resultaträkningen"
+            "Närmare 110",
+            "Närmare 70",
+            "Exakt 60"
           ],
           "ratt": [1],
-          "forklaring": "Verklig intäkt blir förr eller senare kontanter. Stiger vinsten men inte kassaflödet, och sväller kundfordringarna, kan intäkten vara för tidig eller fiktiv. Kontanter är svåra att förfalska."
+          "forklaring": "Bara den verkliga engångsposten på 10 är försvarbar att lägga tillbaka, alltså 60 plus 10 lika med 70. De övriga 40 är i praktiken löpande kostnader, och 110 överskattar intjäningsförmågan."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ett bolags omsättning växer 30 procent medan kundfordringarna mer än fördubblas och det operativa kassaflödet faller. Vad tyder det främst på?",
+          "alternativ": [
+            "Att tillväxten är av hög kvalitet och backas av kontanter",
+            "Att bolaget bokför försäljning det inte driver in, alltså möjligen för tidig eller lågkvalitativ intäkt",
+            "Att skatten tillfälligt ökat"
+          ],
+          "ratt": [1],
+          "forklaring": "När fordringarna växer mycket snabbare än omsättningen och kassaflödet faller medan vinsten stiger, staplas intäkten som skuldsedlar i stället för kontanter, den klassiska divergensen mellan resultat och kassa."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur skiljer man godartad divergens mellan vinst och kassaflöde från elakartad?",
+          "alternativ": [
+            "Godartad divergens uppstår bara i små bolag",
+            "Genom att se om orsaken är förklarlig och tillfällig, eller ihållande och oförklarad",
+            "All divergens mellan vinst och kassaflöde är elakartad"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett snabbväxande bolag som binder kontanter i rörelsekapital eller tillväxtinvestering kan legitimt visa vinst över kontanter en tid. Nyckeln är om orsaken är förklarlig och tillfällig, eller ihållande och oförklarad."
         },
         {
           "typ": "multi",
@@ -87,6 +169,17 @@
           ],
           "ratt": [0, 1, 3],
           "forklaring": "Ett vidgande vinst-mot-kassa-gap, fordringar som springer ifrån omsättningen och justeringar som alltid pekar uppåt är alla tecken på låg kvalitet. Att vinst och kassaflöde stiger tillsammans är tvärtom kännetecknet på en frisk verksamhet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad innebär huvudkorskollen över flera år?",
+          "alternativ": [
+            "Att vinsten ska öka varje enskilt år",
+            "Att det kumulativa operativa kassaflödet ungefär bör följa den kumulativa nettovinsten",
+            "Att kassaflödet alltid ska överstiga vinsten varje år"
+          ],
+          "ratt": [1],
+          "forklaring": "Redovisar ett bolag 500 i kumulativ vinst men bara 200 i kumulativt operativt kassaflöde över fem år ska du fråga hårt vart de andra 300 tog vägen, och om vinsten någonsin var verklig."
         }
       ]
     }
