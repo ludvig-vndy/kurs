@@ -187,6 +187,30 @@
     .crit{grid-template-columns:1fr}
     .phead h2{font-size:23px}
   }
+  /* ===== Vänster-rail (matchar plattformens sidomeny) ===== */
+  .railnav{position:fixed;inset:0 auto 0 0;width:248px;z-index:20;display:flex;flex-direction:column;justify-content:space-between;padding:26px 18px;border-right:1px solid var(--line);background:var(--page)}
+  .rn-brand{display:flex;align-items:center;gap:11px;padding:0 8px;margin-bottom:34px;color:var(--ink);text-decoration:none}
+  .rn-mark{width:26px;height:26px;border-radius:7px;background:var(--petrol);flex:none}
+  .rn-brandtext{font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:-.01em}
+  .rn-label{font-family:var(--sans);font-weight:600;font-size:10px;letter-spacing:.16em;color:var(--ink-faint);padding:0 10px;margin:0 0 10px}
+  .rn-group{display:flex;flex-direction:column;gap:3px;margin-bottom:26px}
+  .rn-item{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:11px;border:1px solid transparent;background:transparent;font-family:var(--sans);font-weight:500;font-size:14px;color:var(--ink-faint);text-decoration:none;text-align:left;cursor:pointer;transition:color .15s,background .15s}
+  .rn-item:hover{color:var(--ink);background:var(--panel)}
+  .rn-item.on{color:var(--ink);background:var(--panel-2);border-color:var(--line)}
+  .rn-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.55;flex:none}
+  .rn-item.on .rn-dot{background:var(--petrol);opacity:1}
+  .rn-theme{color:var(--ink-faint)}
+  .rn-bottom{display:flex;flex-direction:column;gap:6px}
+  .rn-profile{display:flex;align-items:center;gap:11px;padding:11px 8px 0;margin-top:4px;border-top:1px solid var(--line);font-family:var(--sans);font-size:13px;color:var(--ink-faint)}
+  @media(min-width:761px){
+    body{padding-left:248px}
+    .backlink{display:none!important}
+    .tt-mobile{display:none!important}
+  }
+  @media(max-width:760px){
+    .railnav{display:none}
+  }
+
   @media print{
     :root{
       --page:#fff;--panel:#F6F7F2;--panel-2:#FCFDF9;
@@ -194,7 +218,8 @@
       --line:#D6D8CD;--line-soft:#E4E6DC;
       --petrol:#1C4B47;--petrol-deep:#123834;--brass:#A8791F;--on-ink:#F3F2EA;
     }
-    nav,.toolbar,.legend{display:none!important}
+    nav,.toolbar,.legend,.railnav,.backlink{display:none!important}
+    body{padding-left:0!important}
     .panel{display:block!important;break-inside:avoid;border-top:1px solid var(--line);margin-top:18px}
     body{background:#fff;color:var(--ink)}
     .seg button.on,.tab.active{color:#F3F2EA}
@@ -203,10 +228,29 @@
   }
 </style>
 </head>
-<body><a href="/hem" aria-label="Tillbaka till plattformen" style="position:fixed;top:14px;left:16px;z-index:99;font:500 13px 'Schibsted Grotesk',system-ui,sans-serif;color:var(--ink,inherit);opacity:.6;text-decoration:none">← Plattform</a>
+<body>
+<nav class="railnav" aria-label="Sidomeny">
+  <div>
+    <a href="/hem" class="rn-brand"><span class="rn-mark" aria-hidden="true"></span><span class="rn-brandtext">Ägarboken</span></a>
+    <div class="rn-label">LÄRA</div>
+    <div class="rn-group">
+      <a href="/hem" class="rn-item"><span class="rn-dot" aria-hidden="true"></span>Hem</a>
+      <a href="/fokus" class="rn-item"><span class="rn-dot" aria-hidden="true"></span>Kursöversikt</a>
+    </div>
+    <div class="rn-label">VERKTYG</div>
+    <div class="rn-group">
+      <a href="/verktyg" class="rn-item on" aria-current="page"><span class="rn-dot" aria-hidden="true"></span>Analysverktyg</a>
+    </div>
+  </div>
+  <div class="rn-bottom">
+    <button class="rn-item rn-theme" type="button" data-theme-btn onclick="toggleTheme()">☀ Ljust läge</button>
+    <div class="rn-profile"><span>Du</span></div>
+  </div>
+</nav>
+<a href="/hem" class="backlink" aria-label="Tillbaka till plattformen" style="position:fixed;top:14px;left:16px;z-index:99;font:500 13px 'Schibsted Grotesk',system-ui,sans-serif;color:var(--ink,inherit);opacity:.6;text-decoration:none">← Plattform</a>
 <div class="wrap">
   <header>
-    <button id="themeBtn" class="themetoggle" type="button" onclick="toggleTheme()">☀ Ljust läge</button>
+    <button id="themeBtn" class="themetoggle tt-mobile" type="button" data-theme-btn onclick="toggleTheme()">☀ Ljust läge</button>
     <p class="eyebrow">Verktygslåda för fundamental analys</p>
     <h1 class="mark">Ägar<span>boken</span></h1>
     <p class="sub">Sju verktyg att gå igenom innan du köper en aktie. Du fyller i, poängen räknas ut medan du arbetar, och sammanställningen väger ihop allt till en hållning. Tänk som en ägare, inte en aktiehandlare.</p>
@@ -728,14 +772,14 @@ function resetAll(){
 }
 
 /* ---------- Init ---------- */
-buildNav(); bindContext(); renderTab("checklista");
+buildNav(); bindContext(); activate("checklista");
 
 /* ---------- Tema ---------- */
 function applyTheme(t){
   if(t==="light") document.documentElement.setAttribute("data-theme","light");
   else document.documentElement.removeAttribute("data-theme");
-  const b=document.getElementById("themeBtn");
-  if(b) b.textContent = t==="light" ? "\u263E M\u00f6rkt l\u00e4ge" : "\u2600 Ljust l\u00e4ge";
+  const label = t==="light" ? "\u263E M\u00f6rkt l\u00e4ge" : "\u2600 Ljust l\u00e4ge";
+  document.querySelectorAll("[data-theme-btn]").forEach(b=>{ b.textContent = label; });
 }
 function toggleTheme(){
   const cur = document.documentElement.getAttribute("data-theme")==="light" ? "light" : "dark";
@@ -743,7 +787,7 @@ function toggleTheme(){
   try{ localStorage.setItem("agarboken-theme", n); }catch(e){}
   applyTheme(n);
 }
-(function(){ let t="dark"; try{ t=localStorage.getItem("agarboken-theme")||"dark"; }catch(e){} applyTheme(t); })();
+(function(){ let t="light"; try{ t=localStorage.getItem("agarboken-theme")||"light"; }catch(e){} applyTheme(t); })();
 </script>
 </body>
 </html>
