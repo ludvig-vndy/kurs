@@ -122,17 +122,28 @@ const { lesson, prevHref, nextHref } = Astro.props as {
 // bad lesson degrades to its figurtext instead of crashing the whole build.
 function visualOk(v: VisualObj | undefined): boolean {
   if (!v || !v.typ) return false;
-  const arrField: Record<string, string> = {
-    linjediagram: 'serier',
-    jamforelse: 'element',
-    stapeldiagram: 'data',
-    flode: 'noder',
-    andel: 'delar',
-  };
-  const key = arrField[v.typ];
-  if (key) return Array.isArray((v as any)[key]) && (v as any)[key].length > 0;
-  if (v.typ === 'rutnat') return typeof (v as any).celler === 'number';
-  return false; // unknown typ -> figurtext fallback
+  const a = v as any;
+  const num = (x: unknown) => typeof x === 'number' && !Number.isNaN(x);
+  const str = (x: unknown) => typeof x === 'string' && x.length > 0;
+  const arr = (x: unknown) => Array.isArray(x) && x.length > 0;
+  switch (v.typ) {
+    case 'rutnat':
+      return num(a.kolumner) && num(a.celler) && num(a.markerad) && str(a.etikett);
+    case 'linjediagram':
+      return arr(a.serier) && a.serier.every(
+        (s: any) => str(s.namn) && Array.isArray(s.punkter) && s.punkter.length >= 2 && s.punkter.every(num)
+      );
+    case 'jamforelse':
+      return arr(a.element) && a.element.every((e: any) => str(e.rubrik) && str(e.text));
+    case 'stapeldiagram':
+      return arr(a.data) && a.data.every((d: any) => str(d.kategori) && num(d.varde));
+    case 'flode':
+      return Array.isArray(a.noder) && a.noder.length >= 2 && a.noder.every((nd: any) => str(nd.etikett));
+    case 'andel':
+      return Array.isArray(a.delar) && a.delar.length >= 2 && a.delar.every((d: any) => str(d.etikett) && num(d.varde));
+    default:
+      return false; // unknown typ -> figurtext fallback
+  }
 }
 
 function splitLead(lead: string, highlight: string): [string, string, string] {
