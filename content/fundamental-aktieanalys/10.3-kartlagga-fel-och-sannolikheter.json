@@ -3,26 +3,36 @@
   "lektion": "10.3",
   "titel": "Kartlägga fel och tänka i sannolikheter",
   "niva": "Mellan",
-  "tid_min": 10,
-  "mal": "Efter lektionen kan eleven systematiskt kartlägga vad som kan gå fel i en investering och väga utfallen efter sannolikhet och storlek i stället för att fixera vid bästa fallet.",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven systematiskt kartlägga vad som kan gå fel i en investering, kategori för kategori, vikta riskerna efter allvar och inte bara sannolikhet, och resonera i förväntat värde och gynnsam asymmetri i stället för att fixera vid bästa fallet.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 10.3",
       "titel": "Kartlägga fel och tänka i sannolikheter",
-      "ingress": "De flesta målar upp hur en investering kan gå rätt. Den disciplinerade frågar systematiskt hur den kan gå fel, och väger sedan utfallen efter hur troliga de är."
+      "ingress": "De flesta ägnar lejonparten av tiden åt att måla upp hur en investering kan gå rätt. Den disciplinerade vänder på det och frågar systematiskt hur den kan gå fel, och väger sedan utfallen efter hur troliga och hur allvarliga de är."
     },
     {
       "typ": "reading",
       "kicker": "VÄND PÅ FRÅGAN",
-      "lead": "Det kraftfullaste greppet är att vända på frågan: i stället för hur lyckas det här, fråga hur misslyckas det, eller förlorar jag pengar permanent.",
-      "highlight": "i stället för hur lyckas det här, fråga hur misslyckas det",
+      "lead": "Det kraftfullaste greppet är att vända på frågan. I stället för hur lyckas det här, fråga hur misslyckas det, eller förlorar jag pengar permanent.",
+      "highlight": "I stället för hur lyckas det här, fråga hur misslyckas det",
       "brodtext": [
-        "Att medvetet konstruera bear-caset tvingar fram de risker som optimismen annars sopar under mattan. Lyckas du inte döda din egen tes är den mer robust, lyckas du har du sparat dig en förlust.",
-        "Gör genomgången strukturerad, kategori för kategori, så att inget självklart hot glider förbi: skuld och finansiell skörhet, beroenden och koncentration (en stor kund, leverantör eller nyckelperson), regulatorisk och politisk risk, samt konkurrens och teknisk disruption.",
-        "Sedan kommer det avgörande steget. För varje risk, ställ den andra frågan: hur illa blir det om den slår in. En risk som kan försätta bolaget i konkurs väger oändligt mycket tyngre än en som bara skaver på vinsten. En felmarginal skyddar mot vanliga misstag och otur, men inte mot en katastrofal, verksamhetsförstörande risk. För vissa risker är rätt svar inte en större rabatt utan att helt avstå."
+        "Att medvetet konstruera bear-caset, scenariot där investeringen går illa, tvingar fram de risker som optimismen annars sopar under mattan. De bästa investerarna lägger möda på att försöka döda sin egen tes, fullt medvetna om att lyckas de inte är tesen mer robust, och lyckas de har de räddat sig en förlust.",
+        "Det svåraste i detta är intellektuell hederlighet: att leta efter skäl att inte investera just när du redan blivit förtjust i idén. En användbar teknik är en pre-mortem. Föreställ dig att det gått några år och investeringen blivit en katastrof, och förklara sedan varför. Det tvingar fram misslyckandesätten konkret, innan de hinner inträffa, i stället för att du bortförklarar dem efteråt."
       ],
-      "takeaway": "En pre-mortem hjälper: föreställ dig att investeringen blivit en katastrof om några år, och förklara sedan varför. Det tvingar fram misslyckandesätten konkret innan de hinner inträffa."
+      "takeaway": "Att tänka hårt på vad som kan gå fel är den mest underanvända och mest skyddande vanan i investering. Inversion och pre-mortem gör den till rutin."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GÅ IGENOM KATEGORIERNA",
+      "lead": "Gör genomgången strukturerad, kategori för kategori, så att inget självklart hot glider förbi obemärkt. En lös oro fångar mindre än en lista du betar av.",
+      "highlight": "Gör genomgången strukturerad, kategori för kategori",
+      "brodtext": [
+        "Skuld och finansiell skörhet: klarar bolaget en svår nedgång, eller är hävstången så hög att en nedgång bryter lånevillkoren? Hävstång är den enskilt vanligaste orsaken till permanent förlust. Beroenden och koncentration: en stor kund, leverantör, produkt, distributionskanal eller nyckelperson vars bortfall vore förödande. Regulatorisk och politisk risk: kan ändrade regler, skatter eller politik förändra verksamheten? Konkurrens och teknisk disruption: kan konkurrensfördelen brytas av ny teknik eller en ny aktör, för de dödligaste hoten kommer ofta utifrån? Cyklikalitet: är dagens hälsa bara tillfällig medvind i cykeln?",
+        "Sedan kommer det avgörande steget, och det är inte att räkna riskerna utan att vikta dem. För varje risk, ställ den andra frågan: hur illa blir det om den slår in? En risk som kan försätta bolaget i konkurs väger oändligt mycket tyngre än en som bara skulle skava på vinsten. En felmarginal skyddar mot vanliga misstag och otur, men den kan inte rädda dig från en katastrofal, verksamhetsförstörande risk. Går bolaget till noll hjälper ingen ingångsrabatt. För vissa risker är det rätta svaret inte en större rabatt utan att helt avstå, hur stor rabatten än är."
+      ],
+      "takeaway": "Listan säkrar att inget hot glider förbi. Viktningen efter allvar avgör vilket hot som diskvalificerar idén. Bägge behövs."
     },
     {
       "typ": "concept",
@@ -31,12 +41,24 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Hur sannolik?", "text": "Det första måttet, men inte det sista. En låg sannolikhet förför dig att vifta bort hotet." },
+          { "rubrik": "Hur sannolik?", "text": "Det första måttet, men inte det sista. En låg sannolikhet förför dig att vifta bort hotet, och det är just den reflexen som ruinerar investerare." },
           { "rubrik": "Hur illa blir det?", "text": "Det avgörande måttet. En risk som kan orsaka permanent förlust eller ruin väger oändligt tungt, hur osannolik den än ter sig, eftersom man inte återhämtar sig från ruin." }
         ],
-        "figurtext": "Vikta risker efter båda frågorna. Att vikta enbart på sannolikhet är den vanliga fällan."
+        "figurtext": "Vikta varje risk efter båda frågorna. Att vikta enbart på sannolikhet är den klassiska fällan."
       },
-      "forklaring": "Fokus ligger på överlevnad. En vanlig fallgrop är att vikta bara på sannolikhet och därför avfärda ett osannolikt men förödande hot. Det som kan utplåna kapitalet permanent diskvalificerar ibland en idé oavsett hur stor rabatten är."
+      "forklaring": "Fokus ligger på överlevnad. En vanlig fallgrop hos mindre erfarna är att vikta bara på sannolikhet och därför avfärda ett osannolikt men förödande hot. Det som kan utplåna kapitalet permanent diskvalificerar ibland en idé oavsett hur stor rabatten är."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TVÅ SOM SER LIKA UT",
+      "lead": "Kartläggningen syns tydligast när du ställer två bolag som ser likvärdigt billiga ut bredvid varandra. Säg båda handlas till P/E 12 med hygglig tillväxt, men en nedsideskartläggning blottlägger helt olika risk (siffror illustrativa).",
+      "highlight": "två bolag som ser likvärdigt billiga ut",
+      "brodtext": [
+        "Det första bolaget har låg nettoskuld, runt 0,5 gånger EBITDA, en spridd kundbas där ingen kund står för mer än några få procent av intäkterna, liten regulatorisk exponering och en stabil, svårdisrumperad verksamhet. Kartlägg nedsidan: även i en hård recession överlever det bekvämt tack vare den låga skulden, ett enskilt kundtapp skaver knappt, och inget uppenbart tekniskt eller regulatoriskt hot tornar upp sig. Riskerna är verkliga men överlevbara, ingen av dem skulle ensam orsaka permanent förlust. Här skyddar en felmarginal dig på riktigt.",
+        "Det andra bolaget har hög nettoskuld, säg 4,5 gånger EBITDA, en enda kund som står för en stor del av intäkterna, verkar i en tungt reglerad bransch inför en möjlig regeländring, och i en sektor som en ny teknik börjar utmana. Kartlägg nedsidan: en nedgång kan bryta lånevillkoren, tappet av storkunden vore förödande, en regeländring kan slå mot verksamheten, och disruption kan urholka positionen. Flera av dessa kan var för sig orsaka permanent förlust eller rentav ruin. Här räcker ingen felmarginal, och det rätta svaret kan vara att avstå helt.",
+        "Båda såg lika billiga ut på P/E 12. Den som bara tittar på multipeln ser tvillingar. Den som kartlade vad som kan gå fel ser en sund möjlighet och en potentiell katastrof. Det är arbetet med nedsidan, inte multipeln, som skyddar kapitalet."
+      ],
+      "takeaway": "Två identiska prislappar kan dölja helt olika risk. Multipeln säger vad du betalar, kartläggningen säger vad du riskerar att förlora."
     },
     {
       "typ": "reading",
@@ -44,11 +66,25 @@
       "lead": "Framtiden löper inte längs en enda väg. Den är ett spann av möjliga utfall, vart och ett med sin sannolikhet, och du resonerar i förväntat värde i stället för i bästa fallet.",
       "highlight": "du resonerar i förväntat värde i stället för i bästa fallet",
       "brodtext": [
-        "Förväntat värde är det sannolikhetsviktade genomsnittet av alla utfall. Ett exempel på formen (siffror illustrativa): har en investering 60 procents chans att ge +50 procent, 30 procents chans att ge 0 procent och 10 procents chans att ge total förlust, blir förväntat värde (0,6 gånger 50) plus (0,3 gånger 0) plus (0,1 gånger minus 100), alltså +20 procent. Sannolikheterna måste summera till 1.",
-        "En liten chans för en stor förlust kan dominera hela kalkylen och måste tas på allvar fast den är osannolik, eftersom storleken kan äta upp det förväntade värdet och dessutom är oåterkallelig. Så binder de två frågorna ihop: en lågsannolik ruin väger tyngst.",
-        "Värdeinvesteraren söker därför en gynnsam asymmetri: begränsad nedsida och rejäl uppsida. Krona vinner jag mycket, klave förlorar jag lite. En felmarginal och en sund verksamhet kapar nedsidan men lämnar uppsidan kvar."
+        "Förväntat värde är det sannolikhetsviktade genomsnittet av alla utfall. Ett exempel på formen (siffror illustrativa): har en investering 60 procents chans att ge +50 procent, 30 procents chans att ge 0 procent och 10 procents chans att ge total förlust, blir det förväntade värdet (0,6 gånger 50) plus (0,3 gånger 0) plus (0,1 gånger minus 100), alltså 30 plus 0 minus 10, det vill säga +20 procent. Sannolikheterna måste summera till 1. Ramverket tvingar in både uppsida och nedsida i kalkylen i stället för att låta dig stirra på toppfallet på +50 procent.",
+        "En liten chans för en stor förlust, de minus 100 procenten ovan, kan dominera hela kalkylen och måste tas på allvar fast den är osannolik, eftersom storleken kan äta upp det förväntade värdet och dessutom är oåterkallelig. Så binds de två frågorna ihop: en lågsannolik ruin väger tyngst, för sannolikhet gånger storlek blir stort när storleken är total och oåterkallelig.",
+        "Värdeinvesteraren söker därför en gynnsam asymmetri: begränsad nedsida och rejäl uppsida. Krona vinner jag mycket, klave förlorar jag lite. En felmarginal och en sund verksamhet kapar nedsidan men lämnar uppsidan kvar. Sannolikheter är ändå uppskattningar som ska hållas ödmjukt, så luta konservativt, särskilt mot högre nedsidessannolikheter, given vår inbyggda optimism."
       ],
-      "takeaway": "De bästa möjligheterna har inte den högsta tänkbara utbetalningen, utan den bästa sannolikhetsviktade utbetalningen i förhållande till sin nedsida. Håll sannolikheterna ödmjukt och luta konservativt."
+      "takeaway": "De bästa möjligheterna har inte den högsta tänkbara utbetalningen, utan den bästa sannolikhetsviktade utbetalningen i förhållande till sin nedsida."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FORMEN DU LETAR EFTER",
+      "titel": "Gynnsam asymmetri",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Förförisk men sämre", "text": "Ett rafflande toppfall, säg +200 procent, men med reell risk för stor förlust. Efter viktning äts mycket av charmen upp av den troliga nedsidan. Att fixera vid bästa fallet är det vanligaste felet av alla." },
+          { "rubrik": "Blygsam men bättre", "text": "Inget flashigt toppfall, men hög sannolikhet för ett bra utfall och liten risk för meningsfull förlust. Begränsad nedsida och rejäl uppsida ger ett högre förväntat värde efter viktning." }
+        ],
+        "figurtext": "Krona vinner jag mycket, klave förlorar jag lite. Det är asymmetrin värdeinvesteraren söker."
+      },
+      "forklaring": "Den som fixerar vid bästa fallet jagar drömmen och prisar in toppfallet som vore det säkert. Den som tänker i sannolikheter ser att den blygsamma profilen ofta erbjuder ett bättre förväntat värde med långt mindre risk. Väg utfallen efter sannolikhet och sök gynnsam asymmetri, inte det mest spännande scenariot."
     },
     {
       "typ": "quiz",
@@ -62,7 +98,18 @@
             "Att lita på att marknadspriset redan vägt in alla risker"
           ],
           "ratt": [1],
-          "forklaring": "Genom att aktivt försöka döda din egen tes tvingar du fram de risker som optimismen annars sopar under mattan. Inversion är nedsideskartläggningens kärna."
+          "forklaring": "Genom att aktivt försöka döda din egen tes tvingar du fram de risker som optimismen annars sopar under mattan. Inversion är nedsideskartläggningens kärna, och en pre-mortem gör den konkret."
+        },
+        {
+          "typ": "single",
+          "fraga": "Efter att en risk identifierats, vilken fråga är avgörande utöver hur sannolik den är?",
+          "alternativ": [
+            "Hur ofta nämns risken i media?",
+            "Hur länge har risken funnits?",
+            "Hur illa blir det om den slår in?"
+          ],
+          "ratt": [2],
+          "forklaring": "Risker viktas efter allvar, inte bara sannolikhet. En risk som kan försätta bolaget i konkurs väger oändligt mycket tyngre än en som bara skaver på vinsten."
         },
         {
           "typ": "single",
@@ -76,11 +123,22 @@
           "forklaring": "(0,6 gånger 50) plus (0,3 gånger 0) plus (0,1 gånger minus 100) blir 30 plus 0 minus 10, alltså +20 procent. Sannolikheterna måste summera till 1."
         },
         {
+          "typ": "single",
+          "fraga": "Varför måste en liten chans för en stor förlust tas på fullt allvar fast den är osannolik?",
+          "alternativ": [
+            "För att osannolika utfall alltid inträffar till slut",
+            "För att den höjer det förväntade värdet",
+            "För att storleken på en sådan förlust kan dominera hela kalkylen och dessutom är oåterkallelig"
+          ],
+          "ratt": [2],
+          "forklaring": "Du väger sannolikhet gånger storlek. En lågsannolik ruin kan både förstöra det förväntade värdet och vara omöjlig att repa sig från, därför väger den tyngst."
+        },
+        {
           "typ": "multi",
           "fraga": "Vad kännetecknar en sund nedsidesanalys?",
           "underrubrik": "Välj alla som stämmer",
           "alternativ": [
-            "Du går igenom riskkategorierna systematiskt: skuld, beroenden, reglering, disruption",
+            "Du går igenom riskkategorierna systematiskt: skuld, beroenden, reglering, konkurrens och disruption, cyklikalitet",
             "Du viktar varje risk efter både hur sannolik och hur allvarlig den är",
             "Du avfärdar ett osannolikt men förödande hot just för att det är osannolikt",
             "Du söker gynnsam asymmetri: begränsad nedsida och rejäl uppsida"

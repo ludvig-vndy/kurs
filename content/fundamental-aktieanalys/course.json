@@ -11,7 +11,7 @@
           "lektion": "1.1",
           "titel": "Vad det innebär att äga en aktie",
           "niva": "Nybörjare",
-          "tid_min": 8,
+          "tid_min": 11,
           "status": "klar",
           "fil": "1.1-aga-en-aktie.json"
         },
@@ -57,7 +57,7 @@
           "lektion": "2.2",
           "titel": "Affärsmodeller och intäktstyper",
           "niva": "Nybörjare",
-          "tid_min": 10,
+          "tid_min": 12,
           "status": "klar",
           "fil": "2.2-affarsmodeller-och-intaktstyper.json"
         },
@@ -65,7 +65,7 @@
           "lektion": "2.3",
           "titel": "Enhetsekonomi och tillväxt",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 12,
           "status": "klar",
           "fil": "2.3-enhetsekonomi-och-tillvaxt.json"
         }
@@ -87,7 +87,7 @@
           "lektion": "3.2",
           "titel": "Läsa mellan raderna",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "3.2-lasa-mellan-raderna.json"
         }
@@ -101,7 +101,7 @@
           "lektion": "4.1",
           "titel": "Resultaträkningen",
           "niva": "Nybörjare",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "4.1-resultatrakningen.json"
         },
@@ -109,7 +109,7 @@
           "lektion": "4.2",
           "titel": "Balansräkningen",
           "niva": "Nybörjare",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "4.2-balansrakningen.json"
         },
@@ -117,7 +117,7 @@
           "lektion": "4.3",
           "titel": "Kassaflödet",
           "niva": "Nybörjare",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "4.3-kassaflodet.json"
         },
@@ -125,7 +125,7 @@
           "lektion": "4.4",
           "titel": "Vinstkvalitet och varningslampor",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "4.4-vinstkvalitet-och-varningslampor.json"
         },
@@ -133,7 +133,7 @@
           "lektion": "4.5",
           "titel": "Goodwill och eget kapital",
           "niva": "Mellan",
-          "tid_min": 9,
+          "tid_min": 12,
           "status": "klar",
           "fil": "4.5-goodwill-och-eget-kapital.json"
         },
@@ -141,7 +141,7 @@
           "lektion": "4.6",
           "titel": "De tre rapporterna ihop",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 12,
           "status": "klar",
           "fil": "4.6-de-tre-rapporterna-ihop.json"
         }
@@ -155,7 +155,7 @@
           "lektion": "5.1",
           "titel": "Marginaler och ROIC",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "5.1-nyckeltal.json"
         },
@@ -163,7 +163,7 @@
           "lektion": "5.2",
           "titel": "Tillväxt, effektivitet och rätt användning",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "5.2-tillvaxt-effektivitet-anvandning.json"
         },
@@ -171,7 +171,7 @@
           "lektion": "5.3",
           "titel": "ROIC i djupet",
           "niva": "Avancerad",
-          "tid_min": 11,
+          "tid_min": 14,
           "status": "klar",
           "fil": "5.3-roic-i-djupet.json"
         }
@@ -185,7 +185,7 @@
           "lektion": "6.1",
           "titel": "Vad en moat är och typerna",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "6.1-vad-en-moat-ar.json"
         },
@@ -193,7 +193,7 @@
           "lektion": "6.2",
           "titel": "Bedöma och se moaten i siffrorna",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "6.2-moat-i-siffrorna.json"
         }
@@ -215,7 +215,7 @@
           "lektion": "7.2",
           "titel": "Kapitalallokering",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "7.2-kapitalallokering.json"
         }
@@ -229,7 +229,7 @@
           "lektion": "8.1",
           "titel": "Vad är värde?",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "8.1-vad-ar-varde.json"
         },
@@ -251,7 +251,7 @@
           "lektion": "9.1",
           "titel": "Multiplar och deras fällor",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 14,
           "status": "klar",
           "fil": "9.1-multiplar.json"
         },
@@ -267,7 +267,7 @@
           "lektion": "9.3",
           "titel": "Diskonterat kassaflöde",
           "niva": "Avancerad",
-          "tid_min": 12,
+          "tid_min": 14,
           "status": "klar",
           "fil": "9.3-dcf.json"
         },
@@ -283,7 +283,7 @@
           "lektion": "9.5",
           "titel": "Att sätta ett riktpris",
           "niva": "Avancerad",
-          "tid_min": 12,
+          "tid_min": 14,
           "status": "klar",
           "fil": "9.5-riktpris.json"
         }
@@ -313,7 +313,7 @@
           "lektion": "10.3",
           "titel": "Kartlägga fel och tänka i sannolikheter",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "10.3-kartlagga-fel-och-sannolikheter.json"
         }
@@ -335,7 +335,7 @@
           "lektion": "11.2",
           "titel": "Tankefällor",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "11.2-tankefallor.json"
         },
@@ -343,7 +343,7 @@
           "lektion": "11.3",
           "titel": "Story vs analys",
           "niva": "Mellan",
-          "tid_min": 9,
+          "tid_min": 13,
           "status": "klar",
           "fil": "11.3-story-vs-analys.json"
         },
@@ -351,7 +351,7 @@
           "lektion": "11.4",
           "titel": "Bygga ett system: position sizing och ödmjukhet",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "11.4-position-sizing-och-odmjukhet.json"
         }
@@ -365,7 +365,7 @@
           "lektion": "12.1",
           "titel": "Multibagger-linsen",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "12.1-multibagger-linsen.json"
         },
@@ -373,7 +373,7 @@
           "lektion": "12.2",
           "titel": "Marknad, problem och TAM",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "12.2-marknad-och-tam.json"
         },
@@ -381,7 +381,7 @@
           "lektion": "12.3",
           "titel": "Enhetsekonomi och tillväxtkvalitet",
           "niva": "Avancerad",
-          "tid_min": 11,
+          "tid_min": 13,
           "status": "klar",
           "fil": "12.3-enhetsekonomi-och-tillvaxtkvalitet.json"
         },
@@ -397,7 +397,7 @@
           "lektion": "12.5",
           "titel": "Kassa, burn och finansieringsrisk",
           "niva": "Avancerad",
-          "tid_min": 11,
+          "tid_min": 13,
           "status": "klar",
           "fil": "12.5-kassa-burn-och-finansieringsrisk.json"
         },
@@ -413,7 +413,7 @@
           "lektion": "12.7",
           "titel": "Att värdera i scenarier",
           "niva": "Avancerad",
-          "tid_min": 11,
+          "tid_min": 13,
           "status": "klar",
           "fil": "12.7-vardera-i-scenarier.json"
         },
@@ -421,7 +421,7 @@
           "lektion": "12.8",
           "titel": "Att överleva resan",
           "niva": "Avancerad",
-          "tid_min": 11,
+          "tid_min": 13,
           "status": "klar",
           "fil": "12.8-overleva-resan.json"
         }
@@ -435,7 +435,7 @@
           "lektion": "13.1",
           "titel": "Från idé till case",
           "niva": "Mellan",
-          "tid_min": 10,
+          "tid_min": 13,
           "status": "klar",
           "fil": "13.1-fran-ide-till-case.json"
         },
@@ -457,7 +457,7 @@
           "lektion": "14.1",
           "titel": "Lifco, räkenskapsåret 2025",
           "niva": "Avancerad",
-          "tid_min": 14,
+          "tid_min": 18,
           "status": "klar",
           "fil": "14.1-lifco-2025.json"
         }
@@ -471,7 +471,7 @@
           "lektion": "15.1",
           "titel": "Banker och försäkring",
           "niva": "Avancerad",
-          "tid_min": 11,
+          "tid_min": 14,
           "status": "klar",
           "fil": "15.1-banker-och-forsakring.json"
         },
@@ -479,7 +479,7 @@
           "lektion": "15.2",
           "titel": "Fastighet och cykliskt",
           "niva": "Avancerad",
-          "tid_min": 11,
+          "tid_min": 14,
           "status": "klar",
           "fil": "15.2-fastighet-och-cykliskt.json"
         }
@@ -493,7 +493,7 @@
           "lektion": "16.1",
           "titel": "Källor, verktyg och svensk praktik",
           "niva": "Nybörjare",
-          "tid_min": 9,
+          "tid_min": 12,
           "status": "klar",
           "fil": "16.1-kallor-verktyg-praktik.json"
         },

@@ -3,23 +3,23 @@
   "lektion": "1.1",
   "titel": "Vad det innebär att äga en aktie",
   "niva": "Nybörjare",
-  "tid_min": 8,
-  "mal": "Efter lektionen kan eleven formulera vad man faktiskt köper när man köper en aktie, och börjar tänka som ägare i stället för spekulant.",
+  "tid_min": 11,
+  "mal": "Efter lektionen kan eleven formulera vad man faktiskt köper när man köper en aktie, en ägarandel i ett riktigt bolag och dess framtida vinster, och börjar tänka som ägare i stället för spekulant.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION ETT",
       "titel": "Vad det innebär att äga en aktie",
-      "ingress": "Allt i den här kursen vilar på en enda idé. Vi börjar där."
+      "ingress": "Allt i den här kursen vilar på en enda idé. Den är enkel att läsa och svår att leva. Vi börjar där, i lugn takt."
     },
     {
       "typ": "reading",
       "kicker": "VARFÖR DET SPELAR ROLL",
-      "lead": "Nästan varje dyrt misstag en privat investerare gör går att spåra tillbaka till en enda glömd sak: en aktie är en bit av ett företag. Inte en siffra på en skärm, inte en lott.",
+      "lead": "Nästan varje dyrt misstag en privat investerare gör går att spåra tillbaka till en enda glömd sak: en aktie är en bit av ett företag. Inte en siffra på en skärm, inte en lapp, inte en lott du köper och hoppas på.",
       "highlight": "en aktie är en bit av ett företag.",
       "brodtext": [
-        "De som håller den tanken framför sig beter sig som ägare och klarar sig bra över åren. De som glömmer den beter sig som spelare och blir straffade av sina egna nerver: de säljer sina bästa innehav av rädsla och köper sina sämsta av girighet.",
-        "På kort sikt är marknaden en röstmaskin, en popularitetstävling. På lång sikt är den en vågmaskin som väger faktiska resultat. Över dagar speglar kursen stämningar, över år rör den sig mot verksamhetens värde."
+        "Håller du den tanken framför dig beter du dig som ägare, och det räcker långt över åren. Tappar du den blir du en spelare som de egna nerverna straffar. Du säljer dina bästa innehav i panik och köper dina sämsta i eufori, varje gång vid sämsta tänkbara tillfälle.",
+        "Allt annat i kursen vilar på den här lektionen. Du kan lära dig konkurrensfördelar, kassaflöde och värdering och ändå sälja det du borde behålla varje gång marknaden skakar, så länge du i botten ser dina aktier som siffror på en skärm. Sitter den här inställningen får resten fäste."
       ],
       "takeaway": "Du behandlar dina aktier som företag, inte som siffror på en skärm."
     },
@@ -35,7 +35,65 @@
         "etikett": "DU",
         "figurtext": "En aktie är en liten men fullt verklig del av allt bolaget äger och tjänar. Den gröna rutan är din."
       },
-      "forklaring": "Ett bolags ägande är uppdelat i andelar. Äger du hundra aktier av tio miljoner äger du en hundratusendel av allt: kassan, varumärket, maskinerna, och varje krona bolaget tjänar från och med nu."
+      "forklaring": "Ett aktiebolags ägande är uppdelat i andelar. Har bolaget gett ut tio miljoner aktier och du äger hundra av dem, äger du en hundratusendel av hela bolaget: kassan, varumärket, maskinerna, avtalen. Du har också rätt till en hundratusendel av varje krona bolaget tjänar från och med nu. Andelen är liten, men den är verklig och den är din."
+    },
+    {
+      "typ": "reading",
+      "kicker": "RÖSTMASKIN OCH VÅGMASKIN",
+      "lead": "Varje aktie bär på två tal som det lönar sig att hålla isär. Priset sätts av marknaden, sekund för sekund, av dem som råkar köpa och sälja idag. Värdet sätts av verksamheten och är summan av de pengar bolaget kommer att ge sina ägare över tid.",
+      "highlight": "två tal som det lönar sig att hålla isär",
+      "brodtext": [
+        "De två hänger ihop men är inte samma sak. En klassisk bild fångar varför: på kort sikt är marknaden en röstmaskin, en popularitetstävling där humöret bestämmer. På lång sikt är den en vågmaskin som väger faktiska resultat. Över dagar och veckor speglar kursen stämningar. Över år rör den sig mot verksamhetens värde.",
+        "Var kommer då en ägares avkastning ifrån? Ur tre källor: tillväxten i bolagets vinst, utdelningarna längs vägen, och förändringen i vad marknaden är villig att betala per krona vinst. De två första kommer ur verksamheten och går att analysera. Den tredje kommer ur stämningsläget och kan ingen förutsäga tillförlitligt. Så förankra ditt case i verksamheten och se humöret som en vind du inte rår över. Vi går djupare på pris mot värde i nästa lektion."
+      ],
+      "takeaway": "Bygg ditt case på det verksamheten gör, inte på vad marknadens humör ska göra härnäst. Hoppet är ingen strategi."
+    },
+    {
+      "typ": "reading",
+      "kicker": "ETT KONKRET EXEMPEL",
+      "lead": "Gör det konkret. Talen här är illustrativa, valda för att visa mönstret. Ett bolag tjänar 10 kronor per aktie varje år. Marknaden prissätter det till 150 kronor, alltså P/E 15: du betalar 15 kronor för varje krona årlig vinst. Du köper 100 aktier för 15 000 kronor.",
+      "highlight": "Talen här är illustrativa",
+      "brodtext": [
+        "Vad köpte du? En rätt till 100 gånger 10, alltså 1 000 kronor i vinst redan i år, och till vad den vinsten växer till framöver. Säg att verksamheten växer vinsten med 10 procent om året. Efter sju år är vinsten per aktie runt 19,5 kronor, och din andel motsvarar omkring 1 950 kronor i årlig vinst. Betalar marknaden fortfarande P/E 15 är dina 100 aktier värda runt 29 200 kronor. Pengarna har ungefär fördubblats, och orsaken var verksamheten, inte marknadens humör.",
+        "Men någonstans under de sju åren kom en svacka. Hela marknaden föll och din aktie sjönk till 110 kronor, en bra bit under ditt köp, trots att vinsten var högre än någonsin. Ägaren såg en rea på en verksamhet som gick bättre än vid köpet. Spekulanten såg rött och sålde. Det enda som skilde dem åt var om de läste priset eller värdet."
+      ],
+      "takeaway": "Samma fallande kurs är ett hot för spekulanten och ett erbjudande för ägaren. Skillnaden sitter i vad du tittar på."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR EN ÄGARE TÄNKER",
+      "lead": "En van investerare kör ett enkelt test innan köp, och du kan ta över det direkt: skulle jag vilja äga hela det här bolaget till dagens pris om jag inte fick sälja på tio år? Är svaret nej finns ingen anledning att äga en bit heller.",
+      "highlight": "skulle jag vilja äga hela det här bolaget till dagens pris",
+      "brodtext": [
+        "En bit är bara en liten version av helheten. Testet tvingar fram rätt fråga, är det en bra verksamhet till ett rimligt pris, i stället för fel fråga, rör sig aktien åt rätt håll den här veckan. Tänk på verksamheten först och kursen sist.",
+        "Marknadens dagliga prislapp är en frivillig tjänst. Tänk dig en man som dyker upp varje dag och erbjuder sig att köpa eller sälja. Vissa dagar är han euforisk och bjuder löjligt högt, andra dagar panikslagen och bjuder löjligt lågt. Du är aldrig tvungen att svara. Utnyttja honom när priset är dumt, ignorera honom resten av tiden. Den friheten kommer ur en enda sak: att du vet vad du äger."
+      ],
+      "takeaway": "Kursen är ett erbjudande du får svara på när det passar dig, inte en order att lyda."
+    },
+    {
+      "typ": "concept",
+      "kicker": "ÄGARE ELLER SPEKULANT",
+      "titel": "Två sätt att hålla i samma aktie",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Ägaren", "text": "Kan beskriva i en mening hur bolaget tjänar pengar, och varför det sannolikt tjänar mer över tid. När kursen faller frågar hen om verksamheten fortfarande är sund, innan hen frågar om hen ska sälja. Bedömer hur det går efter hur verksamheten går, och vore bekväm med att äga hela bolaget." },
+          { "rubrik": "Spekulanten", "text": "Köpte aktien för att den rörde sig och kan inte förklara verksamheten. Skälet att äga den är att den går upp eller att alla pratar om den. En nedgång på en femtedel väcker lust att sälja trots att inget i verksamheten ändrats. Hela tesen är att någon annan ska betala mer." }
+        ],
+        "figurtext": "Samma aktie, två hållningar. Den ena följer verksamheten, den andra följer kursen."
+      },
+      "forklaring": "Genom ägarglasögonen är ett fantastiskt innehav en verksamhet vars vinst per aktie du med rimlig grund väntar dig är betydligt högre om fem till tio år, köpt till ett pris som inte redan förutsätter perfektion. Ett dåligt innehav är en aktie du köpte för att den rörde sig och vars verksamhet du inte kan förklara. Det är inte ägande, det är en vadslagning på nästa köpare. De vanligaste fällorna: att förväxla aktiesymbolen med bolaget, att köpa något du inte kan beskriva i en mening, och att förväxla aktivitet med framsteg."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DIN CHECKLISTA",
+      "lead": "Innan du kallar dig ägare till ett innehav, stäm av fem saker. Detta är till lika delar en lista för bolaget och för ditt eget huvud, och den blir din vana för varje aktie du tittar på.",
+      "highlight": "till lika delar en lista för bolaget och för ditt eget huvud",
+      "brodtext": [
+        "Först: jag kan beskriva i en mening hur bolaget tjänar pengar. Sedan: jag vet vad min andel representerar, en del av tillgångarna och av alla framtida vinster. Vidare: jag skulle vilja äga hela bolaget till dagens pris. Och: jag bedömer innehavet efter verksamheten, inte efter kursen. Till sist: jag förstår att gapet mellan pris och värde är min möjlighet, inte mitt hot.",
+        "En kort övning förankrar det. Välj ett bolag du äger eller funderar på och skriv för hand: jag äger en andel av ett bolag som tjänar pengar genom att, och fyll i meningen. Kan du inte fylla i den förstår du ännu inte vad du äger, och då är det ingen brådska. Gå inte vidare förrän du kan, för hela kursen byggs ovanpå just den meningen."
+      ],
+      "takeaway": "Om du inte kan säga i en mening vad bolaget gör och varför det tjänar mer i framtiden, äger du inte ännu, du gissar."
     },
     {
       "typ": "quiz",
@@ -62,6 +120,28 @@
           "forklaring": "Kursen är priset i ögonblicket, inte värdet. Gapet mellan pris och värde är din möjlighet."
         },
         {
+          "typ": "single",
+          "fraga": "På kort sikt är marknaden en röstmaskin och på lång sikt en vågmaskin. Vad betyder det?",
+          "alternativ": [
+            "Kursen rör sig slumpmässigt både på kort och lång sikt",
+            "Över dagar speglar kursen humör och popularitet, över år rör den sig mot verksamhetens värde",
+            "Bara stora bolag väger tungt, små röstas bort"
+          ],
+          "ratt": [1],
+          "forklaring": "Röstmaskinen är stämningarna som driver priset från dag till dag. Vågmaskinen är de faktiska resultaten som avgör värdet över år. Det är därför ägaren tittar på verksamheten."
+        },
+        {
+          "typ": "single",
+          "fraga": "Din aktie faller en bit trots att bolagets vinst är högre än någonsin. Hur ser ägaren på det?",
+          "alternativ": [
+            "Som en signal att sälja innan det faller mer",
+            "Som en rea på en verksamhet som gått bättre, alltså möjligen ett köpläge",
+            "Som ett bevis på att den första analysen var fel"
+          ],
+          "ratt": [1],
+          "forklaring": "När verksamheten går bättre men priset fallit har gapet mellan pris och värde vidgats till din fördel. Spekulanten ser rött och säljer, ägaren ser rea."
+        },
+        {
           "typ": "multi",
           "fraga": "Vilka av dessa stämmer in på att tänka som ägare?",
           "underrubrik": "Välj alla som stämmer",
@@ -72,7 +152,7 @@
             "Köpa något du inte kan beskriva i en mening"
           ],
           "ratt": [0, 2],
-          "forklaring": "Ägaren följer verksamheten och ser kursen som ett frivilligt erbjudande, inte en order att lyda."
+          "forklaring": "Ägaren följer verksamheten och ser kursen som ett frivilligt erbjudande, inte en order att lyda. Att sälja på varje rörelse eller köpa det man inte förstår är spekulantens beteende."
         }
       ]
     }
