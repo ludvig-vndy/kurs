@@ -39,7 +39,7 @@ function checkLesson(name, raw, errs) {
   }
   if (!isArr(data.steg)) return;
 
-  if (data.steg.length < 3 || data.steg.length > 7) errs.push(`${name}: ${data.steg.length} steg (ska vara 3 till 7)`);
+  if (data.steg.length < 3 || data.steg.length > 16) errs.push(`${name}: ${data.steg.length} steg (ska vara 3 till 16)`);
 
   let quizCount = 0;
   data.steg.forEach((s, i) => {
@@ -68,7 +68,7 @@ function checkLesson(name, raw, errs) {
       if (!isStr(s.slutsats) && !(isArr(s.brodtext) && s.brodtext.length)) errs.push(`${w}: slutsats eller brodtext krävs`);
     } else if (s.typ === 'quiz') {
       quizCount++;
-      if (!isArr(s.fragor) || s.fragor.length !== 3) errs.push(`${w}: quiz ska ha exakt 3 frågor`);
+      if (!isArr(s.fragor) || s.fragor.length < 3 || s.fragor.length > 6) errs.push(`${w}: quiz ska ha 3 till 6 frågor`);
       (s.fragor || []).forEach((q, qi) => {
         const qw = `${w} fraga[${qi}]`;
         if (q.typ !== 'single' && q.typ !== 'multi') errs.push(`${qw}: typ ska vara single eller multi`);
