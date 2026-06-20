@@ -3,8 +3,8 @@
   "lektion": "9.5",
   "titel": "Att sätta ett riktpris",
   "niva": "Avancerad",
-  "tid_min": 12,
-  "mal": "Efter lektionen kan eleven sätta ett riktprisintervall via scenarier och känslighet, och hålla det som en bedömning, inte ett facit.",
+  "tid_min": 14,
+  "mal": "Efter lektionen kan eleven sätta ett riktpris som ett intervall via internt konsekventa scenarier, läsa känsligheten för att se vilka antaganden som driver värdet mest, och ställa intervallet mot priset för att avgöra om det finns en felmarginal.",
   "steg": [
     {
       "typ": "intro",
@@ -18,16 +18,57 @@
       "lead": "Bygg aldrig en värdering för att få ett tal. Bygg den för att få ett intervall. Du flexar de viktiga antagandena medvetet, tillväxt, marginaler, diskonteringsränta och evig tillväxt, och ser hur värdet rör sig. Det förvandlar en värdering från falsk precision till ett ärligt verktyg.",
       "highlight": "Bygg aldrig en värdering för att få ett tal. Bygg den för att få ett intervall.",
       "brodtext": [
-        "I praktiken bygger du några scenarier. Ett konservativt fall med försiktiga antaganden, ett basfall med dina bästa gissningar, och ett optimistiskt fall där saker går bra. Var och en ger ett värde, och tillsammans ger de ett intervall i stället för en punkt. Poängen är inte fler decimaler, utan att förstå spannet av möjliga värden och vilka antaganden som driver det.",
-        "Disciplinen ligger i att bygga sammanhängande scenarier, inte lösryckta tal. Varje scenario ska vara internt konsekvent: ett svagare bolag har gärna både lägre tillväxt och högre risk. Det du ska undvika är att stapla de mest optimistiska antagandena på varje rad och få ett värde som är osannolikt på alla sätt samtidigt."
+        "Känsligheten i en värdering kan kännas som en svaghet hos verktyget. En enda procentenhet i tillväxt, ränta eller evig tillväxt svänger värdet kraftigt. Det är tvärtom nyckeln till att använda verktyget ärligt. I stället för att låtsas att modellen ger ett exakt tal flexar du antagandena medvetet och ser hur värdet rör sig. Då får du ett intervall av troliga värden och en känsla för vad som driver dem.",
+        "Att kunna stresstesta en värdering och lägga fram ett intervall avgör om du blir lurad av din egen modell eller använder den klokt. Och det är just så du kommer fram till en felmarginal. Intervallet är inte en eftergift åt osäkerheten, det är hela poängen: det säger dig vad du faktiskt vet och hur mycket du inte vet."
       ],
       "takeaway": "Du behöver aldrig ett exakt riktpris. Du behöver intervallet och ett pris klart under det."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SCENARIERNA",
+      "lead": "I praktiken bygger du några scenarier. Ett konservativt fall med försiktiga antaganden, ett basfall med dina bästa gissningar, och ett optimistiskt fall där saker går bra. Var och en ger ett värde, och tillsammans ger de ett intervall i stället för en punkt.",
+      "highlight": "Var och en ger ett värde, och tillsammans ger de ett intervall i stället för en punkt.",
+      "brodtext": [
+        "Det konservativa fallet sätter försiktiga men rimliga antaganden, lägre tillväxt, högre ränta, lägre evig tillväxt. Basfallet sätter dina bästa uppskattningar. Det optimistiska antar att saker går bra, högre tillväxt, lägre ränta, högre evig tillväxt. Poängen är inte fler decimaler, utan att förstå spannet av möjliga värden och vilka antaganden som driver det.",
+        "Ett viktigt hantverksdetalj: i vart och ett av scenarierna räknar du om både de explicita kassaflödena och slutvärdet från grunden, eftersom räntan ändras. Du kan inte bara skruva på slutvärdet och låta resten stå still. När diskonteringsräntan rör sig påverkar den varje diskonterat år, inte bara den eviga svansen."
+      ],
+      "takeaway": "Tre internt konsekventa scenarier ger ett intervall. Räkna om hela kalkylen i varje fall, inte bara slutvärdet."
     },
     {
       "typ": "concept",
       "kicker": "VARFÖR SPANNET ÄR BRETT",
       "titel": "Små antaganden, stora svängningar",
-      "forklaring": "Två saker gör spannet brett. Varje antagande multipliceras genom många år, så små skillnader sammansätts, och merparten av värdet sitter ofta i slutvärdet, vars nämnare reagerar dramatiskt på små ändringar. Därför är en enda siffra meningslös och ett intervall nödvändigt."
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Antagandena sammansätts genom åren", "text": "Varje antagande multipliceras genom många år i prognosen, så en liten skillnad i tillväxt eller marginal blir en stor skillnad i framtida kassaflöde. Små fel växer, de krymper inte." },
+          { "rubrik": "Slutvärdet bär merparten", "text": "Ofta sitter den största delen av värdet i slutvärdet, vars nämnare är diskonteringsränta minus evig tillväxt. När den nämnaren är liten reagerar slutvärdet dramatiskt på en ändring på någon enstaka procentenhet." }
+        ],
+        "figurtext": "De två krafterna som gör att rimliga insiffror ger ett vitt spann av värden."
+      },
+      "forklaring": "Två saker gör spannet brett. Varje antagande multipliceras genom många år, så små skillnader sammansätts. Och merparten av värdet sitter ofta i slutvärdet, vars nämnare reagerar dramatiskt på små ändringar. Tillsammans gör de att rimliga variationer i insiffrorna ger ett vitt spann av värden. Därför är en enda siffra meningslös och ett intervall nödvändigt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM DRIVER VÄRDET MEST",
+      "lead": "När du flexar antagandena ett i taget ser du vilken spak som rör värdet mest. Oftast är det diskonteringsräntan och tillväxten, och förstår du varför just de svänger mest har du förstått känslighetsanalysens kärna.",
+      "highlight": "Oftast är det diskonteringsräntan och tillväxten",
+      "brodtext": [
+        "Diskonteringsräntan svänger mest därför att den verkar på allt. Den drar tillbaka varje framtida års kassaflöde, och den sitter dessutom i nämnaren på slutvärdet, där den möter den eviga tillväxten. Eftersom slutvärdet ofta är den största delen av värdet betyder en liten ändring i räntan en stor ändring i hela värderingen. Den eviga tillväxten verkar i samma nämnare och har samma hävstång åt motsatt håll.",
+        "Du kan flexa ett antagande i taget, vilket visar vilken spak som driver värdet mest. Eller flera tillsammans, vilket ger trovärdiga helhetsscenarier eftersom antaganden tenderar att röra sig ihop. Båda är nyttiga. Den första lär dig var modellens nerver sitter, den andra bygger de scenarier du faktiskt håller mot priset."
+      ],
+      "takeaway": "Flexa ett antagande i taget för att hitta nerverna, flera tillsammans för att bygga scenarier. Räntan och tillväxten brukar dominera."
+    },
+    {
+      "typ": "reading",
+      "kicker": "INTERNT KONSEKVENTA SCENARIER",
+      "lead": "Disciplinen ligger i att bygga sammanhängande scenarier, inte lösryckta tal. Varje scenario ska vara internt konsekvent: ett svagare bolag har gärna både lägre tillväxt och högre risk.",
+      "highlight": "ett svagare bolag har gärna både lägre tillväxt och högre risk",
+      "brodtext": [
+        "Antaganden tenderar att röra sig ihop i verkligheten. Ett bolag som tappar fart möter ofta hårdare konkurrens, pressade marginaler och en marknad som kräver högre avkastning för att äga risken. Ett scenario som speglar det blir trovärdigt. Ett scenario som plockar det sämsta från en rad och det bästa från en annan blir det inte.",
+        "Det du ska undvika är att stapla de mest optimistiska antagandena på varje rad och få ett värde som är osannolikt på alla sätt samtidigt. Den högsta tillväxten, den lägsta räntan, den bästa marginalen och den högsta eviga tillväxten samtidigt beskriver inte ett optimistiskt bolag, det beskriver ett bolag som inte finns. Ett ärligt optimistiskt fall är ändå sammanhängande, bara på den ljusa sidan av det rimliga."
+      ],
+      "takeaway": "Bygg scenarier som hänger ihop. Att stapla det bästa utfallet på varje enskild rad ger ett tal som är osannolikt på alla sätt på en gång."
     },
     {
       "typ": "dataviz",
@@ -36,14 +77,62 @@
       "visual": {
         "typ": "stapeldiagram",
         "data": [
-          { "kategori": "Pessimistiskt", "varde": 10.4 },
-          { "kategori": "Troligt", "varde": 15.2, "accent": true },
+          { "kategori": "Konservativt", "varde": 10.4 },
+          { "kategori": "Basfall", "varde": 15.2, "accent": true },
           { "kategori": "Optimistiskt", "varde": 23.9 }
         ],
         "etiketter": "Riktpris per aktie (kr), illustrativt",
-        "figurtext": "Illustrativa tal."
+        "figurtext": "Illustrativa tal. Konservativt: 6 procents tillväxt, 11 procents ränta, 2 procents evig tillväxt. Optimistiskt: 10, 9 och 4 procent. Basfallet ligger mittemellan."
       },
-      "slutsats": "Sanningen om värdet är inte 15,16 kr, utan någonstans runt 10 till 24 kr, troligen kring 15. Håll sedan priset mot spannet: ligger det under till och med det konservativa fallet finns en verklig felmarginal, ligger det bara inom det optimistiska krävs att allt går rätt."
+      "slutsats": "Sanningen om värdet är inte 15,16 kr, utan någonstans runt 10 till 24 kr, troligen kring 15. Spannet är mer än det dubbla, byggt av antaganden som vart och ett är rimligt. Den exakta basfallssiffran var en synvilla av träffsäkerhet."
+    },
+    {
+      "typ": "reading",
+      "kicker": "INTERVALLET MOT PRISET",
+      "lead": "Det avgörande är vad du gör med intervallet, och här möter det felmarginalen. Du håller priset mot spannet, och var priset hamnar avgör om du är skyddad eller om du satsar på att allt går rätt.",
+      "highlight": "Det avgörande är vad du gör med intervallet",
+      "brodtext": [
+        "Ligger priset under till och med ditt konservativa fall är det tydligt billigt med en felmarginal. Du är skyddad även om dina antaganden var för rosiga. Ligger priset bara inom det optimistiska fallet kräver det att allt går rätt, det finns ingen marginal. Ligger det mitt i intervallet är det ungefär rättvist prissatt, utan tydlig kant åt något håll.",
+        "Felmarginalen är skillnaden mellan vad något är värt och vad du betalar, ett skydd mot dina egna misstag och mot otur. Så avgör känslighetsanalysen om den finns. Det är inte en akademisk övning, det är skillnaden mellan ett köp du kan leva med om du har fel och ett köp som bara fungerar om du har rätt om allt."
+      ],
+      "takeaway": "Köp under till och med ditt konservativa fall. Då finns en verklig marginal kvar även när några av antagandena visar sig för optimistiska."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Var priset hamnar avgör om du är skyddad",
+      "underrubrik": "Samma intervall, runt 10 till 24 kr, men tre olika priser ger tre helt olika lägen för en köpare.",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Pris runt 7 kr", "text": "Under till och med det konservativa fallet på 10,4. Tydligt billigt med en verklig felmarginal. Du är skyddad även om dina antaganden var för rosiga." },
+          { "rubrik": "Pris runt 15 kr", "text": "Mitt i intervallet, nära basfallet. Ungefär rättvist prissatt, ingen tydlig kant åt något håll. Du betalar för det troliga utfallet." },
+          { "rubrik": "Pris runt 22 kr", "text": "Bara motiverat av det optimistiska fallet. Ingen marginal. Du satsar på att allt går rätt, och en besvikelse straffar sig direkt." }
+        ],
+        "figurtext": "Illustrativt, mot intervallet runt 10 till 24 kr per aktie."
+      },
+      "slutsats": "Du behövde aldrig ett exakt värde. Du behövde intervallet och ett pris klart under det. Samma analys, samma intervall, men priset avgör om köpet bär en felmarginal eller inte."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VÄND PÅ KALKYLEN",
+      "lead": "Ett kraftfullt komplement är att vända på kalkylen helt. I stället för att mata in antaganden och få ett värde matar du in dagens pris och räknar ut vilka antaganden som krävs för att motivera det.",
+      "highlight": "vilka antaganden som krävs för att motivera det",
+      "brodtext": [
+        "Om kursen kräver 15 procents evig tillväxt eller marginaler som aldrig setts i branschen vet du att priset bygger på orimliga förväntningar. Frågan blir vad som måste vara sant för att priset ska vara rätt, inte vad det är värt, och den första frågan är ofta mer upplysande än den andra. Den tvingar fram en jämförelse mot verkligheten du faktiskt kan göra.",
+        "Den omvända kalkylen är särskilt nyttig när intervallet och priset ligger nära varandra och du är osäker. Att läsa förväntningarna i priset, och fråga dig om de är rimliga givet vad du vet om bolaget och branschen, är ofta lättare än att försvara en exakt egen siffra. Det flyttar samtalet från din modell till bolagets verklighet."
+      ],
+      "takeaway": "Fråga inte bara vad bolaget är värt, fråga vad priset redan kräver. Kräver det orimliga antaganden vet du nog för att avstå."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SÅ TÄNKER EN ERFAREN INVESTERARE",
+      "lead": "Jag bygger en värdering för att få ett intervall, aldrig ett enskilt tal. Jag flexar antagandena medvetet, oftast i ett konservativt, ett bas- och ett optimistiskt scenario, och ser vilka antaganden som rör värdet mest, vanligen diskonteringsräntan och tillväxten.",
+      "highlight": "för att få ett intervall, aldrig ett enskilt tal",
+      "brodtext": [
+        "Jag håller scenarierna internt konsekventa och undviker att stapla det bästa utfallet på varje rad. Framför allt använder jag intervallet för att bestämma felmarginalen: jag vill köpa under till och med mitt konservativa fall. Och jag vänder ofta på kalkylen för att läsa vilka förväntningar dagens pris bär, och frågar mig om de är rimliga.",
+        "För mig är känsligheten kärnan i en värdering, inte en svaghet. Där slutar den vara falsk precision och blir ett ärligt verktyg. Jag går inte ifrån en analys med ett svar på öret. Jag går ifrån den med ett intervall, en uppfattning om var den största risken att ha fel sitter, och ett pris jag är beredd att betala."
+      ],
+      "takeaway": "Ett riktpris är en bedömning du håller mot priset, inte ett facit du jagar. Intervallet och felmarginalen gör osäkerheten hanterbar."
     },
     {
       "typ": "quiz",
@@ -61,6 +150,28 @@
         },
         {
           "typ": "single",
+          "fraga": "Varför svänger värdet mest när du ändrar diskonteringsräntan och den eviga tillväxten?",
+          "alternativ": [
+            "För att de bara påverkar det första prognosåret",
+            "För att de sitter i nämnaren på slutvärdet, som ofta är den största delen av värdet, så en liten ändring slår hårt",
+            "För att de saknar betydelse för de explicita kassaflödena"
+          ],
+          "ratt": [1],
+          "forklaring": "Diskonteringsräntan verkar på alla år och sitter dessutom i slutvärdets nämnare tillsammans med den eviga tillväxten. Eftersom slutvärdet ofta bär merparten av värdet ger en liten ändring där en stor ändring i hela värderingen."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad kännetecknar ett internt konsekvent scenario, till skillnad från ett orealistiskt?",
+          "alternativ": [
+            "Antagandena hänger ihop, ett svagare bolag har gärna både lägre tillväxt och högre risk",
+            "De mest optimistiska antagandena staplas på varje enskild rad",
+            "Alla antaganden sätts till exakt samma värde"
+          ],
+          "ratt": [0],
+          "forklaring": "Antaganden tenderar att röra sig ihop i verkligheten. Det du ska undvika är att stapla det bästa utfallet på varje rad och få ett värde som är osannolikt på alla sätt samtidigt."
+        },
+        {
+          "typ": "single",
           "fraga": "Hur använder du riktprisintervallet tillsammans med felmarginalen?",
           "alternativ": [
             "Du köper så länge priset ligger inom det optimistiska fallet",
@@ -69,6 +180,17 @@
           ],
           "ratt": [2],
           "forklaring": "Ligger priset under även det konservativa fallet är aktien tydligt billig med en verklig marginal, du är skyddad även om antagandena var för rosiga. Ligger det bara inom det optimistiska fallet finns ingen marginal."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gör det att vända på kalkylen, alltså att mata in dagens pris?",
+          "alternativ": [
+            "Den räknar ut vilka antaganden som krävs för att motivera priset, så du kan pröva om de är rimliga",
+            "Den diskonterar kassaflödena baklänges från slutvärdet",
+            "Den byter plats på tillväxt och diskonteringsränta i formeln"
+          ],
+          "ratt": [0],
+          "forklaring": "I stället för att fråga vad bolaget är värt frågar den omvända kalkylen vad som måste vara sant för att priset ska vara rätt. Kräver kursen orimlig tillväxt eller marginaler vet du att priset bygger på orimliga förväntningar."
         },
         {
           "typ": "multi",

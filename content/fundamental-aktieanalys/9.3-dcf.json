@@ -3,8 +3,8 @@
   "lektion": "9.3",
   "titel": "Diskonterat kassaflöde",
   "niva": "Avancerad",
-  "tid_min": 12,
-  "mal": "Efter lektionen förstår eleven DCF-modellens logik: att prognostisera framtida kassaflöden och diskontera dem till ett nuvärde idag.",
+  "tid_min": 14,
+  "mal": "Efter lektionen förstår eleven hela DCF-maskinen: hur fria kassaflöden prognostiseras, diskonteras med en ränta och fångas i ett terminalvärde, hur FCFF mot WACC ger rörelsevärde och vägen till värde per aktie, samt varför diskonteringsräntan och terminalvärdet bär merparten av värdet och därför är modellens farligaste antaganden.",
   "steg": [
     {
       "typ": "intro",
@@ -14,15 +14,14 @@
     },
     {
       "typ": "reading",
-      "kicker": "GRUNDEN",
-      "lead": "En DCF förverkligar definitionen av värde rakt av: värdet av en verksamhet är nuvärdet av de kontanter den kommer ge dig. Den gör det i tre steg, och lägger varje antagande på bordet i stället för att gömma dem bakom en multipel.",
-      "highlight": "värdet av en verksamhet är nuvärdet av de kontanter den kommer ge dig",
+      "kicker": "VARFÖR DEN ÄR VÄRD ATT FÖRSTÅ",
+      "lead": "Tidigt trodde jag att en DCF var ett sätt att räkna fram det rätta priset. Det tog några år att förstå att dess verkliga gåva ligger någon annanstans: den tvingar mig att säga högt vad jag tror. Hur mycket kontanter, som växer hur snabbt, hur länge, diskonterat till vilken ränta.",
+      "highlight": "den tvingar mig att säga högt vad jag tror",
       "brodtext": [
-        "Först prognostiserar du det fria kassaflödet för var och ett av de närmaste åren, den explicita prognosperioden, oftast fem till tio år. Sedan fångar du allt liv bortom prognosen i ett enda terminalvärde, oftast med Gordons tillväxtformel som antar en blygsam evig tillväxttakt. Till sist diskonterar du allt, både prognosens kassaflöden och terminalvärdet, tillbaka till idag med en ränta som speglar risk och pengars tidsvärde, och summerar.",
-        "Den summan är rörelsevärdet, värdet på hela verksamheten. En DCF byggd på fritt kassaflöde till hela bolaget ger alltid rörelsevärde, eftersom de kassaflödena tillfaller både långivare och ägare och därför diskonteras med WACC. För att nå värdet per aktie drar du bort nettoskulden och delar på antalet aktier.",
-        "Två antaganden bortom själva prognosen driver vanligen merparten av värdet och är samtidigt svårast att förankra: diskonteringsräntan och terminalvärdet. Diskonteringsräntan översätter all framtida kontant till idag, så en liten ändring svänger värdet kraftigt. Terminalvärdet vilar på en gissning om en oändlig framtid och utgör i ett typiskt fall långt mer än hälften av totalvärdet."
+        "En multipel packar ihop allt det i ett enda tal och gömmer antagandena bakom det. En DCF lägger i stället varje antagande på bordet och låter dig se exakt var värdet kommer ifrån. Den öppenheten gör den värd att förstå även om du sällan bygger en själv. När du väl sett värdets logik utan slöja läser du också en multipel klarare, för en multipel är i grunden en hopvikt DCF.",
+        "Den här lektionen visar hela maskinen på en gång: de tre byggstenarna, vägen från rörelsevärde till värde per aktie, och de två antaganden som bär merparten av värdet. Behandla aldrig utfallet som ett orakel. En DCF parar du alltid med ett intervall och en felmarginal, för värdet ligger i tydligheten den tvingar fram, inte i decimalen den producerar."
       ],
-      "takeaway": "Värdet ligger i tydligheten en DCF tvingar fram, inte i decimalen den producerar. Behandla utfallet som en uppskattning i ett intervall, aldrig som ett orakel."
+      "takeaway": "En DCF:s gåva är tydligheten. Den lägger varje antagande på bordet i stället för att gömma det i en multipel, och lär dig läsa även multipeln klarare."
     },
     {
       "typ": "concept",
@@ -31,14 +30,25 @@
       "visual": {
         "typ": "flode",
         "noder": [
-          { "etikett": "Prognostisera kassaflöden" },
-          { "etikett": "Diskontera till nuvärde", "operator": "plus" },
-          { "etikett": "Terminalvärde", "operator": "likamed" },
-          { "etikett": "Bolagets värde", "accent": true }
+          { "etikett": "Prognostisera fritt kassaflöde" },
+          { "etikett": "Lägg till terminalvärde", "operator": "plus" },
+          { "etikett": "Diskontera allt till idag", "operator": "likamed" },
+          { "etikett": "Rörelsevärde", "accent": true }
         ],
-        "figurtext": "DCF i tre steg: prognos och diskontering plus terminalvärde ger bolagets värde."
+        "figurtext": "DCF i tre steg: prognosens kassaflöden plus terminalvärdet, allt diskonterat till idag, ger rörelsevärdet."
       },
-      "forklaring": "En DCF prognostiserar fritt kassaflöde under en explicit period, fångar allt liv därefter i ett terminalvärde, och diskonterar sedan allt tillbaka till idag och summerar. De tre byggstenarna är alltid desamma, och svaret är aldrig bättre än antagandena bakom dem. Diskontering betyder att ett framtida belopp delas på (1 + r) upphöjt till antal år, så pengar längre fram väger mindre idag."
+      "forklaring": "En DCF förverkligar definitionen av värde rakt av: värdet av en verksamhet är nuvärdet av de kontanter den kommer ge dig. Först prognostiserar du det fria kassaflödet för var och ett av de närmaste åren, den explicita prognosperioden, oftast fem till tio år. Sedan fångar du allt liv bortom prognosen i ett enda terminalvärde. Till sist diskonterar du allt, både prognosens kassaflöden och terminalvärdet, tillbaka till idag och summerar. De tre byggstenarna är alltid desamma, och svaret är aldrig bättre än antagandena bakom dem. Diskontering betyder att ett framtida belopp delas på (1 + r) upphöjt till antal år, så pengar längre fram väger mindre idag."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FRÅN RÖRELSEVÄRDE TILL VÄRDE PER AKTIE",
+      "lead": "Summan av de diskonterade kassaflödena är rörelsevärdet, värdet på hela verksamheten. Det är inte detsamma som vad aktierna är värda, och att blanda ihop de två är ett klassiskt fel.",
+      "highlight": "Summan av de diskonterade kassaflödena är rörelsevärdet",
+      "brodtext": [
+        "En DCF byggd på fritt kassaflöde till hela bolaget, FCFF, ger alltid rörelsevärde. De kassaflödena tillfaller både långivare och ägare och diskonteras därför med WACC, den vägda kapitalkostnaden för hela bolaget. Var konsekvent med vilket kassaflöde du diskonterar: FCFF mot WACC ger rörelsevärdet, och först efter en skuldjustering har du ett värde per aktie att hålla mot kursen.",
+        "Steget dit är enkelt men avgörande. Värde per aktie är rörelsevärdet minus nettoskulden, delat på antalet aktier. Drar du inte bort skulden behandlar du hela verksamhetens värde som om det vore ägarnas, vilket överskattar aktien med precis bolagets nettoskuld. Det är samma misstag som att läsa en köpeskilling utan att räkna in vad köparen också övertar i lån."
+      ],
+      "takeaway": "FCFF mot WACC ger rörelsevärde. Värde per aktie är rörelsevärde minus nettoskuld, delat på antalet aktier. Glöm aldrig skuldsteget."
     },
     {
       "typ": "dataviz",
@@ -60,6 +70,82 @@
       "slutsats": "Att växa 8 procent och diskontera 10 procent tar nästan ut varandra: framtida kassaflöden ser stora ut, men deras nuvärde idag är blygsamt. Därför hamnar ofta merparten av en DCF i terminalvärdet."
     },
     {
+      "typ": "reading",
+      "kicker": "DISKONTERINGSRÄNTAN",
+      "lead": "Diskonteringsräntan är den avkastning du kräver givet risken, och den översätter alla framtida kontanter till dagens pengar. Högre ränta, lägre värde. För en FCFF-modell är den räntan WACC, och de flesta antar bara ett tal och går vidare. Vi gör tvärtom och bygger det underifrån, för förstår du var räntan kommer från slutar du behandla den som magi.",
+      "highlight": "förstår du var räntan kommer från slutar du behandla den som magi",
+      "brodtext": [
+        "Börja med ägarnas avkastningskrav, kostnaden för eget kapital, som du sätter med CAPM: riskfri ränta plus beta gånger marknadsriskpremien. Var och en av de tre delarna har en konkret förankring. Den riskfria räntan tar du från en lång och säker statsobligation, i praktiken tioåringen. Marknadsriskpremien är den extra avkastning aktier historiskt gett över den riskfria räntan, ungefär 4 till 5 procent. Beta mäter hur mycket aktien svänger med marknaden: runt 1 för ett genomsnittligt bolag, lägre för ett stabilt och defensivt, klart högre för ett svängigt eller spekulativt.",
+        "WACC väger sedan ihop kostnaden för eget kapital med kostnaden för skuld efter skatt, viktat efter bolagets kapitalstruktur. Eftersom räntan är avdragsgill, och lägre än ägarnas krav, drar skuld ofta ner WACC något under kostnaden för eget kapital. För ett bolag som mest finansieras med eget kapital ligger WACC därför nära CAPM-talet. Höj risken och beta, så stiger räntan; sänk dem, så faller den. Det exakta talet förblir en bedömning, och eftersom värdet är så känsligt för det är räntevalet ett av de viktigaste i hela värderingen."
+      ],
+      "takeaway": "WACC är inte magi, den byggs underifrån: CAPM ger ägarnas krav, skuld efter skatt väger ner det något. Räntan speglar risk och förblir en bedömning."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TERMINALVÄRDET OCH GORDON",
+      "lead": "Verksamheten slutar inte efter prognosperioden, så alla kontanter därefter fångas i ett terminalvärde vid prognosens slut. Det görs oftast med Gordons tillväxtformel: kassaflödet året efter prognosen delat på diskonteringsränta minus evig tillväxt, diskonterat tillbaka till idag.",
+      "highlight": "alla kontanter därefter fångas i ett terminalvärde",
+      "brodtext": [
+        "Den eviga tillväxten måste vara blygsam. Inget bolag växer snabbare än ekonomin för evigt, så en hållbar takt ligger nära långsiktig nominell BNP-tillväxt eller inflation, runt 2 till 3 procent. En evig tillväxt på 5 procent eller mer är nästan aldrig försvarbar, den antar att bolaget till slut blir större än hela ekonomin.",
+        "Gordons formel bär en tickande fara i nämnaren, diskonteringsränta minus evig tillväxt. När de två närmar sig varandra krymper nämnaren och terminalvärdet exploderar. Vid en ränta på 10 procent ger en evig tillväxt på 3 procent en nämnare på 7 procent. Men 5 procent ger 5 procent, och 8 procent ger bara 2 procent, vilket mer än tredubblar terminalvärdet. En till synes liten höjning av den eviga tillväxten kan alltså blåsa upp värdet absurt, och därför håller disciplinerade analytiker den låg.",
+        "Ett alternativ till Gordon är att sätta terminalvärdet med en utgångsmultipel, alltså att anta vilken EV/EBIT- eller P/E-multipel bolaget handlas till vid prognosens slut. Det kan kännas mer intuitivt, men det flyttar bara osäkerheten: nu beror terminalvärdet på en antagen framtida multipel, som i sig speglar tillväxt, risk och avkastning. Båda metoderna koncentrerar osäkerheten till terminalvärdet."
+      ],
+      "takeaway": "Håll den eviga tillväxten nära inflation eller BNP. När nämnaren r minus g krymper exploderar terminalvärdet, och det är ett varningstecken, inte ett mål."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Tre fjärdedelar bor i terminalvärdet",
+      "underrubrik": "Samma bolag, samma prognos. Så här fördelar sig totalvärdet mellan de fem omsorgsfullt prognostiserade åren och terminalvärdet.",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Terminalvärde", "varde": 74, "accent": true },
+          { "etikett": "Explicita fem år", "varde": 26 }
+        ],
+        "figurtext": "Illustrativa tal. Av ett totalvärde på runt 1 816 Mkr står det diskonterade terminalvärdet på runt 1 342 Mkr för cirka 74 procent, de explicita kassaflödena på runt 473 Mkr för cirka 26."
+      },
+      "slutsats": "Här sitter modulens obekvämaste sanning. Mest av värdet vilar på de två terminalantagandena, ränta och evig tillväxt, alltså på en gissning om en oändlig framtid. De noggrant uträknade fem åren är den mindre delen av svaret."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR KÄNSLIGT VÄRDET ÄR",
+      "lead": "Eftersom terminalvärdet dominerar, och räntan rör allt, sitter nästan all känslighet i de två terminalantagandena. Det syns när du flexar dem inom rimliga gränser och ser hela värdet vandra.",
+      "highlight": "sitter nästan all känslighet i de två terminalantagandena",
+      "brodtext": [
+        "Flexa först den eviga tillväxten med räntan kvar på 10 procent. Vid 2 procent blir totalvärdet runt 1 637 Mkr, vid 3 procent runt 1 816 Mkr, vid 4 procent runt 2 055 Mkr. En enda procentenhet i en ren gissning om all framtid flyttar värdet med runt 10 till 13 procent åt gången.",
+        "Flexa sedan diskonteringsräntan med den eviga tillväxten kvar på 3 procent, och kom ihåg att även de explicita kassaflödenas nuvärde måste räknas om när räntan ändras. Vid 9 procent blir totalvärdet runt 2 126 Mkr, vid 10 procent runt 1 816 Mkr, vid 11 procent runt 1 584 Mkr. En enda procentenhet svänger värdet med omkring 15 procent åt gången. Effekterna förstärker dessutom varandra: en något lägre ränta plus en något högre evig tillväxt kan tillsammans lyfta värdet enormt.",
+        "Samma bolag, samma prognos, men värdet sträcker sig från under 1 600 till över 2 100 Mkr enbart genom att variera två terminalantaganden inom rimliga gränser. Den noggranna femårsprognosen rör knappt totalen. Därför håller du de två konservativa, korskollar dem, och tror aldrig på en enda exakt DCF-siffra."
+      ],
+      "takeaway": "En procentenhet hit eller dit i ränta eller evig tillväxt svänger värdet tvåsiffrigt i procent. Mest av värdet, och nästan all osäkerhet, bor i de två antagandena."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR EN ERFAREN INVESTERARE TÄNKER",
+      "lead": "Jag bygger sällan en DCF för att spika ett exakt tal. Jag bygger den för att förstå värdedrivarna och för att se vad priset redan tar för givet. Och jag riktar min skepsis dit den gör mest nytta, mot räntan och terminalvärdet, inte mot prognosen.",
+      "highlight": "jag riktar min skepsis dit den gör mest nytta",
+      "brodtext": [
+        "Det mest upplysande jag gör med modellen är ofta att vända på den. Jag matar in dagens pris och räknar baklänges: vilken tillväxt och avkastning kräver kursen för att gå ihop? En sådan omvänd DCF flyttar samtalet från vad är det värt till vad måste vara sant. Den frågan är ärligare, och små ändringar i antagandena svänger utfallet så kraftigt att jag aldrig behandlar en DCF som ett orakel.",
+        "Räntan härleder jag med CAPM och WACC och tar sedan decimalerna med en nypa salt. Den eviga tillväxten håller jag blygsam, nära inflation eller BNP, och jag misstror reflexmässigt varje DCF som lutar sig mot en hög evig tillväxt eller en liten nämnare. Eftersom terminalvärdet dominerar korskollar jag det alltid: implicerar det en orimlig framtida storlek eller en multipel bolaget inte förtjänar? Hela DCF:en läser jag som ett intervall, för den enda exakta siffran finns inte."
+      ],
+      "takeaway": "Vänd på modellen och fråga vad priset kräver. Para alltid utfallet med ett intervall och en felmarginal, och korskolla det dominerande terminalvärdet."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD SOM VARNAR",
+      "titel": "Fyra signaler att en DCF inte håller",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "En enda exakt siffra", "text": "En DCF presenterad utan intervall, som om decimalen vore sann. Utfallet är en uppskattning, inte ett facit. Saknas intervallet är precisionen falsk." },
+          { "rubrik": "Rörelsevärde som eget kapital", "text": "Nettoskulden glömd, så att hela verksamhetens värde behandlas som ägarnas. Värdet per aktie är rörelsevärde minus nettoskuld, delat på aktierna." },
+          { "rubrik": "Liten r minus g-nämnare", "text": "En evig tillväxt nära diskonteringsräntan krymper nämnaren och får terminalvärdet att explodera. Ofta vald för att nå ett önskat svar." },
+          { "rubrik": "Ränta vald baklänges", "text": "En diskonteringsränta eller evig tillväxt som ser ut att ha plockats för att ge det svar man redan ville ha, inte för att spegla risken." }
+        ],
+        "figurtext": "De vanligaste sätten en DCF förskönas eller missbrukas."
+      },
+      "forklaring": "De vanligaste misstagen följer av samma rotorsak: att tro på precisionen. Folk behandlar utfallet som ett facit i stället för en uppskattning, glömmer nettoskulden, låter nämnaren krympa tills terminalvärdet sväller, och plockar räntan som ger det svar de redan ville ha. Att veta var dessa fällor sitter är att veta var en DCF är som farligast, och var din skepsis gör mest nytta."
+    },
+    {
       "typ": "quiz",
       "fragor": [
         {
@@ -75,14 +161,47 @@
         },
         {
           "typ": "single",
-          "fraga": "En DCF på fritt kassaflöde till hela bolaget, diskonterad med WACC, ger direkt vilket värde?",
+          "fraga": "En DCF på fritt kassaflöde till hela bolaget, FCFF, diskonterad med WACC, ger direkt vilket värde?",
           "alternativ": [
             "Värdet på det egna kapitalet, alltså värdet per aktie",
             "Rörelsevärdet, hela verksamhetens värde",
             "Marknadsvärdet på skulden"
           ],
           "ratt": [1],
-          "forklaring": "Kassaflödet till hela bolaget tillfaller både långivare och ägare och diskonteras med WACC, så summan blir rörelsevärdet. Först efter avdrag för nettoskuld och delning på aktierna får du ett värde per aktie."
+          "forklaring": "FCFF tillfaller både långivare och ägare och diskonteras med WACC, så summan blir rörelsevärdet. Först efter avdrag för nettoskuld och delning på aktierna får du ett värde per aktie."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur går du från rörelsevärde till ett värde per aktie?",
+          "alternativ": [
+            "Lägg till nettoskulden och dela på antalet aktier",
+            "Dela rörelsevärdet rakt på antalet aktier",
+            "Dra bort nettoskulden och dela på antalet aktier"
+          ],
+          "ratt": [2],
+          "forklaring": "Värde per aktie är rörelsevärdet minus nettoskulden, delat på antalet aktier. Att använda rörelsevärdet som om det vore eget kapital, alltså glömma nettoskulden, är ett klassiskt fel."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad bygger upp kostnaden för eget kapital enligt CAPM?",
+          "alternativ": [
+            "Riskfri ränta plus beta gånger marknadsriskpremien",
+            "WACC plus skuldränta minus skatt",
+            "Evig tillväxt plus inflation plus BNP-tillväxt"
+          ],
+          "ratt": [0],
+          "forklaring": "CAPM sätter ägarnas avkastningskrav som riskfri ränta plus beta gånger marknadsriskpremien. Den riskfria räntan tas från en lång statsobligation, riskpremien är ungefär 4 till 5 procent, och beta mäter hur aktien svänger med marknaden."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad händer med terminalvärdet i Gordons formel när den eviga tillväxten (g) närmar sig diskonteringsräntan (r)?",
+          "alternativ": [
+            "Terminalvärdet faller mot noll",
+            "Nämnaren r minus g krymper och terminalvärdet exploderar",
+            "Terminalvärdet påverkas inte alls"
+          ],
+          "ratt": [1],
+          "forklaring": "Gordons formel har kassaflödet delat på r minus g. När g närmar sig r krymper nämnaren och terminalvärdet sväller dramatiskt. Därför håller disciplinerade analytiker g lågt, nära inflation eller BNP-tillväxt."
         },
         {
           "typ": "multi",
