@@ -91,15 +91,15 @@
 /* ===================== LJUST ("ed") ===================== */
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #efe9dc;
-  --surface: #f7f2e7;
-  --surface-2: #fcfaf3;
+  --bg: #f7f5ef;
+  --surface: #fdfbf7;
+  --surface-2: #ffffff;
   --border: rgba(30, 36, 31, 0.14);
   --border-2: rgba(30, 36, 31, 0.24);
   --text: #1e241f;
   --prose: #3c4239;
   --muted: #6e7568;
-  --faint: #cbc3b2;
+  --faint: #ded8cb;
   --mint: #1c6e50;
   --mint-2: #155741;
   --mint-soft: rgba(28, 110, 80, 0.1);
