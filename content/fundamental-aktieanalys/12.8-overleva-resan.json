@@ -3,39 +3,25 @@
   "lektion": "12.8",
   "titel": "Att överleva resan",
   "niva": "Avancerad",
-  "tid_min": 11,
-  "mal": "Efter lektionen kan eleven tåla djupa kursfall på vägen mot en multibagger, skilja en bra förlust där tesen håller från en dålig där tesen brustit, och dimensionera positionen så att hög osäkerhet aldrig ruinerar portföljen.",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven tåla djupa kursfall på vägen mot en multibagger utan att paniksälja, skilja en bra förlust där tesen håller från en dålig där tesen brustit, och dimensionera positionen i hög osäkerhet så att en enskild nolla aldrig ruinerar portföljen.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 12.8",
       "titel": "Att överleva resan",
-      "ingress": "Även de slutliga vinnarna faller hårt på vägen upp. Att fånga deras avkastning kräver att du överlever turbulensen utan att paniksälja en intakt verksamhet eller hålla fast vid ett brustet case."
+      "ingress": "Även de slutliga vinnarna faller brutalt på vägen upp. Att fånga deras avkastning kräver tre saker på en gång: temperamentet att hålla genom stormen, omdömet att skilja en svacka från en brytning, och en position liten nog att du överlever oavsett vilket."
     },
     {
       "typ": "reading",
       "kicker": "RESAN ÄR SKAKIG",
-      "lead": "För att fånga vinsten i en tidig vinnare måste du överleva resan. De slutliga storvinnarna faller rutinmässigt 50 procent, ibland 70 till 80, en eller flera gånger innan de lyckas.",
+      "lead": "För att fånga vinsten i en tidig vinnare måste du överleva resan. De slutliga storvinnarna faller rutinmässigt 50 procent, ibland 70 till 80, en eller flera gånger innan de till slut lyckas.",
       "highlight": "För att fånga vinsten i en tidig vinnare måste du överleva resan.",
       "brodtext": [
-        "Tidiga tillväxtbolag svänger våldsamt, långt mer än mogna, eftersom värdet vilar på en osäker framtid som marknaden ständigt omgissar. Ett fall på 50 procent eller mer kan drabba en slutlig storvinnare utan att något fundamentalt ändrats. Det är volatilitet, priset som rör sig, inte värdet.",
-        "Behandlar du varje fall som en katastrof skakas du ut ur dina bästa investeringar före utdelningen. Men varje stort fall är ändå inte en svacka att hålla igenom. Ibland är ett fallande pris marknaden som helt korrekt inser att caset är brustet. Den svåra färdigheten är att skilja de två."
+        "Tidiga tillväxtbolag svänger våldsamt, långt mer än mogna, eftersom värdet vilar på en osäker framtid som marknaden ständigt omgissar. Ett fall på 50 procent eller mer kan drabba en slutlig storvinnare utan att något fundamentalt ändrats. Det är volatilitet, priset som rör sig, inte värdet. Det historiska mönstret är tydligt: bolag som till slut gav enorm avkastning led upprepade, svåra ras på vägen.",
+        "Behandlar du varje fall som en katastrof skakas du ut ur dina bästa investeringar före utdelningen. Att stå ut känslomässigt är förutsättningen för att över huvud taget fånga den här avkastningen. Men varje stort fall är ändå inte en svacka att hålla igenom. Ibland är ett fallande pris marknaden som helt korrekt inser att caset är brustet. Den svåra färdigheten är att skilja de två."
       ],
       "takeaway": "Får du det rätt håller du vinnare genom stormen och skär förlorare. Får du det fel panikar du ut ur en framtida vinnare eller rider ett misslyckande hela vägen till noll."
-    },
-    {
-      "typ": "concept",
-      "kicker": "VOLATILITET ELLER BRYTNING",
-      "titel": "Bra förlust mot dålig förlust",
-      "visual": {
-        "typ": "jamforelse",
-        "element": [
-          { "rubrik": "Bra förlust (volatilitet)", "text": "Verksamheten är intakt. Bolaget vinner fortfarande sin marknad, enhetsekonomin håller och kassan räcker. Inget falsifieringsvillkor har utlösts. Fallet speglar stämning eller en tillväxtaktieomvärdering. Rätt handling: håll, kanske fyll på." },
-          { "rubrik": "Dålig förlust (försämring)", "text": "Något verkligt har gått fel. Tillväxten har stannat, enhetsekonomin har visat sig trasig, eller kassan sinar och utspädning hotar. Ett skrivet falsifieringsvillkor har utlösts. Rätt handling: sälj oavsett förlusten, för det lägre priset kan fortfarande vara för högt." }
-        ],
-        "figurtext": "Fallet ser identiskt ut på skärmen. Bara verksamheten avgör vilket det är."
-      },
-      "forklaring": "Eftersom det stämmer att stora vinnare faller hårt är den sanningen lätt att missbruka som ursäkt att hålla eller köpa vilket fallande bolag som helst, även de som går under. Du skiljer dem genom att ignorera priset och fråga om den fundamentala tesen ändrats. Prisfallet är bara avtryckaren att göra jobbet. Svaret kommer från verksamheten, inte från diagrammet."
     },
     {
       "typ": "dataviz",
@@ -48,7 +34,43 @@
         ],
         "figurtext": "Illustrativ. Punkterna visar mönstret av djupa drawdowns på vägen upp, inte verkliga kurser."
       },
-      "slutsats": "Volatilitet i sig är inget tecken på misslyckande, utan den oundvikliga turbulensen i att äga en osäker framtid. Ditt mest tillförlitliga försvar mot att gissa fel mitt i ett ras är en skriven tes med uttryckliga falsifieringsvillkor, en måttstock satt när du var lugn. Du läser om tesen och kontrollerar en sak: har ett villkor faktiskt utlösts, eller har bara priset rört sig?"
+      "slutsats": "Volatilitet i sig är inget tecken på misslyckande, utan den oundvikliga turbulensen i att äga en osäker framtid. Den som behandlar varje ras som ett larm äger aldrig en vinnare tillräckligt länge för att den ska betala sig. Temperamentet att sitta still genom svackorna är halva färdigheten. Den andra halvan är att veta när raset faktiskt betyder något."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VOLATILITET ELLER BRYTNING",
+      "titel": "Bra förlust mot dålig förlust",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Bra förlust (volatilitet)", "text": "Verksamheten är intakt. Bolaget vinner fortfarande sin marknad, enhetsekonomin håller och kassan räcker. Inget falsifieringsvillkor har utlösts. Fallet speglar stämning, räntor eller en tillväxtaktieomvärdering, inte en förändring i fundamenta. Rätt handling: håll, kanske fyll på." },
+          { "rubrik": "Dålig förlust (brytning)", "text": "Något verkligt har gått fel. Tillväxten har stannat på ett sätt som ifrågasätter marknaden, enhetsekonomin har visat sig trasig, eller kassan sinar och en utspädande emission hotar. Ett skrivet falsifieringsvillkor har utlösts. Rätt handling: sälj oavsett förlusten, för det lägre priset kan fortfarande vara för högt." }
+        ],
+        "figurtext": "Fallet ser identiskt ut på skärmen. Bara verksamheten avgör vilket det är."
+      },
+      "forklaring": "Här ligger den farliga spegelbilden av en sann insikt. Eftersom det stämmer att stora vinnare faller hårt är den sanningen lätt att missbruka som ursäkt att hålla eller köpa vilket fallande bolag som helst, även de som går under. En nedgång på 70 procent kan mycket väl vara ett fynd, men långt ifrån varje nedgång är ett köpläge. Du skiljer dem genom att ignorera priset och fråga om den fundamentala tesen ändrats. Prisfallet är bara avtryckaren att göra jobbet. Svaret kommer från verksamheten, inte från diagrammet."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SKÄLET, INTE STORLEKEN",
+      "lead": "Det är inte fallets storlek som avgör om en förlust är bra eller dålig, utan skälet bakom det. Två bolag kan falla lika djupt av rakt motsatta orsaker, och bara verksamheten under priset säger vilket som är vilket.",
+      "highlight": "Det är inte fallets storlek som avgör om en förlust är bra eller dålig, utan skälet bakom det.",
+      "brodtext": [
+        "Vid volatilitet omvärderar marknaden en intakt verksamhet, ofta driven av stämning, räntor, tillväxtaktiemode eller otålighet. Men bolaget vinner fortfarande sin marknad, enhetsekonomin håller och kassan räcker. Inget har brustit, och det lägre priset är inte motiverat av något i bolaget. Det är då du håller, och ibland fyller på.",
+        "Vid brytning har något verkligt gått fel. Tillväxten har stannat på ett sätt som ifrågasätter om bolaget kan vinna sin marknad, enhetsekonomin har visat sig trasig, eller kassan sinar och utspädning hotar. Då är det lägre priset motiverat, kanske fortfarande för högt, och rätt handling är att sälja oavsett förlusten. Samma fall på skärmen, motsatt slutsats. Skillnaden bor i fundamenta, aldrig i kursdiagrammet."
+      ],
+      "takeaway": "Döm aldrig ett fall på dess storlek eller på kursdiagrammet. Fråga vad som driver det. Är kärnan intakt är fallet volatilitet att hålla igenom. Har kärnan brustit är det en brytning att lämna."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TESEN ÄR DIN MÅTTSTOCK",
+      "lead": "Ditt mest tillförlitliga försvar mot att gissa fel mitt i ett ras är en skriven investeringstes med uttryckliga falsifieringsvillkor, en måttstock satt när du var lugn och objektiv.",
+      "highlight": "en måttstock satt när du var lugn och objektiv",
+      "brodtext": [
+        "När aktien faller hårt läser du om tesen och kontrollerar en enda sak: har ett falsifieringsvillkor faktiskt utlösts, eller är tesen fortfarande intakt? Den måttstocken låter dig skilja de två mitt under stressen av ett stort ras, i stället för att rationalisera i stunden. Den förvandlar frågan svacka eller brytning från en panikslagen gissning till en kontroll mot något du redan bestämt.",
+        "Utan en sådan skriven tes drar stressen dig åt två håll samtidigt. Antingen får rädslan dig att paniksälja en intakt verksamhet på botten, eller så får hoppet dig att omtolka varje varningssignal som brus så att du rider ett brustet case till noll. Den i förväg satta tröskeln är vad som håller huvudet kallt när priset gör allt för att rubba det."
+      ],
+      "takeaway": "Skriv tesen och dess falsifieringsvillkor när du är lugn. Mitt i ett ras kontrollerar du bara om ett villkor utlösts. Det ena är jobbet du gör i förväg, det andra är jobbet du klarar under press tack vare det."
     },
     {
       "typ": "reading",
@@ -56,10 +78,47 @@
       "lead": "Att överleva resan handlar om struktur lika mycket som psykologi. Positionen måste vara liten nog att volatiliteten är uthärdlig och en total förlust på vilket enskilt namn som helst är överlevbar.",
       "highlight": "Positionen måste vara liten nog att volatiliteten är uthärdlig och en total förlust på vilket enskilt namn som helst är överlevbar.",
       "brodtext": [
-        "Storleken sätts av nedsidan, alltså vad du förlorar om bolaget misslyckas, inte av hur rafflande uppsidan känns. Eftersom konkurs är ett troligt utfall för var och en av de här bolagen får ingen enskild position vara stor nog att ruinera dig. I praktiken landar det ofta på några få procent av portföljen som mest, ibland mindre (illustrativt), satt så att en nolla är en överlevbar förlust och inte en katastrof.",
-        "Eftersom uppsidan kan vara stor kan även en liten position bidra rejält om den vinner. Det öppnar för korgen: flera små positioner spridda över kategorin, var och en dimensionerad att vara överlevbar. Logiken är asymmetri på portföljnivå. Varje position kan bara förlora det insatta, medan vinnarna kan mångdubblas. Några få vinnare väger mer än upp de många som sviker, och inget enskilt misslyckande spelar roll."
+        "Storleken sätts av nedsidan, alltså vad du förlorar om bolaget misslyckas, inte av hur rafflande uppsidan känns. Det följer direkt av regeln att aldrig riskera ruin: vilket enskilt tidigt bolag som helst kan gå under, att gå under betyder nära total förlust, och då har du inte råd med en stor position i något enskilt. Eftersom konkurs är ett troligt utfall för var och en av de här bolagen får ingen enskild position vara stor nog att ruinera dig.",
+        "I praktiken landar det ofta på några få procent av portföljen som mest, ibland mindre (illustrativt), satt så att en nolla är en överlevbar förlust och inte en katastrof. Den enkla testfrågan: om den här positionen gick till noll, ett verkligt och ofta troligt utfall, vore det en överlevbar förlust eller ett allvarligt slag mot portföljen? Är svaret katastrof är positionen för stor."
       ],
-      "takeaway": "Allt detta tjänar överlevnad: att stanna kvar i spelet tillräckligt länge för att de få stora vinnarna ska hinna framträda och bära portföljen. Dimensioneringen avgör hur du klarar bedömningen, för den som satsade för stort panikar och kan ruineras om caset visar sig brustet."
+      "takeaway": "Dimensioneringen avgör hur du klarar bedömningen. Höll du positionen liten nog kan du väga svacka mot brytning lugnt och överleva oavsett vilket, medan den som satsade för stort panikar och kan ruineras om caset visar sig brustet."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KORGEN OCH ASYMMETRIN",
+      "lead": "Eftersom uppsidan kan vara stor kan även en liten position bidra rejält om den vinner. Det öppnar för korgen: flera små positioner spridda över kategorin, var och en dimensionerad att vara överlevbar.",
+      "highlight": "Det öppnar för korgen: flera små positioner spridda över kategorin",
+      "brodtext": [
+        "Logiken är asymmetri på portföljnivå. Varje position kan bara förlora det insatta, ett litet och begränsat belopp, medan vinnarna kan mångdubblas. Några få vinnare i korgen väger därför mer än upp de många som sviker eller misslyckas, och inget enskilt misslyckande spelar roll när var och en är liten. En samling individuellt riskabla satsningar blir på så vis en strategi där vinnarnas uppsida bär resultatet.",
+        "Du kan inte förutsäga vilket enskilt bolag som vinner, utfallen är för osäkra, så du ser till två saker. Att inget enskilt misslyckande kan slå ut dig, och att du håller nog många små satsningar för att sannolikt äga några av vinnarna. Att satsa stort på ett enda är tvärtom hur kategorins höga misslyckandefrekvens utplånar dig, för det troliga felet på just det namnet blir då katastrofalt."
+      ],
+      "takeaway": "Ta exponering mot kategorin genom en korg av små, överlevbara, asymmetriska satsningar, aldrig genom en stor. Analysen säger vad du köper. Korgen och storleken säkerställer att det att ha fel på enskilda namn, vilket du ofta kommer att ha, aldrig ruinerar dig."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Varför korgen bär trots att de flesta sviker",
+      "underrubrik": "Tio små satsningar på cirka 2 procent var. Givet kategorins odds kan utfallet typiskt se ut så här (illustrativt).",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Går nära noll", "varde": 50 },
+          { "etikett": "Blir medelmåttiga", "varde": 30 },
+          { "etikett": "Mångdubblas", "varde": 20, "accent": true }
+        ],
+        "figurtext": "Illustrativ fördelning av en korg på tio högosäkra namn. Förlorarna kostar några få procent var, medan de två som mångdubblas kan mer än täcka alla förlusterna."
+      },
+      "slutsats": "Hälften kan gå nära noll utan att korgen havererar, eftersom varje förlust är begränsad till sin lilla insats medan vinnarna kan stiga obegränsat. Det är asymmetrin i praktiken: inget enskilt misslyckande spelar roll, och de få vinnarna bär resultatet. Hade en enda position varit stor hade samma odds i stället kunnat ruinera dig."
+    },
+    {
+      "typ": "reading",
+      "kicker": "ALLT TJÄNAR ÖVERLEVNAD",
+      "lead": "Temperamentet att hålla, omdömet att skilja svacka från brytning och disciplinen att dimensionera litet tjänar alla samma sak: att stanna kvar i spelet tillräckligt länge för att de få stora vinnarna ska hinna framträda och bära portföljen.",
+      "highlight": "att stanna kvar i spelet tillräckligt länge för att de få stora vinnarna ska hinna framträda",
+      "brodtext": [
+        "De tre delarna är oskiljaktiga. Förmågan att hålla genom en nedgång är värdelös om du inte kan avgöra om den är värd att hålla igenom, och bådadera är värdelösa om positionen är så stor att volatiliteten själv tvingar fram en panikförsäljning. Ruin, att satsa så stort på ett att dess fall blir katastrofalt, avslutar ditt deltagande innan vinnarna betalar sig.",
+        "Så här kulminerar arbetet med tidiga tillväxtbolag. Du analyserar marknad, enhetsekonomi och kassa, värderar bolaget i sannolikhetsvägda scenarier med ett verkligt konkursfall, förbereder dig att överleva den volatila resan, och dimensionerar sedan litet nog att det troliga misslyckandet av vilket enskilt namn som helst är överlevbart. Analysen säger om och vad du ska köpa. Dimensioneringen säkerställer att det att ha fel aldrig ruinerar dig."
+      ],
+      "takeaway": "Sätt överlevnad först. Att ha fel på något enskilt bolag är troligt, men det får aldrig avlägsna dig från spelet innan vinnarna framträder. Det är försvaret som låter offensiven vara värd att spela."
     },
     {
       "typ": "quiz",
@@ -77,6 +136,28 @@
         },
         {
           "typ": "single",
+          "fraga": "Två bolag faller båda 70 procent. Vad avgör om förlusten är bra eller dålig?",
+          "alternativ": [
+            "Storleken på fallet och hur snabbt det skedde",
+            "Skälet bakom fallet: är kärnan intakt är det volatilitet, har kärnan brustit är det en brytning",
+            "Vilket bolag som har störst marknad"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är inte fallets storlek som avgör utan skälet. Vid volatilitet omvärderas en intakt verksamhet av stämning eller räntor. Vid brytning har tillväxten, enhetsekonomin eller kassan faktiskt gått sönder."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är en skriven tes med falsifieringsvillkor det mest tillförlitliga försvaret mitt i ett ras?",
+          "alternativ": [
+            "Den garanterar att aktien återhämtar sig",
+            "Den låter dig kontrollera mot en måttstock satt när du var lugn, i stället för att rationalisera i stunden",
+            "Den gör att du aldrig behöver titta på verksamheten igen"
+          ],
+          "ratt": [1],
+          "forklaring": "Du läser om tesen och kontrollerar en enda sak: har ett falsifieringsvillkor faktiskt utlösts, eller har bara priset rört sig? Tröskeln satt i lugn förvandlar en panikgissning till en kontroll."
+        },
+        {
+          "typ": "single",
           "fraga": "Vad sätter storleken på en position i ett tidigt olönsamt bolag?",
           "alternativ": [
             "Hur rafflande uppsidan känns och hur stor marknaden är",
@@ -84,7 +165,18 @@
             "Hur mycket kursen redan har stigit"
           ],
           "ratt": [1],
-          "forklaring": "Eftersom konkurs är ett troligt utfall för var och en får ingen enskild position vara stor nog att ruinera dig. Storleken sätts av nedsidan, inte drömmen. Testfrågan: om positionen gick till noll, vore det en överlevbar förlust eller en katastrof?"
+          "forklaring": "Eftersom konkurs är ett troligt utfall för var och en får ingen enskild position vara stor nog att ruinera dig. Testfrågan: om positionen gick till noll, vore det en överlevbar förlust eller en katastrof?"
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är logiken bakom att hålla en korg av många små positioner i stället för en stor?",
+          "alternativ": [
+            "Att diversifiering eliminerar all risk",
+            "Asymmetri på portföljnivå: varje position kan bara förlora det insatta, men vinnarna kan mångdubblas och bära resultatet",
+            "Att små positioner aldrig går till noll"
+          ],
+          "ratt": [1],
+          "forklaring": "Några få vinnare i korgen kan mer än väga upp de många som misslyckas, och inget enskilt misslyckande spelar roll när var och en är liten."
         },
         {
           "typ": "multi",
@@ -97,7 +189,7 @@
             "Du säljer oavsett förlusten när ett skrivet falsifieringsvillkor faktiskt har utlösts"
           ],
           "ratt": [0, 2, 3],
-          "forklaring": "Disciplin är att döma på fundamenta mot en skriven tes, att dimensionera litet i en korg, och att skära ett brustet case när ett villkor utlösts. Att låta vinnare är volatila bli en ursäkt att blunda för verklig försämring är tvärtom det farliga felet."
+          "forklaring": "Disciplin är att döma på fundamenta mot en skriven tes, att dimensionera litet i en korg, och att skära ett brustet case när ett villkor utlösts. Att låta sanningen att vinnare är volatila bli en ursäkt att blunda för verklig försämring är tvärtom det farliga felet."
         }
       ]
     }

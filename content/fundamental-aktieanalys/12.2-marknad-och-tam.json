@@ -3,8 +3,8 @@
   "lektion": "12.2",
   "titel": "Marknad, problem och TAM",
   "niva": "Mellan",
-  "tid_min": 10,
-  "mal": "Efter lektionen kan eleven skilja en stor marknad från ett bolag som faktiskt kan vinna den, uppskatta marknaden nerifrån och upp och läsa product-market fit från kundernas beteende.",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven skilja en stor marknad från ett bolag som faktiskt kan vinna den, uppskatta marknaden nerifrån och upp via TAM, SAM och SOM, och läsa product-market fit från kundernas beteende innan möjligheten dimensioneras.",
   "steg": [
     {
       "typ": "intro",
@@ -18,40 +18,106 @@
       "lead": "Tre saker måste alla vara sanna för att framtiden ska vara värd något. Det måste finnas ett verkligt problem som bolaget löser, marknaden måste vara stor nog att spela roll, och det här bolaget måste kunna vinna en meningsfull andel av den.",
       "highlight": "marknaden måste vara stor nog att spela roll, och det här bolaget måste kunna vinna en meningsfull andel av den",
       "brodtext": [
-        "Investerare förförs rutinmässigt av en av de tre, oftast enorm marknad, och blundar för de andra. En enorm marknad är värdelös om bolaget inte kan ta den, eller om problemet inte är verkligt. Ett fantastiskt bolag som löser ett icke-problem kommer ingenstans. Bedöm de tre var för sig och hårt.",
+        "Investerare förförs rutinmässigt av en av de tre, oftast enorm marknad, och blundar för de andra. En enorm marknad är värdelös om bolaget inte kan ta den, eller om problemet inte är verkligt. Ett fantastiskt bolag som löser ett icke-problem kommer ingenstans. Bedöm de tre var för sig och hårt, och sviker det första lagret spelar inget annat någon roll.",
         "Färdigheten är att skilja är marknaden stor från kan det här bolaget vinna den. Det är två mycket olika frågor, och den andra är där de flesta berättelser brister. Storleken är den förföriska delen, vinnandet är det svåra och avgörande."
       ],
       "takeaway": "Var som mest skeptisk mot påståendet enorm marknad. Det är det mest förföriska och det minst tillräckliga."
     },
     {
+      "typ": "reading",
+      "kicker": "ÄR PROBLEMET VERKLIGT",
+      "lead": "Det första testet är efterfrågan. De starkaste tidiga bolagen löser ett verkligt, smärtsamt och brett känt problem som kunder akut vill ha löst och betalar för att slippa, inte en lösning som söker ett problem.",
+      "highlight": "ett verkligt, smärtsamt och brett känt problem som kunder akut vill ha löst",
+      "brodtext": [
+        "Tecken på ett verkligt problem är kunder som aktivt söker en lösning, betalningsvilja, och bevis på riktig användning utöver test. Ju mer akut smärtan är, desto starkare blir efterfrågan, och desto mindre hänger caset på att någon först måste övertygas om att problemet finns. Efterfrågan finns då vare sig bolaget existerar eller inte.",
+        "De svagaste tidiga bolagen är lösningar som söker ett problem: smart teknik eller en trevlighet utan akut behov bakom sig. Hur elegant produkten än är spelar det ingen roll om ingen brinner för att få smärtan löst. Verifiera därför att problemet är verkligt och brådskande innan du imponeras av själva lösningen."
+      ],
+      "takeaway": "Mät problemet före produkten. En medioker lösning på en akut smärta slår en lysande lösning på ett behov ingen känner."
+    },
+    {
       "typ": "concept",
       "kicker": "FRÅN PROBLEM TILL FIT",
-      "titel": "Är problemet verkligt, och vill kunderna stanna",
+      "titel": "Löser produkten det så väl att kunderna stannar",
       "visual": {
         "typ": "flode",
         "noder": [
-          { "etikett": "Verkligt problem" },
-          { "etikett": "Produkt som löser det", "operator": "plus" },
+          { "etikett": "Verkligt, akut problem" },
+          { "etikett": "Produkt som löser det väl", "operator": "plus" },
           { "etikett": "Product-market fit", "operator": "likamed", "accent": true }
         ],
-        "figurtext": "Konceptuell kedja: efterfrågan som finns oavsett bolaget, en produkt som möter den, och kunder som stannar kvar."
+        "figurtext": "Konceptuell kedja: efterfrågan som finns oavsett bolaget, en produkt som möter den väl, och kunder som stannar kvar."
       },
-      "forklaring": "De starkaste tidiga bolagen löser ett verkligt, brådskande problem som kunder betalar för att slippa, inte en lösning som söker ett problem. Product-market fit betyder att produkten löser problemet så väl att kunder börjar använda den, stannar och berättar för andra. Den läses från beteende, inte från grundarens entusiasm: stannar kunderna, expanderar de sin spendering, kommer tillväxten organiskt och billigt? Hög churn avslöjar svag fit hur stor marknaden än är."
+      "forklaring": "Product-market fit betyder att produkten löser problemet så väl att kunder börjar använda den, stannar och berättar för andra. Det är beviset att bolaget hittat något folk vill ha, och förmodligen den viktigaste ledande indikatorn av alla, eftersom allt annat hänger på det: tillväxt, skalning, lönsamhet. Fit läses från beteende, inte från grundarens entusiasm: stannar kunderna, expanderar de sin spendering, kommer tillväxten organiskt och billigt? Håller produkten kvaliteten i lösningen är fiten verklig, oavsett hur stor marknaden är."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PRODUCT-MARKET FIT LÄSES FRÅN BETEENDE",
+      "lead": "Vad kunderna säger, eller vad grundaren tror, väger lätt. Product-market fit läses från vad kunderna gör, och tre beteenden berättar det mesta: stannar de, spenderar de mer, och tar de med sig andra.",
+      "highlight": "Product-market fit läses från vad kunderna gör",
+      "brodtext": [
+        "Stannar kunderna kvar år efter år, alltså låg churn, är det första tecknet. Expanderar de befintliga kunderna sin spendering över tid, så att net revenue retention ligger över 100 procent, växer bolaget från sin egen bas allena utan en enda ny kund. Och kommer nykundstillväxten organiskt och billigt, via mun-till-mun eller en väntelista snarare än dyr marknadsföring, älskar kunderna produkten tillräckligt för att bära den åt bolaget.",
+        "Svag eller frånvarande fit, hög churn, ingen organisk tillväxt, kunder som testar och inte kommer tillbaka, är det tydligaste tecknet på att en tillväxtberättelse är ihålig, hur stor marknaden än är. Net revenue retention under 100 procent betyder att basen krymper utan ständig nyförsäljning, och då löper bolaget i motvind även när det växer."
+      ],
+      "takeaway": "Retention, net revenue retention över 100 procent och billig organisk tillväxt är fitens fingeravtryck. Churn är dess tydligaste motbevis."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR FIT KOMMER FÖRE SIFFRORNA",
+      "lead": "Skälet att fit föregår de fantastiska räkenskaperna är att den är orsaken och bra siffror är den senare effekten. Ett bolag med genuin fit i en stor marknad har en vinnares motor innan räkenskaperna visar den.",
+      "highlight": "den är orsaken och bra siffror är den senare effekten",
+      "brodtext": [
+        "Förlusterna i ett tidigt bolag är kostnaden för att skaffa kunder som sedan stannar och expanderar. Med verklig fit sammansätter verksamheten under den rapporterade förlusten: varje kohort av kunder blir mer värd över tid, även medan resultaträkningen visar minus. Att känna igen fit tidigt, genom retention och organisk dragning, är hur du identifierar en vinnare innan siffrorna ser bra ut.",
+        "Det är också varför ordningen är inövad. Bekräfta att fiten är verklig först, dimensionera sedan möjligheten. En enorm marknad utan fit är en berättelse utan substans, medan fit i en liten marknad ger en god men begränsad verksamhet. Profilen för en möjlig vinnare är påvisad fit i en stor, nåbar och växande marknad."
+      ],
+      "takeaway": "Fit är den första grinden, marknadens storlek den andra. Bekräfta motorn innan du mäter hur långt den kan köra."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR STOR ÄR MARKNADEN EGENTLIGEN",
+      "lead": "TAM, total adresserbar marknad, är möjlighetens fulla storlek: hur mycket intäkt bolaget skulle kunna tjäna om det betjänade hela marknaden det riktar sig mot. Marknadsstorlek överdrivs rutinmässigt, så det avgörande är hur talet byggs.",
+      "highlight": "TAM, total adresserbar marknad, är möjlighetens fulla storlek",
+      "brodtext": [
+        "Det finns två sätt att uppskatta marknaden. Uppifrån och ned tar en stor branschsiffra och säger att även en procent av den vore enormt. Den siffran är vanligen uppblåst och inkluderar kunder bolaget aldrig når, och den är hypens favoritverktyg. Nerifrån och upp räknar i stället det realistiska antalet nåbara kunder gånger en realistisk intäkt per kund. En nåbar nerifrån-uppskattning slår en bländande, teoretisk uppifrån-siffra.",
+        "Det hjälper att dela marknaden i tre lager. TAM är hela den teoretiska marknaden. SAM, den adresserbara marknaden, är den del bolagets produkt och affärsmodell faktiskt kan betjäna. SOM, den nåbara delen, är den bit bolaget realistiskt kan vinna givet konkurrens och egen kapacitet. En framtida tiodubblare behöver ett TAM som är många gånger dess nuvarande omsättning, men det är SAM och SOM som sätter den verkliga möjligheten."
+      ],
+      "takeaway": "Bygg marknaden nerifrån och upp, och skilj TAM från SAM och SOM. Det är den nåbara delen, inte rubriken, som dimensionerar caset."
     },
     {
       "typ": "dataviz",
       "titel": "Marknaden krymper från rubrik till nåbar bit",
-      "underrubrik": "Rubrikens totala marknad inkluderar kunder bolaget aldrig når. Uppskatta i stället nerifrån och upp: rimligt antal nåbara kunder gånger realistisk intäkt per kund.",
+      "underrubrik": "Rubrikens totala marknad inkluderar kunder bolaget aldrig når. TAM är hela branschen, SAM den del produkten kan betjäna, SOM den bit bolaget realistiskt kan vinna.",
       "visual": {
         "typ": "andel",
         "delar": [
-          { "etikett": "Rubrikmarknad" },
-          { "etikett": "Adresserbar marknad (nerifrån och upp)" },
-          { "etikett": "Bolagets fångade andel idag", "accent": true }
+          { "etikett": "TAM, hela marknaden" },
+          { "etikett": "SAM, adresserbar nerifrån och upp" },
+          { "etikett": "SOM, bolagets nåbara andel idag", "accent": true }
         ],
-        "figurtext": "Illustrativ, påhittat bolag. Exempel: rubrik på flera hundra miljarder, en nerifrån-uppskattning på cirka 6 mdkr (500 000 nåbara kunder gånger cirka 12 000 kr per år), bolaget vid cirka 50 Mkr har fångat under 1 procent."
+        "figurtext": "Illustrativ, påhittat bolag. Exempel: rubrik på flera hundra miljarder, en SAM nerifrån på cirka 6 mdkr (500 000 nåbara kunder gånger cirka 12 000 kr per år), bolaget vid cirka 50 Mkr har fångat under 1 procent."
       },
       "slutsats": "En verklig men liten adresserbar marknad sätter ett tak på möjligheten oavsett hur gott bolaget är. Bekräfta att product-market fit är verklig först, dimensionera sedan möjligheten."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KAN DET HÄR BOLAGET VINNA DEN",
+      "lead": "Här brister de flesta tidiga analyser. En stor marknad är ingen möjlighet för ett enskilt bolag, den är en magnet för konkurrens. Frågan är om just det här bolaget kan fånga och försvara en meningsfull andel.",
+      "highlight": "En stor marknad är ingen möjlighet för ett enskilt bolag, den är en magnet för konkurrens",
+      "brodtext": [
+        "Har bolaget en verklig eller framväxande fördel, en bättre produkt, en konkurrensfördel under bildande, ett försprång som växer med ränta på ränta, eller är det ett av många odifferentierade bolag som kommer konkurrera bort all vinst? Enorm marknad betyder ingenting utan och det här bolaget kan vinna en försvarbar bit av den.",
+        "Tänk dig två pitchar med identisk rubrikmarknad. Bolag A verkar i samma stora marknad och har en försvarbar fördel som låter det ta en meningsfull andel, så storleken spelar roll just för att bolaget kan fånga den. Bolag B citerar samma siffra men är odifferentierat, så även om marknaden är verklig och stor blir B:s försvarbara andel liten, och därmed värdet litet. Identisk marknad, olika utfall."
+      ],
+      "takeaway": "Att hålla isär marknadens storlek från bolagets förmåga att vinna en försvarbar andel är lektionens enskilt viktigaste disciplin."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SÅ TÄNKER EN ERFAREN INVESTERARE",
+      "lead": "Inled analysen av ett tidigt bolag med frågorna i rätt ordning. Bekräfta verklig och brådskande fit först, läst från beteende, och dimensionera sedan möjligheten med en nykter nerifrån-uppskattning.",
+      "highlight": "Bekräfta verklig och brådskande fit först, läst från beteende",
+      "brodtext": [
+        "Börja med produkten och kunderna. Löser den ett verkligt, akut problem, och syns fiten i retention, net revenue retention över 100 procent och billig organisk tillväxt? Saknas fiten dör caset, hur stor marknaden än är. Dimensionera sedan: bygg TAM nerifrån, skilj SAM och SOM från rubriken, och kräv en marknad som är en stor multipel av nuvarande omsättning och faktiskt fångbar.",
+        "Var som mest skeptisk när pitchen lutar sig mot marknadens storlek, för det är där berättelser ersätter analys. Och kom ihåg att det här bara är de två första grindarna. En stor marknad och en älskad produkt är nödvändiga men inte tillräckliga, och de flesta bolag som passerar dem misslyckas ändå längre fram."
+      ],
+      "takeaway": "Ordningen är inövad: problem, fit, sedan storlek. Bekräfta motorn, dimensionera banan, och fortsätt vara skeptisk."
     },
     {
       "typ": "quiz",
@@ -76,7 +142,29 @@
             "Genom att anta att bolaget tar hela branschen"
           ],
           "ratt": [1],
-          "forklaring": "Rubrikens totala marknad är ofta uppblåst och inkluderar kunder bolaget aldrig når. En nykter uppskattning nerifrån och upp slår en svepande siffra uppifrån och ner."
+          "forklaring": "Rubrikens totala marknad är ofta uppblåst och inkluderar kunder bolaget aldrig når. En nykter uppskattning nerifrån och upp slår en svepande siffra uppifrån och ned."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad skiljer TAM, SAM och SOM åt?",
+          "alternativ": [
+            "De är tre namn på exakt samma tal",
+            "TAM är hela marknaden, SAM den del produkten kan betjäna, SOM den bit bolaget realistiskt kan vinna",
+            "TAM är bolagets omsättning, SAM dess vinst och SOM dess kassaflöde"
+          ],
+          "ratt": [1],
+          "forklaring": "TAM är den fulla teoretiska marknaden, SAM den adresserbara delen givet produkt och affärsmodell, och SOM den nåbara biten givet konkurrens. Det är SAM och SOM, inte rubriken, som sätter den verkliga möjligheten."
+        },
+        {
+          "typ": "single",
+          "fraga": "I vilken ordning bör marknadens storlek och product-market fit bedömas, och varför?",
+          "alternativ": [
+            "Dimensionera marknaden först, eftersom fit saknar betydelse om marknaden är liten",
+            "Bekräfta verklig fit först, dimensionera sedan marknaden, eftersom en stor marknad utan fit är en berättelse utan substans",
+            "Ordningen spelar ingen roll så länge båda är gröna"
+          ],
+          "ratt": [1],
+          "forklaring": "En enorm marknad utan fit är substanslös, medan fit i en liten marknad ger en god men begränsad verksamhet. Man bekräftar att fiten är verklig och dimensionerar sedan möjligheten."
         },
         {
           "typ": "multi",

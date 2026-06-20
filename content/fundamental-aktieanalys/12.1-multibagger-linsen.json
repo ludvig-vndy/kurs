@@ -3,39 +3,73 @@
   "lektion": "12.1",
   "titel": "Multibagger-linsen",
   "niva": "Mellan",
-  "tid_min": 10,
-  "mal": "Efter lektionen förstår eleven varför vanliga värderingsverktyg sviker för små olönsamma tillväxtbolag, och hur den asymmetriska multibagger-linsen gör att några få vinnare kan bära många förluster.",
+  "tid_min": 13,
+  "mal": "Efter lektionen förstår eleven varför vanliga värderingsverktyg sviker för små olönsamma tillväxtbolag, och hur den asymmetriska multibagger-linsen gör att några få vinnare kan bära många förluster om posterna dimensioneras som en korg.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 12.1",
       "titel": "Multibagger-linsen",
-      "ingress": "En aktie som kan tiodubblas ser sällan billig eller ens bra ut på vanliga mått när möjligheten är som störst. Att se den kräver en annan lins."
+      "ingress": "En aktie som kan tiodubblas ser nästan aldrig billig eller ens bra ut på vanliga mått när möjligheten är som störst. Att se den kräver en annan lins, och att veta varför den vanliga inte fungerar."
     },
     {
       "typ": "reading",
-      "kicker": "EN ANNAN SORTS ANALYS",
-      "lead": "När räkenskaperna väl ser omisskännligt bra ut ligger merparten av avkastningen redan i priset. De lätta pengarna togs av dem som såg det tidigt.",
-      "highlight": "merparten av avkastningen redan i priset",
+      "kicker": "NÄR FACIT SAKNAS",
+      "lead": "Det mesta du lärt dig hittills förutsätter ett bolag med facit: vinster att värdera, marginaler att bedöma, en historik att förlänga. Ta bort facit, och verktygslådan slutar fungera.",
+      "highlight": "Ta bort facit, och verktygslådan slutar fungera.",
       "brodtext": [
-        "Det mesta i fundamental analys förutsätter ett bolag med facit: vinster att värdera, marginaler att bedöma, en historik att förlänga. Ta bort facit, och verktygslådan slutar fungera. Små olönsamma tillväxtbolag har sitt värde nästan helt i framtiden, i vad verksamheten kan bli, och då viker sig de vanliga måtten eller pekar åt fel håll.",
-        "För att fånga den stora avkastningen måste du känna igen vinnaren medan den fortfarande är liten, olönsam och obevisad. Beviset är då kvalitativt. Frågan flyttar från vad det här tjänar nu till vad det här kan bli, och vilka tidiga tecken som skulle berätta att det är på väg."
+        "Det finns en hel kategori där facit saknas: små olönsamma tillväxtbolag vars värde ligger nästan helt i framtiden, i vad verksamheten kan bli. Här viker sig de vanliga måtten eller, värre, pekar åt fel håll. Det leder till två motsatta misstag. Det ena är att avfärda ett lovande bolag för att dagens siffror ser hemska ut. Det andra, vanligare och farligare, är att sakna ett rigoröst ramverk helt och därför falla tillbaka på berättelse och hype.",
+        "För ett moget bolag vilar värdet på sådant du kan mäta nu: vinst, marginaler, avkastning på kapitalet, en lång historik. För ett litet olönsamt tillväxtbolag ligger värdet i en framtid som siffrorna ännu inte visar. Frågan byter karaktär, och då måste verktygen byta karaktär. Vill du äga den här sortens bolag, eller hålla dig undan dem på goda grunder, måste du först förstå varför standardverktygen sviker och vad som ersätter dem."
       ],
-      "takeaway": "Du dömer inte ett tidigt bolag på dagens vinst. Du bedömer framtiden direkt och letar efter tecknen som föregår bra siffror."
+      "takeaway": "Värde som ligger i framtiden kan inte mätas med det mogna bolagets mått. En annan fråga kräver andra verktyg, använda med samma rigor."
     },
     {
       "typ": "concept",
-      "kicker": "TVÅ LINSER",
-      "titel": "Det mogna bolagets mått mot tillväxtbolagets",
+      "kicker": "VARFÖR MÅTTEN VIKER SIG",
+      "titel": "Tre verktyg som sviker, vart och ett av samma rot",
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Vanliga värderingsmått", "text": "P/E kräver en vinst som saknas, marginalen är negativ med flit, och en kort turbulent historik går inte att förlänga. Linsen ger ett säkert men oanvändbart utlåtande: undvik." },
-          { "rubrik": "Tillväxtlinsen", "text": "Bedömer framtiden direkt: är marknaden verklig och stor, fungerar enhetsekonomin, finns produktkärlek och ett försprång. Ledande tecken som orsakar bra siffror innan de syns." }
+          { "rubrik": "P/E och marginaler", "text": "P/E kräver en vinst, och ett olönsamt bolag har ingen, så talet blir odefinierat eller meningslöst. Marginalerna är negativa med flit: bolaget spenderar medvetet före intäkterna på tillväxt, forskning och kundanskaffning. En negativ marginal här är inte samma sjukdomstecken som hos ett moget bolag. Den kan vara ett val." },
+          { "rubrik": "Historisk extrapolering", "text": "Modulerna om kvalitet lutade tungt på historik: trender i marginaler och kassaflöden över år avslöjar en verksamhets karaktär. Men ett tidigt bolags historik är kort, orepresentativ och snabbt föränderlig. Ett par turbulenta år säger lite om hur ekonomin ser ut i jämvikt ett decennium senare. Du kan inte förlänga en stabil framtid ur ett kort, turbulent förflutet." },
+          { "rubrik": "Den vanliga DCF:en", "text": "En DCF diskonterar prognostiserbara kassaflöden, men ett tidigt bolag har inga positiva kassaflöden på kort sikt och enorm osäkerhet om de långsiktiga. Nästan hela värdet hamnar då i en avlägsen, mycket osäker terminalperiod, där en DCF är som minst pålitlig. Den duger bara i scenarioform som omfamnar osäkerheten, aldrig som ett enda exakt tal." }
         ],
-        "figurtext": "Samma bolag, två linser. Den ena dömer på det som saknas, den andra på det som kan bli."
+        "figurtext": "Tre standardverktyg, samma underliggande problem: värdet ligger i framtiden, inte i nutidssiffrorna de mäter."
       },
-      "forklaring": "Vanliga mått missläser ett tidigt bolag systematiskt. Negativa marginaler kan vara ett val, medveten spendering för att fånga en stor marknad. Att döma bolaget på dagens lönsamhet bekräftar bara att det är tidigt. Det säger nästan inget om huruvida det kommer lyckas. Detta är inte value investing: det finns ingen felmarginal på nuvarande siffror, så värderegler som förkastar varje tidig vinnare hör inte hemma här."
+      "forklaring": "Vanliga mått missläser ett tidigt bolag systematiskt. Att döma bolaget på dagens lönsamhet bekräftar bara att det är tidigt. Det säger nästan inget om huruvida det kommer lyckas. Den verkliga faran är inte att verktygen är trubbiga, utan att tomrummet efter de saknade siffrorna fylls av berättelse och hype om du låter det. Att analysera tidiga bolag väl är att byta en sorts rigor mot en annan, lika krävande: marknad, enhetsekonomi, kassa, scenarier och sannolikheter."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN OFFENSIVA LINSEN",
+      "lead": "När ett bolags räkenskaper väl ser omisskännligt bra ut, med höga vinster, feta marginaler och lång historik, ligger merparten av avkastningen redan i priset. De lätta pengarna togs av dem som såg det tidigt.",
+      "highlight": "merparten av avkastningen redan i priset",
+      "brodtext": [
+        "En multibagger, en aktie som ger flera eller tio gånger pengarna, ser nästan aldrig billig eller ens bra ut på traditionella mått när möjligheten är som störst. Den är liten, ofta olönsam, och värdet ligger helt i en framtid som siffrorna ännu inte visar. För att fånga den stora avkastningen måste du känna igen vinnaren medan den fortfarande är liten, olönsam och obevisad. Beviset är då kvalitativt.",
+        "Det praktiska arbetet är att byta blick från eftersläpande till ledande indikatorer. Räkenskaper är eftersläpande, de berättar vad som redan hänt. En multibagger identifieras genom det som orsakar fantastiska räkenskaper innan de syns: ett verkligt problem och en stor, växande marknad, product-market fit, en skalbar modell, sund enhetsekonomi som förbättras med skala, ett starkt grundarlett team och ett verkligt försprång. När de signalerna finns och stärks är bra siffror sannolikt på väg. Frågan flyttar från vad det här tjänar nu till vad det här kan bli, och vilka tidiga tecken som skulle berätta att det är på väg."
+      ],
+      "takeaway": "Du dömer inte ett tidigt bolag på dagens vinst. Du bedömer framtiden direkt och letar efter de ledande indikatorerna som föregår bra siffror."
+    },
+    {
+      "typ": "reading",
+      "kicker": "INTE VALUE INVESTING",
+      "lead": "Skillnaden mot value investing är värd att vara skarp på. Value köper en verksamhet för mindre än dess påvisbara värde, med en felmarginal mot sådant du kan mäta i dag. En framtida multibagger erbjuder ingen sådan marginal på nuvarande siffror.",
+      "highlight": "ingen sådan marginal på nuvarande siffror",
+      "brodtext": [
+        "En tidig vinnare är dyr eller direkt ovärderbar på dagens räkenskaper, och säkerheten kommer i stället från storleken och sannolikheten i den framtida möjligheten. De två angreppssätten letar efter motsatta saker: value vill ha bevisat värde till rabatt, multibagger-jakt vill ha obevisad potential innan den är erkänd.",
+        "Det är därför du måste veta vilket spel du spelar. Tillämpar du value-regler på en tidig vinnare förkastar du varenda en, eftersom ingen av dem har en felmarginal på nutidssiffrorna. Riktar du multibagger-hopp mot en value-situation överbetalar du i stället för berättelser. Den ständiga spänningen är mot hype: värdet ligger i framtiden är vad varje promotor också påstår, och berättelsen om en enorm framtid är gratis. Det som skiljer disciplinerad tillväxtinvestering från att jaga narrativ är beviset, faktisk produktkärlek, en nåbar marknad, verklig enhetsekonomi, ett försprång du kan peka på."
+      ],
+      "takeaway": "Vet vilket spel du spelar. Value vill ha bevisat värde till rabatt, multibagger-jakt vill ha obevisad potential innan den är erkänd. Att blanda ihop dem leder fel åt båda hållen."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DU MÅSTE VARA TIDIG",
+      "lead": "Tänk att ett bolag är på väg att tiodubbla sitt värde över ett decennium, från litet och olönsamt till stort och högst lönsamt. Bolaget och slutpunkten är desamma oavsett när du kliver in. Din avkastning hänger ändå nästan helt på hur tidigt du kände igen det.",
+      "highlight": "Din avkastning hänger ändå nästan helt på hur tidigt du kände igen det.",
+      "brodtext": [
+        "Köper du tidigt, medan de ledande indikatorerna finns men räkenskaperna ser svaga ut, fångar du hela tiodubblingen. Väntar du tills siffrorna ser omisskännligt bra ut, säg tills bolaget är stort och lönsamt med lång historik, har mycket av uppgången redan skett, och du fångar kanske bara de sista gångerna pengarna. Talen är illustrativa, men logiken är hård: samma resa ger helt olika utfall beroende på var du steg ombord.",
+        "Det är detta som gör att de eftersläpande måtten arbetar mot dig. När de visar styrka har möjligheten redan vandrat in i priset. Att se det före marknaden, på de kvalitativa signalerna, är där pengarna ligger. Det är också det svåra: du måste fatta beslutet medan beviset fortfarande är ofullständigt."
+      ],
+      "takeaway": "Räkenskaperna bekräftar för sent. Den stora avkastningen kräver att du känner igen vinnaren medan den fortfarande är liten och obevisad."
     },
     {
       "typ": "dataviz",
@@ -46,13 +80,24 @@
         "data": [
           { "kategori": "6 förlorare", "varde": -6 },
           { "kategori": "2 jämnt ut", "varde": 2 },
-          { "kategori": "1 vinnare", "varde": 5 },
-          { "kategori": "1 vinnare", "varde": 12, "accent": true }
+          { "kategori": "1 vinnare (5x)", "varde": 5 },
+          { "kategori": "1 vinnare (12x)", "varde": 12, "accent": true }
         ],
         "etiketter": "Utfall i enheter av tio satsade",
-        "figurtext": "Illustrativ. Tio lika små satsningar: sex går mot noll, två ger tillbaka insatsen, en ger 5 gånger och en 12 gånger. Tio satsade enheter slutar runt 19, trots att de flesta var fel."
+        "figurtext": "Illustrativ. Tio lika små satsningar: sex går mot noll, två ger tillbaka insatsen, en ger 5 gånger och en 12 gånger. De sex förlorarna kostar sex, de två som går jämnt ut ger tillbaka två, vinnarna ger 5 plus 12. Tio satsade enheter slutar runt 19, nästan en dubbling, trots att de flesta var fel."
       },
-      "slutsats": "Du måste vara tidig för att fånga multipeln, och dimensionerad som en korg så att det att ha fel för det mesta blir både överlevbart och lönsamt. Den höga misslyckandefrekvensen blir då en sak du hanterar med storleken på posterna, inte ett skäl att hålla dig borta."
+      "slutsats": "Det enda som gör jakten rationell är asymmetrin: en vinnares multipel dvärgar de begränsade förlusterna. Men det fungerar bara om du är dimensionerad som en korg av små, överlevbara satsningar. Den höga misslyckandefrekvensen blir då en sak du hanterar med storleken på posterna, inte ett skäl att hålla dig borta från kategorin."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR EN ERFAREN INVESTERARE TÄNKER",
+      "lead": "Morgondagens vinnare hittas inte genom att vänta på fantastiska siffror. Då är möjligheten redan inprisad. Du letar efter de ledande indikatorerna på en stor verksamhet innan räkenskaperna visar dem, och håller klart för dig att det här inte är value investing.",
+      "highlight": "Morgondagens vinnare hittas inte genom att vänta på fantastiska siffror.",
+      "brodtext": [
+        "Du måste tro på en framtid, men den tron förtjänar du med bevis, spänning räcker inte. Det som skiljer disciplinerad tillväxtinvestering från att jaga narrativ är faktisk retention och produktkärlek, en stor och nåbar marknad, verklig enhetsekonomi, ett försprång du kan peka på. När du väl ser de signalerna stärkas över tid är bra siffror sannolikt på väg.",
+        "Och under allt ligger ödmjukheten kvar: de flesta sådana bolag misslyckas. Därför lutar du dig mot asymmetri och dimensionering, och förlitar dig inte på att ha rätt om varje enskilt fall. Den här linsen är offensiven, komplementet till försvaret som lär ut den rigorösa mekaniken, kassa, scenarier och dimensionering. Tillsammans är de hela verktygslådan för den svåraste, mest uppsida-tunga kategorin av bolag."
+      ],
+      "takeaway": "Tro på framtiden, men förtjäna tron med bevis. Räkna med att ha fel ofta, och dimensionera så att det är överlevbart att ha fel."
     },
     {
       "typ": "quiz",
@@ -78,6 +123,39 @@
           ],
           "ratt": [0],
           "forklaring": "Utan vinst saknar P/E nämnare och blir odefinierat. Värdet ligger i framtiden, inte i dagens obefintliga vinst, så måttet säger ingenting om huruvida bolaget kommer lyckas."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför fungerar en vanlig DCF dåligt för ett tidigt olönsamt bolag, och hur kan den ändå användas?",
+          "alternativ": [
+            "Den fungerar perfekt och bör ge ett enda exakt riktvärde",
+            "Nästan hela värdet hamnar i en avlägsen, mycket osäker terminalperiod, så den duger bara i scenarioform som omfamnar osäkerheten",
+            "Den bör ersättas helt av P/E"
+          ],
+          "ratt": [1],
+          "forklaring": "Utan positiva kortsiktiga kassaflöden samlas värdet i terminalperioden där DCF är som minst pålitlig. Disciplinen är intervall och sannolikheter, inte ett falskt exakt tal."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur skiljer sig multibagger-jakt från value investing?",
+          "alternativ": [
+            "Value köper bevisat värde till rabatt med felmarginal på dagens siffror, multibagger-jakt köper obevisad potential utan sådan felmarginal",
+            "Value letar efter tillväxtbolag medan multibagger-jakt letar efter utdelningsaktier",
+            "De är samma sak, bara med olika namn beroende på marknadsläge"
+          ],
+          "ratt": [0],
+          "forklaring": "Value vill ha påvisbart värde till rabatt. Multibagger-jakt vill ha potential innan den är erkänd, utan felmarginal på nuvarande räkenskaper. Att blanda ihop spelen leder fel."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gör jakten på framtida vinnare rationell trots att de flesta sådana bolag misslyckas?",
+          "alternativ": [
+            "Asymmetri och korgdimensionering: en sann vinnares multipel dvärgar de begränsade förlusterna",
+            "Att man kan sälja förlorarna innan de hinner falla",
+            "Att staten subventionerar tidiga tillväxtbolag"
+          ],
+          "ratt": [0],
+          "forklaring": "En position kan bara förlora insatsen en gång, men en vinnare ger många gånger den. Dimensionerad som en korg blir misslyckandena överlevbara och vinnarna bär resultatet."
         },
         {
           "typ": "multi",

@@ -3,14 +3,14 @@
   "lektion": "12.7",
   "titel": "Att värdera i scenarier",
   "niva": "Avancerad",
-  "tid_min": 11,
-  "mal": "Efter lektionen kan eleven sätta ett sannolikhetsvägt värde på ett bolag med en bred och osäker framtid genom att väga ihop scenarier efter deras odds.",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven sätta ett sannolikhetsvägt värde på ett bolag med en bred och osäker framtid, förstå varför sådana bolag oftast är prissatta för framgång, och dimensionera jakten över en korg så att de troliga misslyckandena blir överlevbara.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 12.7",
       "titel": "Att värdera i scenarier",
-      "ingress": "För ett bolag med osäker framtid är ett enda exakt värde falsk precision. Ett vägt intervall är det ärliga verktyget."
+      "ingress": "För ett bolag med osäker framtid är ett enda exakt värde falsk precision. Ett sannolikhetsvägt intervall är det ärliga verktyget, och det säger ofta något obekvämt."
     },
     {
       "typ": "reading",
@@ -18,29 +18,29 @@
       "lead": "För ett bolag utan vinst är framtiden inte en enda väg. Den är en bred solfjäder av utfall, från spektakulär framgång till konkurs, och du kan inte ärligt klämma in den i ett enda tal.",
       "highlight": "Den är en bred solfjäder av utfall, från spektakulär framgång till konkurs",
       "brodtext": [
-        "En enskild värdering, en DCF eller ett riktvärde, låtsas en precision som inte finns. Värre: den ankrar nästan alltid i det optimistiska fallet, drömmen om vad bolaget kunde bli, och blundar för risken att det misslyckas.",
-        "Gör i stället så här. Bygg några scenarier, värdera verksamheten i vart och ett, sätt en sannolikhet på vart och ett, och väg ihop dem till ett tal som uttryckligen rymmer konkursfallet. Då väger du storleken på varje utfall mot dess odds i stället för att förälska dig i bästa fallet."
+        "En enskild värdering, en DCF eller ett riktvärde, låtsas en precision som inte finns. Värre: den ankrar nästan alltid i det optimistiska fallet, drömmen om vad bolaget kunde bli, och blundar för risken att det misslyckas. För en framtida vinnare är utfallet ofta nära binärt, en stor multipel eller nära noll, och då blir enpunktsvärdet vilseledande.",
+        "Gör i stället så här. Bygg några scenarier, värdera verksamheten i vart och ett, sätt en sannolikhet på vart och ett, och väg ihop dem till ett tal som uttryckligen rymmer konkursfallet. Då väger du storleken på varje utfall mot dess odds i stället för att förälska dig i bästa fallet. Du slutar gissa på ett framtidsvärde och börjar uppskatta det med disciplin."
       ],
       "takeaway": "Du försöker inte sätta ett exakt värde. Du väger hela solfjädern av framtider efter deras odds, och den vackraste blir aldrig den du förälskar dig i."
     },
     {
       "typ": "concept",
       "kicker": "TRE STEG",
-      "titel": "Bygg, vikta, jämför",
+      "titel": "Bygg från fundamenta, vikta nyktert, väg ihop",
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Bygg från fundamenta", "text": "Spänn upp några scenarier, oftast tre: pessimistiskt (ofta konkurs, eget kapital nära noll), basfall (måttlig framgång) och optimistiskt (bolaget vinner stort). Värdera varje moget utfall och räkna tillbaka till idag." },
-          { "rubrik": "Vikta nyktert", "text": "Sätt en sannolikhet på varje fall, summerande till 100 procent. Detta är det svåraste steget. Frestelsen är att övervikta det levande optimistfallet; nykterheten är att våga ge konkurs en stor vikt." }
+          { "rubrik": "Bygg från fundamenta", "text": "Spänn upp några scenarier, oftast tre: pessimistiskt (ofta konkurs, eget kapital nära noll), basfall (måttlig framgång) och optimistiskt (bolaget vinner stort). Varje fall ska vila på resten av analysen: marknaden, enhetsekonomin och kassan. Värdera varje moget utfall, mogen vinst gånger en rimlig multipel, och räkna tillbaka till idag." },
+          { "rubrik": "Vikta nyktert", "text": "Sätt en sannolikhet på varje fall, summerande till 100 procent. Detta är det svåraste och viktigaste steget. Frestelsen är att övervikta det levande optimistfallet; nykterheten är att våga ge konkursfallet en stor vikt, eftersom konkurs eller besvikelse oftast är det troliga för ett spekulativt tidigt bolag." }
         ],
         "figurtext": "Det svåraste och viktigaste steget är oddsen, inte räkningen."
       },
-      "forklaring": "Varje scenariovärde ska vila på verksamheten själv, mogen vinst gånger en rimlig multipel tillbakaräknat till idag, inte på en förhoppning. Sätt sedan oddsen nyktert: för ett spekulativt tidigt bolag är konkurs eller besvikelse oftast det troliga och drömutfallet det osannolika. Vågar du ge konkursfallet en stor vikt blir värderingen en uppskattning i stället för en efterhandsrationalisering av drömmen."
+      "forklaring": "Varje scenariovärde ska vila på verksamheten själv, inte på en förhoppning. Det optimistiska fallet kan anta att bolaget tar en stor andel av sin marknad på en sund enhetsekonomi och når en hög mogen intäkt; basfallet en blygsammare skala; det pessimistiska att bolaget inte vinner, får slut på kassa eller späder ut ägarna, och lämnar det egna kapitalet nära noll. En nyans som lätt glöms: detta är bolagsvärden, men din avkastning är per aktie. Bas och optimistfall kräver oftast nyemissioner på vägen till mognad, och varje emission krymper din andel, så dra av den förväntade utspädningen i de fall som kräver kapital innan du väger ihop. Vågar du sedan ge konkursfallet en stor vikt blir värderingen en uppskattning i stället för en efterhandsrationalisering av drömmen."
     },
     {
       "typ": "dataviz",
       "titel": "Konkursfallet tynger ned snittet",
-      "underrubrik": "Det sannolikhetsvägda värdet är varje scenarios värde gånger dess sannolikhet, summerat. Här ser du varje scenarios bidrag, inte dess fulla värde.",
+      "underrubrik": "Det sannolikhetsvägda värdet är varje scenarios värde gånger dess sannolikhet, summerat. Stapeln visar varje scenarios bidrag, inte dess fulla värde.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -50,18 +50,51 @@
           { "kategori": "Vägt värde", "varde": 76, "accent": true }
         ],
         "etiketter": "Bidrag till det vägda värdet, Mkr (illustrativt)",
-        "figurtext": "Illustrativa tal från ett tänkt bolag. Det optimistiska fallets fulla värde är 240 Mkr, men dess bidrag är bara 48 eftersom det bara är 20 procent troligt. Det vägda värdet 76 Mkr ligger långt under drömutfallets 240, just för att konkurs är så troligt."
+        "figurtext": "Illustrativa tal från ett tänkt bolag. Det optimistiska fallets fulla värde är 240 Mkr, men dess bidrag är bara 48 (240 gånger 0,20) eftersom det bara är 20 procent troligt. Konkursfallet bidrar med 0 men väger ändå tungt, för dess 45 procent är vikt som de andra fallen inte får. Summan av bidragen, 76 Mkr, är det vägda värdet."
       },
-      "slutsats": "Jämför det vägda värdet mot priset, aldrig det optimistiska fallet mot priset. Ligger priset väl under det vägda värdet finns gynnsam asymmetri, och eftersom hela uppskattningen är grov kräver du en rejäl felmarginal ovanpå."
+      "slutsats": "Poängen är bidraget, inte scenariovärdet i sig: ett utfall på 240 som bara är 20 procent troligt väger lättare än det ser ut, och konkursens nollutfall drar ned snittet just genom sin höga vikt. Jämför det vägda värdet mot priset, aldrig det optimistiska fallet mot priset."
+    },
+    {
+      "typ": "reading",
+      "kicker": "RÄKNAT GENOM",
+      "lead": "Ta ett prenumerationsmjukvarubolag av vanlig sort (illustrativa tal, ett tänkt bolag). Du kan inte fånga det i ett tal, så du bygger tre scenarier och väger ihop dem efter nyktra odds.",
+      "highlight": "du bygger tre scenarier och väger ihop dem efter nyktra odds",
+      "brodtext": [
+        "I det optimistiska fallet vinner bolaget en stor del av sin marknad: en mogen intäkt på 150 Mkr vid 20 procents nettomarginal ger 30 Mkr i vinst, och vid en multipel på 20 blir det 600 Mkr om ungefär åtta år, tillbakaräknat omkring 240 Mkr idag. Basfallet når en blygsammare skala, värt säg 80 Mkr i dagens termer. Det pessimistiska fallet misslyckas eller får slut på kassa, och det egna kapitalet blir i princip 0.",
+        "Nu det avgörande steget, oddsen. Nykter om ett spekulativt tidigt bolag bedömer du kanske det optimistiska fallet till 20 procent, basfallet till 35 och konkurs till hela 45 (de summerar till 100). Det vägda värdet blir 0,20 gånger 240 plus 0,35 gånger 80 plus 0,45 gånger 0, alltså 48 plus 28 plus 0, lika med 76 Mkr. Din ärliga uppskattning av verksamheten är alltså omkring 76 Mkr, långt under det optimistiska fallets 240, just för att konkurs är så troligt och tynger ned snittet. Värderar marknaden bolaget till 50 Mkr finns en felmarginal; värderar den det till 150 överbetalar du rejält för samma 76, och då lockar tanken billigt mot toppscenariots 240, som är fällan att prissätta en möjlighet som om den vore en sannolikhet."
+      ],
+      "takeaway": "Det vägda värdet är din ärliga gissning på vad verksamheten är värd givet allt som kan hända, inte vad den är värd om allt går rätt."
     },
     {
       "typ": "concept",
       "kicker": "EN OBEKVÄM SANNING",
       "titel": "Ofta prissatt för framgång",
       "brodtext": [
-        "För en potentiell framtida vinnare avslöjar det vägda värdet nästan alltid samma sak: eftersom marknaden redan prissätter en meningsfull chans till framgång ligger det vägda värdet ofta nära, eller till och med under, dagens pris. Aktien är prissatt för framgång, och det finns ingen felmarginal på det vägda värdet. En renodlad value-investerare skulle korrekt avstå.",
-        "Så varför ändå köpa? Kanten är en annan än i value investing. Den ligger i att vara tidig nog att fånga det optimistiska fallet, i fallets egen asymmetri (det kan vara flera gånger priset), och framför allt i att dimensionera varje satsning liten som del av en korg. Då blir de troliga misslyckandena överlevbara medan de få vinnarna bär resultatet. Din kant är asymmetri plus överlevnad över en korg, inte en rabatt på något enskilt."
+        "För en potentiell framtida vinnare avslöjar det vägda värdet nästan alltid samma sak: eftersom marknaden redan prissätter en meningsfull chans till framgång, ligger det vägda värdet ofta nära, eller till och med under, dagens pris. Aktien är prissatt för framgång, och det finns ingen felmarginal på det vägda värdet. En renodlad value-investerare skulle korrekt avstå, för du får inte den framtida vinnaren till rabatt mot vad den sannolikhetsvägt är värd.",
+        "Så varför ändå köpa? Kanten är en annan än i value investing och kommer från tre håll. Det första är att vara tidig: multipeln finns bara att fånga innan siffrorna bevisar bolaget. Det andra är det optimistiska fallets egen asymmetri: även vid ett rättvist vägt värde kan toppfallet vara flera gånger priset, så att ha rätt ibland betalar enormt. Det tredje, och avgörande, är att dimensionera varje satsning liten som del av en korg. Din kant är asymmetri plus överlevnad över en korg, inte en rabatt på något enskilt."
       ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "ATT DIMENSIONERA JAKTEN",
+      "lead": "Scenariovärderingen dimensionerar priset och oddsen. Positionsdimensioneringen gör jakten överlevbar. Det är två beslut, och det andra är det som avgör om strategin håller.",
+      "highlight": "Positionsdimensioneringen gör jakten överlevbar.",
+      "brodtext": [
+        "Dimensioneringen följer direkt av den nära binära naturen med hög konkurssannolikhet. Varje position måste vara liten nog att dess troliga misslyckande blir en trivial portföljförlust, och du tar exponering mot kategorin genom en korg av sådana små satsningar. Över korgen kostar de många misslyckandena lite var, medan de få vinnarna multipliceras flerfaldigt, så ett par fullträffar betalar mer än väl för resten.",
+        "Det är vad som gör jakten rationell trots den höga misslyckandefrekvensen: du behöver inte ha rätt ofta, du behöver vara dimensionerad så att det att ha fel är överlevbart och det att ha rätt ibland räcker. Tänk en korg av tio små satsningar där sex går till noll, två går jämnt ut och två blir stora vinnare; den kan ändå nästan dubbla pengarna, trots fel på de flesta. Var ödmjuk inför att de flesta enskilda satsningar kommer att misslyckas, och att tur spelar in på vilka som inte gör det. Att fånga framtida vinnare är en portföljstrategi av små, asymmetriska satsningar, inte ett sökande efter billiga aktier."
+      ],
+      "takeaway": "Dimensionera varje satsning liten nog att ett troligt misslyckande är trivialt, och samla en korg. Då bär de få vinnarna resultatet och det att ha fel ruinerar dig aldrig."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM SKILJER EN ÄRLIG VÄRDERING",
+      "lead": "Det mesta här handlar om ditt eget angreppssätt, så flaggorna gäller dig. Testfrågan är enkel: rymmer ditt värde ett konkursfall med hög sannolikhet som drar ned det, eller är det bara det optimistiska fallet i förklädnad?",
+      "highlight": "är det bara det optimistiska fallet i förklädnad?",
+      "brodtext": [
+        "Tecken på en ärlig värdering: du har byggt scenarier som spänner från konkurs till triumf, var och en grundad i fundamenta. Oddsen är satta nyktert, med en realistisk vikt på konkurs. Ditt värde är sannolikhetsvägt och rymmer uttryckligen nedsidan. Du inser att aktien är prissatt för framgång, utan felmarginal på det vägda värdet, och att din kant är asymmetri och att vara tidig, exekverat genom en korg där varje position är liten nog att ett troligt misslyckande är överlevbart.",
+        "Varningstecken: värderingen är ett enda tal utan scenarier eller odds, eller konkursfallet saknas eller har getts en orimligt låg vikt. Du behandlar aktien som billig bara för att toppscenariot ligger långt över priset. En enskild potentiell vinnare är en stor, ruinriskerande del av portföljen, eller du är dimensionerad som om framgång vore trolig när konkurs är det mer sannolika enskilda utfallet. De vanligaste misstagen är att producera ett enda exakt tal för en vilt osäker framtid, att modellera bara drömmen, att vikta konkurs för lätt, att glömma justera bolagsvärdet till värde per aktie efter utspädning, och att satsa stort på ett enskilt bolag i stället för litet över en korg."
+      ],
+      "takeaway": "Skriv ned de tre scenariovärdena och oddsen, det vägda värdet mot priset, och en mening om hur du skulle dimensionera positionen. Först då är det ett beslut och inte en förälskelse."
     },
     {
       "typ": "quiz",
@@ -75,7 +108,7 @@
             "Det underskattar alltid bolagets värde"
           ],
           "ratt": [1],
-          "forklaring": "Framtiden är en bred solfjäder av utfall. Ett enda tal blundar för den verkliga risken att bolaget misslyckas och ankrar oftast i drömmen om vad bolaget kunde bli."
+          "forklaring": "Framtiden är en bred solfjäder av utfall, ofta nära binär. Ett enda tal blundar för den verkliga risken att bolaget misslyckas och ankrar oftast i drömmen om vad bolaget kunde bli."
         },
         {
           "typ": "single",
@@ -86,20 +119,42 @@
             "Varje scenarios värde gånger dess sannolikhet, summerat, med sannolikheter som summerar till 100 procent"
           ],
           "ratt": [2],
-          "forklaring": "Poängen är att ett konkursfall med hög sannolikhet drar det vägda värdet långt under det optimistiska fallet, så du inte prissätter drömmen som ett faktum."
+          "forklaring": "Poängen är att ett konkursfall med hög sannolikhet drar det vägda värdet långt under det optimistiska fallet, så du inte prissätter drömmen som ett faktum. I exemplet ger 0,20 gånger 240 plus 0,35 gånger 80 plus 0,45 gånger 0 ett vägt värde på 76 Mkr."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är det svåraste och viktigaste steget i scenariovärderingen?",
+          "alternativ": [
+            "Att räkna ut nuvärdet av varje scenario",
+            "Att sätta nyktra sannolikheter, särskilt att våga ge konkursfallet en stor vikt",
+            "Att välja rätt antal scenarier"
+          ],
+          "ratt": [1],
+          "forklaring": "Frestelsen är att övervikta det levande optimistfallet. Nykterheten att ge konkurs en realistisk, ofta hög vikt är vad som gör det till en uppskattning och inte en efterhandsrationalisering av drömmen."
+        },
+        {
+          "typ": "single",
+          "fraga": "Var ligger investerarens kant för en potentiell framtida vinnare, om det inte är en rabatt på det vägda värdet?",
+          "alternativ": [
+            "I att vara tidig, i det optimistiska fallets asymmetri, och i att dimensionera satsningen liten över en korg",
+            "I att förhandla ned priset med bolagets ledning",
+            "I att vänta tills konkursrisken är helt eliminerad"
+          ],
+          "ratt": [0],
+          "forklaring": "Dessa bolag är oftast prissatta för framgång utan felmarginal på det vägda värdet. Kanten är asymmetri plus överlevnad över en korg: multipeln fångas tidigt, toppfallet kan vara flera gånger priset, och små positioner gör de troliga misslyckandena överlevbara."
         },
         {
           "typ": "multi",
-          "fraga": "Vilka av dessa stämmer om att värdera en potentiell framtida vinnare i scenarier?",
+          "fraga": "Vilka av dessa stämmer om att värdera och dimensionera en potentiell framtida vinnare?",
           "underrubrik": "Välj alla som stämmer",
           "alternativ": [
-            "Det svåraste och viktigaste steget är att sätta nyktra odds, särskilt att våga ge konkursfallet en stor vikt",
+            "Det svåraste steget är att sätta nyktra odds, särskilt att våga ge konkursfallet en stor vikt",
             "Bolaget är ofta prissatt för framgång, så det vägda värdet är sällan ett fynd mot priset",
             "Du jämför det optimistiska fallet mot priset för att se om aktien är billig",
-            "Kanten ligger i asymmetri och i att dimensionera satsningen liten som del av en korg"
+            "Varje position hålls liten som del av en korg, så att de troliga misslyckandena är överlevbara"
           ],
           "ratt": [0, 1, 3],
-          "forklaring": "Oddsen avgör allt, dessa bolag är oftast prissatta för framgång utan felmarginal, och kanten är asymmetri plus överlevnad över en korg. Att jämföra priset mot toppscenariot är tvärtom fällan att prissätta en möjlighet som en sannolikhet."
+          "forklaring": "Oddsen avgör allt, dessa bolag är oftast prissatta för framgång utan felmarginal, och jakten görs överlevbar genom små satsningar över en korg. Att jämföra priset mot toppscenariot är tvärtom fällan att prissätta en möjlighet som en sannolikhet."
         }
       ]
     }
