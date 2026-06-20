@@ -3,25 +3,36 @@
   "lektion": "11.3",
   "titel": "Story vs analys",
   "niva": "Mellan",
-  "tid_min": 9,
-  "mal": "Efter lektionen kan eleven behandla en lockande berättelse som en hypotes att pröva mot fundamenta, och skilja storleken på ett möjligt utfall från sannolikheten för det.",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven behandla en lockande berättelse som en hypotes att pröva mot fundamenta i stället för som ett bevis, och skilja storleken på ett möjligt utfall från sannolikheten för det.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 11.3",
       "titel": "Story vs analys",
-      "ingress": "En fängslande berättelse får dig att känna dig säker, och en lockande potential får dig att glömma oddsen. Ingen av dem är ett bevis."
+      "ingress": "En fängslande berättelse får dig att känna dig säker, och en lockande potential får dig att glömma oddsen. Ingen av dem är ett bevis. Den här lektionen handlar om två närbesläktade dragningar och hur du står emot dem."
     },
     {
       "typ": "reading",
-      "kicker": "KATEGORIFELET",
-      "lead": "Människor tänker i berättelser, inte i kalkylblad, och marknaden vet om det. Faran är inte att berättelser ljuger. Många är sanna. Faran är att berättelsen sköter övertygandet medan beviset saknas.",
-      "highlight": "Faran är att berättelsen sköter övertygandet medan beviset saknas.",
+      "kicker": "VARFÖR DET SPELAR ROLL",
+      "lead": "Människor tänker i berättelser snarare än i kalkylblad, och marknaden vet om det. Faran är inte att berättelser ljuger. Många är sanna och bolagen lyckas. Faran ligger i att berättelsen sköter övertygandet medan beviset saknas.",
+      "highlight": "Faran ligger i att berättelsen sköter övertygandet medan beviset saknas.",
       "brodtext": [
-        "Att köpa på ett narrativ i stället för på vad analysen visar kallas story investing. Den visionära grundaren, den världsförändrande tekniken, den enorma marknaden: ett levande narrativ biter sig fast på ett sätt som en nykter genomgång av fundamenta aldrig gör. Vi utvecklades för att bära kunskap i berättelser, så de känns övertygande och minnesvärda. Ett kalkylblad gör varken eller.",
-        "Det centrala felet är ett slags kategorifel: hjärnan förväxlar en berättelses övertygelsekraft med bevis för dess sannolikhet. Ju mer detaljerat och fängslande narrativet är, desto säkrare verkar det, fast övertygelsekraft och sannolikhet inte har med varandra att göra. En stor berättelse kan vara osannolik. En tråkig kan vara högst sannolik."
+        "Ett övertygande narrativ, den visionära grundaren, den världsförändrande tekniken, den enorma marknaden, biter sig fast i minnet på ett sätt som en nykter genomgång av fundamenta aldrig gör. Att köpa på en sådan berättelse i stället för på vad analysen visar kallas story investing. Du känner dig säker för att narrativet är fängslande, men siffrorna bär dig inte.",
+        "Berättelser används, medvetet eller inte, för att rättfärdiga vilt överprissatta eller fundamentalt svaga bolag. Marknadens dyraste misstag är nästan alltid älskade berättelser som siffrorna aldrig motiverade. Färdigheten du ska bygga är att kunna njuta av ett narrativ och ändå kräva att fundamenta backar upp det innan du betalar."
       ],
       "takeaway": "En fängslande historia är ett skäl att undersöka. Den motiverar aldrig betalningen."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SÅ FUNGERAR DET",
+      "lead": "För att försvara dig mot berättelser behöver du förstå varför de är så verksamma. Det bottnar i hur sinnet är byggt, inte i att vissa människor är lättlurade.",
+      "highlight": "Det bottnar i hur sinnet är byggt",
+      "brodtext": [
+        "Vi utvecklades för att bearbeta världen genom narrativ. I årtusenden var berättelsen bäraren av kunskap, fara och mening, så vi finner den övertygande, minnesvärd och känslomässigt rörande på ett sätt som data inte är. En levande berättelse aktiverar känsla och fantasi. Ett kalkylblad aktiverar ingetdera. Vi dras dessutom särskilt till berättelser om hjältar, förvandling och framtiden, vilket är just vad en stor investeringsberättelse erbjuder: den visionära ledaren, den revolutionära produkten, chansen att vara med om något stort.",
+        "Det centrala felet hjärnan gör är ett slags kategorifel. Den förväxlar en berättelses övertygelsekraft med bevis för dess sannolikhet. Ett levande, sammanhängande narrativ känns sannolikt, och ju mer detaljerat och fängslande det är, desto säkrare verkar det, trots att övertygelsekraft och sannolikhet inte har med varandra att göra. En stor berättelse kan vara osannolik. En tråkig kan vara högst sannolik. När narrativet väl fångat sinnet slutar det dessutom granska fundamenta, värdering och odds, eftersom berättelsen redan känns som nog. Kvar står övertygelse byggd på narrativ tjusning där beviset borde stå."
+      ],
+      "takeaway": "Övertygelsekraft och sannolikhet är två skilda saker. Hjärnan behandlar dem som en enda, och där börjar misstaget."
     },
     {
       "typ": "concept",
@@ -30,21 +41,69 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Berättelsen", "text": "Genererar idén och förklarar varför ett bolag kan vara bra. Får starta en undersökning, men avslutar den aldrig." },
-          { "rubrik": "Analysen", "text": "Prövar hypotesen mot fundamenta: affärsmodell, enhetsekonomi, konkurrensfördel, kassaflöden, pris. Körs oavsett hur fängslande narrativet låter." }
+          { "rubrik": "Berättelsen", "text": "Genererar idén och förklarar varför ett bolag kan vara bra. Den får starta en undersökning, men avslutar den aldrig. Den är hypotesen, inte beviset." },
+          { "rubrik": "Analysen", "text": "Prövar hypotesen mot fundamenta: fungerar affärsmodellen, är enhetsekonomin sund, finns en konkurrensfördel, hur ser kassaflödena ut, är priset rimligt. Körs oavsett hur fängslande narrativet låter." }
         ],
         "figurtext": "En verklig möjlighet har en berättelse och stärkande fundamenta. En fälla har bara berättelsen."
       },
-      "forklaring": "Var allra mest skeptisk när berättelsen gör hela värderingsjobbet. När ett bolag har lite vinst eller kassaflöde är narrativet det enda som finns kvar att värdera på, och en tillräckligt lockande berättelse kan då rättfärdiga nästan vilket pris som helst. Så bildas bubblor i berättelseaktier. Granska därför säljande ledningar hårdare, inte mjukare: de bästa bolagen och de värsta bedrägerierna berättar nästan likadant, och substansen är det enda som skiljer."
+      "forklaring": "Du kan älska en god berättelse och ändå aldrig förväxla den med analys. Behandla narrativet som en hypotes att pröva mot fundamenta, och låt det inte bli skälet att investera. Berättelsen får generera idén. Sedan kör du analysen oavsett hur fängslande den låter. Hoppa aldrig över testet bara för att hypotesen är tilltalande."
+    },
+    {
+      "typ": "reading",
+      "kicker": "NÄR BERÄTTELSEN GÖR HELA JOBBET",
+      "lead": "Var allra mest skeptisk när berättelsen gör hela värderingsjobbet. Det låter bakvänt, men det är just då en lockande story slår ut sifferdisciplinen helt.",
+      "highlight": "Var allra mest skeptisk när berättelsen gör hela värderingsjobbet.",
+      "brodtext": [
+        "När ett bolag har lite vinst eller kassaflöde är narrativet, alltså den stora framtiden, det enda som finns kvar att värdera på. En tillräckligt lockande berättelse kan då rättfärdiga nästan vilket pris som helst, eftersom framtiden den målar upp är obegränsad och obevisbar. Så bildas bubblor i berättelseaktier: narrativet ersätter värderingen i stället för att backa upp den. Regeln att hålla fast vid är att även en stor berättelse till slut måste översättas till kassaflöden som bär priset.",
+        "Du behöver också kunna skilja en verklig möjlighet från ett förföriskt narrativ. Några av de bästa investeringarna hade stora berättelser, men de backades av förbättrade fundamenta. Testet är om berättelsen syns i räkenskaperna, alltså i växande omsättning, förbättrad enhetsekonomi, en konkurrensfördel som faktiskt bildas och en väg till kassaflöde, eller om den svävar fritt från siffrorna. En verklig möjlighet har en berättelse och en stärkande fundamental verklighet. En fälla har bara berättelsen.",
+        "Granska därför säljande berättare hårdare, inte mjukare. En karismatisk grundare som spinner en storslagen vision kännetecknar både de största bolagen och de värsta bedrägerierna, för berättandet är ofta nästan identiskt och substansen är det enda som skiljer. En övertygande pitch från en säljande ledning är ett skäl till mer granskning, inte till mindre."
+      ],
+      "takeaway": "En berättelse får starta en undersökning. Den avslutar den aldrig. Ju mer narrativet bär priset, desto hårdare ska du läsa siffrorna."
+    },
+    {
+      "typ": "reading",
+      "kicker": "MÖNSTRET I VERKLIGHETEN",
+      "lead": "På de stora börserna är historien full av älskade berättelser som siffrorna aldrig motiverade. I varje mani bjuds bolag med rafflande narrativ upp till värderingar helt frikopplade från rimliga framtida kassaflöden, för att investerare köper berättelsen och struntar i fundamenta.",
+      "highlight": "älskade berättelser som siffrorna aldrig motiverade",
+      "brodtext": [
+        "Dot-com-eran runt år 2000 ger arketypen: bolag med tunna intäkter men storslagna berättelser om internet nådde enorma värderingar och föll sedan ihop när berättelsen måste möta siffrorna. Berättelsen var ofta verklig, internet förändrade världen, men värderingen den fick motivera höll inte. Mönstret är poängen, inte siffrorna på något enskilt bolag.",
+        "I småbolag är story investing den dominerande fällan, eftersom det är där de spännande narrativen är som flest och fundamenta som svagast. Ett mindre bolag med en rafflande berättelse, ett genombrottsläkemedel, en disruptiv teknik eller en enorm adresserbar marknad, kan handlas långt över allt dess faktiska verksamhet bär, uppehållet helt av narrativet och de troende det drar till sig. Njut av berättelsen, men kontrollera substansen: finns intäkter, förbättras enhetsekonomin, hur länge räcker kassan, och vad skulle verksamheten behöva åstadkomma för att motivera priset? Ofta visar svaret att priset är ren berättelse.",
+        "Ett tänkt exempel skärper distinktionen. Två småbolag har båda spännande berättelser om en stor framtida marknad. Det ena visar berättelsen i sina siffror: omsättningen växer snabbt, enhetsekonomin förbättras mot lönsamhet, en konkurrensfördel börjar bildas. Det andra har en lika övertygande berättelse, men intäkterna är platta eller ekonomin trasig, kassan brinner och milstolparna skjuts ständigt fram. I en pitch låter de lika lovande. Men det ena är en berättelse som håller på att bli sann, det andra en berättelse som står i stället för en verksamhet som inte fungerar. Fundamenta avgör vilket som är vilket. Narrativet kan det aldrig."
+      ],
+      "takeaway": "Två bolag kan berätta nästan samma historia. Bara siffrorna visar vilket som håller på att bli sant och vilket som bara är ord."
     },
     {
       "typ": "reading",
       "kicker": "POTENTIAL MOT SANNOLIKHET",
-      "lead": "Samma dragning återkommer i en nära släkting. När du tittar på en möjlighet fastnar blicken vid hur stor utbetalningen kan bli, medan den långt viktigare frågan, hur sannolik den är, knappt registreras.",
-      "highlight": "hur stor utbetalningen kan bli",
+      "lead": "Samma dragning återkommer i en nära släkting. Potential är förförisk, sannolikhet är tråkig, och däremellan ligger en av de dyraste vanorna en investerare kan ha.",
+      "highlight": "Potential är förförisk, sannolikhet är tråkig",
       "brodtext": [
-        "Varje satsning har två dimensioner: hur stort utfallet kan bli, och hur sannolikt det utfallet är. Båda väger lika tungt, för värdet är storleken på utbetalningen viktad efter dess sannolikhet. Men sinnet dras överväldigande till storleken och försummar oddset. En tiodubblingsdröm känns lika övertygande oavsett om oddsen är en procent eller femtio. Det är samma mekanism som säljer lotter: det enorma priset är lätt att föreställa sig, den lilla chansen ignoreras.",
-        "Para därför alltid magnitud med sannolikhet, och döm på det sannolikhetsviktade resultatet. Hög potential ska inte undvikas, målet är gynnsam asymmetri: stor potential, rimlig sannolikhet och begränsad nedsida. Den kombinationen, en sund verksamhet köpt med felmarginal, är sällsynt och värdefull. När du känner spänningen inför en stor potential är spänningen biasen i arbete, inte ett skäl."
+        "När du tittar på en möjlighet fastnar blicken nästan automatiskt vid hur stor utbetalningen kan bli, chansen att tiodubbla pengarna, drömutfallet. Den långt viktigare frågan, hur sannolik den är, registreras knappt. En levande, stor potential fångar fantasin, medan den nyktra sannolikheten att uppnå den känns abstrakt. Så betalar investerare för mycket för lotteriaktier med enorm potential men usla odds, och förbiser solida bolag med blygsam potential men höga odds.",
+        "Varje satsning har två dimensioner: hur stort utfallet kan bli, alltså potentialen eller magnituden, och hur sannolikt det utfallet är. Båda väger lika tungt, för värdet av en satsning är storleken på utbetalningen viktad efter dess sannolikhet, alltså dess förväntade värde. Sinnet dras däremot överväldigande till storleken och försummar oddset. En tiodubblingsdröm känns lika övertygande oavsett om oddsen är en procent eller femtio.",
+        "Mekanismen bakom är konkret. Sinnet rörs av det som är tydligt och känsloladdat, och en stor möjlig utbetalning är båda delarna på ett sätt som en sannolikhetsuppskattning aldrig är. Du kan föreställa dig att bli rik på en tiodubblare. Du kan inte föreställa dig eller känna en sannolikhet på trettio procent. Fantasin griper tag i bästa fallet och dröjer kvar där, medan det torra oddset är lätt att glömma."
+      ],
+      "takeaway": "Värdet är storleken på utbetalningen viktad efter dess sannolikhet. Sinnet ser storleken klart och oddset knappt alls."
+    },
+    {
+      "typ": "reading",
+      "kicker": "LOTTERI-TÄNKET",
+      "lead": "Att förväxla möjlighet med sannolikhet är att behandla det som kan hända som om det vore det som kommer att hända. Det är samma mekanism som säljer lotter: det enorma priset är lätt att föreställa sig, den lilla chansen ignoreras.",
+      "highlight": "behandla det som kan hända som om det vore det som kommer att hända",
+      "brodtext": [
+        "Tre kända fel följer av dragningen. Det första är att förväxla möjlighet med sannolikhet: eftersom ett utfall är möjligt, bolaget kan bli enormt, behandlar hjärnan det som sannolikt, eller viktar det åtminstone långt tyngre än de faktiska oddsen motiverar. Det andra är att försumma basfrekvensen: hjärnan fäster vid den levande, specifika berättelsen om just det här bolagets väg till storhet och ignorerar den dystra allmänna statistiken, att de flesta sådana bolag misslyckas. Det tredje är en okänslighet för sannolikhet i det känslomässiga registret: vi skiljer knappt en liten chans från en något större när utbetalningen är spännande nog, och rysningen av priset dränker oddsens matematik.",
+        "Summan är att systematiskt betala för mycket för potential och för lite för sannolikhet. I småbolag är det här den definierande fällan, eftersom spekulativa bolag nästan alltid säljs på potential. Ett litet forskningsbolag inom läkemedel med en möjlig storsäljare, eller ett litet teknikbolag med en möjligt enorm marknad, erbjuder en levande, väldig uppsida med realistiskt låga odds, för de flesta sådana bolag misslyckas eller besviker. Investerare fäster vid drömmen, tio gånger, femtio gånger, väger knappt sannolikheten, och betalar för en lott."
+      ],
+      "takeaway": "Att ett utfall är möjligt säger ingenting om hur sannolikt det är. Lotteriköparen vet hur stort priset är och struntar i hur litet oddset är."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR EN ERFAREN INVESTERARE TÄNKER",
+      "lead": "Para alltid magnitud med sannolikhet. Fråga hur stort ett utfall kan bli och hur sannolikt det är, och döm på det sannolikhetsviktade resultatet. Priset är bara halva kalkylen. Oddsen är den andra halvan, den som sinnet vill hoppa över.",
+      "highlight": "Para alltid magnitud med sannolikhet.",
+      "brodtext": [
+        "Botemedlet är att vikta varje utfall efter dess odds, sällan efter dess storlek allena. En tiodubblingspotential med fem procents sannolikhet bidrar långt mindre till förväntat värde än en uppgång på femtio procent med åttio procents sannolikhet, även om den första låter mycket mer spännande. De tre talen här är illustrativa och visar bara principen. Var på din vakt mot lotterifällan, en liten chans till en enorm utbetalning som sinnet övervärderar eftersom priset är så tydligt. Sådana satsningar har oftast dåligt förväntat värde. De små oddsen bär inte priset, men de är ständigt populära eftersom potential säljer.",
+        "Hög potential ska ändå inte undvikas. Målet är att hitta gynnsam asymmetri: lägen där potentialen är stor, sannolikheten rimlig och nedsidan begränsad. Den kombinationen, som skapas av en sund verksamhet köpt med felmarginal, är sällsynt och värdefull, och det är den sannolikhetstänkandet hjälper dig att hitta och att skilja från en ren lott. Att uppskatta odds är svårt och ödmjukande, och sinnets obehag inför den svårigheten är en del av varför det retirerar till den levande potentialen. En grov, konservativt lutad uppskattning slår ändå att ignorera oddset helt.",
+        "När du känner spänningen inför en stor potential är spänningen biasen i arbete, inte ett skäl. Du behöver inga exakta tal. Du behöver bara sluta behandla en möjlighet som en visshet, och varje gång en stor potential fångar dig ställa följdfrågan: hur sannolikt är det, egentligen?"
       ],
       "takeaway": "Behandla inte det som är möjligt som om det vore sannolikt. En stor uppsida är ett skäl att uppskatta oddsen noggrant, inget mer."
     },
@@ -60,7 +119,18 @@
             "Att data alltid är viktigare än berättelser"
           ],
           "ratt": [1],
-          "forklaring": "Faran är inte att berättelser ljuger, många är sanna. Faran är att ett fängslande narrativ känns sannolikt, fast övertygelsekraft och sannolikhet inte har med varandra att göra."
+          "forklaring": "Faran är inte att berättelser ljuger, många är sanna. Faran är att ett fängslande narrativ känns sannolikt, fast övertygelsekraft och sannolikhet inte har med varandra att göra. En stor berättelse kan vara osannolik, en tråkig kan vara högst sannolik."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur ska du förhålla dig till en övertygande berättelse om ett bolag?",
+          "alternativ": [
+            "Som ett tillräckligt skäl att investera",
+            "Som en hypotes att pröva mot fundamenta, aldrig som ersättning för analysen",
+            "Som något att ignorera helt"
+          ],
+          "ratt": [1],
+          "forklaring": "Berättelsen får generera idén och förklara varför bolaget kan vara bra, men sedan körs analysen oavsett hur fängslande den låter. Berättelsen är hypotesen, fundamenta är testet. Den startar en undersökning, den avslutar den aldrig."
         },
         {
           "typ": "single",
@@ -74,13 +144,35 @@
           "forklaring": "När ett bolag har lite vinst eller kassaflöde är narrativet det enda som finns kvar att värdera på. En obegränsad, obevisbar framtid kan motivera vilket pris som helst, vilket är hur bubblor i berättelseaktier bildas."
         },
         {
+          "typ": "single",
+          "fraga": "Vad innebär det att förväxla möjlighet med sannolikhet?",
+          "alternativ": [
+            "Att behandla något som är möjligt, att bolaget kan bli enormt, som om det vore sannolikt",
+            "Att tro att inget är möjligt",
+            "Att räkna ut förväntat värde fel"
+          ],
+          "ratt": [0],
+          "forklaring": "Eftersom ett utfall är möjligt viktar hjärnan det långt tyngre än de faktiska oddsen motiverar. Det är samma mekanism som säljer lotter: det enorma priset är lätt att föreställa sig, den lilla chansen ignoreras."
+        },
+        {
+          "typ": "single",
+          "fraga": "En satsning har liten chans till en mycket stor uppsida men stor chans till betydande förlust. En annan har hög chans till en blygsam uppgång och begränsad nedsida. Hur tänker en disciplinerad investerare? (Talen är illustrativa.)",
+          "alternativ": [
+            "Väljer den första, eftersom den stora uppsidan är mest spännande",
+            "Väljer den andra, det bättre sannolikhetsviktade utfallet med begränsad nedsida",
+            "Det går inte att jämföra dem"
+          ],
+          "ratt": [1],
+          "forklaring": "Den första säljer sig på potential, den andra vinner på sannolikhet. Att väga magnitud mot odds, alltså förväntat värde, är hela färdigheten. Spänningen inför den stora potentialen är biasen i arbete, inte ett skäl."
+        },
+        {
           "typ": "multi",
           "fraga": "Vilka av dessa är tecken på sund disciplin inför en berättelse eller en stor potential?",
           "underrubrik": "Välj alla som stämmer",
           "alternativ": [
             "Du behandlar berättelsen som en hypotes att pröva mot fundamenta",
             "Ditt främsta skäl att äga är att narrativet är fängslande",
-            "Du parar varje potential med en uppskattning av dess sannolikhet",
+            "Du parar varje potential med en uppskattning av dess sannolikhet och tänker i förväntat värde",
             "Priset går bara ihop om det storslagna bästa fallet blir verklighet"
           ],
           "ratt": [0, 2],

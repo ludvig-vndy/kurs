@@ -3,55 +3,99 @@
   "lektion": "15.2",
   "titel": "Fastighet och cykliskt",
   "niva": "Avancerad",
-  "tid_min": 11,
-  "mal": "Efter lektionen kan eleven analysera fastighetsbolag genom substansvärde, belåningsgrad och driftnetto, och cykliska bolag genom normaliserad vinst över hela cykeln utan att gå i topp- eller bottenfällan.",
+  "tid_min": 14,
+  "mal": "Efter lektionen kan eleven analysera fastighetsbolag genom förvaltningsresultat, substansvärde, belåningsgrad och driftnetto med blick för den sammankopplade räntekänsligheten, och cykliska bolag genom normaliserad vinst över hela cykeln, position på kostnadskurvan och balansräkningen som överlevnad, utan att gå i topp- eller bottenfällan.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 15.2",
       "titel": "Fastighet och cykliskt",
-      "ingress": "Två sektorer där standardramverket leder vilse, fastigheter och cykliska bolag, kräver varsitt eget set mått för att vinsten inte ska lasa dig i stället för tvärtom."
+      "ingress": "Två sektorer där standardramverket leder vilse. Fastigheter och cykliska bolag kräver varsitt eget set mått, annars läser resultaträkningen dig i stället för tvärtom."
     },
     {
       "typ": "reading",
-      "kicker": "FASTIGHET",
-      "lead": "En fastighets redovisade vinst domineras av något som inte alls är drift: orealiserade värdeförändringar på fastigheterna. Läs förvaltningsresultatet separat.",
-      "highlight": "En fastighets redovisade vinst domineras av något som inte alls är drift",
+      "kicker": "FASTIGHET: VAD ÄR EGENTLIGEN VINST",
+      "lead": "En fastighets redovisade resultat domineras av något som inte alls är drift: orealiserade värdeförändringar på fastigheterna. Läs förvaltningsresultatet separat.",
+      "highlight": "domineras av något som inte alls är drift",
       "brodtext": [
-        "Dela resultatet i två delar som har nästan ingenting med varandra att göra. Förvaltningsresultatet är den rena intjäningen: hyresintäkter minus drift och underhåll (det ger driftnettot), minus administration, minus räntor. Det är fastighetsbolagets motsvarighet till rörelseresultat efter ränta, och där läser du hur det går på riktigt.",
-        "Värdeförändringarna är den andra delen. Fastigheter redovisas till verkligt värde, så portföljen skrivs upp och ned mot marknadens avkastningskrav utan att en krona bytt händer. De svängningarna är ofta större än hela förvaltningsresultatet. När en fastighetsvinst exploderar eller kollapsar kommer rörelsen nästan alltid härifrån, medan driften står still."
+        "Första gången man tittar på ett fastighetsbolag brukar något kännas fel. Vinsten har dubblats på ett år, men hyresgästerna är desamma, husen är desamma och inte en kvadratmeter ny har byggts. Året därpå rasar samma vinst, fast verksamheten rullar precis som förut. Den som läser den redovisade vinsten som ett mått på hur det går drar fel slutsats både på uppgången och på nedgången.",
+        "Dela därför resultatet i två delar som har nästan ingenting med varandra att göra. Förvaltningsresultatet är den rena intjäningen: hyresintäkter minus drift och underhåll (det ger driftnettot), minus central administration, minus räntekostnader. Det är fastighetsbolagets motsvarighet till en industrikoncerns rörelseresultat efter ränta, och här läser du hur det går på riktigt.",
+        "Värdeförändringarna är den andra delen. Fastigheter redovisas till verkligt värde, så varje kvartal skrivs portföljen upp eller ned mot vad marknaden tror den är värd, utan att en krona bytt händer. De svängningarna är ofta större än hela förvaltningsresultatet, och de är orealiserade tills huset säljs. När en fastighetsvinst exploderar eller kollapsar kommer rörelsen nästan alltid härifrån, medan driften står still."
       ],
-      "takeaway": "Läs aldrig den redovisade vinsten först. Gå till förvaltningsresultatet och fråga vad driften tjänar, och hur det utvecklats per aktie över flera år."
+      "takeaway": "Läs aldrig den redovisade vinsten först. Gå till förvaltningsresultatet, fråga vad driften tjänar, och följ det per aktie över flera år. Värdeförändringen är marknadens humör satt i siffror, inte intjäning."
     },
     {
       "typ": "concept",
-      "kicker": "SUBSTANS OCH RÄNTA",
-      "titel": "Substansvärde, belåningsgrad och den sammankopplade räntekänsligheten",
+      "kicker": "SUBSTANSVÄRDE OCH BELÅNINGSGRAD",
+      "titel": "Vad bolaget äger, och hur mycket av det som är lånat",
       "visual": {
         "typ": "andel",
         "delar": [
-          { "etikett": "Lån (belåningsgrad)", "varde": 60 },
+          { "etikett": "Lån (belåningsgrad 60 procent)", "varde": 60 },
           { "etikett": "Substansvärde (till ägarna)", "varde": 40, "accent": true }
         ],
         "figurtext": "Illustrativt. Fastighetsvärde 10 000, lån 6 000, substans 4 000. Belåningsgrad 60 procent."
       },
-      "forklaring": "För att mäta vad bolaget är värt använder du substansvärdet, inte vinsten: tillgångarnas verkliga värde minus skulderna, ungefär vad som blir kvar till ägarna. Aktien handlas med premie eller rabatt mot det. En rabatt mot ett uppblåst substansvärde är ingen rabatt: granska vilket avkastningskrav bolaget självt använt på sina hus. Belåningsgraden mot räntebindningen avgör hur hårt stigande räntor slår. När ränta stiger äter räntan förvaltningsresultatet medan högre avkastningskrav sänker fastighetsvärdet, belåningsgraden och substansen på en gång."
-    },
-    {
-      "typ": "reading",
-      "kicker": "CYKLISKT",
-      "lead": "För ett cykliskt bolag säger ett enskilt års vinst nästan ingenting. Intjäningen svänger våldsamt med en konjunktur och ett råvarupris bolaget inte kan styra.",
-      "highlight": "ett enskilt års vinst nästan ingenting",
-      "brodtext": [
-        "Stål, gruvor, basindustri, skog, kemi, allt som lever på ett råvarupris. Kostnaderna är ganska fasta, så varje rörelse i priset slår rakt igenom till vinsten med hävstång. På toppen tjänar bolaget enormt, i dalen lite eller inget. Slutar du fråga vad bolaget tjänar nu och börjar fråga vad det tjänar över en hel cykel, och om det överlever dalen, får du den fråga som håller.",
-        "Det första verktyget är därför normaliserad vinst: en uppskattning av vad bolaget tjänar i snitt över cykeln, medvetet bortseende från både rekordåret och krisåret. Det andra är positionen på kostnadskurvan. Råvarupriset är gemensamt, men kostnaden skiljer sig. När priset faller går högkostnadsproducenterna först med förlust, medan lågkostnadsproducenter överlever och kan komma ut starkare."
-      ],
-      "takeaway": "Vakta mest av allt kapitaldisciplinen. Den disciplinerade ledningen håller igen på expansion i euforin på toppen och investerar när andra är rädda."
+      "forklaring": "För att mäta vad bolaget är värt använder du substansvärdet, inte vinsten: tillgångarnas verkliga värde minus skulderna, alltså ungefär vad som blir kvar till ägarna om allt sålts och lånen betalats. Aktien handlas sedan med premie (över substans) eller rabatt (under). En rabatt betyder att marknaden tror substansvärdet är för högt satt, ofta för att den väntar sig fallande fastighetsvärden. Belåningsgraden (lån genom fastighetsvärde) säger hur stor del av husen som är lånefinansierad, och tillsammans med räntebindningen avgör den hur hårt stigande räntor slår. Det är fastighetsbolagets enskilt största risk, och den är inbyggd i hela affärsmodellen."
     },
     {
       "typ": "dataviz",
-      "titel": "Lågt P/E på toppvinsten är fällan",
-      "underrubrik": "Vinsten går i vågor runt en normaliserad mittpunkt. Ett lågt P/E på toppen bygger på en vinst som snart inte finns.",
+      "titel": "Varför värdet rör sig fast hyran står still",
+      "underrubrik": "Fastighetsvärde är ungefär driftnetto delat med avkastningskravet. Samma driftnetto, olika yield, helt olika värde.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Yield 4 procent", "varde": 1250, "accent": true },
+          { "kategori": "Yield 5 procent", "varde": 1000 },
+          { "kategori": "Yield 6 procent", "varde": 833 }
+        ],
+        "etiketter": "Fastighetsvärde vid driftnetto 50, olika avkastningskrav",
+        "figurtext": "Illustrativt. Driftnetto 50 delat med yield. Vid 5 procent blir värdet 1 000, vid 4 procent 1 250, vid 6 procent omkring 833."
+      },
+      "slutsats": "Värdet på en fastighet bestäms av två tal: driftnettot och avkastningskravet, på fackspråk yield, den årliga direktavkastning köpare kräver. Eftersom yield i stora drag följer räntan rör sig fastighetsvärden våldsamt när räntan rör sig, helt utan att en enda hyra ändrats. Det är hävstången bakom hela sektorn."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN SAMMANKOPPLADE RÄNTEKÄNSLIGHETEN",
+      "lead": "När räntan stiger för ett högt belånat bolag slår det inte på ett ställe utan på fyra samtidigt: förvaltningsresultat, fastighetsvärde, belåningsgrad och substans på en gång.",
+      "highlight": "på fyra samtidigt",
+      "brodtext": [
+        "Tänk igenom kedjan på ett illustrativt bolag (talen är konstruerade, jag sätter aldrig siffror på namngivna bolag). Driftnetto 500, fastighetsvärde 10 000 vid yield 5 procent, lån 6 000 vilket ger belåningsgrad 60 procent och substansvärde 4 000. Med 3 procents ränta på lånen blir räntekostnaden 180, och förvaltningsresultatet landar runt 500 minus 50 i administration minus 180, alltså omkring 270.",
+        "Vrid nu upp räntan. Avkastningskravet stiger från 5 till 6 procent, så fastighetsvärdet faller mot 8 333, en orealiserad värdeförlust på cirka 1 667 som är långt större än hela förvaltningsresultatet. Belåningsgraden hoppar samtidigt mot 72 procent, för lånet ligger kvar medan värdet krympt. När räntebindningarna löper ut och lånen omsätts till säg 5 procent stiger räntekostnaden mot 300, och förvaltningsresultatet pressas från 270 mot 150. Substansvärdet faller från 4 000 mot 2 333.",
+        "Hyresgästerna betalade hela tiden och driftnettot rörde sig knappt. Ändå slog ränteuppgången mot vinsten, fastighetsvärdet, belåningsgraden och substansen på samma gång. Ett bolag med 40 procents belåning och långa, utspridda räntebindningar hade svidit långt mindre. Och en rabatt mot ett uppblåst substansvärde är ingen rabatt: har bolaget självt satt ett optimistiskt lågt avkastningskrav på sina hus ser rabatten stor ut tills värderingen tas ned mot verkligheten."
+      ],
+      "takeaway": "Ställ belåningsgraden mot räntebindningen och stresstesta en högre ränta. Granska vilket avkastningskrav bolaget självt använt innan du tror på substansvärdet. Rabatten är bara värd något om talet den räknas mot är ärligt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "CYKLISKT: ETT ÅR SÄGER NÄSTAN INGET",
+      "lead": "För ett cykliskt bolag säger ett enskilt års vinst nästan ingenting. Intjäningen svänger våldsamt med en konjunktur och ett råvarupris bolaget inte kan styra.",
+      "highlight": "ett enskilt års vinst nästan ingenting",
+      "brodtext": [
+        "Det finns en klassisk fälla som fångar nästan varje ny investerare en gång, och den ser ut som ett fynd. Du hittar ett stålbolag eller gruvbolag som handlas till P/E 5, halva priset mot marknaden, en kassako som tjänar som aldrig förr. Du köper. Sedan halveras vinsten, och halveras igen, och aktien följer med ned. Du köpte på toppen av en cykel, och det låga P/E-talet var varningssignalen.",
+        "Stål, gruvor, basindustri, skog, kemi, allt som lever på ett råvarupris. Priset stiger och faller med utbud och efterfrågan i världen, och eftersom kostnaderna är ganska fasta slår varje rörelse i priset rakt igenom till vinsten med hävstång. På toppen tjänar bolaget enormt, i dalen lite eller inget. Det säger ingenting om ledningen, bara om cykelns natur. Som ägare måste du då sluta fråga vad bolaget tjänar nu och börja fråga vad det tjänar över en hel cykel, och om det överlever dalen.",
+        "Det första verktyget är därför normaliserad vinst: en uppskattning av vad bolaget tjänar i snitt över en hel cykel, från topp till dal och tillbaka. Du tar flera års resultat och bildar dig en bild av mittpunkten, medvetet bortseende från både rekordåret och krisåret. Värderar du på toppvinsten ser allt löjligt billigt ut precis när det är som farligast. Värderar du på dalvinsten ser allt skrämmande dyrt ut just när det kan vara läge."
+      ],
+      "takeaway": "All meningsfull värdering av ett cykliskt bolag vilar på den normaliserade vinsten, inte på topp- eller dalåret. Det enskilda årets vinst är nästan brus."
+    },
+    {
+      "typ": "concept",
+      "kicker": "KOSTNADSKURVAN",
+      "titel": "Var på kurvan står bolaget, och överlever det dalen",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Lågkostnadsproducent", "text": "Låg produktionskostnad och liten skuld. I dalen tjänar bolaget fortfarande något litet, överlever bekvämt och kan köpa tillgångar billigt av dem som tvingas sälja. Kan komma ut starkare ur en kris när konkurrenter slås ut." },
+          { "rubrik": "Högkostnadsproducent", "text": "Hög produktionskostnad och ofta tung skuld från expansion på toppen. När priset faller går bolaget först med förlust på varje ton, och räntorna ska betalas oavsett. Samma cykel, samma råvarupris, men kämpar för sin överlevnad." }
+        ],
+        "figurtext": "Råvarupriset är gemensamt för alla. Det som skiljer ödena åt är positionen på kostnadskurvan och skuldsättningen."
+      },
+      "forklaring": "Tänk dig alla producenter radade efter vad det kostar dem att framställa ett ton stål eller en enhet koppar, från billigast till dyrast. Priset är gemensamt, kostnaden skiljer sig. När priset faller går högkostnadsproducenterna först med förlust och tvingas stänga, medan lågkostnadsproducenterna fortsätter tjäna eller åtminstone överleva. Var bolaget står på kurvan avgör om en nedgång är en svacka eller en dödsdom. Och under allt detta: balansräkningen är överlevnad. En stark balansräkning tål en nedgång utan nödåtgärder, en svag tvingar fram nyemission eller nödförsäljning i botten, precis när det kostar som mest."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Vinsten går i vågor kring en normaliserad mittpunkt",
+      "underrubrik": "Den redovisade vinsten svänger, den normaliserade ligger still. Lägg P/E på fel av dem och du köper dyrt i tron att du köper billigt.",
       "visual": {
         "typ": "linjediagram",
         "serier": [
@@ -59,9 +103,21 @@
           { "namn": "Redovisad vinst", "stil": "streckad", "punkter": [500, 1100, 1800, 2000, 1400, 800, 500, 300, 600] }
         ],
         "markor": { "serieIndex": 1, "punktIndex": 3, "etikett": "P/E 5, farligt" },
-        "figurtext": "Illustrativt. Toppvinst 2 000 ger P/E 5, men på normaliserad vinst 800 är P/E 12,5, en helt vanlig värdering."
+        "figurtext": "Illustrativt. Toppvinst 2 000 ger P/E 5, men på normaliserad vinst 800 är P/E 12,5, en helt vanlig värdering. I botten, vinst 300, ser P/E skyhögt ut just när läget kan vara bäst."
       },
-      "slutsats": "Räkna alltid P/E på normaliserad vinst. För cykliska bolag är talet ofta bakvänt: lågt vid toppen (farligt), högt vid botten (möjligt läge). När vinsten svänger för vilt ger P/B en lugnare lins."
+      "slutsats": "Här ligger fällan: P/E räknas på dagens vinst. På toppen är vinsten rekordhög, så även ett normalt pris ger lågt P/E, fast vinsten är på väg att försvinna. P/E för cykliska bolag är därför ofta bakvänt: lågt vid toppen (farligt), högt vid botten (möjligt läge). Räkna alltid på normaliserad vinst, och när vinsten svänger för vilt ger P/B en lugnare lins, för fabriker och gruvor svänger inte som kvartalsvinsten."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KAPITALDISCIPLIN",
+      "lead": "Vakta mest av allt kapitaldisciplinen, för det är här cykliska bolag förstör mest värde för sina ägare. Frestelsen är brutal.",
+      "highlight": "det är här cykliska bolag förstör mest värde för sina ägare",
+      "brodtext": [
+        "På toppen flödar kontanterna in, priserna är höga, och ledningen vill bygga ut, förvärva, öppna nya gruvor. Men kapacitet som beställs på toppen står ofta lånefinansierad och färdig först när cykeln vänt och priserna fallit, så bolaget sitter med överkapacitet och skuld i dalen. Den disciplinerade ledningen gör tvärtom: håller igen på expansion när alla är euforiska och investerar när andra är rädda. De flesta klarar det inte, för incitamenten drar åt fel håll.",
+        "Knyt ihop det med kostnadskurvan och balansräkningen, för där skiljs två öden. En lågkostnadsproducent med stark balansräkning kan rida ut nedgången och köpa tillgångar billigt av dem som tvingas sälja. En högkostnadsproducent med tung skuld är i livsfara i samma nedgång. En cyklisk nedgång prövar inte bara bolaget, den rensar branschen, och den som överlever vinner ofta på de andras fall.",
+        "Och under allt detta ligger en sak du aldrig får glömma: råvarupriset kan ingen ledning styra. Du kan analysera kostnaden, balansräkningen och disciplinen, men priset sätts av världen. Därför är ödmjukhet inför cykliska bolag aldrig fel."
+      ],
+      "takeaway": "Fråga var i cykeln bolaget står, inte vad det tjänade i fjol. Bedöm position på kostnadskurvan, kräv en balansräkning som bär genom dalen, och misstro varje lågt P/E på en synbar toppvinst."
     },
     {
       "typ": "quiz",
@@ -75,7 +131,18 @@
             "Bolaget byter redovisningsprincip varje år"
           ],
           "ratt": [1],
-          "forklaring": "Fastigheter redovisas till verkligt värde, så portföljen skrivs upp och ned mot marknadens humör utan att en krona bytt händer. Driften kan stå still."
+          "forklaring": "Fastigheter redovisas till verkligt värde, så portföljen skrivs upp och ned mot marknadens humör utan att en krona bytt händer. Förvaltningsresultatet, den rena driften, kan stå still hela tiden."
+        },
+        {
+          "typ": "single",
+          "fraga": "Avkastningskravet (yield) på ett fastighetsbolags hus stiger från 5 till 6 procent medan driftnettot står still. Vad händer?",
+          "alternativ": [
+            "Ingenting, eftersom hyrorna är oförändrade",
+            "Fastighetsvärdet faller och belåningsgraden stiger, eftersom värdet är ungefär driftnetto delat med yield medan lånet ligger kvar",
+            "Driftnettot dubblas automatiskt"
+          ],
+          "ratt": [1],
+          "forklaring": "Värde är driftnetto delat med avkastningskrav, så ett högre krav sänker värdet utan att en hyra ändrats. Lånet ligger kvar, så belåningsgraden stiger och substansen krymper på en gång."
         },
         {
           "typ": "single",
@@ -86,7 +153,18 @@
             "Cykliska bolag redovisar aldrig någon vinst"
           ],
           "ratt": [0],
-          "forklaring": "På toppen är vinsten rekordhög, så även ett normalt pris ger lågt P/E. När cykeln vänder rasar vinsten. Räkna alltid P/E på normaliserad vinst."
+          "forklaring": "På toppen är vinsten rekordhög, så även ett normalt pris ger lågt P/E. När cykeln vänder rasar vinsten. Räkna alltid P/E på normaliserad vinst, mittpunkten över hela cykeln."
+        },
+        {
+          "typ": "single",
+          "fraga": "Två producenter möter samma fallande råvarupris. Vad avgör om nedgången blir en svacka eller en dödsdom?",
+          "alternativ": [
+            "Hur stor utdelning de betalar i dalen",
+            "Positionen på kostnadskurvan tillsammans med balansräkningen: en lågkostnadsproducent med liten skuld överlever, en högkostnadsproducent med tung skuld kämpar för livet",
+            "Vilken av dem som hinner sänka priset först"
+          ],
+          "ratt": [1],
+          "forklaring": "Priset är gemensamt, kostnaden skiljer sig. Lågkostnadsproducenten tjänar något även i botten och kan köpa billigt av dem som tvingas sälja, medan högkostnadsproducenten med skuld går med förlust på varje ton."
         },
         {
           "typ": "multi",
