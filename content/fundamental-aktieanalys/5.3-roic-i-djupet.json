@@ -3,14 +3,14 @@
   "lektion": "5.3",
   "titel": "ROIC i djupet",
   "niva": "Avancerad",
-  "tid_min": 11,
-  "mal": "Efter lektionen kan eleven bedöma värdeskapande på spreaden mot kapitalkostnaden, väga in reinvesteringsförmågan, och genomskåda en ROE som egentligen är hävstång.",
+  "tid_min": 14,
+  "mal": "Efter lektionen kan eleven bedöma värdeskapande på spreaden mot kapitalkostnaden, väga in hur mycket som kan återinvesteras till den avkastningen, och genomskåda en hög ROE som egentligen är hävstång.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 5.3",
       "titel": "ROIC i djupet",
-      "ingress": "En hög ROIC säger lite på egen hand. Den får mening först mot vad kapitalet kostar, hur mycket som kan återinvesteras, och om talet är intjänat eller lånat."
+      "ingress": "En hög ROIC säger förvånansvärt lite på egen hand. Den får mening först mot tre saker: vad kapitalet kostar, hur mycket som kan återinvesteras till avkastningen, och om talet är intjänat eller lånat."
     },
     {
       "typ": "reading",
@@ -18,8 +18,8 @@
       "lead": "En verksamhet skapar värde bara när den tjänar mer på sitt kapital än kapitalet kostar. Gapet mellan de två, spreaden, är det verkliga måttet på värdeskapande.",
       "highlight": "En verksamhet skapar värde bara när den tjänar mer på sitt kapital än kapitalet kostar.",
       "brodtext": [
-        "Allt kapital, skuld och eget kapital, har en kostnad. Långivarna vill ha ränta, ägarna betalt för risken. Den sammanvägda kostnaden är kapitalkostnaden, ofta WACC. Tjänar verksamheten en ROIC över den skapar den värde, ligger ROIC under den förstör den värde, även om bolaget redovisar vinst. ROIC lika med kapitalkostnaden betyder att man springer för att stå stilla.",
-        "Att redovisad vinst kan vara positiv medan värde förstörs förvånar många. Förklaringen är att resultaträkningen drar av räntan på skulden men aldrig tar betalt för kostnaden för eget kapital. Ägarnas avkastningskrav syns ingenstans i bokföringen. Prissätter du allt kapital, även det egna, kan ett lönsamt bolag visa sig förstöra värde. Det är tanken bakom ekonomisk vinst (EVA)."
+        "Varje verksamhet finansieras av kapital, skuld och eget kapital, och det kapitalet har en kostnad. Långivarna vill ha ränta. Ägarna vill ha betalt för risken de tar. Den sammanvägda kostnaden kallar vi kapitalkostnaden, ofta WACC. Regeln är enkel och kraftfull: tjänar verksamheten en ROIC över sin kapitalkostnad skapar den värde, ligger ROIC under den förstör den värde, även om bolaget fortfarande redovisar vinst. ROIC lika med kapitalkostnaden betyder att man springer för att stå stilla. Spreaden, ROIC minus kapitalkostnad, är värdeskapandets motor.",
+        "Att redovisad vinst kan vara positiv medan värde förstörs förvånar många. Förklaringen är att resultaträkningen drar av räntan på skulden men aldrig tar betalt för kostnaden för eget kapital. Ägarnas avkastningskrav syns ingenstans i bokföringen. När du väl prissätter allt kapital, även det egna, kan ett lönsamt bolag visa sig förstöra värde. Det är hela tanken bakom ekonomisk vinst (EVA): resultatet efter att en avgift för allt använt kapital dragits av. Det exakta talet för kapitalkostnaden behöver du sällan bråka om, för om ROIC ligger klart över eller klart under en grovt uppskattad ribba avgör principen slutsatsen långt innan en decimal gör det."
       ],
       "takeaway": "Värdefrågan är inte om bolaget är lönsamt, utan om det tjänar mer på sitt kapital än kapitalet kostar. En högre och ärligare ribba."
     },
@@ -35,19 +35,44 @@
           { "kategori": "Kapitalkostnad", "varde": 9 }
         ],
         "etiketter": "Procent, illustrativa nivåer",
-        "figurtext": "Illustrativ. Skapare har positiv spread, Förstörare negativ, mot samma kapitalkostnad runt 9 procent."
+        "figurtext": "Illustrativ. Skapare har en positiv spread, Förstörare en negativ, båda mot samma kapitalkostnad runt 9 procent."
       },
-      "forklaring": "Är ROIC över kapitalkostnaden lägger varje ny investerad krona till värde, och mer tillväxt betyder mer värde. Är ROIC under kapitalkostnaden förlorar varje ny krona pengar, och då växer skadan med varje expansion. Tillväxt är ingen dygd i sig. Tillväxt till en avkastning under kapitalkostnaden är aktivt värdeförstörande, även när omsättning och redovisad vinst stiger. Många imperiebyggen har vuxit sig till mindre värdefulla bolag på det sättet."
+      "forklaring": "Är ROIC över kapitalkostnaden lägger varje ny investerad krona till värde, och mer tillväxt betyder mer värde. Då är tillväxt något att hylla. Är ROIC under kapitalkostnaden förlorar varje ny krona pengar, och då växer skadan med varje expansion. Tillväxt är ingen dygd i sig. Tillväxt till en avkastning under kapitalkostnaden är aktivt värdeförstörande, även när omsättning och redovisad vinst stiger. Bolag Skapare bör växa allt det kan, Bolag Förstörare gör bäst i att inte växa alls utan återföra kapitalet. Många imperiebyggen har vuxit sig till mindre värdefulla bolag just genom att förväxla de två."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SKEPSISEN",
+      "lead": "Heja på tillväxt bara när spreaden är positiv. Tillväxt till en negativ spread är värdeförstörelse utklädd till framgång, hur imponerande omsättningsraden än ser ut.",
+      "highlight": "Tillväxt till en negativ spread är värdeförstörelse utklädd till framgång",
+      "brodtext": [
+        "Ser du bara omsättning och vinst har du två framgångssagor framför dig. Ser du spreaden har du en värdeskapare och en värdeförstörare. Det är distinktionen rubriksiffrorna döljer, och förklaringen till hur kapitaltunga bolag och imperiebyggare kan växa i decennier medan ägarna förlorar. Rikta därför skepsisen mot två arketyper: kapitaltunga verksamheter som vanemässigt tjänar under sin kapitalkostnad, och serieförvärvare som växer genom att betala för mycket.",
+        "Den mentala modellen är kompakt. Värde skapas av spreaden mellan ROIC och kapitalkostnad, multiplicerat med hur mycket kapital som kan placeras till den spreaden. En hög ROIC väl över kapitalkostnaden, med en lång bana att återinvestera på, är själva definitionen av en ränta-på-ränta-maskin. Den andra faktorn, hur mycket som kan återinvesteras, är nästa steg."
+      ],
+      "takeaway": "Spreadens tecken avgör om bolaget alls bör växa. Positiv spread: väx allt du kan. Negativ spread: återför kapitalet i stället."
     },
     {
       "typ": "concept",
       "kicker": "BANAN",
-      "titel": "Reinvesteringsförmåga: ROIC gånger bana",
+      "titel": "Reinvesteringsförmåga: ROIC gånger återinvesteringsgrad",
       "brodtext": [
-        "En hög ROIC talar om att verksamheten tjänar god avkastning. Den talar inte om hur mycket värde som faktiskt växer med ränta på ränta. Det avgörs av hur stor del av vinsten bolaget kan plöja tillbaka till den höga avkastningen. Grovt blir den inre tillväxten ungefär ROIC gånger återinvesteringsgraden: med ROIC 20 procent ger en återinvesteringsgrad på 80 procent runt 16 procents inre tillväxt, medan 20 procent ger runt 4 (illustrativt). Samma avkastning, helt olika ränta på ränta, där kassakon återför resten som kontanter.",
-        "Det ger två sorters högkvalitativ verksamhet. Ränta-på-ränta-maskinen har hög ROIC och en lång bana, plöjer tillbaka det mesta till hög avkastning i många år, och växer värde internt. Kassakon har lika hög ROIC men är mättad, kan inte placera mer lönsamt, och återför överskottet. Båda är utmärkta, men ränta på ränta sker på olika ställen: i maskinen internt, i kassakon via kontanterna den lämnar tillbaka.",
-        "Banan spelar lika stor roll som avkastningen, eftersom ränta på ränta beror på båda faktorerna multiplicerade. En sista varning knyter tillbaka till spreaden: ett bolag desperat att växa kan återinvestera tungt även när avkastningen på nya pengar fallit under kapitalkostnaden. Bevaka därför den inkrementella avkastningen på nyinvesterat kapital, inte bara genomsnittet. Den avslöjar om bolaget ännu återinvesterar till hög avkastning eller in i medelmåttighet."
+        "En hög ROIC talar om att verksamheten tjänar god avkastning. Den talar inte om hur mycket värde som faktiskt växer med ränta på ränta. Det avgörs av hur stor del av vinsten bolaget kan plöja tillbaka till den höga avkastningen. Grovt uttryckt blir den inre tillväxten ungefär ROIC gånger återinvesteringsgraden, alltså avkastningen gånger andelen av vinsten som plöjs tillbaka i stället för att betalas ut. Återinvesteringen sker i underhåll och tillväxt av rörelsen, i rörelsekapital och i förvärv.",
+        "Det ger två tydligt olika sorters högkvalitativ verksamhet. Ränta-på-ränta-maskinen har hög ROIC och en lång bana, plöjer tillbaka det mesta till hög avkastning i många år, och växer värde internt med ränta på ränta. Tänk ett beprövat butikskoncept som rullar ut nya enheter till hög avkastning. Kassakon har lika hög ROIC men är mogen och mättad, kan inte placera mer kapital lönsamt, och återför överskottet som utdelning eller återköp. Tänk en stark varumärkesverksamhet som vräker ut kontanter men inte kan återinvestera mycket. Båda är utmärkta, men ränta på ränta sker på olika ställen: i maskinen internt, i kassakon via kontanterna den lämnar tillbaka, i dina händer.",
+        "Banan spelar lika stor roll som avkastningen, eftersom ränta på ränta beror på båda faktorerna multiplicerade. En måttlig ROIC med en väldig återinvesteringsbana kan skapa mer värde över tid än en skyhög ROIC utan någonstans att växa. En sista varning knyter tillbaka till spreaden: ett bolag desperat att växa kan återinvestera tungt även när avkastningen på nya pengar fallit under kapitalkostnaden. Bevaka därför den inkrementella avkastningen på nyinvesterat kapital, inte bara genomsnittet. Genomsnittet döljer det. Den inkrementella avkastningen avslöjar om bolaget ännu återinvesterar till hög avkastning eller in i medelmåttighet."
       ]
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Samma ROIC, helt olika ränta på ränta",
+      "underrubrik": "Två bolag tjänar båda ROIC 20 procent. Det enda som skiljer dem är hur mycket de kan återinvestera till den avkastningen.",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Räntemaskin: inre tillväxt cirka 16 procent", "text": "Lång bana, återinvesterar 80 procent av vinsten till samma cirka 20 procent. Inre tillväxt blir 20 gånger 80 procent, runt 16 procent om året. Värdet växer internt så länge banan räcker. Håller det i ett decennium mer än fyrdubblas inre värdet, allt från bolagets egna högavkastande vinster." },
+          { "rubrik": "Kassako: inre tillväxt cirka 4 procent", "text": "Mogen och mättad, kan bara återinvestera 20 procent och betalar ut 80. Inre tillväxt blir 20 gånger 20 procent, runt 4 procent om året, plus en stor kontantåterföring. Fortfarande en fin verksamhet, men ränta på ränta sker nu i vad du gör med utdelningarna." }
+        ],
+        "figurtext": "Illustrativa nivåer. Samma superba ROIC, men banan skiljer dem åt: en självväxande maskin och en kontantfontän."
+      },
+      "slutsats": "För långsiktig ränta på ränta räcker det inte att fråga hur hög avkastningen är. Du måste fråga hur mycket som kan återinvesteras till den, och hur länge. Idealet, hög ROIC och en lång bana samtidigt, är det sällsyntaste och mest värdefulla i investering."
     },
     {
       "typ": "reading",
@@ -55,10 +80,25 @@
       "lead": "ROE kan blåsas upp av skuld. En hög ROE kan signalera en lysande verksamhet, eller bara en tungt belånad, och det är två mycket olika saker.",
       "highlight": "ROE kan blåsas upp av skuld.",
       "brodtext": [
-        "Att låna krymper basen av eget kapital och förstorar avkastningen på den, så ett bolag kan lyfta sin ROE utan en enda förbättring i rörelsen. DuPont-nedbrytningen visar var en ROE kommer ifrån: nettomarginal gånger kapitalomsättning gånger finansiell hävstång. De två första är den operativa kvaliteten (tillsammans ROA), den tredje är ren finansiering. ROA i sin tur bortser från hur verksamheten finansieras och behandlar alla tillgångar lika, inklusive kassa och goodwill som kan snedvrida talet.",
-        "Här ligger styrkan i ROIC. Den bygger på rörelseresultat efter skatt (NOPAT) och totalt investerat kapital, neutraliserar finansieringen, och kan inte trissas upp genom att stapla på skuld. När ROE är hög men ROIC bara medelmåttig är gapet hävstång, och det gapet är en flagga. Hävstången bär dessutom en dold risk: den förstorar förlusterna i dåliga tider och höjer risken för finansiell nöd. Faller vinsten måste räntan ändå betalas, och det tunna egna kapitalet kan utplånas."
+        "ROE är nettovinst genom eget kapital, ROA är nettovinst genom totala tillgångar. Båda låter som rena kvalitetsmått, men var och en har en brist. ROE:s brist är att den höjs av skuld: att låna krymper basen av eget kapital och förstorar avkastningen på den, så ett bolag kan lyfta sin ROE utan en enda förbättring i den underliggande rörelsen. ROA:s brist är att den bortser från hur verksamheten finansieras och behandlar alla tillgångar lika, inklusive kassa och goodwill som kan snedvrida talet.",
+        "Det avgörande är att se var en ROE kommer ifrån, och DuPont-nedbrytningen gör det möjligt: ROE lika med nettomarginal gånger kapitalomsättning gånger finansiell hävstång (tillgångar genom eget kapital). De två första är den operativa kvaliteten, och tillsammans utgör de ROA. Den tredje, hävstången, är ren finansiering. Ju mer skuld, desto högre kvot tillgångar mot eget kapital, och desto högre ROE, oavsett hur bra verksamheten är. En hög ROE kan alltså komma från en lysande rörelse eller helt enkelt från att stapla på skuld. Nedbrytningen visar vilket.",
+        "Här ligger styrkan i ROIC. Den bygger på rörelseresultat efter skatt (NOPAT) och totalt investerat kapital, neutraliserar finansieringen, och kan inte trissas upp genom att stapla på skuld. När ROE är hög men ROIC bara medelmåttig är gapet hävstång, och det gapet är en flagga. Hävstången bär dessutom en dold risk: den förstorar förlusterna i dåliga tider och höjer risken för finansiell nöd. Faller vinsten måste räntan ändå betalas, och det tunna egna kapitalet kan utplånas. En hävstångsdriven ROE är alltså inte bara av lägre kvalitet än den ser ut, den är också farligare."
       ],
       "takeaway": "Var på din vakt mot en hög ROE tills du kollat om den är intjänad eller lånad. Reflexen är att ställa ROE bredvid ROIC, och låta ROIC vara kärnmåttet på kvalitet."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Var en hög ROE kommer ifrån",
+      "underrubrik": "Två bolag med identisk rörelse och samma ROIC. Det enda som skiljer dem är finansieringen.",
+      "visual": {
+        "typ": "andel",
+        "delar": [
+          { "etikett": "Belånat: ROE cirka 17 procent", "varde": 68, "accent": true },
+          { "etikett": "Skuldfritt: ROE cirka 8 procent", "varde": 32 }
+        ],
+        "figurtext": "Illustrativa nivåer. Båda tjänar samma rörelseresultat på samma tillgångar, så ROIC är identisk. Belånats dubbelt så höga ROE kommer helt och hållet av hävstång, inte av en bättre verksamhet."
+      },
+      "slutsats": "En investerare som bara ser ROE dömer Belånat som klart överlägset. En som jämför ROE med ROIC ser att den operativa kvaliteten är identisk, att hela ROE-gapet är hävstång, och att Belånat dessutom är långt skörare i en nedgång."
     },
     {
       "typ": "quiz",
@@ -76,14 +116,47 @@
         },
         {
           "typ": "single",
+          "fraga": "Hur kan ett bolag redovisa vinst och ändå förstöra värde?",
+          "alternativ": [
+            "Genom att betala för hög utdelning",
+            "Resultaträkningen drar av räntan på skulden men tar aldrig betalt för kostnaden för eget kapital",
+            "Det är omöjligt, redovisad vinst betyder alltid värdeskapande"
+          ],
+          "ratt": [1],
+          "forklaring": "Ägarnas avkastningskrav syns ingenstans i bokföringen. När man prissätter allt kapital, även det egna, kan ett lönsamt bolag visa sig förstöra värde. Det är tanken bakom ekonomisk vinst (EVA)."
+        },
+        {
+          "typ": "single",
           "fraga": "Bolag A och B har båda ROIC 20 procent. A kan återinvestera 80 procent av vinsten, B bara 20 procent. Hur jämförs deras inre tillväxt?",
           "alternativ": [
             "Båda växer internt med ungefär 20 procent per år",
-            "A växer internt med ca 16 procent per år, B med ca 4 procent men återför mycket kontanter",
+            "A växer internt med cirka 16 procent per år, B med cirka 4 procent men återför mycket kontanter",
             "B växer snabbare eftersom det delar ut mer"
           ],
           "ratt": [1],
           "forklaring": "Inre tillväxt ungefär ROIC gånger återinvesteringsgrad: A ger 20 gånger 80 procent, runt 16, och B ger 20 gånger 20 procent, runt 4. Samma ROIC men banan gör hela skillnaden för ränta på ränta."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför ska man bevaka den inkrementella avkastningen på nyinvesterat kapital, inte bara genomsnittlig ROIC?",
+          "alternativ": [
+            "För att genomsnittet alltid är felräknat",
+            "För att den inkrementella avkastningen avslöjar om bolaget återinvesterar in i medelmåttighet eller fortfarande till hög avkastning",
+            "För att nyinvesterat kapital är skattefritt"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett bolag kan fortsätta återinvestera även när avkastningen på nya pengar fallit under kapitalkostnaden. Den inkrementella avkastningen, inte genomsnittet, visar om banan ännu är högavkastande eller om bolaget återinvesterar in i medelmåttighet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Två bolag har identisk rörelse och samma ROIC, men det skuldfria visar ROE cirka 8 procent medan det belånade visar ROE cirka 17 procent. Vad förklarar gapet?",
+          "alternativ": [
+            "Det belånade bolaget har en bättre verksamhet",
+            "Hela ROE-gapet är hävstång, och det belånade bolaget är dessutom skörare i en nedgång",
+            "ROIC måste vara felräknad eftersom ROE skiljer sig"
+          ],
+          "ratt": [1],
+          "forklaring": "Den underliggande rörelsen är identisk, så ROIC är oförändrad. Hela skillnaden i ROE kommer från hävstång, som dessutom höjer risken: faller vinsten måste räntan ändå betalas och det tunna egna kapitalet kan utplånas."
         },
         {
           "typ": "multi",

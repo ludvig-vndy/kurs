@@ -1,41 +1,130 @@
 {
   "kapitel": 5,
   "lektion": "5.1",
-  "titel": "Nyckeltal som faktiskt betyder något",
+  "titel": "Marginaler och ROIC",
   "niva": "Mellan",
-  "tid_min": 10,
-  "mal": "Efter lektionen kan eleven läsa marginaler och ROIC och veta vad de säger om ett bolags kvalitet.",
+  "tid_min": 14,
+  "mal": "Efter lektionen kan eleven läsa marginalkedjan och ROIC som en diagnos av ett bolags kvalitet: vad gapen mellan marginalerna avslöjar, hur trend, jämförelse och stabilitet ger talen mening, vad som smickrar en marginal, och varför ROIC neutraliserar finansiering och kan vara fingeravtrycket av en moat.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 5.1",
-      "titel": "Nyckeltal som faktiskt betyder något",
+      "titel": "Marginaler och ROIC",
       "ingress": "Marginaler och ROIC är där kvalitet visar sig först. Lär dig läsa dem så slutar de vara siffror och blir en diagnos av verksamheten."
     },
     {
       "typ": "reading",
-      "kicker": "GRUNDEN",
-      "lead": "Marginalen säger hur mycket av varje försäljningskrona som blir vinst, men det verkligt användbara är inte ett tal, det är kedjan: hur mycket som överlever från brutto till rörelse till netto.",
-      "highlight": "det verkligt användbara är inte ett tal, det är kedjan",
+      "kicker": "VARFÖR DET SPELAR ROLL",
+      "lead": "Marginalen säger hur mycket av varje försäljningskrona som blir vinst, men det användbara är inte ett tal, det är kedjan: hur mycket som överlever från brutto till rörelse till netto.",
+      "highlight": "det användbara är inte ett tal, det är kedjan",
       "brodtext": [
-        "Det finns tre marginaler, var och en ett steg längre ned i resultaträkningen. Bruttomarginalen kommer efter den direkta varukostnaden. Rörelsemarginalen kommer efter kostnaderna att driva verksamheten, alltså EBIT genom omsättning. Nettomarginalen kommer efter allt, inklusive ränta och skatt. Gapen mellan stegen bär informationen: gapet mellan brutto och rörelse visar vad bolaget spenderar på att driva sig självt, gapet mellan rörelse och netto visar bettet från ränta och skatt.",
-        "Tre linser gör avläsningen skarp. Trenden betyder oftast mer än nivån: en rörelsemarginal som expanderar signalerar hävstång eller prissättningskraft, en som pressas signalerar konkurrens eller kostnadstryck. Jämförelsen ger nivån mening, ett tal är bara högt eller lågt mot rätt branschkollegor. Stabiliteten är i sig en kvalitetssignal. Var dessutom vaksam på vad som smickrar en marginal, och stäm alltid av en marginalförbättring mot kassaflödet."
+        "Den kedjan är en karta över var ett bolag tjänar pengar och var de läcker ut. Tänk som ägare. Två bolag i samma bransch omsätter lika mycket. Det ena behåller dubbelt så mycket på sista raden, det andra arbetar lika hårt för halva belöningen. Den skillnaden är sällan slump.",
+        "Höga, stabila marginaler som ligger över branschen är ofta det finansiella fingeravtrycket av något speciellt: prissättningskraft, ett varumärke, en kostnadsfördel. Tunna, eroderande marginaler under branschen är frånvaron av samma sak. När du lär dig läsa kedjan blir marginaler en diagnos av verksamhetens kvalitet snarare än en isolerad siffra."
       ],
-      "takeaway": "Läs marginaler som en kedja och över tid, mot kollegor, aldrig som en enskild siffra. Kontanterna ljuger sällan, så stäm av mot kassaflödet."
+      "takeaway": "Läs inte en marginal som ett tal. Läs hela kedjan, och fråga var i den pengarna görs och var de läcker ut."
+    },
+    {
+      "typ": "concept",
+      "kicker": "MARGINALKEDJAN",
+      "titel": "Tre marginaler, och gapen som bär informationen",
+      "visual": {
+        "typ": "flode",
+        "steg": [
+          { "rubrik": "Bruttomarginal", "text": "Vad som blir kvar efter den direkta varukostnaden. Det råa råmaterialet för all lönsamhet under." },
+          { "rubrik": "Rörelsemarginal", "text": "EBIT genom omsättning, alltså efter kostnaderna att driva verksamheten. Gapet ned hit visar vad bolaget spenderar på att driva sig självt: försäljning, administration, utveckling." },
+          { "rubrik": "Nettomarginal", "text": "Efter allt, inklusive ränta och skatt. Gapet ned hit visar bettet från finansiering och skatt." }
+        ],
+        "figurtext": "Tre marginaler, var och en ett steg längre ned i resultaträkningen. Det är gapen mellan stegen som bär informationen."
+      },
+      "forklaring": "Läs gapen och du läser bolagets kostnadspersonlighet. En hög bruttomarginal men låg rörelsemarginal betyder en fin produkt som kostar tungt att sälja: ett varumärke som lägger en förmögenhet på marknadsföring, eller ett mjukvarubolag med stora säljkostnader. En måttlig bruttomarginal men hygglig rörelsemarginal betyder tvärtom en slimmad, effektiv operatör. Omdefiniera inte marginalerna, läs dem som en kedja."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TRE LINSER",
+      "lead": "Själva talet betyder lite tills du håller det mot tre linser. Trenden, jämförelsen och stabiliteten är det som gör en marginalavläsning skarp i stället för tonsäker.",
+      "highlight": "Trenden, jämförelsen och stabiliteten",
+      "brodtext": [
+        "Trenden betyder oftast mer än nivån. En rörelsemarginal som expanderar över fem år signalerar operativ hävstång, prissättningskraft eller stigande effektivitet. En som pressas signalerar konkurrens, kostnadstryck bolaget inte kan föra vidare, eller tappad disciplin. Riktningen är en tidig varning, ofta synlig innan vinsttillväxten saktar in.",
+        "Jämförelsen ger nivån mening. En nettomarginal på 6 procent är utmärkt för en livsmedelsbutik och svag för ett mjukvarubolag, så ett tal är bara högt eller lågt mot rätt branschkollegor. Stabiliteten är i sig en kvalitetssignal: marginaler som håller genom både goda och dåliga tider antyder en uthållig verksamhet, medan vilt svängande marginaler antyder en cyklisk eller skör."
+      ],
+      "takeaway": "Läs marginaler över tid, mot rätt kollegor, och fråga om de håller i motvind. Trenden lyssnar du extra noga på, den talar före vinsten."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM SMICKRAR EN MARGINAL",
+      "lead": "En redovisad marginal kan ljuga medan kontanterna sällan gör det. Innan du litar på en marginalförbättring, fråga om den kommer från driften eller från bokföringen.",
+      "highlight": "En redovisad marginal kan ljuga medan kontanterna sällan gör det.",
+      "brodtext": [
+        "Tre saker får ofta en marginal att se bättre ut än driften förtjänar. Engångsposter kan lyfta ett enskilt år utan att något underliggande ändrats. Aggressiv redovisning, som att aktivera kostnader i stället för att ta dem direkt, kan putsa rörelsemarginalen på pappret. Och en förskjutning i produktmixen mot mer lönsamma varor kan lyfta snittet utan att någon enskild produkt blivit bättre.",
+        "Därför är regeln enkel: stäm alltid av en marginalförbättring mot kassaflödet. Växer de redovisade vinsterna utan att kontanterna följer med är det en varningssignal, inte en kvalitet. Kontanterna är det svåraste att smickra."
+      ],
+      "takeaway": "Behandla en marginalförbättring som ett påstående tills kassaflödet bekräftar den. Engångsposter, aktiverade kostnader och mixskift kan alla ljuga."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Samma bransch, två kostnadspersonligheter",
+      "underrubrik": "Två bolag med 1 000 i omsättning, lästa som kedjor. Siffrorna är illustrativa och visar principen, inte ett verkligt bolag.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Brutto, Stark", "varde": 60, "accent": true },
+          { "kategori": "Rörelse, Stark", "varde": 25, "accent": true },
+          { "kategori": "Netto, Stark", "varde": 18, "accent": true },
+          { "kategori": "Brutto, Medel", "varde": 45 },
+          { "kategori": "Rörelse, Medel", "varde": 12 },
+          { "kategori": "Netto, Medel", "varde": 7 }
+        ],
+        "etiketter": "Marginal i procent, illustrativa tal",
+        "figurtext": "Stark håller 60, 25 och 18 procent genom kedjan. Medel håller 45, 12 och 7. Båda omsätter lika mycket."
+      },
+      "slutsats": "Stark behåller mer vid varje steg: högre bruttomarginal plus stramare rörelsespenderande ger mer än dubbla rörelsemarginalen på identisk försäljning. I samma bransch är det gapet en stark signal på en verklig fördel, värd att undersöka närmare."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FRÅGAN BAKOM MARGINALEN",
+      "lead": "En marginal säger hur mycket av försäljningen som blir vinst, men inte hur mycket kapital som krävdes för att skapa den. Där kommer ROIC in, och det är ofta den första avläsningen en erfaren investerare gör.",
+      "highlight": "inte hur mycket kapital som krävdes för att skapa den",
+      "brodtext": [
+        "Om du bara fick ställa en enda fråga om ett bolag innan du köpte det är hur mycket tjänar verksamheten på varje krona kapital den binder en av de bästa du kan välja. Två bolag kan tjäna lika mycket i kronor, men det ena behöver en fabrik värd en miljard för att göra det och det andra klarar sig med en bråkdel.",
+        "Det andra är en överlägset bättre maskin: det skapar mer värde av samma resurser och kan växa snabbare utan att ständigt tigga efter nytt kapital. Den skillnaden syns inte i vinsten på sista raden. Den syns i ROIC. Läs ROIC först, ofta innan ett ord om pris."
+      ],
+      "takeaway": "Vinsten i kronor döljer hur mycket kapital som band den. ROIC är talet som skiljer en underbar verksamhet från en medelmåttig."
     },
     {
       "typ": "concept",
       "kicker": "ROIC",
-      "titel": "Skapar värde mot förstör värde",
+      "titel": "NOPAT delat med investerat kapital",
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Hög ROIC, skapar värde", "text": "Verksamheten tjänar hög avkastning på kapitalet den binder och kan växa billigare utan att ständigt tigga efter nytt kapital. Ihållande hög ROIC är det finansiella fingeravtrycket av en moat." },
-          { "rubrik": "Låg ROIC, förstör värde", "text": "Avkastningen ligger lågt, kanske under kapitalkostnaden, och tillväxt ovanpå låg ROIC bränner kapital snarare än skapar värde. Kapitaltunga modeller tjänar typiskt lågt hur skickligt de än drivs." }
+          { "rubrik": "Hög ROIC, skapar värde", "text": "Verksamheten tjänar hög avkastning på kapitalet den binder och kan växa billigare utan att ständigt be om nytt kapital. Ihållande hög ROIC är det finansiella fingeravtrycket av en moat: vore avkastningen oskyddad hade konkurrensen redan konkurrerat bort den." },
+          { "rubrik": "Låg ROIC, förstör värde", "text": "Avkastningen ligger lågt, kanske under kapitalkostnaden, och tillväxt ovanpå låg ROIC bränner kapital snarare än skapar värde. Kapitaltunga modeller som flyg, stål och gruvor tjänar typiskt lågt hur skickligt de än drivs." }
         ],
         "figurtext": "ROIC mot kapitalkostnaden: var avkastningen avgör om värde skapas eller förstörs."
       },
-      "forklaring": "ROIC är NOPAT delat med investerat kapital, där NOPAT är EBIT gånger (1 minus skattesatsen). Eftersom både täljare och nämnare är rensade från finansiering mäter måttet driften själv, oberoende av hur bolaget lånat. En hög ROIC kommer från feta marginaler, snabb kapitalomsättning, eller båda. En enskild årssiffra säger nästan ingenting, det är nivån och trenden över fem till tio år som skiljer en verklig moat från en tillfällig medvind."
+      "forklaring": "ROIC är NOPAT delat med investerat kapital. NOPAT är rörelseresultatet efter skatt, alltså EBIT gånger (1 minus skattesatsen). Akta formen: det är EBIT gånger (1 minus skattesatsen), inte EBIT minus den skatt bolaget redovisade, eftersom den redovisade skatten är beräknad efter räntekostnader. Investerat kapital är i grova drag eget kapital plus räntebärande skuld minus kassa. Eftersom både täljare och nämnare är rensade från finansiering mäter måttet driften själv, oberoende av hur bolaget lånat, vilket gör ROIC ärligare än ROE när du vill bedöma kvalitet."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARIFRÅN HÖG ROIC KOMMER",
+      "lead": "En hög ROIC kommer från feta marginaler, snabb kapitalomsättning, eller båda. Det knyter ihop ROIC med allt du just läste om marginalkedjan.",
+      "highlight": "feta marginaler, snabb kapitalomsättning, eller båda",
+      "brodtext": [
+        "Den mest användbara nedbrytningen är ROIC som NOPAT-marginal gånger omsättning på investerat kapital. Marginalen och kapitaleffektiviteten är de två spakarna, och ROIC är deras produkt. Ett varumärke kan tjäna hög ROIC på feta marginaler, en lågmarginal men kapitalsnål handlare på snabb omsättning av sitt kapital.",
+        "Det avslöjar också en strukturell verklighet. Kapitalsnåla modeller, som varumärken, mjukvara och franchiser, tjänar typiskt hög ROIC. Kapitaltunga modeller tjänar låg, hur skickligt de än drivs. När du vet vilken sort du tittar på vet du ungefär vilken avkastning som är rimlig att vänta."
+      ],
+      "takeaway": "Gräv i hur den höga avkastningen uppstår. Är det marginalen eller kapitalomsättningen, och passar det modellens karaktär."
+    },
+    {
+      "typ": "reading",
+      "kicker": "NIVÅ OCH TREND ÖVER TID",
+      "lead": "En enskild årssiffra säger nästan ingenting. Det är nivån och trenden över fem till tio år som skiljer en verklig moat från en tillfällig medvind.",
+      "highlight": "Det är nivån och trenden över fem till tio år",
+      "brodtext": [
+        "En verksamhet som håller hög ROIC år efter år gör nästan per definition något konkurrenterna inte lätt kan kopiera, annars hade konkurrensen redan konkurrerat bort avkastningen. Därför är ihållande hög ROIC, ofta 20 procent eller mer, det finansiella fingeravtrycket av en konkurrensfördel. En ROIC som faller över tid betyder tvärtom att konkurrensen eroderar avkastningen eller att kapitalet sväller.",
+        "Med tiden lutar du åt de kapitalsnåla, högavkastande bolagen och blir skeptisk mot kapitalhungriga bolag som växer omsättningen snabbt men tjänar dåligt på kapitalet. Tillväxt ovanpå låg ROIC bränner kapital. Hög ROIC spelar dessutom som störst roll när bolaget kan återinvestera till samma höga takt, då växer värdet med ränta på ränta på ett sätt ett lågavkastande bolag aldrig kan."
+      ],
+      "takeaway": "Döm aldrig ROIC på ett år. Nivån över en konjunkturcykel skiljer en skyddad avkastning från en lånad."
     },
     {
       "typ": "quiz",
@@ -53,6 +142,28 @@
         },
         {
           "typ": "single",
+          "fraga": "Varför betonar lektionen att trenden i en marginal oftast betyder mer än nivån?",
+          "alternativ": [
+            "Eftersom riktningen är en tidig signal på konkurrensläget, ofta synlig innan vinsttillväxten saktar in",
+            "Eftersom nivån alltid är manipulerad av engångsposter",
+            "Eftersom trenden är lättare att jämföra mellan olika branscher"
+          ],
+          "ratt": [0],
+          "forklaring": "En expanderande rörelsemarginal signalerar hävstång eller prissättningskraft, en pressad signalerar konkurrens eller kostnadstryck. Det är en tidig varning, ofta synlig innan vinsten reagerar."
+        },
+        {
+          "typ": "single",
+          "fraga": "En nettomarginal på 6 procent är att betrakta som ...",
+          "alternativ": [
+            "Utmärkt för en livsmedelsbutik men svag för ett mjukvarubolag",
+            "Svag oavsett bransch, eftersom god kvalitet kräver tvåsiffriga marginaler",
+            "Stark oavsett bransch, eftersom den ligger klart över noll"
+          ],
+          "ratt": [0],
+          "forklaring": "Ett tal är bara högt eller lågt mot rätt branschkollegor. Samma 6 procent är utmärkt i lågmarginalhandel men svagt i mjukvara."
+        },
+        {
+          "typ": "single",
           "fraga": "Hur definieras ROIC?",
           "alternativ": [
             "Nettovinst delat med eget kapital",
@@ -62,6 +173,18 @@
           ],
           "ratt": [1],
           "forklaring": "ROIC är NOPAT delat med investerat kapital. Eftersom både täljare och nämnare är rensade från finansiering mäter måttet driften själv, oberoende av hur bolaget lånat."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför beräknas NOPAT som EBIT gånger (1 minus skattesatsen) i stället för EBIT minus den skatt bolaget faktiskt redovisade?",
+          "alternativ": [
+            "För att den redovisade skatten alltid är för låg",
+            "För att rensa bort effekten av finansieringen, eftersom redovisad skatt beräknas efter räntekostnader",
+            "För att förenkla beräkningen när skattesatsen är okänd",
+            "För att inkludera räntekostnaderna i resultatet"
+          ],
+          "ratt": [1],
+          "forklaring": "Den redovisade skatten är beräknad efter räntekostnader. Genom att i stället ta EBIT gånger (1 minus skattesatsen) rensar man bort hur bolaget är finansierat, så att ROIC mäter verksamhetens kvalitet."
         },
         {
           "typ": "multi",
