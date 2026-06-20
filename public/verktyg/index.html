@@ -157,6 +157,20 @@
   .stance p:last-child{margin-bottom:0}
   .stance .note{font-size:12.5px;color:var(--ink-faint);font-style:italic}
 
+  /* Ägarbetyg (kombinerad rubrik) */
+  .gradehero{display:flex;gap:24px;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-top:3px solid var(--brass);border-radius:var(--r);padding:22px 24px;margin:0 0 16px}
+  .gradehero .gh-score{text-align:center;flex:none;min-width:132px}
+  .gradehero .gh-num{font-family:var(--mono);font-weight:600;font-size:54px;line-height:.9;letter-spacing:-.02em}
+  .gradehero .gh-num small{font-size:17px;color:var(--ink-faint);font-weight:400;letter-spacing:0}
+  .gradehero .gh-band{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-top:9px}
+  .gradehero .gh-body{flex:1;min-width:0;border-left:1px solid var(--line);padding-left:22px}
+  .gradehero .gh-reason{font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink);margin:0 0 11px}
+  .gradehero .gh-meta{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--ink-faint);line-height:1.6}
+  @media(max-width:680px){
+    .gradehero{flex-direction:column;gap:16px;align-items:stretch;text-align:center}
+    .gradehero .gh-body{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:16px}
+  }
+
   /* Toolbar */
   .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 0;padding:18px 0 0;border-top:1px solid var(--line)}
   .btn{border:1px solid var(--petrol);background:transparent;color:var(--petrol);cursor:pointer;font-family:var(--sans);font-size:13px;padding:9px 15px;border-radius:var(--r);font-weight:500}
@@ -536,6 +550,72 @@ function renderValuation(){
 }
 function setVal(id,val){ S.vardering[id]= val===""?"":Number(val); renderValuation(); renderSummaryIfActive(); }
 
+/* Kombinerat ägarbetyg: en grindad sammanvägning av alla sju steg.
+   Felmarginalen är ett krav, inte en faktor: den sätter taket, kvalitet,
+   risk och checklista kan bara sänka eller bekräfta, aldrig köpa sig förbi
+   en saknad felmarginal. Bandet härleds ur slutscoren så de aldrig krockar. */
+function ownerGrade(q, mo, mg, sc, rs, val, warn, chkDone){
+  let steps=0;
+  [q.n>0, mo.n>0, mg.n>0, sc.n>0, rs.n>0, !!(val&&val.mos!=null), chkDone>0].forEach(b=>{ if(b) steps++; });
+
+  // Verksamhetsbas: viktat snitt av bedömda kvalitetssidor (kvalitet väger tyngst)
+  const dims=[];
+  if(q.pct!=null) dims.push([q.pct,3]);
+  if(mo.pct!=null) dims.push([mo.pct,2]);
+  if(mg.pct!=null) dims.push([mg.pct,2]);
+  let base=null;
+  if(dims.length){ let n=0,d=0; dims.forEach(([v,w])=>{ n+=v*w; d+=w; }); base=n/d; }
+  if(base==null && sc.pct!=null) base=sc.pct; // small cap som alternativ verksamhetslins
+
+  const hasVal = !!(val && val.mos!=null);
+  if(base==null && !hasVal)
+    return {score:null, band:{t:"Ofullständig",col:"var(--ink-faint)"},
+      reason:"Bedöm verksamheten och fyll i värderingen för att få ett ägarbetyg.", steps};
+
+  // Riskdrag (högre index = mer risk, upp till -40 %) och checklistedrag (-6 per Nej, max -24)
+  let s = base!=null ? base : 50;
+  if(rs.idx!=null) s *= 1 - (rs.idx/100)*0.4;
+  if(warn>0) s = Math.max(0, s - Math.min(24, warn*6));
+
+  let band, reason;
+  if(!hasVal){
+    s = Math.round(Math.min(s, 49));
+    band = {t:"Preliminär", col:"var(--ink-faint)"};
+    reason = "Verksamheten är bedömd, men sätt aktuellt pris och fyll i värderingsmallen. Utan en felmarginal går ingen hållning att ge.";
+    return {score:s, band, reason, steps};
+  }
+
+  const verdict = val.verdict ? val.verdict.t : null;
+  const mos = Math.round(val.mos);
+  const reqMos = Number(S.vardering.mos);
+  if(verdict==="ÖVERVÄRDERAD") s = Math.min(s, 34); // grind: ingen felmarginal -> AVSTÅ
+  else if(verdict==="BEVAKA")  s = Math.min(s, 64); // grind: otillräcklig marginal -> max BEVAKA
+  s = Math.round(s);
+
+  band = s>=65 ? {t:"KÖPVÄRD",col:"var(--great)"}
+       : s>=40 ? {t:"BEVAKA",col:"var(--mid)"}
+       :         {t:"AVSTÅ",col:"var(--bad)"};
+
+  // Dominerande begränsning, för en konkret förklaring
+  let lim=null;
+  if(base!=null && base<45) lim="kvaliteten i verksamheten";
+  else if(rs.idx!=null && rs.idx>=50) lim="risknivån";
+  else if(warn>0) lim="öppna punkter i checklistan";
+
+  if(verdict==="ÖVERVÄRDERAD")
+    reason = "Priset ligger över ditt beräknade värde. Hur god verksamheten än är saknas felmarginal, och då är det inget köp.";
+  else if(verdict==="BEVAKA")
+    reason = `Under ditt värde men utan tillräcklig felmarginal (${mos}% mot kravet ${reqMos}%). Ett bra bolag kan ändå vara fel pris. Bevaka och vänta på ett bättre läge.`;
+  else if(s>=65)
+    reason = `Felmarginal uppnådd (${mos}%), verksamheten håller och risken är hanterbar. De tre kraven möts samtidigt.`;
+  else if(lim)
+    reason = `Felmarginal finns (${mos}%), men ${lim} drar ned helheten. ${s<40?"En billig svag verksamhet är sällan ett fynd.":"Bevaka tills bilden stärks."}`;
+  else
+    reason = `Felmarginal finns (${mos}%), men för få steg är bedömda för att helheten ska övertyga. Fyll i fler för en säkrare hållning.`;
+
+  return {score:s, band, reason, steps};
+}
+
 function renderSummary(){
   const q=scoreOf(S.kvalitet,QUALITY.crit), qb=band(q.pct);
   const sc=scoreOf(S.smallcap,SMALLCAP.crit), scb=scband(sc.pct);
@@ -570,9 +650,24 @@ function renderSummary(){
   if(sc.pct!=null&&sc.pct>=60) sent.push(`Som small cap-kandidat ser den lovande ut (${sc.pct}/100), men kom ihåg den offensiva linsen: sådana bolag är oftast prissatta för framgång, de flesta misslyckas, och kanten ligger i asymmetri och att dimensionera litet i en korg, inte i en felmarginal.`);
   if(warn>0) sent.push(`Du har ${warn} obesvarad eller röd punkt i checklistan. Stäng luckorna innan du beslutar.`);
 
+  // Kombinerat ägarbetyg (rubrik över korten)
+  const grade = ownerGrade(q, mo, mg, sc, rs, val, warn, done);
+  const heroNum = grade.score===null ? "—" : grade.score;
+  const hero = `<div class="gradehero">
+    <div class="gh-score">
+      <div class="gh-num" style="color:${grade.band.col}">${heroNum}${grade.score===null?"":'<small>/100</small>'}</div>
+      <div class="gh-band" style="color:${grade.band.col}">${grade.band.t}</div>
+    </div>
+    <div class="gh-body">
+      <p class="gh-reason">${grade.reason}</p>
+      <div class="gh-meta">Ägarscore väger samman alla sju steg och grindas av felmarginalen: utan marginal kan inget bolag bli köpvärt. Baserat på ${grade.steps} av 7 steg bedömda.</div>
+    </div>
+  </div>`;
+
   panels.summa.innerHTML = `
     <div class="phead"><span class="pn">\u03A3</span><h2>Sammanställning</h2></div>
     <p class="pintro">Hela analysen på ett ställe. Ett köp kräver tre saker samtidigt: en verksamhet värd att äga (eller en genuin small cap-kandidat), en risk du kan leva med, och en felmarginal mot priset.</p>
+    ${hero}
     <div class="sgrid">${cards}</div>
     <div class="stance">
       <h3>Sammanvägd hållning för ${name}</h3>
