@@ -6,6 +6,12 @@
     {
       "nummer": 1,
       "titel": "Investeringsfilosofi",
+      "blurb": "Allt annat i kursen vilar på hur du ser på en aktie. Här lägger vi grunden: en aktie är en ägarandel i ett företag, värd nuvärdet av de pengar verksamheten ger sina ägare, och din uppgift är att agera på gapet mellan pris och värde.",
+      "outcomes": [
+        "Formulera vad du faktiskt äger när du köper en aktie",
+        "Skilja på vad en aktie kostar och vad den är värd",
+        "Välja en investeringsfilosofi som passar dig och hålla dig inom din kompetenscirkel"
+      ],
       "lektioner": [
         {
           "lektion": "1.1",
@@ -44,6 +50,12 @@
     {
       "nummer": 2,
       "titel": "Affärsmodeller",
+      "blurb": "Innan du läser siffrorna måste du förstå motorn som skapar dem. Här lär du dig hur olika bolag tjänar pengar, varför intäktens karaktär avgör hur värdefull den är, och hur enhetsekonomi avslöjar om tillväxt skapar eller förstör värde.",
+      "outcomes": [
+        "Beskriva hur ett bolag tjänar pengar i några meningar",
+        "Skilja återkommande intäkt från cyklisk och engångsartad",
+        "Bedöma om tillväxten är ekonomiskt sund via enhetsekonomin"
+      ],
       "lektioner": [
         {
           "lektion": "2.1",
@@ -74,6 +86,12 @@
     {
       "nummer": 3,
       "titel": "Årsredovisningen",
+      "blurb": "Årsredovisningen är ditt primärkällmaterial. Här lär du dig var olika information bor, och hur du läser mellan raderna i VD-ord, noter och revisionsberättelse, där sanningen ofta göms.",
+      "outcomes": [
+        "Hitta rätt information i en årsredovisnings olika delar",
+        "Skilja vad ledningen säger från vad siffrorna visar",
+        "Veta var i noterna och revisionsberättelsen risker avslöjar sig"
+      ],
       "lektioner": [
         {
           "lektion": "3.1",
@@ -96,6 +114,12 @@
     {
       "nummer": 4,
       "titel": "Räkenskaperna",
+      "blurb": "De tre rapporterna är bolagets språk. Här lär du dig läsa resultaträkning, balansräkning och kassaflöde, se hur de hänger ihop, och känna igen när en redovisad vinst inte är riktiga pengar.",
+      "outcomes": [
+        "Läsa de tre rapporterna och vad varje rad betyder",
+        "Se hur en händelse syns i alla tre rapporterna",
+        "Genomskåda svag vinstkvalitet och varningssignaler"
+      ],
       "lektioner": [
         {
           "lektion": "4.1",
@@ -150,6 +174,12 @@
     {
       "nummer": 5,
       "titel": "Nyckeltal och kapitalavkastning",
+      "blurb": "Nyckeltal förvandlar rapporterna till en diagnos, om du läser dem rätt. Här lär du dig marginaler, tillväxt- och effektivitetstal, och ROIC, måttet som avslöjar om ett bolag verkligen skapar värde på sitt kapital.",
+      "outcomes": [
+        "Läsa marginalkedjan och vad gapen avslöjar",
+        "Använda nyckeltal i kontext i stället för som ensamma tal",
+        "Bedöma värdeskapande på ROIC mot kapitalkostnaden"
+      ],
       "lektioner": [
         {
           "lektion": "5.1",
@@ -180,6 +210,12 @@
     {
       "nummer": 6,
       "titel": "Konkurrensfördelar (moats)",
+      "blurb": "Hög lönsamhet konkurreras bort om inget skyddar den. Här lär du dig vad en konkurrensfördel är, de fem former den tar, och hur du ser i siffrorna om vallgraven är verklig och hållbar.",
+      "outcomes": [
+        "Känna igen de fem typerna av konkurrensfördel",
+        "Skilja en verklig vallgrav från ett tillfälligt försprång",
+        "Se en moats styrka i uthålligt hög avkastning över tid"
+      ],
       "lektioner": [
         {
           "lektion": "6.1",
@@ -202,6 +238,12 @@
     {
       "nummer": 7,
       "titel": "Ledning och kapitalallokering",
+      "blurb": "Det är människor som förvaltar ditt kapital. Här lär du dig bedöma en ledning, och granska deras viktigaste jobb: hur de allokerar varje krona mellan återinvestering, förvärv, återköp och utdelning.",
+      "outcomes": [
+        "Bedöma en lednings kompetens, integritet och incitament",
+        "Avgöra om kapitalallokeringen skapar eller förstör värde",
+        "Se när förvärv och återköp lönar sig, och när de inte gör det"
+      ],
       "lektioner": [
         {
           "lektion": "7.1",
@@ -224,6 +266,12 @@
     {
       "nummer": 8,
       "titel": "Värderingsgrunder",
+      "blurb": "Värde är inte en siffra på en skärm, det är nuvärdet av framtida kassaflöden. Här lägger vi den teoretiska grunden för all värdering: vad värde är, och varför en krona idag är värd mer än en krona imorgon.",
+      "outcomes": [
+        "Förklara varför värde är nuvärdet av framtida kassaflöden",
+        "Förstå hur diskontering översätter framtid till nutid",
+        "Behandla en värdering som ett intervall, inte ett facit"
+      ],
       "lektioner": [
         {
           "lektion": "8.1",
@@ -246,6 +294,12 @@
     {
       "nummer": 9,
       "titel": "Värdering i praktiken",
+      "blurb": "Nu omsätter vi värdeteorin i verktyg. Här lär du dig multiplar och deras fällor, hur en DCF byggs och vad som driver den, och hur du sätter ett riktprisintervall du faktiskt kan lita på.",
+      "outcomes": [
+        "Använda multiplar på rätt bolag och känna igen fällorna",
+        "Bygga en DCF och se var värdet kommer ifrån",
+        "Sätta ett riktpris som ett intervall via scenarier"
+      ],
       "lektioner": [
         {
           "lektion": "9.1",
@@ -292,6 +346,12 @@
     {
       "nummer": 10,
       "titel": "Risk och felmarginal",
+      "blurb": "Risk är inte att kursen svänger, det är att förlora kapital permanent. Här lär du dig vad risk faktiskt är, hur du kartlägger vad som kan gå fel, och hur en felmarginal skyddar dig när du har fel.",
+      "outcomes": [
+        "Skilja volatilitet från permanent kapitalförlust",
+        "Köpa med en felmarginal som tål misstag och otur",
+        "Kartlägga risker och tänka i sannolikheter"
+      ],
       "lektioner": [
         {
           "lektion": "10.1",
@@ -322,6 +382,12 @@
     {
       "nummer": 11,
       "titel": "Investeringspsykologi",
+      "blurb": "Den största risken sitter ofta mellan dina öron. Här lär du dig känna igen flockbeteende, rädsla och de tankefällor som får skickliga analytiker att fatta dåliga beslut, och bygga ett system som skyddar dig från dig själv.",
+      "outcomes": [
+        "Känna igen och motstå flock, rädsla och girighet",
+        "Genomskåda bekräftelsebias, ankring och sunk cost",
+        "Bygga ett system med position sizing och regler"
+      ],
       "lektioner": [
         {
           "lektion": "11.1",
@@ -360,6 +426,12 @@
     {
       "nummer": 12,
       "titel": "Tillväxtbolag",
+      "blurb": "Olönsamma tillväxtbolag bryter de vanliga verktygen. Här lär du dig en egen verktygslåda: enhetsekonomi, marknad och TAM, kassa och burn, scenariovärdering, och temperamentet att överleva resan mot en multibagger.",
+      "outcomes": [
+        "Värdera tillväxtbolag där vanliga multiplar inte fungerar",
+        "Bedöma marknad, enhetsekonomi och finansieringsrisk",
+        "Dimensionera positioner och överleva djupa kursfall"
+      ],
       "lektioner": [
         {
           "lektion": "12.1",
@@ -430,6 +502,12 @@
     {
       "nummer": 13,
       "titel": "Din investeringsprocess",
+      "blurb": "Kunskap blir resultat först som en process. Här lär du dig ta dig från idé till ett skrivet, falsifierbart investeringscase, och hur du sedan förvaltar innehavet: bevaka det som spelar roll, ompröva, och sälja av rätt skäl.",
+      "outcomes": [
+        "Skriva ett falsifierbart investeringscase",
+        "Bevaka caset i stället för kursen",
+        "Sälja av rätt skäl, inte av panik eller tristess"
+      ],
       "lektioner": [
         {
           "lektion": "13.1",
@@ -452,6 +530,12 @@
     {
       "nummer": 14,
       "titel": "Fallstudie: Lifco",
+      "blurb": "Här körs hela analyskedjan en gång, från början till slut, på ett verkligt bolags räkenskapsår. Med Lifcos rapporterade tal för 2025 ser du hur stegen talar med varandra i praktiken, från kvalitet till felmarginal.",
+      "outcomes": [
+        "Tillämpa hela analyskedjan på ett riktigt bolag",
+        "Skilja rapporterade tal från härledda",
+        "Landa i rätt fråga: vad är inbakat i priset"
+      ],
       "lektioner": [
         {
           "lektion": "14.1",
@@ -466,6 +550,12 @@
     {
       "nummer": 15,
       "titel": "Sektoranalys",
+      "blurb": "Vissa sektorer kräver egna mätstickor. Här lär du dig varför banker, försäkringsbolag, fastighetsbolag och cykliska bolag inte går att läsa med standardramverket, och vilka nyckeltal som faktiskt gäller.",
+      "outcomes": [
+        "Läsa banker och försäkringsbolag på deras egna mått",
+        "Värdera fastighetsbolag på substans och belåning",
+        "Värdera cykliska bolag på normaliserad vinst"
+      ],
       "lektioner": [
         {
           "lektion": "15.1",
@@ -488,6 +578,12 @@
     {
       "nummer": 16,
       "titel": "Praktik och avslut",
+      "blurb": "Sista steget är att göra kunskapen praktisk. Här samlar vi verktygslådan: var du hittar data, hur svenska konton och skatt fungerar, och hur du fortsätter på egen hand efter kursen.",
+      "outcomes": [
+        "Hitta data och rapporter i rätt källa",
+        "Förstå ISK, kapitalförsäkring och skatt som mekanism",
+        "Lägga en plan för att fortsätta lära på egen hand"
+      ],
       "lektioner": [
         {
           "lektion": "16.1",

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:#0a0c0b;}
+[data-theme="fokus"]{
+  --bg:#0a0c0b;--surface:#11140f;--surface-2:#161a14;
+  --border:rgba(255,255,255,.09);--border-2:rgba(255,255,255,.16);
+  --text:#f0ede4;--prose:#c3c7bc;--muted:#777f73;--faint:#333a32;
+  --mint:#8fd3b0;--mint-2:#a6e0c4;--mint-soft:rgba(143,211,176,.11);
+  --line-price:#6f7a72;--on-mint:#0a0c0b;
+}
+[data-theme="fokus"][data-accent="bla"]{--mint:#83bdee;--mint-2:#a3d0f5;--mint-soft:rgba(131,189,238,.12);}
+[data-theme="fokus"][data-accent="amber"]{--mint:#e3c06a;--mint-2:#eed08a;--mint-soft:rgba(227,192,106,.12);}
+[data-theme="ed"]{
+  --bg:#EFE9DC;--surface:#F7F2E7;--surface-2:#FCFAF3;
+  --border:rgba(30,36,31,.14);--border-2:rgba(30,36,31,.24);
+  --text:#1E241F;--prose:#3C4239;--muted:#6E7568;--faint:#CBC3B2;
+  --mint:#1C6E50;--mint-2:#155741;--mint-soft:rgba(28,110,80,.10);
+  --line-price:#9aa6b3;--on-mint:#F6F3EA;
+}
+[data-motion="off"] *{animation:none!important;}
+[data-safe="on"] [style*="animation:"]{opacity:1!important;transform:none!important;}
+::selection{background:rgba(143,211,176,.26);}
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-thumb{background:var(--faint);border-radius:99px;}
+a{text-decoration:none;color:inherit;}
+@keyframes riseF{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media (max-width:760px){
+  [data-rail]{display:none!important;}
+  [data-content]{inset:0!important;padding:26px 18px 104px!important;}
+  [data-tabbar]{display:flex!important;}
+  [data-stats]{grid-template-columns:1fr!important;}
+  [data-dashhead]{flex-wrap:wrap!important;gap:14px!important;}
+}
+</style>
+</helmet>
+<div data-theme="{{ themeAttr }}" data-accent="{{ accentAttr }}" data-motion="{{ motionAttr }}" data-safe="{{ safeAttr }}" style="position:relative;height:100vh;width:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Schibsted Grotesk',sans-serif;-webkit-font-smoothing:antialiased;">
+
+  <!-- ============ PERSISTENT RAIL ============ -->
+  <div data-rail style="position:absolute;top:0;left:0;bottom:0;width:248px;display:flex;flex-direction:column;justify-content:space-between;padding:26px 18px;border-right:1px solid var(--border);z-index:6;background:var(--bg);">
+    <div>
+      <div style="display:flex;align-items:center;gap:11px;padding:0 8px;margin-bottom:34px;">
+        <div style="width:30px;height:30px;border-radius:9px;background:var(--mint);flex:none;"></div>
+        <div style="font:600 13px/1.2 'Schibsted Grotesk',sans-serif;color:var(--text);">Fundamental<br>aktieanalys</div>
+      </div>
+
+      <div style="font:600 10px 'Schibsted Grotesk',sans-serif;letter-spacing:.16em;color:var(--muted);padding:0 10px;margin-bottom:10px;">LÄRA</div>
+      <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:26px;">
+        <button onClick="{{ goDash }}" style="{{ navHomeStyle }}">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span>Hem</span>
+        </button>
+        <button onClick="{{ goCourse }}" style="{{ navCourseStyle }}">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h10"/></svg>
+          <span>Kursöversikt</span>
+        </button>
+      </div>
+
+      <div style="font:600 10px 'Schibsted Grotesk',sans-serif;letter-spacing:.16em;color:var(--muted);padding:0 10px;margin-bottom:10px;">VERKTYG</div>
+      <div style="display:flex;flex-direction:column;gap:3px;">
+        <a href="%C3%84garboken%20-%20Analysverktyg.html" style="display:flex;align-items:center;gap:13px;width:100%;padding:11px 12px;border-radius:11px;border:1px solid transparent;color:var(--muted);font:500 14px 'Schibsted Grotesk',sans-serif;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M9 13l2 2 4-4"/></svg>
+          <span>Analysverktyg</span>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div style="padding:0 10px;margin-bottom:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;">
+          <span style="font:600 10px 'Schibsted Grotesk',sans-serif;letter-spacing:.14em;color:var(--muted);">KURSFRAMSTEG</span>
+          <span style="font:600 11px 'Schibsted Grotesk',sans-serif;color:var(--mint);">{{ coursePctLabel }}</span>
+        </div>
+        <div style="height:4px;border-radius:99px;background:var(--surface-2);overflow:hidden;"><div style="height:100%;width:{{ coursePct }};background:var(--mint);border-radius:99px;transition:width .6s cubic-bezier(.21,.7,.18,1);"></div></div>
+      </div>
+      <button onClick="{{ toggleTheme }}" style="display:flex;align-items:center;gap:13px;width:100%;padding:11px 12px;border-radius:11px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font:500 14px 'Schibsted Grotesk',sans-serif;margin-bottom:4px;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg>
+        <span>{{ themeLabel }}</span>
+      </button>
+      <div style="display:flex;align-items:center;gap:11px;padding:10px;border-top:1px solid var(--border);">
+        <div style="width:34px;height:34px;border-radius:50%;border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font:600 11px 'Schibsted Grotesk',sans-serif;color:var(--prose);flex:none;">DU</div>
+        <div style="flex:1;">
+          <div style="font:600 13px 'Schibsted Grotesk',sans-serif;color:var(--text);">Din profil</div>
+          <div style="font:500 11px 'Schibsted Grotesk',sans-serif;color:var(--muted);">Elev</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD ============ -->
+  <sc-if value="{{ isDash }}" hint-placeholder-val="{{ true }}">
+    <div data-content style="position:absolute;inset:0 0 0 248px;overflow-y:auto;padding:54px clamp(40px,5vw,76px) 70px;">
+      <div style="width:100%;max-width:1000px;margin:0 auto;">
+
+        <div data-dashhead style="animation:riseF .6s cubic-bezier(.21,.7,.18,1) both;animation-delay:.04s;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:40px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <span style="font:600 11px 'Schibsted Grotesk',sans-serif;letter-spacing:.16em;color:var(--mint);">{{ greeting }}</span>
+              <span style="width:4px;height:4px;border-radius:50%;background:var(--faint);"></span>
+              <span style="font:500 12px 'Schibsted Grotesk',sans-serif;color:var(--muted);">{{ today }}</span>
+            </div>
+            <h1 style="margin:0 0 12px;font:300 clamp(36px,4.4vw,52px)/1.04 'Newsreader',serif;letter-spacing:-.02em;color:var(--text);">Fundamental aktieanalys</h1>
+            <p style="margin:0;max-width:50ch;font:400 17px/1.55 'Newsreader',serif;color:var(--prose);">Lär dig värdera bolag och tänka som ägare, från vad en aktie faktiskt är till hur du sätter ett eget riktpris.</p>
+          </div>
+          <div style="flex:none;display:flex;align-items:center;gap:10px;border:1px solid var(--border-2);border-radius:99px;padding:9px 16px;margin-top:4px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--mint);"></span>
+            <span style="font:600 13px 'Schibsted Grotesk',sans-serif;color:var(--text);white-space:nowrap;">{{ streak }} dagar i rad</span>
+          </div>
+        </div>
+
+        <a href="Aktieanalys%20-%20Lektion%20(Fokus).dc.html" style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.1s;display:flex;align-items:center;gap:26px;background:var(--surface);border:1px solid var(--border-2);border-radius:18px;padding:28px 30px;margin-bottom:18px;">
+          <div style="flex:1;">
+            <div style="font:600 11px 'Schibsted Grotesk',sans-serif;letter-spacing:.16em;color:var(--mint);margin-bottom:10px;">FORTSÄTT DÄR DU SLUTADE</div>
+            <div style="font:300 30px/1.12 'Newsreader',serif;color:var(--text);margin-bottom:6px;">{{ resumeTitle }}</div>
+            <div style="font:500 13px 'Schibsted Grotesk',sans-serif;color:var(--muted);margin-bottom:18px;">{{ resumeMeta }}</div>
+            <div style="display:flex;align-items:center;gap:13px;max-width:380px;">
+              <div style="flex:1;height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden;"><div style="height:100%;width:{{ coursePct }};background:var(--mint);border-radius:99px;transition:width .6s cubic-bezier(.21,.7,.18,1);"></div></div>
+              <span style="font:600 12px 'Schibsted Grotesk',sans-serif;color:var(--muted);white-space:nowrap;">{{ coursePctLabel }}</span>
+            </div>
+          </div>
+          <span style="flex:none;width:56px;height:56px;border-radius:50%;background:var(--mint);color:var(--on-mint);display:flex;align-items:center;justify-content:center;font-size:22px;">→</span>
+        </a>
+
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.16s;display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;">
+          <h2 style="margin:0;font:300 24px 'Newsreader',serif;color:var(--text);">Din väg genom kursen</h2>
+          <button onClick="{{ goCourse }}" style="border:none;background:transparent;color:var(--mint);font:500 13px 'Schibsted Grotesk',sans-serif;cursor:pointer;padding:0;">Se hela kursen →</button>
+        </div>
+        <div data-stats style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.2s;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:46px;">
+          <sc-for list="{{ pathChapters }}" as="c" hint-placeholder-count="3">
+            <button onClick="{{ c.onOpen }}" style="{{ c.cardStyle }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+                <span style="font:600 10px 'Schibsted Grotesk',sans-serif;letter-spacing:.14em;color: {{ c.kickerColor }};">KAPITEL {{ c.num }}</span>
+                <span style="{{ c.pillStyle }}">{{ c.pill }}</span>
+              </div>
+              <div style="font:300 21px/1.18 'Newsreader',serif;color:var(--text);min-height:50px;margin-bottom:16px;">{{ c.title }}</div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="flex:1;height:4px;border-radius:99px;background:var(--surface-2);overflow:hidden;"><div style="height:100%;width:{{ c.pct }};background:var(--mint);border-radius:99px;transition:width .6s cubic-bezier(.21,.7,.18,1);"></div></div>
+                <span style="font:600 11px 'Schibsted Grotesk',sans-serif;color:var(--muted);white-space:nowrap;">{{ c.count }}</span>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.22s;display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;">
+          <h2 style="margin:0;font:300 24px 'Newsreader',serif;color:var(--text);">Analysera ett bolag</h2>
+          <span style="font:500 12px 'Schibsted Grotesk',sans-serif;color:var(--muted);">När du är redo att värdera på riktigt</span>
+        </div>
+        <a href="%C3%84garboken%20-%20Analysverktyg.html" style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.28s;display:block;background:var(--surface);border:1px solid var(--border-2);border-top:2px solid var(--mint);border-radius:18px;padding:28px 30px;margin-bottom:46px;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;">
+            <div style="flex:1;">
+              <div style="font:600 11px 'Schibsted Grotesk',sans-serif;letter-spacing:.14em;color:var(--mint);margin-bottom:10px;">ÄGARBOKEN · ANALYSVERKTYG</div>
+              <div style="font:300 28px/1.12 'Newsreader',serif;color:var(--text);margin-bottom:10px;">Sju steg innan du köper en aktie</div>
+              <div style="font:400 15px/1.55 'Newsreader',serif;color:var(--prose);max-width:60ch;">Du fyller i, poängen räknas ut medan du arbetar, och allt vägs ihop till en hållning — med krav på felmarginal. Tänk som ägare, inte aktiehandlare.</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;">
+                <span style="padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted);font:500 12px 'Schibsted Grotesk',sans-serif;">Checklista</span>
+                <span style="padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted);font:500 12px 'Schibsted Grotesk',sans-serif;">Kvalitet</span>
+                <span style="padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted);font:500 12px 'Schibsted Grotesk',sans-serif;">Small cap</span>
+                <span style="padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted);font:500 12px 'Schibsted Grotesk',sans-serif;">Moat</span>
+                <span style="padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted);font:500 12px 'Schibsted Grotesk',sans-serif;">Ledning</span>
+                <span style="padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted);font:500 12px 'Schibsted Grotesk',sans-serif;">Risk</span>
+                <span style="padding:5px 11px;border-radius:99px;border:1px solid var(--border);color:var(--muted);font:500 12px 'Schibsted Grotesk',sans-serif;">Värdering</span>
+              </div>
+            </div>
+            <span style="flex:none;width:56px;height:56px;border-radius:50%;background:var(--mint);color:var(--on-mint);display:flex;align-items:center;justify-content:center;font-size:22px;">→</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ KURSÖVERSIKT ============ -->
+  <sc-if value="{{ isCourse }}" hint-placeholder-val="{{ false }}">
+    <div data-content style="position:absolute;inset:0 0 0 248px;overflow-y:auto;padding:54px clamp(40px,5vw,76px) 70px;">
+      <div style="width:100%;max-width:880px;margin:0 auto;">
+
+        <div style="animation:riseF .6s cubic-bezier(.21,.7,.18,1) both;animation-delay:.04s;display:flex;align-items:center;gap:10px;font:500 13px 'Schibsted Grotesk',sans-serif;margin-bottom:28px;">
+          <button onClick="{{ goDash }}" style="border:none;background:transparent;color:var(--muted);font:inherit;cursor:pointer;padding:0;">Hem</button>
+          <span style="color:var(--faint);">›</span>
+          <span style="color:var(--text);">Kursöversikt</span>
+        </div>
+
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.1s;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:14px;">
+          <h1 style="margin:0;font:300 clamp(32px,4vw,46px)/1.05 'Newsreader',serif;letter-spacing:-.02em;color:var(--text);">Fundamental aktieanalys</h1>
+          <span style="font:600 13px 'Schibsted Grotesk',sans-serif;color:var(--mint);white-space:nowrap;">{{ coursePctLabel }} klart</span>
+        </div>
+        <p style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.16s;margin:0 0 14px;max-width:54ch;font:400 17px/1.6 'Newsreader',serif;color:var(--prose);">Tre kapitel som bygger omdömet steg för steg — från vad en aktie faktiskt är till hur du sätter ett värde på ett företag.</p>
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.2s;display:flex;align-items:center;gap:13px;max-width:420px;margin-bottom:48px;">
+          <div style="flex:1;height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden;"><div style="height:100%;width:{{ coursePct }};background:var(--mint);border-radius:99px;"></div></div>
+          <span style="font:500 12px 'Schibsted Grotesk',sans-serif;color:var(--muted);white-space:nowrap;">{{ doneLabel }}</span>
+        </div>
+
+        <div style="position:relative;padding-left:38px;">
+          <div style="position:absolute;left:11px;top:6px;bottom:6px;width:1px;background:var(--border);"></div>
+          <sc-for list="{{ course }}" as="ch" hint-placeholder-count="3">
+            <div style="position:relative;margin-bottom:30px;">
+              <span style="{{ ch.nodeStyle }}">{{ ch.nodeLabel }}</span>
+              <div style="{{ ch.cardStyle }}">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px;">
+                  <button onClick="{{ ch.onOpen }}" style="flex:1;text-align:left;border:none;background:transparent;padding:0;cursor:pointer;">
+                    <div style="font:600 10px 'Schibsted Grotesk',sans-serif;letter-spacing:.16em;color: {{ ch.kickerColor }};margin-bottom:7px;">KAPITEL {{ ch.num }} · {{ ch.tag }}</div>
+                    <div style="display:flex;align-items:center;gap:9px;">
+                      <span style="font:300 26px/1.1 'Newsreader',serif;color:var(--text);">{{ ch.title }}</span>
+                      <span style="color:var(--muted);font-size:15px;">›</span>
+                    </div>
+                    <div style="margin-top:9px;font:500 12.5px 'Schibsted Grotesk',sans-serif;color:var(--muted);">{{ ch.meta }}</div>
+                  </button>
+                  <span style="{{ ch.lockStyle }}">{{ ch.lockIcon }}</span>
+                </div>
+                <sc-if value="{{ ch.open }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:18px;border-top:1px solid var(--border);padding-top:6px;">
+                    <sc-for list="{{ ch.lessons }}" as="l" hint-placeholder-count="2">
+                      <a href="{{ l.href }}" style="{{ l.style }}">
+                        <span style="{{ l.markStyle }}">{{ l.mark }}</span>
+                        <span style="flex:1;font:400 16px 'Newsreader',serif;color: {{ l.titleColor }};">{{ l.title }}</span>
+                        <span style="font:500 12px 'Schibsted Grotesk',sans-serif;color:var(--muted);">{{ l.time }}</span>
+                        <span style="font:500 13px 'Schibsted Grotesk',sans-serif;color: {{ l.ctaColor }};white-space:nowrap;">{{ l.cta }}</span>
+                      </a>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ KAPITELSIDA ============ -->
+  <sc-if value="{{ isChapter }}" hint-placeholder-val="{{ false }}">
+    <div data-content style="position:absolute;inset:0 0 0 248px;overflow-y:auto;padding:54px clamp(40px,5vw,76px) 70px;">
+      <div style="width:100%;max-width:780px;margin:0 auto;">
+
+        <div style="animation:riseF .6s cubic-bezier(.21,.7,.18,1) both;animation-delay:.04s;display:flex;align-items:center;gap:10px;font:500 13px 'Schibsted Grotesk',sans-serif;margin-bottom:30px;">
+          <button onClick="{{ goDash }}" style="border:none;background:transparent;color:var(--muted);font:inherit;cursor:pointer;padding:0;">Hem</button>
+          <span style="color:var(--faint);">›</span>
+          <button onClick="{{ goCourse }}" style="border:none;background:transparent;color:var(--muted);font:inherit;cursor:pointer;padding:0;">Kursöversikt</button>
+          <span style="color:var(--faint);">›</span>
+          <span style="color:var(--text);">Kapitel {{ chap.num }}</span>
+        </div>
+
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.1s;font:600 11px 'Schibsted Grotesk',sans-serif;letter-spacing:.18em;color:var(--mint);margin-bottom:14px;">KAPITEL {{ chap.num }}</div>
+        <h1 style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.14s;margin:0 0 18px;font:300 clamp(34px,4.4vw,52px)/1.05 'Newsreader',serif;letter-spacing:-.02em;color:var(--text);">{{ chap.title }}</h1>
+        <p style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.2s;margin:0 0 24px;max-width:60ch;font:400 18px/1.65 'Newsreader',serif;color:var(--prose);">{{ chap.blurb }}</p>
+
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.24s;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:40px;">
+          <span style="font:500 13px 'Schibsted Grotesk',sans-serif;color:var(--muted);">{{ chap.meta }}</span>
+          <span style="width:4px;height:4px;border-radius:50%;background:var(--faint);"></span>
+          <div style="display:flex;align-items:center;gap:11px;">
+            <div style="width:150px;height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden;"><div style="height:100%;width:{{ chap.pct }};background:var(--mint);border-radius:99px;transition:width .6s cubic-bezier(.21,.7,.18,1);"></div></div>
+            <span style="font:600 12px 'Schibsted Grotesk',sans-serif;color:var(--muted);white-space:nowrap;">{{ chap.pctLabel }}</span>
+          </div>
+        </div>
+
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.3s;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 28px;margin-bottom:40px;">
+          <div style="font:600 10px 'Schibsted Grotesk',sans-serif;letter-spacing:.16em;color:var(--mint);margin-bottom:18px;">DET HÄR LÄR DU DIG</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <sc-for list="{{ chap.outcomes }}" as="o" hint-placeholder-count="3">
+              <div style="display:flex;align-items:flex-start;gap:13px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M20 6 9 17l-5-5"/></svg>
+                <span style="font:400 17px/1.45 'Newsreader',serif;color:var(--text);">{{ o }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.36s;font:600 10px 'Schibsted Grotesk',sans-serif;letter-spacing:.16em;color:var(--muted);margin-bottom:6px;">LEKTIONER I KAPITLET</div>
+        <div style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.4s;margin-bottom:38px;">
+          <sc-for list="{{ chap.lessons }}" as="l" hint-placeholder-count="3">
+            <a href="{{ l.href }}" style="{{ l.style }}">
+              <span style="{{ l.markStyle }}">{{ l.mark }}</span>
+              <span style="flex:1;font:400 18px 'Newsreader',serif;color: {{ l.titleColor }};">{{ l.title }}</span>
+              <span style="font:500 12px 'Schibsted Grotesk',sans-serif;color:var(--muted);">{{ l.time }}</span>
+              <span style="font:500 13px 'Schibsted Grotesk',sans-serif;color: {{ l.ctaColor }};white-space:nowrap;min-width:54px;text-align:right;">{{ l.cta }}</span>
+            </a>
+          </sc-for>
+        </div>
+
+        <a href="{{ chap.ctaHref }}" style="animation:riseF .7s cubic-bezier(.21,.7,.18,1) both;animation-delay:.46s;display:flex;align-items:center;justify-content:space-between;gap:20px;border-radius:16px;padding:20px 26px;{{ chap.ctaStyle }}">
+          <div>
+            <div style="font:600 15px 'Schibsted Grotesk',sans-serif;">{{ chap.ctaLabel }}</div>
+            <div style="font:500 12.5px 'Schibsted Grotesk',sans-serif;opacity:.7;margin-top:3px;">{{ chap.ctaSub }}</div>
+          </div>
+          <span style="font-size:20px;">→</span>
+        </a>
+
+      </div>
+    </div>
+  </sc-if>
+
+  <div data-tabbar style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--border);padding:7px 4px;align-items:stretch;">
+    <button onClick="{{ goDash }}" style="{{ tabHomeStyle }}">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      <span>Hem</span>
+    </button>
+    <button onClick="{{ goCourse }}" style="{{ tabCourseStyle }}">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h10"/></svg>
+      <span>Kurs</span>
+    </button>
+    <a href="%C3%84garboken%20-%20Analysverktyg.html" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;color:var(--muted);font:500 10px 'Schibsted Grotesk',sans-serif;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M9 13l2 2 4-4"/></svg>
+      <span>Verktyg</span>
+    </a>
+    <button onClick="{{ toggleTheme }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border:none;background:transparent;cursor:pointer;color:var(--muted);font:500 10px 'Schibsted Grotesk',sans-serif;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg>
+      <span>{{ themeShort }}</span>
+    </button>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Mint&quot;,&quot;Blå&quot;,&quot;Amber&quot;],&quot;default&quot;:&quot;Mint&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { view:'dashboard', safe:'off', theme:'fokus', chapterIdx:0 };
+
+  LESSON_HREF = 'Aktieanalys%20-%20Lektion%20(Fokus).dc.html';
+
+  COURSE = [
+    { num:'1', title:'Investeringsfilosofi och tankesätt', tag:'Pågår', time:'22 min', level:'Nybörjare', open:true,
+      blurb:'Innan siffror och nyckeltal kommer tankesättet. Det här kapitlet lägger grunden: vad en aktie faktiskt är, och hur en ägare resonerar när marknaden skakar och andra får panik.',
+      outcomes:[
+        'Formulera vad du faktiskt äger när du köper en aktie',
+        'Skilja på en akties pris och dess underliggande värde',
+        'Känna igen ägartänk kontra spekulation i dina egna beslut',
+      ],
+      lessons:[
+        { id:'1.1', title:'Vad det innebär att äga en aktie', time:'8 min', state:'done' },
+        { id:'1.2', title:'Pris mot värde', time:'14 min', state:'next' },
+      ]},
+    { num:'2', title:'Att läsa ett bolag', tag:'Låst', time:'48 min', level:'Nybörjare', open:false,
+      blurb:'Nu öppnar vi rapporten. Du lär dig läsa de tre tabellerna som tillsammans avslöjar om ett bolag tjänar pengar på riktigt, eller bara ser ut att göra det.',
+      outcomes:[
+        'Läsa en resultaträkning och en balansräkning uppifrån och ner',
+        'Förstå varför kassaflödet är sanningen om vinsten',
+        'Välja ut de nyckeltal som faktiskt betyder något',
+      ],
+      lessons:[
+        { id:'2.1', title:'Resultaträkningen', time:'10 min', state:'locked' },
+        { id:'2.2', title:'Balansräkningen', time:'12 min', state:'locked' },
+        { id:'2.3', title:'Kassaflödet, sanningen om vinsten', time:'13 min', state:'locked' },
+        { id:'2.4', title:'Nyckeltal som faktiskt betyder något', time:'13 min', state:'locked' },
+      ]},
+    { num:'3', title:'Värdering i praktiken', tag:'Låst', time:'1 h 5 min', level:'Medel', open:false,
+      blurb:'Det sista steget: att sätta en siffra på vad ett bolag är värt, och veta hur säker du kan vara på den innan du köper.',
+      outcomes:[
+        'Använda multiplar utan att gå i deras vanligaste fällor',
+        'Förstå grunderna i diskonterat kassaflöde',
+        'Bygga in en säkerhetsmarginal och sätta ett eget riktpris',
+      ],
+      lessons:[
+        { id:'3.1', title:'Vad är egentligen värde?', time:'11 min', state:'locked' },
+        { id:'3.2', title:'Multiplar och deras fällor', time:'14 min', state:'locked' },
+        { id:'3.3', title:'Diskonterat kassaflöde', time:'16 min', state:'locked' },
+        { id:'3.4', title:'Säkerhetsmarginal', time:'12 min', state:'locked' },
+        { id:'3.5', title:'Att sätta ett riktpris', time:'12 min', state:'locked' },
+      ]},
+  ];
+
+  armSafe(){ if(this._safeT) clearTimeout(this._safeT); this.setState({safe:'off'}); this._safeT=setTimeout(()=>this.setState({safe:'on'}), 1200); }
+  _lastView='';
+  componentDidMount(){ let t='fokus'; try{ t = localStorage.getItem('agarboken-theme')==='light' ? 'ed' : 'fokus'; }catch(e){} const r=this.routeFromHash(); this.setState({theme:t, view:r.view, chapterIdx:r.chapterIdx}); this.armSafe(); }
+  routeFromHash(){
+    const h = (location.hash||'').toLowerCase();
+    const m = h.match(/#kapitel-(\d+)/);
+    if(m){ const i = Math.max(0, Math.min(this.COURSE.length-1, parseInt(m[1],10)-1)); return {view:'chapter', chapterIdx:i}; }
+    if(h==='#kurs') return {view:'course', chapterIdx:this.state.chapterIdx};
+    return {view:'dashboard', chapterIdx:this.state.chapterIdx};
+  }
+  componentWillUnmount(){ if(this._safeT) clearTimeout(this._safeT); }
+  componentDidUpdate(){ if(this._lastView!==this.state.view){ this._lastView=this.state.view; this.armSafe(); } }
+
+  goDash(){ this.setState({view:'dashboard'}); }
+  goCourse(){ this.setState({view:'course'}); }
+  goChapter(i){ this.setState({view:'chapter', chapterIdx:i}); }
+  toggleTheme(){ const ed=this.state.theme==='ed'; try{ localStorage.setItem('agarboken-theme', ed?'dark':'light'); }catch(e){} this.setState({theme: ed?'fokus':'ed'}); }
+
+  navStyle(active){
+    return "display:flex;align-items:center;gap:13px;width:100%;text-align:left;padding:11px 12px;border-radius:11px;border:1px solid "+(active?'var(--border-2)':'transparent')+";background:"+(active?'var(--mint-soft)':'transparent')+";color:"+(active?'var(--text)':'var(--muted)')+";cursor:pointer;font:500 14px 'Schibsted Grotesk',sans-serif;transition:all .2s ease;";
+  }
+  tabStyle(active){
+    return "flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border:none;background:transparent;cursor:pointer;font:500 10px 'Schibsted Grotesk',sans-serif;color:"+(active?'var(--mint)':'var(--muted)')+";";
+  }
+
+  renderVals(){
+    const view = this.state.view;
+
+    let done=0, totalL=0;
+    this.COURSE.forEach(ch=>ch.lessons.forEach(l=>{ totalL++; if(l.state==='done') done++; }));
+    const pct = Math.round(done/totalL*100);
+
+    const h = new Date().getHours();
+    const greeting = h<10 ? 'God morgon' : (h<18 ? 'God dag' : 'God kväll');
+    let today = '';
+    try { today = new Intl.DateTimeFormat('sv-SE',{weekday:'long',day:'numeric',month:'long'}).format(new Date()); today = today.charAt(0).toUpperCase()+today.slice(1); }
+    catch(e){ today = 'Idag'; }
+
+    const stats = [
+      { label:'KURSFRAMSTEG', value:pct+'%', sub:done+' av '+totalL+' lektioner' },
+      { label:'AVKLARAT', value:String(done), sub:'lektion klar' },
+      { label:'STUDIETID', value:'8 min', sub:'denna vecka' },
+    ];
+
+    const course = this.COURSE.map((ch,ci)=>{
+      const lessons = ch.lessons.map(l=>{
+        const isDone=l.state==='done', isNext=l.state==='next', locked=l.state==='locked';
+        return {
+          title:l.title, time:l.time,
+          href: locked ? 'javascript:void(0)' : this.LESSON_HREF,
+          titleColor: locked ? 'var(--prose)' : 'var(--text)',
+          mark: isDone ? '✓' : (locked ? '' : String(ch.num+'.'+l.id.split('.')[1])),
+          markStyle: "flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 10px sans-serif;"+(
+            isDone ? "background:var(--mint);color:var(--on-mint);"
+            : isNext ? "background:var(--mint-soft);color:var(--mint);font:600 11px 'Schibsted Grotesk',sans-serif;"
+            : "border:1.5px solid var(--faint);color:var(--muted);font:600 11px 'Schibsted Grotesk',sans-serif;"),
+          cta: isDone ? 'Repetera' : (isNext ? 'Börja →' : ''),
+          ctaColor: isNext ? 'var(--mint)' : 'var(--muted)',
+          style: "display:flex;align-items:center;gap:13px;padding:13px 6px;border-bottom:1px solid var(--border);cursor:"+(locked?'default':'pointer')+";opacity:"+(locked?'.55':'1')+";"
+        };
+      });
+      return {
+        num:ch.num, title:ch.title, tag:ch.tag, open:ch.open, lessons,
+        onOpen:()=>this.goChapter(ci),
+        meta: ch.time+' · '+ch.level+' · '+ch.lessons.length+' lektioner',
+        kickerColor: ch.open ? 'var(--mint)' : 'var(--muted)',
+        nodeLabel: ch.num,
+        nodeStyle: "position:absolute;left:-38px;top:24px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:600 12px 'Schibsted Grotesk',sans-serif;"+(
+          ch.open ? "background:var(--mint);color:var(--on-mint);" : "background:var(--surface-2);border:1px solid var(--border-2);color:var(--muted);"),
+        cardStyle: "background:var(--surface);border:1px solid "+(ch.open?'var(--border-2)':'var(--border)')+";border-radius:16px;padding:22px 24px;"+(ch.open?'':'opacity:.72;'),
+        lockStyle: ch.open ? "display:none;" : "flex:none;color:var(--muted);font-size:15px;margin-top:4px;",
+        lockIcon: ch.open ? '' : '🔒',
+      };
+    });
+
+    // ---- Chapter map for dashboard "Din väg" ----
+    const pathChapters = this.COURSE.map((ch,ci)=>{
+      const dn = ch.lessons.filter(l=>l.state==='done').length;
+      const tot = ch.lessons.length;
+      const p = Math.round(dn/tot*100);
+      const started = dn>0;
+      const pill = !ch.open ? 'Låst' : (dn>=tot ? 'Klar' : (started ? 'Pågår' : 'Ej börjad'));
+      const pillBg = !ch.open ? 'background:var(--surface-2);color:var(--muted);'
+        : (started ? 'background:var(--mint-soft);color:var(--mint);' : 'border:1px solid var(--border);color:var(--muted);');
+      return {
+        num:ch.num, title:ch.title, onOpen:()=>this.goChapter(ci),
+        pct:p+'%', count:dn+'/'+tot,
+        kickerColor: ch.open ? 'var(--mint)' : 'var(--muted)',
+        pill, pillStyle: 'flex:none;padding:3px 9px;border-radius:99px;font:600 10px \'Schibsted Grotesk\',sans-serif;'+pillBg,
+        cardStyle: "text-align:left;width:100%;display:block;background:var(--surface);border:1px solid "+(ch.open?'var(--border-2)':'var(--border)')+";border-radius:14px;padding:18px 20px;cursor:pointer;"+(ch.open?'':'opacity:.66;'),
+      };
+    });
+
+    // ---- Selected chapter detail (chapter page) ----
+    const cIdx = this.state.chapterIdx;
+    const cd = this.COURSE[cIdx];
+    let cDone=0;
+    cd.lessons.forEach(l=>{ if(l.state==='done') cDone++; });
+    const cPct = Math.round(cDone/cd.lessons.length*100);
+    const cNextId = (cd.lessons.find(l=>l.state==='next') || cd.lessons.find(l=>l.state!=='done') || cd.lessons[0]).id;
+    const chapLessons = cd.lessons.map(l=>{
+      const isDone=l.state==='done', isNext=l.state==='next', locked=l.state==='locked';
+      return {
+        id:l.id, title:l.title, time:l.time,
+        href: locked ? 'javascript:void(0)' : this.LESSON_HREF,
+        titleColor: locked ? 'var(--prose)' : 'var(--text)',
+        mark: isDone ? '✓' : (locked ? '' : l.id),
+        markStyle: "flex:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 11px sans-serif;"+(
+          isDone ? "background:var(--mint);color:var(--on-mint);"
+          : isNext ? "background:var(--mint-soft);color:var(--mint);font:600 12px 'Schibsted Grotesk',sans-serif;"
+          : "border:1.5px solid var(--faint);color:var(--muted);font:600 12px 'Schibsted Grotesk',sans-serif;"),
+        cta: isDone ? 'Repetera' : (isNext ? 'Börja →' : (locked ? 'Låst' : '')),
+        ctaColor: isNext ? 'var(--mint)' : 'var(--muted)',
+        style: "display:flex;align-items:center;gap:15px;padding:16px 8px;border-bottom:1px solid var(--border);cursor:"+(locked?'default':'pointer')+";opacity:"+(locked?'.55':'1')+";"
+      };
+    });
+    const chap = {
+      num:cd.num, title:cd.title, blurb:cd.blurb, outcomes:cd.outcomes||[],
+      meta: cd.time+' · '+cd.level+' · '+cd.lessons.length+' lektioner',
+      locked: !cd.open,
+      pct: cPct+'%', pctLabel: cDone+' / '+cd.lessons.length+' klara',
+      lessons: chapLessons,
+      ctaLabel: cd.open ? (cDone>0 ? 'Fortsätt kapitlet' : 'Börja kapitlet') : 'Kapitlet är låst',
+      ctaSub: cd.open ? ('Nästa: lektion '+cNextId) : 'Slutför föregående kapitel för att låsa upp',
+      ctaStyle: cd.open ? 'background:var(--text);color:var(--bg);cursor:pointer;' : 'background:var(--surface-2);color:var(--muted);cursor:not-allowed;pointer-events:none;',
+      ctaHref: cd.open ? this.LESSON_HREF : 'javascript:void(0)',
+    };
+
+    return {
+      accentAttr: { 'Blå':'bla', 'Amber':'amber' }[this.props.accent] || 'mint',
+      themeAttr: this.state.theme,
+      themeLabel: this.state.theme==='ed' ? 'Mörkt läge' : 'Ljust läge',
+      themeShort: this.state.theme==='ed' ? 'Mörkt' : 'Ljust',
+      toggleTheme:()=>this.toggleTheme(),
+      motionAttr: this.props.motion===false ? 'off' : 'on',
+      safeAttr: this.state.safe,
+      pathChapters,
+      isDash: view==='dashboard', isCourse: view==='course', isChapter: view==='chapter',
+      goDash:()=>this.goDash(), goCourse:()=>this.goCourse(), goChapter:(i)=>this.goChapter(i),
+      chap,
+      navHomeStyle: this.navStyle(view==='dashboard'),
+      navCourseStyle: this.navStyle(view==='course' || view==='chapter'),
+      tabHomeStyle: this.tabStyle(view==='dashboard'),
+      tabCourseStyle: this.tabStyle(view==='course' || view==='chapter'),
+      greeting, today, streak:'4',
+      resumeTitle:'Vad det innebär att äga en aktie',
+      resumeMeta:'Kapitel 1 · Lektion 1.1 · 5 steg',
+      coursePct: pct+'%', coursePctLabel: pct+'%', doneLabel: done+' / '+totalL+' lektioner',
+      stats, course,
+    };
+  }
+}
+</script>
+</body>
+</html>
