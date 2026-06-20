@@ -20,9 +20,50 @@ function isArr(v) { return Array.isArray(v); }
 
 function checkVisual(v, where, errs) {
   if (!v || typeof v !== 'object') { errs.push(`${where}: visual saknas`); return; }
-  if (!isStr(v.typ)) errs.push(`${where}: visual.typ saknas`);
-  else if (!VISUAL_TYPER.includes(v.typ)) errs.push(`${where}: okänd visual.typ "${v.typ}"`);
+  if (!isStr(v.typ)) { errs.push(`${where}: visual.typ saknas`); return; }
+  if (!VISUAL_TYPER.includes(v.typ)) { errs.push(`${where}: okänd visual.typ "${v.typ}"`); return; }
   if (!isStr(v.figurtext)) errs.push(`${where}: visual.figurtext saknas`);
+
+  // Per-typ-kontrakt: varje visual måste ha sitt array-/datafält med rätt form.
+  // (Fångar t.ex. en flode som lagt noderna under "steg" istället för "noder".)
+  const w = `${where} visual(${v.typ})`;
+  if (v.typ === 'rutnat') {
+    if (!isNum(v.kolumner)) errs.push(`${w}: kolumner saknas eller ej tal`);
+    if (!isNum(v.celler)) errs.push(`${w}: celler saknas eller ej tal`);
+    if (!isNum(v.markerad)) errs.push(`${w}: markerad saknas eller ej tal`);
+    if (!isStr(v.etikett)) errs.push(`${w}: etikett saknas`);
+  } else if (v.typ === 'linjediagram') {
+    if (!isArr(v.serier) || v.serier.length < 1) errs.push(`${w}: serier saknas (array, minst 1)`);
+    else v.serier.forEach((s, i) => {
+      if (!isStr(s.namn)) errs.push(`${w}: serier[${i}].namn saknas`);
+      if (s.stil !== 'heldragen' && s.stil !== 'streckad') errs.push(`${w}: serier[${i}].stil ska vara heldragen eller streckad`);
+      if (!isArr(s.punkter) || s.punkter.length < 2 || !s.punkter.every(isNum)) errs.push(`${w}: serier[${i}].punkter ska vara minst 2 tal`);
+    });
+  } else if (v.typ === 'jamforelse') {
+    if (!isArr(v.element) || v.element.length < 2) errs.push(`${w}: element saknas (array, minst 2)`);
+    else v.element.forEach((e, i) => {
+      if (!isStr(e.rubrik)) errs.push(`${w}: element[${i}].rubrik saknas`);
+      if (!isStr(e.text)) errs.push(`${w}: element[${i}].text saknas`);
+    });
+  } else if (v.typ === 'stapeldiagram') {
+    if (!isArr(v.data) || v.data.length < 1) errs.push(`${w}: data saknas (array, minst 1)`);
+    else v.data.forEach((d, i) => {
+      if (!isStr(d.kategori)) errs.push(`${w}: data[${i}].kategori saknas`);
+      if (!isNum(d.varde)) errs.push(`${w}: data[${i}].varde saknas eller ej tal`);
+    });
+  } else if (v.typ === 'flode') {
+    if (!isArr(v.noder) || v.noder.length < 2) errs.push(`${w}: noder saknas (array, minst 2)`);
+    else v.noder.forEach((nd, i) => {
+      if (!isStr(nd.etikett)) errs.push(`${w}: noder[${i}].etikett saknas`);
+      if (nd.operator !== undefined && !['minus', 'plus', 'likamed'].includes(nd.operator)) errs.push(`${w}: noder[${i}].operator ogiltig (minus/plus/likamed)`);
+    });
+  } else if (v.typ === 'andel') {
+    if (!isArr(v.delar) || v.delar.length < 2) errs.push(`${w}: delar saknas (array, minst 2)`);
+    else v.delar.forEach((d, i) => {
+      if (!isStr(d.etikett)) errs.push(`${w}: delar[${i}].etikett saknas`);
+      if (!isNum(d.varde)) errs.push(`${w}: delar[${i}].varde saknas eller ej tal`);
+    });
+  }
 }
 
 function checkLesson(name, raw, errs) {
