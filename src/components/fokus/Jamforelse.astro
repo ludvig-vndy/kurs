@@ -19,10 +19,15 @@ interface Props {
 
 const { visual } = Astro.props;
 const { element, figurtext } = visual;
+
+// Balanced column count: 2 -> 2, 3 -> 3, 4 -> 2x2, 5 -> 3+2, 6 -> 3x2.
+const n = element.length;
+const cols = n <= 3 ? n : Math.min(3, Math.ceil(n / 2));
+const maxw = cols >= 3 ? 720 : 560;
 ---
 
 <div class="jamforelse">
-  <div class="jamforelse__grid" style={`--n-cards:${element.length};`}>
+  <div class="jamforelse__grid" style={`--cols:${cols}; max-width:${maxw}px;`}>
     {element.map((el) => (
       <div class="jamforelse__card">
         <div class="jamforelse__rubrik">{el.rubrik}</div>
@@ -47,15 +52,15 @@ const { element, figurtext } = visual;
 
   .jamforelse__grid {
     display: grid;
-    grid-template-columns: repeat(var(--n-cards, 2), 1fr);
+    grid-template-columns: repeat(var(--cols, 2), 1fr);
     gap: 14px;
     width: 100%;
-    max-width: 600px;
   }
 
   @media (max-width: 640px) {
     .jamforelse__grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
+      max-width: 420px !important;
     }
   }
 

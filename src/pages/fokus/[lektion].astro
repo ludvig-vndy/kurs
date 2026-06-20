@@ -117,6 +117,24 @@ const { lesson, prevHref, nextHref } = Astro.props as {
 
 // ── Highlight split helper ────────────────────────────────────────────────
 
+// A visual is renderable only if its required array field is present and non-empty.
+// Guards against data typos (e.g. a flode using `steg` instead of `noder`) so one
+// bad lesson degrades to its figurtext instead of crashing the whole build.
+function visualOk(v: VisualObj | undefined): boolean {
+  if (!v || !v.typ) return false;
+  const arrField: Record<string, string> = {
+    linjediagram: 'serier',
+    jamforelse: 'element',
+    stapeldiagram: 'data',
+    flode: 'noder',
+    andel: 'delar',
+  };
+  const key = arrField[v.typ];
+  if (key) return Array.isArray((v as any)[key]) && (v as any)[key].length > 0;
+  if (v.typ === 'rutnat') return typeof (v as any).celler === 'number';
+  return false; // unknown typ -> figurtext fallback
+}
+
 function splitLead(lead: string, highlight: string): [string, string, string] {
   if (!highlight) return [lead, '', ''];
   const idx = lead.indexOf(highlight);
@@ -215,7 +233,7 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                 {s.titel && (
                   <h2 class="step-title step-title--concept">{s.titel}</h2>
                 )}
-                {s.visual && (
+                {s.visual && (visualOk(s.visual) ? (
                   s.visual.typ === 'rutnat' ? (
                     <Rutnat visual={s.visual as any} />
                   ) : s.visual.typ === 'linjediagram' ? (
@@ -231,7 +249,9 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                   ) : (
                     <p class="visual-fallback">{s.visual.figurtext}</p>
                   )
-                )}
+                ) : (
+                  <p class="visual-fallback">{s.visual.figurtext}</p>
+                ))}
                 {s.brodtext && s.brodtext.length > 0 && (
                   <div class="step-prose">
                     {s.brodtext.map((p) => (
@@ -257,7 +277,7 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                 {s.underrubrik && (
                   <p class="step-underrubrik">{s.underrubrik}</p>
                 )}
-                {s.visual && (
+                {s.visual && (visualOk(s.visual) ? (
                   s.visual.typ === 'rutnat' ? (
                     <Rutnat visual={s.visual as any} />
                   ) : s.visual.typ === 'linjediagram' ? (
@@ -273,7 +293,9 @@ function splitLead(lead: string, highlight: string): [string, string, string] {
                   ) : (
                     <p class="visual-fallback">{s.visual.figurtext}</p>
                   )
-                )}
+                ) : (
+                  <p class="visual-fallback">{s.visual.figurtext}</p>
+                ))}
                 {s.brodtext && s.brodtext.length > 0 && (
                   <div class="step-prose">
                     {s.brodtext.map((p) => (
