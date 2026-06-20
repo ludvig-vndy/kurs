@@ -20,7 +20,16 @@ interface Lektion {
 interface Kapitel {
   nummer: number;
   titel: string;
+  niva: string;
+  tid_min: number;
   lektioner: Lektion[];
+}
+
+function formatTime(min: number): string {
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  return m === 0 ? `${h} h` : `${h} h ${m} min`;
 }
 
 interface Kurs {
@@ -63,10 +72,14 @@ const klarCount = kurs.kapitel
   <div class="chapter-list">
     {kurs.kapitel.map((kap) => (
       <div class="chapter">
-        <div class="chapter__head">
+        <a class="chapter__head" href={`/fokus/kapitel/${kap.nummer}`}>
           <span class="chapter__kicker">KAPITEL {kap.nummer}</span>
-          <h2 class="chapter__title">{kap.titel}</h2>
-        </div>
+          <span class="chapter__title-row">
+            <h2 class="chapter__title">{kap.titel}</h2>
+            <span class="chapter__chevron" aria-hidden="true">›</span>
+          </span>
+          <span class="chapter__meta">{formatTime(kap.tid_min)} · {kap.niva} · {kap.lektioner.length} lektioner</span>
+        </a>
 
         <div class="lesson-list">
           {kap.lektioner.map((l) =>
@@ -186,7 +199,13 @@ const klarCount = kurs.kapitel
 
   /* ---- Chapter ---- */
   .chapter__head {
+    display: block;
     margin-bottom: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .chapter__head:hover {
+    text-decoration: none;
   }
   .chapter__kicker {
     display: block;
@@ -197,6 +216,15 @@ const klarCount = kurs.kapitel
     text-transform: uppercase;
     color: var(--muted);
     margin-bottom: 6px;
+    transition: color var(--dur-micro) var(--ease-standard);
+  }
+  .chapter__head:hover .chapter__kicker {
+    color: var(--mint);
+  }
+  .chapter__title-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
   }
   .chapter__title {
     margin: 0;
@@ -206,6 +234,23 @@ const klarCount = kurs.kapitel
     line-height: 1.1;
     letter-spacing: -0.01em;
     color: var(--text);
+  }
+  .chapter__chevron {
+    color: var(--muted);
+    font-size: 18px;
+    transition: transform var(--dur-micro) var(--ease-standard), color var(--dur-micro) var(--ease-standard);
+  }
+  .chapter__head:hover .chapter__chevron {
+    color: var(--mint);
+    transform: translateX(3px);
+  }
+  .chapter__meta {
+    display: block;
+    margin-top: 7px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
   }
 
   /* ---- Lesson list ---- */
