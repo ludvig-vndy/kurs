@@ -3,7 +3,7 @@
   "lektion": "1.2",
   "titel": "Pris mot värde",
   "niva": "Nybörjare",
-  "tid_min": 8,
+  "tid_min": 9,
   "mal": "Efter lektionen kan eleven skilja på vad en aktie kostar och vad den är värd, och fatta beslut utifrån gapet mellan dem.",
   "steg": [
     {
@@ -19,7 +19,7 @@
       "highlight": "Pris är vad du betalar. Värde är vad du får.",
       "brodtext": [
         "För det mesta ligger de två nära varandra, eftersom marknaden oftast är hyfsat förnuftig. Men ibland trycker rädsla ned priset under värdet, och då blir saker rea. Ibland trycker girighet upp priset över värdet, och då blir saker dyra.",
-        "En bra investerare köper när priset ligger under den egna uppskattningen av värdet, och avstår eller säljer när priset ligger långt över. Värde är dessutom ett intervall, inte en exakt punkt: ett grovt spann räcker för att se om priset är billigt, rimligt eller dyrt."
+        "En bra investerare köper när priset ligger under den egna uppskattningen av värdet, och avstår eller säljer när priset ligger långt över. Värde är dessutom ett intervall, inte en exakt punkt: du kommer aldrig att veta att ett bolag är värt exakt 247 kronor, men du kan med rimlig grund tro att det är värt någonstans mellan 200 och 280. Ett grovt spann räcker för att se om priset är billigt, rimligt eller dyrt."
       ],
       "takeaway": "Du försöker inte förutsäga priset. Du uppskattar värdet och väntar tills priset erbjuder ett gap."
     },
@@ -35,7 +35,7 @@
         ],
         "figurtext": "Pris mot värde, två skilda storheter."
       },
-      "forklaring": "Priset sätts av den marginella köparen och säljaren och kan hoppa flera procent på en dag utan att något i verksamheten ändrats. Värdet är jämförelsevis stabilt. Den skillnaden i rörlighet är precis där möjligheten bor."
+      "forklaring": "Priset sätts av den marginella köparen och säljaren och kan hoppa flera procent på en dag utan att något i verksamheten ändrats. Värdet är jämförelsevis stabilt: ett bolags verkliga värde svänger inte på grund av en tisdagsrubrik. Den skillnaden i rörlighet är precis där möjligheten bor."
     },
     {
       "typ": "dataviz",
@@ -53,6 +53,31 @@
       "slutsats": "Ett köpläge är inte när priset stigit, utan när det fallit tydligt under värdet du redan uppskattat."
     },
     {
+      "typ": "concept",
+      "kicker": "TVÅ FRÅGOR, INTE EN",
+      "titel": "Bra bolag och bra köp är olika saker",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Är det en bra verksamhet?", "text": "Handlar om kvaliteten: lönsamhet, tillväxt, hur stabil och försvarbar affären är. En egen fråga med ett eget svar." },
+          { "rubrik": "Är det ett bra pris?", "text": "Handlar om priset i förhållande till värdet. En lysande verksamhet till ett absurt pris kan vara en dålig investering." }
+        ],
+        "figurtext": "Två frågor som nybörjaren slår ihop och den vane håller isär."
+      },
+      "forklaring": "Den vane investeraren betygsätter först verksamhetens kvalitet och sedan köpets kvalitet, och köper bara när båda klarar ribban. Pris utan kvalitet är en värdefälla. Kvalitet utan prisdisciplin är hur man betalar för mycket för fina bolag och ändå förlorar pengar."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EXEMPEL: NÄR KVALITET INTE RÄCKER",
+      "lead": "Ta två bolag med samma startvinst men motsatt prislapp, så syns det varför priset avgör utfallet. Siffrorna är illustrativa.",
+      "highlight": "samma startvinst men motsatt prislapp",
+      "brodtext": [
+        "Bolag A är utmärkt. Det tjänar 10 kronor per aktie och växer 12 procent om året. Men marknaden älskar det och prissätter det till 400 kronor, alltså P/E 40. Du betalar 40 kronor för varje krona nuvarande vinst, och priset förutsätter redan flera år av stark tillväxt. Saktar tillväxten in till fortfarande goda 8 procent kan multipeln falla från 40 till säg 20, och kursen ungefär halveras trots att bolaget fortfarande är lönsamt. Du köpte en fin verksamhet till ett pris som inte lämnade utrymme för något mindre än perfektion.",
+        "Bolag B är medelmåttigt. Det tjänar samma 10 kronor per aktie men växer bara 3 procent om året. Det är oälskat och prissatt till 70 kronor, alltså P/E 7. Priset förutsätter redan att bolaget inte kommer någonstans. Om det bara fortsätter lunka på och kryper upp till P/E 10 stiger kursen från 70 till 100, innan någon vinsttillväxt eller utdelning ens räknats in."
+      ],
+      "takeaway": "Samma startvinst, motsatta utfall, helt och hållet på grund av priset du betalade i förhållande till värdet."
+    },
+    {
       "typ": "quiz",
       "fragor": [
         {
@@ -65,6 +90,28 @@
           ],
           "ratt": [0],
           "forklaring": "Priset är ett faktum på skärmen. Värdet är en bedömning av de pengar verksamheten kommer att producera. Besluten fattas på gapet mellan dem."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför uppstår möjligheten att köpa under värde över huvud taget?",
+          "alternativ": [
+            "För att värdet svänger kraftigt från dag till dag",
+            "För att priset är rörligt medan värdet är jämförelsevis stabilt",
+            "För att bolaget regelbundet ändrar sin värdering"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett bolags verkliga värde rör sig inte flera procent på en tisdagsrubrik, men kursen gör det lätt. Den skillnaden i rörlighet är där möjligheten bor."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför kan ett utmärkt bolag på P/E 40 vara en dålig investering?",
+          "alternativ": [
+            "För att höga multiplar alltid betyder bedrägeri",
+            "För att priset förutsätter perfektion, så om tillväxten saktar in kan multipeln falla och kursen nästan halveras trots fortsatt lönsamhet",
+            "För att bra bolag aldrig är värda att äga"
+          ],
+          "ratt": [1],
+          "forklaring": "Kvalitet utan prisdisciplin är hur man förlorar pengar på fina bolag. Priset på P/E 40 lämnade inget utrymme för något mindre än perfektion."
         },
         {
           "typ": "single",
