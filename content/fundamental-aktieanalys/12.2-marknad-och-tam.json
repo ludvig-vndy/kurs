@@ -89,9 +89,9 @@
       "visual": {
         "typ": "andel",
         "delar": [
-          { "etikett": "TAM, hela marknaden" },
-          { "etikett": "SAM, adresserbar nerifrån och upp" },
-          { "etikett": "SOM, bolagets nåbara andel idag", "accent": true }
+          { "etikett": "TAM, hela marknaden", "varde": 300000 },
+          { "etikett": "SAM, adresserbar nerifrån och upp", "varde": 6000 },
+          { "etikett": "SOM, bolagets nåbara andel idag", "varde": 50, "accent": true }
         ],
         "figurtext": "Illustrativ, påhittat bolag. Exempel: rubrik på flera hundra miljarder, en SAM nerifrån på cirka 6 mdkr (500 000 nåbara kunder gånger cirka 12 000 kr per år), bolaget vid cirka 50 Mkr har fångat under 1 procent."
       },

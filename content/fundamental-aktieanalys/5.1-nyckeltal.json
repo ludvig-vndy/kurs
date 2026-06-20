@@ -29,10 +29,10 @@
       "titel": "Tre marginaler, och gapen som bär informationen",
       "visual": {
         "typ": "flode",
-        "steg": [
-          { "rubrik": "Bruttomarginal", "text": "Vad som blir kvar efter den direkta varukostnaden. Det råa råmaterialet för all lönsamhet under." },
-          { "rubrik": "Rörelsemarginal", "text": "EBIT genom omsättning, alltså efter kostnaderna att driva verksamheten. Gapet ned hit visar vad bolaget spenderar på att driva sig självt: försäljning, administration, utveckling." },
-          { "rubrik": "Nettomarginal", "text": "Efter allt, inklusive ränta och skatt. Gapet ned hit visar bettet från finansiering och skatt." }
+        "noder": [
+          { "etikett": "Bruttomarginal" },
+          { "etikett": "Rörelsemarginal" },
+          { "etikett": "Nettomarginal", "accent": true }
         ],
         "figurtext": "Tre marginaler, var och en ett steg längre ned i resultaträkningen. Det är gapen mellan stegen som bär informationen."
       },

@@ -6,6 +6,8 @@
     {
       "nummer": 1,
       "titel": "Investeringsfilosofi",
+      "niva": "Nybörjare",
+      "tid_min": 37,
       "blurb": "Allt annat i kursen vilar på hur du ser på en aktie. Här lägger vi grunden: en aktie är en ägarandel i ett företag, värd nuvärdet av de pengar verksamheten ger sina ägare, och din uppgift är att agera på gapet mellan pris och värde.",
       "outcomes": [
         "Formulera vad du faktiskt äger när du köper en aktie",
@@ -50,6 +52,8 @@
     {
       "nummer": 2,
       "titel": "Affärsmodeller",
+      "niva": "Nybörjare",
+      "tid_min": 33,
       "blurb": "Innan du läser siffrorna måste du förstå motorn som skapar dem. Här lär du dig hur olika bolag tjänar pengar, varför intäktens karaktär avgör hur värdefull den är, och hur enhetsekonomi avslöjar om tillväxt skapar eller förstör värde.",
       "outcomes": [
         "Beskriva hur ett bolag tjänar pengar i några meningar",
@@ -86,6 +90,8 @@
     {
       "nummer": 3,
       "titel": "Årsredovisningen",
+      "niva": "Mellan",
+      "tid_min": 22,
       "blurb": "Årsredovisningen är ditt primärkällmaterial. Här lär du dig var olika information bor, och hur du läser mellan raderna i VD-ord, noter och revisionsberättelse, där sanningen ofta göms.",
       "outcomes": [
         "Hitta rätt information i en årsredovisnings olika delar",
@@ -114,6 +120,8 @@
     {
       "nummer": 4,
       "titel": "Räkenskaperna",
+      "niva": "Mellan",
+      "tid_min": 79,
       "blurb": "De tre rapporterna är bolagets språk. Här lär du dig läsa resultaträkning, balansräkning och kassaflöde, se hur de hänger ihop, och känna igen när en redovisad vinst inte är riktiga pengar.",
       "outcomes": [
         "Läsa de tre rapporterna och vad varje rad betyder",
@@ -174,6 +182,8 @@
     {
       "nummer": 5,
       "titel": "Nyckeltal och kapitalavkastning",
+      "niva": "Mellan",
+      "tid_min": 42,
       "blurb": "Nyckeltal förvandlar rapporterna till en diagnos, om du läser dem rätt. Här lär du dig marginaler, tillväxt- och effektivitetstal, och ROIC, måttet som avslöjar om ett bolag verkligen skapar värde på sitt kapital.",
       "outcomes": [
         "Läsa marginalkedjan och vad gapen avslöjar",
@@ -210,6 +220,8 @@
     {
       "nummer": 6,
       "titel": "Konkurrensfördelar (moats)",
+      "niva": "Mellan",
+      "tid_min": 26,
       "blurb": "Hög lönsamhet konkurreras bort om inget skyddar den. Här lär du dig vad en konkurrensfördel är, de fem former den tar, och hur du ser i siffrorna om vallgraven är verklig och hållbar.",
       "outcomes": [
         "Känna igen de fem typerna av konkurrensfördel",
@@ -238,6 +250,8 @@
     {
       "nummer": 7,
       "titel": "Ledning och kapitalallokering",
+      "niva": "Mellan",
+      "tid_min": 23,
       "blurb": "Det är människor som förvaltar ditt kapital. Här lär du dig bedöma en ledning, och granska deras viktigaste jobb: hur de allokerar varje krona mellan återinvestering, förvärv, återköp och utdelning.",
       "outcomes": [
         "Bedöma en lednings kompetens, integritet och incitament",
@@ -266,6 +280,8 @@
     {
       "nummer": 8,
       "titel": "Värderingsgrunder",
+      "niva": "Mellan",
+      "tid_min": 23,
       "blurb": "Värde är inte en siffra på en skärm, det är nuvärdet av framtida kassaflöden. Här lägger vi den teoretiska grunden för all värdering: vad värde är, och varför en krona idag är värd mer än en krona imorgon.",
       "outcomes": [
         "Förklara varför värde är nuvärdet av framtida kassaflöden",
@@ -294,6 +310,8 @@
     {
       "nummer": 9,
       "titel": "Värdering i praktiken",
+      "niva": "Avancerad",
+      "tid_min": 62,
       "blurb": "Nu omsätter vi värdeteorin i verktyg. Här lär du dig multiplar och deras fällor, hur en DCF byggs och vad som driver den, och hur du sätter ett riktprisintervall du faktiskt kan lita på.",
       "outcomes": [
         "Använda multiplar på rätt bolag och känna igen fällorna",
@@ -346,6 +364,8 @@
     {
       "nummer": 10,
       "titel": "Risk och felmarginal",
+      "niva": "Mellan",
+      "tid_min": 30,
       "blurb": "Risk är inte att kursen svänger, det är att förlora kapital permanent. Här lär du dig vad risk faktiskt är, hur du kartlägger vad som kan gå fel, och hur en felmarginal skyddar dig när du har fel.",
       "outcomes": [
         "Skilja volatilitet från permanent kapitalförlust",
@@ -382,6 +402,8 @@
     {
       "nummer": 11,
       "titel": "Investeringspsykologi",
+      "niva": "Mellan",
+      "tid_min": 48,
       "blurb": "Den största risken sitter ofta mellan dina öron. Här lär du dig känna igen flockbeteende, rädsla och de tankefällor som får skickliga analytiker att fatta dåliga beslut, och bygga ett system som skyddar dig från dig själv.",
       "outcomes": [
         "Känna igen och motstå flock, rädsla och girighet",
@@ -426,6 +448,8 @@
     {
       "nummer": 12,
       "titel": "Tillväxtbolag",
+      "niva": "Avancerad",
+      "tid_min": 97,
       "blurb": "Olönsamma tillväxtbolag bryter de vanliga verktygen. Här lär du dig en egen verktygslåda: enhetsekonomi, marknad och TAM, kassa och burn, scenariovärdering, och temperamentet att överleva resan mot en multibagger.",
       "outcomes": [
         "Värdera tillväxtbolag där vanliga multiplar inte fungerar",
@@ -502,6 +526,8 @@
     {
       "nummer": 13,
       "titel": "Din investeringsprocess",
+      "niva": "Mellan",
+      "tid_min": 22,
       "blurb": "Kunskap blir resultat först som en process. Här lär du dig ta dig från idé till ett skrivet, falsifierbart investeringscase, och hur du sedan förvaltar innehavet: bevaka det som spelar roll, ompröva, och sälja av rätt skäl.",
       "outcomes": [
         "Skriva ett falsifierbart investeringscase",
@@ -530,6 +556,8 @@
     {
       "nummer": 14,
       "titel": "Fallstudie: Lifco",
+      "niva": "Avancerad",
+      "tid_min": 18,
       "blurb": "Här körs hela analyskedjan en gång, från början till slut, på ett verkligt bolags räkenskapsår. Med Lifcos rapporterade tal för 2025 ser du hur stegen talar med varandra i praktiken, från kvalitet till felmarginal.",
       "outcomes": [
         "Tillämpa hela analyskedjan på ett riktigt bolag",
@@ -550,6 +578,8 @@
     {
       "nummer": 15,
       "titel": "Sektoranalys",
+      "niva": "Avancerad",
+      "tid_min": 28,
       "blurb": "Vissa sektorer kräver egna mätstickor. Här lär du dig varför banker, försäkringsbolag, fastighetsbolag och cykliska bolag inte går att läsa med standardramverket, och vilka nyckeltal som faktiskt gäller.",
       "outcomes": [
         "Läsa banker och försäkringsbolag på deras egna mått",
@@ -578,6 +608,8 @@
     {
       "nummer": 16,
       "titel": "Praktik och avslut",
+      "niva": "Nybörjare",
+      "tid_min": 19,
       "blurb": "Sista steget är att göra kunskapen praktisk. Här samlar vi verktygslådan: var du hittar data, hur svenska konton och skatt fungerar, och hur du fortsätter på egen hand efter kursen.",
       "outcomes": [
         "Hitta data och rapporter i rätt källa",
