@@ -3,14 +3,14 @@
   "lektion": "3.2",
   "titel": "Läsa mellan raderna",
   "niva": "Mellan",
-  "tid_min": 10,
-  "mal": "Efter lektionen kan eleven skilja vad som sägs från vad som menas i en årsredovisning, genom att pröva ledningens ord, noterna och revisionsberättelsen mot varandra.",
+  "tid_min": 14,
+  "mal": "Efter lektionen kan eleven läsa en årsredovisning kritiskt: skilja substans från spin i VD-ord och förvaltningsberättelse, leta efter sanningen i noterna, och pröva siffrornas trovärdighet mot revisionsberättelsen och redovisningsprinciperna.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 3.2",
       "titel": "Läsa mellan raderna",
-      "ingress": "En årsredovisning är delvis skriven för att övertyga. Färdigheten är att läsa den som ett test på både verksamheten och de som styr den."
+      "ingress": "En årsredovisning är delvis skriven för att övertyga. Färdigheten är att läsa den som ett test på både verksamheten och de som styr den, och att veta var sanningen brukar gömma sig."
     },
     {
       "typ": "reading",
@@ -18,10 +18,21 @@
       "lead": "När det går bra ger ärlig ledning dig siffror. När det går dåligt ger undvikande ledning dig adjektiv.",
       "highlight": "ärlig ledning dig siffror",
       "brodtext": [
-        "VD-ordet är den del av rapporten som ledningen styr mest över, vilket gör det både mest användbart och mest farligt. Användbart för att det visar vad ledningen betonar och hur ärlig den är. Farligt för att det är skrivet för att övertyga. Substans är specifik och ansvarsbärande: faktiska siffror och tydliga förklaringar av vad som hände och varför. Spin är vagt och undvikande: modeord, skuld förflyttad till makro och marknad, prat om aktivitet i stället för resultat.",
-        "Leta systematiskt. Bevaka asymmetrin: undvikande ledning kvantifierar segrar men beskriver förluster i vaga adjektiv. Bevaka vart skulden går. Bevaka försvinnande nyckeltal, en siffra som lyftes stolt i fjol men saknas i år har nästan säkert vänt nedåt. Jämför sedan berättelsen med siffrorna. Orden och rapporterna är två redogörelser för samma år, och där de inte stämmer överens vinner siffrorna."
+        "VD-ordet och ledningens kommentarer är de delar av rapporten som ledningen styr mest över. Därför är de på samma gång de mest användbara och de mest farliga. Användbara, eftersom de avslöjar vad ledningen väljer att betona, hur den tänker och hur ärlig den är. Farliga, eftersom de är skrivna för att övertyga. Att äga ett bolag är till slut att lita på dess ledning med ditt kapital, och språket är ett av få fönster mot integritet. Integritet kan inget nyckeltal mäta, men texten är ofta första stället du kan pröva om förtroendet håller.",
+        "Ledningstext kommer i grunden i två smaker. Substans är specifik, mätbar och ansvarsbärande: faktiska siffror, tydliga förklaringar av vad som hände och varför, ärligt erkännande av problem. Spin är vagt, känslomässigt och undvikande: modeord, skuld förflyttad till marknaden och makro, goda nyheter i siffror men dåliga i adjektiv, prat om aktivitet i stället för om resultat. Den enklaste tumregeln rymmer hela skillnaden: när det går bra ger ärlig ledning dig siffror, och när det går dåligt ger undvikande ledning dig adjektiv."
       ],
-      "takeaway": "Läs ledningens ord som ett karaktärstest. Den som levererar dåliga nyheter rakt är den vars goda nyheter du också kan lita på."
+      "takeaway": "Läs ledningens ord som ett karaktärstest minst lika mycket som en informationskälla. Den som levererar dåliga nyheter rakt är den vars goda nyheter du också kan lita på."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FYRA MÖNSTER ATT LETA EFTER",
+      "lead": "Med tumregeln i ryggen finns en handfull mönster du kan leta efter systematiskt, gång på gång, i vilket VD-ord som helst.",
+      "highlight": "leta efter systematiskt",
+      "brodtext": [
+        "Bevaka asymmetrin mellan goda och dåliga nyheter. Ärlig ledning rapporterar båda i klartext. Undvikande ledning kvantifierar segrar, omsättningen upp 18 procent, men kvalificerar förluster, ett utmanande kvartal i region Nord, utan en enda siffra. Skillnaden i precision är signalen. Bevaka sedan vart skulden går. Bra ledning äger sina misstag och förklarar vad den ska göra annorlunda. Svag ledning skyller på vädret, makro, valutan och kunderna, allt externt, och tar bara åt sig äran för det som gick bra.",
+        "Bevaka försvinnande nyckeltal. Om en siffra som ledningen stolt lyfte i fjol plötsligt saknas i år, har den nästan säkert vänt nedåt, och man slutar nämna det som inte längre smickrar. Bevaka språket. Tung jargong och modeord som synergier, transformationsresa och strategisk optionalitet ersätter ofta substans, medan enkelt och specifikt språk brukar signalera trygghet. Läs slutligen konsekvens över tid: jämför årets löften med fjolårets, och se efter om ledningen tyst överger gamla mål och presenterar nya varje år utan att erkänna missarna."
+      ],
+      "takeaway": "Jaga det som saknas: nyckeltalet som försvann, problemet som inte nämns, målet som tyst släpptes. Det utelämnade säger ofta mer än det som står skrivet."
     },
     {
       "typ": "concept",
@@ -30,12 +41,12 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Vad som sägs", "text": "Ett starkt, transformativt år trots ett utmanande klimat, och vi är väl positionerade för lönsam tillväxt." },
-          { "rubrik": "Vad som menas", "text": "Omsättning och marginal föll, utmanande klimat är att skylla på makro, och löftet om framtida tillväxt ersätter konkreta resultat att visa nu." }
+          { "rubrik": "Vad som sägs", "text": "Trots ett utmanande klimat levererade vi ett starkt, transformativt år och är väl positionerade för lönsam tillväxt." },
+          { "rubrik": "Vad som menas", "text": "Omsättning och marginal föll. Utmanande klimat är att skylla på makro, transformativt år döper om en nedgång till medveten förändring, och löftet om framtida tillväxt ersätter konkreta resultat att visa nu." }
         ],
-        "figurtext": "Samma år, två redogörelser. Pröva varje fras mot en siffra."
+        "figurtext": "Samma år, två redogörelser. Pröva varje fras mot en siffra. Talen i en sådan översättning är illustrativa."
       },
-      "forklaring": "Fras efter fras, prövad mot rapporterna, säger ofta tvärtom mot vad den vill få dig att känna. Den nyttiga frågan till varje VD-ord: skulle det här ha låtit annorlunda om året gått dåligt? Hos ärlig ledning hade du vetat det av texten. Hos säljande ledning hade den låtit nästan likadan."
+      "forklaring": "Fras efter fras, prövad mot rapporterna, säger spinet ofta tvärtom mot vad det vill få dig att känna. Föll omsättningen är starkt år redan tveksamt, föll rörelsemarginalen försämrades lönsamheten, försvann ett tidigare framlyft nyckeltal har det troligen vänt nedåt. Orden och siffrorna är två redogörelser för samma år, och där de inte stämmer överens vinner siffrorna. Den nyttiga frågan till varje VD-ord: skulle det här ha låtit annorlunda om året gått dåligt? Hos ärlig ledning hade du vetat det av texten. Hos säljande ledning hade den låtit nästan likadan."
     },
     {
       "typ": "reading",
@@ -43,25 +54,84 @@
       "lead": "Rapporterna är sammanfattningen. Noterna är substansen. Det är där sanningen gömmer sig.",
       "highlight": "Noterna är substansen",
       "brodtext": [
-        "Huvudrapporterna ger rubriksiffrorna, noterna förklarar vad som ligger inuti dem. Där balansräkningen säger skuld 500 Mkr talar noten om räntan, förfallodagen och de covenants som är knutna till lånet, och ett brutet covenant kan vara dödligt och syns bara här. De flesta investerare läser aldrig noterna, och just därför ger det en edge att göra det. Den enskilt viktigaste reservationen om ett bolag ligger nästan alltid i noterna och nästan aldrig i rubrikerna.",
-        "Några noter ska du i princip alltid läsa: redovisningsprinciper, segmentsredovisning, skuld och finansiering inklusive covenants, närståendetransaktioner, eventualförpliktelser, samt kund- och leverantörskoncentration. Segmentsnoten visar var vinsten faktiskt görs, så att ett bolag kan se friskt ut på totalen medan ett segment tyst blöder. Närståendenoten visar värde som tyst lämnar bolaget till insiders. Läs noterna på jakt efter problem, inte efter lugnande besked: den som söker bekräftelse hittar den nästan alltid."
+        "Huvudrapporterna ger dig rubriksiffrorna. Noterna förklarar vad som ligger inuti dem, och det är där överraskningar, risker och ren manipulation göms. Där resultaträkningen säger omsättning 1 000 Mkr talar en not om vilka segment och regioner den kom från. Där balansräkningen säger skuld 500 Mkr talar en not om räntan, förfallodagen och de covenants som är knutna till lånet, och ett brutet covenant kan vara dödligt och syns bara där. Att läsa ett bolag utan noterna är ungefär som att läsa bara kapitelrubrikerna i en bok.",
+        "De flesta investerare läser aldrig noterna, och just därför ger det en edge att göra det. Den enskilt viktigaste reservationen om ett bolag, skulden utanför balansräkningen, kunden som står för en stor del av omsättningen, lånevillkoret som är på väg att brytas, den aggressiva redovisningsprincipen, ligger nästan alltid i noterna och nästan aldrig i rubrikerna. En tes som ser oklanderlig ut i sammanfattningen kan falla isär på en enda not. Du hittar den bara om du letar, och du letar efter problem, inte efter lugnande besked: den som söker bekräftelse hittar den nästan alltid."
       ],
-      "takeaway": "I ett fint bolag bekräftar noterna att rubriksiffrorna är verkliga. I ett dåligt bolag är det i noterna rubriksiffrorna faller isär."
+      "takeaway": "I ett fint bolag bekräftar noterna att rubriksiffrorna är verkliga och rena. I ett dåligt bolag är det i noterna som rubriksiffrorna faller isär."
+    },
+    {
+      "typ": "concept",
+      "kicker": "NOTERNA DU ALLTID LÄSER",
+      "titel": "Var sanningen brukar gömmas",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Segment och koncentration", "text": "Segmentsnoten visar var vinsten faktiskt görs, så att ett bolag kan se friskt ut på totalen medan ett segment tyst blöder. Kund- och leverantörsnoten visar om en stor andel av omsättningen hänger på en enda motpart." },
+          { "rubrik": "Skuld och åtaganden", "text": "Skuldnoten ger belopp, räntor, förfall och covenants, villkoren som kan tvinga fram återbetalning. Eventualförpliktelser är möjliga skyldigheter som ännu inte står på balansräkningen, som rättstvister, garantier och leasing, och kan bli verkliga skulder." },
+          { "rubrik": "Närstående och principer", "text": "Närståendenoten visar värde som tyst lämnar bolaget till insiders, ägare eller deras andra bolag. Redovisningsprinciperna avslöjar de val som formar den redovisade vinsten, intäktsredovisning, avskrivningar och aktivering." }
+        ],
+        "figurtext": "Sex noter som i princip alltid förtjänar din läsning. Det här är platsen där bolag helst begraver dåliga nyheter."
+      },
+      "forklaring": "Korsläs. En siffra i rapporten betyder något först när du läst noten bakom den. Öppenhetens kvalitet är i sig en signal: ett bolag som utelämnar sådant som rimligen borde stå i noterna säger dig något redan innan du hittat det specifika problemet. Rena, generösa noter speglar oftast ett bolag som inte har något att dölja, medan vaga, tunna eller krympande noter som utelämnar väntade detaljer är en varning i sig."
     },
     {
       "typ": "reading",
-      "kicker": "REVISIONEN OCH PRINCIPERNA",
-      "lead": "Revisionsberättelsen säger hur trovärdiga siffrorna är. Redovisningsprinciperna säger hur formbara de är.",
-      "highlight": "hur trovärdiga siffrorna är",
+      "kicker": "EN NOT KAN ÄNDRA ALLT",
+      "lead": "Ett bolag redovisar ett rörelseresultat på 200 Mkr och ser stabilt ut på rubriken. Du går till noterna, och bilden blir en annan.",
+      "highlight": "ser stabilt ut på rubriken",
       "brodtext": [
-        "Läs revisionsberättelsen först, det tar några sekunder. Ett rent uttalande intygar att årsredovisningen i allt väsentligt ger en rättvisande bild, men det är inget kvitto på att verksamheten är bra och stänger inte ute bedrägeri. Ett modifierat uttalande finns i stigande grad: reservation gäller ett avgränsat fel, ett avstyrkande betyder att rapporterna är så väsentligt vilseledande att de inte ger en rättvisande bild. Håll isär det från en anmärkning, som rör förvaltningen, alltså hur bolaget styrts. En upplysning om osäkerhet kring fortsatt drift är en av de allvarligaste signaler som finns. Behandla allt utom ett rent uttalande utan anmärkning som ett skäl att gräva hårt eller gå därifrån.",
-        "Sedan kommer spelrummet i principerna. Samma verklighet kan ge mycket olika redovisad vinst. Aktivering av till exempel utvecklingskostnader smickrar årets vinst genom att skjuta kostnaden till balansräkningen, medan kostnadsföring tar hela smällen direkt. Längre antagna nyttjandetider och tidig intäktsredovisning lyfter också vinsten nu. Bakom valen ligger en fråga: är redovisningen försiktig eller aggressiv? Försiktig redovisning underskattar vinsten i nuet och håller över tid. En ändring som bekvämt höjer vinsten är en blinkande lampa."
+        "Talen här är illustrativa, valda för att visa vad en not kan rymma. Segmentsnoten: av de 200 Mkr tjänade kärndivisionen 260 Mkr medan en nyare division förlorade 60 Mkr. Kärnan är alltså starkare än den såg ut, men bolaget finansierar samtidigt en förlustmaskin, och du vill veta ledningens plan för den. Närståendenoten: bolaget betalar 30 Mkr om året i konsultarvoden till en firma som ägs av VD:s familj, motsvarande 15 procent av rörelseresultatet som rinner till en insider, värde som resultaträkningen bara bokför som en vanlig kostnad.",
+        "Skuldnoten: finansieringen har ett covenant som kräver att nettoskulden hålls under 3,0 gånger EBITDA. Med en EBITDA kring 250 Mkr ger en nettoskuld på cirka 700 Mkr ett tal på 2,8 gånger, obekvämt nära gränsen. Ett svagt år och villkoret bryts, vilket kan tvinga fram återbetalning eller nya villkor, en överlevnadsrisk som är helt osynlig på balansräkningens framsida. Inget av det här syns i rubriken 200 Mkr i rörelseresultat. Allt är beslutsrelevant, och allt finns bara i noterna."
+      ],
+      "takeaway": "Var särskilt vaksam på närståendetransaktioner, dold belåning, kundkoncentration och ändrade redovisningsprinciper. Där begraver bolag helst dåliga nyheter."
+    },
+    {
+      "typ": "reading",
+      "kicker": "REVISIONSBERÄTTELSEN",
+      "lead": "Revisionsberättelsen talar om hur trovärdiga de redovisade siffrorna är. Läs den först, det tar några sekunder.",
+      "highlight": "hur trovärdiga de redovisade siffrorna är",
+      "brodtext": [
+        "Revisionsberättelsen är en oberoende revisors omdöme, och den har två sidor som är lätta att blanda ihop men viktiga att hålla isär: ett uttalande om själva årsredovisningen, och en eventuell anmärkning som rör förvaltningen. Det normala är ett rent uttalande, där revisorn tillstyrker att årsredovisningen i allt väsentligt ger en rättvisande bild. När uttalandet inte är rent kallas det modifierat och finns i stigande grad: ett uttalande med reservation gäller ett avgränsat fel, medan ett avstyrkande uttalande betyder att rapporterna är så väsentligt vilseledande att de inte ger en rättvisande bild, vilket är mycket sällsynt och mycket allvarligt.",
+        "Håll det isär från en anmärkning, som rör förvaltningen, alltså hur bolaget styrts, och riktas mot styrelse eller VD, till exempel vid obetalda skatter. Ett modifierat uttalande säger att något är fel med årsredovisningen, en anmärkning att något är fel med förvaltningen. Utöver detta kan revisorn lägga en upplysning om väsentlig osäkerhet kring fortsatt drift, ett tvivel på att bolaget kan fortsätta verka, som är en av de allvarligaste signaler som finns och kan stå även i en i övrigt ren berättelse. Moderna berättelser lyfter dessutom fram särskilt betydelsefulla områden, de frågor revisorn fann mest bedömningskrävande, en närmast gratis karta till var siffrorna är mjukast."
+      ],
+      "takeaway": "Behandla allt utom ett rent uttalande utan anmärkning som ett skäl att gräva hårt eller gå därifrån. Ett rent uttalande är samtidigt inget kvitto på att verksamheten är bra, och stänger inte ute bedrägeri."
+    },
+    {
+      "typ": "reading",
+      "kicker": "REDOVISNINGSPRINCIPERNA",
+      "lead": "Revisionsberättelsen säger hur trovärdiga siffrorna är. Redovisningsprinciperna säger hur formbara de är, för samma verklighet kan ge mycket olika redovisad vinst.",
+      "highlight": "hur formbara de är",
+      "brodtext": [
+        "De stora spakarna är några stycken. Intäktsredovisning: när en försäljning får räknas, där det aggressiva är att bokföra tidigt eller före leverans. Avskrivningar: längre antagna nyttjandetider ger lägre årlig kostnad och därmed högre vinst nu. Lagervärdering. Och valet att aktivera mot att kostnadsföra, där aktivering av till exempel utvecklingskostnader smickrar årets vinst genom att skjuta kostnaden till balansräkningen, medan kostnadsföring tar hela smällen direkt. Två i grunden identiska verksamheter kan redovisa mycket olika vinst enbart genom dessa val.",
+        "Tänk dig två bolag med identisk verksamhet som var och en lägger 100 Mkr på utveckling i år. Det försiktiga kostnadsför hela summan direkt och redovisar säg 50 Mkr i rörelseresultat. Det aggressiva aktiverar de 100 Mkr och skriver av dem över fem år, så att bara 20 Mkr träffar årets kostnader, och redovisar 130 Mkr, mer än dubbelt så högt för exakt samma verkliga aktivitet. Talen är illustrativa, valda för att isolera ett enda redovisningsval. Bakom valen ligger en enda fråga: är redovisningen försiktig eller aggressiv? Försiktig redovisning underskattar vinsten i nuet och håller över tid. En ändring som bekvämt höjer vinsten är en blinkande lampa."
       ],
       "takeaway": "Hos en försiktig redovisare är den redovisade vinsten ett golv du kan luta dig mot. Hos en aggressiv är den ett tak som kanske inte håller."
     },
     {
+      "typ": "reading",
+      "kicker": "SÅ HÄNGER DET IHOP",
+      "lead": "De tre lagren prövas mot varandra. Orden, noterna och revisionen är tre vittnen till samma år, och du litar mest på den siffra som tre vittnen är överens om.",
+      "highlight": "tre vittnen till samma år",
+      "brodtext": [
+        "Börja med revisionsberättelsen, för den avgör om siffrorna alls går att lita på. Läs sedan principerna, för de avgör hur formade siffrorna är innan du jämför dem med något annat bolag. Gå därefter till noterna och jaga den enda upplysning som spräcker tesen, segmentet som blöder, insidern som dräneras värde, covenantet nära gränsen. Pröva slutligen VD-ordets berättelse mot allt det här. De farligaste fallen kombinerar en glänsande historia, alarmerande noter och aggressiv redovisning på en och samma gång, och var och en för sig hade du kunnat missa.",
+        "En vanlig fallgrop, även för vana läsare, är att bli lugnad av självförtroende och karisma i stället för av bevis. Motgiftet är enkelt och du kan ställa frågan till varje rad i rapporten: vad här går att kontrollera mot en siffra eller en not? Det du inte kan kontrollera rabatterar du hårt. Det du kan kontrollera väger du mot vad noterna och revisorn säger. Där berättelse och räkenskaper krockar vinner räkenskaperna, och där räkenskaperna och noterna krockar vinner noterna."
+      ],
+      "takeaway": "Läsa mellan raderna är inte misstänksamhet för sin egen skull. Det är att kräva att orden, noterna och revisionen säger samma sak innan du litar på vinstsiffran."
+    },
+    {
       "typ": "quiz",
       "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Enligt lektionens tumregel, vad ger ärlig ledning dig när det går bra, jämfört med vad undvikande ledning ger när det går dåligt?",
+          "alternativ": [
+            "Siffror när det går bra, adjektiv när det går dåligt",
+            "Adjektiv när det går bra, siffror när det går dåligt",
+            "Modeord i båda fallen"
+          ],
+          "ratt": [0],
+          "forklaring": "Ärlig ledning kvantifierar både segrar och förluster, medan undvikande ledning kvantifierar segrar men beskriver förluster i vaga adjektiv. Skillnaden i precision är signalen."
+        },
         {
           "typ": "single",
           "fraga": "Ett nyckeltal som ledningen lyfte stolt i fjol nämns inte alls i år. Hur tolkar lektionen detta?",
@@ -82,7 +152,29 @@
             "VD:s personliga åsikt om belåningen"
           ],
           "ratt": [0],
-          "forklaring": "Rapporten är sammanfattningen och noten är substansen. Skuldnoten redovisar villkoren, och ett brutet covenant kan vara dödligt och syns bara här."
+          "forklaring": "Rapporten är sammanfattningen och noten är substansen. Skuldnoten redovisar villkoren, och ett brutet covenant kan vara dödligt och syns bara där."
+        },
+        {
+          "typ": "single",
+          "fraga": "Ordna stigande i allvar: vilket är den allvarligaste typen av uttalande om årsredovisningen?",
+          "alternativ": [
+            "Ett avstyrkande uttalande",
+            "Ett uttalande med reservation",
+            "Ett rent uttalande utan anmärkning"
+          ],
+          "ratt": [0],
+          "forklaring": "Ett uttalande med reservation gäller ett avgränsat fel, medan ett avstyrkande betyder att rapporterna är så väsentligt vilseledande att de inte ger en rättvisande bild. Ett rent uttalande är inte modifierat alls."
+        },
+        {
+          "typ": "single",
+          "fraga": "Två identiska bolag lägger lika mycket på utveckling. Det ena aktiverar kostnaderna, det andra kostnadsför dem direkt. Vad blir effekten på årets redovisade vinst?",
+          "alternativ": [
+            "Det som aktiverar visar högre vinst i år genom att skjuta kostnaden till balansräkningen",
+            "Det som kostnadsför visar högre vinst i år",
+            "Båda visar exakt samma vinst eftersom verksamheten är identisk"
+          ],
+          "ratt": [0],
+          "forklaring": "Aktivering lägger kostnaden som en tillgång och fördelar den över flera år, vilket smickrar årets vinst. Kostnadsföring tar hela smällen direkt. Samma verklighet kan ge mycket olika redovisad vinst."
         },
         {
           "typ": "multi",

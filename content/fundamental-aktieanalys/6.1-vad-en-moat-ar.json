@@ -3,48 +3,96 @@
   "lektion": "6.1",
   "titel": "Vad en moat är och typerna",
   "niva": "Mellan",
-  "tid_min": 10,
-  "mal": "Efter lektionen kan eleven förklara vad en konkurrensfördel (moat) är och varför den skyddar hög avkastning, samt klassificera de fem huvudtyperna.",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven förklara vad en konkurrensfördel (moat) är och varför den skyddar hög avkastning, skilja orsak från effekt, och känna igen de fem huvudtyperna med var sin uppkomst, sitt finansiella avtryck och sitt typiska sätt att erodera.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 6.1",
       "titel": "Vad en moat är och typerna",
-      "ingress": "En konkurrensfördel är barriären som hindrar att hög lönsamhet konkurreras bort, och den finns i fem igenkännbara former."
+      "ingress": "En konkurrensfördel är barriären som hindrar att hög lönsamhet konkurreras bort. Den finns i fem igenkännbara former, och var och en uppstår, syns och eroderar på sitt eget vis."
     },
     {
       "typ": "reading",
-      "kicker": "BARRIÄREN",
-      "lead": "På en fri marknad är hög lönsamhet en magnet. En konkurrensfördel, en vallgrav, det engelska ordet är moat, är det som hindrar att vinsterna konkurreras bort.",
-      "highlight": "En konkurrensfördel, en vallgrav, det engelska ordet är moat, är det som hindrar att vinsterna konkurreras bort.",
+      "kicker": "VARFÖR DET SPELAR ROLL",
+      "lead": "På en fri marknad är hög lönsamhet en magnet. Det naturliga ödet för en höglönsam verksamhet utan barriär är att vinsterna konkurreras bort tills den blivit medelmåttig.",
+      "highlight": "På en fri marknad är hög lönsamhet en magnet.",
       "brodtext": [
-        "När en verksamhet tjänar hög avkastning på kapitalet ser omvärlden det och vill ha en del av kakan. Konkurrenter investerar, nya aktörer kliver in, priser pressas. Det naturliga ödet för en höglönsam verksamhet utan barriär är att vinsterna eroderas tills avkastningen sjunkit mot kapitalkostnaden och bolaget blivit medelmåttigt.",
-        "Tänk dig en borg med en vattenfylld vallgrav. Vallgraven gör inte borgen rikare, men den gör den svår att inta. På samma sätt skyddar en konkurrensfördel den höga avkastningen utan att själv synas i resultaträkningen. Vinster lockar konkurrens, konkurrens eroderar vinster, och en vallgrav bromsar den erosionen.",
-        "Skilj noga på en verklig vallgrav och ett tillfälligt försprång. En het produkt eller en kostnadsfördel som vem som helst kan kopiera håller inte. Testet är hållbarhet: skyddar fördelen fortfarande den höga avkastningen om tio år, eller har konkurrensen då hunnit ikapp? Konkurrensfördelen är orsaken och ihållande hög ROIC är effekten."
+        "När en verksamhet tjänar hög avkastning på kapitalet ser omvärlden det och vill ha en del av kakan. Konkurrenter investerar, nya aktörer kliver in, kapacitet byggs ut och priser pressas. Utan något som håller emot sjunker avkastningen ned mot kapitalkostnaden, och dagens höga lönsamhet blir morgondagens genomsnitt.",
+        "Något måste hindra det. Den barriären är en konkurrensfördel, en vallgrav, det engelska ordet är moat. Den avgör om ett bolag är lönsamt i år eller lönsamt om tio år. Begriper du begreppet ser du varför två bolag med identisk lönsamhet idag kan vara värda vitt skilda summor: det ena får behålla sina vinster, det andra får dem bortkonkurrerade."
       ],
-      "takeaway": "Fråga om varje höglönsamt bolag: varför konkurreras det här inte bort? Saknas svaret är den höga avkastningen sannolikt lånad från framtiden."
+      "takeaway": "Hög lönsamhet utan en barriär som skyddar den är inte en tillgång du kan räkna med, bara ett tillstånd som konkurrensen är på väg att rätta till."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SÅ FUNGERAR DET",
+      "lead": "Tänk dig en borg med en vattenfylld vallgrav runt sig. Vallgraven gör inte borgen rikare, men den gör den svår att inta.",
+      "highlight": "Vallgraven gör inte borgen rikare, men den gör den svår att inta.",
+      "brodtext": [
+        "På samma sätt skyddar en konkurrensfördel den höga avkastningen utan att själv synas i resultaträkningen. Logiken är en kedja: vinster lockar konkurrens, konkurrens eroderar vinster, och en vallgrav är det som stoppar, eller åtminstone bromsar, den erosionen. Ett bolag med en bred vallgrav kan tjäna hög avkastning i många år, för rivaler kan inte enkelt kopiera produkten, underprissätta den eller locka bort kunderna. Ett bolag utan vallgrav kan vara mycket lönsamt idag, men vinsterna ligger oskyddade, och vem som helst med kapital kan ta sig in och konkurrera bort dem.",
+        "Mekaniskt fungerar varje konkurrensfördel genom att göra en av tre saker svår för en rival: att matcha bolagets kostnader, att matcha dess produkt eller kundvärde, eller att ta dess kunder. Vilken den specifika källan är, skala, nätverk, byteskostnader, immateriella tillgångar eller en strukturell kostnadsfördel, kommer strax. Gemensamt är att de alla reser en barriär som konkurrenter inte billigt kan korsa."
+      ],
+      "takeaway": "En vallgrav skyddar avkastningen genom att göra något dyrt eller omöjligt för en rival: att matcha kostnaden, att matcha produkten, eller att ta kunderna."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HÅLLBARHET OCH ORSAK",
+      "lead": "Skilj noga på en verklig vallgrav och ett tillfälligt försprång. Testet är hållbarhet: skyddar fördelen fortfarande den höga avkastningen om tio år?",
+      "highlight": "Testet är hållbarhet: skyddar fördelen fortfarande den höga avkastningen om tio år?",
+      "brodtext": [
+        "En het produkt, ett försprång som förste aktör, en kostnadsfördel som vem som helst kan kopiera inom ett par år: sådant håller inte. Frågan är om konkurrensen hunnit ikapp om ett decennium eller inte. Mycket av det som kallas vallgravar i investerarberättelser är vid närmare påseende bara tillfälliga försprång.",
+        "Håll också isär orsak och effekt. Konkurrensfördelen är orsaken, ihållande hög avkastning på kapitalet är effekten. Har en verksamhet tjänat hög avkastning i många år utan att den konkurrerats bort, är det ett starkt indicium på att en vallgrav finns, för något måste ju ha hållit konkurrensen borta. En verksamhet vars höga avkastning snabbt bleknade hade aldrig någon riktig vallgrav. En sista nyans: en vallgrav är inte för evigt. Den kan breddas, hålla sig stadig eller erodera, och ett teknikskifte kan göra en till synes ointaglig position irrelevant."
+      ],
+      "takeaway": "Förväxla aldrig effekten med orsaken. Hög avkastning är spåret en vallgrav lämnar, inte vallgraven själv, och spår kan vara tillfälliga."
     },
     {
       "typ": "concept",
-      "kicker": "FEM TYPER",
-      "titel": "De fem konkurrensfördelarna",
+      "kicker": "DE FEM TYPERNA",
+      "titel": "Fem källor till en konkurrensfördel",
       "brodtext": [
-        "Skalfördelar: den största aktören slår ut fasta kostnader på fler enheter och kan sätta priser mindre rivaler inte överlever. Fördelen växer med storleken och eroderar om en rival når jämförbar skala.",
-        "Nätverkseffekter: produkten blir mer värdefull för alla ju fler som använder den. Det ledande nätverkets försprång växer med ränta på ränta, men kan slå över om en rival når kritisk massa.",
-        "Byteskostnader: när det är dyrt, riskabelt eller besvärligt att byta stannar kunden kvar även när en konkurrent är billigare. Eroderar om byte blir enkelt eller en rival erbjuder nog för att motivera flytten.",
-        "Immateriella tillgångar: avkastningen skyddas juridiskt eller via kundens uppfattning, varumärke, patent, licenser. Håller så länge uppfattningen håller, patent löper ut, regulatoriska fördelar håller så länge reglerna gör det.",
-        "Strukturell kostnadsfördel: inte storlek utan en unik tillgång ingen rival kan kopiera, en billig råvarukälla, ett oslagbart läge, en lågkostnadsprocess. Ett litet bolag kan ha den, ett stort kan sakna den."
+        "Skalfördelar. Den största aktören slår ut sina fasta kostnader på fler enheter, köper in billigare och drivs effektivare, och kan därför sätta priser som mindre rivaler inte överlever. Fördelen är självförstärkande: skala sänker kostnader, låga priser vinner andelar, fler andelar lägger till skala. Det som definierar typen är att fördelen växer med storleken. Den syns som en kostnad per enhet rivalerna inte kan matcha, och den eroderar om en rival når jämförbar skala eller om marknaden splittras i mindre nischer.",
+        "Nätverkseffekter. Produkten blir mer värdefull för alla användare ju fler som använder den. Det ledande nätverkets försprång växer då med ränta på ränta och blir mycket svårt att rubba, en ny aktör möter ett moment 22 där ingen vill vara först. Det syns som att kunderna stannar utan att leverantören anstränger sig. Nätverkseffekter kan skapa några av de bredaste vallgravar som finns, men de kan också slå över snabbt om en rival ändå når kritisk massa.",
+        "Byteskostnader. När det är dyrt, riskabelt eller besvärligt att byta stannar kunden kvar även när en konkurrent är billigare eller något bättre. Det ger den etablerade leverantören prissättningskraft och uthållighet. Det syns som hög andel kunder som förnyar år efter år trots prishöjningar. Fördelen eroderar om byte blir enkelt, eller om en rival erbjuder så mycket mer att kunden tar smärtan att flytta.",
+        "Immateriella tillgångar. Avkastningen skyddas juridiskt eller genom kundens uppfattning: varumärke, patent, licenser och tillstånd. Ett starkt varumärke låter bolaget ta mer betalt för en i grunden likvärdig produkt, ett patent ger ett tidsbegränsat juridiskt monopol, en licens kan stänga ute konkurrenter helt. Det syns som en prispremie eller lojalitet utan motsvarande skillnad i själva varan. Varumärken håller så länge uppfattningen håller, patent löper ut, och regulatoriska fördelar håller så länge reglerna gör det.",
+        "Strukturell kostnadsfördel. Också en kostnadsfördel, men håll den noga isär från skala. Här kommer fördelen inte av att vara störst, utan av en unik tillgång ingen rival kan kopiera oavsett storlek: en ovanligt billig råvarukälla, ett oslagbart läge, en patentskyddad lågkostnadsprocess, gynnsam geografi. Ett litet bolag kan ha den, ett stort kan sakna den. Den håller precis så länge den underliggande tillgången gör det, fyndigheten, läget, processen."
       ],
-      "forklaring": "Mekaniskt gör varje fördel en av tre saker svår för en rival: att matcha kostnaderna, att matcha produkten, eller att ta kunderna. Håll noga isär skala (beror på storlek) och strukturell kostnadsfördel (beror på en unik tillgång), bägge sänker kostnaden men av skilda skäl."
+      "forklaring": "Lär dig de fem som ett raster du lägger över varje bolag. Varje typ gör en av tre saker svår för en rival: att matcha kostnaden, att matcha produkten, eller att ta kunderna. Och var och en har sitt eget sätt att erodera, vilket är just varför namnet på typen är värt så mycket."
     },
     {
       "typ": "concept",
-      "kicker": "NAMNGE OCH BEVAKA",
-      "titel": "Typen pekar ut hotet",
+      "kicker": "TVÅ KOSTNADSFÖRDELAR, SKILDA SKÄL",
+      "titel": "Skala mot strukturell kostnadsfördel",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Skalfördel", "text": "Bygger på storlek. Den största aktören slår ut fasta kostnader på fler enheter och drivs billigare än alla mindre. Ett litet bolag kan per definition inte ha den. Eroderar när en rival når jämförbar skala, eller när marknaden splittras i nischer där storleken inte längre lönar sig." },
+          { "rubrik": "Strukturell kostnadsfördel", "text": "Bygger på en unik tillgång, inte på storlek: en billig fyndighet, ett oslagbart läge, en skyddad lågkostnadsprocess. Ett litet bolag kan ha den och ett stort sakna den. Eroderar bara när den underliggande tillgången gör det, när fyndigheten sinar eller läget tappar sitt värde." }
+        ],
+        "figurtext": "Bägge sänker kostnaden under rivalernas, men av helt skilda skäl. Den vanligaste hopblandningen i moat-analys."
+      },
+      "forklaring": "Den första fällan är att slå ihop dessa två. Båda sänker kostnaden, men skala beror på att vara störst medan den strukturella fördelen beror på en unik tillgång. Skillnaden styr vad du bevakar: hotet mot skala är en rival som växer ikapp, hotet mot den strukturella fördelen är att själva tillgången förlorar sitt värde."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TYPEN PEKAR UT HOTET",
+      "lead": "Påstå aldrig bara att ett bolag har en konkurrensfördel. Namnge typen, eller typerna. Det är namngivningen som gör analysen precis.",
+      "highlight": "Namnge typen, eller typerna. Det är namngivningen som gör analysen precis.",
       "brodtext": [
-        "Påstå aldrig bara att ett bolag har en konkurrensfördel. Namnge typen, eller typerna. Det är namngivningen som gör analysen precis, och som avgör vad du ska bevaka: ett nätverk kan slå över till en rival, ett varumärke kan vattnas ur, en kostnadsfördel kan mötas av en ny lågkostnadsaktör. Varje sort eroderar på sitt eget vis.",
-        "De starkaste bolagen har ofta mer än en typ samtidigt, och typerna förstärker varandra: skala kan finansiera ett varumärke, som vinner andelar, som lägger till ännu mer skala. Kombinerade konkurrensfördelar är bredare och mer svårangripna, och värderas högst. Går typen däremot inte att sätta namn på, finns där förmodligen ingen riktig vallgrav, bara ett tillfälligt försprång."
-      ]
+        "Klassificeringen är inte en etikett utan en karta, både till styrkan och till sårbarheten. En nätverkseffekt eroderar på ett helt annat sätt än ett varumärke eller en kostnadsfördel, och bevakar du fel sak missar du den dag barriären börjar brista. För nätverket: att en rival når kritisk massa. För det immateriella: ett urvattnat varumärke eller ett patent som löper ut. För en kostnadsfördel: en ny lågkostnadsaktör. Varje sort eroderar på sitt eget vis, så bevakningslistan ser olika ut.",
+        "De starkaste bolagen har ofta mer än en typ samtidigt, och typerna förstärker varandra: skala kan finansiera ett varumärke, som vinner andelar, som lägger till ännu mer skala. Kombinerade konkurrensfördelar är bredare, mer svårangripna och värderas högst. Den andra fällan är därför att se bara en källa när flera samverkar. Och går typen över huvud taget inte att sätta namn på, finns där förmodligen ingen riktig vallgrav, bara ett tillfälligt försprång."
+      ],
+      "takeaway": "Kan du inte koppla den höga avkastningen till en igenkännbar, uthållig typ, har du kanske ingen vallgrav alls. Namnet är sanningstestet."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR EN ERFAREN INVESTERARE TÄNKER",
+      "lead": "Ställ en enda fråga framför alla andra om varje höglönsamt bolag: varför konkurreras det här inte bort? Hög avkastning är inget givet faktum, den kräver en förklaring.",
+      "highlight": "varför konkurreras det här inte bort?",
+      "brodtext": [
+        "Saknas förklaringen är den höga avkastningen sannolikt lånad från framtiden. Skilj hela tiden en strukturell, uthållig fördel från ett tillfälligt försprång, och sätt namn på den specifika typen innan du litar på den. För varje bolag ställer du samma följdfråga: vilken av de fem källorna är i arbete, och hur stark är var och en?",
+        "Breda, varaktiga konkurrensfördelar värderas högt, för de låter ett bolag behålla hög avkastning och växa med ränta på ränta i åratal. Men var ödmjuk samtidigt: även stora vallgravar kan brytas. Ompröva fortlöpande om barriären breddas eller börjar erodera, och anpassa vad du bevakar efter typen. För den som tänker så är fin verksamhet och uthållig konkurrensfördel nästan samma påstående."
+      ],
+      "takeaway": "Gör frågan vad skyddar avkastningen, och hur länge, till din reflex inför varje lönsam verksamhet. Det är vallgraven, inte den nuvarande avkastningen, som avgör det varaktiga värdet."
     },
     {
       "typ": "quiz",
@@ -62,6 +110,28 @@
         },
         {
           "typ": "single",
+          "fraga": "Hur hänger en konkurrensfördel ihop med uthålligt hög avkastning på kapitalet?",
+          "alternativ": [
+            "Konkurrensfördelen är orsaken och ihållande hög avkastning är effekten",
+            "Hög avkastning skapar automatiskt en konkurrensfördel åt bolaget",
+            "De två sakerna har inget samband med varandra"
+          ],
+          "ratt": [0],
+          "forklaring": "Vallgraven är orsaken, ihållande hög avkastning effekten. Har avkastningen hållit i många år utan att konkurreras bort är det ett starkt indicium på att en vallgrav finns."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad kännetecknar en konkurrensfördel som bygger på nätverkseffekter?",
+          "alternativ": [
+            "Produkten blir mer värdefull för alla användare ju fler som använder den",
+            "Bolaget är störst och slår ut sina fasta kostnader på fler enheter",
+            "Bolaget har en unik råvarukälla som ingen rival kan kopiera"
+          ],
+          "ratt": [0],
+          "forklaring": "Vid nätverkseffekter blir produkten mer värdefull för alla ju fler som använder den, vilket gör det ledande nätverkets försprång svårt att rubba. Skala och unik tillgång beskriver andra typer."
+        },
+        {
+          "typ": "single",
           "fraga": "Vad är den centrala skillnaden mellan en skalfördel och en strukturell kostnadsfördel?",
           "alternativ": [
             "Skala beror på storlek, medan en strukturell kostnadsfördel beror på en unik tillgång oavsett storlek",
@@ -73,7 +143,7 @@
         },
         {
           "typ": "multi",
-          "fraga": "Para ihop typerna av konkurrensfördel med deras typiska hot. Vilka stämmer?",
+          "fraga": "Para ihop typerna av konkurrensfördel med deras typiska sätt att erodera. Vilka stämmer?",
           "underrubrik": "Välj alla som stämmer",
           "alternativ": [
             "En byteskostnadsfördel hotas av att byte blir enkelt eller att en rival erbjuder så mycket mer att kunden tar smärtan att flytta",
@@ -82,6 +152,17 @@
           ],
           "ratt": [0, 1],
           "forklaring": "Byteskostnader eroderar när byte blir enkelt, och nätverkseffekter kan slå över om en rival når kritisk massa. Ett patent hotas i första hand av att det löper ut, inte av kundsmak."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför värderas bolag med flera samverkande typer av konkurrensfördel högst?",
+          "alternativ": [
+            "Kombinerade fördelar är bredare, mer svårangripna och kan förstärka varandra",
+            "Flera fördelar ger automatiskt lägre skatt än en enda",
+            "Bolag med flera fördelar slipper redovisa dem i årsredovisningen"
+          ],
+          "ratt": [0],
+          "forklaring": "De starkaste bolagen har ofta mer än en typ samtidigt, och typerna förstärker varandra, till exempel kan skala finansiera ett varumärke som vinner andelar som lägger till mer skala."
         }
       ]
     }
