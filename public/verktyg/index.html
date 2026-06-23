@@ -6,29 +6,23 @@
 <title>Marginalen · Analysverktyg före aktieköp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Schibsted+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Marginalen broadsheet-tema (matchar src/styles/broadsheet.css). Ett enda
+     ljust tema, inget morkt lage. Verktyget ar valtokeniserat, sa paletten +
+     typsnitten lyfter hela ytan till samma sprak som resten av sajten. */
   :root{
-    --page:#0A0C0B; --panel:#11140F; --panel-2:#161A14;
-    --ink:#F0EDE4; --ink-soft:#C3C7BC; --ink-faint:#8A938A;
-    --line:rgba(255,255,255,.10); --line-soft:rgba(255,255,255,.06);
-    --petrol:#8FD3B0; --petrol-deep:#F0EDE4;
-    --brass:#C9A86A; --brass-soft:#D8BD82;
-    --bad:#E0896F; --mid:#E3C06A; --good:#8FD3B0; --great:#B6EBCF;
-    --vhigh:#E8654A; --on-ink:#0A0C0B;
-    --serif:"Newsreader",Georgia,serif;
-    --sans:"Schibsted Grotesk",system-ui,sans-serif;
-    --mono:"IBM Plex Mono",ui-monospace,monospace;
-    --r:10px;
-  }
-  html[data-theme="light"]{
-    --page:#F7F5EF; --panel:#FDFBF7; --panel-2:#FFFFFF;
-    --ink:#1E241F; --ink-soft:#46503F; --ink-faint:#7A8170;
-    --line:rgba(30,36,31,.15); --line-soft:rgba(30,36,31,.08);
-    --petrol:#1C4B47; --petrol-deep:#123834;
-    --brass:#9A6E1C; --brass-soft:#B98F36;
+    --page:#F6F2EA; --panel:#FCFAF4; --panel-2:#ECE5D6;
+    --ink:#211C17; --ink-soft:#4A4239; --ink-faint:#6E6456;
+    --line:rgba(33,28,23,.16); --line-soft:rgba(33,28,23,.09);
+    --petrol:#8A2E26; --petrol-deep:#211C17;
+    --brass:#8A2E26; --brass-soft:#9A6E1C;
     --bad:#A8473A; --mid:#9A7320; --good:#3E7A4F; --great:#2E6E4E;
-    --vhigh:#8A3327; --on-ink:#F6F3EA;
+    --vhigh:#8A3327; --on-ink:#F6F2EA;
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Spectral",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --r:0px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -210,6 +204,12 @@
   @media(max-width:760px){
     .railnav{display:none}
   }
+
+  /* Broadsheet-form: platta ytor (--r:0), pill-formade actions, fyrkantigt
+     varumarke, ingen temavaxel (enbart ljust tema). */
+  .btn, .tab { border-radius: 999px; }
+  .rn-mark, .rn-item { border-radius: 0; }
+  .themetoggle, .rn-theme, .tt-mobile { display: none !important; }
 
   @media print{
     :root{
