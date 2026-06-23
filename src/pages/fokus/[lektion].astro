@@ -267,6 +267,15 @@ function visualEl(v: VisualObj) {
       </div>
     </main>
 
+    <!-- ── Quiz gate (shown if you try to finish below 80%) ── -->
+    <div class="qgate" data-quiz-gate hidden role="alertdialog" aria-label="Quizet är inte klart">
+      <p class="qgate__msg" data-quiz-gate-msg></p>
+      <div class="qgate__btns">
+        <button type="button" class="qgate__redo" data-quiz-gate-redo>Öva om de du missade</button>
+        <button type="button" class="qgate__skip" data-quiz-gate-skip>Slutför ändå</button>
+      </div>
+    </div>
+
     <!-- ── Bottom nav ── -->
     <footer class="lnav">
       <div class="lnav-in">
@@ -369,6 +378,16 @@ function visualEl(v: VisualObj) {
   .s-prose { max-width: 60ch; margin: 22px auto 0; }
   .s-prose p { color: var(--ink-soft); margin: 0; }
   .s-prose p + p { margin-top: 1.05em; }
+
+  /* ── Quiz gate ── */
+  .qgate { max-width: 560px; margin: 0 auto; background: var(--card); border: 1px solid var(--oxblood); border-left: 3px solid var(--oxblood); padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+  .qgate[hidden] { display: none; }
+  .qgate__msg { font-family: var(--serif); font-size: 15.5px; line-height: 1.5; color: var(--ink); margin: 0; }
+  .qgate__btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .qgate__redo { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; background: var(--ink); color: var(--paper); border: none; padding: 12px 22px; border-radius: 99px; cursor: pointer; transition: background .2s; }
+  .qgate__redo:hover { background: var(--oxblood); }
+  .qgate__skip { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; background: none; border: 1px solid var(--rule-strong); color: var(--ink-soft); padding: 11px 20px; border-radius: 99px; cursor: pointer; transition: border-color .2s, color .2s; }
+  .qgate__skip:hover { border-color: var(--oxblood); color: var(--oxblood); }
 
   /* ── Bottom nav ── */
   .lnav { position: sticky; bottom: 0; background: linear-gradient(rgba(246,242,234,0), var(--paper) 40%); padding: 14px clamp(18px,5vw,52px) 22px; }

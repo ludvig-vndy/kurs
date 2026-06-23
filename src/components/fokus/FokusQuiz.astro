@@ -222,6 +222,9 @@ const PASS_MARK = 80;
     const passed = pct >= passMark;
 
     fq.classList.add('is-graded');
+    fq.dataset.graded = '1';
+    fq.dataset.passed = String(passed);
+    fq.dataset.pct = String(pct);
 
     const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
     const ringEl = fq.querySelector<HTMLElement>('[data-fq-ring]');
@@ -264,6 +267,7 @@ const PASS_MARK = 80;
 
   function resetQuiz(fq: HTMLElement): void {
     fq.classList.remove('is-graded');
+    fq.dataset.graded = ''; fq.dataset.passed = '';
     fq.querySelectorAll<HTMLElement>('[data-fq-q]').forEach((q) => { q.hidden = false; q.dataset.wasWrong = ''; });
     fq.querySelectorAll<HTMLInputElement>('.fq-opt__input').forEach((i) => { i.checked = false; });
     fq.querySelectorAll<HTMLElement>('.fq-opt').forEach((o) => {
@@ -298,6 +302,7 @@ const PASS_MARK = 80;
       }
     });
     fq.classList.remove('is-graded');
+    fq.dataset.graded = ''; fq.dataset.passed = '';
     const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
     const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
     const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');

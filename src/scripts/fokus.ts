@@ -59,6 +59,15 @@ function initFokus(host: HTMLElement) {
   const backBtn = document.querySelector<HTMLButtonElement>('[data-back]');
   const nextBtn = document.querySelector<HTMLButtonElement>('[data-next]');
 
+  // Soft quiz gate: finishing a lesson whose quiz isn't passed (>=80%) opens a
+  // nudge with "practise the misses" and an explicit "finish anyway" escape.
+  const gateEl = document.querySelector<HTMLElement>('[data-quiz-gate]');
+  const gateMsgEl = document.querySelector<HTMLElement>('[data-quiz-gate-msg]');
+  const gateRedoBtn = document.querySelector<HTMLButtonElement>('[data-quiz-gate-redo]');
+  const gateSkipBtn = document.querySelector<HTMLButtonElement>('[data-quiz-gate-skip]');
+  let gateConfirmed = false;
+  function quizEl() { return host.querySelector<HTMLElement>('[data-fokus-quiz]'); }
+
   // Build segmented track.
   let segs: HTMLElement[] = [];
   if (trackEl) {
@@ -108,6 +117,11 @@ function initFokus(host: HTMLElement) {
   }
 
   function finish() {
+    // Gate: if the lesson has a quiz that hasn't reached the pass mark, nudge
+    // once before completing (the user can still choose to finish anyway).
+    const quiz = quizEl();
+    if (quiz && quiz.dataset.passed !== 'true' && !gateConfirmed) { openGate(quiz); return; }
+
     if (lessonId) markFokusDone(lessonId);
     clearPos();
     if (!player) {
@@ -128,6 +142,30 @@ function initFokus(host: HTMLElement) {
     player.classList.add('is-done');
     scrollTop();
   }
+
+  function openGate(quiz: HTMLElement) {
+    if (!gateEl) { gateConfirmed = true; finish(); return; } // no gate UI: don't trap
+    const graded = quiz.dataset.graded === '1';
+    const pct = Number(quiz.dataset.pct || '0');
+    if (gateMsgEl) {
+      gateMsgEl.textContent = graded
+        ? `Du fick ${pct}% rätt. Målet är minst 80%. Öva om de du missade, eller slutför ändå.`
+        : 'Du har inte rättat quizet än. Testa dig själv först, eller slutför ändå.';
+    }
+    if (gateRedoBtn) gateRedoBtn.textContent = graded ? 'Öva om de du missade' : 'Till quizet';
+    gateEl.hidden = false;
+    gateEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+  }
+  function closeGate() { if (gateEl) gateEl.hidden = true; }
+  gateRedoBtn?.addEventListener('click', () => {
+    closeGate();
+    const quiz = quizEl();
+    if (!quiz) return;
+    const redo = quiz.querySelector<HTMLButtonElement>('[data-fq-redo]');
+    if (redo && !redo.hidden) redo.click();
+    else quiz.scrollIntoView({ behavior: 'auto', block: 'start' });
+  });
+  gateSkipBtn?.addEventListener('click', () => { gateConfirmed = true; closeGate(); finish(); });
 
   function go(dir: 'next' | 'prev') {
     if (dir === 'next') {
