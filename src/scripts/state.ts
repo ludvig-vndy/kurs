@@ -1,4 +1,4 @@
-/* localStorage-baserad kursmeta (svit + senaste position) och dev-upplåsning.
+/* localStorage-baserad kursmeta (streak + senaste position) och dev-upplåsning.
    Ren räknelogik ligger i state-core.mjs. Per webbläsare, inga konton. */
 
 import {
@@ -48,7 +48,7 @@ function todayISO(): string {
   return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`;
 }
 
-/** Bumpa sviten för dagens aktivitet (idempotent inom samma dag). */
+/** Bumpa streaken för dagens aktivitet (idempotent inom samma dag). */
 export function touchStreak(): void {
   const m = readMeta();
   const s = nextStreak({ count: m.streakCount ?? 0, lastDay: m.streakLastDay }, todayISO());
@@ -65,7 +65,7 @@ export function getMeta(): CourseMeta {
   return readMeta();
 }
 
-/** Spara senaste position och bumpa sviten. Anropas av decket vid navigering. */
+/** Spara senaste position och bumpa streaken. Anropas av decket vid navigering. */
 export function recordPosition(lessonId: string, step: number): void {
   const m = readMeta();
   writeMeta({ ...m, lastLessonId: lessonId, lastStep: step });
