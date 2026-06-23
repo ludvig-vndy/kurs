@@ -247,7 +247,7 @@ function visualEl(v: VisualObj) {
                 )}
 
                 {s.typ === 'quiz' && (
-                  <div class="s-col"><FokusQuiz fragor={s.fragor ?? []} lektionId={lesson.lektion} /></div>
+                  <div class="s-col"><FokusQuiz fragor={s.fragor ?? []} lektionId={lesson.lektion} quizId={`${lesson.lektion}.s${i}`} /></div>
                 )}
 
                 {hasGloss && (

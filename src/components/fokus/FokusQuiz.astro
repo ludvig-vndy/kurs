@@ -11,9 +11,12 @@ interface Fraga {
 interface Props {
   fragor: Fraga[];
   lektionId?: string;
+  /** Stable id for this quiz instance, used to build per-question SRS ids. */
+  quizId?: string;
 }
 
-const { fragor, lektionId = '' } = Astro.props;
+const { fragor, lektionId = '', quizId } = Astro.props;
+const qbase = quizId || lektionId || 'q';
 const PASS_MARK = 80;
 ---
 
@@ -31,6 +34,7 @@ const PASS_MARK = 80;
       <li
         class="fq-q"
         data-fq-q
+        data-qid={`${qbase}#${qi}`}
         data-ratt={JSON.stringify(q.ratt)}
         data-multi={String(q.typ === 'multi')}
       >
@@ -75,6 +79,7 @@ const PASS_MARK = 80;
 
   <div class="fq__actions">
     <button type="button" class="fq-btn fq-btn--primary" data-fq-check disabled>Rätta svar</button>
+    <button type="button" class="fq-btn fq-btn--ghost" data-fq-redo hidden>Öva om de du missade</button>
     <button type="button" class="fq-btn fq-btn--ghost" data-fq-retry hidden>Gör om</button>
   </div>
 
@@ -168,6 +173,8 @@ const PASS_MARK = 80;
 </style>
 
 <script>
+  import { recordResult } from '../../scripts/srs';
+
   function gradeQuiz(fq: HTMLElement): void {
     const questions = Array.from(fq.querySelectorAll<HTMLElement>('[data-fq-q]'));
     let correctCount = 0;
@@ -184,6 +191,10 @@ const PASS_MARK = 80;
         [...rattSet].every((r) => pickedSet.has(r));
 
       if (isRight) correctCount++;
+
+      const qid = q.dataset.qid;
+      if (qid) recordResult(qid, isRight);
+      q.dataset.wasWrong = isRight ? '' : '1';
 
       inputs.forEach((input) => {
         const opt = input.closest<HTMLElement>('.fq-opt');
@@ -231,8 +242,11 @@ const PASS_MARK = 80;
 
     const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
     const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
+    const redoBtn = fq.querySelector<HTMLButtonElement>('[data-fq-redo]');
     if (checkBtn) checkBtn.hidden = true;
     if (retryBtn) retryBtn.hidden = false;
+    const anyWrong = questions.some((q) => q.dataset.wasWrong === '1');
+    if (redoBtn) redoBtn.hidden = !anyWrong;
 
     const lektionId = fq.dataset.lektion;
     if (lektionId) {
@@ -250,6 +264,7 @@ const PASS_MARK = 80;
 
   function resetQuiz(fq: HTMLElement): void {
     fq.classList.remove('is-graded');
+    fq.querySelectorAll<HTMLElement>('[data-fq-q]').forEach((q) => { q.hidden = false; q.dataset.wasWrong = ''; });
     fq.querySelectorAll<HTMLInputElement>('.fq-opt__input').forEach((i) => { i.checked = false; });
     fq.querySelectorAll<HTMLElement>('.fq-opt').forEach((o) => {
       o.classList.remove('is-correct', 'is-wrong', 'is-picked');
@@ -259,11 +274,38 @@ const PASS_MARK = 80;
     const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
     const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
     const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
+    const redoBtn = fq.querySelector<HTMLButtonElement>('[data-fq-redo]');
 
     if (resultEl) resultEl.hidden = true;
     if (checkBtn) { checkBtn.hidden = false; checkBtn.disabled = true; }
     if (retryBtn) retryBtn.hidden = true;
+    if (redoBtn) redoBtn.hidden = true;
 
+    fq.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Re-practise only the missed questions: keep correct ones (and their answers)
+  // hidden but still counted, clear and re-show the wrong ones for another try.
+  function redoWrong(fq: HTMLElement): void {
+    const questions = Array.from(fq.querySelectorAll<HTMLElement>('[data-fq-q]'));
+    questions.forEach((q) => {
+      const wrong = q.dataset.wasWrong === '1';
+      q.hidden = !wrong;
+      if (wrong) {
+        q.querySelectorAll<HTMLInputElement>('.fq-opt__input').forEach((i) => { i.checked = false; });
+        q.querySelectorAll<HTMLElement>('.fq-opt').forEach((o) => o.classList.remove('is-correct', 'is-wrong', 'is-picked'));
+        const fb = q.querySelector<HTMLElement>('[data-fq-feedback]'); if (fb) fb.hidden = true;
+      }
+    });
+    fq.classList.remove('is-graded');
+    const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
+    const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
+    const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
+    const redoBtn = fq.querySelector<HTMLButtonElement>('[data-fq-redo]');
+    if (resultEl) resultEl.hidden = true;
+    if (checkBtn) { checkBtn.hidden = false; checkBtn.disabled = !allAnswered(fq); }
+    if (retryBtn) retryBtn.hidden = true;
+    if (redoBtn) redoBtn.hidden = true;
     fq.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -281,9 +323,11 @@ const PASS_MARK = 80;
 
     const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
     const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
+    const redoBtn = fq.querySelector<HTMLButtonElement>('[data-fq-redo]');
 
     checkBtn?.addEventListener('click', () => gradeQuiz(fq));
     retryBtn?.addEventListener('click', () => resetQuiz(fq));
+    redoBtn?.addEventListener('click', () => redoWrong(fq));
 
     fq.addEventListener('change', () => {
       if (checkBtn) checkBtn.disabled = !allAnswered(fq);
