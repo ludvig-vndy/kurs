@@ -11,7 +11,9 @@
   --serif:"Spectral",Georgia,serif; --display:"Fraunces",Georgia,serif; --mono:"IBM Plex Mono",monospace;
 }
 *{box-sizing:border-box;margin:0}
-html{ -webkit-text-size-adjust:100% }
+/* Always reserve the scrollbar track so centered content (and the masthead)
+   doesn't shift sideways between short and long pages. */
+html{ -webkit-text-size-adjust:100%; scrollbar-gutter:stable }
 body{background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:18px; line-height:1.62; -webkit-font-smoothing:antialiased; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column}
 a{color:inherit}
 /* The theme strips underlines/borders from interactive elements, so a
