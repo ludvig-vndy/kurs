@@ -24,3 +24,7 @@ KURS-EXPORT.md
 .lt/
 # rost-pass artefakter
 rost*.csv
+
+# binara artefakter och standalone-export (ej kalla)
+*.zip
+*standalone*.html
