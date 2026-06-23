@@ -40,8 +40,8 @@
     {
       "typ": "reading",
       "kicker": "RÖSTMASKIN OCH VÅGMASKIN",
-      "lead": "Varje aktie bär på två tal som det lönar sig att hålla isär. Priset sätts av marknaden, sekund för sekund, av dem som råkar köpa och sälja idag. Värdet sätts av verksamheten och är summan av de pengar bolaget kommer att ge sina ägare över tid.",
-      "highlight": "två tal som det lönar sig att hålla isär",
+      "lead": "Varje aktie bär på två tal som det lönar sig att hålla isär: priset och värdet. Priset är vad aktien kostar just nu, satt av marknaden sekund för sekund av dem som råkar köpa och sälja idag. Värdet är vad bolaget egentligen är värt, summan av de pengar verksamheten kommer att ge sina ägare över tid.",
+      "highlight": "priset och värdet",
       "brodtext": [
         "De två hänger ihop men är inte samma sak. En klassisk bild fångar varför: på kort sikt är marknaden en röstmaskin, en popularitetstävling där humöret bestämmer. På lång sikt är den en vågmaskin som väger faktiska resultat. Över dagar och veckor speglar kursen stämningar. Över år rör den sig mot verksamhetens värde.",
         "Var kommer då en ägares avkastning ifrån? Ur tre källor: tillväxten i bolagets vinst, utdelningarna längs vägen, och förändringen i vad marknaden är villig att betala per krona vinst. De två första kommer ur verksamheten och går att analysera. Den tredje kommer ur stämningsläget och kan ingen förutsäga tillförlitligt. Så förankra ditt case i verksamheten och se humöret som en vind du inte rår över. Vi går djupare på pris mot värde i nästa lektion."

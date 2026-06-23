@@ -1,408 +1,95 @@
 ---
-// Linjediagram — inline SVG line chart visual.
-// Heldragen (accent) series: smooth Catmull-Rom curve + draw-on animation.
-// Streckad (price) series: straight polyline, dashed, fade in.
-// Optional markor: filled circle + label at a specific point.
-// Frame: y-axis (left), x-baseline (bottom), horizontal gridlines, x-ticks.
-
-interface Serie {
-  namn: string;
-  stil: 'heldragen' | 'streckad';
-  accent?: boolean;
-  punkter: number[];
-}
-
-interface Markor {
-  serieIndex: number;
-  punktIndex: number;
-  etikett: string;
-}
-
-interface LinjediagramVisual {
-  typ: 'linjediagram';
-  serier: Serie[];
-  markor?: Markor;
-  figurtext: string;
-}
-
-interface Props {
-  visual: LinjediagramVisual;
-}
-
+// Linjediagram, broadsheet living line chart. Solid value line draws in with a
+// travelling gold gleam; dashed price line flows; optional markor dot pops.
+// Animations gate on the parent step gaining .is-active.
+interface Serie { namn: string; stil?: string; accent?: boolean; punkter: number[] }
+interface Markor { serieIndex: number; punktIndex: number; etikett: string }
+interface LinjediagramVisual { typ: 'linjediagram'; serier: Serie[]; markor?: Markor; figurtext: string }
+interface Props { visual: LinjediagramVisual }
 const { visual } = Astro.props;
-const { serier, markor, figurtext } = visual;
+const serier = visual.serier;
 
-// SVG coordinate system — extra left/bottom padding for axes
-const VW = 640;
-const VH = 280;
-const PAD_L = 48; // room for y-axis + tick labels
-const PAD_R = 24;
-const PAD_T = 24;
-const PAD_B = 36; // room for x-axis + ticks
+const W = 560, H = 220, P = 22;
+const all = serier.flatMap((s) => s.punkter);
+const min = Math.min(...all);
+const max = Math.max(...all);
+const span = max - min || 1;
+const n = Math.max(...serier.map((s) => s.punkter.length));
+const X = (i: number) => P + (i * (W - 2 * P)) / (n - 1 || 1);
+const Y = (v: number) => H - P - ((v - min) / span) * (H - 2 * P);
+const pathOf = (pts: number[]) =>
+  pts.map((v, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
 
-const chartW = VW - PAD_L - PAD_R;
-const chartH = VH - PAD_T - PAD_B;
-
-// Map a serie's punkter to SVG [x, y] coords.
-// All series share the same x-span based on the longest series.
-const maxLen = Math.max(...serier.map(s => s.punkter.length));
-
-function getPoints(punkter: number[]): [number, number][] {
-  const n = maxLen > 1 ? maxLen - 1 : 1;
-  return punkter.map((y, i) => {
-    const x = PAD_L + (i / n) * chartW;
-    // y 0..100; 0 = bottom, 100 = top
-    const svgY = PAD_T + chartH - (y / 100) * chartH;
-    return [x, svgY];
-  });
-}
-
-// Catmull-Rom to cubic bezier for smooth curve.
-// Returns an SVG path "d" string.
-function catmullRomPath(pts: [number, number][]): string {
-  if (pts.length < 2) return '';
-  if (pts.length === 2) {
-    return `M ${pts[0][0]},${pts[0][1]} L ${pts[1][0]},${pts[1][1]}`;
-  }
-
-  // Build cubic bezier from Catmull-Rom with alpha=0.5 (centripetal)
-  const tension = 0.5;
-  let d = `M ${pts[0][0]},${pts[0][1]}`;
-
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[Math.max(0, i - 1)];
-    const p1 = pts[i];
-    const p2 = pts[i + 1];
-    const p3 = pts[Math.min(pts.length - 1, i + 2)];
-
-    const cp1x = p1[0] + (p2[0] - p0[0]) * tension / 3;
-    const cp1y = p1[1] + (p2[1] - p0[1]) * tension / 3;
-    const cp2x = p2[0] - (p3[0] - p1[0]) * tension / 3;
-    const cp2y = p2[1] - (p3[1] - p1[1]) * tension / 3;
-
-    d += ` C ${cp1x.toFixed(2)},${cp1y.toFixed(2)} ${cp2x.toFixed(2)},${cp2y.toFixed(2)} ${p2[0]},${p2[1]}`;
-  }
-  return d;
-}
-
-// Straight polyline "points" attribute string.
-function polylinePoints(pts: [number, number][]): string {
-  return pts.map(([x, y]) => `${x},${y}`).join(' ');
-}
-
-// Compute all series points up front.
-const allSeriesPts = serier.map(s => getPoints(s.punkter));
-
-// Compute marker position if present.
-let markorPt: [number, number] | null = null;
-if (markor) {
-  const pts = allSeriesPts[markor.serieIndex];
-  if (pts && pts[markor.punktIndex] !== undefined) {
-    markorPt = pts[markor.punktIndex];
-  }
-}
-
-// Gridlines: 4 evenly spaced horizontal lines at 20%, 40%, 60%, 80% of chart height.
-const gridLevels = [20, 40, 60, 80]; // y values (0=bottom, 100=top)
-const gridLines = gridLevels.map(level => ({
-  y: PAD_T + chartH - (level / 100) * chartH,
+const series = serier.map((s) => ({
+  namn: s.namn,
+  solid: s.accent === true || s.stil === 'heldragen',
+  d: pathOf(s.punkter),
 }));
 
-// Relative y-tick labels: only top and bottom to keep it editorial, no fake numbers.
-const yTickLabels = [
-  { y: PAD_T + chartH - (80 / 100) * chartH, label: 'Högre' },
-  { y: PAD_T + chartH - (20 / 100) * chartH, label: 'Lägre' },
-];
-
-// X-axis tick marks: one per data point along the baseline.
-const xTickCount = maxLen;
-const xTicks: number[] = [];
-for (let i = 0; i < xTickCount; i++) {
-  const n = xTickCount > 1 ? xTickCount - 1 : 1;
-  xTicks.push(PAD_L + (i / n) * chartW);
-}
-
-// Axis coordinates
-const axisBaselineY = PAD_T + chartH; // x-axis y
-const axisLeftX = PAD_L;             // y-axis x
+const m = visual.markor;
+const mk = m
+  ? { x: X(m.punktIndex), y: Y(serier[m.serieIndex].punkter[m.punktIndex]), etikett: m.etikett }
+  : null;
 ---
-
-<div class="linjediagram">
-  <svg
-    class="linjediagram__svg"
-    viewBox={`0 0 ${VW} ${VH}`}
-    aria-label="Linjediagram"
-    role="img"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <!-- Horizontal gridlines (render before data lines) -->
-    <g class="linjediagram__grid" aria-hidden="true">
-      {gridLines.map(gl => (
-        <line
-          x1={PAD_L}
-          y1={gl.y}
-          x2={PAD_L + chartW}
-          y2={gl.y}
-          stroke="var(--border)"
-          stroke-width="1"
-          fill="none"
-        />
-      ))}
-    </g>
-
-    <!-- Y-axis line -->
-    <line
-      class="linjediagram__axis"
-      x1={axisLeftX}
-      y1={PAD_T}
-      x2={axisLeftX}
-      y2={axisBaselineY}
-      stroke="var(--border-2)"
-      stroke-width="1"
-      aria-hidden="true"
-    />
-
-    <!-- X-axis baseline -->
-    <line
-      class="linjediagram__axis"
-      x1={axisLeftX}
-      y1={axisBaselineY}
-      x2={PAD_L + chartW}
-      y2={axisBaselineY}
-      stroke="var(--border-2)"
-      stroke-width="1"
-      aria-hidden="true"
-    />
-
-    <!-- X-axis ticks -->
-    <g class="linjediagram__xticks" aria-hidden="true">
-      {xTicks.map(tx => (
-        <line
-          x1={tx}
-          y1={axisBaselineY}
-          x2={tx}
-          y2={axisBaselineY + 5}
-          stroke="var(--border-2)"
-          stroke-width="1"
-        />
-      ))}
-    </g>
-
-    <!-- Y-tick labels: relative only, no fabricated numbers -->
-    <g class="linjediagram__ytick-labels" aria-hidden="true">
-      {yTickLabels.map(tl => (
-        <text
-          x={axisLeftX - 6}
-          y={tl.y + 4}
-          text-anchor="end"
-          font-family="var(--sans)"
-          font-size="10"
-          fill="var(--muted)"
-        >{tl.label}</text>
-      ))}
-    </g>
-
-    <!-- Data series -->
-    {serier.map((serie, si) => {
-      const pts = allSeriesPts[si];
-      if (serie.stil === 'heldragen') {
-        const d = catmullRomPath(pts);
-        return (
-          <path
-            class="linjediagram__line linjediagram__line--heldragen"
-            d={d}
-            stroke="var(--mint)"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"
-            pathLength="1"
-            stroke-dasharray="1"
-            stroke-dashoffset="1"
-          />
-        );
-      } else {
-        const pts_str = polylinePoints(pts);
-        return (
-          <polyline
-            class="linjediagram__line linjediagram__line--streckad"
-            points={pts_str}
-            stroke="var(--line-price)"
-            stroke-width="2"
-            stroke-dasharray="5 5"
-            fill="none"
-          />
-        );
-      }
-    })}
-
-    {markorPt && (
-      <g class="linjediagram__markor">
-        <circle
-          cx={markorPt[0]}
-          cy={markorPt[1]}
-          r="5"
-          fill="var(--mint)"
-        />
-        <text
-          x={markorPt[0]}
-          y={markorPt[1] + 18}
-          text-anchor="middle"
-          font-family="var(--sans)"
-          font-size="11"
-          fill="var(--mint)"
-        >{markor!.etikett}</text>
-      </g>
+<figure class="fig lj">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Linjediagram" preserveAspectRatio="none">
+    {mk && <line class="lj-h" x1={mk.x} y1={P} x2={mk.x} y2={H - P} />}
+    {series.map((s) =>
+      s.solid ? (
+        <g>
+          <path class="lj-v" d={s.d} />
+          <path class="lj-glow" d={s.d} />
+        </g>
+      ) : (
+        <path class="lj-p" d={s.d} />
+      )
     )}
+    {mk && <circle class="lj-dot" cx={mk.x} cy={mk.y} r="4.5" />}
+    {mk && <text class="lj-dottext" x={mk.x} y={mk.y - 12} text-anchor="middle">{mk.etikett}</text>}
   </svg>
-
-  <!-- Legend -->
-  <div class="linjediagram__legend" aria-hidden="true">
-    {serier.map((serie) => (
-      <div class="linjediagram__legend-item">
-        {serie.stil === 'heldragen' ? (
-          <svg class="linjediagram__swatch" width="24" height="10" aria-hidden="true">
-            <line x1="0" y1="5" x2="24" y2="5" stroke="var(--mint)" stroke-width="2.5" stroke-linecap="round" />
-          </svg>
-        ) : (
-          <svg class="linjediagram__swatch" width="24" height="10" aria-hidden="true">
-            <line x1="0" y1="5" x2="24" y2="5" stroke="var(--line-price)" stroke-width="2" stroke-dasharray="4 3" />
-          </svg>
-        )}
-        <span class="linjediagram__legend-namn">{serie.namn}</span>
-      </div>
+  <div class="legend">
+    {series.map((s) => (
+      <span>
+        <i style={s.solid ? 'background:var(--ink)' : 'height:0;border-top:2px dashed var(--oxblood)'}></i>
+        {s.namn}
+      </span>
     ))}
   </div>
-
-  {figurtext && (
-    <p class="linjediagram__figurtext">{figurtext}</p>
-  )}
-</div>
-
-<style is:global>
-  /* ── Linjediagram keyframes ──────────────────────────────────────────── */
-  @keyframes linje-draw {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-  @keyframes linje-fade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  @keyframes linje-pop {
-    from {
-      opacity: 0;
-      transform: scale(0);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-</style>
-
+  {visual.figurtext && <figcaption class="figtext">{visual.figurtext}</figcaption>}
+</figure>
 <style>
-  .linjediagram {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-    padding: var(--space-4) 0;
-  }
+  .lj { margin: 0; }
+  .lj svg { aspect-ratio: 560 / 220; }
+  .lj-v { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; pathLength: 1; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .lj-glow { fill: none; stroke: var(--gold); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; pathLength: 1; stroke-dasharray: .08 .92; stroke-dashoffset: 1; opacity: 0; filter: drop-shadow(0 0 4px rgba(154,110,28,.7)); }
+  .lj-p { fill: none; stroke: var(--oxblood); stroke-width: 1.8; stroke-linejoin: round; stroke-dasharray: 5 6; opacity: 0; }
+  .lj-h { stroke: var(--oxblood); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0; }
+  .lj-dot { fill: var(--oxblood); opacity: 0; }
+  .lj-dottext { fill: var(--oxblood); font-family: var(--mono); font-size: 11px; opacity: 0; }
 
-  .linjediagram__svg {
-    width: 100%;
-    max-width: 640px;
-    height: auto;
-    overflow: visible;
-  }
+  /* Calm pass: line draws once and rests; gold gleam traces a single time;
+     dashed price line is static (no perpetual flow). */
+  :global(.step.is-active) .lj-v { animation: lj-draw 1.3s cubic-bezier(.4,0,.2,1) .15s forwards; }
+  :global(.step.is-active) .lj-glow { animation: lj-trail 3.4s linear 1.7s 1 both; }
+  :global(.step.is-active) .lj-p { opacity: 1; }
+  :global(.step.is-active) .lj-h { animation: lj-fade .6s 1s forwards; }
+  :global(.step.is-active) .lj-dot { animation: lj-pop .5s cubic-bezier(.2,.85,.3,1.3) 1.2s both; }
+  :global(.step.is-active) .lj-dottext { animation: lj-fade .5s 1.4s both; }
 
-  /* Grid and axes appear immediately — no animation needed */
-  .linjediagram__grid,
-  .linjediagram__axis,
-  .linjediagram__xticks,
-  .linjediagram__ytick-labels {
-    opacity: 1;
-  }
+  @keyframes lj-draw { to { stroke-dashoffset: 0; } }
+  @keyframes lj-trail { 0% { opacity: 0; stroke-dashoffset: 1; } 12% { opacity: .85; } 88% { opacity: .85; } 100% { opacity: 0; stroke-dashoffset: 0; } }
+  @keyframes lj-pop { 0% { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: scale(1); } }
+  @keyframes lj-fade { to { opacity: 1; } }
 
-  /* Lines: hidden by default (will animate when step becomes active) */
-  .linjediagram__line--heldragen {
-    stroke-dashoffset: 1;
-  }
-
-  .linjediagram__line--streckad {
-    opacity: 0;
-  }
-
-  .linjediagram__markor {
-    opacity: 0;
-    transform-origin: center;
-  }
-
-  /* Animate when parent step is active */
-  :global(.step.is-active) .linjediagram__line--heldragen {
-    animation: linje-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
-  }
-
-  :global(.step.is-active) .linjediagram__line--streckad {
-    animation: linje-fade 0.6s ease 0.15s forwards;
-  }
-
-  :global(.step.is-active) .linjediagram__markor {
-    animation: linje-pop 0.35s cubic-bezier(0.21, 0.7, 0.18, 1) 0.7s both;
-    transform-box: fill-box;
-  }
-
-  /* Legend */
-  .linjediagram__legend {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  .linjediagram__legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .linjediagram__swatch {
-    flex-shrink: 0;
-  }
-
-  .linjediagram__legend-namn {
-    font-family: var(--sans);
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .linjediagram__figurtext {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-    text-align: center;
-    max-width: 46ch;
-    margin: 0;
-  }
-
-  /* Reduced motion: draw lines instantly, show all at rest */
   @media (prefers-reduced-motion: reduce) {
-    .linjediagram__line--heldragen {
-      stroke-dashoffset: 0 !important;
-      animation: none !important;
-    }
-    .linjediagram__line--streckad {
-      opacity: 1 !important;
-      animation: none !important;
-    }
-    .linjediagram__markor {
-      opacity: 1 !important;
-      animation: none !important;
-    }
+    .lj-v { stroke-dashoffset: 0 !important; }
+    .lj-p, .lj-dot, .lj-dottext, .lj-h { opacity: 1 !important; }
+    .lj-glow { opacity: 0 !important; }
+    :global(.step.is-active) .lj-v,
+    :global(.step.is-active) .lj-glow,
+    :global(.step.is-active) .lj-p,
+    :global(.step.is-active) .lj-dot,
+    :global(.step.is-active) .lj-dottext,
+    :global(.step.is-active) .lj-h { animation: none !important; }
   }
 </style>

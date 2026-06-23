@@ -1,256 +1,29 @@
 ---
-// Stapeldiagram — inline SVG bar chart visual.
-// Supports negative values: draws a zero-baseline, bars extend up or down.
-// accent:true bars use --mint fill; others use --surface-2 with --border-2 stroke.
-
-interface StapelData {
-  kategori: string;
-  varde: number;
-  accent?: boolean;
-}
-
-interface StapeldiagramVisual {
-  typ: 'stapeldiagram';
-  data: StapelData[];
-  etiketter: string;
-  figurtext: string;
-}
-
-interface Props {
-  visual: StapeldiagramVisual;
-}
-
+// Stapeldiagram, broadsheet horizontal bars. Fills grow on .step.is-active.
+interface StapelData { kategori: string; varde: number; accent?: boolean }
+interface StapeldiagramVisual { typ: 'stapeldiagram'; data: StapelData[]; figurtext: string }
+interface Props { visual: StapeldiagramVisual }
 const { visual } = Astro.props;
-const { data, etiketter, figurtext } = visual;
-
-// SVG coordinate system
-const VW = 600;
-const VH = 260;
-const PAD_L = 8;
-const PAD_R = 8;
-const PAD_T = 20;
-// Negative bars put their value label below the zero line, so reserve more bottom
-// room and push the category labels to the very bottom to avoid a collision.
-const hasNeg = data.some((d) => d.varde < 0);
-const PAD_B = hasNeg ? 58 : 40;
-
-const chartW = VW - PAD_L - PAD_R;
-const chartH = VH - PAD_T - PAD_B;
-
-// Find value range
-const values = data.map(d => d.varde);
-const maxVal = Math.max(0, ...values);
-const minVal = Math.min(0, ...values);
-const range = maxVal - minVal || 1;
-
-// Zero-line Y in SVG coords (maps value=0 to a Y position)
-// value=maxVal -> y=PAD_T, value=minVal -> y=PAD_T+chartH
-function valToY(v: number): number {
-  return PAD_T + ((maxVal - v) / range) * chartH;
-}
-
-const zeroY = valToY(0);
-
-// Bar layout
-const n = data.length;
-const barGap = 0.24; // fraction of slot width used as gap
-const slotW = chartW / n;
-const barW = slotW * (1 - barGap);
-const barRadius = Math.min(5, barW / 4);
-
-// Precompute bar rects
-const bars = data.map((d, i) => {
-  const x = PAD_L + i * slotW + (slotW - barW) / 2;
-  const yTop = Math.min(valToY(d.varde), zeroY);
-  const yBot = Math.max(valToY(d.varde), zeroY);
-  const h = Math.max(yBot - yTop, 2); // at least 2px tall
-  return { x, yTop, h, d };
-});
-
-// Format value label (compact: 1000 -> 1000, 10.4 -> 10.4)
-function fmt(v: number): string {
-  if (Number.isInteger(v)) return v.toString();
-  return v.toFixed(1);
-}
+const max = Math.max(...visual.data.map((d) => Math.abs(d.varde))) || 1;
+const rows = visual.data.map((d) => ({ ...d, pct: Math.round((Math.abs(d.varde) / max) * 100) }));
 ---
-
-<div class="stapeldiagram">
-  <svg
-    class="stapeldiagram__svg"
-    viewBox={`0 0 ${VW} ${VH}`}
-    aria-label="Stapeldiagram"
-    role="img"
-    xmlns="http://www.w3.org/2000/svg"
-    overflow="visible"
-  >
-    <!-- Zero baseline -->
-    <line
-      class="stapeldiagram__baseline"
-      x1={PAD_L}
-      y1={zeroY}
-      x2={VW - PAD_R}
-      y2={zeroY}
-      stroke="var(--border-2)"
-      stroke-width="1"
-    />
-
-    <!-- Bars -->
-    {bars.map((bar, i) => (
-      <g class="stapeldiagram__bar-group" style={`--bar-delay:${i * 80}ms; --bar-h:${bar.h}px;`}>
-        <!-- Positive / neutral bar (grows from zero up) or negative (down) -->
-        <rect
-          class={`stapeldiagram__bar${bar.d.accent ? ' stapeldiagram__bar--accent' : ''}`}
-          x={bar.x}
-          y={bar.yTop}
-          width={barW}
-          height={bar.h}
-          rx={barRadius}
-          ry={barRadius}
-          data-zero-y={zeroY}
-          data-is-positive={bar.d.varde >= 0 ? 'true' : 'false'}
-          fill={bar.d.accent ? 'var(--mint)' : 'var(--surface-2)'}
-          stroke={bar.d.accent ? 'var(--mint)' : 'var(--border-2)'}
-          stroke-width="1"
-        />
-
-        <!-- Value label above (positive) or below (negative) the bar -->
-        <text
-          class="stapeldiagram__val-label"
-          x={bar.x + barW / 2}
-          y={bar.d.varde >= 0 ? bar.yTop - 6 : bar.yTop + bar.h + 14}
-          text-anchor="middle"
-          font-family="var(--sans)"
-          font-size="12"
-          font-weight="500"
-          fill={bar.d.accent ? 'var(--mint)' : 'var(--muted)'}
-        >{fmt(bar.d.varde)}</text>
-
-        <!-- Category label below the chart area -->
-        <text
-          class="stapeldiagram__cat-label"
-          x={bar.x + barW / 2}
-          y={hasNeg ? VH - 6 : VH - PAD_B + 16}
-          text-anchor="middle"
-          font-family="var(--sans)"
-          font-size="11"
-          fill="var(--muted)"
-        >{bar.d.kategori}</text>
-      </g>
-    ))}
-  </svg>
-
-  {etiketter && (
-    <div class="stapeldiagram__etiketter">{etiketter}</div>
-  )}
-  {figurtext && (
-    <p class="stapeldiagram__figurtext">{figurtext}</p>
-  )}
-</div>
-
-<style is:global>
-  /* ── Stapeldiagram keyframes ─────────────────────────────────────────── */
-  @keyframes stapel-grow {
-    from {
-      transform: scaleY(0);
-    }
-    to {
-      transform: scaleY(1);
-    }
-  }
-</style>
-
+<figure class="bars">
+  {rows.map((d, i) => (
+    <div class:list={['bar', { acc: d.accent }]}>
+      <span class="lab">{d.kategori}</span>
+      <span class="tk"><i style={`--w:${d.pct}%; --d:${i * 90}ms`}></i></span>
+      <span class="val">{d.varde}</span>
+    </div>
+  ))}
+  {visual.figurtext && <figcaption class="figtext">{visual.figurtext}</figcaption>}
+</figure>
 <style>
-  .stapeldiagram {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: var(--space-4) 0;
-  }
-
-  .stapeldiagram__svg {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    overflow: visible;
-  }
-
-  /* Bars hidden until step is active */
-  .stapeldiagram__bar {
-    opacity: 0;
-    transform-box: fill-box;
-    transform-origin: bottom center;
-  }
-
-  /* Positive bars grow from zero (bottom of the bar is at zeroY) */
-  .stapeldiagram__bar[data-is-positive="true"] {
-    transform-origin: bottom center;
-  }
-
-  /* Negative bars grow from zero (top of the bar is at zeroY) */
-  .stapeldiagram__bar[data-is-positive="false"] {
-    transform-origin: top center;
-  }
-
-  .stapeldiagram__val-label {
-    opacity: 0;
-  }
-
-  /* Animate when parent step is active */
-  :global(.step.is-active) .stapeldiagram__bar {
-    animation: stapel-grow 0.55s cubic-bezier(0.21, 0.7, 0.18, 1) var(--bar-delay, 0ms) both;
-    opacity: 1;
-  }
-
-  :global(.step.is-active) .stapeldiagram__val-label {
-    animation: stapel-fade 0.35s ease calc(var(--bar-delay, 0ms) + 0.45s) both;
-  }
-
-  .stapeldiagram__cat-label {
-    opacity: 0.8;
-  }
-
-  .stapeldiagram__baseline {
-    opacity: 0.6;
-  }
-
-  .stapeldiagram__etiketter {
-    font-family: var(--sans);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-    text-align: center;
-  }
-
-  .stapeldiagram__figurtext {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-    text-align: center;
-    max-width: 46ch;
-    margin: 0;
-  }
-
-  /* Reduced motion: show bars immediately */
+  .bars { margin-top: 0; }
+  .bars .tk i { width: 0; }
+  :global(.step.is-active) .bars .tk i { animation: bar-grow .8s cubic-bezier(.2,.7,.2,1) var(--d) forwards; }
+  @keyframes bar-grow { to { width: var(--w); } }
   @media (prefers-reduced-motion: reduce) {
-    .stapeldiagram__bar {
-      opacity: 1 !important;
-      transform: scaleY(1) !important;
-      animation: none !important;
-    }
-    .stapeldiagram__val-label {
-      opacity: 1 !important;
-      animation: none !important;
-    }
-  }
-</style>
-
-<style is:global>
-  @keyframes stapel-fade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    .bars .tk i { width: var(--w); }
+    :global(.step.is-active) .bars .tk i { animation: none; }
   }
 </style>

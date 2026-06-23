@@ -22,7 +22,7 @@ const PASS_MARK = 80;
     <div class="fq__kicker">KUNSKAPSKOLL</div>
     <h2 class="fq__title">Testa dig själv</h2>
     <p class="fq__lede">
-      {fragor.length} {fragor.length === 1 ? 'fråga' : 'frågor'}. Godkänt vid {PASS_MARK}% rätt.
+      {fragor.length} {fragor.length === 1 ? 'fråga' : 'frågor'}. Sikta på minst {PASS_MARK}% rätt.
     </p>
   </header>
 
@@ -91,365 +91,80 @@ const PASS_MARK = 80;
 
 <style>
   /* ── Container ──────────────────────────────────────────────────────── */
-  .fq {
-    width: 100%;
-    font-family: var(--sans);
-  }
+  .fq { width: 100%; font-family: var(--mono); }
 
   /* ── Header ─────────────────────────────────────────────────────────── */
-  .fq__head {
-    margin-bottom: var(--space-7);
-    text-align: center;
-  }
-  .fq__kicker {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--mint);
-    margin-bottom: 20px;
-  }
-  .fq__title {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(30px, 3.6vw, 40px);
-    line-height: 1.1;
-    color: var(--text);
-    margin: 0 0 12px;
-  }
-  .fq__lede {
-    font-size: var(--text-sm);
-    color: var(--muted);
-    margin: 0;
-  }
+  .fq__head { margin-bottom: 30px; text-align: center; }
+  .fq__kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 18px; }
+  .fq__title { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; color: var(--ink); margin: 0 0 10px; }
+  .fq__lede { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
 
   /* ── Question list ──────────────────────────────────────────────────── */
-  .fq__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-7);
-    text-align: left;
-  }
-
-  /* ── Question item ──────────────────────────────────────────────────── */
-  .fq-q__fieldset {
-    border: none;
-    margin: 0;
-    padding: 0;
-  }
-  .fq-q__legend {
-    display: flex;
-    gap: 10px;
-    align-items: baseline;
-    margin-bottom: 10px;
-    padding: 0;
-    width: 100%;
-  }
-  .fq-q__num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    border-radius: var(--radius-full);
-    background: var(--mint-soft);
-    color: var(--mint);
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    margin-top: 2px;
-  }
-  .fq-q__text {
-    font-family: var(--serif);
-    font-size: 21px;
-    line-height: 1.4;
-    color: var(--text);
-  }
-  .fq-q__sub {
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    margin: -2px 0 14px 34px;
-    padding: 0;
-  }
+  .fq__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 32px; text-align: left; }
+  .fq-q__fieldset { border: none; margin: 0; padding: 0; }
+  .fq-q__legend { display: flex; gap: 10px; align-items: baseline; margin-bottom: 12px; padding: 0; width: 100%; }
+  .fq-q__num { font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--oxblood); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .fq-q__text { font-family: var(--display); font-weight: 400; font-size: 21px; line-height: 1.32; color: var(--ink); }
+  .fq-q__sub { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: -4px 0 14px 24px; padding: 0; }
 
   /* ── Options ────────────────────────────────────────────────────────── */
-  .fq-opts {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .fq-opt {
-    display: grid;
-    grid-template-columns: 20px 1fr auto;
-    align-items: center;
-    gap: var(--space-3);
-    padding: 13px 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--surface);
-    cursor: pointer;
-    transition:
-      border-color var(--dur-micro) var(--ease-standard),
-      background var(--dur-micro) var(--ease-standard);
-  }
-  .fq-opt:hover {
-    border-color: var(--border-2);
-  }
+  .fq-opts { display: flex; flex-direction: column; gap: 8px; }
+  .fq-opt { display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 13px; padding: 13px 16px; border: 1px solid var(--rule); background: var(--card); cursor: pointer; transition: border-color .18s, background .18s; }
+  .fq-opt:hover { border-color: var(--rule-strong); }
+  .fq-opt__input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+  .fq-opt__marker { width: 20px; height: 20px; flex-shrink: 0; border: 1.4px solid var(--faint); border-radius: 50%; transition: border-color .18s, box-shadow .18s; }
+  [data-multi='true'] .fq-opt__marker { border-radius: 4px; }
+  .fq-opt:has(.fq-opt__input:checked) { border-color: var(--oxblood); background: #F0E4DE; }
+  .fq-opt:has(.fq-opt__input:checked) .fq-opt__marker { border-color: var(--oxblood); box-shadow: inset 0 0 0 5px var(--oxblood); }
+  [data-multi='true'] .fq-opt:has(.fq-opt__input:checked) .fq-opt__marker { box-shadow: inset 0 0 0 9px var(--oxblood); }
+  .fq-opt:has(.fq-opt__input:focus-visible) { outline: 2px solid var(--oxblood); outline-offset: 2px; }
+  .fq-opt__text { font-family: var(--serif); font-size: 16px; line-height: 1.4; color: var(--ink); }
 
-  /* Visually-hidden real input */
-  .fq-opt__input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-  }
-
-  /* Custom marker */
-  .fq-opt__marker {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    border: 1.5px solid var(--border-2);
-    border-radius: var(--radius-full);
-    transition:
-      border-color var(--dur-micro) var(--ease-standard),
-      box-shadow var(--dur-micro) var(--ease-standard);
-  }
-  /* Checkbox marker = rounded square */
-  [data-multi='true'] .fq-opt__marker {
-    border-radius: var(--radius-sm);
-  }
-
-  /* Checked state */
-  .fq-opt:has(.fq-opt__input:checked) {
-    border-color: var(--mint);
-    background: var(--mint-soft);
-  }
-  .fq-opt:has(.fq-opt__input:checked) .fq-opt__marker {
-    border-color: var(--mint);
-    box-shadow: inset 0 0 0 4px var(--mint);
-  }
-  [data-multi='true'] .fq-opt:has(.fq-opt__input:checked) .fq-opt__marker {
-    box-shadow: inset 0 0 0 9px var(--mint);
-  }
-
-  /* Keyboard focus */
-  .fq-opt:has(.fq-opt__input:focus-visible) {
-    outline: 2px solid var(--mint);
-    outline-offset: 2px;
-  }
-
-  .fq-opt__text {
-    font-family: var(--serif);
-    font-size: var(--prose-size);
-    line-height: 1.4;
-    color: var(--text);
-  }
-
-  /* Result icons (shown after grading) */
-  .fq-opt__icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    display: none;
-  }
-  .fq-opt__icon svg {
-    width: 20px;
-    height: 20px;
-    display: none;
-  }
+  .fq-opt__icon { width: 20px; height: 20px; flex-shrink: 0; display: none; }
+  .fq-opt__icon svg { width: 20px; height: 20px; display: none; }
   .fq-icon-ok { stroke: var(--good); }
-  .fq-icon-no { stroke: var(--bad); }
+  .fq-icon-no { stroke: var(--oxblood); }
 
-  /* ── Post-grading states ─────────────────────────────────────────── */
-  .fq.is-graded .fq-opt {
-    cursor: default;
-    pointer-events: none;
-  }
-  /* Correct option (always shown green after grading) */
-  .fq-opt.is-correct {
-    border-color: var(--good);
-    background: var(--good-soft);
-  }
+  /* ── Post-grading states ────────────────────────────────────────────── */
+  .fq.is-graded .fq-opt { cursor: default; pointer-events: none; }
+  .fq-opt.is-correct { border-color: var(--good); background: var(--good-soft); }
   .fq-opt.is-correct .fq-opt__icon { display: block; }
   .fq-opt.is-correct .fq-icon-ok { display: block; }
-
-  /* Wrong-selected option */
-  .fq-opt.is-wrong {
-    border-color: var(--bad);
-    background: var(--bad-soft);
-  }
+  .fq-opt.is-wrong { border-color: var(--oxblood); background: var(--bad-soft); }
   .fq-opt.is-wrong .fq-opt__icon { display: block; }
   .fq-opt.is-wrong .fq-icon-no { display: block; }
-  .fq-opt.is-wrong {
-    animation: fq-shake 250ms var(--ease-standard);
-  }
-  .fq-opt.is-correct.is-picked {
-    animation: fq-pop 220ms var(--ease-out);
-  }
-  @keyframes fq-shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-3px); }
-    75% { transform: translateX(3px); }
-  }
-  @keyframes fq-pop {
-    0% { transform: scale(1); }
-    45% { transform: scale(1.025); }
-    100% { transform: scale(1); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .fq-opt.is-wrong,
-    .fq-opt.is-correct.is-picked {
-      animation: none;
-    }
-  }
+  .fq-opt.is-wrong { animation: fq-shake 250ms ease; }
+  @keyframes fq-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+  @media (prefers-reduced-motion: reduce) { .fq-opt.is-wrong { animation: none; } }
 
-  /* ── Per-question feedback ──────────────────────────────────────── */
-  .fq-q__feedback {
-    margin-top: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-sm);
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    font-size: var(--text-sm);
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-  .fq-q__verdict {
-    font-weight: 600;
-  }
+  /* ── Per-question feedback ──────────────────────────────────────────── */
+  .fq-q__feedback { margin-top: 12px; padding: 4px 0 4px 16px; border-left: 2px solid var(--oxblood); font-size: 15px; line-height: 1.5; display: flex; flex-direction: column; gap: 4px; }
+  .fq-q__verdict { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
   .fq-q__verdict[data-ok='true'] { color: var(--good); }
-  .fq-q__verdict[data-ok='false'] { color: var(--bad); }
-  .fq-q__why {
-    color: var(--muted);
-    font-family: var(--sans);
-  }
+  .fq-q__verdict[data-ok='false'] { color: var(--oxblood); }
+  .fq-q__why { color: var(--ink-soft); font-family: var(--serif); }
 
-  /* ── Action row ─────────────────────────────────────────────────── */
-  .fq__actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin-top: var(--space-7);
-    flex-wrap: wrap;
-  }
-  .fq-btn {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 15px;
-    padding: 14px 38px;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition:
-      background var(--dur-micro) var(--ease-standard),
-      opacity var(--dur-micro) var(--ease-standard),
-      transform var(--dur-micro) var(--ease-out),
-      border-color var(--dur-micro) var(--ease-standard);
-  }
-  .fq-btn:active { transform: scale(0.98); }
-  .fq-btn--primary {
-    background: var(--text);
-    color: var(--bg);
-    border-color: transparent;
-  }
-  .fq-btn--primary:hover:not(:disabled) { opacity: 0.88; }
-  .fq-btn--primary:disabled {
-    opacity: 0.32;
-    cursor: not-allowed;
-  }
-  .fq-btn--ghost {
-    background: transparent;
-    border-color: var(--border-2);
-    color: var(--muted);
-    padding: 13px 24px;
-  }
-  .fq-btn--ghost:hover {
-    border-color: var(--mint);
-    color: var(--mint);
-  }
+  /* ── Action row ─────────────────────────────────────────────────────── */
+  .fq__actions { display: flex; align-items: center; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .fq-btn { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: background .2s, opacity .2s, border-color .2s; }
+  .fq-btn--primary { background: var(--ink); color: var(--paper); padding: 14px 30px; border-radius: 99px; }
+  .fq-btn--primary:hover:not(:disabled) { background: var(--oxblood); }
+  .fq-btn--primary:disabled { opacity: .35; cursor: not-allowed; }
+  .fq-btn--ghost { background: none; border-color: var(--rule-strong); color: var(--ink-soft); padding: 12px 22px; border-radius: 99px; }
+  .fq-btn--ghost:hover { border-color: var(--oxblood); color: var(--oxblood); }
 
-  /* ── Result panel ───────────────────────────────────────────────── */
-  .fq__result {
-    display: flex;
-    align-items: center;
-    gap: var(--space-5);
-    margin-top: var(--space-6);
-    padding: var(--space-5);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-  }
-  .fq-result__ring {
-    --pct: 0;
-    position: relative;
-    width: 76px;
-    height: 76px;
-    border-radius: var(--radius-full);
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    background: conic-gradient(
-      var(--ring-color, var(--mint)) calc(var(--pct) * 1%),
-      var(--surface-2) 0
-    );
-    transition: --pct var(--dur-comp) var(--ease-out);
-  }
-  .fq-result__ring::after {
-    content: '';
-    position: absolute;
-    inset: 8px;
-    border-radius: var(--radius-full);
-    background: var(--surface);
-  }
-  .fq-result__pct {
-    position: relative;
-    z-index: 1;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    font-size: var(--text-md);
-    color: var(--text);
-  }
-  .fq-result__body {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .fq-result__head {
-    font-family: var(--serif);
-    font-size: var(--text-lg);
-    font-weight: 400;
-    color: var(--text);
-  }
-  .fq-result__sub {
-    font-family: var(--sans);
-    font-size: var(--text-sm);
-    color: var(--muted);
-  }
+  /* ── Result panel ───────────────────────────────────────────────────── */
+  .fq__result { display: flex; align-items: center; gap: 22px; margin-top: 26px; padding: 22px; border: 1px solid var(--rule-strong); background: var(--card); }
+  .fq-result__ring { --pct: 0; position: relative; width: 76px; height: 76px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; background: conic-gradient(var(--ring-color, var(--oxblood)) calc(var(--pct) * 1%), var(--paper-2) 0); transition: --pct .9s cubic-bezier(.2,.7,.2,1); }
+  .fq-result__ring::after { content: ''; position: absolute; inset: 8px; border-radius: 50%; background: var(--card); }
+  .fq-result__pct { position: relative; z-index: 1; font-family: var(--mono); font-weight: 500; font-variant-numeric: tabular-nums; font-size: 18px; color: var(--ink); }
+  .fq-result__body { display: flex; flex-direction: column; gap: 4px; }
+  .fq-result__head { font-family: var(--display); font-size: 22px; font-weight: 400; color: var(--ink); }
+  .fq-result__sub { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); }
 
-  @property --pct {
-    syntax: '<number>';
-    inherits: false;
-    initial-value: 0;
-  }
+  @property --pct { syntax: '<number>'; inherits: false; initial-value: 0; }
 
-  /* The `hidden` attribute must win over the display:flex above, so feedback
-     and the result panel stay hidden until grading. */
-  .fq-q__feedback[hidden],
-  .fq__result[hidden] {
-    display: none;
-  }
+  .fq-q__feedback[hidden], .fq__result[hidden] { display: none; }
 </style>
 
 <script>
@@ -470,7 +185,6 @@ const PASS_MARK = 80;
 
       if (isRight) correctCount++;
 
-      // Mark each option
       inputs.forEach((input) => {
         const opt = input.closest<HTMLElement>('.fq-opt');
         if (!opt) return;
@@ -482,7 +196,6 @@ const PASS_MARK = 80;
         if (wasPicked) opt.classList.add('is-picked');
       });
 
-      // Per-question feedback
       const fb = q.querySelector<HTMLElement>('[data-fq-feedback]');
       const verdict = q.querySelector<HTMLElement>('[data-fq-verdict]');
       if (fb && verdict) {
@@ -499,7 +212,6 @@ const PASS_MARK = 80;
 
     fq.classList.add('is-graded');
 
-    // Update result panel
     const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
     const ringEl = fq.querySelector<HTMLElement>('[data-fq-ring]');
     const pctEl = fq.querySelector<HTMLElement>('[data-fq-pct]');
@@ -508,22 +220,20 @@ const PASS_MARK = 80;
 
     if (ringEl) {
       ringEl.style.setProperty('--pct', String(pct));
-      ringEl.style.setProperty('--ring-color', passed ? 'var(--good)' : 'var(--bad)');
+      ringEl.style.setProperty('--ring-color', passed ? 'var(--good)' : 'var(--oxblood)');
     }
     if (pctEl) pctEl.textContent = pct + '%';
     if (headEl) headEl.textContent = passed ? 'Godkänt!' : 'Nästan där';
     if (subEl) {
-      subEl.textContent = `${correctCount} av ${total} rätt${passed ? '' : ` - ${passMark}% krävs`}`;
+      subEl.textContent = `${correctCount} av ${total} rätt${passed ? '' : `, ${passMark}% är målet`}`;
     }
     if (resultEl) resultEl.hidden = false;
 
-    // Swap buttons
     const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');
     const retryBtn = fq.querySelector<HTMLButtonElement>('[data-fq-retry]');
     if (checkBtn) checkBtn.hidden = true;
     if (retryBtn) retryBtn.hidden = false;
 
-    // Persist best score to localStorage
     const lektionId = fq.dataset.lektion;
     if (lektionId) {
       try {
@@ -531,7 +241,7 @@ const PASS_MARK = 80;
         const prev = Number(localStorage.getItem(key) || '0');
         if (pct > prev) localStorage.setItem(key, String(pct));
       } catch (_) {
-        // localStorage may be unavailable
+        /* localStorage may be unavailable */
       }
     }
 
@@ -540,16 +250,11 @@ const PASS_MARK = 80;
 
   function resetQuiz(fq: HTMLElement): void {
     fq.classList.remove('is-graded');
-
-    fq.querySelectorAll<HTMLInputElement>('.fq-opt__input').forEach((i) => {
-      i.checked = false;
-    });
+    fq.querySelectorAll<HTMLInputElement>('.fq-opt__input').forEach((i) => { i.checked = false; });
     fq.querySelectorAll<HTMLElement>('.fq-opt').forEach((o) => {
       o.classList.remove('is-correct', 'is-wrong', 'is-picked');
     });
-    fq.querySelectorAll<HTMLElement>('[data-fq-feedback]').forEach((f) => {
-      f.hidden = true;
-    });
+    fq.querySelectorAll<HTMLElement>('[data-fq-feedback]').forEach((f) => { f.hidden = true; });
 
     const resultEl = fq.querySelector<HTMLElement>('[data-fq-result]');
     const checkBtn = fq.querySelector<HTMLButtonElement>('[data-fq-check]');

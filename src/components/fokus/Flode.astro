@@ -1,193 +1,31 @@
 ---
-// Flode — income-statement chain visual.
-// Renders a vertical stack of nodes connected by operator connectors.
-// minus -> U+2212 MINUS SIGN, plus -> "+", likamed -> "="
-// accent:true node rendered in mint highlight.
-
-interface FlodeNode {
-  etikett: string;
-  operator?: 'minus' | 'plus' | 'likamed';
-  accent?: boolean;
-}
-
-interface FlodeVisual {
-  typ: 'flode';
-  noder: FlodeNode[];
-  figurtext: string;
-}
-
-interface Props {
-  visual: FlodeVisual;
-}
-
+// Flode, broadsheet income-statement chain. Nodes with operator connectors.
+// minus -> U+2212 MINUS SIGN (intentionally kept), plus -> +, likamed -> =.
+interface FlodeNode { etikett: string; operator?: 'minus' | 'plus' | 'likamed'; accent?: boolean }
+interface FlodeVisual { typ: 'flode'; noder: FlodeNode[]; figurtext: string }
+interface Props { visual: FlodeVisual }
 const { visual } = Astro.props;
 const { noder, figurtext } = visual;
-
-function operatorSymbol(op: string | undefined): string {
-  if (op === 'minus') return '−'; // U+2212 MINUS SIGN
-  if (op === 'plus') return '+';
-  if (op === 'likamed') return '=';
-  return '';
-}
+const opSymbol = (op?: string) => (op === 'minus' ? '−' : op === 'plus' ? '+' : op === 'likamed' ? '=' : '→');
 ---
-
-<div class="flode" aria-label="Flodediagram">
-  <div class="flode__chain">
+<figure class="flode-wrap">
+  <div class="flow">
     {noder.map((nod, i) => (
-      <div
-        class="flode__item"
-        style={`--nod-delay:${i * 90}ms;`}
-      >
-        {nod.operator && (
-          <div class="flode__connector" aria-hidden="true">
-            <span class="flode__op-symbol">{operatorSymbol(nod.operator)}</span>
-          </div>
-        )}
-        <div
-          class={`flode__nod${nod.accent ? ' flode__nod--accent' : ''}`}
-          role="listitem"
-        >
-          <span class="flode__nod-etikett">{nod.etikett}</span>
-        </div>
-      </div>
+      <Fragment>
+        {i > 0 && <div class="op">{opSymbol(nod.operator)}</div>}
+        <div class:list={['node', { acc: nod.accent }]} style={`--d:${i * 90}ms`}>{nod.etikett}</div>
+      </Fragment>
     ))}
   </div>
-  {figurtext && (
-    <p class="flode__figurtext">{figurtext}</p>
-  )}
-</div>
-
+  {figurtext && <figcaption class="figtext">{figurtext}</figcaption>}
+</figure>
 <style>
-  .flode {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    padding: var(--space-4) 0;
-  }
-
-  .flode__chain {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-    max-width: 380px;
-  }
-
-  /* Each item (connector + node) starts hidden */
-  .flode__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  /* Animate items in when step is active */
-  :global(.step.is-active) .flode__item {
-    animation: flode-slide 0.42s cubic-bezier(0.21, 0.7, 0.18, 1) var(--nod-delay, 0ms) both;
-  }
-
-  .flode__connector {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 32px;
-    position: relative;
-  }
-
-  /* Vertical line connecting nodes */
-  .flode__connector::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 100%;
-    background: var(--border-2);
-  }
-
-  .flode__op-symbol {
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-    border-radius: var(--radius-full);
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    line-height: 1;
-  }
-
-  .flode__nod {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-    border-radius: var(--radius-md);
-    padding: 12px 20px;
-    text-align: center;
-  }
-
-  .flode__nod--accent {
-    background: var(--mint-soft);
-    border-color: var(--mint);
-    box-shadow: 0 0 0 1px var(--mint);
-  }
-
-  .flode__nod-etikett {
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.3;
-  }
-
-  .flode__nod--accent .flode__nod-etikett {
-    color: var(--mint);
-    font-weight: 600;
-  }
-
-  .flode__figurtext {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-    text-align: center;
-    max-width: 46ch;
-    margin: 0;
-  }
-
-  /* Reduced motion: show all nodes immediately */
+  .flode-wrap { margin: 0; }
+  .flow .node { opacity: 0; transform: translateY(8px); }
+  :global(.step.is-active) .flow .node { animation: node-in .42s cubic-bezier(.2,.7,.2,1) var(--d) both; }
+  @keyframes node-in { to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) {
-    .flode__item {
-      opacity: 1 !important;
-      transform: none !important;
-      animation: none !important;
-    }
-  }
-</style>
-
-<style is:global>
-  /* ── Flode keyframes ─────────────────────────────────────────────────── */
-  @keyframes flode-slide {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .flow .node { opacity: 1; transform: none; }
+    :global(.step.is-active) .flow .node { animation: none; }
   }
 </style>

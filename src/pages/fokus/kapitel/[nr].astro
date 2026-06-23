@@ -1,7 +1,7 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
-import AppShell from '../../../layouts/AppShell.astro';
+import Broadsheet from '../../../layouts/Broadsheet.astro';
 
 // ── Types ────────────────────────────────────────────────────────────────
 interface CourseLektion {
@@ -47,6 +47,15 @@ function formatTime(min: number): string {
   return m === 0 ? `${h} h` : `${h} h ${m} min`;
 }
 
+// Map chapter number -> part (course.json has no part field).
+function partFor(nr: number): { nr: number; titel: string } {
+  if (nr <= 2) return { nr: 1, titel: 'Grunderna' };
+  if (nr <= 7) return { nr: 2, titel: 'Förstå bolaget' };
+  if (nr <= 10) return { nr: 3, titel: 'Värdering' };
+  return { nr: 4, titel: 'I praktiken' };
+}
+const del = partFor(kap.nummer);
+
 const lessonCount = kap.lektioner.length;
 const metaText = `${formatTime(kap.tid_min)} · ${kap.niva} · ${lessonCount} lektioner`;
 
@@ -54,394 +63,111 @@ const metaText = `${formatTime(kap.tid_min)} · ${kap.niva} · ${lessonCount} le
 const chapterOrder = kap.lektioner.map((l) => l.lektion);
 ---
 
-<AppShell title={`Kapitel ${kap.nummer}: ${kap.titel}`} active="kurs" maxWidth={780}>
-  <script type="application/json" data-chapter-order set:html={JSON.stringify(chapterOrder)} />
+<Broadsheet title={`Kapitel ${kap.nummer}: ${kap.titel}`} active="kurs" nav="app">
+  <main class="wrap" style="flex:1; padding-top:8px">
+    <script type="application/json" data-chapter-order set:html={JSON.stringify(chapterOrder)} />
 
-  <!-- Breadcrumb -->
-  <nav class="breadcrumb" aria-label="Brodsmula">
-    <a href="/hem" class="breadcrumb__link">Hem</a>
-    <span class="breadcrumb__sep" aria-hidden="true">›</span>
-    <a href="/fokus" class="breadcrumb__link">Kursöversikt</a>
-    <span class="breadcrumb__sep" aria-hidden="true">›</span>
-    <span class="breadcrumb__current">Kapitel {kap.nummer}</span>
-  </nav>
+    <!-- Breadcrumb -->
+    <div class="crumb">
+      <a href="/hem">Hem</a><span class="sep">›</span>
+      <a href="/fokus">Kursöversikt</a><span class="sep">›</span>
+      <span class="here">Kapitel {kap.nummer}</span>
+    </div>
 
-  <!-- Header -->
-  <div class="chap-kicker">KAPITEL {kap.nummer}</div>
-  <h1 class="chap-title">{kap.titel}</h1>
-  <p class="chap-blurb">{kap.blurb}</p>
-
-  <!-- Meta row + progress -->
-  <div class="chap-meta">
-    <span class="chap-meta__text">{metaText}</span>
-    <span class="chap-meta__dot" aria-hidden="true"></span>
-    <div class="chap-meta__progress">
-      <div class="chap-progress__track" aria-hidden="true">
-        <div class="chap-progress__fill" data-chap-fill style="width:0%"></div>
+    <!-- Header: one bold chapter numeral is the single anchor. The chapter
+         number is not repeated in the kicker (the breadcrumb already states it). -->
+    <header class="chead">
+      <div class="chead__num" aria-hidden="true">{kap.nummer}</div>
+      <div class="chead__body">
+        <div class="kicker">{del.titel}</div>
+        <h1 class="h-title" style="max-width:18ch">{kap.titel}</h1>
+        <p class="standfirst">{kap.blurb}</p>
+        <div class="chead__meta">
+          <span>{metaText}</span>
+          <span class="chead__prog">
+            <span class="tk"><i data-chap-fill style="width:0%"></i></span>
+            <span data-chap-label>0 / {lessonCount} klara</span>
+          </span>
+        </div>
       </div>
-      <span class="chap-progress__label" data-chap-label>0 / {lessonCount} klara</span>
-    </div>
-  </div>
+    </header>
 
-  <!-- Outcomes card -->
-  <div class="outcomes-card">
-    <div class="outcomes-card__kicker">DET HÄR LÄR DU DIG</div>
-    <div class="outcomes-card__list">
-      {kap.outcomes.map((o) => (
-        <div class="outcome">
-          <svg class="outcome__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          <span class="outcome__text">{o}</span>
-        </div>
-      ))}
+    <!-- Outcomes -->
+    <div class="outcomes" style="margin-top:30px">
+      <div class="lbl">Det här lär du dig</div>
+      <ul>
+        {kap.outcomes.map((o) => <li>{o}</li>)}
+      </ul>
     </div>
-  </div>
 
-  <!-- Lesson list -->
-  <div class="lessons-label">LEKTIONER I KAPITLET</div>
-  <div class="chap-lessons">
-    {kap.lektioner.map((l) =>
-      l.status === 'klar' ? (
-        <a
-          class="chap-lesson"
-          data-lesson-id={l.lektion}
-          data-num={l.lektion}
-          href={`/fokus/${l.lektion}`}
-        >
-          <span class="chap-lesson__mark" aria-hidden="true">
-            <span class="chap-lesson__num">{l.lektion}</span>
-            <svg class="chap-lesson__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
-          </span>
-          <span class="chap-lesson__title">{l.titel}</span>
-          <span class="chap-lesson__time">{l.tid_min} min</span>
-          <span class="chap-lesson__cta" data-cta></span>
-        </a>
-      ) : (
-        <div class="chap-lesson chap-lesson--locked" aria-label={`${l.titel} (kommande)`}>
-          <span class="chap-lesson__mark chap-lesson__mark--locked" aria-hidden="true">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </span>
-          <span class="chap-lesson__title">{l.titel}</span>
-          <span class="chap-lesson__time">{l.tid_min} min</span>
-          <span class="chap-lesson__cta">Kommande</span>
-        </div>
-      )
-    )}
-  </div>
-
-  <!-- Chapter CTA -->
-  <a class="chap-cta" data-chap-cta href={`/fokus/${chapterOrder[0]}`}>
-    <div class="chap-cta__body">
-      <div class="chap-cta__label" data-cta-label>Börja kapitlet</div>
-      <div class="chap-cta__sub" data-cta-sub>Nästa: lektion {chapterOrder[0]}</div>
+    <!-- Lessons -->
+    <div class="part" style="margin-bottom:0"><span class="n">Lektioner</span><span class="line"></span></div>
+    <div style="margin-bottom:8px">
+      {kap.lektioner.map((l) =>
+        l.status === 'klar' ? (
+          <a class="lrow" data-lesson-id={l.lektion} data-cta-cell href={`/fokus/${l.lektion}`}>
+            <span class="mk">
+              <span class="mk-num">{l.lektion}</span>
+              <svg class="mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span class="lt">{l.titel}</span>
+            <span class="lv">{l.niva}</span>
+            <span class="tm">{l.tid_min} min</span>
+            <span class="cta" data-cta></span>
+          </a>
+        ) : (
+          <div class="lrow lock" aria-label={`${l.titel} (kommande)`}>
+            <span class="mk">
+              <svg class="mk-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <span class="lt">{l.titel}</span>
+            <span class="lv">{l.niva}</span>
+            <span class="tm">{l.tid_min} min</span>
+            <span class="cta">Kommande</span>
+          </div>
+        )
+      )}
     </div>
-    <span class="chap-cta__arrow" aria-hidden="true">→</span>
-  </a>
-</AppShell>
+
+    <!-- Footer band -->
+    <div class="foot">
+      <a class="btn-ghost" href="/fokus">← Till kursöversikt</a>
+      <a class="btn-ink" data-chap-cta href={`/fokus/${chapterOrder[0]}`}>
+        <span style="display:flex;flex-direction:column;gap:2px;text-transform:none;letter-spacing:0">
+          <span data-cta-label style="font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase">Börja kapitlet</span>
+          <span data-cta-sub style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;opacity:.7;text-transform:none">Nästa: lektion {chapterOrder[0]}</span>
+        </span>
+      </a>
+    </div>
+  </main>
+</Broadsheet>
 
 <style>
-  @keyframes riseC {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: none; }
+  /* Chapter header: a single large numeral anchors the page so the number
+     isn't echoed across kicker + breadcrumb + numeral. The kicker is the part
+     name only; the meta + progress collapse to one calm line. */
+  .chead { display: grid; grid-template-columns: auto 1fr; gap: clamp(18px, 4vw, 46px); align-items: start; margin-top: 6px; }
+  .chead__num { font-family: var(--display); font-weight: 300; font-size: clamp(72px, 13vw, 150px); line-height: .8; letter-spacing: -.03em; color: var(--oxblood); font-variant-numeric: lining-nums; }
+  .chead__body { min-width: 0; padding-top: clamp(4px, 1.2vw, 12px); }
+  .chead__meta { display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+  .chead__prog { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+  .chead__prog .tk { width: 130px; height: 3px; background: var(--paper-2); overflow: hidden; }
+  .chead__prog .tk i { display: block; height: 100%; background: var(--oxblood); transition: width .9s cubic-bezier(.2,.7,.2,1); }
+  @media (max-width: 560px) {
+    .chead { gap: 16px; }
+    .chead__num { font-size: clamp(56px, 18vw, 80px); }
+    .chead__prog { margin-left: 0; }
   }
 
-  /* ---- Breadcrumb ---- */
-  .breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 30px;
-    color: var(--muted);
-    animation: riseC 0.6s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-  }
-  .breadcrumb__link {
-    color: var(--muted);
-    text-decoration: none;
-    transition: color var(--dur-micro) var(--ease-standard);
-  }
-  .breadcrumb__link:hover { color: var(--text); }
-  .breadcrumb__sep { color: var(--faint); }
-  .breadcrumb__current { color: var(--text); }
-
-  /* ---- Header ---- */
-  .chap-kicker {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    color: var(--mint);
-    margin-bottom: 14px;
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.06s;
-  }
-  .chap-title {
-    margin: 0 0 18px;
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(34px, 4.4vw, 52px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.1s;
-  }
-  .chap-blurb {
-    margin: 0 0 24px;
-    max-width: 60ch;
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 1.65;
-    color: var(--prose);
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.16s;
-  }
-
-  /* ---- Meta row ---- */
-  .chap-meta {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.2s;
-  }
-  .chap-meta__text {
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .chap-meta__dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--faint);
-    flex: none;
-  }
-  .chap-meta__progress {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-  }
-  .chap-progress__track {
-    width: 150px;
-    height: 5px;
-    border-radius: var(--radius-full);
-    background: var(--surface-2);
-    overflow: hidden;
-  }
-  .chap-progress__fill {
-    height: 100%;
-    background: var(--mint);
-    border-radius: var(--radius-full);
-    transition: width var(--dur-comp) var(--ease-out);
-  }
-  .chap-progress__label {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 12px;
-    color: var(--muted);
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* ---- Outcomes card ---- */
-  .outcomes-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 26px 28px;
-    margin-bottom: 40px;
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.26s;
-  }
-  .outcomes-card__kicker {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    color: var(--mint);
-    margin-bottom: 18px;
-  }
-  .outcomes-card__list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .outcome {
-    display: flex;
-    align-items: flex-start;
-    gap: 13px;
-  }
-  .outcome__icon {
-    flex: none;
-    margin-top: 2px;
-  }
-  .outcome__text {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 1.45;
-    color: var(--text);
-  }
-
-  /* ---- Lesson list ---- */
-  .lessons-label {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    color: var(--muted);
-    margin-bottom: 6px;
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.32s;
-  }
-  .chap-lessons {
-    margin-bottom: 38px;
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.36s;
-  }
-  .chap-lesson {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 16px 8px;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.15s var(--ease-standard);
-  }
-  .chap-lesson:last-child { border-bottom: none; }
-  .chap-lesson:not(.chap-lesson--locked):hover {
-    background: var(--mint-soft);
-    text-decoration: none;
-  }
-  .chap-lesson--locked {
-    opacity: 0.55;
-    cursor: default;
-  }
-
-  /* Lesson marker: shows number, or check when done */
-  .chap-lesson__mark {
-    position: relative;
-    flex: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    border: 1.5px solid var(--faint);
-    color: var(--muted);
-    transition: background var(--dur-comp) var(--ease-out), border-color var(--dur-comp) var(--ease-out), color var(--dur-comp) var(--ease-out);
-  }
-  .chap-lesson__num {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 11px;
-    transition: opacity var(--dur-comp) var(--ease-out);
-  }
-  .chap-lesson__check {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    opacity: 0;
-    transition: opacity var(--dur-comp) var(--ease-out);
-  }
-  .chap-lesson__mark--locked {
-    border-color: var(--faint);
-    color: var(--muted);
-  }
-  /* "next" state */
-  .chap-lesson[data-state='next'] .chap-lesson__mark {
-    background: var(--mint-soft);
-    border-color: transparent;
-    color: var(--mint);
-  }
-  /* "done" state */
-  .chap-lesson[data-state='done'] .chap-lesson__mark {
-    background: var(--mint);
-    border-color: var(--mint);
-    color: var(--on-mint);
-  }
-  .chap-lesson[data-state='done'] .chap-lesson__num { opacity: 0; }
-  .chap-lesson[data-state='done'] .chap-lesson__check { opacity: 1; }
-
-  .chap-lesson__title {
-    flex: 1;
-    font-family: var(--serif);
-    font-size: 18px;
-    line-height: 1.35;
-    color: var(--text);
-  }
-  .chap-lesson--locked .chap-lesson__title { color: var(--prose); }
-  .chap-lesson__time {
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 12px;
-    color: var(--muted);
-    white-space: nowrap;
-    flex: none;
-  }
-  .chap-lesson__cta {
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--muted);
-    white-space: nowrap;
-    flex: none;
-    min-width: 54px;
-    text-align: right;
-  }
-  .chap-lesson[data-state='next'] .chap-lesson__cta { color: var(--mint); }
-
-  /* ---- Chapter CTA ---- */
-  .chap-cta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    border-radius: 16px;
-    padding: 20px 26px;
-    background: var(--text);
-    color: var(--bg);
-    text-decoration: none;
-    transition: transform 0.15s, box-shadow 0.18s;
-    animation: riseC 0.7s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-    animation-delay: 0.42s;
-  }
-  .chap-cta:hover {
-    text-decoration: none;
-    box-shadow: var(--shadow-md);
-  }
-  .chap-cta:hover .chap-cta__arrow { transform: translateX(3px); }
-  .chap-cta__label {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 15px;
-  }
-  .chap-cta__sub {
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 12.5px;
-    opacity: 0.7;
-    margin-top: 3px;
-  }
-  .chap-cta__arrow {
-    font-size: 20px;
-    flex: none;
-    transition: transform 0.15s;
-  }
-
-  /* ---- Mobile ---- */
-  @media (max-width: 640px) {
-    .chap-lesson { gap: 12px; padding: 14px 4px; }
-    .chap-lesson__title { font-size: 16px; }
-    .outcomes-card { padding: 20px 18px; }
-  }
+  /* The mark cell carries both the lektion number and a check; the client
+     toggles which is shown by adding `done` to the row. */
+  .lrow .mk-num { display: inline; }
+  .lrow .mk-check { width: 14px; height: 14px; display: none; }
+  .lrow .mk-lock { width: 13px; height: 13px; }
+  .lrow.done .mk-num { display: none; }
+  .lrow.done .mk-check { display: inline-block; }
+  /* "next" mark accent mirrors broadsheet .lrow.next .mk */
+  .lrow.next .cta { color: var(--oxblood); }
 </style>
 
 <script>
@@ -453,8 +179,8 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
     const order = JSON.parse(orderEl.textContent || '[]') as string[];
     const done = new Set(getFokusDone());
 
-    // Per-lesson state: done | next | (default). First non-done klar lesson = next.
-    const rows = document.querySelectorAll<HTMLElement>('.chap-lesson[data-lesson-id]');
+    // Per-lesson state: done | next | todo. First non-done klar lesson = next.
+    const rows = document.querySelectorAll<HTMLElement>('.lrow[data-lesson-id]');
     let doneCount = 0;
     let nextAssigned = false;
     let nextId: string | null = null;
@@ -462,17 +188,17 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
     rows.forEach((row) => {
       const id = row.dataset.lessonId || '';
       const ctaEl = row.querySelector<HTMLElement>('[data-cta]');
+      row.classList.remove('done', 'next');
       if (done.has(id)) {
-        row.dataset.state = 'done';
+        row.classList.add('done');
         doneCount++;
         if (ctaEl) ctaEl.textContent = 'Repetera';
       } else if (!nextAssigned) {
-        row.dataset.state = 'next';
+        row.classList.add('next');
         nextAssigned = true;
         nextId = id;
         if (ctaEl) ctaEl.textContent = 'Börja →';
       } else {
-        row.dataset.state = 'todo';
         if (ctaEl) ctaEl.textContent = '';
       }
     });
@@ -485,7 +211,7 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
     const label = document.querySelector<HTMLElement>('[data-chap-label]');
     if (label) label.textContent = `${doneCount} / ${total} klara`;
 
-    // CTA: continue to next incomplete lesson, or first if all done
+    // CTA: continue to next incomplete lesson, or first if all done.
     const cta = document.querySelector<HTMLAnchorElement>('[data-chap-cta]');
     const ctaLabel = document.querySelector<HTMLElement>('[data-cta-label]');
     const ctaSub = document.querySelector<HTMLElement>('[data-cta-sub]');
@@ -494,7 +220,9 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
     if (ctaLabel) ctaLabel.textContent = doneCount > 0 ? 'Fortsätt kapitlet' : 'Börja kapitlet';
     if (ctaSub) {
       ctaSub.textContent =
-        doneCount >= total ? 'Du har klarat kapitlet — repetera valfri lektion' : `Nästa: lektion ${target}`;
+        doneCount >= total
+          ? 'Du har klarat kapitlet, repetera valfri lektion'
+          : `Nästa: lektion ${target}`;
     }
   }
 

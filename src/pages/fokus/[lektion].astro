@@ -1,7 +1,7 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
-import AppShell from '../../layouts/AppShell.astro';
+import Broadsheet from '../../layouts/Broadsheet.astro';
 import Rutnat from '../../components/fokus/Rutnat.astro';
 import Linjediagram from '../../components/fokus/Linjediagram.astro';
 import Jamforelse from '../../components/fokus/Jamforelse.astro';
@@ -11,75 +11,30 @@ import Andel from '../../components/fokus/Andel.astro';
 import FokusQuiz from '../../components/fokus/FokusQuiz.astro';
 
 // ── Types ──────────────────────────────────────────────────────────────────
-
-interface CourseLektion {
-  lektion: string;
-  titel: string;
-  niva: string;
-  tid_min: number;
-  status: string;
-  fil: string;
-}
-interface CourseKapitel {
-  nummer: number;
-  titel: string;
-  lektioner: CourseLektion[];
-}
-interface CourseJson {
-  kapitel: CourseKapitel[];
-}
+interface CourseLektion { lektion: string; titel: string; niva: string; tid_min: number; status: string; fil: string }
+interface CourseKapitel { nummer: number; titel: string; lektioner: CourseLektion[] }
+interface CourseJson { kapitel: CourseKapitel[] }
 
 type StegTyp = 'intro' | 'reading' | 'concept' | 'dataviz' | 'quiz';
-
-interface VisualObj {
-  typ: string;
-  figurtext: string;
-  [key: string]: unknown;
-}
-
-interface Fraga {
-  typ: 'single' | 'multi';
-  fraga: string;
-  underrubrik?: string;
-  alternativ: string[];
-  ratt: number[];
-  forklaring: string;
-}
-
+interface VisualObj { typ: string; figurtext: string; [key: string]: unknown }
+interface Fraga { typ: 'single' | 'multi'; fraga: string; underrubrik?: string; alternativ: string[]; ratt: number[]; forklaring: string }
 interface Steg {
-  typ: StegTyp;
-  kicker?: string;
-  titel?: string;
-  ingress?: string;
-  lead?: string;
-  highlight?: string;
-  brodtext?: string[];
-  takeaway?: string;
-  visual?: VisualObj;
-  forklaring?: string;
-  underrubrik?: string;
-  slutsats?: string;
-  fragor?: Fraga[];
+  typ: StegTyp; kicker?: string; titel?: string; ingress?: string; lead?: string; highlight?: string;
+  brodtext?: string[]; takeaway?: string; visual?: VisualObj; forklaring?: string; underrubrik?: string;
+  slutsats?: string; fragor?: Fraga[];
 }
-
-interface LessonJson {
-  kapitel: number;
-  lektion: string;
-  titel: string;
-  niva: string;
-  tid_min: number;
-  mal: string;
-  steg: Steg[];
-}
+interface LessonJson { kapitel: number; lektion: string; titel: string; niva: string; tid_min: number; mal: string; steg: Steg[] }
 
 // ── getStaticPaths ─────────────────────────────────────────────────────────
-
 export async function getStaticPaths() {
   const contentDir = path.resolve('content/fundamental-aktieanalys');
-  const courseRaw = fs.readFileSync(path.join(contentDir, 'course.json'), 'utf8');
-  const course: CourseJson = JSON.parse(courseRaw);
+  const course: CourseJson = JSON.parse(fs.readFileSync(path.join(contentDir, 'course.json'), 'utf8'));
 
-  // Collect all lessons whose fil exists (regardless of status), in course order
+  const chapterIdsMap: Record<number, string[]> = {};
+  for (const kapitel of course.kapitel) {
+    chapterIdsMap[kapitel.nummer] = kapitel.lektioner.map((l) => l.lektion);
+  }
+
   const builtLessons: { lektion: string; lesson: LessonJson }[] = [];
   for (const kapitel of course.kapitel) {
     for (const l of kapitel.lektioner) {
@@ -92,6 +47,7 @@ export async function getStaticPaths() {
       }
     }
   }
+  const courseIds = builtLessons.map((b) => b.lektion);
 
   return builtLessons.map(({ lektion, lesson }, idx) => {
     const prev = idx > 0 ? builtLessons[idx - 1] : null;
@@ -102,24 +58,70 @@ export async function getStaticPaths() {
         lesson,
         prevHref: prev ? `/fokus/${prev.lektion}` : null,
         nextHref: next ? `/fokus/${next.lektion}` : null,
+        nextLektion: next ? next.lektion : null,
+        chapterIds: chapterIdsMap[lesson.kapitel] ?? [],
+        courseIds,
       },
     };
   });
 }
 
-// ── Props ─────────────────────────────────────────────────────────────────
-
-const { lesson, prevHref, nextHref } = Astro.props as {
+const { lesson, prevHref, nextHref, nextLektion, chapterIds, courseIds } = Astro.props as {
   lesson: LessonJson;
   prevHref: string | null;
   nextHref: string | null;
+  nextLektion: string | null;
+  chapterIds: string[];
+  courseIds: string[];
 };
 
-// ── Highlight split helper ────────────────────────────────────────────────
+const total = lesson.steg.length;
+const meta = { lektion: lesson.lektion, kapitel: lesson.kapitel, chapterIds, courseIds, nextHref };
 
-// A visual is renderable only if its required array field is present and non-empty.
-// Guards against data typos (e.g. a flode using `steg` instead of `noder`) so one
-// bad lesson degrades to its figurtext instead of crashing the whole build.
+// ── Ordlista: margin-note glosses on a term's first appearance in the lesson ─
+const ordlista = JSON.parse(
+  fs.readFileSync(path.resolve('src/data/ordlista.json'), 'utf8')
+) as Record<string, string>;
+// Longest terms first so EV/EBITDA is matched (and masked) before EV.
+const glossTerms = Object.keys(ordlista).sort((a, b) => b.length - a.length);
+
+function stepText(s: Steg): string {
+  const v: any = s.visual ?? {};
+  const parts: (string | undefined)[] = [
+    s.kicker, s.titel, s.ingress, s.lead, s.underrubrik, s.forklaring, s.slutsats, s.takeaway,
+    ...(s.brodtext ?? []),
+    v.figurtext,
+    ...((v.element ?? []).flatMap((e: any) => [e.rubrik, e.text])),
+    ...((v.noder ?? []).map((n: any) => n.etikett)),
+    ...((v.delar ?? []).map((d: any) => d.etikett)),
+    ...((v.data ?? []).map((d: any) => d.kategori)),
+    ...((v.serier ?? []).map((se: any) => se.namn)),
+    ...((s.fragor ?? []).flatMap((f) => [f.fraga, f.underrubrik, ...(f.alternativ ?? []), f.forklaring])),
+  ];
+  return parts.filter(Boolean).join('  ');
+}
+function termRe(term: string, global: boolean): RegExp {
+  const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const lower = !/[A-ZÅÄÖ]/.test(term); // pure-lowercase terms match case-insensitively
+  const flags = (lower ? 'i' : '') + (global ? 'g' : '');
+  return new RegExp('(?<![A-Za-zÅÄÖåäö0-9])' + esc + '(?![A-Za-zÅÄÖåäö0-9])', flags);
+}
+const seenTerms = new Set<string>();
+const stepGloss: { term: string; forklaring: string }[][] = lesson.steg.map((s) => {
+  let work = stepText(s);
+  const found: { term: string; forklaring: string }[] = [];
+  for (const term of glossTerms) {
+    if (seenTerms.has(term)) continue;
+    if (termRe(term, false).test(work)) {
+      seenTerms.add(term);
+      found.push({ term, forklaring: ordlista[term] });
+      work = work.replace(termRe(term, true), '  '); // mask so shorter terms don't match inside
+    }
+  }
+  return found;
+});
+
+// ── Helpers ────────────────────────────────────────────────────────────────
 function visualOk(v: VisualObj | undefined): boolean {
   if (!v || !v.typ) return false;
   const a = v as any;
@@ -127,711 +129,280 @@ function visualOk(v: VisualObj | undefined): boolean {
   const str = (x: unknown) => typeof x === 'string' && x.length > 0;
   const arr = (x: unknown) => Array.isArray(x) && x.length > 0;
   switch (v.typ) {
-    case 'rutnat':
-      return num(a.kolumner) && num(a.celler) && num(a.markerad) && str(a.etikett);
-    case 'linjediagram':
-      return arr(a.serier) && a.serier.every(
-        (s: any) => str(s.namn) && Array.isArray(s.punkter) && s.punkter.length >= 2 && s.punkter.every(num)
-      );
-    case 'jamforelse':
-      return arr(a.element) && a.element.every((e: any) => str(e.rubrik) && str(e.text));
-    case 'stapeldiagram':
-      return arr(a.data) && a.data.every((d: any) => str(d.kategori) && num(d.varde));
-    case 'flode':
-      return Array.isArray(a.noder) && a.noder.length >= 2 && a.noder.every((nd: any) => str(nd.etikett));
-    case 'andel':
-      return Array.isArray(a.delar) && a.delar.length >= 2 && a.delar.every((d: any) => str(d.etikett) && num(d.varde));
-    default:
-      return false; // unknown typ -> figurtext fallback
+    case 'rutnat': return num(a.kolumner) && num(a.celler) && num(a.markerad) && str(a.etikett);
+    case 'linjediagram': return arr(a.serier) && a.serier.every((s: any) => str(s.namn) && Array.isArray(s.punkter) && s.punkter.length >= 2 && s.punkter.every(num));
+    case 'jamforelse': return arr(a.element) && a.element.every((e: any) => str(e.rubrik) && str(e.text));
+    case 'stapeldiagram': return arr(a.data) && a.data.every((d: any) => str(d.kategori) && num(d.varde));
+    case 'flode': return Array.isArray(a.noder) && a.noder.length >= 2 && a.noder.every((nd: any) => str(nd.etikett));
+    case 'andel': return Array.isArray(a.delar) && a.delar.length >= 2 && a.delar.every((d: any) => str(d.etikett) && num(d.varde));
+    default: return false;
   }
 }
-
 function splitLead(lead: string, highlight: string): [string, string, string] {
   if (!highlight) return [lead, '', ''];
   const idx = lead.indexOf(highlight);
   if (idx === -1) return [lead, '', ''];
   return [lead.slice(0, idx), highlight, lead.slice(idx + highlight.length)];
 }
+
+function visualEl(v: VisualObj) {
+  if (!visualOk(v)) return null;
+  return v;
+}
 ---
 
-<AppShell title={lesson.titel} active="lektion" maxWidth={760}>
+<Broadsheet title={lesson.titel} chrome="none">
+  <script type="application/json" data-fokus-meta set:html={JSON.stringify(meta)} />
 
-  <!-- ── Rail context ── -->
-  <div slot="rail-context" class="rail-fokus-ctx">
-    <a href={`/fokus/${lesson.lektion}/`} class="rail__item is-active" aria-current="page">
-      <span class="rail__dot" aria-hidden="true"></span>
-      Lektion {lesson.lektion}
-    </a>
-
-    <div class="rail-steps">
-      <div class="rail-steps__label">
-        LEKTIONENS STEG
-        <span data-fokus-rail-step></span>
+  <div class="player" data-player>
+    <!-- ── Running head ── -->
+    <header class="rh">
+      <div class="rh-in">
+        <div class="rh-top">
+          <nav class="crumb" aria-label="Brodsmulor">
+            <span class="mk" aria-hidden="true"></span>
+            <a href="/hem">Hem</a><span class="sep">›</span>
+            <a href={`/fokus/kapitel/${lesson.kapitel}`}>Kapitel {lesson.kapitel}</a><span class="sep">›</span>
+            <span class="here">Lektion {lesson.lektion}</span>
+          </nav>
+          <div class="folio"><b data-fnow>01</b> / <span data-ftot>{String(total).padStart(2, '0')}</span></div>
+        </div>
+        <div class="track" data-track aria-hidden="true"></div>
       </div>
-      <div class="rail-steps__track" aria-hidden="true">
-        <div class="rail-steps__fill" data-fokus-rail-fill></div>
+    </header>
+
+    <!-- ── Stage ── -->
+    <main class="stage">
+      <div class="step-host" data-fokus data-lektion={lesson.lektion}>
+        <div class="steps" data-fokus-steps>
+          {lesson.steg.map((s, i) => {
+            const gloss = stepGloss[i];
+            const hasGloss = gloss.length > 0;
+            return (
+              <section
+                class:list={['step', { 'has-gloss': hasGloss, 'step--intro': s.typ === 'intro' }]}
+                data-step
+                data-typ={s.typ}
+                aria-label={`Steg ${i + 1}`}
+              >
+                {s.typ === 'intro' && (
+                  <div class="s-intro">
+                    {s.kicker && <div class="kicker kicker--intro">{s.kicker}</div>}
+                    {s.titel && <h1 class="s-title">{s.titel}</h1>}
+                    {s.ingress && <p class="s-ingress">{s.ingress}</p>}
+                    <div class="s-meta">Kapitel {lesson.kapitel} · {total} steg · {lesson.niva}</div>
+                  </div>
+                )}
+
+                {s.typ === 'reading' && (() => {
+                  const [before, hl, after] = splitLead(s.lead ?? '', s.highlight ?? '');
+                  return (
+                    <div class="s-col">
+                      {s.kicker && <div class="kicker">{s.kicker}</div>}
+                      <p class="s-lead">{before}<mark>{hl}</mark>{after}</p>
+                      {s.brodtext && s.brodtext.map((para) => <p class="s-body">{para}</p>)}
+                      {s.takeaway && <blockquote class="s-take">{s.takeaway}</blockquote>}
+                    </div>
+                  );
+                })()}
+
+                {s.typ === 'concept' && (
+                  <div class="s-col s-col--center">
+                    {s.kicker && <div class="kicker">{s.kicker}</div>}
+                    {s.titel && <h2 class="s-ctitle">{s.titel}</h2>}
+                    {s.visual && (visualEl(s.visual) ? (
+                      s.visual.typ === 'rutnat' ? <Rutnat visual={s.visual as any} />
+                      : s.visual.typ === 'linjediagram' ? <Linjediagram visual={s.visual as any} />
+                      : s.visual.typ === 'jamforelse' ? <Jamforelse visual={s.visual as any} />
+                      : s.visual.typ === 'stapeldiagram' ? <Stapeldiagram visual={s.visual as any} />
+                      : s.visual.typ === 'flode' ? <Flode visual={s.visual as any} />
+                      : s.visual.typ === 'andel' ? <Andel visual={s.visual as any} />
+                      : <p class="visual-fallback">{s.visual.figurtext}</p>
+                    ) : <p class="visual-fallback">{s.visual.figurtext}</p>)}
+                    {s.brodtext && s.brodtext.length > 0 && (
+                      <div class="s-prose">{s.brodtext.map((p) => <p>{p}</p>)}</div>
+                    )}
+                    {s.forklaring && <p class="s-forklaring">{s.forklaring}</p>}
+                  </div>
+                )}
+
+                {s.typ === 'dataviz' && (
+                  <div class="s-col s-col--center">
+                    {s.titel && <h2 class="s-ctitle">{s.titel}</h2>}
+                    {s.underrubrik && <p class="s-underrubrik">{s.underrubrik}</p>}
+                    {s.visual && (visualEl(s.visual) ? (
+                      s.visual.typ === 'rutnat' ? <Rutnat visual={s.visual as any} />
+                      : s.visual.typ === 'linjediagram' ? <Linjediagram visual={s.visual as any} />
+                      : s.visual.typ === 'jamforelse' ? <Jamforelse visual={s.visual as any} />
+                      : s.visual.typ === 'stapeldiagram' ? <Stapeldiagram visual={s.visual as any} />
+                      : s.visual.typ === 'flode' ? <Flode visual={s.visual as any} />
+                      : s.visual.typ === 'andel' ? <Andel visual={s.visual as any} />
+                      : <p class="visual-fallback">{s.visual.figurtext}</p>
+                    ) : <p class="visual-fallback">{s.visual.figurtext}</p>)}
+                    {s.brodtext && s.brodtext.length > 0 && (
+                      <div class="s-prose">{s.brodtext.map((p) => <p>{p}</p>)}</div>
+                    )}
+                    {s.slutsats && <p class="s-slutsats">{s.slutsats}</p>}
+                  </div>
+                )}
+
+                {s.typ === 'quiz' && (
+                  <div class="s-col"><FokusQuiz fragor={s.fragor ?? []} lektionId={lesson.lektion} /></div>
+                )}
+
+                {hasGloss && (
+                  <aside class="gloss" aria-label="Ordforklaringar">
+                    {gloss.map((g) => (
+                      <div class="gloss__item">
+                        <div class="gloss__term">{g.term}</div>
+                        <div class="gloss__def">{g.forklaring}</div>
+                      </div>
+                    ))}
+                  </aside>
+                )}
+              </section>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </main>
+
+    <!-- ── Bottom nav ── -->
+    <footer class="lnav">
+      <div class="lnav-in">
+        <button class="lback" type="button" data-back>← Tillbaka</button>
+        <span class="lhint">Använd piltangenterna ← →</span>
+        <button class="lnext" type="button" data-next>Fortsätt →</button>
+      </div>
+    </footer>
+
+    <!-- ── Completion ── -->
+    <section class="done-stage" data-done-panel>
+      <div class="done-in">
+        <div class="seal" aria-hidden="true"></div>
+        <div class="done-kick">Lektion klar</div>
+        <h1 class="done-title">{lesson.titel}</h1>
+        <p class="done-sub">Ett steg till i kursen. Bra jobbat.</p>
+        <div class="done-stat">
+          <div class="c"><div class="v"><span data-done-chap>0</span><span class="su">/{chapterIds.length}</span></div><div class="l">i Kapitel {lesson.kapitel}</div></div>
+          <div class="c"><div class="v" style="color:var(--oxblood)" data-done-total>0</div><div class="l">av {courseIds.length} totalt</div></div>
+          <div class="c"><div class="v" data-done-streak>0</div><div class="l">dagars svit</div></div>
+        </div>
+        <div class="done-cta">
+          <a class="btn-ghost" href={`/fokus/kapitel/${lesson.kapitel}`}>Till kapitlet</a>
+          {nextHref && <a class="btn-ink" href={nextHref}>Nästa: lektion {nextLektion} →</a>}
+          {!nextHref && <a class="btn-ink" href="/fokus">Till kursöversikt →</a>}
+        </div>
+      </div>
+    </section>
   </div>
-
-  <!-- ── Topbar ── -->
-  <div class="lesson-topbar">
-    <nav class="lesson-topbar__crumbs" aria-label="Brodsmulor">
-      <a href="/oversikt" class="crumb-link">Kapitel {lesson.kapitel}</a>
-      <span class="crumb-sep" aria-hidden="true">&#x203A;</span>
-      <span class="crumb-seg crumb-seg--active">Lektion {lesson.lektion}</span>
-    </nav>
-    <div class="lesson-topbar__nav">
-      <div data-fokus-dots class="topbar-dots" role="tablist" aria-label="Steg"></div>
-      <span data-fokus-counter class="topbar-counter"></span>
-    </div>
-  </div>
-
-  <!-- ── Fokus article ── -->
-  <article class="fokus" data-fokus data-lektion={lesson.lektion}>
-    <div class="fokus__steps" data-fokus-steps>
-      {lesson.steg.map((s, i) => {
-        if (s.typ === 'intro') {
-          return (
-            <section class="step step--intro" data-step data-typ="intro" aria-label={`Steg ${i + 1}: Intro`}>
-              <div class="step__inner step__inner--centered">
-                {s.kicker && (
-                  <div class="step-kicker step-kicker--intro">{s.kicker}</div>
-                )}
-                {s.titel && (
-                  <h1 class="step-title step-title--intro">{s.titel}</h1>
-                )}
-                {s.ingress && (
-                  <p class="step-ingress">{s.ingress}</p>
-                )}
-              </div>
-            </section>
-          );
-        }
-
-        if (s.typ === 'reading') {
-          const [before, hl, after] = splitLead(s.lead ?? '', s.highlight ?? '');
-          return (
-            <section class="step step--reading" data-step data-typ="reading" aria-label={`Steg ${i + 1}: Lasning`}>
-              <div class="step__inner step__inner--left">
-                {s.kicker && (
-                  <div class="step-kicker">{s.kicker}</div>
-                )}
-                <p class="step-lead">
-                  {before}<span class="hl">{hl}</span>{after}
-                </p>
-                {s.brodtext && s.brodtext.map((para) => (
-                  <p class="step-body">{para}</p>
-                ))}
-                {s.takeaway && (
-                  <div class="step-takeaway">
-                    <div class="step-takeaway__kicker">TA MED DIG</div>
-                    <div class="step-takeaway__text">{s.takeaway}</div>
-                  </div>
-                )}
-              </div>
-            </section>
-          );
-        }
-
-        if (s.typ === 'concept') {
-          return (
-            <section class:list={['step', 'step--concept', { 'step--text-only': !s.visual }]} data-step data-typ="concept" aria-label={`Steg ${i + 1}: Koncept`}>
-              <div class="step__inner step__inner--centered">
-                {s.kicker && (
-                  <div class="step-kicker">{s.kicker}</div>
-                )}
-                {s.titel && (
-                  <h2 class="step-title step-title--concept">{s.titel}</h2>
-                )}
-                {s.visual && (visualOk(s.visual) ? (
-                  s.visual.typ === 'rutnat' ? (
-                    <Rutnat visual={s.visual as any} />
-                  ) : s.visual.typ === 'linjediagram' ? (
-                    <Linjediagram visual={s.visual as any} />
-                  ) : s.visual.typ === 'jamforelse' ? (
-                    <Jamforelse visual={s.visual as any} />
-                  ) : s.visual.typ === 'stapeldiagram' ? (
-                    <Stapeldiagram visual={s.visual as any} />
-                  ) : s.visual.typ === 'flode' ? (
-                    <Flode visual={s.visual as any} />
-                  ) : s.visual.typ === 'andel' ? (
-                    <Andel visual={s.visual as any} />
-                  ) : (
-                    <p class="visual-fallback">{s.visual.figurtext}</p>
-                  )
-                ) : (
-                  <p class="visual-fallback">{s.visual.figurtext}</p>
-                ))}
-                {s.brodtext && s.brodtext.length > 0 && (
-                  <div class="step-prose">
-                    {s.brodtext.map((p) => (
-                      <p>{p}</p>
-                    ))}
-                  </div>
-                )}
-                {s.forklaring && (
-                  <p class="step-forklaring">{s.forklaring}</p>
-                )}
-              </div>
-            </section>
-          );
-        }
-
-        if (s.typ === 'dataviz') {
-          return (
-            <section class:list={['step', 'step--dataviz', { 'step--text-only': !s.visual }]} data-step data-typ="dataviz" aria-label={`Steg ${i + 1}: Dataviz`}>
-              <div class="step__inner step__inner--centered">
-                {s.titel && (
-                  <h2 class="step-title step-title--dataviz">{s.titel}</h2>
-                )}
-                {s.underrubrik && (
-                  <p class="step-underrubrik">{s.underrubrik}</p>
-                )}
-                {s.visual && (visualOk(s.visual) ? (
-                  s.visual.typ === 'rutnat' ? (
-                    <Rutnat visual={s.visual as any} />
-                  ) : s.visual.typ === 'linjediagram' ? (
-                    <Linjediagram visual={s.visual as any} />
-                  ) : s.visual.typ === 'jamforelse' ? (
-                    <Jamforelse visual={s.visual as any} />
-                  ) : s.visual.typ === 'stapeldiagram' ? (
-                    <Stapeldiagram visual={s.visual as any} />
-                  ) : s.visual.typ === 'flode' ? (
-                    <Flode visual={s.visual as any} />
-                  ) : s.visual.typ === 'andel' ? (
-                    <Andel visual={s.visual as any} />
-                  ) : (
-                    <p class="visual-fallback">{s.visual.figurtext}</p>
-                  )
-                ) : (
-                  <p class="visual-fallback">{s.visual.figurtext}</p>
-                ))}
-                {s.brodtext && s.brodtext.length > 0 && (
-                  <div class="step-prose">
-                    {s.brodtext.map((p) => (
-                      <p>{p}</p>
-                    ))}
-                  </div>
-                )}
-                {s.slutsats && (
-                  <p class="step-slutsats">{s.slutsats}</p>
-                )}
-              </div>
-            </section>
-          );
-        }
-
-        if (s.typ === 'quiz') {
-          return (
-            <section class="step step--quiz" data-step data-typ="quiz" aria-label={`Steg ${i + 1}: Kunskapskoll`}>
-              <div class="step__inner step__inner--left">
-                <FokusQuiz fragor={s.fragor ?? []} lektionId={lesson.lektion} />
-              </div>
-            </section>
-          );
-        }
-
-        return null;
-      })}
-    </div>
-  </article>
-
-  <!-- Hidden adjacent-lesson nav links (used programmatically by fokus.ts) -->
-  {nextHref && <a class="fokus-pn fokus-pn--next" href={nextHref} aria-hidden="true" tabindex="-1">Nasta lektion</a>}
-  {prevHref && <a class="fokus-pn fokus-pn--prev" href={prevHref} aria-hidden="true" tabindex="-1">Foregaende lektion</a>}
-
-</AppShell>
+</Broadsheet>
 
 <style>
-  /* ── Topbar ─────────────────────────────────────────────────────────── */
-  .lesson-topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-3) 0 var(--space-5);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: var(--space-6);
-    flex-wrap: wrap;
-  }
-  .lesson-topbar__crumbs {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--sans);
-    font-size: var(--text-xs);
-    color: var(--muted);
-    flex-wrap: wrap;
-  }
-  .crumb-link {
-    color: var(--muted);
-    text-decoration: none;
-    transition: color var(--dur-micro) var(--ease-standard);
-  }
-  .crumb-link:hover {
-    color: var(--text);
-    text-decoration: none;
-  }
-  .crumb-sep {
-    color: var(--faint);
-  }
-  .crumb-seg {
-    color: var(--muted);
-  }
-  .crumb-seg--active {
-    color: var(--text);
-    font-weight: 500;
-  }
-  .lesson-topbar__nav {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-  .topbar-dots {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .topbar-counter {
-    font-family: var(--sans);
-    font-size: var(--text-xs);
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-  }
+  .player { display: contents; }
 
-  /* ── Rail context (page-scoped; slotted content carries page scope) ── */
-  .rail-fokus-ctx {
-    display: contents;
-  }
-  .rail__item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: 11px;
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--muted);
-    text-decoration: none;
-  }
-  .rail__item:hover {
-    text-decoration: none;
-  }
-  .rail__item.is-active {
-    color: var(--text);
-    background: var(--mint-soft);
-  }
-  .rail__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-    opacity: 0.55;
-    flex-shrink: 0;
-  }
-  .rail__item.is-active .rail__dot {
-    background: var(--mint);
-    opacity: 1;
-  }
-  .rail-steps {
-    padding: 0 10px;
-    margin-bottom: 8px;
-  }
-  .rail-steps__label {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    color: var(--muted);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .rail-steps__track {
-    height: 3px;
-    background: var(--faint);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-  }
-  .rail-steps__fill {
-    height: 100%;
-    width: 0%;
-    background: var(--mint);
-    border-radius: var(--radius-full);
-    transition: width var(--dur-comp) var(--ease-out);
-  }
+  /* ── Running head ── */
+  /* Solid (not fading to transparent) so scrolled-up step text hides cleanly
+     behind the running head instead of bleeding through under the breadcrumb. */
+  .rh { position: sticky; top: 0; z-index: 10; background: var(--paper); padding: 16px clamp(18px,5vw,52px) 0; }
+  .rh-in { max-width: 1080px; margin: 0 auto; }
+  .rh-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .rh .crumb { margin: 0; }
+  .rh .crumb .mk { width: 18px; height: 18px; border-radius: 5px; background: var(--oxblood); margin-right: 4px; }
+  .rh .crumb a { color: var(--ink-soft); text-decoration: none; }
+  .rh .crumb a:hover { color: var(--oxblood); }
+  .folio { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; color: var(--ink-soft); white-space: nowrap; }
+  .folio b { color: var(--oxblood); font-weight: 500; }
+  .track { display: flex; gap: 4px; margin: 6px 0 0; padding-bottom: 8px; }
+  .rh-in::after { content: ""; display: block; border-bottom: 1px solid var(--rule); }
+  /* Segments double as a stepper, so the tappable area is 20px tall while the
+     visible bar stays a 3px hairline centered within it. */
+  :global(.track .seg) { flex: 1; height: 20px; background: none; cursor: pointer; position: relative; }
+  :global(.track .seg::before) { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; background: var(--paper-2); }
+  :global(.track .seg::after) { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; background: var(--oxblood); transform: scaleX(0); transform-origin: left center; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  :global(.track .seg.done::after), :global(.track .seg.cur::after) { transform: scaleX(1); }
 
-  /* ── Hidden adjacent links ──────────────────────────────────────────── */
-  .fokus-pn {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
+  /* ── Stage ── */
+  .stage { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: clamp(36px,6vh,84px) clamp(18px,5vw,52px) clamp(24px,4vh,56px); }
+  .steps { width: 100%; max-width: 960px; margin: 0 auto; }
+  .step { display: none; }
+  .step.is-active { display: block; animation: step-rise .5s cubic-bezier(.21,.7,.18,1) both; }
+  .step.is-active.has-gloss { display: grid; grid-template-columns: minmax(0, 660px) 210px; gap: 32px; justify-content: center; align-items: start; }
+  .step.is-active.has-gloss .s-col, .step.is-active.has-gloss .s-intro { margin: 0; }
+  /* Calm pass: gentle fade with a minimal 6px rise (was 16px) on step change. */
+  @keyframes step-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .step.is-active { animation: none; } }
 
-  /* ── Fokus article ──────────────────────────────────────────────────── */
-  .fokus {
-    position: relative;
-  }
+  .s-col { max-width: 660px; margin: 0 auto; text-align: left; }
+  .s-col--center { text-align: center; }
+  .s-col--center .s-prose, .s-col--center .visual-fallback { text-align: left; }
 
-  /* ── Steps container ────────────────────────────────────────────────── */
-  .step {
-    display: none;
-    animation: stepRise 0.65s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-  }
-  .step.is-active {
-    display: block;
-  }
+  /* ── Margin gloss box ── */
+  .gloss { grid-column: 2; display: flex; flex-direction: column; gap: 20px; padding-top: 4px; }
+  .gloss__item { border-left: 2px solid var(--oxblood); padding: 1px 0 1px 14px; }
+  .gloss__term { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 6px; }
+  .gloss__def { font-family: var(--serif); font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); }
 
-  @media (prefers-reduced-motion: reduce) {
-    .step {
-      animation: none;
-    }
-  }
+  /* kicker spacing override for intro */
+  .kicker--intro { letter-spacing: .26em; font-size: 12px; margin-bottom: 22px; }
 
-  @keyframes stepRise {
-    from {
-      opacity: 0;
-      transform: translateY(18px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
+  /* intro */
+  .s-intro { text-align: center; max-width: 600px; margin: 0 auto; }
+  .s-title { font-family: var(--display); font-weight: 300; font-size: clamp(40px,7vw,76px); line-height: 1.0; letter-spacing: -.02em; margin: 0 0 22px; }
+  .s-ingress { font-size: 21px; color: var(--ink-soft); font-style: italic; max-width: 34ch; margin: 0 auto; }
+  .s-meta { display: inline-block; margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 
-  .step__inner {
-    width: 100%;
-    padding: var(--space-8) 0 var(--space-6);
-  }
-  .step__inner--centered {
-    text-align: center;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-  .step__inner--left {
-    text-align: left;
-    max-width: 640px;
-    margin: 0 auto;
-  }
+  /* reading */
+  .s-lead { font-family: var(--display); font-weight: 300; font-size: clamp(23px,3vw,30px); line-height: 1.34; letter-spacing: -.01em; margin: 0 0 24px; }
+  .s-lead mark { background: none; color: var(--oxblood); font-style: italic; }
+  .s-body { color: var(--ink-soft); margin: 0 0 18px; max-width: 62ch; }
+  .s-take { margin-top: 26px; border-left: 2px solid var(--oxblood); padding: 4px 0 4px 22px; font-family: var(--display); font-style: italic; font-size: 21px; line-height: 1.4; color: var(--ink); }
+  /* Byline, not a shouty label: mixed case, light tracking, reads as a signature. */
+  .s-take::before { content: "Sebastian tänker"; display: block; font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .01em; color: var(--oxblood); margin-bottom: 8px; }
 
-  /* ── Kicker ─────────────────────────────────────────────────────────── */
-  .step-kicker {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--mint);
-    margin-bottom: 26px;
-  }
-  .step-kicker--intro {
-    letter-spacing: 0.28em;
-    font-size: 12px;
-    margin-bottom: 30px;
-  }
+  /* concept / dataviz */
+  .s-ctitle { font-family: var(--display); font-weight: 400; font-size: clamp(26px,3.6vw,38px); line-height: 1.08; letter-spacing: -.015em; margin: 0 0 8px; }
+  .s-underrubrik { color: var(--ink-soft); font-style: italic; font-size: 18px; margin: 0 auto 22px; max-width: 52ch; }
+  .s-forklaring { color: var(--ink-soft); margin: 22px auto 0; max-width: 54ch; }
+  .s-slutsats { margin: 22px auto 0; font-family: var(--display); font-weight: 400; font-size: 20px; line-height: 1.4; max-width: 52ch; }
+  .s-slutsats::before { content: "\27F6  "; color: var(--oxblood); }
+  .s-prose { max-width: 60ch; margin: 22px auto 0; }
+  .s-prose p { color: var(--ink-soft); margin: 0; }
+  .s-prose p + p { margin-top: 1.05em; }
 
-  /* ── Intro step ─────────────────────────────────────────────────────── */
-  .step-title--intro {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(48px, 7vw, 84px);
-    line-height: 1.04;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin: 0 0 32px;
-  }
-  .step-ingress {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 21px;
-    line-height: 1.55;
-    color: var(--prose);
-    max-width: 30ch;
-    margin: 0 auto;
-  }
+  /* ── Bottom nav ── */
+  .lnav { position: sticky; bottom: 0; background: linear-gradient(rgba(246,242,234,0), var(--paper) 40%); padding: 14px clamp(18px,5vw,52px) 22px; }
+  .lnav-in { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--rule); padding-top: 16px; }
+  .lback { background: none; border: none; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); cursor: pointer; padding: 8px 4px; }
+  .lback:hover { color: var(--ink); }
+  .lhint { font-family: var(--mono); font-size: 10.5px; color: var(--faint); letter-spacing: .04em; }
+  .lnext { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; background: var(--ink); color: var(--paper); border: none; padding: 15px 30px; border-radius: 99px; cursor: pointer; transition: background .25s, transform .25s; }
+  .lnext:hover { background: var(--oxblood); transform: translateX(3px); }
 
-  /* ── Reading step ───────────────────────────────────────────────────── */
-  .step-lead {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(26px, 3.4vw, 38px);
-    line-height: 1.32;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin: 0 0 30px;
-  }
-  .hl {
-    color: var(--mint);
-  }
-  .step-body {
-    font-family: var(--serif);
-    font-size: var(--prose-size);
-    line-height: 1.7;
-    color: var(--prose);
-    max-width: 60ch;
-    margin: 0 0 var(--space-5);
-  }
-  .step-takeaway {
-    border-left: 2px solid var(--mint);
-    padding: 6px 0 6px 20px;
-    margin-top: var(--space-5);
-  }
-  .step-takeaway__kicker {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    color: var(--mint);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-  .step-takeaway__text {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 21px;
-    line-height: 1.4;
-    color: var(--text);
-  }
+  /* ── Completion ── */
+  .done-stage { display: none; flex: 1; align-items: center; justify-content: center; padding: 40px clamp(20px,5vw,52px) 70px; text-align: center; }
+  .player.is-done .rh, .player.is-done .stage, .player.is-done .lnav { display: none; }
+  .player.is-done .done-stage { display: flex; }
+  .done-in { max-width: 560px; }
+  .seal { width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid var(--oxblood); display: grid; place-items: center; margin: 0 auto 26px; }
+  .seal::before { content: ""; width: 26px; height: 26px; background: var(--oxblood); -webkit-mask: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); mask: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); }
+  .done-kick { font-family: var(--mono); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 16px; }
+  .done-title { font-family: var(--display); font-weight: 300; font-size: clamp(34px,5vw,56px); line-height: 1.04; letter-spacing: -.02em; margin-bottom: 18px; }
+  .done-sub { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--ink-soft); margin-bottom: 30px; }
+  .done-stat { display: inline-flex; border: 1px solid var(--rule); background: var(--card); margin-bottom: 34px; }
+  .done-stat .c { padding: 16px 26px; } .done-stat .c + .c { border-left: 1px solid var(--rule); }
+  .done-stat .v { font-family: var(--display); font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .done-stat .v .su { font-size: 16px; color: var(--muted); font-family: var(--mono); }
+  .done-stat .l { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+  .done-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-  /* ── Concept step ───────────────────────────────────────────────────── */
-  .step-title--concept {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(32px, 4vw, 46px);
-    line-height: 1.12;
-    letter-spacing: -0.015em;
-    color: var(--text);
-    margin: 0 0 36px;
+  /* ── Mobile: gloss falls below the step content ── */
+  @media (max-width: 920px) {
+    .step.is-active.has-gloss { display: block; }
+    .step.is-active.has-gloss .s-col, .step.is-active.has-gloss .s-intro { margin: 0 auto; }
+    .gloss { max-width: 660px; margin: 24px auto 0; border-top: 1px solid var(--rule); padding-top: 18px; }
   }
-  .step-forklaring {
-    font-family: var(--serif);
-    font-size: 17px;
-    line-height: 1.6;
-    color: var(--prose);
-    max-width: 42ch;
-    margin: 0 auto;
-  }
-
-  /* ── Dataviz step ───────────────────────────────────────────────────── */
-  .step-title--dataviz {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(30px, 3.8vw, 44px);
-    line-height: 1.12;
-    letter-spacing: -0.015em;
-    color: var(--text);
-    margin: 0 0 8px;
-  }
-  .step-underrubrik {
-    font-family: var(--serif);
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--muted);
-    max-width: 44ch;
-    margin: 0 auto 34px;
-  }
-  .step-slutsats {
-    font-family: var(--serif);
-    font-size: 17px;
-    line-height: 1.6;
-    color: var(--prose);
-    max-width: 44ch;
-    margin: var(--space-5) auto 0;
-  }
-
-  /* ── Prose paragraphs on concept/dataviz (text-heavy lessons) ───────── */
-  .step-prose {
-    max-width: 58ch;
-    margin: var(--space-5) auto 0;
-    text-align: left;
-  }
-  .step-prose p {
-    font-family: var(--serif);
-    font-size: var(--prose-size);
-    line-height: 1.7;
-    color: var(--prose);
-    margin: 0;
-  }
-  .step-prose p + p {
-    margin-top: 1.1em;
-  }
-  /* When a concept/dataviz step has no visual, give the text more breathing room. */
-  .step--text-only .step-prose {
-    margin-top: var(--space-6);
-  }
-
-  /* ── Visual fallback (unknown visual.typ) ───────────────────────────── */
-  .visual-fallback {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--muted);
-    text-align: center;
-    padding: var(--space-5) 0;
-    margin: 0 auto;
-    max-width: 46ch;
-  }
-
-  /* ── Visual placeholder (replaced by RB-2) ──────────────────────────── */
-  .visual-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 180px;
-    border: 1px dashed var(--border-2);
-    border-radius: var(--radius-lg);
-    padding: var(--space-5);
-    margin: 0 auto var(--space-5);
-    max-width: 480px;
-    background: var(--surface);
-  }
-  .visual-placeholder__text {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--muted);
-    text-align: center;
-  }
-
-  /* ── Quiz placeholder (replaced by RB-3) ───────────────────────────── */
-  .quiz-header {
-    margin-bottom: var(--space-6);
-  }
-  .step-title--quiz {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(30px, 3.6vw, 40px);
-    line-height: 1.1;
-    color: var(--text);
-    margin: 0;
-  }
-  .quiz-question {
-    margin-top: var(--space-7);
-    text-align: left;
-  }
-  .quiz-question__text {
-    font-family: var(--serif);
-    font-size: 21px;
-    line-height: 1.4;
-    color: var(--text);
-    margin-bottom: 16px;
-  }
-  .quiz-question__num {
-    display: inline-block;
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--mint);
-    margin-right: 10px;
-  }
-  .quiz-question__sub {
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 12px;
-    color: var(--muted);
-    margin: -8px 0 14px 24px;
-  }
-  .quiz-alts {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .quiz-alt {
-    font-family: var(--serif);
-    font-size: var(--prose-size);
-    line-height: 1.4;
-    color: var(--prose);
-    padding: 12px 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--surface);
-    text-align: left;
-  }
-
-  /* ── Nav controls (injected by fokus.ts) ────────────────────────────── */
-  :global(.fokus__controls) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 13px;
-    margin-top: var(--space-7);
-    padding-bottom: var(--space-7);
-  }
-  :global(.fokus-nav) {
-    font-family: var(--sans);
-    cursor: pointer;
-    border-radius: var(--radius-full);
-    transition:
-      opacity var(--dur-micro) var(--ease-standard),
-      transform var(--dur-micro) var(--ease-standard);
-  }
-  :global(.fokus-nav--next) {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 14px 38px;
-    border: 1px solid var(--border-2);
-    background: var(--text);
-    color: var(--bg);
-    font-weight: 600;
-    font-size: 15px;
-  }
-  :global(.fokus-nav--next:hover) {
-    opacity: 0.88;
-  }
-  :global(.fokus-nav--prev) {
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-weight: 500;
-    font-size: 13px;
-    padding: 4px 8px;
-  }
-  :global(.fokus-nav--prev:hover) {
-    color: var(--text);
-  }
-
-  /* ── Topbar step dots ───────────────────────────────────────────────── */
-  :global(.fokus-dot) {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: none;
-    padding: 0;
-    background: var(--faint);
-    cursor: pointer;
-    transition: background var(--dur-micro) var(--ease-standard),
-      transform var(--dur-micro) var(--ease-standard);
-  }
-  :global(.fokus-dot.is-active) {
-    background: var(--mint);
-    transform: scale(1.2);
-  }
-  :global(.fokus-dot.is-seen) {
-    background: var(--mint);
-    opacity: 0.45;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :global(.fokus-nav),
-    :global(.fokus-dot),
-    .rail-steps__fill {
-      transition: none;
-    }
-  }
+  @media (max-width: 680px) { .lhint { display: none; } }
 </style>
 
 <script>

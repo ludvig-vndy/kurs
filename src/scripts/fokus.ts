@@ -1,11 +1,19 @@
-/* fokus.ts — JSON-driven Fokus lesson player nav
-   Models on deck.ts patterns: one step at a time, prev/next,
-   clickable dots in topbar, arrow keys, reduced-motion support. */
+/* fokus.ts, broadsheet Fokus lesson player.
+   One step at a time, segmented track + folio counter, bottom nav,
+   arrow keys, reduced-motion aware. Marks the lesson done and shows a
+   completion panel on finish. */
 
-import { touchStreak } from './state';
-import { markFokusDone } from './fokus-progress';
+import { touchStreak, getStreak } from './state';
+import { markFokusDone, getFokusDone } from './fokus-progress';
 
-// Document-level arrow key listener set once per page lifecycle.
+interface FokusMeta {
+  lektion: string;
+  kapitel: number;
+  chapterIds: string[];
+  courseIds: string[];
+  nextHref: string | null;
+}
+
 let activeGo: ((dir: 'next' | 'prev') => void) | null = null;
 let keysBound = false;
 
@@ -16,63 +24,28 @@ function bindKeysOnce() {
     if (!activeGo) return;
     const t = e.target as HTMLElement;
     if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
-    if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      activeGo('next');
-    } else if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      activeGo('prev');
-    }
+    if (e.key === 'ArrowRight') { e.preventDefault(); activeGo('next'); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); activeGo('prev'); }
   });
 }
 
-function buildControls(
-  steps: HTMLElement[],
-  noMotion: boolean
-): {
-  nav: HTMLElement;
-  prevBtn: HTMLButtonElement;
-  nextBtn: HTMLButtonElement;
-} {
-  const nav = document.createElement('nav');
-  nav.className = 'fokus__controls';
-  nav.setAttribute('aria-label', 'Stegnavigering');
-
-  const prevBtn = document.createElement('button');
-  prevBtn.type = 'button';
-  prevBtn.className = 'fokus-nav fokus-nav--prev';
-  prevBtn.dataset.fokusPrev = '';
-  prevBtn.textContent = '← Tillbaka';
-
-  const nextBtn = document.createElement('button');
-  nextBtn.type = 'button';
-  nextBtn.className = 'fokus-nav fokus-nav--next';
-  nextBtn.dataset.fokusNext = '';
-  nextBtn.textContent = 'Fortsätt →';
-
-  if (noMotion) {
-    prevBtn.style.transition = 'none';
-    nextBtn.style.transition = 'none';
-  }
-
-  // Primär (Fortsätt) överst, sekundär (Tillbaka) under.
-  nav.append(nextBtn, prevBtn);
-  return { nav, prevBtn, nextBtn };
+function readMeta(): FokusMeta | null {
+  const el = document.querySelector('[data-fokus-meta]');
+  if (!el) return null;
+  try { return JSON.parse(el.textContent || 'null'); } catch { return null; }
 }
 
-function initFokus(article: HTMLElement) {
-  if (article.dataset.built) return;
-  article.dataset.built = '1';
+function initFokus(host: HTMLElement) {
+  if (host.dataset.built) return;
+  host.dataset.built = '1';
 
-  // Read lesson id from the article's data-lektion attribute
-  const lessonId = article.dataset.lektion ?? '';
+  const meta = readMeta();
+  const lessonId = host.dataset.lektion ?? meta?.lektion ?? '';
 
-  // Count this page visit toward the streak
+  // Count this visit toward the streak.
   touchStreak();
 
-  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const stepsContainer = article.querySelector<HTMLElement>('[data-fokus-steps]');
+  const stepsContainer = host.querySelector<HTMLElement>('[data-fokus-steps]');
   if (!stepsContainer) return;
   const steps = Array.from(stepsContainer.querySelectorAll<HTMLElement>('[data-step]'));
   if (steps.length === 0) return;
@@ -80,125 +53,92 @@ function initFokus(article: HTMLElement) {
   const total = steps.length;
   const last = total - 1;
 
-  // Topbar containers
-  const dotsContainer = document.querySelector<HTMLElement>('[data-fokus-dots]');
-  const counterEl = document.querySelector<HTMLElement>('[data-fokus-counter]');
+  const player = host.closest<HTMLElement>('[data-player]');
+  const trackEl = document.querySelector<HTMLElement>('[data-track]');
+  const fnowEl = document.querySelector<HTMLElement>('[data-fnow]');
+  const backBtn = document.querySelector<HTMLButtonElement>('[data-back]');
+  const nextBtn = document.querySelector<HTMLButtonElement>('[data-next]');
 
-  // Rail containers
-  const railStepEl = document.querySelector<HTMLElement>('[data-fokus-rail-step]');
-  const railFillEl = document.querySelector<HTMLElement>('[data-fokus-rail-fill]');
-
-  // Adjacent-lesson hidden links
-  const nextLessonLink = document.querySelector<HTMLAnchorElement>('.fokus-pn--next');
-  const prevLessonLink = document.querySelector<HTMLAnchorElement>('.fokus-pn--prev');
-
-  // Build topbar dots
-  let topbarDots: HTMLButtonElement[] = [];
-  if (dotsContainer) {
-    dotsContainer.innerHTML = '';
+  // Build segmented track.
+  let segs: HTMLElement[] = [];
+  if (trackEl) {
+    trackEl.innerHTML = '';
     for (let i = 0; i < total; i++) {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'fokus-dot';
-      dot.dataset.go = String(i);
-      dot.setAttribute('aria-label', `Gå till steg ${i + 1}`);
-      dotsContainer.appendChild(dot);
-      topbarDots.push(dot);
+      const seg = document.createElement('span');
+      seg.className = 'seg';
+      seg.dataset.go = String(i);
+      seg.addEventListener('click', () => show(Number(seg.dataset.go)));
+      trackEl.appendChild(seg);
+      segs.push(seg);
     }
   }
 
-  // Build controls and append to article
-  const { nav, prevBtn, nextBtn } = buildControls(steps, noMotion);
-  article.appendChild(nav);
-
   let index = 0;
 
-  function scrollToTop() {
-    const y = article.getBoundingClientRect().top + window.scrollY - 8;
-    window.scrollTo({ top: Math.max(0, y), behavior: noMotion ? 'auto' : 'smooth' });
+  function scrollTop() {
+    // Calm pass: jump to top instantly on step change instead of smooth-scrolling
+    // the whole viewport, which read as the floor moving for motion-sensitive users.
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
-  function show(i: number, _dir: 'next' | 'prev') {
+  function show(i: number) {
     index = Math.max(0, Math.min(last, i));
-
-    // Show/hide steps
     steps.forEach((s, k) => {
       const active = k === index;
       s.classList.toggle('is-active', active);
       s.hidden = !active;
     });
-
-    // Update topbar dots
-    topbarDots.forEach((d, k) => {
-      d.classList.toggle('is-active', k === index);
-      d.classList.toggle('is-seen', k < index);
+    segs.forEach((sg, k) => {
+      sg.classList.toggle('done', k < index);
+      sg.classList.toggle('cur', k === index);
     });
+    if (fnowEl) fnowEl.textContent = String(index + 1).padStart(2, '0');
+    if (backBtn) backBtn.textContent = index === 0 ? '← Till kursöversikten' : '← Tillbaka';
+    if (nextBtn) nextBtn.textContent = index === last ? 'Slutför lektionen' : 'Fortsätt →';
+    scrollTop();
+  }
 
-    const stepText = `${index + 1} / ${total}`;
-    if (counterEl) counterEl.textContent = stepText;
-    if (railStepEl) railStepEl.textContent = stepText;
-    if (railFillEl) railFillEl.style.width = `${((index + 1) / total) * 100}%`;
-
-    // Update prev button
-    if (index === 0) {
-      prevBtn.textContent = '← Till kursöversikten';
-      prevBtn.classList.add('fokus-nav--overview');
-    } else {
-      prevBtn.textContent = '← Tillbaka';
-      prevBtn.classList.remove('fokus-nav--overview');
+  function finish() {
+    if (lessonId) markFokusDone(lessonId);
+    if (!player) {
+      // No completion panel, fall back to next lesson or overview.
+      window.location.href = meta?.nextHref || '/fokus';
+      return;
     }
-    prevBtn.removeAttribute('disabled');
-
-    // Update next button
-    if (index === last) {
-      nextBtn.textContent = 'Slutför lektionen';
-      nextBtn.classList.add('fokus-nav--complete');
-      // Mark this lesson done when the learner reaches the last step
-      if (lessonId) markFokusDone(lessonId);
-    } else {
-      nextBtn.textContent = 'Fortsätt →';
-      nextBtn.classList.remove('fokus-nav--complete');
-    }
-
-    scrollToTop();
+    // Populate completion stats from localStorage.
+    const done = new Set(getFokusDone());
+    const chapDone = (meta?.chapterIds ?? []).filter((id) => done.has(id)).length;
+    const courseDone = (meta?.courseIds ?? []).filter((id) => done.has(id)).length;
+    const chapEl = document.querySelector<HTMLElement>('[data-done-chap]');
+    const totalEl = document.querySelector<HTMLElement>('[data-done-total]');
+    const streakEl = document.querySelector<HTMLElement>('[data-done-streak]');
+    if (chapEl) chapEl.textContent = String(chapDone);
+    if (totalEl) totalEl.textContent = String(courseDone);
+    if (streakEl) streakEl.textContent = String(getStreak());
+    player.classList.add('is-done');
+    scrollTop();
   }
 
   function go(dir: 'next' | 'prev') {
     if (dir === 'next') {
-      if (index === last) {
-        nextLessonLink?.click();
-      } else {
-        show(index + 1, 'next');
-      }
+      if (index === last) finish();
+      else show(index + 1);
     } else {
-      if (index === 0) {
-        window.location.href = '/fokus';
-      } else {
-        show(index - 1, 'prev');
-      }
+      if (index === 0) window.location.href = '/fokus';
+      else show(index - 1);
     }
   }
 
-  nextBtn.addEventListener('click', () => go('next'));
-  prevBtn.addEventListener('click', () => go('prev'));
-
-  topbarDots.forEach((d) => {
-    d.addEventListener('click', () => {
-      const target = Number(d.dataset.go);
-      show(target, target >= index ? 'next' : 'prev');
-    });
-  });
+  nextBtn?.addEventListener('click', () => go('next'));
+  backBtn?.addEventListener('click', () => go('prev'));
 
   activeGo = go;
   bindKeysOnce();
-
-  article.classList.add('is-ready');
-  show(0, 'next');
+  show(0);
 }
 
 export function setupFokus() {
-  // Reset activeGo on each page load so the old closure doesn't linger
   activeGo = null;
-  const article = document.querySelector<HTMLElement>('[data-fokus]');
-  if (article) initFokus(article);
+  const host = document.querySelector<HTMLElement>('[data-fokus]');
+  if (host) initFokus(host);
 }

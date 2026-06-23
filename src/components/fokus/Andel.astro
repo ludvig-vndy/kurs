@@ -1,205 +1,39 @@
 ---
-// Andel — 100% horizontal stacked bar visual.
-// Normalizes varde values to percentages.
-// accent:true segments use --mint; others use --surface-2 with --border-2 border.
-
-interface AndelDel {
-  etikett: string;
-  varde: number;
-  accent?: boolean;
-}
-
-interface AndelVisual {
-  typ: 'andel';
-  delar: AndelDel[];
-  figurtext: string;
-}
-
-interface Props {
-  visual: AndelVisual;
-}
-
+// Andel, broadsheet 100% stacked proportion bar. Segments expand on .step.is-active.
+interface AndelDel { etikett: string; varde: number; accent?: boolean }
+interface AndelVisual { typ: 'andel'; delar: AndelDel[]; figurtext: string }
+interface Props { visual: AndelVisual }
 const { visual } = Astro.props;
 const { delar, figurtext } = visual;
-
-// Normalize to 100%
 const total = delar.reduce((s, d) => s + d.varde, 0) || 1;
-const segments = delar.map(d => ({
+const palette = ['var(--ink)', 'var(--oxblood)', 'var(--gold)', 'var(--faint)'];
+const segs = delar.map((d, i) => ({
   ...d,
   pct: (d.varde / total) * 100,
+  color: d.accent ? 'var(--oxblood)' : palette[i % palette.length],
 }));
-
-function roundPct(p: number): string {
-  return Math.round(p) + '%';
-}
+const r = (p: number) => Math.round(p) + '%';
 ---
-
-<div class="andel" aria-label="Andelsstapel">
-  <!-- 100% stacked bar -->
-  <div class="andel__bar-wrap">
-    <div class="andel__bar" role="img" aria-label="Proportioner">
-      {segments.map((seg, i) => (
-        <div
-          class={`andel__seg${seg.accent ? ' andel__seg--accent' : ''}`}
-          style={`--seg-pct:${seg.pct.toFixed(3)}%; --seg-delay:${i * 120}ms;`}
-          aria-label={`${seg.etikett}: ${roundPct(seg.pct)}`}
-        ></div>
-      ))}
-    </div>
-  </div>
-
-  <!-- Legend -->
-  <div class="andel__legend" aria-label="Förklaring">
-    {segments.map((seg, i) => (
-      <div class="andel__legend-item" style={`--seg-delay:${i * 120}ms;`}>
-        <span
-          class={`andel__swatch${seg.accent ? ' andel__swatch--accent' : ''}`}
-          aria-hidden="true"
-        ></span>
-        <span class="andel__legend-etikett">{seg.etikett}</span>
-        <span class="andel__legend-pct">{roundPct(seg.pct)}</span>
-      </div>
+<figure class="andel">
+  <div class="barwrap">
+    {segs.map((s, i) => (
+      <div class="seg2" style={`--w:${s.pct.toFixed(2)}%; --d:${i * 120}ms; background:${s.color}`}>{r(s.pct)}</div>
     ))}
   </div>
-
-  {figurtext && (
-    <p class="andel__figurtext">{figurtext}</p>
-  )}
-</div>
-
+  <div class="keys">
+    {segs.map((s) => (
+      <span><i style={`background:${s.color}`}></i>{s.etikett}</span>
+    ))}
+  </div>
+  {figurtext && <figcaption class="figtext">{figurtext}</figcaption>}
+</figure>
 <style>
-  .andel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    width: 100%;
-    padding: var(--space-4) 0;
-  }
-
-  .andel__bar-wrap {
-    width: 100%;
-    max-width: 520px;
-  }
-
-  .andel__bar {
-    display: flex;
-    width: 100%;
-    height: 52px;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--border-2);
-  }
-
-  /* Segments start at width:0, animate to target width */
-  .andel__seg {
-    height: 100%;
-    width: 0;
-    background: var(--surface-2);
-    border-right: 1px solid var(--border-2);
-    flex-shrink: 0;
-    transition: none;
-  }
-
-  .andel__seg:last-child {
-    border-right: none;
-  }
-
-  .andel__seg--accent {
-    background: var(--mint);
-    border-right-color: transparent;
-  }
-
-  /* Animate segments in when step is active */
-  :global(.step.is-active) .andel__seg {
-    animation: andel-grow var(--seg-delay, 0ms) cubic-bezier(0.21, 0.7, 0.18, 1) 0.1s both,
-               andel-expand 0.65s cubic-bezier(0.21, 0.7, 0.18, 1) var(--seg-delay, 0ms) forwards;
-  }
-
-  /* Legend items fade in staggered */
-  .andel__legend-item {
-    opacity: 0;
-  }
-
-  :global(.step.is-active) .andel__legend-item {
-    animation: andel-fade 0.35s ease calc(var(--seg-delay, 0ms) + 0.55s) both;
-  }
-
-  .andel__legend {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px 28px;
-    max-width: 520px;
-    width: 100%;
-  }
-
-  .andel__legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .andel__swatch {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-    background: var(--surface-2);
-    border: 1px solid var(--border-2);
-    flex-shrink: 0;
-  }
-
-  .andel__swatch--accent {
-    background: var(--mint);
-    border-color: var(--mint);
-  }
-
-  .andel__legend-etikett {
-    font-family: var(--sans);
-    font-size: 13px;
-    color: var(--prose);
-  }
-
-  .andel__legend-pct {
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .andel__figurtext {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-    text-align: center;
-    max-width: 46ch;
-    margin: 0;
-  }
-
-  /* Reduced motion: show bars at final width immediately */
+  .andel { margin: 0; }
+  .andel .barwrap .seg2 { width: 0; }
+  :global(.step.is-active) .andel .barwrap .seg2 { animation: seg-grow .7s cubic-bezier(.2,.7,.2,1) var(--d) forwards; }
+  @keyframes seg-grow { to { width: var(--w); } }
   @media (prefers-reduced-motion: reduce) {
-    .andel__seg {
-      animation: none !important;
-      width: var(--seg-pct) !important;
-    }
-    .andel__legend-item {
-      opacity: 1 !important;
-      animation: none !important;
-    }
-  }
-</style>
-
-<style is:global>
-  /* ── Andel keyframes ─────────────────────────────────────────────────── */
-  @keyframes andel-expand {
-    from { width: 0; }
-    to   { width: var(--seg-pct); }
-  }
-  @keyframes andel-fade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    .andel .barwrap .seg2 { width: var(--w); }
+    :global(.step.is-active) .andel .barwrap .seg2 { animation: none; }
   }
 </style>

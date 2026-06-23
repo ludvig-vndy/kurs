@@ -1,129 +1,28 @@
 ---
-// Rutnat — grid ownership visual.
-// Props: visual object matching the "rutnat" contract.
-
-interface RutnatVisual {
-  typ: 'rutnat';
-  kolumner: number;
-  celler: number;
-  markerad: number;
-  etikett: string;
-  figurtext: string;
-}
-
-interface Props {
-  visual: RutnatVisual;
-}
-
+// Rutnat, broadsheet ownership grid. One cell (index `markerad`) marked in oxblood,
+// label below. Cells pop in on .step.is-active.
+interface RutnatVisual { typ: 'rutnat'; kolumner: number; celler: number; markerad: number; etikett: string; figurtext: string }
+interface Props { visual: RutnatVisual }
 const { visual } = Astro.props;
 const { kolumner, celler, markerad, etikett, figurtext } = visual;
-
 const cells = Array.from({ length: celler }, (_, i) => i);
 ---
-
-<div class="rutnat" aria-label={`Rutnät med ${celler} celler, cell ${markerad + 1} markerad som ${etikett}`}>
-  <div
-    class="rutnat__grid"
-    style={`--kolumner:${kolumner};`}
-  >
+<figure class="rutnat" aria-label={`Rutnät: cell ${markerad + 1} av ${celler} markerad som ${etikett}`}>
+  <div class="grid" style={`grid-template-columns:repeat(${kolumner},16px)`}>
     {cells.map((i) => (
-      <div
-        class={`rutnat__cell${i === markerad ? ' rutnat__cell--markerad' : ''}`}
-        style={`animation-delay:${i * 28}ms`}
-        aria-hidden="true"
-      >
-        {i === markerad && <span class="rutnat__etikett">{etikett}</span>}
-      </div>
+      <span class:list={['cell', { on: i === markerad }]} style={`--d:${i * 14}ms`} aria-hidden="true"></span>
     ))}
   </div>
-  {figurtext && (
-    <p class="rutnat__figurtext">{figurtext}</p>
-  )}
-</div>
-
-<style is:global>
-  /* ── Rutnat keyframes ─────────────────────────────────────────────────── */
-  @keyframes rutnat-pop {
-    from {
-      opacity: 0;
-      transform: scale(0.6);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-</style>
-
+  <div class="etikett">{etikett}</div>
+  {figurtext && <figcaption class="figtext">{figurtext}</figcaption>}
+</figure>
 <style>
-  .rutnat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    padding: var(--space-5) 0;
-  }
-
-  .rutnat__grid {
-    display: grid;
-    grid-template-columns: repeat(var(--kolumner), 36px);
-    gap: 11px;
-    justify-content: center;
-  }
-
-  .rutnat__cell {
-    width: 36px;
-    height: 36px;
-    border-radius: 9px;
-    background: var(--surface-2);
-    border: 1px solid var(--border-2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Default: not animated until step is active */
-    opacity: 0;
-    transform: scale(0.6);
-  }
-
-  /* Cells animate in when the parent step gains .is-active */
-  :global(.step.is-active) .rutnat__cell {
-    animation: rutnat-pop 0.32s cubic-bezier(0.21, 0.7, 0.18, 1) both;
-  }
-
-  .rutnat__cell--markerad {
-    background: var(--mint);
-    border-color: var(--mint);
-    box-shadow: var(--glow-mint);
-  }
-
-  .rutnat__etikett {
-    font-family: var(--sans);
-    font-weight: 700;
-    font-size: 11px;
-    color: var(--on-mint);
-    letter-spacing: 0.04em;
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .rutnat__figurtext {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-    text-align: center;
-    max-width: 46ch;
-    margin: 0;
-  }
-
-  /* Reduced motion: skip animation, show cells immediately */
+  .rutnat { margin: 0; }
+  .rutnat .cell { opacity: 0; transform: scale(.5); }
+  :global(.step.is-active) .rutnat .cell { animation: cell-pop .3s cubic-bezier(.2,.7,.18,1) var(--d) both; }
+  @keyframes cell-pop { to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) {
-    .rutnat__cell {
-      opacity: 1;
-      transform: scale(1);
-      animation: none !important;
-    }
+    .rutnat .cell { opacity: 1; transform: none; }
+    :global(.step.is-active) .rutnat .cell { animation: none; }
   }
 </style>

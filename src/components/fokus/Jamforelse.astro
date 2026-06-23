@@ -1,102 +1,22 @@
 ---
-// Jamforelse — side-by-side comparison cards visual.
-// Props: visual object matching the "jamforelse" contract.
-
-interface JamforelseElement {
-  rubrik: string;
-  text: string;
-}
-
-interface JamforelseVisual {
-  typ: 'jamforelse';
-  element: JamforelseElement[];
-  figurtext: string;
-}
-
-interface Props {
-  visual: JamforelseVisual;
-}
-
+// Jamforelse, broadsheet comparison: hairline-ruled columns.
+interface JamforelseElement { rubrik: string; text: string }
+interface JamforelseVisual { typ: 'jamforelse'; element: JamforelseElement[]; figurtext: string }
+interface Props { visual: JamforelseVisual }
 const { visual } = Astro.props;
 const { element, figurtext } = visual;
-
-// Balanced column count: 2 -> 2, 3 -> 3, 4 -> 2x2, 5 -> 3+2, 6 -> 3x2.
-const n = element.length;
-const cols = n <= 3 ? n : Math.min(3, Math.ceil(n / 2));
-const maxw = cols >= 3 ? 720 : 560;
 ---
-
-<div class="jamforelse">
-  <div class="jamforelse__grid" style={`--cols:${cols}; max-width:${maxw}px;`}>
+<figure class="jmf-wrap">
+  <div class="jmf">
     {element.map((el) => (
-      <div class="jamforelse__card">
-        <div class="jamforelse__rubrik">{el.rubrik}</div>
-        <p class="jamforelse__text">{el.text}</p>
+      <div class="col">
+        <div class="r">{el.rubrik}</div>
+        <div class="x">{el.text}</div>
       </div>
     ))}
   </div>
-  {figurtext && (
-    <p class="jamforelse__figurtext">{figurtext}</p>
-  )}
-</div>
-
+  {figurtext && <figcaption class="figtext">{figurtext}</figcaption>}
+</figure>
 <style>
-  .jamforelse {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    padding: var(--space-4) 0;
-  }
-
-  .jamforelse__grid {
-    display: grid;
-    grid-template-columns: repeat(var(--cols, 2), 1fr);
-    gap: 14px;
-    width: 100%;
-  }
-
-  @media (max-width: 640px) {
-    .jamforelse__grid {
-      grid-template-columns: 1fr !important;
-      max-width: 420px !important;
-    }
-  }
-
-  .jamforelse__card {
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-    border-radius: 14px;
-    padding: 20px;
-    text-align: left;
-  }
-
-  .jamforelse__rubrik {
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--mint);
-    margin-bottom: 10px;
-    letter-spacing: 0.02em;
-  }
-
-  .jamforelse__text {
-    font-family: var(--serif);
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--prose);
-    margin: 0;
-  }
-
-  .jamforelse__figurtext {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-    text-align: center;
-    max-width: 46ch;
-    margin: 0;
-  }
+  .jmf-wrap { margin: 0; }
 </style>
