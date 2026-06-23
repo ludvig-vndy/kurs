@@ -1,0 +1,165 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import Broadsheet from '../layouts/Broadsheet.astro';
+
+// ── Glossary terms ───────────────────────────────────────────────────────
+const ordlista = JSON.parse(
+  fs.readFileSync(path.resolve('src/data/ordlista.json'), 'utf8')
+) as Record<string, string>;
+const terms = Object.entries(ordlista)
+  .map(([term, forklaring]) => ({ term, forklaring }))
+  .sort((a, b) => a.term.localeCompare(b.term, 'sv'));
+
+// ── Lessons (for "look it up" search across the course) ──────────────────
+interface CourseLektion { lektion: string; titel: string; niva: string; status: string }
+interface CourseKapitel { nummer: number; titel: string; lektioner: CourseLektion[] }
+interface CourseJson { kapitel: CourseKapitel[] }
+const course: CourseJson = JSON.parse(
+  fs.readFileSync(path.resolve('content/fundamental-aktieanalys/course.json'), 'utf8')
+);
+const lessons = course.kapitel.flatMap((k) =>
+  k.lektioner.map((l) => ({
+    lektion: l.lektion,
+    titel: l.titel,
+    kapitel: k.nummer,
+    kapitelTitel: k.titel,
+    status: l.status,
+  }))
+);
+---
+
+<Broadsheet title="Ordlista och sök" active="ordlista" nav="app">
+  <main class="wrap" style="flex:1; padding-top:8px">
+    <div class="crumb">
+      <a href="/hem">Hem</a><span class="sep">›</span>
+      <span class="here">Ordlista</span>
+    </div>
+
+    <h1 class="h-title" style="max-width:16ch">Ordlista och sök</h1>
+    <p class="standfirst">Slå upp ett begrepp eller hitta lektionen där det förklaras. Skriv för att filtrera.</p>
+
+    <div class="searchbar">
+      <svg class="searchbar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input
+        id="q"
+        class="searchbar__input"
+        type="search"
+        placeholder="Sök begrepp eller lektion, t.ex. EV/EBITDA, moat, kassaflöde"
+        autocomplete="off"
+        aria-label="Sök i ordlista och lektioner"
+      />
+    </div>
+
+    <!-- Begrepp -->
+    <section data-section="begrepp">
+      <div class="part"><span class="n">Begrepp</span><span class="line"></span><span class="sub" data-count-terms>{terms.length} ord</span></div>
+      <dl class="terms">
+        {terms.map((t) => (
+          <div class="term" data-term={t.term.toLowerCase()} data-def={t.forklaring.toLowerCase()}>
+            <dt class="term__name">{t.term}</dt>
+            <dd class="term__def">{t.forklaring}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <!-- Lektioner -->
+    <section data-section="lektioner">
+      <div class="part"><span class="n">Lektioner</span><span class="line"></span><span class="sub" data-count-lessons>{lessons.length} lektioner</span></div>
+      <div class="leks">
+        {lessons.map((l) => (
+          <a class="lek" href={`/fokus/${l.lektion}`} data-title={`${l.titel} ${l.kapitelTitel}`.toLowerCase()}>
+            <span class="lek__num">{l.lektion}</span>
+            <span class="lek__title">{l.titel}</span>
+            <span class="lek__chap">Kapitel {l.kapitel} · {l.kapitelTitel}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <p class="noresult" data-noresult hidden>Inget träffar <b data-noresult-q></b>. Pröva ett annat ord.</p>
+  </main>
+</Broadsheet>
+
+<style>
+  .searchbar { position: relative; display: flex; align-items: center; margin: 22px 0 8px; border-bottom: 2px solid var(--ink); }
+  .searchbar__icon { width: 20px; height: 20px; color: var(--oxblood); flex-shrink: 0; }
+  .searchbar__input { flex: 1; border: none; background: none; font-family: var(--display); font-weight: 300; font-size: clamp(20px, 2.6vw, 28px); color: var(--ink); padding: 10px 8px 12px; }
+  .searchbar__input::placeholder { color: var(--muted); font-style: italic; }
+  .searchbar__input:focus { outline: none; }
+  .searchbar:focus-within { border-bottom-color: var(--oxblood); }
+
+  .part { margin-top: 38px; }
+  .part .sub { font-variant-numeric: tabular-nums; }
+
+  /* Begrepp */
+  .terms { margin: 8px 0 0; }
+  .term { display: grid; grid-template-columns: minmax(120px, 220px) 1fr; gap: 8px 28px; padding: 16px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .term__name { font-family: var(--display); font-weight: 500; font-size: 18px; letter-spacing: -.01em; color: var(--ink); margin: 0; }
+  .term__def { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: var(--ink-soft); margin: 0; max-width: 62ch; }
+  mark.hl { background: rgba(154,110,28,.22); color: inherit; padding: 0 1px; border-radius: 2px; }
+
+  /* Lektioner */
+  .leks { margin-top: 8px; }
+  .lek { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: baseline; padding: 13px 6px; border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; transition: background .15s; }
+  .lek:hover { background: var(--card); }
+  .lek__num { font-family: var(--mono); font-size: 12px; color: var(--oxblood); font-variant-numeric: tabular-nums; }
+  .lek__title { font-family: var(--display); font-weight: 500; font-size: 17px; letter-spacing: -.005em; }
+  .lek:hover .lek__title { color: var(--oxblood); }
+  .lek__chap { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); text-align: right; }
+
+  .noresult { margin: 30px 0 60px; font-family: var(--serif); font-style: italic; color: var(--ink-soft); }
+  [data-section][hidden], .term[hidden], .lek[hidden], .noresult[hidden] { display: none; }
+
+  @media (max-width: 620px) {
+    .term { grid-template-columns: 1fr; gap: 4px; }
+    .lek { grid-template-columns: 32px 1fr; }
+    .lek__chap { display: none; }
+  }
+</style>
+
+<script>
+  function setupOrdlista() {
+    const input = document.getElementById('q') as HTMLInputElement | null;
+    if (!input || input.dataset.wired) return;
+    input.dataset.wired = '1';
+
+    const termEls = Array.from(document.querySelectorAll<HTMLElement>('.term'));
+    const lekEls = Array.from(document.querySelectorAll<HTMLElement>('.lek'));
+    const begreppSec = document.querySelector<HTMLElement>('[data-section="begrepp"]');
+    const lektionerSec = document.querySelector<HTMLElement>('[data-section="lektioner"]');
+    const countTerms = document.querySelector<HTMLElement>('[data-count-terms]');
+    const countLessons = document.querySelector<HTMLElement>('[data-count-lessons]');
+    const noResult = document.querySelector<HTMLElement>('[data-noresult]');
+    const noResultQ = document.querySelector<HTMLElement>('[data-noresult-q]');
+
+    function apply() {
+      const q = input!.value.trim().toLowerCase();
+
+      let tShown = 0;
+      termEls.forEach((el) => {
+        const hit = !q || (el.dataset.term || '').includes(q) || (el.dataset.def || '').includes(q);
+        el.hidden = !hit;
+        if (hit) tShown++;
+      });
+      let lShown = 0;
+      lekEls.forEach((el) => {
+        const hit = !q || (el.dataset.title || '').includes(q);
+        el.hidden = !hit;
+        if (hit) lShown++;
+      });
+
+      if (countTerms) countTerms.textContent = q ? `${tShown} träffar` : `${termEls.length} ord`;
+      if (countLessons) countLessons.textContent = q ? `${lShown} träffar` : `${lekEls.length} lektioner`;
+      if (begreppSec) begreppSec.hidden = tShown === 0;
+      if (lektionerSec) lektionerSec.hidden = lShown === 0;
+      if (noResult) noResult.hidden = !(tShown === 0 && lShown === 0);
+      if (noResultQ) noResultQ.textContent = input!.value.trim();
+    }
+
+    input.addEventListener('input', apply);
+    apply();
+  }
+  document.addEventListener('astro:page-load', setupOrdlista);
+</script>

@@ -5,7 +5,7 @@ import '../styles/broadsheet.css';
 interface Props {
   title: string;
   description?: string;
-  active?: 'hem' | 'kurs' | 'verktyg';
+  active?: 'hem' | 'kurs' | 'verktyg' | 'ordlista';
   /** masthead nav variant: app rail, landing marketing, or none */
   nav?: 'app' | 'landing' | 'none';
   /** page chrome: standard masthead, or none (lesson player brings its own) */
@@ -62,6 +62,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
               <a href="/hem" class:list={[{ here: active === 'hem' }]} aria-current={active === 'hem' ? 'page' : undefined}>Hem</a>
               <a href="/fokus" class:list={[{ here: active === 'kurs' }]} aria-current={active === 'kurs' ? 'page' : undefined}>Kursöversikt</a>
               <a href="/verktyg" class:list={[{ here: active === 'verktyg' }]} aria-current={active === 'verktyg' ? 'page' : undefined}>Analysverktyg</a>
+              <a href="/ordlista" class:list={[{ here: active === 'ordlista' }]} aria-current={active === 'ordlista' ? 'page' : undefined}>Ordlista</a>
             </nav>
           )}
           {nav === 'landing' && (
@@ -88,6 +89,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
               <a href="/hem">Hem</a>
               <a href="/fokus">Kursöversikt</a>
               <a href="/verktyg">Analysverktyg</a>
+              <a href="/ordlista">Ordlista</a>
             </nav>
           </div>
           <p class="site-foot__fine">Marginalen, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
