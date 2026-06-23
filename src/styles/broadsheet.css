@@ -48,7 +48,9 @@ a{color:inherit}
 /* ── type ───────────────────────────────────────────────────────────── */
 .kicker{font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--oxblood); margin-bottom:16px}
 .h-title{font-family:var(--display); font-weight:300; font-size:clamp(34px,5vw,58px); line-height:1.03; letter-spacing:-.02em}
-.h-title em{font-style:italic; color:var(--oxblood)}
+/* No single brown italic accent word in headlines (reads as AI); the sentence
+   carries its own emphasis. */
+.h-title em{font-style:normal; color:inherit}
 .standfirst{font-family:var(--serif); font-style:italic; font-size:clamp(17px,1.8vw,20px); line-height:1.55; color:var(--ink-soft); max-width:54ch; margin-top:16px}
 .lead{font-family:var(--display); font-weight:300; font-size:clamp(22px,2.6vw,28px); line-height:1.35; letter-spacing:-.01em; color:var(--ink)}
 .lead mark{background:none; color:var(--oxblood); font-style:italic}
@@ -126,7 +128,7 @@ a{color:inherit}
 /* ── dashboard: hero / stats / figure ───────────────────────────────── */
 .hero{display:grid; grid-template-columns:1.25fr .85fr; gap:46px; align-items:center; padding:40px 0 30px; border-bottom:1px solid var(--rule)}
 .greeting{font-family:var(--display); font-weight:300; font-size:clamp(40px,6vw,72px); line-height:1.0; letter-spacing:-.018em}
-.greeting em{font-style:italic; color:var(--oxblood)}
+.greeting em{font-style:normal; color:inherit}
 .lede{margin-top:18px; font-size:18px; color:var(--ink-soft); max-width:44ch; font-style:italic}
 .stats{display:flex; gap:34px; margin-top:26px; flex-wrap:wrap}
 /* Solid fallback by default; the gradient-clip only applies where supported, and
