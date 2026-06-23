@@ -75,6 +75,14 @@ function initFokus(host: HTMLElement) {
 
   let index = 0;
 
+  // Resume position: persist the current step per lesson so reloading or leaving
+  // mid-lesson returns you where you were. Cleared on completion so a revisit of
+  // a finished lesson starts fresh.
+  const posKey = lessonId ? `kurs:fokus:pos:${lessonId}` : '';
+  function savePos(i: number) { if (!posKey) return; try { localStorage.setItem(posKey, String(i)); } catch {} }
+  function clearPos() { if (!posKey) return; try { localStorage.removeItem(posKey); } catch {} }
+  function readPos(): number { if (!posKey) return 0; try { const v = Number(localStorage.getItem(posKey)); return Number.isFinite(v) ? v : 0; } catch { return 0; } }
+
   function scrollTop() {
     // Calm pass: jump to top instantly on step change instead of smooth-scrolling
     // the whole viewport, which read as the floor moving for motion-sensitive users.
@@ -83,6 +91,7 @@ function initFokus(host: HTMLElement) {
 
   function show(i: number) {
     index = Math.max(0, Math.min(last, i));
+    savePos(index);
     steps.forEach((s, k) => {
       const active = k === index;
       s.classList.toggle('is-active', active);
@@ -100,6 +109,7 @@ function initFokus(host: HTMLElement) {
 
   function finish() {
     if (lessonId) markFokusDone(lessonId);
+    clearPos();
     if (!player) {
       // No completion panel, fall back to next lesson or overview.
       window.location.href = meta?.nextHref || '/fokus';
@@ -134,7 +144,7 @@ function initFokus(host: HTMLElement) {
 
   activeGo = go;
   bindKeysOnce();
-  show(0);
+  show(Math.max(0, Math.min(last, readPos())));
 }
 
 export function setupFokus() {
