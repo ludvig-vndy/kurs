@@ -64,8 +64,8 @@ Hela omskrivningsplanen (`docs/superpowers/plans/2026-06-18-kurs-bplus-till-aplu
 - **115 lektioner, 22 moduler.** Flaggskeppscase: `src/content/kurs/20-fallstudie-lifco/` (källa: `docs/case-sources/fall-lifco-2025.md`).
 - Kanoniska formler: `src/content/kurs/00-referens/formelbilaga.md` (format: referens).
 
-### Redesign (live)
-Ny visuell riktning, deployad: tokens med Newsreader/Schibsted/Plex + mint/petrol, AppShell, `/hem` (dashboard), animerad landningssida, `/verktyg` (Ägarboken analysverktyg). Lämna detta ifred om inte ombedd.
+### Design (live): "Marginalen" broadsheet
+Sajten heter **Marginalen** och kör en broadsheet-look (Fraunces/Spectral/IBM Plex Mono, papper + oxblod/guld), som ersatte den tidigare mint/petrol-redesignen. Ytor: `/` (startsida), `/hem` (dashboard), `/fokus` + `/fokus/kapitel/[nr]` + `/fokus/[lektion]` (Fokus-spelaren), `/verktyg` (Marginalen analysverktyg). Delat stilark `src/styles/broadsheet.css` + layout `src/layouts/Broadsheet.astro` (masthead) och den ljusa enda temat. Textkursen (`/oversikt`, `/kurs/*`) ligger kvar på `tokens.css`/AppShell (mint, mörkt/ljust-toggle). Tidigare namn: Ägarboken.
 
 ### Fokus-spelaren / JSON-stegformat (innehåll klart — 51 lektioner, hela kursen)
 Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-fokus-full-course.md`. Mål: transformera verifierade lektioner till ett stegbaserat JSON-format för en "Fokus"-lektionsspelare (steg: intro, reading, concept, dataviz, quiz; inline-datadriven grafik).
