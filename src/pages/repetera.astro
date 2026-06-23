@@ -1,0 +1,237 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import Broadsheet from '../layouts/Broadsheet.astro';
+
+// ── Build a manifest of every quiz question across the course ─────────────
+// qid must match FokusQuiz: `${lektion}.s${stegIndex}#${fragaIndex}`.
+interface Fraga { typ: 'single' | 'multi'; fraga: string; underrubrik?: string; alternativ: string[]; ratt: number[]; forklaring: string }
+interface Steg { typ: string; fragor?: Fraga[] }
+interface LessonJson { kapitel: number; lektion: string; titel: string; steg: Steg[] }
+interface CourseLektion { lektion: string; fil: string }
+interface CourseKapitel { nummer: number; titel: string; lektioner: CourseLektion[] }
+interface CourseJson { kapitel: CourseKapitel[] }
+
+const contentDir = path.resolve('content/fundamental-aktieanalys');
+const course: CourseJson = JSON.parse(fs.readFileSync(path.join(contentDir, 'course.json'), 'utf8'));
+
+interface QItem {
+  qid: string; fraga: string; underrubrik?: string; alternativ: string[];
+  ratt: number[]; typ: 'single' | 'multi'; forklaring: string;
+  lektion: string; titel: string; kapitel: number;
+}
+const manifest: QItem[] = [];
+for (const kap of course.kapitel) {
+  for (const l of kap.lektioner) {
+    if (!l.fil) continue;
+    const filPath = path.join(contentDir, l.fil);
+    if (!fs.existsSync(filPath)) continue;
+    const lesson: LessonJson = JSON.parse(fs.readFileSync(filPath, 'utf8'));
+    lesson.steg.forEach((s, i) => {
+      if (s.typ !== 'quiz' || !s.fragor) return;
+      s.fragor.forEach((f, qi) => {
+        manifest.push({
+          qid: `${lesson.lektion}.s${i}#${qi}`,
+          fraga: f.fraga, underrubrik: f.underrubrik, alternativ: f.alternativ,
+          ratt: f.ratt, typ: f.typ, forklaring: f.forklaring,
+          lektion: lesson.lektion, titel: lesson.titel, kapitel: lesson.kapitel,
+        });
+      });
+    });
+  }
+}
+---
+
+<Broadsheet title="Repetera" active="kurs" nav="app">
+  <main class="wrap" style="flex:1; padding-top:8px">
+    <script type="application/json" data-rep-manifest set:html={JSON.stringify(manifest)} />
+
+    <div class="crumb">
+      <a href="/hem">Hem</a><span class="sep">›</span>
+      <span class="here">Repetera</span>
+    </div>
+
+    <h1 class="h-title" style="max-width:16ch">Repetera</h1>
+    <p class="standfirst" data-rep-lede>Frågorna du svarat fel på samlas här tills du har dem.</p>
+
+    <!-- Empty state -->
+    <div class="rep-empty" data-rep-empty hidden>
+      <div class="rep-empty__seal" aria-hidden="true"></div>
+      <p class="rep-empty__h">Inget att repetera just nu.</p>
+      <p class="rep-empty__sub">När du svarar fel på en quizfråga hamnar den här. Bra jobbat.</p>
+      <a class="btn-ink" href="/fokus">Till kursöversikten →</a>
+    </div>
+
+    <!-- Session -->
+    <div data-rep-session hidden>
+      <ol class="rep-list" data-rep-list></ol>
+      <div class="rep-actions">
+        <button type="button" class="btn-ink" data-rep-check disabled>Rätta alla</button>
+        <span class="rep-hint" data-rep-hint></span>
+      </div>
+      <div class="rep-result" data-rep-result hidden role="status" aria-live="polite"></div>
+    </div>
+  </main>
+</Broadsheet>
+
+<style>
+  .rep-list { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-direction: column; gap: 30px; }
+  .rq { border-top: 1px solid var(--rule); padding-top: 22px; }
+  .rq__src { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .rq__q { font-family: var(--display); font-weight: 400; font-size: 21px; line-height: 1.32; color: var(--ink); margin-bottom: 4px; }
+  .rq__sub { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+  .rq__opts { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .rq-opt { display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 13px; padding: 13px 16px; border: 1px solid var(--rule); background: var(--card); cursor: pointer; transition: border-color .18s, background .18s; }
+  .rq-opt:hover { border-color: var(--rule-strong); }
+  .rq-opt__input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+  .rq-opt__mark { width: 20px; height: 20px; flex-shrink: 0; border: 1.4px solid var(--faint); border-radius: 50%; }
+  [data-multi='true'] .rq-opt__mark { border-radius: 4px; }
+  .rq-opt:has(.rq-opt__input:checked) { border-color: var(--oxblood); background: #F0E4DE; }
+  .rq-opt:has(.rq-opt__input:checked) .rq-opt__mark { border-color: var(--oxblood); box-shadow: inset 0 0 0 5px var(--oxblood); }
+  .rq-opt:has(.rq-opt__input:focus-visible) { outline: 2px solid var(--oxblood); outline-offset: 2px; }
+  .rq-opt__txt { font-family: var(--serif); font-size: 16px; line-height: 1.4; color: var(--ink); }
+
+  .is-graded .rq-opt { cursor: default; pointer-events: none; }
+  .rq-opt.is-correct { border-color: var(--good); background: var(--good-soft); }
+  .rq-opt.is-wrong { border-color: var(--oxblood); background: var(--bad-soft); }
+
+  .rq__fb { margin-top: 12px; padding: 4px 0 4px 16px; border-left: 2px solid var(--oxblood); font-size: 15px; line-height: 1.5; }
+  .rq__verdict { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; display: block; margin-bottom: 4px; }
+  .rq__verdict[data-ok='true'] { color: var(--good); }
+  .rq__verdict[data-ok='false'] { color: var(--oxblood); }
+  .rq__why { color: var(--ink-soft); font-family: var(--serif); }
+
+  .rep-actions { display: flex; align-items: center; gap: 16px; margin-top: 30px; flex-wrap: wrap; }
+  .rep-hint { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); }
+  .rep-result { margin-top: 24px; border: 1px solid var(--rule-strong); background: var(--card); padding: 20px 22px; font-family: var(--display); font-size: 20px; }
+  .rep-result span { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+  .rep-empty { text-align: center; max-width: 460px; margin: 60px auto; }
+  .rep-empty__seal { width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid var(--good); margin: 0 auto 22px; position: relative; }
+  .rep-empty__seal::before { content: ""; position: absolute; inset: 0; background: var(--good); -webkit-mask: no-repeat center/24px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); mask: no-repeat center/24px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); }
+  .rep-empty__h { font-family: var(--display); font-size: 24px; margin: 0 0 8px; }
+  .rep-empty__sub { color: var(--ink-soft); margin: 0 0 24px; }
+  [hidden] { display: none !important; }
+</style>
+
+<script>
+  import { getMissed, recordResult } from '../scripts/srs';
+
+  interface QItem {
+    qid: string; fraga: string; underrubrik?: string; alternativ: string[];
+    ratt: number[]; typ: 'single' | 'multi'; forklaring: string;
+    lektion: string; titel: string; kapitel: number;
+  }
+
+  function esc(s: string): string {
+    const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+  }
+  function allAnswered(list: HTMLElement): boolean {
+    return Array.from(list.querySelectorAll<HTMLElement>('[data-rq]')).every((q) =>
+      Array.from(q.querySelectorAll<HTMLInputElement>('.rq-opt__input')).some((i) => i.checked));
+  }
+
+  // Render (or re-render) the queue from current SRS state. Idempotent: only
+  // touches DOM content/state, never attaches listeners (those are wired once).
+  function render() {
+    const manEl = document.querySelector('[data-rep-manifest]');
+    const list = document.querySelector<HTMLElement>('[data-rep-list]');
+    const empty = document.querySelector<HTMLElement>('[data-rep-empty]');
+    const session = document.querySelector<HTMLElement>('[data-rep-session]');
+    const lede = document.querySelector<HTMLElement>('[data-rep-lede]');
+    const checkBtn = document.querySelector<HTMLButtonElement>('[data-rep-check]');
+    const resultEl = document.querySelector<HTMLElement>('[data-rep-result]');
+    if (!manEl || !list || !empty || !session) return;
+
+    const manifest = JSON.parse(manEl.textContent || '[]') as QItem[];
+    const missed = new Set(getMissed());
+    const items = manifest.filter((q) => missed.has(q.qid));
+
+    if (resultEl) { resultEl.hidden = true; resultEl.textContent = ''; }
+
+    if (items.length === 0) {
+      empty.hidden = false; session.hidden = true;
+      if (lede) lede.hidden = true;
+      return;
+    }
+    empty.hidden = true; session.hidden = false;
+    if (lede) { lede.hidden = false; lede.textContent = `${items.length} ${items.length === 1 ? 'fråga' : 'frågor'} att repetera, från lektioner du svarat fel på.`; }
+
+    list.classList.remove('is-graded');
+    list.innerHTML = items.map((q, n) => {
+      const type = q.typ === 'multi' ? 'checkbox' : 'radio';
+      const opts = q.alternativ.map((alt, oi) => `
+        <label class="rq-opt" data-i="${oi}">
+          <input class="rq-opt__input" type="${type}" name="rq-${n}" value="${oi}">
+          <span class="rq-opt__mark" aria-hidden="true"></span>
+          <span class="rq-opt__txt">${esc(alt)}</span>
+        </label>`).join('');
+      return `<li class="rq" data-rq data-qid="${q.qid}" data-ratt="${esc(JSON.stringify(q.ratt))}" data-multi="${q.typ === 'multi'}">
+        <div class="rq__src">Lektion ${esc(q.lektion)} · ${esc(q.titel)}</div>
+        <div class="rq__q">${esc(q.fraga)}</div>
+        ${q.underrubrik ? `<div class="rq__sub">${esc(q.underrubrik)}</div>` : ''}
+        <div class="rq__opts" role="${q.typ === 'multi' ? 'group' : 'radiogroup'}">${opts}</div>
+        <div class="rq__fb" data-fb hidden><span class="rq__verdict" data-verdict></span><span class="rq__why">${esc(q.forklaring)}</span></div>
+      </li>`;
+    }).join('');
+
+    if (checkBtn) { checkBtn.disabled = true; checkBtn.hidden = false; checkBtn.textContent = 'Rätta alla'; checkBtn.dataset.mode = 'grade'; }
+  }
+
+  function grade() {
+    const list = document.querySelector<HTMLElement>('[data-rep-list]');
+    const checkBtn = document.querySelector<HTMLButtonElement>('[data-rep-check]');
+    const resultEl = document.querySelector<HTMLElement>('[data-rep-result]');
+    if (!list) return;
+    const qs = Array.from(list.querySelectorAll<HTMLElement>('[data-rq]'));
+    let right = 0;
+    qs.forEach((q) => {
+      const ratt: number[] = JSON.parse(q.dataset.ratt || '[]');
+      const inputs = Array.from(q.querySelectorAll<HTMLInputElement>('.rq-opt__input'));
+      const picked = inputs.filter((i) => i.checked).map((i) => Number(i.value));
+      const rattSet = new Set(ratt);
+      const isRight = picked.length === ratt.length && ratt.every((r) => picked.includes(r));
+      if (isRight) right++;
+      recordResult(q.dataset.qid || '', isRight);
+      inputs.forEach((input) => {
+        const opt = input.closest<HTMLElement>('.rq-opt'); if (!opt) return;
+        const idx = Number(input.value);
+        if (rattSet.has(idx)) opt.classList.add('is-correct');
+        if (picked.includes(idx) && !rattSet.has(idx)) opt.classList.add('is-wrong');
+      });
+      const fb = q.querySelector<HTMLElement>('[data-fb]');
+      const verdict = q.querySelector<HTMLElement>('[data-verdict]');
+      if (fb && verdict) { verdict.textContent = isRight ? 'Rätt' : 'Inte riktigt'; verdict.dataset.ok = String(isRight); fb.hidden = false; }
+    });
+    list.classList.add('is-graded');
+    const stillMissed = qs.length - right;
+    if (resultEl) {
+      resultEl.hidden = false;
+      resultEl.innerHTML = `${right} av ${qs.length} rätt den här gången.<span>${stillMissed > 0 ? stillMissed + ' kvar i repetitionskön' : 'Kön är tom, fint jobbat'}</span>`;
+    }
+    if (checkBtn) { checkBtn.disabled = false; checkBtn.textContent = stillMissed > 0 ? 'Öva vidare' : 'Klar'; checkBtn.dataset.mode = stillMissed > 0 ? 'again' : 'done'; }
+  }
+
+  function setup() {
+    const list = document.querySelector<HTMLElement>('[data-rep-list]');
+    const checkBtn = document.querySelector<HTMLButtonElement>('[data-rep-check]');
+    if (!list || !checkBtn) return;
+
+    if (!list.dataset.wired) {
+      list.dataset.wired = '1';
+      list.addEventListener('change', () => {
+        if (checkBtn.dataset.mode === 'grade') checkBtn.disabled = !allAnswered(list);
+      });
+    }
+    if (!checkBtn.dataset.wired) {
+      checkBtn.dataset.wired = '1';
+      checkBtn.addEventListener('click', () => {
+        if (checkBtn.dataset.mode === 'grade') grade();
+        else render(); // rebuild from the now-updated queue (or show empty state)
+      });
+    }
+    render();
+  }
+
+  document.addEventListener('astro:page-load', setup);
+</script>
