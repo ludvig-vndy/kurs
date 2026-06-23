@@ -39,8 +39,6 @@
   .mark span{color:var(--brass)}
   .sub{margin:10px 0 0;color:var(--ink-soft);max-width:62ch}
   .disclaim{margin:14px 0 0;font-size:12.5px;color:var(--ink-faint);font-style:italic}
-  .themetoggle{position:absolute;top:28px;right:0;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);font-family:var(--sans);font-size:12.5px;font-weight:500;padding:8px 14px;border-radius:99px;cursor:pointer}
-  .themetoggle:hover{border-color:var(--brass);color:var(--ink)}
 
   /* Company context */
   .context{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin:20px 0 6px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
@@ -77,7 +75,6 @@
   .assessed{font-size:12px;color:var(--ink-faint)}
   .gauge{position:relative;height:4px;background:var(--panel-2);overflow:hidden;margin-top:4px}
   .gauge .fill{position:absolute;left:0;top:0;bottom:0;transition:width .45s cubic-bezier(.4,0,.2,1),background .3s}
-  .ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin:5px 1px 0}
 
   /* Criterion rows */
   .legend{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin:0 0 14px;display:flex;flex-wrap:wrap;gap:5px 16px}
@@ -180,28 +177,11 @@
     .crit{grid-template-columns:1fr}
     .phead h2{font-size:23px}
   }
-  /* ===== Vänster-rail (matchar plattformens sidomeny) ===== */
-  .railnav{position:fixed;inset:0 auto 0 0;width:248px;z-index:20;display:flex;flex-direction:column;justify-content:space-between;padding:26px 18px;border-right:1px solid var(--line);background:var(--page)}
-  .rn-brand{display:flex;align-items:center;gap:11px;padding:0 8px;margin-bottom:34px;color:var(--ink);text-decoration:none}
-  .rn-mark{width:26px;height:26px;border-radius:7px;background:var(--petrol);flex:none}
-  .rn-brandtext{font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:-.01em}
-  .rn-label{font-family:var(--sans);font-weight:600;font-size:10px;letter-spacing:.16em;color:var(--ink-faint);padding:0 10px;margin:0 0 10px}
-  .rn-group{display:flex;flex-direction:column;gap:3px;margin-bottom:26px}
-  .rn-item{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:11px;border:1px solid transparent;background:transparent;font-family:var(--sans);font-weight:500;font-size:14px;color:var(--ink-faint);text-decoration:none;text-align:left;cursor:pointer;transition:color .15s,background .15s}
-  .rn-item:hover{color:var(--ink);background:var(--panel)}
-  .rn-item.on{color:var(--ink);background:var(--panel-2);border-color:var(--line)}
-  .rn-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.55;flex:none}
-  .rn-item.on .rn-dot{background:var(--petrol);opacity:1}
-  .rn-theme{color:var(--ink-faint)}
-  .rn-bottom{display:flex;flex-direction:column;gap:6px}
-  .rn-profile{display:flex;align-items:center;gap:11px;padding:11px 8px 0;margin-top:4px;border-top:1px solid var(--line);font-family:var(--sans);font-size:13px;color:var(--ink-faint)}
   /* Rail removed in favour of the masthead, so no left offset. */
 
   /* Broadsheet-form: platta ytor (--r:0), pill-formade actions, fyrkantigt
      varumarke, ingen temavaxel (enbart ljust tema). */
   .btn, .tab { border-radius: 999px; }
-  .rn-mark, .rn-item { border-radius: 0; }
-  .themetoggle, .rn-theme, .tt-mobile { display: none !important; }
 
   /* Masthead (ersatter vansterrailen, matchar resten av sajtens topp-nav).
      .masthead ar ett <header>, sa override:a den globala header{}-regeln. */
@@ -224,7 +204,7 @@
       --line:#D6D8CD;--line-soft:#E4E6DC;
       --petrol:#1C4B47;--petrol-deep:#123834;--brass:#A8791F;--on-ink:#F3F2EA;
     }
-    nav,.toolbar,.legend,.railnav,.backlink{display:none!important}
+    nav,.toolbar,.legend{display:none!important}
     body{padding-left:0!important}
     .panel{display:block!important;break-inside:avoid;border-top:1px solid var(--line);margin-top:18px}
     body{background:#fff;color:var(--ink)}
@@ -252,7 +232,6 @@
 </header>
 <div class="wrap">
   <header>
-    <button id="themeBtn" class="themetoggle tt-mobile" type="button" data-theme-btn onclick="toggleTheme()">☀ Ljust läge</button>
     <p class="eyebrow">Verktygslåda för fundamental analys</p>
     <h1 class="mark">Analysverktyg</h1>
     <p class="sub">Sju verktyg att gå igenom innan du köper en aktie. Du fyller i, poängen räknas ut medan du arbetar, och sammanställningen väger ihop allt till en hållning. Tänk som en ägare, inte en aktiehandlare.</p>
@@ -776,20 +755,6 @@ function resetAll(){
 /* ---------- Init ---------- */
 buildNav(); bindContext(); activate("checklista");
 
-/* ---------- Tema ---------- */
-function applyTheme(t){
-  if(t==="light") document.documentElement.setAttribute("data-theme","light");
-  else document.documentElement.removeAttribute("data-theme");
-  const label = t==="light" ? "\u263E M\u00f6rkt l\u00e4ge" : "\u2600 Ljust l\u00e4ge";
-  document.querySelectorAll("[data-theme-btn]").forEach(b=>{ b.textContent = label; });
-}
-function toggleTheme(){
-  const cur = document.documentElement.getAttribute("data-theme")==="light" ? "light" : "dark";
-  const n = cur==="light" ? "dark" : "light";
-  try{ localStorage.setItem("agarboken-theme", n); }catch(e){}
-  applyTheme(n);
-}
-(function(){ let t="light"; try{ t=localStorage.getItem("agarboken-theme")||"light"; }catch(e){} applyTheme(t); })();
 </script>
 </body>
 </html>
