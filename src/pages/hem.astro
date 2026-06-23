@@ -77,6 +77,18 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
       </figure>
     </section>
 
+    <!-- ===== Onboarding (first visit only) ===== -->
+    <section class="onboard" data-onboard hidden>
+      <button class="onboard__x" type="button" data-onboard-dismiss aria-label="Stäng introduktionen">✕</button>
+      <div class="onboard__kick">Välkommen</div>
+      <h2 class="onboard__h">Så funkar kursen</h2>
+      <div class="onboard__steps">
+        <div class="ob"><span class="ob__n">1</span><div><b>Lär steg för steg</b><p>Korta steg per lektion: du läser och ser det viktiga visualiserat.</p></div></div>
+        <div class="ob"><span class="ob__n">2</span><div><b>Testa dig själv</b><p>Ett kort quiz på slutet. Sikta på minst 80 procent rätt.</p></div></div>
+        <div class="ob"><span class="ob__n">3</span><div><b>Följ din väg</b><p>Svit och framsteg sparas automatiskt i den här webbläsaren.</p></div></div>
+      </div>
+    </section>
+
     <!-- ===== Continue ===== -->
     <a class="feature" data-continue-card href={firstHref}>
       <div class="row">
@@ -122,6 +134,24 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
 </Broadsheet>
 
 <style>
+  /* Onboarding strip: numbered "how it works", shown only on first visit. */
+  .onboard { position: relative; border: 1px solid var(--rule); background: var(--card); padding: 24px 28px; margin: 28px 0 0; }
+  .onboard[hidden] { display: none; }
+  .onboard__x { position: absolute; top: 10px; right: 12px; background: none; border: none; cursor: pointer; color: var(--muted); font-size: 14px; line-height: 1; padding: 8px; min-width: 36px; min-height: 36px; }
+  .onboard__x:hover { color: var(--oxblood); }
+  .onboard__kick { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); }
+  .onboard__h { font-family: var(--display); font-weight: 400; font-size: clamp(22px,2.6vw,28px); letter-spacing: -.01em; margin: 6px 0 18px; }
+  .onboard__steps { display: grid; grid-template-columns: repeat(3,1fr); }
+  .ob { display: flex; gap: 12px; padding: 2px 22px 2px 0; align-items: flex-start; }
+  .ob + .ob { border-left: 1px solid var(--rule); padding-left: 22px; }
+  .ob__n { font-family: var(--display); font-weight: 300; font-size: 26px; color: var(--oxblood); line-height: 1; flex: none; font-variant-numeric: lining-nums; }
+  .ob b { font-family: var(--display); font-weight: 500; font-size: 16px; display: block; margin-bottom: 3px; }
+  .ob p { font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); margin: 0; }
+  @media (max-width: 680px) {
+    .onboard__steps { grid-template-columns: 1fr; }
+    .ob + .ob { border-left: 0; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 14px; margin-top: 14px; }
+  }
+
   .feature { display: block; margin: 30px 0; padding: 30px 32px; background: var(--card); border: 1px solid var(--rule); position: relative; overflow: hidden; text-decoration: none; color: inherit; transition: transform .4s cubic-bezier(.2,.7,.2,1); }
   .feature::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--rule); pointer-events: none; }
   .feature:hover { transform: translateY(-3px); text-decoration: none; }
@@ -186,6 +216,14 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
     const sp = el('[data-stat-pct]'); if (sp) sp.textContent = pct + '%';
     const ss = el('[data-stat-streak]'); if (ss) ss.textContent = String(streak);
 
+    // First-visit onboarding strip: only when nothing is done and not dismissed.
+    const onboard = el('[data-onboard]');
+    if (onboard) {
+      let dismissed = false;
+      try { dismissed = localStorage.getItem('kurs:onboard:done') === '1'; } catch {}
+      onboard.hidden = !(doneCount === 0 && !dismissed);
+    }
+
     // Continue
     const incompleteId = firstIncomplete(fokusOrder);
     const targetId = incompleteId ?? fokusOrder[0] ?? null;
@@ -229,7 +267,18 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
     }
   }
 
-  document.addEventListener('astro:page-load', paint);
+  function wireOnboard() {
+    const btn = document.querySelector<HTMLButtonElement>('[data-onboard-dismiss]');
+    if (!btn || btn.dataset.wired) return;
+    btn.dataset.wired = '1';
+    btn.addEventListener('click', () => {
+      try { localStorage.setItem('kurs:onboard:done', '1'); } catch {}
+      const ob = document.querySelector<HTMLElement>('[data-onboard]');
+      if (ob) ob.hidden = true;
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => { paint(); wireOnboard(); });
   window.addEventListener(META_EVENT, paint);
   window.addEventListener(FOKUS_EVENT, paint);
 </script>
