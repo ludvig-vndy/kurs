@@ -69,15 +69,14 @@
 
   /* Score header (gauge) */
   .scorebar{display:flex;align-items:center;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin:0 0 22px}
-  .scorenum{font-family:var(--mono);font-weight:600;font-size:42px;line-height:1;letter-spacing:-.02em;min-width:108px}
+  .scorenum{font-family:var(--serif);font-weight:400;font-size:48px;line-height:1;letter-spacing:-.02em;min-width:108px;font-variant-numeric:tabular-nums}
   .scorenum small{font-size:16px;color:var(--ink-faint);font-weight:400}
   .gaugewrap{flex:1;min-width:0}
   .gaugetop{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 7px}
   .bandlabel{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
   .assessed{font-size:12px;color:var(--ink-faint)}
-  .gauge{position:relative;height:11px;background:var(--line-soft);border-radius:20px;overflow:hidden}
-  .gauge .fill{position:absolute;left:0;top:0;bottom:0;border-radius:20px;transition:width .45s cubic-bezier(.4,0,.2,1),background .3s}
-  .gauge .needle{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);transition:left .45s cubic-bezier(.4,0,.2,1)}
+  .gauge{position:relative;height:4px;background:var(--panel-2);overflow:hidden;margin-top:4px}
+  .gauge .fill{position:absolute;left:0;top:0;bottom:0;transition:width .45s cubic-bezier(.4,0,.2,1),background .3s}
   .ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin:5px 1px 0}
 
   /* Criterion rows */
@@ -196,20 +195,27 @@
   .rn-theme{color:var(--ink-faint)}
   .rn-bottom{display:flex;flex-direction:column;gap:6px}
   .rn-profile{display:flex;align-items:center;gap:11px;padding:11px 8px 0;margin-top:4px;border-top:1px solid var(--line);font-family:var(--sans);font-size:13px;color:var(--ink-faint)}
-  @media(min-width:761px){
-    body{padding-left:248px}
-    .backlink{display:none!important}
-    .tt-mobile{display:none!important}
-  }
-  @media(max-width:760px){
-    .railnav{display:none}
-  }
+  /* Rail removed in favour of the masthead, so no left offset. */
 
   /* Broadsheet-form: platta ytor (--r:0), pill-formade actions, fyrkantigt
      varumarke, ingen temavaxel (enbart ljust tema). */
   .btn, .tab { border-radius: 999px; }
   .rn-mark, .rn-item { border-radius: 0; }
   .themetoggle, .rn-theme, .tt-mobile { display: none !important; }
+
+  /* Masthead (ersatter vansterrailen, matchar resten av sajtens topp-nav).
+     .masthead ar ett <header>, sa override:a den globala header{}-regeln. */
+  .masthead { padding: 28px 18px 0; border-bottom: 0; position: static; }
+  .mast-in { max-width: 1160px; margin: 0 auto; }
+  .mast-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; padding-bottom: 14px; }
+  .wordmark { font-family: var(--serif); font-weight: 500; font-size: clamp(26px,3.4vw,38px); letter-spacing: .13em; text-transform: uppercase; line-height: .9; text-decoration: none; color: var(--ink); }
+  .wordmark span { color: inherit; }
+  .edition { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); text-align: right; line-height: 1.7; }
+  .mast-rule { height: 2px; background: rgba(33,28,23,.42); }
+  .mast-nav { display: flex; gap: 26px; padding: 2px 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; }
+  .mast-nav a { display: inline-flex; align-items: center; min-height: 40px; color: var(--ink-faint); text-decoration: none; }
+  .mast-nav a:hover { color: var(--ink); }
+  .mast-nav a.here { color: var(--brass); }
 
   @media print{
     :root{
@@ -229,30 +235,26 @@
 </style>
 </head>
 <body>
-<nav class="railnav" aria-label="Sidomeny">
-  <div>
-    <a href="/hem" class="rn-brand"><span class="rn-mark" aria-hidden="true"></span><span class="rn-brandtext">Marginalen</span></a>
-    <div class="rn-label">LÄRA</div>
-    <div class="rn-group">
-      <a href="/hem" class="rn-item"><span class="rn-dot" aria-hidden="true"></span>Hem</a>
-      <a href="/fokus" class="rn-item"><span class="rn-dot" aria-hidden="true"></span>Kursöversikt</a>
+<header class="masthead">
+  <div class="mast-in">
+    <div class="mast-top">
+      <a class="wordmark" href="/hem">Margin<span>alen</span></a>
+      <div class="edition">Fundamental aktieanalys<br>Analysverktyg</div>
     </div>
-    <div class="rn-label">VERKTYG</div>
-    <div class="rn-group">
-      <a href="/verktyg" class="rn-item on" aria-current="page"><span class="rn-dot" aria-hidden="true"></span>Analysverktyg</a>
+    <div class="mast-rule"></div>
+    <div class="mast-nav">
+      <a href="/hem">Hem</a>
+      <a href="/fokus">Kursöversikt</a>
+      <a href="/verktyg" class="here" aria-current="page">Analysverktyg</a>
+      <a href="/ordlista">Ordlista</a>
     </div>
   </div>
-  <div class="rn-bottom">
-    <button class="rn-item rn-theme" type="button" data-theme-btn onclick="toggleTheme()">☀ Ljust läge</button>
-    <div class="rn-profile"><span>Du</span></div>
-  </div>
-</nav>
-<a href="/hem" class="backlink" aria-label="Tillbaka till plattformen" style="position:fixed;top:14px;left:16px;z-index:99;font:500 13px 'Schibsted Grotesk',system-ui,sans-serif;color:var(--ink,inherit);opacity:.6;text-decoration:none">← Plattform</a>
+</header>
 <div class="wrap">
   <header>
     <button id="themeBtn" class="themetoggle tt-mobile" type="button" data-theme-btn onclick="toggleTheme()">☀ Ljust läge</button>
     <p class="eyebrow">Verktygslåda för fundamental analys</p>
-    <h1 class="mark">Margin<span>alen</span></h1>
+    <h1 class="mark">Analysverktyg</h1>
     <p class="sub">Sju verktyg att gå igenom innan du köper en aktie. Du fyller i, poängen räknas ut medan du arbetar, och sammanställningen väger ihop allt till en hållning. Tänk som en ägare, inte en aktiehandlare.</p>
     <p class="disclaim">Utbildningsverktyg, inte investeringsrådgivning. Du fattar dina egna beslut, och dimensionerar dem så att du överlever att ha fel.</p>
   </header>
@@ -473,8 +475,8 @@ const panels = {}; document.querySelectorAll(".panel").forEach(p=>panels[p.datas
 
 function gaugeHTML(pct,b){
   const w = pct===null?0:pct;
-  return `<div class="gauge"><div class="fill" style="width:${w}%;background:${b.col}"></div><div class="needle" style="left:${w}%"></div></div>
-    <div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>`;
+  // Editorial reframe: a thin progress rule, not a needle-and-ticks dashboard gauge.
+  return `<div class="gauge"><div class="fill" style="width:${w}%;background:${b.col}"></div></div>`;
 }
 function scorebarHTML(s,b){
   return `<div class="scorebar">
