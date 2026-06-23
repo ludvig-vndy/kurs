@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ägarboken, Look 2: Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0D0A; --panel:#10140F; --panel2:#161C15; --line:rgba(173,242,75,.12);
+    --grid:rgba(255,255,255,.035);
+    --text:#E8EDE1; --soft:#AEB6A9; --muted:#6F7A6E; --faint:#33402F;
+    --lime:#ADF24B; --amber:#F2B441; --red:#E0896F;
+    --mono:"JetBrains Mono",monospace; --sans:"Hanken Grotesk",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--sans); font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+      radial-gradient(800px 500px at 100% 0%, rgba(173,242,75,.06), transparent 55%);
+    background-size:42px 42px,42px 42px,100% 100%;
+  }
+  .app{display:grid; grid-template-columns:230px 1fr; min-height:100vh}
+  /* rail */
+  .rail{border-right:1px solid var(--line); padding:22px 18px; display:flex; flex-direction:column; gap:28px; position:sticky; top:0; height:100vh}
+  .logo{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-weight:700; letter-spacing:.04em; font-size:15px}
+  .logo .sq{width:16px; height:16px; background:var(--lime); box-shadow:0 0 14px -2px var(--lime)}
+  .navsec{font-family:var(--mono); font-size:10px; letter-spacing:.22em; color:var(--muted); margin-bottom:10px}
+  .nav a{display:flex; justify-content:space-between; font-family:var(--mono); font-size:12.5px; color:var(--soft); text-decoration:none; padding:7px 10px; border-radius:6px}
+  .nav a.on{background:var(--panel2); color:var(--lime)}
+  .nav a:hover{color:var(--text)}
+  .rail .foot{margin-top:auto; font-family:var(--mono); font-size:11px; color:var(--muted)}
+
+  main{padding:26px clamp(20px,3.5vw,46px) 60px; max-width:1180px}
+  /* status bar */
+  .statusbar{display:flex; align-items:center; gap:22px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line); padding-bottom:14px; flex-wrap:wrap}
+  .statusbar .live{color:var(--lime); display:flex; align-items:center; gap:7px}
+  .statusbar .live .pulse{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime); animation:pulse 1.8s infinite}
+  .statusbar .prog{display:flex; align-items:center; gap:10px; margin-left:auto}
+  .statusbar .track{width:160px;height:5px;background:var(--faint);border-radius:99px;overflow:hidden}
+  .statusbar .track i{display:block;height:100%;width:10%;background:var(--lime);box-shadow:0 0 10px -1px var(--lime)}
+  .statusbar .pct{color:var(--text)}
+
+  .head{padding:34px 0 26px}
+  .kick{font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--lime); margin-bottom:16px}
+  h1{font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.02; letter-spacing:-.025em}
+  h1 .dim{color:var(--muted)}
+  .sub{color:var(--soft); margin-top:14px; max-width:54ch; font-size:16px}
+
+  /* live continue panel */
+  .live-panel{background:linear-gradient(180deg,var(--panel2),var(--panel)); border:1px solid var(--line); border-radius:14px; padding:24px 26px; display:flex; justify-content:space-between; align-items:center; gap:24px; position:relative; overflow:hidden}
+  .live-panel::after{content:"";position:absolute;inset:0;background:radial-gradient(420px 160px at 0% 0%,rgba(173,242,75,.10),transparent 60%);pointer-events:none}
+  .live-panel .tag{font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--amber)}
+  .live-panel h2{font-weight:700; font-size:clamp(20px,2.6vw,28px); margin-top:10px; letter-spacing:-.01em}
+  .live-panel .meta{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-top:10px; letter-spacing:.04em}
+  .live-panel .meta b{color:var(--soft); font-weight:500}
+  .resume{flex:none; font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; color:var(--bg); background:var(--lime); border:none; border-radius:8px; padding:14px 20px; cursor:pointer; box-shadow:0 0 22px -6px var(--lime); transition:.25s}
+  .resume:hover{transform:translateY(-2px); box-shadow:0 0 30px -4px var(--lime)}
+
+  .secbar{display:flex; justify-content:space-between; align-items:center; margin:42px 0 16px}
+  .secbar h3{font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--soft)}
+  .secbar span{font-family:var(--mono); font-size:11px; color:var(--muted)}
+
+  /* chapter grid */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(248px,1fr)); gap:12px}
+  .cell{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:12px; min-height:138px; position:relative; transition:.2s; opacity:0; transform:translateY(10px); animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+  .cell:hover{border-color:rgba(173,242,75,.5); background:var(--panel2); transform:translateY(-3px)}
+  .cell .crow{display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em}
+  .cell .id{color:var(--muted)}
+  .cell .t{font-weight:700; font-size:16px; line-height:1.18; letter-spacing:-.01em}
+  .cell .bot{margin-top:auto; display:flex; flex-direction:column; gap:8px}
+  .cell .mrow{font-family:var(--mono); font-size:10.5px; color:var(--muted); letter-spacing:.05em; display:flex; gap:10px}
+  .cell .mini{height:4px; background:var(--faint); border-radius:99px; overflow:hidden}
+  .cell .mini i{display:block; height:100%; background:var(--lime)}
+  .st{font-family:var(--mono); font-size:9.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; padding:3px 7px; border-radius:4px; border:1px solid}
+  .st.done{color:var(--lime); border-color:rgba(173,242,75,.4); background:rgba(173,242,75,.08)}
+  .st.act{color:var(--amber); border-color:rgba(242,180,65,.4); background:rgba(242,180,65,.08)}
+  .st.open{color:var(--soft); border-color:var(--faint)}
+  .st.lock{color:var(--muted); border-color:var(--faint)}
+  .cell.lock{opacity:.5}
+  .cell.lock:hover{transform:none; border-color:var(--line); background:var(--panel)}
+
+  @keyframes rise{to{opacity:1;transform:none}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @media(max-width:860px){.app{grid-template-columns:1fr}.rail{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <div class="logo"><span class="sq"></span> AGARBOKEN</div>
+    <div>
+      <div class="navsec">LÄRA</div>
+      <nav class="nav">
+        <a class="on" href="#">Hem <span>↩</span></a>
+        <a href="#">Kursöversikt</a>
+        <a href="#">Mina anteckningar</a>
+      </nav>
+    </div>
+    <div>
+      <div class="navsec">VERKTYG</div>
+      <nav class="nav"><a href="#">Analysverktyg</a></nav>
+    </div>
+    <div class="foot">v0.9 · mörkt läge<br>5 dagars svit ▲</div>
+  </aside>
+
+  <main>
+    <div class="statusbar">
+      <span class="live"><span class="pulse"></span>Aktiv session</span>
+      <span>Torsdag 19 jun 2025</span>
+      <div class="prog"><span>Kursframsteg</span><div class="track"><i></i></div><span class="pct">5 / 51</span></div>
+    </div>
+
+    <div class="head">
+      <div class="kick">God morgon, Ludvig</div>
+      <h1>Läs bolaget.<br><span class="dim">Lita på siffrorna, inte humöret.</span></h1>
+      <p class="sub">Sexton kapitel, från din första aktie till ett färdigt investeringscase på riktig data. Du är igång.</p>
+    </div>
+
+    <div class="live-panel">
+      <div>
+        <div class="tag">▸ Fortsätt där du slutade</div>
+        <h2>Affärsmodeller och intäktstyper</h2>
+        <div class="meta"><b>KAP 02</b> · LEKTION 2.2 · 10 MIN · NYBÖRJARE · 1/3 KLARA</div>
+      </div>
+      <button class="resume">Återuppta →</button>
+    </div>
+
+    <div class="secbar">
+      <h3>// Din väg genom kursen</h3>
+      <span id="count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
+</div>
+
+<script>
+const COURSE=[
+ {n:1,t:"Investeringsfilosofi",niva:"Nybörjare",tid:37,lekt:4,klar:4,s:"done"},
+ {n:2,t:"Affärsmodeller",niva:"Nybörjare",tid:33,lekt:3,klar:1,s:"act"},
+ {n:3,t:"Årsredovisningen",niva:"Mellan",tid:22,lekt:2,klar:0,s:"open"},
+ {n:4,t:"Räkenskaperna",niva:"Mellan",tid:79,lekt:6,klar:0,s:"lock"},
+ {n:5,t:"Nyckeltal & kapitalavkastning",niva:"Mellan",tid:42,lekt:3,klar:0,s:"lock"},
+ {n:6,t:"Konkurrensfördelar",niva:"Mellan",tid:26,lekt:2,klar:0,s:"lock"},
+ {n:7,t:"Ledning & kapitalallokering",niva:"Mellan",tid:23,lekt:2,klar:0,s:"lock"},
+ {n:8,t:"Värderingsgrunder",niva:"Mellan",tid:23,lekt:2,klar:0,s:"lock"},
+ {n:9,t:"Värdering i praktiken",niva:"Avancerad",tid:62,lekt:5,klar:0,s:"lock"},
+ {n:10,t:"Risk & felmarginal",niva:"Mellan",tid:30,lekt:3,klar:0,s:"lock"},
+ {n:11,t:"Investeringspsykologi",niva:"Mellan",tid:48,lekt:4,klar:0,s:"lock"},
+ {n:12,t:"Tillväxtbolag",niva:"Avancerad",tid:97,lekt:8,klar:0,s:"lock"},
+ {n:13,t:"Din investeringsprocess",niva:"Mellan",tid:22,lekt:2,klar:0,s:"lock"},
+ {n:14,t:"Fallstudie: Lifco",niva:"Avancerad",tid:18,lekt:1,klar:0,s:"lock"},
+ {n:15,t:"Sektoranalys",niva:"Avancerad",tid:28,lekt:2,klar:0,s:"lock"},
+ {n:16,t:"Praktik & avslut",niva:"Nybörjare",tid:19,lekt:2,klar:0,s:"lock"},
+];
+const ST={done:"Klar",act:"Pågår",open:"Öppen",lock:"Låst"};
+document.getElementById('count').textContent=COURSE.length+" kapitel · ~10,5 h";
+document.getElementById('grid').innerHTML=COURSE.map((c,i)=>`
+ <a class="cell ${c.s}" href="#" style="animation-delay:${i*40}ms">
+   <div class="crow"><span class="id">KAP ${String(c.n).padStart(2,'0')}</span><span class="st ${c.s}">${ST[c.s]}</span></div>
+   <div class="t">${c.t}</div>
+   <div class="bot">
+     <div class="mini"><i style="width:${Math.round(c.klar/c.lekt*100)}%"></i></div>
+     <div class="mrow"><span>${c.niva}</span><span>${c.tid} min</span><span>${c.klar}/${c.lekt}</span></div>
+   </div>
+ </a>`).join('');
+</script>
+</body>
+</html>

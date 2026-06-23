@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ägarboken, looks att välja mellan</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0e0f0e;--card:#16181500;--ink:#ECEAE2;--muted:#8b8f86;--mint:#8FD3B0}
+  *{box-sizing:border-box;margin:0}
+  body{background:#0e100e;color:var(--ink);font-family:"IBM Plex Mono",monospace;min-height:100vh;padding:clamp(28px,6vw,80px)}
+  h1{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(30px,5vw,52px);letter-spacing:-.01em}
+  .sub{color:var(--muted);margin-top:14px;max-width:60ch;font-size:13px;line-height:1.7}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:46px;max-width:1000px}
+  a.card{display:block;text-decoration:none;color:inherit;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:26px;transition:.25s;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
+  a.card:hover{border-color:var(--mint);transform:translateY(-4px)}
+  .n{font-size:11px;letter-spacing:.2em;color:var(--mint)}
+  .t{font-family:"Newsreader",serif;font-weight:400;font-size:26px;margin:14px 0 6px;letter-spacing:-.01em}
+  .d{color:var(--muted);font-size:12.5px;line-height:1.65}
+  .swatch{display:flex;gap:6px;margin-top:18px}
+  .swatch i{width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.1)}
+  .go{margin-top:18px;font-size:11px;letter-spacing:.14em;color:var(--ink)}
+</style>
+</head>
+<body>
+  <h1>Ägarboken, tre riktningar</h1>
+  <p class="sub">Tre alternativa looks för kurs-siten, var och en en fristående dashboard på den riktiga kursdatan (16 kapitel). Öppna och jämför. Alla skiljer sig medvetet från dagens mint-editorial.</p>
+  <div class="grid">
+    <a class="card" href="1-broadsheet.html">
+      <div class="n">LOOK 01</div>
+      <div class="t">Broadsheet</div>
+      <div class="d">Finanstidning i tryck. Varmt papper, Fraunces och Spectral, oxblod-accent, numrerad innehållsförteckning med hårfina linjer. Auktoritativt, dyrt, klassiskt.</div>
+      <div class="swatch"><i style="background:#F2ECE0"></i><i style="background:#211C17"></i><i style="background:#8A2E26"></i><i style="background:#9A6E1C"></i></div>
+      <div class="go">Öppna →</div>
+    </a>
+    <a class="card" href="2-terminal.html">
+      <div class="n">LOOK 02</div>
+      <div class="t">Terminal</div>
+      <div class="d">Mörk pro-desk. JetBrains Mono och Hanken Grotesk, elektrisk lime, rutnät och tät datakänsla, statusetiketter och mini-staplar. Precist, proffsigt.</div>
+      <div class="swatch"><i style="background:#0A0D0A"></i><i style="background:#161C15"></i><i style="background:#ADF24B"></i><i style="background:#F2B441"></i></div>
+      <div class="go">Öppna →</div>
+    </a>
+    <a class="card" href="3-nordic-atelier.html">
+      <div class="n">LOOK 03</div>
+      <div class="t">Nordic Atelier</div>
+      <div class="d">Lugn och luftig. Instrument Serif och Hanken Grotesk, terrakotta och salvia, mjuka rundade kort, mycket whitespace, progress-ring. Stilla, exklusivt.</div>
+      <div class="swatch"><i style="background:#ECE7DC"></i><i style="background:#F6F2EA"></i><i style="background:#B5654A"></i><i style="background:#7C886C"></i></div>
+      <div class="go">Öppna →</div>
+    </a>
+    <a class="card" href="4-momentum.html">
+      <div class="n">LOOK 04 · NY</div>
+      <div class="t">Momentum</div>
+      <div class="d">Levande och rörlig. Bricolage Grotesque och Spectral, plommon med bärnsten och aqua, animerad aurora, en pris/värde-linje som flödar, kursticker, uppräknande siffror och kort som tiltar mot muspekaren. Energiskt, modernt.</div>
+      <div class="swatch"><i style="background:#150F1A"></i><i style="background:#F4B740"></i><i style="background:#67E3C2"></i><i style="background:#E98FA8"></i></div>
+      <div class="go">Öppna →</div>
+    </a>
+    <a class="card" href="5-levande-broadsheet.html">
+      <div class="n">LOOK 05 · HYBRID</div>
+      <div class="t">Levande Broadsheet</div>
+      <div class="d">Broadsheets själ med Momentums liv. Papper, Fraunces och numrerad förteckning, men med en pris/värde-linje som ritas och flödar, redaktionell kursticker, uppräknande svit, guldlinje som dras under fortsätt-titeln, och mjuka blur-reveals. Dyrt tryck, men det andas.</div>
+      <div class="swatch"><i style="background:#F2ECE0"></i><i style="background:#211C17"></i><i style="background:#8A2E26"></i><i style="background:#9A6E1C"></i></div>
+      <div class="go">Öppna →</div>
+    </a>
+    <a class="card" href="7-de-AI-landing.html">
+      <div class="n">LOOK 07 · DE-AI</div>
+      <div class="t">De-AI Landing</div>
+      <div class="d">Broadsheeten avgenererad. Samma papper och Fraunces, men de tells som skvallrar om AI är borttagna: 01/02/03-tripletten ersatt av redaktionell lead + spalt, varierade rubrikingångar (kall rubrik, anfang, hängande citat) i stället för mono-etikett på varje block, rörelse som landar i stället för att loopa, plus kontrast- och fokusfixarna. En landningssida som demonstrerar mildringarna.</div>
+      <div class="swatch"><i style="background:#F6F2EA"></i><i style="background:#211C17"></i><i style="background:#8A2E26"></i><i style="background:#9A6E1C"></i></div>
+      <div class="go">Öppna →</div>
+    </a>
+  </div>
+</body>
+</html>
