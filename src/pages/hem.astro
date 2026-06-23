@@ -101,6 +101,16 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
       </div>
     </a>
 
+    <!-- ===== Repetition (shown when there are missed questions) ===== -->
+    <a class="repcard" data-rep-card href="/repetera" hidden>
+      <div>
+        <div class="repcard__eyebrow">Repetition</div>
+        <div class="repcard__h"><b data-rep-count>0</b> frågor att repetera</div>
+        <div class="repcard__sub">Frågor du svarat fel på, samlade för en snabb omgång.</div>
+      </div>
+      <span class="repcard__cta" aria-hidden="true">→</span>
+    </a>
+
     <!-- ===== Chapter map ===== -->
     <div class="sec-head">
       <h3>Din väg genom kursen</h3>
@@ -162,6 +172,16 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
   .cta { flex: none; width: 62px; height: 62px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; font-size: 22px; color: var(--ink); transition: .35s cubic-bezier(.2,.7,.2,1); }
   .feature:hover .cta { background: var(--oxblood); border-color: var(--oxblood); color: var(--paper); transform: translateX(4px); }
 
+  /* Repetition card: surfaces the SRS miss-queue, only when non-empty. */
+  .repcard { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 16px 0 0; padding: 18px 22px; background: var(--card); border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+  .repcard[hidden] { display: none; }
+  .repcard:hover { transform: translateX(3px); text-decoration: none; }
+  .repcard__eyebrow { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 6px; }
+  .repcard__h { font-family: var(--display); font-weight: 400; font-size: 22px; letter-spacing: -.01em; }
+  .repcard__h b { font-weight: 500; font-variant-numeric: tabular-nums; }
+  .repcard__sub { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); margin-top: 6px; }
+  .repcard__cta { font-family: var(--display); font-size: 22px; color: var(--oxblood); flex: none; }
+
   .sec-head { display: flex; justify-content: space-between; align-items: baseline; margin: 46px 0 10px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
   .sec-head h3 { font-family: var(--display); font-weight: 400; font-size: 24px; letter-spacing: -.01em; }
   .sec-head a { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); text-decoration: none; }
@@ -184,6 +204,7 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
 <script>
   import { getFokusDone, firstIncomplete, FOKUS_EVENT } from '../scripts/fokus-progress';
   import { getStreak, META_EVENT } from '../scripts/state';
+  import { getMissed, SRS_EVENT } from '../scripts/srs';
 
   function el<T extends HTMLElement = HTMLElement>(sel: string): T | null {
     return document.querySelector<T>(sel);
@@ -222,6 +243,14 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
       let dismissed = false;
       try { dismissed = localStorage.getItem('kurs:onboard:done') === '1'; } catch {}
       onboard.hidden = !(doneCount === 0 && !dismissed);
+    }
+
+    // Repetition card: show only when the miss-queue is non-empty.
+    const repCard = el('[data-rep-card]');
+    if (repCard) {
+      const n = getMissed().length;
+      const cnt = el('[data-rep-count]'); if (cnt) cnt.textContent = String(n);
+      repCard.hidden = n === 0;
     }
 
     // Continue
@@ -281,4 +310,5 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
   document.addEventListener('astro:page-load', () => { paint(); wireOnboard(); });
   window.addEventListener(META_EVENT, paint);
   window.addEventListener(FOKUS_EVENT, paint);
+  window.addEventListener(SRS_EVENT, paint);
 </script>
