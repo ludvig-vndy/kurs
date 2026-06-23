@@ -1,0 +1,229 @@
+/* Marginalen, broadsheet design system (shared).
+   Loaded by the broadsheet surfaces: /, /hem, /fokus, /fokus/kapitel/[nr], /fokus/[lektion].
+   The markdown course (/oversikt, /kurs/*) keeps tokens.css/global.css. */
+
+:root{
+  --paper:#F6F2EA; --paper-2:#ECE5D6; --card:#FCFAF4;
+  --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+  --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+  --oxblood:#8A2E26; --gold:#9A6E1C;
+  --good:#3E7A4F; --good-soft:#E6EFE3; --bad:#8A2E26; --bad-soft:#F3E2DE;
+  --serif:"Spectral",Georgia,serif; --display:"Fraunces",Georgia,serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box;margin:0}
+html{ -webkit-text-size-adjust:100% }
+body{background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:18px; line-height:1.62; -webkit-font-smoothing:antialiased; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column}
+a{color:inherit}
+/* The theme strips underlines/borders from interactive elements, so a
+   deliberate focus ring is the only keyboard affordance. */
+:focus-visible{outline:2px solid var(--oxblood); outline-offset:2px}
+
+/* paper: faint static hairline ruling + a static warm glow.
+   (Calm pass: the warmth no longer breathes, and the ruling alpha is lowered
+   so the 1px lines don't shimmer/moire on scroll.) */
+.bg{position:fixed; inset:0; z-index:-1; pointer-events:none; background-image:repeating-linear-gradient(0deg, transparent 0 39px, rgba(33,28,23,.013) 39px 40px)}
+.bg::before{content:""; position:absolute; inset:0; background:radial-gradient(1100px 620px at 80% -12%, rgba(154,110,28,.06), transparent 60%)}
+
+.wrap{width:100%; max-width:1080px; margin:0 auto; padding:0 clamp(20px,5vw,52px)}
+
+/* ── masthead ───────────────────────────────────────────────────────── */
+.masthead{padding:30px 0 0}
+.mast-top{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap; padding-bottom:14px}
+.wordmark{font-family:var(--display); font-weight:500; font-size:clamp(26px,3.4vw,38px); letter-spacing:.13em; text-transform:uppercase; line-height:.9; text-decoration:none; color:var(--ink)}
+.wordmark span{color:inherit}
+.edition{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.7}
+.mast-rule{height:2px; background:var(--rule-strong)}
+.nav{display:flex; gap:26px; padding:2px 0; font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase}
+.nav a{display:inline-flex; align-items:center; min-height:40px; color:var(--muted); text-decoration:none}
+.nav a:hover,.nav a.here{color:var(--ink)}
+.nav a.here{color:var(--oxblood)}
+
+/* ── breadcrumb ─────────────────────────────────────────────────────── */
+.crumb{display:flex; align-items:center; gap:9px; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--muted); flex-wrap:wrap; margin:26px 0 28px}
+.crumb a{color:var(--ink-soft); text-decoration:none}
+.crumb a:hover{color:var(--oxblood)}
+.crumb .sep{color:var(--faint)}
+.crumb .here{color:var(--oxblood)}
+
+/* ── type ───────────────────────────────────────────────────────────── */
+.kicker{font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--oxblood); margin-bottom:16px}
+.h-title{font-family:var(--display); font-weight:300; font-size:clamp(34px,5vw,58px); line-height:1.03; letter-spacing:-.02em}
+.h-title em{font-style:italic; color:var(--oxblood)}
+.standfirst{font-family:var(--serif); font-style:italic; font-size:clamp(17px,1.8vw,20px); line-height:1.55; color:var(--ink-soft); max-width:54ch; margin-top:16px}
+.lead{font-family:var(--display); font-weight:300; font-size:clamp(22px,2.6vw,28px); line-height:1.35; letter-spacing:-.01em; color:var(--ink)}
+.lead mark{background:none; color:var(--oxblood); font-style:italic}
+.body{color:var(--ink-soft); margin-top:16px}
+.sec-rule{height:2px; background:var(--rule-strong); margin-top:8px}
+
+/* ── progress bar ───────────────────────────────────────────────────── */
+.prog{display:flex; align-items:center; gap:14px; max-width:460px; margin-top:18px}
+.prog .tk{flex:1; height:3px; background:var(--paper-2); overflow:hidden}
+.prog .tk i{display:block; height:100%; background:var(--oxblood); transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.prog .lab{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+
+/* ── part header ────────────────────────────────────────────────────── */
+.part{display:flex; align-items:baseline; gap:14px; margin:42px 0 18px}
+.part .n{font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--oxblood)}
+.part .t{font-family:var(--display); font-weight:400; font-size:21px; letter-spacing:-.01em}
+.part .line{flex:1; height:1px; background:var(--rule)}
+.part .sub{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+
+/* ── chapter index ──────────────────────────────────────────────────── */
+.index{display:grid; grid-template-columns:1fr 1fr; gap:0 56px}
+.ch{position:relative; display:grid; grid-template-columns:46px 1fr auto; gap:16px; align-items:baseline; padding:16px 6px 16px 0; border-top:1px solid var(--rule); text-decoration:none; color:inherit; transition:padding-left .25s}
+.ch::before{content:""; position:absolute; left:-12px; top:18px; bottom:18px; width:2px; background:var(--oxblood); transform:scaleY(0); transition:transform .25s}
+.ch:hover{padding-left:8px}
+.ch:hover::before{transform:scaleY(1)}
+.ch:hover .ch-t{color:var(--oxblood)}
+.ch-n{font-family:var(--display); font-weight:300; font-size:30px; color:var(--faint); line-height:1; font-variant-numeric:lining-nums; transition:color .2s}
+.ch.act .ch-n,.ch.done .ch-n,.ch:hover .ch-n{color:var(--oxblood)}
+.ch-t{font-family:var(--display); font-weight:500; font-size:18px; line-height:1.2; letter-spacing:-.005em; transition:color .2s}
+.ch-meta{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-top:7px; display:flex; gap:10px; flex-wrap:wrap}
+.ch-meta .lvl{color:var(--ink-soft)}
+.ch.lock{opacity:.55}
+.ch.lock::before{display:none}
+.ch.lock:hover{padding-left:0}
+.ch.lock .ch-t{color:var(--muted)}
+/* not-started / future chapters: grey the title too, so it recedes like the number */
+.ch:not(.done):not(.act) .ch-t{color:var(--muted)}
+.ch:not(.done):not(.act):hover .ch-t{color:var(--oxblood)}
+
+/* ── pill ───────────────────────────────────────────────────────────── */
+.pill{font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; padding:3px 8px; border:1px solid var(--rule-strong); white-space:nowrap; align-self:start; margin-top:3px}
+.pill.done{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.pill.act{background:var(--oxblood); color:var(--paper); border-color:var(--oxblood)}
+.pill.lock{color:var(--muted); border-color:var(--rule)}
+
+/* ── buttons ────────────────────────────────────────────────────────── */
+.btn-ink{display:inline-flex; align-items:center; gap:10px; font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; background:var(--ink); color:var(--paper); border:none; padding:15px 28px; border-radius:99px; cursor:pointer; text-decoration:none; transition:background .25s, transform .25s}
+.btn-ink:hover{background:var(--oxblood); transform:translateX(3px); text-decoration:none}
+.btn-ghost{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); border:1px solid var(--rule-strong); padding:13px 22px; border-radius:99px; text-decoration:none; background:none; cursor:pointer; transition:border-color .2s, color .2s}
+.btn-ghost:hover{border-color:var(--oxblood); color:var(--oxblood); text-decoration:none}
+.link-mono{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--oxblood); text-decoration:none; white-space:nowrap}
+
+/* ── outcomes ───────────────────────────────────────────────────────── */
+.outcomes{border:1px solid var(--rule); background:var(--card); padding:24px 26px; margin-top:8px}
+.outcomes .lbl{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--oxblood); margin-bottom:16px}
+.outcomes ul{list-style:none; display:flex; flex-direction:column; gap:13px}
+.outcomes li{display:flex; gap:13px; align-items:flex-start; font-family:var(--display); font-weight:400; font-size:17px; line-height:1.4}
+.outcomes li::before{content:""; flex:none; width:18px; height:18px; margin-top:3px; background:var(--oxblood); -webkit-mask:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); mask:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")}
+
+/* ── lesson row (chapter page) ──────────────────────────────────────── */
+.lrow{display:grid; grid-template-columns:34px 1fr auto auto auto; gap:14px; align-items:center; padding:15px 6px; border-bottom:1px solid var(--rule); text-decoration:none; color:inherit; transition:background .15s}
+.lrow:not(.lock):hover{background:var(--card)}
+.lrow .mk{width:26px;height:26px;border-radius:50%; border:1.5px solid var(--faint); display:grid; place-items:center; font-family:var(--mono); font-size:11px; color:var(--muted)}
+.lrow.done .mk{background:var(--oxblood); border-color:var(--oxblood); color:var(--paper)}
+.lrow.next .mk{border-color:var(--oxblood); color:var(--oxblood)}
+.lrow .lt{font-family:var(--serif); font-size:17px}
+.lrow .lv,.lrow .tm{font-family:var(--mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted)}
+.lrow .tm{text-align:right; min-width:52px}
+.lrow .cta{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--oxblood); min-width:54px; text-align:right}
+.lrow.lock{opacity:.55} .lrow.lock .cta{color:var(--muted)}
+
+/* ── footer band ────────────────────────────────────────────────────── */
+.foot{margin-top:44px; border-top:2px solid var(--rule-strong); padding:22px 0 60px; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap}
+
+/* ── dashboard: hero / stats / figure ───────────────────────────────── */
+.hero{display:grid; grid-template-columns:1.25fr .85fr; gap:46px; align-items:center; padding:40px 0 30px; border-bottom:1px solid var(--rule)}
+.greeting{font-family:var(--display); font-weight:300; font-size:clamp(40px,6vw,72px); line-height:1.0; letter-spacing:-.018em}
+.greeting em{font-style:italic; color:var(--oxblood)}
+.lede{margin-top:18px; font-size:18px; color:var(--ink-soft); max-width:44ch; font-style:italic}
+.stats{display:flex; gap:34px; margin-top:26px; flex-wrap:wrap}
+/* Solid fallback by default; the gradient-clip only applies where supported, and
+   forced-colors (high contrast) restores a system colour so the number can't vanish. */
+.stat .v{font-family:var(--display); font-weight:400; font-size:42px; line-height:1; color:var(--oxblood); font-variant-numeric:lining-nums tabular-nums}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .stat .v{background:linear-gradient(120deg,var(--oxblood),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent}
+}
+@media (forced-colors: active){
+  .stat .v{background:none; color:CanvasText; -webkit-text-fill-color:CanvasText}
+}
+.stat .v .u{font-size:16px; color:var(--muted); font-family:var(--mono); -webkit-text-fill-color:var(--muted)}
+.stat .l{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:8px}
+
+/* shared framed figure plate */
+.fig{border:1px solid var(--rule); background:var(--card); padding:18px 18px 12px; position:relative}
+.fig::before{content:""; position:absolute; inset:5px; border:1px solid var(--rule); pointer-events:none}
+.fig .cap{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); display:flex; justify-content:space-between; margin-bottom:6px; position:relative}
+.fig svg{width:100%; height:auto; display:block; overflow:visible; position:relative}
+.fig .legend,.legend{display:flex; gap:18px; justify-content:center; margin-top:10px; font-family:var(--mono); font-size:10px; color:var(--ink-soft)}
+.fig .legend i,.legend i{display:inline-block; width:18px; height:2.5px; vertical-align:middle; margin-right:6px}
+.figtext{font-family:var(--mono); font-size:9.5px; letter-spacing:.04em; color:var(--muted); margin-top:8px; text-align:center}
+
+/* line chart (dataviz / hero figure).
+   Calm pass: every line draws once and rests. No perpetual flow, gleam, or
+   pulse. The value line draws in; the gold gleam traces it a single time; the
+   price line is a static dashed line; the marker pops once. */
+.vline{fill:none; stroke:var(--ink); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; pathLength:1; stroke-dasharray:1; stroke-dashoffset:1; animation:bs-draw 2.2s cubic-bezier(.4,0,.2,1) .4s forwards}
+.vglow{fill:none; stroke:var(--gold); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; pathLength:1; stroke-dasharray:.08 .92; stroke-dashoffset:1; opacity:0; filter:drop-shadow(0 0 4px rgba(154,110,28,.7)); animation:bs-trail 3.4s linear 2.6s 1 both}
+.pline{fill:none; stroke:var(--oxblood); stroke-width:1.8; stroke-linejoin:round; stroke-dasharray:5 6}
+.dot{fill:var(--oxblood); opacity:0; animation:bs-pop .5s cubic-bezier(.2,.85,.3,1.3) 2.2s both}
+.dot-h{stroke:var(--oxblood); stroke-width:1; opacity:0; animation:bs-fade .6s 2.5s both}
+.dottext{fill:var(--oxblood); font-family:var(--mono); font-size:10px; opacity:0; animation:bs-fade .6s 2.5s both}
+@keyframes bs-draw{to{stroke-dashoffset:0}}
+@keyframes bs-trail{0%{opacity:0;stroke-dashoffset:1}12%{opacity:.85}88%{opacity:.85}100%{opacity:0;stroke-dashoffset:0}}
+@keyframes bs-pop{0%{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+@keyframes bs-fade{to{opacity:1}}
+
+/* ── visual: jamforelse ─────────────────────────────────────────────── */
+.jmf{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:0; border:1px solid var(--rule-strong); margin-top:24px; background:var(--card)}
+.jmf .col{padding:22px 24px}
+.jmf .col+.col{border-left:1px solid var(--rule-strong)}
+.jmf .r{font-family:var(--display); font-weight:500; font-size:20px; color:var(--oxblood); margin-bottom:10px; line-height:1.2}
+.jmf .x{font-size:15.5px; color:var(--ink-soft); line-height:1.55}
+
+/* ── visual: stapeldiagram ──────────────────────────────────────────── */
+.bars{margin-top:24px; border:1px solid var(--rule); background:var(--card); padding:20px 22px}
+.bar{display:grid; grid-template-columns:150px 1fr 60px; align-items:center; gap:12px; margin:10px 0; font-family:var(--mono); font-size:11px}
+.bar .lab{color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em}
+.bar .tk{height:14px; background:var(--paper-2); position:relative}
+.bar .tk i{position:absolute; top:0; bottom:0; left:0; background:var(--ink); transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.bar.acc .tk i{background:var(--oxblood)}
+.bar .val{text-align:right; color:var(--ink)}
+
+/* ── visual: flode ──────────────────────────────────────────────────── */
+.flow{display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; margin-top:24px}
+.node{flex:1; min-width:120px; border:1px solid var(--rule-strong); background:var(--card); padding:14px 16px; font-family:var(--display); font-size:16px; display:flex; align-items:center}
+.node.acc{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.op{display:flex; align-items:center; font-family:var(--mono); color:var(--oxblood); font-size:16px}
+
+/* ── visual: andel ──────────────────────────────────────────────────── */
+.andel{margin-top:24px}
+.andel .barwrap{display:flex; height:38px; border:1px solid var(--rule-strong); overflow:hidden}
+.andel .seg2{display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:10.5px; color:var(--paper); white-space:nowrap; overflow:hidden}
+.andel .keys{display:flex; gap:16px; margin-top:10px; font-family:var(--mono); font-size:11px; color:var(--ink-soft); flex-wrap:wrap}
+.andel .keys i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:middle}
+
+/* ── visual: rutnat (ownership grid) ────────────────────────────────── */
+.rutnat{margin-top:24px; border:1px solid var(--rule); background:var(--card); padding:20px 22px 14px}
+.rutnat .grid{display:grid; gap:5px; justify-content:center}
+.rutnat .cell{width:16px; height:16px; border:1px solid var(--rule-strong); background:var(--paper)}
+.rutnat .cell.on{background:var(--oxblood); border-color:var(--oxblood)}
+.rutnat .etikett{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); text-align:center; margin-top:14px}
+
+/* ── visual fallback ────────────────────────────────────────────────── */
+.visual-fallback{font-family:var(--serif); font-style:italic; font-size:15px; line-height:1.5; color:var(--muted); text-align:center; padding:22px 0; margin:0 auto; max-width:46ch}
+
+/* ── reduced motion ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  .bg::before,.pline,.vglow,.dot,.dot-h,.dottext{animation:none!important}
+  .vline{stroke-dashoffset:0!important; animation:none!important}
+  .vglow{opacity:0!important}
+}
+
+@media(max-width:760px){
+  .index{grid-template-columns:1fr; gap:0}
+  .hero{grid-template-columns:1fr; gap:26px}
+  .lrow{grid-template-columns:30px 1fr auto} .lrow .lv{display:none}
+  .jmf{grid-auto-flow:row}
+  .jmf .col+.col{border-left:0; border-top:1px solid var(--rule-strong)}
+}
+
+/* Narrow screens: the bar's fixed 150px label column starves the track, so the
+   label moves to its own row and the bar spans full width. */
+@media(max-width:560px){
+  .bar{grid-template-columns:1fr auto; grid-template-areas:"lab lab" "bar val"; gap:6px 12px}
+  .bar .lab{grid-area:lab}
+  .bar .tk{grid-area:bar}
+  .bar .val{grid-area:val}
+}

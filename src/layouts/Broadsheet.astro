@@ -1,0 +1,154 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/broadsheet.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: 'hem' | 'kurs' | 'verktyg';
+  /** masthead nav variant: app rail, landing marketing, or none */
+  nav?: 'app' | 'landing' | 'none';
+  /** page chrome: standard masthead, or none (lesson player brings its own) */
+  chrome?: 'masthead' | 'none';
+  editionLine2?: string;
+}
+
+const {
+  title,
+  description = 'Kurs i fundamental aktieanalys.',
+  active,
+  nav = 'app',
+  chrome = 'masthead',
+  editionLine2 = 'En kurs i sexton kapitel',
+} = Astro.props;
+
+const wordmarkHref = nav === 'landing' ? '/' : '/hem';
+---
+
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    {chrome === 'masthead' && (
+      <header class="masthead">
+        <div class="wrap">
+          <div class="mast-top">
+            <a class="wordmark" href={wordmarkHref}>Margin<span>alen</span></a>
+            <div class="edition">Fundamental aktieanalys<br />{editionLine2}</div>
+          </div>
+          <div class="mast-rule"></div>
+          {nav === 'app' && (
+            <nav class="nav">
+              <a href="/hem" class:list={[{ here: active === 'hem' }]} aria-current={active === 'hem' ? 'page' : undefined}>Hem</a>
+              <a href="/fokus" class:list={[{ here: active === 'kurs' }]} aria-current={active === 'kurs' ? 'page' : undefined}>Kursöversikt</a>
+              <a href="/verktyg" class:list={[{ here: active === 'verktyg' }]} aria-current={active === 'verktyg' ? 'page' : undefined}>Analysverktyg</a>
+            </nav>
+          )}
+          {nav === 'landing' && (
+            <nav class="nav" style="justify-content:space-between">
+              <span style="display:flex;gap:26px">
+                <a href="/fokus">Kursen</a>
+                <a href="/verktyg">Verktyget</a>
+              </span>
+              <a href="/hem">Logga in</a>
+            </nav>
+          )}
+        </div>
+      </header>
+    )}
+
+    <slot />
+
+    {chrome === 'masthead' && (
+      <footer class="site-foot">
+        <div class="wrap">
+          <div class="site-foot__top">
+            <a class="site-foot__mark" href="/hem">Margin<span>alen</span></a>
+            <nav class="site-foot__nav">
+              <a href="/hem">Hem</a>
+              <a href="/fokus">Kursöversikt</a>
+              <a href="/verktyg">Analysverktyg</a>
+            </nav>
+          </div>
+          <p class="site-foot__fine">Marginalen, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
+        </div>
+      </footer>
+    )}
+
+    <style>
+      .site-foot { margin-top: 56px; border-top: 2px solid var(--rule-strong); }
+      .site-foot .wrap { padding-top: 26px; padding-bottom: 60px; }
+      .site-foot__top { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+      .site-foot__mark { font-family: var(--display); font-weight: 500; font-size: 20px; letter-spacing: .13em; text-transform: uppercase; text-decoration: none; color: var(--ink); }
+      .site-foot__mark span { color: inherit; }
+      .site-foot__nav { display: flex; gap: 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+      .site-foot__nav a { color: var(--muted); text-decoration: none; }
+      .site-foot__nav a:hover { color: var(--oxblood); }
+      .site-foot__fine { margin-top: 16px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: var(--faint); }
+    </style>
+
+    <script>
+      function setupReveal() {
+        document.querySelectorAll('[data-reveal-children]').forEach((box) => {
+          Array.from(box.children).forEach((child) => {
+            if (!child.hasAttribute('data-reveal')) child.setAttribute('data-reveal', '');
+          });
+        });
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document
+            .querySelectorAll('[data-reveal], [data-reveal-children] > *')
+            .forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const targets = document.querySelectorAll(
+          '[data-reveal]:not(.is-visible), [data-reveal-children] > *:not(.is-visible)'
+        );
+        if (!targets.length) return;
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target as HTMLElement;
+                el.style.transitionDelay = (el.dataset.revealDelay || '0') + 'ms';
+                el.classList.add('is-visible');
+                obs.unobserve(el);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+      document.addEventListener('astro:page-load', setupReveal);
+    </script>
+
+    <style is:global>
+      /* Calm pass: reveal is a gentle opacity fade only. The previous 16px
+         upward slide added per-element motion on every scroll, which compounds
+         into a queasy "everything is drifting" effect. */
+      [data-reveal] { opacity: 0; transition: opacity 0.7s cubic-bezier(0.2,0.7,0.2,1); }
+      [data-reveal].is-visible { opacity: 1; }
+      @media (prefers-reduced-motion: reduce) { [data-reveal] { transition: none; } }
+    </style>
+  </body>
+</html>
