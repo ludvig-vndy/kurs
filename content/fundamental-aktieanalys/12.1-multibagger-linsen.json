@@ -86,7 +86,7 @@
         "etiketter": "Utfall i enheter av tio satsade",
         "figurtext": "Illustrativ. Tio lika små satsningar: sex går mot noll, två ger tillbaka insatsen, en ger 5 gånger och en 12 gånger. De sex förlorarna kostar sex, de två som går jämnt ut ger tillbaka två, vinnarna ger 5 plus 12. Tio satsade enheter slutar runt 19, nästan en dubbling, trots att de flesta var fel."
       },
-      "slutsats": "Det enda som gör jakten rationell är asymmetrin: en vinnares multipel dvärgar de begränsade förlusterna. Men det fungerar bara om du är dimensionerad som en korg av små, överlevbara satsningar. Den höga misslyckandefrekvensen blir då en sak du hanterar med storleken på posterna, inte ett skäl att hålla dig borta från kategorin."
+      "slutsats": "Det enda som gör jakten rationell är asymmetrin: en vinnares multipel är mycket större än de begränsade förlusterna. Men det fungerar bara om du är dimensionerad som en korg av små, överlevbara satsningar. Den höga misslyckandefrekvensen blir då en sak du hanterar med storleken på posterna, inte ett skäl att hålla dig borta från kategorin."
     },
     {
       "typ": "reading",
@@ -150,7 +150,7 @@
           "typ": "single",
           "fraga": "Vad gör jakten på framtida vinnare rationell trots att de flesta sådana bolag misslyckas?",
           "alternativ": [
-            "Asymmetri och korgdimensionering: en sann vinnares multipel dvärgar de begränsade förlusterna",
+            "Asymmetri och korgdimensionering: en sann vinnares multipel är mycket större än de begränsade förlusterna",
             "Att man kan sälja förlorarna innan de hinner falla",
             "Att staten subventionerar tidiga tillväxtbolag"
           ],

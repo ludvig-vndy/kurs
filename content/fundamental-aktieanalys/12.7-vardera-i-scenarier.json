@@ -71,7 +71,7 @@
       "titel": "Ofta prissatt för framgång",
       "brodtext": [
         "För en potentiell framtida vinnare avslöjar det vägda värdet nästan alltid samma sak: eftersom marknaden redan prissätter en meningsfull chans till framgång, ligger det vägda värdet ofta nära, eller till och med under, dagens pris. Aktien är prissatt för framgång, och det finns ingen felmarginal på det vägda värdet. En renodlad value-investerare skulle korrekt avstå, för du får inte den framtida vinnaren till rabatt mot vad den sannolikhetsvägt är värd.",
-        "Så varför ändå köpa? Kanten är en annan än i value investing och kommer från tre håll. Det första är att vara tidig: multipeln finns bara att fånga innan siffrorna bevisar bolaget. Det andra är det optimistiska fallets egen asymmetri: även vid ett rättvist vägt värde kan toppfallet vara flera gånger priset, så att ha rätt ibland betalar enormt. Det tredje, och avgörande, är att dimensionera varje satsning liten som del av en korg. Din kant är asymmetri plus överlevnad över en korg, inte en rabatt på något enskilt."
+        "Så varför ändå köpa? Övertaget är ett annat än i value investing och kommer från tre håll. Det första är att vara tidig: multipeln finns bara att fånga innan siffrorna bevisar bolaget. Det andra är det optimistiska fallets egen asymmetri: även vid ett rättvist vägt värde kan toppfallet vara flera gånger priset, så att ha rätt ibland betalar enormt. Det tredje, och avgörande, är att dimensionera varje satsning liten som del av en korg. Ditt övertag är asymmetri plus överlevnad över en korg, inte en rabatt på något enskilt."
       ]
     },
     {
@@ -91,7 +91,7 @@
       "lead": "Det mesta här handlar om ditt eget angreppssätt, så flaggorna gäller dig. Testfrågan är enkel: rymmer ditt värde ett konkursfall med hög sannolikhet som drar ned det, eller är det bara det optimistiska fallet i förklädnad?",
       "highlight": "är det bara det optimistiska fallet i förklädnad?",
       "brodtext": [
-        "Tecken på en ärlig värdering: du har byggt scenarier som spänner från konkurs till triumf, var och en grundad i fundamenta. Oddsen är satta nyktert, med en realistisk vikt på konkurs. Ditt värde är sannolikhetsvägt och rymmer uttryckligen nedsidan. Du inser att aktien är prissatt för framgång, utan felmarginal på det vägda värdet, och att din kant är asymmetri och att vara tidig, exekverat genom en korg där varje position är liten nog att ett troligt misslyckande är överlevbart.",
+        "Tecken på en ärlig värdering: du har byggt scenarier som spänner från konkurs till triumf, var och en grundad i fundamenta. Oddsen är satta nyktert, med en realistisk vikt på konkurs. Ditt värde är sannolikhetsvägt och rymmer uttryckligen nedsidan. Du inser att aktien är prissatt för framgång, utan felmarginal på det vägda värdet, och att ditt övertag är asymmetri och att vara tidig, exekverat genom en korg där varje position är liten nog att ett troligt misslyckande är överlevbart.",
         "Varningstecken: värderingen är ett enda tal utan scenarier eller odds, eller konkursfallet saknas eller har getts en orimligt låg vikt. Du behandlar aktien som billig bara för att toppscenariot ligger långt över priset. En enskild potentiell vinnare är en stor, ruinriskerande del av portföljen, eller du är dimensionerad som om framgång vore trolig när konkurs är det mer sannolika enskilda utfallet. De vanligaste misstagen är att producera ett enda exakt tal för en vilt osäker framtid, att modellera bara drömmen, att vikta konkurs för lätt, att glömma justera bolagsvärdet till värde per aktie efter utspädning, och att satsa stort på ett enskilt bolag i stället för litet över en korg."
       ],
       "takeaway": "Skriv ned de tre scenariovärdena och oddsen, det vägda värdet mot priset, och en mening om hur du skulle dimensionera positionen. Först då är det ett beslut och inte en förälskelse."
@@ -134,7 +134,7 @@
         },
         {
           "typ": "single",
-          "fraga": "Var ligger investerarens kant för en potentiell framtida vinnare, om det inte är en rabatt på det vägda värdet?",
+          "fraga": "Var ligger investerarens övertag för en potentiell framtida vinnare, om det inte är en rabatt på det vägda värdet?",
           "alternativ": [
             "I att vara tidig, i det optimistiska fallets asymmetri, och i att dimensionera satsningen liten över en korg",
             "I att förhandla ned priset med bolagets ledning",
