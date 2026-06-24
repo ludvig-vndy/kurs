@@ -19,6 +19,7 @@ interface CourseKapitel {
   tid_min: number;
   blurb: string;
   outcomes: string[];
+  sebbe?: string;
   lektioner: CourseLektion[];
 }
 interface CourseJson {
@@ -100,6 +101,14 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
       </ul>
     </div>
 
+    <!-- Sebastian tänker: chapter framing in his voice -->
+    {kap.sebbe && (
+      <aside class="chsebbe">
+        <span class="chsebbe__by"><span class="chsebbe__mono" aria-hidden="true">S</span>Sebastian tänker</span>
+        <p class="chsebbe__text">{kap.sebbe}</p>
+      </aside>
+    )}
+
     <!-- Lessons -->
     <div class="part" style="margin-bottom:0"><span class="n">Lektioner</span><span class="line"></span></div>
     <div style="margin-bottom:8px">
@@ -158,6 +167,13 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
     .chead__num { font-size: clamp(56px, 18vw, 80px); }
     .chead__prog { margin-left: 0; }
   }
+
+  /* Sebastian tänker: a signed chapter note, same monogram language as the
+     lesson takeaway, framing the chapter in his voice. */
+  .chsebbe { margin: 26px 0 0; border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
+  .chsebbe__by { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 10px; }
+  .chsebbe__mono { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--oxblood); color: var(--paper); font-family: var(--display); font-size: 14px; font-weight: 500; flex: none; }
+  .chsebbe__text { font-family: var(--display); font-style: italic; font-size: 19px; line-height: 1.45; color: var(--ink); margin: 0; }
 
   /* The mark cell carries both the lektion number and a check; the client
      toggles which is shown by adding `done` to the row. */
