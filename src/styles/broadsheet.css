@@ -8,7 +8,10 @@
   --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
   --oxblood:#8A2E26; --gold:#9A6E1C;
   --good:#3E7A4F; --good-soft:#E6EFE3; --bad:#8A2E26; --bad-soft:#F3E2DE;
-  --serif:"Spectral",Georgia,serif; --display:"Fraunces",Georgia,serif; --mono:"IBM Plex Mono",monospace;
+  /* Modern stack: Outfit (sans display/rubriker), Spectral (serif brodtext +
+     kursiva pull-quotes), Inter (etiketter, ersatter maskinskriften). --mono
+     behaller sitt namn men ar nu Inter sans. */
+  --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0}
 /* Always reserve the scrollbar track so centered content (and the masthead)
@@ -54,7 +57,7 @@ a{color:inherit}
 .h-title em{font-style:normal; color:inherit}
 .standfirst{font-family:var(--serif); font-style:normal; font-size:clamp(17px,1.8vw,20px); line-height:1.55; color:var(--ink-soft); max-width:54ch; margin-top:16px}
 .lead{font-family:var(--display); font-weight:300; font-size:clamp(22px,2.6vw,28px); line-height:1.35; letter-spacing:-.01em; color:var(--ink)}
-.lead mark{background:none; color:inherit; font-style:italic}
+.lead mark{background:none; color:inherit; font-style:normal; font-weight:600}
 .body{color:var(--ink-soft); margin-top:16px}
 .sec-rule{height:2px; background:var(--rule-strong); margin-top:8px}
 
