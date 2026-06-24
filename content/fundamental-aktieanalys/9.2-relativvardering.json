@@ -4,22 +4,22 @@
   "titel": "Relativvärdering och jämförelser",
   "niva": "Mellan",
   "tid_min": 9,
-  "mal": "Efter lektionen kan eleven göra en rättvis jämförande värdering och se när en jämförelse ljuger, i stället för att kalla något billigt bara för att det är billigare.",
+  "mal": "Efter lektionen kan du göra en rättvis jämförande värdering och se när en jämförelse ljuger, i stället för att kalla något billigt bara för att det är billigare.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 9.2",
       "titel": "Relativvärdering och jämförelser",
-      "ingress": "Att värdera ett bolag genom att jämföra dess multiplar med liknande bolag är kraftfullt, och ett av de mest missbrukade greppen i hela analysen."
+      "ingress": "Att värdera ett bolag mot multiplarna hos liknande bolag är kraftfullt. Det är också ett av de mest missbrukade greppen i hela analysen."
     },
     {
       "typ": "reading",
       "kicker": "GRUNDEN",
-      "lead": "Fällan är förrädisk i sin enkelhet: att kalla något billigt bara för att det är billigare än något annat. Ett bolag kan handlas under sina kollegor och ändå vara rättvist, eller till och med dyrt, prissatt.",
+      "lead": "Fällan är enkel och därför lätt att gå i: att kalla något billigt bara för att det är billigare än något annat. Ett bolag kan handlas under sina kollegor och ändå vara rättvist prissatt, eller till och med dyrt.",
       "highlight": "att kalla något billigt bara för att det är billigare",
       "brodtext": [
-        "I praktiken används multiplar nästan alltid jämförande. Man ställer ett bolags tal mot dess egen historik och mot branschkollegorna för att avgöra om det är billigt eller dyrt. Logiken är sund: en multipel betyder något först mot ett riktmärke. Men allt hänger på att riktmärket är rätt och att skillnader tolkas snarare än tas för givna fynd.",
-        "Ett bolag kan förtjäna att handlas under sina kollegor. Ställ därför frågan systematiskt: förtjänar bolaget en premie eller rabatt mot sina kollegor, och hur stor? Högre tillväxt, högre ROIC, bredare vallgrav, lägre risk och bättre kapitalallokering motiverar en premie. Svagare siffror motiverar en rabatt."
+        "Multiplar används nästan alltid jämförande. Du ställer ett bolags tal mot dess egen historik och mot kollegorna för att se om det är billigt eller dyrt. Logiken är sund: en multipel betyder något först mot ett riktmärke. Men allt hänger på att riktmärket är rätt, och på att du tolkar skillnaderna i stället för att ta dem för givna fynd.",
+        "Ett bolag kan förtjäna att handlas under sina kollegor. Ställ frågan rakt: förtjänar det en premie eller en rabatt, och hur stor? Högre tillväxt, högre ROIC, bredare vallgrav, lägre risk och bättre kapitalallokering motiverar en premie. Svagare siffror motiverar en rabatt."
       ],
       "takeaway": "Frågan är inte om bolaget är billigare, utan om det är billigare än vad det förtjänar att vara."
     },
@@ -33,21 +33,21 @@
           { "rubrik": "Förtjänad rabatt", "text": "Bolaget handlas under kollegorna och växer långsammare, tjänar lägre ROIC eller bär högre risk. Då prisar marknaden korrekt in en sämre verksamhet. Rättvist prissatt lägre, inte billigt." },
           { "rubrik": "Oförtjänt rabatt", "text": "Bolaget handlas under kollegorna men är egentligen lika bra: lika hög tillväxt, lika hög ROIC, lika bred vallgrav. Då är rabatten ett verkligt fynd värt att gräva i." }
         ],
-        "figurtext": "Samma rabatt mot kollegorna, motsatta slutsatser. Avgörandet ligger i kvaliteten bakom multipeln."
+        "figurtext": "Samma rabatt mot kollegorna, motsatta slutsatser. Det är kvaliteten bakom multipeln som avgör."
       },
-      "forklaring": "Det vanligaste felet är att se ett bolag handlas lägre än kollegorna och kalla det billigt. Men fråga varför. Rabatten blir ett fynd först om den är oförtjänt. Multipeln själv säger ingenting; kvaliteten bakom den avgör."
+      "forklaring": "Det vanligaste felet är att se ett bolag handlas lägre än kollegorna och kalla det billigt. Fråga i stället varför. Rabatten blir ett fynd först om den är oförtjänt. Multipeln själv säger ingenting; det är kvaliteten bakom den som avgör."
     },
     {
       "typ": "reading",
       "kicker": "DE TRE FÄLLORNA",
-      "lead": "En meningsfull jämförelse kräver bolag som faktiskt liknar varandra i affärsmodell, tillväxt, lönsamhet och risk. Jämför lika med lika.",
+      "lead": "En jämförelse betyder något bara om bolagen faktiskt liknar varandra i affärsmodell, tillväxt, lönsamhet och risk. Jämför lika med lika.",
       "highlight": "Jämför lika med lika.",
       "brodtext": [
-        "Fel jämförelsegrupp. Att ställa ett snabbväxande kvalitetsbolags multipel mot ett moget, lågavkastande bolags säger lite; skillnaden i tal speglar bara skillnaden i utsikter. Jämför du äpplen mot päron blir slutsatsen meningslös.",
-        "Hela gruppen felprissatt. Relativvärdering säger bara om ett bolag är billigt eller dyrt mot sina kollegor, inte i absoluta termer. Handlas hela branschen till historiskt höga multiplar kan ett bolag se rimligt ut mot kollegorna och ändå vara övervärderat. Att vara billigast i en dyr sektor är fortfarande dyrt. Komplettera därför med en absolut känsla för värde, som DCF.",
+        "Fel jämförelsegrupp. Att ställa ett snabbväxande kvalitetsbolags multipel mot ett moget, lågavkastande bolag säger nästan ingenting; skillnaden i tal speglar bara skillnaden i utsikter. Jämför du äpplen mot päron blir slutsatsen meningslös.",
+        "Hela gruppen felprissatt. Relativvärdering säger bara om ett bolag är billigt eller dyrt mot sina kollegor, inte i absoluta termer. Handlas hela branschen till historiskt höga multiplar kan ett bolag se rimligt ut mot grannarna och ändå vara övervärderat. Att vara billigast i en dyr sektor är fortfarande dyrt. Komplettera med en absolut känsla för värde, som DCF.",
         "Historiken som lurar. Att jämföra mot bolagets eget snitt är användbart, men bolag förändras. En multipel som var motiverad när bolaget växte snabbt kan vara för hög när tillväxten avtagit. 'Billigt mot sin historik' blir en fälla om verksamheten har försämrats. Historiken är ett riktmärke, ingen garanti."
       ],
-      "takeaway": "Använd relativvärdering, men misstro reflexen att billigare är billigt. Jämför bara mot genuint jämförbara bolag och fråga varje gång om skillnaden i multipel är motiverad."
+      "takeaway": "Använd relativvärdering, men lita inte på reflexen att billigare är billigt. Jämför bara mot genuint jämförbara bolag och fråga varje gång om skillnaden i multipel är motiverad."
     },
     {
       "typ": "quiz",
@@ -61,7 +61,7 @@
             "Aldrig, en lägre multipel är alltid motiverad"
           ],
           "ratt": [0],
-          "forklaring": "Växer bolaget långsammare, tjänar lägre ROIC eller bär högre risk är den lägre multipeln motiverad, då är det rättvist prissatt lägre, inte billigt. Bara en oförtjänt rabatt är ett verkligt fynd. (Talen är illustrativa.)"
+          "forklaring": "Växer bolaget långsammare, tjänar lägre ROIC eller bär högre risk, då är den lägre multipeln motiverad. Det är rättvist prissatt lägre, inte billigt. Bara en oförtjänt rabatt är ett verkligt fynd. (Talen är illustrativa.)"
         },
         {
           "typ": "single",
@@ -72,7 +72,7 @@
             "Relativvärdering ger alltid det absoluta värdet"
           ],
           "ratt": [1],
-          "forklaring": "Relativvärdering säger bara om ett bolag är billigt eller dyrt mot kollegorna, inte i absoluta termer. Därför måste den kompletteras med en absolut känsla för värde, som DCF."
+          "forklaring": "Relativvärdering säger bara om ett bolag är billigt eller dyrt mot kollegorna, inte i absoluta termer. Komplettera den med en absolut känsla för värde, som DCF."
         },
         {
           "typ": "multi",
@@ -85,7 +85,7 @@
             "Du kompletterar med en absolut känsla för värde så att en dyr sektor inte lurar dig"
           ],
           "ratt": [0, 1, 3],
-          "forklaring": "En rättvis jämförelse ställer lika mot lika, frågar om rabatten är förtjänad och kompletterar med en absolut värdekontroll. Att döpa allt billigare till billigt är tvärtom själva fällan."
+          "forklaring": "En rättvis jämförelse ställer lika mot lika, frågar om rabatten är förtjänad och kompletterar med en absolut värdekontroll. Att kalla allt billigare för billigt är tvärtom själva fällan."
         }
       ]
     }

@@ -10,7 +10,7 @@
       "typ": "intro",
       "kicker": "LEKTION 16.1",
       "titel": "Källor, verktyg och svensk praktik",
-      "ingress": "Hela kursen har lärt dig hur du tänker om ett bolag. Nu kommer det jordnära men minst lika viktiga: var du hämtar uppgifterna, hur mycket du litar på var och en, och hur konton, listor och skatt fungerar i den svenska verkligheten runt investeringen."
+      "ingress": "Hela kursen har lärt dig hur du tänker om ett bolag. Nu kommer det jordnära: var du hämtar uppgifterna, hur mycket du litar på var och en, och hur konton, listor och skatt fungerar i den svenska verkligheten runt investeringen."
     },
     {
       "typ": "reading",
@@ -18,10 +18,10 @@
       "lead": "En analys är aldrig bättre än källan den vilar på.",
       "highlight": "En analys är aldrig bättre än källan den vilar på.",
       "brodtext": [
-        "Tänk dig att du läser en rubrik om att ett bolag slår förväntningarna. Det är någon annans sammanfattning av någon annans tolkning av en siffra du själv aldrig sett. Mellan dig och sanningen ligger flera lager av filter, vart och ett skrivet av någon med ett syfte: att få dig att klicka, att köpa, att sälja. Kan du gå till primärkällan har du en av de billigaste fördelar som finns, eftersom förvånansvärt få orkar öppna originaldokumentet och läsa det själva.",
-        "Bygg därför en tydlig hierarki mellan dina källor och låt den sitta i ryggmärgen. Överst står primärkällan: bolagets egen reviderade rapport. Under den ligger sammanställande databaser, snabba och oftast rätt men ändå andrahandskällor. Längst ner ligger nyhetsrubriker och analytikerkommentarer. De fångar upp vad som händer, men de avgör aldrig en investering."
+        "Du läser en rubrik om att ett bolag slår förväntningarna. Det är någon annans sammanfattning av någon annans tolkning av en siffra du själv aldrig sett. Mellan dig och sanningen ligger flera lager filter, vart och ett skrivet av någon som vill något: att du klickar, att du köper, att du säljer. Går du i stället till primärkällan har du en av de billigaste fördelar som finns, för förvånansvärt få orkar öppna originaldokumentet och läsa det själva.",
+        "Bygg därför en hierarki mellan dina källor och låt den sitta i ryggmärgen. Överst står primärkällan: bolagets egen reviderade rapport. Under den ligger databaserna, snabba och oftast rätt men ändå andrahandskällor. Längst ner ligger nyhetsrubriker och analytikerkommentarer. De fångar upp vad som händer, men de avgör aldrig en investering."
       ],
-      "takeaway": "Ju längre från primärkällan en uppgift kommer, desto mer skepsis. För de tal som bär din slutsats går du alltid till bolagets egen rapport och kontrollerar själv."
+      "takeaway": "Ju längre från primärkällan en uppgift kommer, desto mer skepsis. De tal som bär din slutsats hämtar du alltid ur bolagets egen rapport och kontrollerar själv."
     },
     {
       "typ": "reading",
@@ -29,19 +29,19 @@
       "lead": "Inne i årsredovisningen ska du veta exakt vart du går för varje fråga, så att dokumentet blir en uppslagskarta i stället för en text du läser pärm till pärm.",
       "highlight": "veta exakt vart du går för varje fråga",
       "brodtext": [
-        "VD-ordet är ledningens egen berättelse. Läs det för ton och prioriteringar, men behandla det som den mest tillrättalagda delen av dokumentet. Förvaltningsberättelsen är mer reglerad och saklig: verksamheten, väsentliga händelser, riskerna och den föreslagna utdelningen. De tre finansiella rapporterna är hjärtat. Resultaträkningen visar lönsamheten över en period, balansräkningen den finansiella ställningen vid en tidpunkt, och kassaflödesanalysen om vinsten faktiskt blir kontanter.",
-        "Noterna är där detaljen och ofta den verkliga sanningen gömmer sig: redovisningsprinciper, segment, skuldernas förfall, närståendetransaktioner och vad som faktiskt ligger inuti raderna. Revisionsberättelsen, slutligen, är en oberoende parts omdöme om huruvida bilden är rättvisande, och allt annat än en ren sådan är en allvarlig signal. En enkel uppslagsvana: vill du veta lönsamheten går du till resultaträkningen och noterna bakom posterna, vill du veta skuldsättningen går du till balansräkningen och skuldnoten, vill du veta om vinsten är verklig går du till kassaflödesanalysen."
+        "VD-ordet är ledningens egen berättelse. Läs det för ton och prioriteringar, men behandla det som den mest tillrättalagda delen av dokumentet. Förvaltningsberättelsen är mer reglerad och saklig: verksamheten, väsentliga händelser, riskerna och den föreslagna utdelningen. De tre finansiella rapporterna är hjärtat. Resultaträkningen visar lönsamheten över en period, balansräkningen ställningen vid en tidpunkt, och kassaflödesanalysen om vinsten faktiskt blir kontanter.",
+        "I noterna gömmer sig detaljen och ofta den verkliga sanningen: redovisningsprinciper, segment, skuldernas förfall, närståendetransaktioner och vad som faktiskt ligger inuti raderna. Revisionsberättelsen är en oberoende parts omdöme om bilden är rättvisande, och allt annat än en ren sådan är en allvarlig signal. Gör det till en uppslagsvana: vill du veta lönsamheten går du till resultaträkningen och noterna bakom posterna, vill du veta skuldsättningen går du till balansräkningen och skuldnoten, vill du veta om vinsten är verklig går du till kassaflödesanalysen."
       ],
-      "takeaway": "Läsordningen är ofta bakvänd mot hur dokumentet är tryckt: skumma berättelsen, gå sedan rakt på siffrorna och noterna, och läs det polerade VD-ordet sist så att historien inte hinner ankra dig."
+      "takeaway": "Läs i annan ordning än dokumentet är tryckt: skumma berättelsen, gå rakt på siffrorna och noterna, och spara det polerade VD-ordet till sist så att historien inte hinner ankra dig."
     },
     {
       "typ": "reading",
       "kicker": "VILKEN RAPPORT DU LÄSER",
-      "lead": "Bolagen kommer med olika dokument under året, och de har olika djup och olika grad av revision. Att hålla isär vilket du läser avgör hur mycket du kan luta dig mot det.",
+      "lead": "Bolagen kommer med olika dokument under året, och de har olika djup och olika grad av revision. Vilket du läser avgör hur mycket du kan luta dig mot det.",
       "highlight": "olika djup och olika grad av revision",
       "brodtext": [
-        "Kvartalsrapporten, delårsrapporten, är en kortare avstämning varje kvartal, ofta oreviderad och med mindre detalj. Bokslutskommunikén är helårets sammanfattning som kommer först, snabbt efter årets slut, men den är komprimerad. Den fullständiga årsredovisningen kommer senare, är reviderad och innehåller hela uppsättningen noter och revisionsberättelsen.",
-        "Skillnaden spelar roll. Bokslutskommunikén ger dig huvudsiffrorna tidigt, men de noter du behöver för att förstå vad som ligger bakom dem dyker ofta inte upp förrän i den fullständiga årsredovisningen. Att läsa kommunikéns rubriker och tro att du sett hela året är ett vanligt misstag, för djupet kommer senare."
+        "Delårsrapporten, kvartalsrapporten, är en kortare avstämning varje kvartal, ofta oreviderad och med mindre detalj. Bokslutskommunikén är helårets sammanfattning som kommer snabbt efter årets slut, men i komprimerad form. Den fullständiga årsredovisningen kommer senare, är reviderad och har hela uppsättningen noter plus revisionsberättelsen.",
+        "Skillnaden spelar roll. Bokslutskommunikén ger dig huvudsiffrorna tidigt, men de noter du behöver för att förstå vad som ligger bakom dem dyker ofta inte upp förrän i den fullständiga årsredovisningen. Att läsa kommunikéns rubriker och tro att du sett hela året är ett vanligt misstag. Djupet kommer senare."
       ],
       "takeaway": "Vet alltid om du tittar på en oreviderad delårsrapport, en komprimerad bokslutskommuniké eller en fullständig, reviderad årsredovisning. De svarar olika väl på olika frågor."
     },
@@ -51,8 +51,8 @@
       "lead": "Databasen och screenern är sökverktyg, inte analys.",
       "highlight": "Databasen och screenern är sökverktyg, inte analys.",
       "brodtext": [
-        "En tjänst som Börsdata samlar historiska nyckeltal för nordiska bolag på ett ställe: omsättning, marginaler, ROIC och skuldsättning, ofta tio år tillbaka och färdigt att visa som en trend. Det är ovärderligt, för en enskild årssiffra säger nästan ingenting medan en tioårstrend i marginal eller ROIC avslöjar verksamhetens karaktär. En aktiescreener låter dig söka brett: filtrera fram alla bolag som uppfyller vissa kriterier, till exempel hög och stabil ROIC, låg skuldsättning och rimlig värdering, ur tusentals bolag till en hanterbar lista kandidater.",
-        "Arbetsflödet följer hierarkin baklänges. Använd screenern för att smalna av världen till en bunt, gå till databasen för att se om historiken och trenderna är värda mer tid, och öppna sedan den faktiska årsredovisningen först när ett bolag passerat de filtren. Men håll en sak klar: en sammanställd databassiffra kan vara fel, justerad på ett sätt du inte ser, eller missa en engångspost. För de tal som faktiskt bär din slutsats går du alltid till primärkällan och kontrollerar själv."
+        "En tjänst som Börsdata samlar historiska nyckeltal för nordiska bolag på ett ställe: omsättning, marginaler, ROIC och skuldsättning, ofta tio år tillbaka och färdiga att visa som en trend. Det är ovärderligt, för en enskild årssiffra säger nästan ingenting medan en tioårstrend i marginal eller ROIC avslöjar verksamhetens karaktär. En aktiescreener låter dig söka brett: filtrera fram alla bolag som uppfyller vissa kriterier, till exempel hög och stabil ROIC, låg skuldsättning och rimlig värdering, ur tusentals bolag ner till en hanterbar lista kandidater.",
+        "Arbetsflödet följer hierarkin baklänges. Använd screenern för att smalna av världen till en bunt, gå till databasen för att se om historiken och trenderna är värda mer tid, och öppna årsredovisningen först när ett bolag passerat filtren. Men kom ihåg: en sammanställd databassiffra kan vara fel, justerad på ett sätt du inte ser, eller missa en engångspost. De tal som faktiskt bär din slutsats hämtar du alltid ur primärkällan och kontrollerar själv."
       ],
       "takeaway": "Den vanligaste fällan, även för erfarna, är att låta ett snyggt databasdiagram ersätta läsningen av rapporten bakom. Diagrammet visar att något hände. Bara rapporten och noterna visar varför, och varför är hela analysen."
     },
@@ -62,8 +62,8 @@
       "lead": "Du kan ha världens bästa analys och ändå tappa en bit av avkastningen på saker som inte har med bolaget att göra: vilket konto du äger aktien i, vilken lista den handlas på, vad det kostar att handla, och när bolaget rapporterar.",
       "highlight": "saker som inte har med bolaget att göra",
       "brodtext": [
-        "Det här är den svenska verkligheten runt investeringen, och den är värd att kunna ordentligt. Det är ingen rådgivning om vilket konto du ska välja, och kursen ger aldrig sådana råd. Tanken är att du ska förstå mekaniken så väl att du själv kan se vad som passar din situation och tidshorisont.",
-        "För en svensk sparare gör kontovalet en verklig skillnad över tid, listan du köper på säger något om bolagets mognad och risk, courtaget tär på varje affär, och rapportkadensen styr när ny information når dig. Den som kan det här blir inte överraskad av en skatteavi, av en oväntat tunt reglerad notering, eller av en kvartalsrapport som rör kursen kraftigt."
+        "Det här är den svenska verkligheten runt investeringen, och den är värd att kunna ordentligt. Det är ingen rådgivning om vilket konto du ska välja, och kursen ger aldrig sådana råd. Du ska förstå mekaniken så väl att du själv ser vad som passar din situation och tidshorisont.",
+        "För en svensk sparare gör kontovalet verklig skillnad över tid, listan du köper på säger något om bolagets mognad och risk, courtaget tär på varje affär, och rapportkadensen styr när ny information når dig. Kan du det här blir du inte överraskad av en skatteavi, av en tunt reglerad notering, eller av en kvartalsrapport som rycker till i kursen."
       ],
       "takeaway": "Gör kontot, listan, courtaget och kadensen till medvetna val i stället för slump. De avgör inte om ett bolag är bra, men de påverkar vad du sitter kvar med."
     },
@@ -74,12 +74,12 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Vanlig depå", "text": "Du äger aktierna direkt och beskattas när något händer: reavinstskatt på den realiserade vinsten när du säljer, och skatt på utdelningar. Förluster får kvittas mot vinster. Ett byte utlöser alltså vinstskatt här och nu, men du står själv som ägare med de rättigheter det innebär." },
-          { "rubrik": "ISK och KF", "text": "Hela kapitalet schablonbeskattas löpande, oavsett om du sålt med vinst. Du kan ombalansera utan reavinstskatt, men det finns ingen förlustkvittning, eftersom realiserade vinster och förluster inte beskattas alls. Bekvämt för ett växande innehav eller aktiv ombalansering." }
+          { "rubrik": "Vanlig depå", "text": "Du äger aktierna direkt och beskattas när något händer: reavinstskatt på vinsten när du säljer, och skatt på utdelningar. Förluster får kvittas mot vinster. Ett byte utlöser alltså vinstskatt här och nu, men du står själv som ägare med de rättigheter det ger." },
+          { "rubrik": "ISK och KF", "text": "Hela kapitalet schablonbeskattas löpande, oavsett om du sålt med vinst. Du kan ombalansera utan reavinstskatt, men det finns ingen förlustkvittning, för realiserade vinster och förluster beskattas inte alls. Bekvämt för ett växande innehav eller aktiv ombalansering." }
         ],
         "figurtext": "Skillnaden sitter i vad som beskattas: den realiserade vinsten i depån, kapitalet i schablonkontot."
       },
-      "forklaring": "En svensk sparare har i grova drag tre kontotyper att äga aktier i: vanlig depå, investeringssparkonto (ISK) och kapitalförsäkring (KF). ISK och KF följer båda schablonlogiken: skatten byggs på statslåneräntan plus ett påslag och tas ut som en årlig skatt på innehavets värde. Den exakta satsen ändras varje år när statslåneräntan rör sig, så lär dig mekanismen och slå upp årets aktuella schablonsats när du räknar, i stället för att bära ett gammalt tal i huvudet. Schablon är inte skattefrihet, det är en skatt på kapitalet. KF och ISK liknar varandra i schablonlogiken men skiljer sig i juridisk form: i en KF är det formellt försäkringsbolaget som äger aktierna åt dig, vilket bland annat påverkar hur du röstar på stämmor och hur utländsk källskatt på utdelningar hanteras."
+      "forklaring": "En svensk sparare har i grova drag tre kontotyper att äga aktier i: vanlig depå, investeringssparkonto (ISK) och kapitalförsäkring (KF). ISK och KF följer båda schablonlogiken: skatten byggs på statslåneräntan plus ett påslag och tas ut som en årlig skatt på innehavets värde. Den exakta satsen ändras varje år när statslåneräntan rör sig, så lär dig mekanismen och slå upp årets schablonsats när du räknar i stället för att bära ett gammalt tal i huvudet. Schablon är inte skattefrihet, det är en skatt på kapitalet. ISK och KF liknar varandra i schablonlogiken men skiljer sig i juridisk form: i en KF är det formellt försäkringsbolaget som äger aktierna åt dig, vilket bland annat påverkar hur du röstar på stämmor och hur utländsk källskatt på utdelningar hanteras."
     },
     {
       "typ": "reading",
@@ -87,8 +87,8 @@
       "lead": "Mekaniken blir konkret när du tänker dig exakt samma affär i två olika konton. Inget av kontona är bättre rakt av, styrkan ligger åt olika håll.",
       "highlight": "styrkan ligger åt olika håll",
       "brodtext": [
-        "Säg att du äger ett innehav som gått upp och vill sälja det och köpa ett annat bolag i stället. I en vanlig depå utlöser försäljningen reavinstskatt på vinsten du realiserar, här och nu. Det blir en faktisk kostnad för omplaceringen, och den kostnaden kan i sig avskräcka dig från att byta även när analysen säger att du borde. I ett ISK eller en KF utlöser exakt samma byte ingen skatt på vinsten, eftersom det är kapitalet som schablonbeskattas löpande, inte den realiserade vinsten. Du kan ombalansera fritt utan att skatten lägger sig i beslutet.",
-        "Vänd nu på det. Säg att ett innehav i stället har gått back och du vill realisera förlusten. I en vanlig depå kan den förlusten kvittas mot vinster du gjort, vilket sänker din skatt. I ett schablonkonto finns ingen sådan kvittning, eftersom du inte beskattas på realiserade vinster och förluster till att börja med. Schablonlogiken passar alltså typiskt ett växande innehav och aktiv förvaltning, medan depån har sin egen styrka när du har förluster att kvitta eller i vissa fall vid utländska utdelningar. Att väga dem mot varandra är ditt beslut. Förstå mekaniken, så väljer du själv."
+        "Säg att du äger ett innehav som gått upp och vill sälja det för att köpa ett annat bolag i stället. I en vanlig depå utlöser försäljningen reavinstskatt på vinsten du realiserar, här och nu. Det är en faktisk kostnad för omplaceringen, och den kan i sig avskräcka dig från att byta även när analysen säger att du borde. I ett ISK eller en KF utlöser exakt samma byte ingen skatt på vinsten, för det är kapitalet som schablonbeskattas löpande, inte den realiserade vinsten. Du kan ombalansera fritt utan att skatten lägger sig i beslutet.",
+        "Vänd nu på det. Säg att ett innehav i stället gått back och du vill realisera förlusten. I en vanlig depå kan den kvittas mot vinster du gjort och sänka din skatt. I ett schablonkonto finns ingen sådan kvittning, för du beskattas inte på realiserade vinster och förluster till att börja med. Schablonlogiken passar alltså typiskt ett växande innehav och aktiv förvaltning, medan depån har sin styrka när du har förluster att kvitta eller i vissa fall vid utländska utdelningar. Att väga dem mot varandra är ditt beslut. Förstå mekaniken, så väljer du själv."
       ],
       "takeaway": "Tänk på skatten som mekanism: beskattas kapitalet eller den realiserade vinsten, och vad betyder det för hur fritt du kan ombalansera? Den exakta satsen slår du upp för året i fråga."
     },
@@ -99,7 +99,7 @@
       "highlight": "listan är en signal om mognad och genomlysning.",
       "brodtext": [
         "Huvudlistan är den reglerade Stockholmsbörsen, indelad efter bolagsstorlek i Large Cap, Mid Cap och Small Cap. Här är kraven på notering och löpande rapportering högst, och bolagen är i regel mognare. Vid sidan av finns handelsplattformar som First North och Spotlight: förenklade noteringar med lägre krav på bolaget, vanliga för små tillväxtbolag som ännu inte är redo för huvudlistan. Lägre krav betyder lägre tröskel för bolaget, men också typiskt högre risk och mindre genomlyst information för dig. Att ett bolag handlas på en förenklad lista är varken bra eller dåligt i sig, men för ett litet och tidigt bolag höjer du granskningen i stället för att sänka den.",
-        "Till handeln hör också courtaget, avgiften din mäklare tar varje gång du köper eller säljer. Det är en liten procent eller ett fast minimibelopp per affär, och det tär på avkastningen, särskilt om du handlar ofta eller i små poster där minimibeloppet väger tungt relativt summan. Courtaget är ett skäl till att flitig handel sällan lönar sig: varje byte kostar både eventuell skatt i en depå och courtage oavsett konto. Ju lugnare du handlar, desto mindre läcker ut den vägen."
+        "Till handeln hör också courtaget, avgiften din mäklare tar varje gång du köper eller säljer. Det är en liten procent eller ett fast minimibelopp per affär, och det tär på avkastningen, särskilt om du handlar ofta eller i små poster där minimibeloppet väger tungt mot summan. Courtaget är ett skäl till att flitig handel sällan lönar sig: varje byte kostar både eventuell skatt i en depå och courtage oavsett konto. Ju lugnare du handlar, desto mindre läcker ut den vägen."
       ],
       "takeaway": "Lista säger något om var i livscykeln bolaget är och hur mycket skydd som finns runt det. Courtaget straffar onödig aktivitet. Bägge talar för att handla medvetet och sällan."
     },
@@ -109,8 +109,8 @@
       "lead": "Rapportkadensen styr när ny information når marknaden, och kring rapportdagarna rör sig kurserna ofta kraftigt eftersom mycket kommer på en gång.",
       "highlight": "Rapportkadensen styr när ny information når marknaden",
       "brodtext": [
-        "Svenska börsbolag rapporterar kvartalsvis: tre delårsrapporter under året och så bokslutskommunikén och den fullständiga årsredovisningen för helåret. Den rytmen är förutsägbar, vilket betyder att du ungefär vet när nästa pusselbit landar. Du behöver inte gissa, du kan planera din läsning efter kalendern.",
-        "Faran ligger i hur marknaden reagerar på rapportdagen. Den första rubriken är en snabb sammanfattning, och den första kursrörelsen är marknadens omedelbara humör, inte en färdig analys. Den som låter rapportdagens kursrörelse styra besluten i stället för innehållet i rapporten handlar på reflex i stället för på underlag."
+        "Svenska börsbolag rapporterar kvartalsvis: tre delårsrapporter under året och så bokslutskommunikén och den fullständiga årsredovisningen för helåret. Rytmen är förutsägbar, så du vet ungefär när nästa pusselbit landar. Du behöver inte gissa, du kan planera din läsning efter kalendern.",
+        "Faran ligger i hur marknaden reagerar på rapportdagen. Den första rubriken är en snabb sammanfattning, och den första kursrörelsen är marknadens omedelbara humör, inte en färdig analys. Låter du rapportdagens kursrörelse styra besluten i stället för innehållet i rapporten handlar du på reflex i stället för på underlag."
       ],
       "takeaway": "Du vet ungefär när nästa rapport kommer, läser primärkällan själv när den landar, och rycks inte med av den första rubriken eller den första kursrörelsen."
     },
@@ -126,7 +126,7 @@
             "Kassaflödesanalysen"
           ],
           "ratt": [2],
-          "forklaring": "Kassaflödesanalysen visar de faktiska kontantrörelserna. Resultaträkningen visar lönsamheten över perioden men inte om vinsten blir kontanter, och VD-ordet är den mest tillrättalagda delen."
+          "forklaring": "Kassaflödesanalysen visar de faktiska kontantrörelserna. Resultaträkningen visar lönsamheten över perioden men inte om vinsten blir kontanter, och VD-ordet är dokumentets mest tillrättalagda del."
         },
         {
           "typ": "single",
@@ -148,7 +148,7 @@
             "Som en skatt som bara tas ut de år du realiserar en vinst"
           ],
           "ratt": [1],
-          "forklaring": "Schablonen byggs på statslåneräntan plus ett påslag och ger en årlig skatt på kapitalets värde, inte på realiserad vinst. Den exakta satsen ändras varje år, så slå upp årets aktuella sats i stället för att bära ett gammalt tal."
+          "forklaring": "Schablonen byggs på statslåneräntan plus ett påslag och ger en årlig skatt på kapitalets värde, inte på realiserad vinst. Den exakta satsen ändras varje år, så slå upp årets sats i stället för att bära ett gammalt tal."
         },
         {
           "typ": "single",

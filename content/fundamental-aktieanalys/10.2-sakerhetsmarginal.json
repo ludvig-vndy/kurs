@@ -10,18 +10,18 @@
       "typ": "intro",
       "kicker": "LEKTION 10.2",
       "titel": "Säkerhetsmarginal",
-      "ingress": "Din uppskattning av ett bolags värde är en kvalificerad åsikt, inte ett facit. Felmarginalen är hur du ändå tål att ha fel."
+      "ingress": "Ditt värde på ett bolag är en kvalificerad gissning, inte ett facit. Säkerhetsmarginalen är det som låter dig ha fel utan att det kostar dig pengar."
     },
     {
       "typ": "reading",
       "kicker": "GRUNDEN",
-      "lead": "Du skyddar dig genom att köpa till ett pris bekvämt under din värdeuppskattning. Glappet däremellan är din buffert mot att ha fel: mot för optimistiska antaganden, mot otur, mot det du inte kunde förutse.",
-      "highlight": "Du skyddar dig genom att köpa till ett pris bekvämt under din värdeuppskattning.",
+      "lead": "Du skyddar dig genom att köpa till ett pris bekvämt under ditt värde. Glappet däremellan är din buffert: mot för optimistiska antaganden, mot otur, mot det du inte kunde se komma.",
+      "highlight": "Du skyddar dig genom att köpa till ett pris bekvämt under ditt värde.",
       "brodtext": [
-        "Logiken är ödmjuk och därför stark. Din uppskattning av ett bolags värde är en kvalificerad åsikt, inte ett facit, och framtiden är okänd. Ju större rabatt mot värdet, desto mer kan gå snett medan du ändå undviker permanent förlust. Felmarginalen är hur du förvandlar en oundvikligen felbar analys till en investering som tål att du ibland har fel.",
-        "Hur stor marginal du behöver skalar med osäkerheten. För en stabil, förutsägbar verksamhet du förstår väl kan en mindre rabatt räcka. För en svårare, mer svårbedömd verksamhet bör du kräva en betydligt större. Marginalen kalibreras mot ditt självförtroende, och det självförtroendet ska vara ärligt grundat."
+        "Logiken bygger på ödmjukhet, och det är därför den håller. Ditt värde på ett bolag är en kvalificerad gissning, inte ett facit, och framtiden känner du inte. Ju större rabatt mot värdet, desto mer kan gå snett utan att du förlorar pengar för gott. Marginalen är det som gör en analys som ibland slår fel till en investering som ändå tål det.",
+        "Hur stor marginal du behöver beror på hur osäker du är. Ett stabilt, förutsägbart bolag du förstår väl kan klara sig på en mindre rabatt. Ett svårare bolag bör du kräva mycket mer för. Du kalibrerar marginalen mot ditt självförtroende, och det självförtroendet ska vara ärligt."
       ],
-      "takeaway": "Det svåraste är att en genuin rabatt inte alltid finns. Då är det disciplinerade draget att vänta, hålla kontanter eller befintliga innehav, tills ett pris faktiskt erbjuder en marginal."
+      "takeaway": "Det svåra är att rabatten inte alltid finns. Då är det disciplinerade draget att vänta, sitta på kontanter eller det du redan äger, tills ett pris faktiskt ger dig en marginal."
     },
     {
       "typ": "concept",
@@ -30,12 +30,12 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Köpa till värde", "text": "Tunn eller obefintlig rabatt. Är du det minsta för optimistisk, eller går något snett, förlorar du pengar. Du satsar helt enkelt på att ha rätt." },
-          { "rubrik": "Köpa under värde", "text": "En tjock buffert mot misstag och otur. Bufferten absorberar en del av slaget innan det blir en förlust, och billigheten lämnar samtidigt mer uppsida när priset söker sig mot värdet." }
+          { "rubrik": "Köpa till värde", "text": "Tunn eller ingen rabatt. Är du det minsta för optimistisk, eller går något snett, förlorar du pengar. Du satsar på att ha rätt." },
+          { "rubrik": "Köpa under värde", "text": "En tjock buffert mot misstag och otur. Den tar en del av slaget innan det blir en förlust, och du har samtidigt mer att tjäna när priset rör sig mot värdet." }
         ],
-        "figurtext": "Felmarginalen ger både skydd och avkastning på en gång."
+        "figurtext": "Rabatten ger dig skydd och avkastning samtidigt."
       },
-      "forklaring": "Var din uppskattning för optimistisk köpte du ändå under det verkliga värdet, och händer något oturligt absorberar rabatten en del av slaget innan den blir en förlust. Poängen är inte att hitta saker värda exakt vad du betalar, utan att köpa så långt under värdet att du står skyddad även när du har fel. Tror du till exempel att ett bolag är värt runt 100 kr och köper i 60, är felmarginalen 40 procent, en buffert på 40 kr per aktie (illustrativt)."
+      "forklaring": "Var din uppskattning för optimistisk köpte du ändå under det verkliga värdet, och händer något oturligt tar rabatten en del av slaget innan det blir en förlust. Du letar inte efter saker värda exakt vad du betalar, utan köper så långt under värdet att du står kvar även när du har fel. Tror du att ett bolag är värt runt 100 kr och köper i 60, har du en marginal på 40 procent, en buffert på 40 kr per aktie (illustrativt)."
     },
     {
       "typ": "quiz",
@@ -49,7 +49,7 @@
             "Att sprida köpet över flera tillfällen för att snitta in sig"
           ],
           "ratt": [0],
-          "forklaring": "Felmarginalen är glappet mellan ett konservativt uppskattat värde och priset du betalar. Den bufferten skyddar mot att du har fel och mot otur."
+          "forklaring": "Säkerhetsmarginalen är glappet mellan ett försiktigt uppskattat värde och priset du betalar. Bufferten skyddar dig mot att ha fel och mot otur."
         },
         {
           "typ": "single",
@@ -60,7 +60,7 @@
             "Den ska vara större ju mer aktiens pris svänger"
           ],
           "ratt": [1],
-          "forklaring": "Marginalen kalibreras mot ditt ärligt grundade självförtroende. Ett stabilt bolag inom din kompetenscirkel kräver mindre buffert än ett svårbedömt."
+          "forklaring": "Du kalibrerar marginalen mot ditt ärliga självförtroende. Ett stabilt bolag du förstår väl kräver mindre buffert än ett svårbedömt."
         },
         {
           "typ": "multi",
@@ -73,7 +73,7 @@
             "Du köper till rättvist värde och intalar dig att det egentligen är billigt"
           ],
           "ratt": [0, 2],
-          "forklaring": "Disciplin är en meningsfull rabatt mot ett konservativt värde och tålamodet att vänta på den. Samma lilla marginal för det riskabla, eller otålighet förklädd till övertygelse, är tvärtom varningstecken."
+          "forklaring": "Disciplin är en meningsfull rabatt mot ett försiktigt värde och tålamodet att vänta på den. Samma lilla marginal för det riskabla, eller otålighet utklädd till övertygelse, är varningstecken."
         }
       ]
     }

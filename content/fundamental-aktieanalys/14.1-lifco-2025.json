@@ -10,16 +10,16 @@
       "typ": "intro",
       "kicker": "FALLSTUDIE 14.1",
       "titel": "Lifco, räkenskapsåret 2025",
-      "ingress": "Du har lärt dig delarna var för sig. Nu körs hela tratten en gång, från början till slut, på ett verkligt bolags rapporterade tal."
+      "ingress": "Du har lärt dig delarna var för sig. Nu kör vi hela tratten en gång, hela vägen, på ett riktigt bolags rapporterade tal."
     },
     {
       "typ": "reading",
       "kicker": "SÅ LÄSER DU DET HÄR",
-      "lead": "Vi går igenom Lifcos räkenskapsår 2025, så som det rapporterades den 30 januari 2026. Det är ingen aktuell värdering och inget köp- eller säljråd. Ett räkenskapsår är permanent, så metoden vi övar åldras inte även om aktien rör sig vidare imorgon.",
+      "lead": "Vi går igenom Lifcos räkenskapsår 2025, så som det rapporterades den 30 januari 2026. Det här är ingen färsk värdering och inget köp- eller säljråd. Ett räkenskapsår är permanent, så metoden vi övar åldras inte även om aktien rör sig vidare imorgon.",
       "highlight": "Ett räkenskapsår är permanent",
       "brodtext": [
-        "Två regler styr genomgången. Först: bara tal som faktiskt står i Lifcos rapport för 2025 används, saknas något hämtas det ur primärkällan i stället för att gissas. Sedan skiljer vi hårt på två sorters tal. Rapporterat betyder att talet kommer direkt ur bokslutsrapporten. Härlett betyder att det är uträknat ur de rapporterade talen, och då visas uträkningen så att du kan göra om den.",
-        "Lifco är en decentraliserad serieförvärvare av marknadsledande nischbolag med starka kassaflöden, och bestod vid slutet av 2025 av 275 rörelsebolag i 37 länder, i tre affärsområden: Dental, Demolition & Tools och Systems Solutions. Stanna vid orden, för affärsmodellen avgör hur du läser allt som följer. Decentraliserad: bolagen drivs självständigt, huvudkontoret allokerar kapital snarare än mikrostyr. Serieförvärvare: en stor del av tillväxten kommer av att köpa fler bolag, inte bara av att de befintliga växer. Marknadsledande nischbolag: en kvalitativ ledtråd om konkurrensfördel."
+        "Två regler styr genomgången. Först: vi använder bara tal som faktiskt står i Lifcos rapport för 2025, och saknas något hämtar vi det ur primärkällan i stället för att gissa. Sedan skiljer vi hårt på två sorters tal. Rapporterat betyder att talet kommer rakt ur bokslutsrapporten. Härlett betyder att vi räknat fram det ur de rapporterade talen, och då visar vi uträkningen så att du kan göra om den.",
+        "Lifco är en decentraliserad serieförvärvare av marknadsledande nischbolag med starka kassaflöden. Vid slutet av 2025 bestod bolaget av 275 rörelsebolag i 37 länder, fördelade på tre affärsområden: Dental, Demolition & Tools och Systems Solutions. Stanna vid orden, för affärsmodellen avgör hur du läser allt som följer. Decentraliserad: bolagen drivs självständigt, och huvudkontoret allokerar kapital i stället för att mikrostyra. Serieförvärvare: mycket av tillväxten kommer av att köpa fler bolag, inte bara av att de befintliga växer. Marknadsledande nischbolag: en ledtråd om konkurrensfördel."
       ],
       "rost": "sebastian",
       "takeaway": "Kör hela kedjan på ett riktigt bolag, så ser du att det mesta är tråkigt jobb: läsa, räkna, kräva marginal. De flesta orkar inte. Det är därför det lönar sig."
@@ -31,28 +31,28 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Exklusive goodwill: 132 procent", "text": "Mäter de underliggande rörelserna själva, avkastningen på det kapital som faktiskt arbetar i verksamheten: maskiner, lager, rörelsekapital. En sällsynt siffra som berättar att Lifco äger kapitalsnåla, högavkastande nischbolag. Fingeravtrycket av verklig kvalitet." },
-          { "rubrik": "Inklusive goodwill: kring 20 procent", "text": "Räknar in vad Lifco betalade för att köpa bolagen. Fortfarande klart över en normal kapitalkostnad, men jordnära jämfört med 132. Här syns priset på förvärven." }
+          { "rubrik": "Exklusive goodwill: 132 procent", "text": "Mäter de underliggande rörelserna, avkastningen på det kapital som verkligen arbetar i verksamheten: maskiner, lager, rörelsekapital. En sällsynt siffra som säger att Lifco äger kapitalsnåla, högavkastande nischbolag. Fingeravtrycket av riktig kvalitet." },
+          { "rubrik": "Inklusive goodwill: kring 20 procent", "text": "Räknar in vad Lifco betalade för att köpa bolagen. Fortfarande klart över en normal kapitalkostnad, men jordnära bredvid 132. Här syns priset på förvärven." }
         ],
         "figurtext": "Avkastning på sysselsatt kapital vid årsskiftet, rapporterat för räkenskapsåret 2025."
       },
-      "forklaring": "Läs talen tillsammans, var för sig utelämnar de halva sanningen. Bara 132 procent vore att låtsas att förvärven var gratis. Bara 20 procent vore att missa att den underliggande maskinen är exceptionell. Båda gäller samtidigt: Lifco köper utmärkta verksamheter, och avkastningen du som ägare till slut får beror på hur disciplinerat priset på förvärven är."
+      "forklaring": "Läs talen tillsammans, var för sig döljer de halva sanningen. Bara 132 procent vore att låtsas att förvärven var gratis. Bara 20 procent vore att missa att den underliggande maskinen är exceptionell. Båda gäller samtidigt: Lifco köper utmärkta verksamheter, och avkastningen du som ägare till slut får hänger på hur disciplinerat priset på förvärven är."
     },
     {
       "typ": "reading",
       "kicker": "TILLVÄXTENS KVALITET",
-      "lead": "Takten säger lite, det är kvaliteten på tillväxten som avgör vad den är värd. Lifcos omsättning steg till 28 251 miljoner kronor mot 26 137 året innan, upp 8,1 procent, men den siffran måste brytas ned innan den betyder något.",
+      "lead": "Takten säger lite, det är kvaliteten på tillväxten som avgör vad den är värd. Lifcos omsättning steg till 28 251 miljoner kronor mot 26 137 året innan, upp 8,1 procent. Men den siffran måste brytas ned innan den betyder något.",
       "highlight": "det är kvaliteten på tillväxten som avgör vad den är värd",
       "brodtext": [
-        "Av de 8,1 procenten var 4,2 procentenheter organiska, alltså drivna av att de befintliga bolagen sålde mer. Valutaeffekter drog ned omsättningen med 3,5 procent, och under året konsoliderades 16 förvärv. Resten av tillväxten är alltså förvärvad.",
-        "Att skilja på källorna är vad tillväxtkvalitet handlar om. Organisk tillväxt är den dyraste och mest värdefulla sorten, eftersom den inte kräver att du köper den. 4,2 procent är blygsamt men positivt, maskinen står inte still mellan förvärven. Sexton förvärv på ett år är en industriell takt, och den förklarar varför kontrasten i ROCE med och utan goodwill är så central: tillväxten är till stor del förvärvsmotorn. Valutan, minus 3,5 procent, påminner om att rapporterad och underliggande tillväxt inte är samma sak."
+        "Av de 8,1 procenten var 4,2 procentenheter organiska, drivna av att de befintliga bolagen sålde mer. Valutan drog ned omsättningen med 3,5 procent, och under året konsoliderades 16 förvärv. Resten av tillväxten är alltså köpt.",
+        "Att skilja på källorna är vad tillväxtkvalitet handlar om. Organisk tillväxt är den dyraste och mest värdefulla sorten, för du behöver inte köpa den. 4,2 procent är blygsamt men positivt: maskinen står inte still mellan förvärven. Sexton förvärv på ett år är en industriell takt, och den visar varför skillnaden i ROCE med och utan goodwill är så central, tillväxten är till stor del förvärvsmotorn. Valutan, minus 3,5 procent, påminner om att rapporterad och underliggande tillväxt inte är samma sak."
       ],
-      "takeaway": "Bryt alltid isär rapporterad tillväxt i organiskt, förvärvat och valuta. Tre helt olika sorters tillväxt göms i en enda procentsats."
+      "takeaway": "Bryt alltid isär rapporterad tillväxt i organiskt, förvärvat och valuta. Tre helt olika sorters tillväxt gömmer sig i en enda procentsats."
     },
     {
       "typ": "dataviz",
       "titel": "Var tillväxten kom ifrån",
-      "underrubrik": "De 8,1 procenten i omsättningstillväxt består av tre helt olika delar. Bara en av dem är gratis.",
+      "underrubrik": "De 8,1 procenten i omsättningstillväxt består av tre helt olika delar. Bara en av dem kommer gratis.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -64,7 +64,7 @@
         "etiketter": "Bidrag till omsättningstillväxt 2025, procentenheter",
         "figurtext": "Organiskt och valuta är rapporterade. Förvärvsbidraget på 7,4 är härlett (8,1 minus 4,2 plus 3,5)."
       },
-      "slutsats": "Den organiska delen är liten men den dyrbaraste. Merparten av tillväxten köptes, vilket gör disciplinen i förvärvspriset till hela frågan, och det är därför ROCE inklusive goodwill betyder så mycket för just Lifco."
+      "slutsats": "Den organiska delen är liten men dyrbarast. Merparten av tillväxten köptes, och det gör disciplinen i förvärvspriset till hela frågan. Just därför betyder ROCE inklusive goodwill så mycket för Lifco."
     },
     {
       "typ": "reading",
@@ -72,10 +72,10 @@
       "lead": "Varför kan de underliggande bolagen hålla en sådan avkastning utan att konkurrensen äter upp den? Svaret ligger i kvaliteten på nischerna, och den höga avkastningen exklusive goodwill är det finansiella fingeravtrycket av att fördelarna är verkliga.",
       "highlight": "den höga avkastningen exklusive goodwill är det finansiella fingeravtrycket av att fördelarna är verkliga",
       "brodtext": [
-        "En liten nischmarknad rymmer ofta bara en eller ett fåtal seriösa leverantörer. Marknaden är för liten för att locka stora utmanare, och den ledande aktören har skala, kundrelationer och rykte som en nykomling skulle ha svårt och dyrt att kopiera. Det ger prissättningskraft och uthållig avkastning, precis den sortens vallgrav som skyddar marginalerna. Utan den hade konkurrensen redan ätit upp dem.",
-        "En ärlig nyans: en moat hos ett enskilt litet bolag är sällan en bred, oövervinnlig vallgrav. Styrkan i Lifco-modellen ligger lika mycket i bredden, många små försvarbara positioner i 37 länder, som i djupet hos någon enskild. För vårt syfte räcker slutsatsen att kvaliteten är hög och försvarad. Den svåra frågan kommer längre fram: priset."
+        "En liten nischmarknad rymmer ofta bara en eller ett fåtal seriösa leverantörer. Den är för liten för att locka stora utmanare, och den ledande aktören har skala, kundrelationer och rykte som en nykomling skulle ha svårt och dyrt att kopiera. Det ger prissättningskraft och uthållig avkastning, just den sortens vallgrav som skyddar marginalerna. Utan den hade konkurrensen redan ätit upp dem.",
+        "En ärlig nyans: en vallgrav hos ett enskilt litet bolag är sällan bred och oövervinnlig. Styrkan i Lifco-modellen ligger lika mycket i bredden, många små försvarbara positioner i 37 länder, som i djupet hos något enskilt bolag. För vårt syfte räcker det att kvaliteten är hög och försvarad. Den svåra frågan kommer längre fram: priset."
       ],
-      "takeaway": "Hög och uthållig avkastning på kapitalet är effekten. Konkurrensfördelen är orsaken. Saknas en trolig orsak är den höga avkastningen sannolikt lånad från framtiden."
+      "takeaway": "Hög och uthållig avkastning på kapitalet är effekten, konkurrensfördelen är orsaken. Saknas en trolig orsak är den höga avkastningen sannolikt lånad från framtiden."
     },
     {
       "typ": "reading",
@@ -83,8 +83,8 @@
       "lead": "Hos en serieförvärvare är kapitalallokering själva verksamheten. Lifco behåller merparten av vinsten och plöjer tillbaka den i nya förvärv, och delar ut resten enligt en policy på 30 till 50 procent av nettovinsten.",
       "highlight": "Hos en serieförvärvare är kapitalallokering själva verksamheten.",
       "brodtext": [
-        "Den föreslagna utdelningen för 2025 är 2,70 kronor per aktie, men utdelningen följer av policyn, huvudnumret är återinvesteringen. Det är en ren och disciplinerad logik så länge förvärven görs till priser som ger god avkastning, och ROCE-talen antyder att de historiskt har det.",
-        "Disciplinen syns i balansräkningen, och här läser du skuldsättningen mot bolagets eget tak, inte mot en abstrakt norm. Den räntebärande nettoskulden var 7 801 miljoner kronor per årsskiftet, vilket motsvarar 1,7 gånger EBITDA mot 1,8 året innan, och mot ett självpåtaget tak på 3 gånger. Lifco använder alltså ungefär halva sitt eget utrymme. Det är ett medvetet val: en serieförvärvare vill ha torrt krut och inte sitta vid taket när ett tillfälle dyker upp. Att kvoten dessutom föll säger att 2025 års förvärv inte finansierades genom att tänja balansräkningen."
+        "Den föreslagna utdelningen för 2025 är 2,70 kronor per aktie, men utdelningen följer av policyn. Huvudnumret är återinvesteringen. Logiken är ren och disciplinerad så länge förvärven görs till priser som ger god avkastning, och ROCE-talen antyder att de historiskt har det.",
+        "Disciplinen syns i balansräkningen, och här läser du skuldsättningen mot bolagets eget tak, inte mot en abstrakt norm. Den räntebärande nettoskulden var 7 801 miljoner kronor vid årsskiftet, alltså 1,7 gånger EBITDA mot 1,8 året innan, och mot ett självpåtaget tak på 3 gånger. Lifco använder ungefär halva sitt utrymme. Det är ett medvetet val: en serieförvärvare vill ha torrt krut och slipper sitta vid taket när ett tillfälle dyker upp. Att kvoten dessutom föll säger att 2025 års förvärv inte finansierades genom att tänja balansräkningen."
       ],
       "takeaway": "Läs en serieförvärvares skuld mot dess eget tak och dess riktning. 1,7 fallande mot ett tak på 3,0 är disciplin, inte svaghet."
     },
@@ -101,7 +101,7 @@
           { "kategori": "Koncernen", "varde": 22.4 }
         ],
         "etiketter": "EBITA-marginal i procent, helår 2025",
-        "figurtext": "Rapporterade tal. Demolition & Tools förbättrade marginalen mest, från 23,9 till 24,9. Systems Solutions föll från 24,1 till 23,0, troligen av integrationskostnader."
+        "figurtext": "Rapporterade tal. Demolition & Tools förbättrade marginalen mest, från 23,9 till 24,9. Systems Solutions föll från 24,1 till 23,0, troligen på integrationskostnader."
       },
       "slutsats": "En koncernmarginal på 22,4 procent består av rörliga delar som drar åt olika håll. Öppna snittet, annars ser du inte var lönsamheten skapas eller vart den är på väg."
     },
@@ -118,7 +118,7 @@
         ],
         "figurtext": "Rapporterade andelar. Systems Solutions är tyngdpunkten, drygt halva vinsten och störst omsättning (15 160 MSEK), och växte snabbast med 13,2 procent organiskt."
       },
-      "slutsats": "Systems Solutions bär över hälften av vinsten, så koncernens öde hänger till stor del på det området. Där ska du lägga din uppmärksamhet när du följer bolaget vidare."
+      "slutsats": "Systems Solutions bär över hälften av vinsten, så koncernens öde hänger till stor del på det området. Där ska du lägga blicken när du följer bolaget vidare."
     },
     {
       "typ": "reading",
@@ -126,8 +126,8 @@
       "lead": "Bakom vinsten ska det finnas riktiga kontanter. Kassaflödet från löpande verksamhet var 5 124 miljoner kronor mot 4 630 året innan, upp 10,7 procent, alltså snabbare än EBITA som steg 6,8 procent till 6 318 miljoner.",
       "highlight": "Bakom vinsten ska det finnas riktiga kontanter.",
       "brodtext": [
-        "Att kassaflödet växer i takt med eller snabbare än vinsten är ett gott tecken: vinsten är mer än en bokföringspost. Nettoresultatet landade på 3 669 miljoner, upp 9,6 procent, och vinst per aktie på 8,00 kronor, upp 10,0 procent. Marginalen på 22,4 procent mot 22,6 är hög och stabil, nedgången är brus snarare än trend.",
-        "En enskild årssiffra säger ändå nästan ingenting, det är nivån och trenden över tid som skiljer kvalitet från tur. Över tioårsperioden 2015 till 2025 rapporterar Lifco ungefär 18 procents årlig tillväxt i EBITA, 16 procent i vinst per aktie och 18 procent i operativt kassaflöde. Att kassaflödet växte i takt med vinsten över hela perioden är ett ovanligt rent spår, och bekräftar att 2025 är en fortsättning på en lång, disciplinerad förvärvsmaskin, inte ett undantagsår."
+        "Att kassaflödet växer i takt med vinsten, eller snabbare, är ett gott tecken: vinsten är mer än en bokföringspost. Nettoresultatet landade på 3 669 miljoner, upp 9,6 procent, och vinst per aktie på 8,00 kronor, upp 10,0 procent. Marginalen på 22,4 procent mot 22,6 är hög och stabil, nedgången är brus och inte trend.",
+        "En enskild årssiffra säger ändå nästan ingenting. Det är nivån och trenden över tid som skiljer kvalitet från tur. Över tioårsperioden 2015 till 2025 rapporterar Lifco ungefär 18 procents årlig tillväxt i EBITA, 16 procent i vinst per aktie och 18 procent i operativt kassaflöde. Att kassaflödet växte i takt med vinsten över hela perioden är ett ovanligt rent spår, och bekräftar att 2025 är en fortsättning på en lång, disciplinerad förvärvsmaskin, inte ett undantagsår."
       ],
       "takeaway": "Stäm alltid av vinst mot kassaflöde, och en enskild årssiffra mot den långa trenden. Uthållighet över ett decennium är svårt att fejka."
     },
@@ -137,10 +137,10 @@
       "lead": "Nu, och först nu, tittar vi på priset. Aktien handlades runt 305 kronor på rapportdagen 30 januari 2026, det enda rapporterade pristalet. Härifrån räknar vi själva, och allt som följer är härlett.",
       "highlight": "Nu, och först nu, tittar vi på priset.",
       "brodtext": [
-        "Vinst per aktie var 8,00 kronor, vilket ger P/E omkring 38 gånger (305 delat med 8,00). Bygger vi rörelsevärdet på den räntebärande nettoskulden på 7 801 miljoner blir EV ungefär 147 till 148 miljarder kronor, och mot en EBITA på 6 318 miljoner ger det EV/EBITA kring 23 gånger. Den föreslagna utdelningen på 2,70 kronor ger en direktavkastning runt 0,9 procent. Jag rundar medvetet, vi är ute efter storleksordningen.",
-        "P/E kring 38 och EV/EBITA kring 23 är höga multiplar, en rejäl premie mot en genomsnittlig börs, och direktavkastningen på 0,9 procent pekar åt samma håll. Det du betalar för är förväntad tillväxt och fortsatt återinvestering till hög avkastning, knappast utdelningskronorna. Marknaden prissätter Lifco som det kvalitetsbolag det är. Då flyttas frågan från om bolaget är bra till vad som måste vara sant i framtiden för att prislappen ska vara rättvis."
+        "Vinst per aktie var 8,00 kronor, vilket ger P/E omkring 38 gånger (305 delat med 8,00). Bygger vi rörelsevärdet på den räntebärande nettoskulden på 7 801 miljoner blir EV ungefär 147 till 148 miljarder kronor, och mot en EBITA på 6 318 miljoner ger det EV/EBITA kring 23 gånger. Den föreslagna utdelningen på 2,70 kronor ger en direktavkastning runt 0,9 procent. Jag rundar med flit, vi är ute efter storleksordningen.",
+        "P/E kring 38 och EV/EBITA kring 23 är höga multiplar, en rejäl premie mot en genomsnittlig börs, och direktavkastningen på 0,9 procent pekar åt samma håll. Det du betalar för är förväntad tillväxt och fortsatt återinvestering till hög avkastning, knappast utdelningskronorna. Marknaden prissätter Lifco som det kvalitetsbolag det är. Då flyttas frågan från om bolaget är bra till vad som måste vara sant i framtiden för att prislappen ska hålla."
       ],
-      "takeaway": "Räkna multiplarna själv ur de rapporterade talen, och läs dem som ett hopvikt antagande om framtiden, inte som ett omdöme om dyrt eller billigt i sig."
+      "takeaway": "Räkna multiplarna själv ur de rapporterade talen, och läs dem som ett hopvikt antagande om framtiden, inte som en dom över dyrt eller billigt i sig."
     },
     {
       "typ": "reading",
@@ -148,20 +148,20 @@
       "lead": "Här ligger kärnan i hela fallet. Allt vi sett pekar åt samma håll, ett uppenbart kvalitetsbolag, och faran är att stanna där. Hög kvalitet skyddar dig inte om du betalar för en perfekt framtid.",
       "highlight": "Hög kvalitet skyddar dig inte om du betalar för en perfekt framtid.",
       "brodtext": [
-        "P/E kring 38 betyder att priset bygger in många år av fortsatt hög tillväxt och bevarad lönsamhet. För att värderingen ska visa sig rimlig måste förvärvsmaskinen fortsätta hitta bra bolag till bra priser, marginalerna hålla, och den organiska tillväxten inte tyna bort. Det kan mycket väl ske, modellen har levererat i ett decennium. Men marknaden tar redan betalt för det, förväntan är inbakad i priset.",
-        "Felmarginalen är skillnaden mellan vad något är värt och vad du betalar, ett skydd mot dina egna misstag och mot otur. När du köper ett fantastiskt bolag till en hög multipel köper du samtidigt bort en del av den marginalen, för priset lämnar mindre utrymme för besvikelser. Notera vad genomgången avstår från: ingen DCF byggs och inget påstås om vad Lifco är värt, för det skulle kräva antaganden om framtida tillväxt och en diskonteringsränta som inte finns i källan."
+        "P/E kring 38 betyder att priset bygger in många år av fortsatt hög tillväxt och bevarad lönsamhet. För att värderingen ska visa sig rimlig måste förvärvsmaskinen fortsätta hitta bra bolag till bra priser, marginalerna hålla, och den organiska tillväxten inte tyna bort. Det kan mycket väl gå så, modellen har levererat i ett decennium. Men marknaden tar redan betalt för det, förväntan är inbakad i priset.",
+        "Felmarginalen är skillnaden mellan vad något är värt och vad du betalar, ett skydd mot dina egna misstag och mot otur. Köper du ett fantastiskt bolag till en hög multipel köper du samtidigt bort en del av den marginalen, för priset lämnar mindre utrymme för besvikelser. Notera vad genomgången avstår från: vi bygger ingen DCF och påstår inget om vad Lifco är värt, för det skulle kräva antaganden om framtida tillväxt och en diskonteringsränta som inte finns i källan."
       ],
       "takeaway": "Du går inte härifrån med ett svar. Du går härifrån med rätt fråga: vad är inbakat i priset, och var finns marginalen om jag har fel?"
     },
     {
       "typ": "reading",
       "kicker": "VAD DU SKULLE SKRIVA I CASET",
-      "lead": "Avsluta som en disciplinerad investerare gör: översätt analysen till ett skrivet, falsifierbart case. Det är en metod-slutsats om hur man arbetar, och den lämnar luckor öppna där källan saknar tal.",
+      "lead": "Avsluta som en disciplinerad investerare gör: översätt analysen till ett skrivet, falsifierbart case. Det är en slutsats om metoden, om hur du arbetar, och den lämnar luckor öppna där källan saknar tal.",
       "highlight": "översätt analysen till ett skrivet, falsifierbart case",
       "brodtext": [
         "Tes i utkast: Lifco är en bevisat skicklig serieförvärvare med mycket hög avkastning på det underliggande kapitalet, en tioårig tillväxttrend kring 16 till 18 procent och en disciplinerad balansräkning. Kvaliteten är avgjord. Den öppna frågan är priset, en premie på P/E kring 38 som bygger in fortsatt hög tillväxt. Ett verkligt case skulle här kräva ett eget värderingsintervall och en uttalad felmarginal vid dagens pris innan det blir ett beslut. Utan den uträkningen stannar slutsatsen vid bevaka.",
         "Nyckelantaganden att bevaka: att förvärvsmotorn fortsätter köpa bra bolag till bra priser, att den organiska tillväxten inte vänder ned varaktigt, att EBITA-marginalen håller sig kring de tjugotalet procent, och att skuldsättningen stannar väl under taket på 3 gånger EBITDA.",
-        "Falsifieringsvillkor, de observerbara saker som skulle säga att tesen brustit: att den organiska tillväxten blir negativ flera kvartal i rad, att förvärven börjar ske till priser som tydligt sänker avkastningen på sysselsatt kapital, att marginalen faller under en namngiven tröskel, eller att skulden kryper mot taket utan motsvarande avkastning."
+        "Falsifieringsvillkor, det du kan observera som skulle säga att tesen brustit: att den organiska tillväxten blir negativ flera kvartal i rad, att förvärven börjar ske till priser som tydligt sänker avkastningen på sysselsatt kapital, att marginalen faller under en namngiven tröskel, eller att skulden kryper mot taket utan motsvarande avkastning."
       ],
       "takeaway": "Skriv ned tesen, räkna din egen värdering, kräv en felmarginal, sätt falsifieringsvillkor. Först då, med allt på papper och daterat, fattar du ett beslut."
     },
@@ -177,7 +177,7 @@
             "Skillnaden beror på valutaeffekter under året"
           ],
           "ratt": [1],
-          "forklaring": "Talet exklusive goodwill mäter avkastningen på det kapital som arbetar i verksamheten. Inklusive goodwill räknas köpeskillingen för förvärven in. Båda gäller samtidigt, och skillnaden är själva serieförvärvar-historien."
+          "forklaring": "Talet exklusive goodwill mäter avkastningen på det kapital som arbetar i verksamheten. Inklusive goodwill räknas köpeskillingen för förvärven in. Båda gäller samtidigt, och skillnaden mellan dem är själva serieförvärvar-historien."
         },
         {
           "typ": "single",
@@ -199,7 +199,7 @@
             "Som irrelevant, skuldsättning spelar ingen roll för serieförvärvare"
           ],
           "ratt": [1],
-          "forklaring": "1,7 fallande mot ett tak på 3,0 betyder att 2025 års förvärv inte finansierades genom att tänja balansräkningen. Att hålla utrymme kvar är ett medvetet val hos någon som vill kunna slå till på förvärv."
+          "forklaring": "1,7 fallande mot ett tak på 3,0 betyder att 2025 års förvärv inte finansierades genom att tänja balansräkningen. Att hålla utrymme kvar är ett medvetet val hos någon som vill kunna slå till när ett förvärv dyker upp."
         },
         {
           "typ": "single",

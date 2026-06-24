@@ -10,31 +10,31 @@
       "typ": "intro",
       "kicker": "LEKTION 9.1",
       "titel": "Multiplar och deras fällor",
-      "ingress": "Multiplar är det språk marknaden pratar värdering på. Slår du upp ett bolag någonstans möts du av P/E, EV/EBIT, P/S, men fel multipel på fel bolag ger ett självsäkert och vilseledande svar."
+      "ingress": "Multiplar är det språk marknaden pratar värdering på. Slår du upp ett bolag möts du av P/E, EV/EBIT, P/S. Men fel multipel på fel bolag ger dig ett tvärsäkert svar som råkar vara fel."
     },
     {
       "typ": "reading",
       "kicker": "TVÅ FAMILJER",
-      "lead": "En multipel är ett pris delat med ett fundamentalt mått: vinst, försäljning, eget kapital. De vanligaste faller i två familjer, och den uppdelningen är det viktigaste du tar med dig härifrån.",
+      "lead": "En multipel är ett pris delat med ett fundamentalt mått: vinst, försäljning, eget kapital. De vanligaste faller i två familjer, och den uppdelningen är det viktigaste du tar med dig.",
       "highlight": "De vanligaste faller i två familjer",
       "brodtext": [
-        "Equity-multiplar byggs på börsvärdet, alltså priset på det egna kapitalet. P/E (pris genom vinst per aktie), P/S (börsvärde genom omsättning) och P/B (börsvärde genom bokfört eget kapital) hör hit. De ser bolaget ur aktieägarens stol, efter att långivarna fått sitt.",
+        "Equity-multiplar byggs på börsvärdet, alltså priset på det egna kapitalet. Hit hör P/E (pris genom vinst per aktie), P/S (börsvärde genom omsättning) och P/B (börsvärde genom bokfört eget kapital). De ser bolaget ur aktieägarens stol, efter att långivarna fått sitt.",
         "EV-multiplar byggs på rörelsevärdet, Enterprise Value. EV är börsvärde plus nettoskuld, alltså priset på hela verksamheten oavsett hur den är finansierad. Hit hör EV/EBIT (rörelsevärde genom rörelseresultat) och EV/EBITDA (rörelsevärde genom resultat före av- och nedskrivningar).",
-        "Den avgörande skillnaden: EV-multiplar tar hänsyn till skulden, equity-multiplar gör det inte. EV räknar in nettoskulden i täljaren, och EBIT respektive EBITDA är resultatmått före räntor i nämnaren. Båda sidor är rensade från finansiering, vilket gör EV-multiplar kapitalstruktur-neutrala. P/E saknar den egenskapen, eftersom vinsten per aktie är efter räntor."
+        "Skillnaden som avgör allt: EV-multiplar tar hänsyn till skulden, equity-multiplar gör det inte. EV räknar in nettoskulden i täljaren, och EBIT respektive EBITDA är resultat före räntor i nämnaren. Båda sidor är rensade från finansiering, så EV-multiplar är kapitalstruktur-neutrala. Det är P/E inte, eftersom vinsten per aktie är efter räntor."
       ],
-      "takeaway": "Equity-multiplar ser bolaget efter skulden, EV-multiplar ser hela verksamheten före den. Håll isär de två familjerna, det är skillnaden som fäller flest i jämförelser."
+      "takeaway": "Equity-multiplar ser bolaget efter skulden, EV-multiplar ser hela verksamheten före den. Håll isär familjerna. Det är den skillnaden som fäller flest jämförelser."
     },
     {
       "typ": "reading",
       "kicker": "VILKEN MULTIPEL TILL VILKET BOLAG",
-      "lead": "Det finns flera multiplar, var och en gjord för en viss sorts bolag. Ingen är universell, och tumregeln för valet handlar om bolagets typ och kapitalstruktur, inte om vad som råkar vara bekvämt.",
+      "lead": "Det finns flera multiplar, var och en gjord för en viss sorts bolag. Ingen är universell. Valet styrs av bolagets typ och kapitalstruktur, inte av vad som råkar vara bekvämt.",
       "highlight": "Ingen är universell",
       "brodtext": [
-        "P/E är den mest kända och intuitiva, hur många års vinst du betalar, men den passar bara lönsamma och relativt stabila bolag, och snedvrids av skuld, av engångsposter och av cykliska toppar och dalar. EV/EBIT är ofta det bästa allroundmåttet, eftersom det neutraliserar kapitalstrukturen och låter dig jämföra rättvist. EV/EBITDA är som EV/EBIT men före avskrivningar, populärt i kapitaltunga branscher, med en varning: EBITDA ignorerar den verkliga kostnaden för att hålla tillgångarna i skick och kan få en kapitalslukande verksamhet att se billigare ut än den är. Korskolla det alltid mot fritt kassaflöde.",
-        "P/S sätter börsvärdet mot omsättningen och har egentligen bara en användning, bolag utan meningsfull vinst ännu, för den ignorerar lönsamhet helt. P/B sätter börsvärdet mot bokfört eget kapital och är mest relevant där tillgångarna i balansräkningen ligger nära sitt verkliga värde, framför allt banker och tillgångstunga bolag. För tillgångssnåla bolag som mjukvara och varumärken säger den lite, eftersom det mesta av värdet inte är bokfört.",
+        "P/E är den mest kända och intuitiva, hur många års vinst du betalar. Men den passar bara lönsamma och hyfsat stabila bolag, och snedvrids av skuld, av engångsposter och av cykliska toppar och dalar. EV/EBIT är ofta det bästa allroundmåttet, eftersom det neutraliserar kapitalstrukturen och låter dig jämföra rättvist. EV/EBITDA är detsamma men före avskrivningar, populärt i kapitaltunga branscher. En varning: EBITDA ignorerar vad det faktiskt kostar att hålla tillgångarna i skick och kan få en kapitalslukande verksamhet att se billigare ut än den är. Korskolla alltid mot fritt kassaflöde.",
+        "P/S sätter börsvärdet mot omsättningen och har egentligen bara en användning, bolag utan meningsfull vinst ännu, eftersom den ignorerar lönsamhet helt. P/B sätter börsvärdet mot bokfört eget kapital och är mest relevant där tillgångarna i balansräkningen ligger nära sitt verkliga värde, framför allt banker och tillgångstunga bolag. För tillgångssnåla bolag som mjukvara och varumärken säger den lite, eftersom det mesta av värdet inte står i böckerna.",
         "Tumregeln: lönsamt och stabilt, P/E eller EV/EBIT. Jämförelse över olika skuldsättning, EV/EBIT. Kapitaltungt, EV/EBIT framför P/E, eller EV/EBITDA med varningen i bakhuvudet. Bank och finans, P/B tillsammans med P/E. Ännu olönsamt, P/S, motvilligt."
       ],
-      "takeaway": "Välj multipel efter bolagstyp i stället för att klistra P/E på allt. Frågan är inte om talet är högt eller lågt, utan om det är rätt mått för just det här bolaget."
+      "takeaway": "Välj multipel efter bolagstyp i stället för att klistra P/E på allt. Frågan är inte om talet är högt eller lågt, utan om det ens är rätt mått för det här bolaget."
     },
     {
       "typ": "concept",
@@ -54,19 +54,19 @@
         ],
         "figurtext": "Två identiska verksamheter, samma rörelseresultat. P/E snedvrids av skuld, EV/EBIT är kapitalstruktur-neutral."
       },
-      "forklaring": "Två i grunden identiska verksamheter får olika P/E enbart för att den ena lånat mer, eftersom vinsten per aktie är efter räntor. Skulden både äter av vinsten och krymper börsvärdet, så det belånade bolaget får lägre P/E och frestar dig att kalla det billigare. Men EV-multiplar räknar in nettoskulden i täljaren och bygger på resultat före räntor i nämnaren, så båda sidor är rensade från finansiering. Då syns att verksamheterna värderas exakt lika operativt. Just därför lutar proffs mot EV/EBIT när de jämför bolag med olika skuldsättning, det är det enda sättet att göra jämförelsen rättvis."
+      "forklaring": "Två i grunden identiska verksamheter får olika P/E enbart för att den ena lånat mer, eftersom vinsten per aktie är efter räntor. Skulden äter av vinsten och krymper börsvärdet, så det belånade bolaget får lägre P/E och frestar dig att kalla det billigare. Men EV-multiplar räknar in nettoskulden i täljaren och bygger på resultat före räntor i nämnaren, så båda sidor är rensade från finansiering. Då syns att verksamheterna värderas exakt lika operativt. Därför lutar proffs mot EV/EBIT när de jämför bolag med olika skuldsättning. Det är enda sättet att göra jämförelsen rättvis."
     },
     {
       "typ": "reading",
       "kicker": "VAD EN MULTIPEL FAKTISKT SÄGER",
-      "lead": "Den vanligaste missuppfattningen i hela investeringsvärlden är att en hög multipel betyder dyrt och en låg betyder billigt. En multipel är inte ett mått på dyrt eller billigt. Den är en sammanfattning av marknadens förväntningar.",
-      "highlight": "En multipel är inte ett mått på dyrt eller billigt.",
+      "lead": "Den vanligaste missuppfattningen i hela investeringsvärlden är att en hög multipel betyder dyrt och en låg betyder billigt. En multipel mäter inte dyrt eller billigt. Den sammanfattar marknadens förväntningar.",
+      "highlight": "En multipel mäter inte dyrt eller billigt.",
       "brodtext": [
-        "En multipel är i grunden en förkortning för nuvärdet av framtida kassaflöden. Att betala 15 gånger vinsten antar implicit en viss ström av framtida kontanter, en viss tillväxt och en viss diskonteringsränta. Multipeln packar ihop antagandena i ett enda tal, och därför går den inte att läsa isolerat.",
-        "Tre drivkrafter ligger bakom en motiverad multipel. Tillväxt: ett bolag vars vinster växer snabbt förtjänar en högre multipel, för dess framtida kontanter blir mycket större. Risk: ett bolag med säkra, förutsägbara kassaflöden förtjänar en högre multipel, alltså en lägre diskonteringsränta, ett osäkert en lägre. Avkastning på kapital: ett bolag som växer med hög avkastning på kapital skapar mer värde per tillväxtkrona och förtjänar en högre multipel än ett som växer med låg avkastning. En motiverad multipel är de tre tillsammans.",
+        "En multipel är i grunden en förkortning för nuvärdet av framtida kassaflöden. Betalar du 15 gånger vinsten antar du, utan att säga det, en viss ström av framtida kontanter, en viss tillväxt och en viss diskonteringsränta. Multipeln packar ihop antagandena i ett enda tal. Därför går den inte att läsa för sig.",
+        "Tre saker driver en motiverad multipel. Tillväxt: ett bolag vars vinster växer snabbt förtjänar en högre multipel, för dess framtida kontanter blir mycket större. Risk: ett bolag med säkra, förutsägbara kassaflöden förtjänar en högre multipel, alltså en lägre diskonteringsränta, ett osäkert en lägre. Avkastning på kapital: ett bolag som växer med hög avkastning på kapital skapar mer värde per tillväxtkrona och förtjänar en högre multipel än ett som växer med låg. En motiverad multipel är de tre tillsammans.",
         "Ett intuitivt grepp är att vända på P/E. Inversen är en sorts vinstavkastning: P/E 20 motsvarar 1 delat med 20, alltså 5 procent, P/E 10 motsvarar 10 procent. Det visar vad du får för priset just nu, men bara som en ögonblicksbild. En låg vinstavkastning kan vara helt rimlig om vinsten växer snabbt."
       ],
-      "takeaway": "Läs multipeln som ett hopvikt antagande om tillväxt, risk och avkastning på kapital. Frågan är inte om talet är högt eller lågt, utan om de tre antagandena är rimliga."
+      "takeaway": "Läs multipeln som ett hopvikt antagande om tillväxt, risk och avkastning på kapital. Frågan är inte om talet är högt eller lågt, utan om de antagandena håller."
     },
     {
       "typ": "reading",
@@ -75,27 +75,27 @@
       "highlight": "en hög multipel kan vara billig och en låg dyr",
       "brodtext": [
         "Ta två bolag med samma vinst idag. Det stillastående handlas till P/E 10, växer knappt och ser billigt ut på en vinstavkastning runt 10 procent. Det växande handlas till P/E 25, växer snabbt med hög avkastning på kapital och ser dyrt ut på en vinstavkastning runt 4 procent. På multipeln ensam ser det första billigt och det andra dyrt ut.",
-        "Men följ vinsterna framåt. Över några år hinner tillväxtbolagets vinst i kapp och förbi det stillastående bolagets. Förtjänar var och en samma multipel om några år, har det växande bolaget skapat långt mer värde räknat från dagens pris, trots sin höga ingångsmultipel. Det dyra priset visade sig billigt, och det billiga blev dyrare i takt med att vinsten stod still. Den dyra höga multipeln var motiverad, och den billiga låga var det också, var och en speglade bolagets verkliga utsikter.",
-        "En sista, avgörande följd: eftersom multipeln speglar förväntningar är det förändringar i förväntningar som rör kursen. Ett utmärkt bolag på hög multipel som bara möter de redan höga förväntningarna kan stå still eller falla, allt var inprisat. Ett bolag på låg multipel som överträffar låga förväntningar kan stiga kraftigt. Det är skillnaden mellan ett bra bolag och en bra investering: verkligheten ställd mot det som redan är inprisat."
+        "Men följ vinsterna framåt. Över några år hinner tillväxtbolagets vinst i kapp det stillastående bolagets, och passerar det. Förtjänar de samma multipel om några år, har tillväxtbolaget skapat långt mer värde räknat från dagens pris, trots sin höga ingångsmultipel. Det dyra priset visade sig billigt, och det billiga blev dyrare medan vinsten stod still. Båda multiplarna var motiverade, var och en speglade bolagets verkliga utsikter.",
+        "En sista följd, och den viktigaste: eftersom multipeln speglar förväntningar är det ändrade förväntningar som rör kursen. Ett lysande bolag på hög multipel som bara möter de redan höga förväntningarna kan stå still eller falla, allt var inprisat. Ett bolag på låg multipel som slår låga förväntningar kan stiga kraftigt. Där går gränsen mellan ett bra bolag och en bra investering: verkligheten mot det som redan är inprisat."
       ],
-      "takeaway": "Du kan aldrig döma billigt eller dyrt på multipeln ensam. Tänk i förväntningar mot verklighet, vad som är inprisat och om verkligheten kan överträffa det."
+      "takeaway": "Du kan aldrig döma billigt eller dyrt på multipeln ensam. Tänk i förväntningar mot verklighet: vad som är inprisat, och om verkligheten kan slå det."
     },
     {
       "typ": "reading",
       "kicker": "MULTIPELNS BEGRÄNSNINGAR",
-      "lead": "Multiplar är snabba och bekväma, och därför farliga. De döljer komplexitet bakom ett enda tal, och en multipel är aldrig mer tillförlitlig än talet i nämnaren. Ofta är just det talet missvisande.",
-      "highlight": "en multipel är aldrig mer tillförlitlig än talet i nämnaren",
+      "lead": "Multiplar är snabba och bekväma, och därför farliga. De döljer komplexitet bakom ett enda tal, och en multipel är aldrig pålitligare än talet i nämnaren. Ofta är just det talet missvisande.",
+      "highlight": "en multipel är aldrig pålitligare än talet i nämnaren",
       "brodtext": [
-        "Den dyraste fällan i hela multipelvärlden är värdefällan: en aktie som ser billig ut på multipeln men är billig av en anledning. Fyra situationer är farligast. Cykliska bolag, där vinsten svänger kraftigt med konjunkturen, så P/E ser lågt och billigt ut vid toppen när vinsten är rekordhög och på väg ned. Engångsposter, där en engångsvinst blåser upp vinsten så P/E ser lågt ut utan att bolaget är billigt på den underliggande vinsten. Bolag i förändring, där historisk vinst är en usel vägledning när branschen disrumperas eller vallgraven eroderar. Och bolag med vinst nära noll eller negativ, där P/E blir meningslöst och små förändringar ger vilt svängande tal.",
-        "Lägg därtill att nämnaren ofta går att putsa. Vinst, EBIT och EBITDA påverkas av redovisningsval och engångsposter, så nämnaren är manipulerbar på ett sätt en räknande läsare måste se igenom. En multipel räknad på en förvrängd vinst är lika förvrängd som vinsten.",
-        "Bakom alla fällorna ligger en enda sak: en låg multipel är ofta låg av en anledning. Marknaden prisar oftast in det den vet, så en låg multipel speglar vanligen verkliga problem, fallande vinster, en eroderande vallgrav, en cyklisk topp, hög risk. Ett verkligt fynd kräver att du har rätt om något marknaden har fel om, vilket är ovanligt. Standardantagandet bör vara att en låg multipel är motiverad tills du specifikt kan förklara varför marknaden har fel."
+        "Den dyraste fällan av alla är värdefällan: en aktie som ser billig ut på multipeln men är billig av en anledning. Fyra lägen är farligast. Cykliska bolag, där vinsten svänger kraftigt med konjunkturen, så P/E ser lågt och billigt ut vid toppen, just när vinsten är rekordhög och på väg ned. Engångsposter, där en engångsvinst blåser upp vinsten så P/E ser lågt ut utan att bolaget är billigt på den underliggande vinsten. Bolag i förändring, där historisk vinst är en usel ledstjärna när branschen disrumperas eller vallgraven eroderar. Och bolag med vinst nära noll eller negativ, där P/E blir meningslöst och små förändringar ger vilt svängande tal.",
+        "Lägg till att nämnaren ofta går att putsa. Vinst, EBIT och EBITDA påverkas av redovisningsval och engångsposter, så talet går att manipulera på sätt du måste räkna dig igenom. En multipel räknad på en förvrängd vinst är lika förvrängd som vinsten.",
+        "Bakom alla fällorna ligger en enda sak: en låg multipel är ofta låg av en anledning. Marknaden prisar oftast in det den vet, så en låg multipel speglar vanligen verkliga problem: fallande vinster, en eroderande vallgrav, en cyklisk topp, hög risk. Ett verkligt fynd kräver att du har rätt om något marknaden har fel om, och det är ovanligt. Utgå från att en låg multipel är motiverad tills du specifikt kan förklara varför marknaden har fel."
       ],
-      "takeaway": "En låg multipel förtjänar misstanke, inte entusiasm. Anta en värdefälla tills du kan förklara exakt varför marknaden har fel."
+      "takeaway": "En låg multipel förtjänar misstanke, inte entusiasm. Anta värdefälla tills du kan förklara exakt varför marknaden har fel."
     },
     {
       "typ": "dataviz",
       "titel": "Lågt P/E är inte alltid billigt",
-      "underrubrik": "Tre bolag med skenbart lågt P/E. Tar man hänsyn till vad som ligger bakom talet ser bilden annorlunda ut.",
+      "underrubrik": "Tre bolag med skenbart lågt P/E. Tittar du på vad som ligger bakom talet ser bilden annorlunda ut.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -106,12 +106,12 @@
         "etiketter": "P/E (gånger vinsten)",
         "figurtext": "Illustrativa tal. Bolag A och B ser billigast ut men är fällor, deras låga multipel är låg av en anledning."
       },
-      "slutsats": "Bolag A handlas på rekordvinst vid en konjunkturtopp, så det låga P/E kollapsar när cykeln vänder. Bolag B krymper strukturellt och blir dyrare för varje år. En låg multipel speglar oftast verkliga problem, och botemedlet mot cykliska fällor är att värdera på normaliserad vinst mitt i cykeln, inte på toppvinsten."
+      "slutsats": "Bolag A handlas på rekordvinst vid en konjunkturtopp, så det låga P/E kollapsar när cykeln vänder. Bolag B krymper strukturellt och blir dyrare för varje år. En låg multipel speglar oftast verkliga problem. Mot cykliska fällor är boten att värdera på normaliserad vinst mitt i cykeln, inte på toppvinsten."
     },
     {
       "typ": "dataviz",
       "titel": "Samma bolag, tre lägen i cykeln",
-      "underrubrik": "Ett cykliskt bolag värt cirka 1 000 mot vinsten i topp, normaliserat och i botten. P/E vänder bakvänt.",
+      "underrubrik": "Ett cykliskt bolag värt cirka 1 000 mot vinsten i topp, normaliserat och i botten. P/E går bakvänt.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -122,18 +122,18 @@
         "etiketter": "P/E vid värde 1 000, olika vinstnivå",
         "figurtext": "Illustrativa tal. Värdet hållet konstant runt 1 000 för att isolera vinstens effekt på multipeln."
       },
-      "slutsats": "På toppvinsten ser P/E billigt ut, på botten skrämmande dyrt, men det är samma bolag. På normaliserad vinst mitt i cykeln, runt 12,5 gånger, är det helt vanligt värderat. För cykliska bolag är P/E ofta bakvänt: lågt vid toppen är farligt, högt vid botten är möjlighet."
+      "slutsats": "På toppvinsten ser P/E billigt ut, på botten skrämmande dyrt, men det är samma bolag. På normaliserad vinst mitt i cykeln, runt 12,5 gånger, är det helt normalt värderat. För cykliska bolag är P/E ofta bakvänt: lågt vid toppen är farligt, högt vid botten är en möjlighet."
     },
     {
       "typ": "reading",
       "kicker": "EN MULTIPEL ÄR INTE ETT FACIT",
-      "lead": "En multipel är en utgångspunkt, ett snabbt mått på prissättning, aldrig ett facit. Den pekar dig mot något att undersöka, den avgör inte saken.",
+      "lead": "En multipel är en utgångspunkt, ett snabbt mått på prissättning, aldrig ett facit. Den pekar dig mot något att undersöka. Den avgör inte saken.",
       "highlight": "aldrig ett facit",
       "brodtext": [
-        "Cykliska bolag värderas på normaliserad vinst, ett snitt över hela cykeln, aldrig på toppvinst. Engångsposter normaliseras bort innan en multipel räknas. EBITDA-baserade mått korskollas mot fritt kassaflöde, särskilt för kapitaltunga bolag. Och en multipel kombineras alltid med kvalitetslinsen, är vinsten hållbar, och med en absolut värdering, vad är de framtida kontanterna värda.",
-        "Inför en aktie som ser billig ut är instinkten hos en van investerare inte glädje utan en fråga: vad är det marknaden ser som jag missar. Verkliga fynd är sällsynta, fällor vanliga. En multipel behandlas därför som det den är, ett första mått som måste tolkas och korskollas, inte ett omdöme om dyrt eller billigt i sig."
+        "Cykliska bolag värderar du på normaliserad vinst, ett snitt över hela cykeln, aldrig på toppvinst. Engångsposter rensar du bort innan du räknar en multipel. EBITDA-baserade mått korskollar du mot fritt kassaflöde, särskilt för kapitaltunga bolag. Och multipeln kombinerar du alltid med kvalitetslinsen, är vinsten hållbar, och med en absolut värdering, vad är de framtida kontanterna värda.",
+        "Inför en aktie som ser billig ut är den vana investerarens första reaktion inte glädje utan en fråga: vad ser marknaden som jag missar. Verkliga fynd är sällsynta, fällor vanliga. Så behandla multipeln som det den är, ett första mått som måste tolkas och korskollas, inte ett omdöme om dyrt eller billigt i sig."
       ],
-      "takeaway": "Läs multipeln, men läs den som ett antagande att granska. Själva beslutet vilar på kvalitet och absolut värdering, inte på ett enda tal."
+      "takeaway": "Läs multipeln, men läs den som ett antagande att granska. Beslutet vilar på kvalitet och absolut värdering, inte på ett enda tal."
     },
     {
       "typ": "quiz",
@@ -147,7 +147,7 @@
             "EV-multiplar kan bara användas på olönsamma bolag"
           ],
           "ratt": [0],
-          "forklaring": "EV är börsvärde plus nettoskuld och EBIT respektive EBITDA är resultat före räntor, så båda sidor är rensade från finansiering. P/E bygger på vinst efter räntor och snedvrids därför av skuldsättningen."
+          "forklaring": "EV är börsvärde plus nettoskuld och EBIT respektive EBITDA är resultat före räntor, så båda sidor är rensade från finansiering. P/E bygger på vinst efter räntor och snedvrids därför av skulden."
         },
         {
           "typ": "single",
@@ -158,7 +158,7 @@
             "EV/EBIT är felräknat eftersom identiska bolag alltid får olika EV/EBIT"
           ],
           "ratt": [0],
-          "forklaring": "Skulden äter av vinsten via räntor och krymper börsvärdet, vilket sänker P/E. EV/EBIT neutraliserar finansieringen på båda sidor och visar att verksamheterna värderas lika operativt."
+          "forklaring": "Skulden äter av vinsten via räntor och krymper börsvärdet, vilket sänker P/E. EV/EBIT rensar bort finansieringen på båda sidor och visar att verksamheterna värderas lika operativt."
         },
         {
           "typ": "single",
@@ -169,7 +169,7 @@
             "Bolagets bokförda värde per aktie"
           ],
           "ratt": [0],
-          "forklaring": "En multipel är en sammanfattning av marknadens förväntningar och i grunden en förkortning för nuvärdet av framtida kassaflöden. En hög multipel motiveras av hög tillväxt, låg risk och hög avkastning på kapital."
+          "forklaring": "En multipel sammanfattar marknadens förväntningar och är i grunden en förkortning för nuvärdet av framtida kassaflöden. En hög multipel motiveras av hög tillväxt, låg risk och hög avkastning på kapital."
         },
         {
           "typ": "single",
@@ -180,18 +180,18 @@
             "Cykliska bolag har alltid för högt P/E vid toppen"
           ],
           "ratt": [0],
-          "forklaring": "För cykliska bolag är P/E ofta bakvänt, lågt vid toppen och högt vid botten. Botemedlet är att värdera på normaliserad vinst mitt i cykeln, inte på toppvinsten."
+          "forklaring": "För cykliska bolag är P/E ofta bakvänt, lågt vid toppen och högt vid botten. Boten är att värdera på normaliserad vinst mitt i cykeln, inte på toppvinsten."
         },
         {
           "typ": "single",
-          "fraga": "En analytiker ser P/E 7 på ett bolag i strukturell nedgång och kallar det ett fynd. Vad är den djupaste invändningen?",
+          "fraga": "En analytiker ser P/E 7 på ett bolag i strukturell nedgång och kallar det ett fynd. Vad är den starkaste invändningen?",
           "alternativ": [
-            "En låg multipel är ofta låg av en anledning, så standardantagandet bör vara att rabatten är motiverad tills man kan förklara varför marknaden har fel",
+            "En låg multipel är ofta låg av en anledning, så utgångspunkten bör vara att rabatten är motiverad tills du kan förklara varför marknaden har fel",
             "P/E 7 är matematiskt omöjligt för ett krympande bolag",
             "Krympande bolag förtjänar alltid en högre multipel än stabila"
           ],
           "ratt": [0],
-          "forklaring": "Marknaden prisar oftast in det den vet. En billig aktie som fortsätter falla i takt med att vinsterna sviktar är en värdefälla. Ett verkligt fynd kräver att du har rätt om något marknaden har fel om, vilket är ovanligt."
+          "forklaring": "Marknaden prisar oftast in det den vet. En billig aktie som fortsätter falla medan vinsterna sviktar är en värdefälla. Ett verkligt fynd kräver att du har rätt om något marknaden har fel om, och det är ovanligt."
         },
         {
           "typ": "multi",
@@ -204,7 +204,7 @@
             "Ett lågt P/E betyder alltid att aktien är ett fynd"
           ],
           "ratt": [0, 1, 2],
-          "forklaring": "EV/EBIT neutraliserar skulden och passar jämförelser, P/B är relevant där bokförda värden ligger nära verkligt värde, och EBITDA döljer kostnaden att återinvestera så den måste korskollas mot kassaflödet. Ett lågt P/E är däremot ofta lågt av en anledning."
+          "forklaring": "EV/EBIT rensar bort skulden och passar jämförelser, P/B är relevant där bokförda värden ligger nära verkligt värde, och EBITDA döljer vad det kostar att återinvestera, så den måste korskollas mot kassaflödet. Ett lågt P/E är däremot ofta lågt av en anledning."
         }
       ]
     }

@@ -10,7 +10,7 @@
       "typ": "intro",
       "kicker": "LEKTION 13.2",
       "titel": "Bevaka, ompröva, sälja",
-      "ingress": "Att köpa är bara början. Det mesta av den känslomässiga skadan sker efteråt, under åren du äger något, och allra mest i säljbeslutet."
+      "ingress": "Köpet är bara början. Den mesta känslomässiga skadan sker efteråt, under åren du äger något, och värst av allt i säljbeslutet."
     },
     {
       "typ": "reading",
@@ -18,10 +18,10 @@
       "lead": "Du bevakar mot din skrivna tes, du ändrar dig när fakta ändras men låter priset röra sig ifred, och du fattar säljbeslut på en tydlig, framåtblickande måttstock.",
       "highlight": "du ändrar dig när fakta ändras men låter priset röra sig ifred",
       "brodtext": [
-        "När du väl äger något har du tre löpande uppgifter: bevaka, ompröva och sälja. Alla tre styrs av den skrivna tesen och av framåtblickande omdöme. Kursrörelser och känsla håller du utanför.",
-        "De flesta gör det här dåligt. De paniksäljer vinnare, håller förlorare för länge och agerar på kursrörelser i stället för på fundamenta. Disciplinerad förvaltning är motgiftet, och den vilar helt på caset du skrev innan du köpte."
+        "När du äger något har du tre löpande uppgifter: bevaka, ompröva och sälja. Alla tre styrs av den skrivna tesen och av omdöme om vad som kommer, inte av kursen och inte av känsla.",
+        "De flesta gör det här dåligt. De paniksäljer vinnare, håller förlorare för länge och agerar på kursen i stället för på fundamenta. Disciplinerad förvaltning är motgiftet, och den vilar på caset du skrev innan du köpte."
       ],
-      "takeaway": "Det här är den sista färdigheten, den som får hela processen att fungera i praktiken och inte bara på papper."
+      "takeaway": "Det här är den sista färdigheten, den som får hela processen att fungera på riktigt och inte bara på papper."
     },
     {
       "typ": "reading",
@@ -29,8 +29,8 @@
       "lead": "Du behöver inte stirra på något dagligen, det skadar bara. Bevaka på två triggrar: varje kvartalsrapport och väsentliga nyheter. Däremellan lämnar du det ifred. Du bevakar caset, inte kursen.",
       "highlight": "Du bevakar caset, inte kursen.",
       "brodtext": [
-        "Vid varje kvartalsrapport tar du fram caset och stämmer av nyckelantagandena ett efter ett: håller tillväxten, ligger marginalen kvar, är balansräkningen sund, har något falsifieringsvillkor utlösts. Det tar tjugo minuter och är den viktigaste vanan i hela förvaltningen. Vid väsentliga nyheter, en vinstvarning, ett stort förvärv, en förlorad nyckelkund, ett vd-byte, en emission, stämmer du av på samma sätt. Inte varje pressmeddelande, definitivt inte varje kursrörelse.",
-        "Att ompröva är konsten att skilja en faktisk förändring från brus. När ett kvartal flyttar bilden, uppdatera caset och datera ändringen på raden senast omprövad. Då får du en löpande logg över hur din syn utvecklats, och du kan aldrig lura dig själv att du alltid tyckt så. Det ena felet är att envist klamra sig fast vid en tes medan motbevisen hopar sig. Det andra är att överge en sund tes vid första vacklan eller på prisdrivet brus. Det daterade caset kalibrerar dig mellan dem."
+        "Vid varje kvartalsrapport tar du fram caset och stämmer av antagandena ett efter ett: håller tillväxten, ligger marginalen kvar, är balansräkningen sund, har något falsifieringsvillkor utlösts. Det tar tjugo minuter och är den viktigaste vanan du har som ägare. Vid väsentliga nyheter, en vinstvarning, ett stort förvärv, en förlorad nyckelkund, ett vd-byte, en emission, stämmer du av på samma sätt. Inte varje pressmeddelande, och definitivt inte varje kursrörelse.",
+        "Att ompröva är att skilja en verklig förändring från brus. När ett kvartal flyttar bilden uppdaterar du caset och daterar ändringen på raden senast omprövad. Då får du en logg över hur din syn rört sig, och du kan aldrig intala dig att du alltid tyckt så. Det ena felet är att klamra sig fast vid en tes medan motbevisen hopar sig. Det andra är att överge en sund tes vid första vacklan eller på brus som priset driver fram. Det daterade caset håller dig mellan de två."
       ],
       "takeaway": "När fakta ändras, ändrar du dig. Men du går tillbaka till de skrivna antagandena för att avgöra om det är fakta eller bara brus."
     },
@@ -43,16 +43,16 @@
         "element": [
           {
             "rubrik": "Sälj på dessa",
-            "text": "Tesen är brusten: ett falsifieringsvillkor har utlösts eller verksamheten är permanent försämrad. Innehavet är betydligt övervärderat: priset har stigit långt över ditt värde och ingen felmarginal är kvar. Eller du har hittat något klart bättre."
+            "text": "Tesen är brusten: ett falsifieringsvillkor har utlösts eller verksamheten är permanent försämrad. Innehavet är klart övervärderat: priset har stigit långt över ditt värde och ingen felmarginal är kvar. Eller du har hittat något betydligt bättre."
           },
           {
             "rubrik": "Sälj inte på dessa",
-            "text": "Att priset föll och det svider. Att du vill komma tillbaka till break-even eller är ankrad i ditt inköpspris. Sunk cost. Eller att en vinnare gått upp och du frestas säkra vinsten, fast den är under värdet och tesen håller."
+            "text": "Att priset föll och det svider. Att du vill tillbaka till break-even eller är fast i ditt inköpspris. Sunk cost. Eller att en vinnare gått upp och du frestas säkra vinsten, fast den ligger under värdet och tesen håller."
           }
         ],
         "figurtext": "De sunda skälen handlar om tesen och värdet framåt, de dåliga om priset och din historik."
       },
-      "forklaring": "Varje sunt säljbeslut är framåtblickande: skulle jag köpa det här till dagens pris nu? Din anskaffningskostnad är irrelevant. Du har två handtag och valet styrs av skälet. En brusten tes betyder oftast att hela positionen ska bort, tesen du ägde finns inte längre. Ren övervärdering betyder oftare att trimma till en rimligare vikt och låta en kärna löpa, eftersom verksamheten fortfarande är god."
+      "forklaring": "Varje sunt säljbeslut är framåtblickande: skulle jag köpa det här till dagens pris nu? Vad du betalade spelar ingen roll. Vilket handtag du drar i styrs av skälet. En brusten tes betyder oftast att hela positionen ska bort, för tesen du ägde finns inte längre. Ren övervärdering betyder oftare att trimma ner till en rimligare vikt och låta en kärna löpa, eftersom verksamheten fortfarande är god."
     },
     {
       "typ": "reading",
@@ -60,8 +60,8 @@
       "lead": "När något smäller, en rapport, en krasch, en spik, går du inte på instinkt. Du går tillbaka till det skrivna caset och frågar en enda sak: är det här tesen som brister, eller är det bara priset som rör sig?",
       "highlight": "är det här tesen som brister, eller är det bara priset som rör sig?",
       "brodtext": [
-        "Är det priset, gör du oftast ingenting, eller fyller på om felmarginalen vidgats. Är det tesen, agerar du, oavsett vad din anskaffningskostnad råkar vara. Den lugna, förbestämda analysen styr ditt jag i stunden.",
-        "Lär dig vad du inte säljer på, det är där de flesta förstör sin avkastning. Låt vinnare löpa medan caset håller. Att bevaka, ompröva och sälja är det systemet i arbete över ett innehavs hela liv."
+        "Är det priset gör du oftast ingenting, eller fyller på om felmarginalen vidgats. Är det tesen agerar du, oavsett vad du råkar ha betalat. Den lugna analysen du gjorde i förväg styr dig i stunden.",
+        "Lär dig vad du inte säljer på. Det är där de flesta förstör sin avkastning. Låt vinnare löpa så länge caset håller. Att bevaka, ompröva och sälja är samma system i arbete genom hela innehavets liv."
       ],
       "takeaway": "Det skrivna caset och kadensen är vad som hindrar dig från att paniksälja i fallet, klamra dig fast vid den brustna tesen och sälja vinnaren för tidigt."
     },
@@ -77,7 +77,7 @@
             "Du är ankrad i ditt inköpspris, marknaden är orolig, eller du vill säkra en vinst"
           ],
           "ratt": [0],
-          "forklaring": "De tre goda skälen är brusten tes, klar övervärdering och en klart bättre användning av kapitalet. Prisfall, break-even och sunk cost är just de fel skäl man inte ska sälja på."
+          "forklaring": "De tre goda skälen är brusten tes, klar övervärdering och en klart bättre användning av kapitalet. Prisfall, break-even och sunk cost är fel skäl, dem säljer du inte på."
         },
         {
           "typ": "single",
@@ -88,7 +88,7 @@
             "Du beslutar utifrån hur mycket du redan förlorat eller vunnit på positionen"
           ],
           "ratt": [0],
-          "forklaring": "Framåtblickande betyder att anskaffningskostnaden är irrelevant, den är sunk cost. Den enda relevanta frågan är om du skulle köpa innehavet till dagens pris givet tesen och felmarginalen."
+          "forklaring": "Framåtblickande betyder att vad du betalade inte spelar någon roll, det är sunk cost. Den enda frågan som räknas är om du skulle köpa innehavet till dagens pris givet tesen och felmarginalen."
         },
         {
           "typ": "multi",
@@ -101,7 +101,7 @@
             "Du säljer en position så snart den fallit under ditt inköpspris"
           ],
           "ratt": [0, 1],
-          "forklaring": "Disciplin är att bevaka caset på rapport och väsentliga nyheter och att datera sina omprövningar. Daglig kurskontroll och att sälja på prisfall under inköpspriset är tvärtom varningstecken."
+          "forklaring": "Disciplin är att bevaka caset på rapport och väsentliga nyheter och att datera sina omprövningar. Daglig kurskontroll och att sälja på prisfall under inköpspriset är varningstecken."
         }
       ]
     }

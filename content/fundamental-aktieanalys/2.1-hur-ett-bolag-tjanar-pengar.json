@@ -10,16 +10,16 @@
       "typ": "intro",
       "kicker": "LEKTION 2.1",
       "titel": "Hur ett bolag tjänar pengar",
-      "ingress": "Innan du rör ett enda nyckeltal måste du förstå hur verksamheten förvandlar aktivitet till vinst. Det är steget de flesta hoppar över."
+      "ingress": "Innan du rör ett enda nyckeltal behöver du veta hur verksamheten gör aktivitet till vinst. Det steget hoppar de flesta över."
     },
     {
       "typ": "reading",
       "kicker": "VARFÖR DET SPELAR ROLL",
-      "lead": "Du kan rabbla att aktien handlas till P/E 15, men talet betyder ingenting förrän du vet vad som producerar vinsten i nämnaren. Kan du inte spåra hur pengar rör sig från kund till sista raden, blir varje senare beräkning en gissning klädd i decimaler.",
-      "highlight": "talet betyder ingenting förrän du vet vad som producerar vinsten",
+      "lead": "Du kan säga att aktien handlas till P/E 15, men talet betyder ingenting förrän du vet vad som skapar vinsten i nämnaren. Kan du inte följa pengarna från kund till sista raden blir varje senare beräkning en gissning klädd i decimaler.",
+      "highlight": "talet betyder ingenting förrän du vet vad som skapar vinsten",
       "brodtext": [
-        "Allt som kommer i de följande modulerna, bokslut, marginaler, kassaflöde och värdering, vilar på att du först förstår motorn. Den som äger ett bolag utan att förstå dess motor äger en lott, inte en verksamhet.",
-        "Varje verksamhet gör i grunden samma sak: den säljer något för mer än det kostar att leverera, och behåller mellanskillnaden. Resten är detaljer i hur den mellanskillnaden uppstår och vad som äter den på vägen."
+        "Allt som kommer senare, bokslut, marginaler, kassaflöde och värdering, vilar på att du först förstår motorn. Äger du ett bolag utan att förstå dess motor äger du en lott, inte en verksamhet.",
+        "I grunden gör varje verksamhet samma sak: säljer något för mer än det kostar att leverera och behåller mellanskillnaden. Resten är detaljer i hur den mellanskillnaden uppstår och vad som äter den på vägen."
       ],
       "rost": "sebastian",
       "takeaway": "Kan jag inte förklara hur bolaget tjänar pengar på tjugo sekunder så äger jag det inte, jag gissar. Den meningen har räddat mig från fler dåliga köp än någon kalkyl."
@@ -38,13 +38,13 @@
         ],
         "figurtext": "Vägen en krona tar från kund till sista raden."
       },
-      "forklaring": "Kunden betalar in en krona, det är omsättning. En del går direkt till att leverera varan eller tjänsten, det är kostnad för sålda varor, och det som blir kvar är bruttovinst. Sedan drar du av kostnaderna för att driva bolaget, löner, marknadsföring, lokaler och utveckling, och därefter ränta och skatt. Det som återstår är ägarnas vinst. Formen på den resan, hur mycket som överlever vid varje steg, talar om vilken sorts bolag du har framför dig."
+      "forklaring": "Kunden betalar in en krona. Det är omsättning. En del går direkt till att leverera varan eller tjänsten, det är kostnad för sålda varor, och kvar blir bruttovinst. Sedan drar du av vad det kostar att driva bolaget, löner, marknadsföring, lokaler och utveckling, och därefter ränta och skatt. Det som återstår är ägarnas vinst. Hur mycket som överlever vid varje steg säger dig vilken sorts bolag du har framför dig."
     },
     {
       "typ": "concept",
       "kicker": "KOSTNADSSTRUKTUR",
       "titel": "Fast mot rörligt avgör hävstången",
-      "forklaring": "Fasta kostnader ändras inte mycket med volymen, som lokaler och kärnpersonal. Rörliga kostnader skalar med varje försäljning, som material och frakt. Blandningen avgör hävstången i rörelsen. Ett bolag med tunga fasta kostnader tjänar lite tills de är täckta, men därefter är varje extra försäljning enormt lönsam. Ett bolag med mest rörliga kostnader är stabilare men har ett lägre tak för marginalen. En sista sak redan nu: vinst är en sak, kontanter en annan. Ett bolag kan vara lönsamt på pappret men sakna pengar om kunderna betalar långsamt eller om det ständigt måste investera."
+      "forklaring": "Fasta kostnader ändras knappt med volymen, som lokaler och kärnpersonal. Rörliga kostnader växer med varje försäljning, som material och frakt. Blandningen avgör hävstången. Ett bolag med tunga fasta kostnader tjänar lite tills de är täckta, men sedan är varje extra försäljning enormt lönsam. Ett bolag med mest rörliga kostnader är stabilare men har lägre tak för marginalen. Och en sak redan nu: vinst är en sak, kontanter en annan. Ett bolag kan se lönsamt ut på pappret och ändå sakna pengar om kunderna betalar långsamt eller om det hela tiden måste investera."
     },
     {
       "typ": "dataviz",
@@ -59,21 +59,21 @@
         "etiketter": "Ägarvinst i kr per 1 000 kr omsättning",
         "figurtext": "Illustrativa tal. Mjukvarubolaget behåller närmare tio gånger mer per krona på sista raden."
       },
-      "slutsats": "I mjukvarubolaget kan nästa krona i omsättning komma in nästan utan ny kostnad, så vinsten kan växa snabbare än omsättningen. I livsmedelskedjan drar varje extra försäljning nästan lika mycket extra kostnad. Den ena motorn har hävstång, den andra saknar den, och just det förklarar varför två bolag med identisk omsättningssiffra kan vara värda helt olika mycket."
+      "slutsats": "I mjukvarubolaget kan nästa krona i omsättning komma in nästan utan ny kostnad, så vinsten kan växa snabbare än omsättningen. I livsmedelskedjan drar varje extra försäljning med sig nästan lika mycket extra kostnad. Den ena motorn har hävstång, den andra inte. Det förklarar varför två bolag med samma omsättning kan vara värda helt olika mycket."
     },
     {
       "typ": "quiz",
       "fragor": [
         {
           "typ": "single",
-          "fraga": "Ett bolag ökar sin omsättning kraftigt år efter år, men nettovinsten och marginalerna står stilla. Vad säger det mest sannolikt om den ekonomiska motorn?",
+          "fraga": "Ett bolag ökar omsättningen kraftigt år efter år, men nettovinsten och marginalerna står stilla. Vad säger det troligen om motorn?",
           "alternativ": [
             "Motorn saknar hävstång: tillväxten drar med sig nästan lika mycket extra kostnad och blir inte till mer ägarvinst",
             "Bolaget är garanterat ett mjukvarubolag med hög bruttomarginal",
             "Omsättningstillväxt är alltid ett tecken på en bra affärsmodell"
           ],
           "ratt": [0],
-          "forklaring": "När omsättningen växer men vinsten och marginalerna inte gör det år efter år är det ett tecken på en motor utan hävstång, inte på en bra affär."
+          "forklaring": "Växer omsättningen år efter år utan att vinsten och marginalerna följer med saknar motorn hävstång. Det är inte en bra affär."
         },
         {
           "typ": "single",
@@ -84,18 +84,18 @@
             "För att skatt och ränta inte räknas in i resultaträkningen"
           ],
           "ratt": [0],
-          "forklaring": "Vinst är inte detsamma som kontanter. Ett lönsamt bolag kan ändå sakna pengar om kunderna betalar sent eller investeringarna är ständiga, en försmak av kassaflödet."
+          "forklaring": "Vinst är inte detsamma som kontanter. Ett lönsamt bolag kan ändå sakna pengar om kunderna betalar sent eller investeringarna aldrig tar slut. Det är en försmak av kassaflödet."
         },
         {
           "typ": "single",
-          "fraga": "Ett bolag har mycket tunga fasta kostnader och små rörliga kostnader. Vad är den typiska följden för lönsamheten när volymen ökar?",
+          "fraga": "Ett bolag har mycket tunga fasta kostnader och små rörliga kostnader. Vad händer typiskt med lönsamheten när volymen ökar?",
           "alternativ": [
             "Bolaget tjänar lite tills de fasta kostnaderna är täckta, men varje extra försäljning därefter är mycket lönsam",
             "Varje extra försäljning drar med sig ungefär lika mycket ny kostnad",
             "Lönsamheten är helt oberoende av hur stor volymen är"
           ],
           "ratt": [0],
-          "forklaring": "Tunga fasta kostnader ger hävstång: lite tjänas tills kostnaderna är täckta, men därefter faller en stor del av varje ny försäljning ned till vinsten."
+          "forklaring": "Tunga fasta kostnader ger hävstång. Du tjänar lite tills kostnaderna är täckta, men sedan faller en stor del av varje ny försäljning rakt ned till vinsten."
         }
       ]
     }

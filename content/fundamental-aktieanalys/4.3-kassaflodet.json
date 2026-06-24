@@ -10,17 +10,17 @@
       "typ": "intro",
       "kicker": "LEKTION 4.3",
       "titel": "Kassaflödet",
-      "ingress": "Vinst är en åsikt, kontanter är ett faktum. Bolag går nästan aldrig omkull av brist på vinst, de går omkull av brist på kontanter."
+      "ingress": "Vinst är en åsikt, kontanter är ett faktum. Bolag går nästan aldrig omkull för att vinsten tar slut. De går omkull för att pengarna tar slut."
     },
     {
       "typ": "reading",
       "kicker": "GRUNDEN",
-      "lead": "Det här är kanske den enskilt viktigaste idén i hela kursen: vinst är en åsikt, kontanter är ett faktum. Redovisad vinst vilar på dussintals bedömningar, när en intäkt bokförs, hur snabbt en tillgång skrivs av, vad som aktiveras. Kontanter är mycket svårare att putsa, pengarna kom antingen in på kontot eller inte.",
+      "lead": "Det här är kanske den viktigaste idén i hela kursen: vinst är en åsikt, kontanter är ett faktum. Redovisad vinst vilar på massor av bedömningar. När en intäkt bokförs, hur snabbt en tillgång skrivs av, vad som aktiveras. Kontanter går inte att putsa lika lätt. Pengarna kom in på kontot, eller så gjorde de inte det.",
       "highlight": "vinst är en åsikt, kontanter är ett faktum",
       "brodtext": [
-        "Vinst beräknas på periodiserad basis. Du bokför en intäkt när du tjänat in den och en kostnad när du ådragit dig den, oavsett när pengarna faktiskt rör sig. Det är ett rimligt sätt att mäta prestation, men det betyder att vinst och kontanter kan se helt olika ut under en period. Du kan bokföra en försäljning som vinst innan kunden betalat, vinsten upp men inga kontanter in. Du kan lägga kontanter på lager eller en maskin utan att det direkt slår mot resultatet, kontanter ut men vinsten orörd. Kassaflödet skalar bort bedömningarna och visar vad som verkligen hände med pengarna.",
-        "Det är värt att förstå varför gapet uppstår, för då kan du läsa det. En intäkt som bokförts men ännu inte drivits in blir en kundfordran, vinst utan kontanter. Kontanter som lagts på en tillgång aktiveras och kostnadsförs långsamt via avskrivningar, kontanter ut nu men kostnad senare. En kostnad som uppstått men ännu inte betalats blir en leverantörsskuld, kostnad utan kontanter ut. Var och en av dessa driver vinst och kontanter isär.",
-        "Två saker följer av detta. Det första är överlevnad. Solvens avgörs av kontanter, inte vinst. Ett lönsamt bolag som får slut på pengar går omkull precis lika säkert som ett olönsamt. Det andra är vinstkvalitet, det renaste enskilda testet du har: omvandlas nettovinsten pålitligt till operativt kassaflöde? Gör den det är vinsten verklig. Överstiger vinsten år efter år det operativa kassaflödet är den av låg kvalitet, i värsta fall delvis fiktiv."
+        "Vinst beräknas på periodiserad basis. Du bokför en intäkt när du tjänat in den och en kostnad när du ådragit dig den, oavsett när pengarna rör sig. Det är ett rimligt sätt att mäta prestation, men det gör att vinst och kontanter kan se helt olika ut under en period. Du kan bokföra en försäljning som vinst innan kunden betalat: vinsten upp, men inga kontanter in. Du kan lägga pengar på lager eller en maskin utan att det slår mot resultatet: kontanter ut, men vinsten orörd. Kassaflödet skalar bort bedömningarna och visar vad som hände med pengarna.",
+        "Förstår du varför gapet uppstår kan du också läsa det. En intäkt som bokförts men inte drivits in blir en kundfordran: vinst utan kontanter. Pengar som lagts på en tillgång aktiveras och kostnadsförs långsamt via avskrivningar: kontanter ut nu, kostnad senare. En kostnad som uppstått men inte betalats blir en leverantörsskuld: kostnad utan kontanter ut. Var och en av dem driver vinst och kontanter isär.",
+        "Två saker följer av det här. Det första är överlevnad. Solvens avgörs av kontanter, inte vinst. Ett lönsamt bolag som får slut på pengar går omkull lika säkert som ett olönsamt. Det andra är vinstkvalitet, det renaste testet du har: omvandlas nettovinsten pålitligt till operativt kassaflöde? Gör den det är vinsten verklig. Överstiger vinsten år efter år det operativa kassaflödet är den av låg kvalitet, i värsta fall delvis påhittad."
       ],
       "rost": "sebastian",
       "takeaway": "När vinsten och kassaflödet bråkar tror jag på kassaflödet, varje gång. Pengar är svårare att sminka än en resultatrapport."
@@ -39,24 +39,24 @@
         ],
         "figurtext": "Kassaflödet delas i tre flöden. Fritt kassaflöde är operativt kassaflöde minus capex."
       },
-      "forklaring": "Löpande verksamhet är motorn: kontanter ur den faktiska driften, att sälja varor och tjänster och betala leverantörer och personal. Investeringsverksamhet är vad som läggs på långsiktiga tillgångar, främst capex och förvärv, för ett växande bolag oftast ett utflöde. Finansieringsverksamhet är kontanter till och från kapitalförsörjarna: lån, aktier, utdelning. Lägg ihop de tre och du får nettoförändringen för perioden. Men det avgörande talet är vad som blir kvar: fritt kassaflöde är operativt kassaflöde minus capex, de kontanter som genuint är tillgängliga för ägarna efter att verksamheten gjort de investeringar den behöver."
+      "forklaring": "Löpande verksamhet är motorn: kontanter ur den faktiska driften, sälja varor och tjänster och betala leverantörer och personal. Investeringsverksamhet är vad som läggs på långsiktiga tillgångar, främst capex och förvärv, för ett växande bolag oftast ett utflöde. Finansieringsverksamhet är kontanter till och från dem som skjuter till kapital: lån, aktier, utdelning. Lägg ihop de tre och du får nettoförändringen för perioden. Men talet som avgör är vad som blir kvar: fritt kassaflöde är operativt kassaflöde minus capex, de kontanter som verkligen är tillgängliga för ägarna efter att verksamheten gjort de investeringar den behöver."
     },
     {
       "typ": "reading",
       "kicker": "ATT LÄSA MÖNSTRET",
-      "lead": "Lägg aldrig en enskild siffra på minnet, läs de tre flödena tillsammans. Mönstret mellan dem berättar om ett bolag finansierar sig självt ur sin egen drift eller hänger på utomstående pengar, om det investerar för tillväxt eller krymper, och om det återför kontanter till ägarna eller ständigt tar in dem.",
+      "lead": "Fäst dig inte vid en enskild siffra, läs de tre flödena tillsammans. Mönstret mellan dem säger om bolaget finansierar sig självt ur sin egen drift eller hänger på utomstående pengar, om det investerar för tillväxt eller krymper, och om det ger kontanter tillbaka till ägarna eller ständigt tar in nya.",
       "highlight": "läs de tre flödena tillsammans",
       "brodtext": [
-        "Det operativa kassaflödet är grunden, källan allt annat i slutänden bör finansieras ur. Ett friskt bolag genererar betydande och växande kontanter ur driften. Svagt eller negativt operativt kassaflöde är ett allvarligt bekymmer, om det inte är en genuin tidig tillväxtinvestering. Investeringsflödet rymmer mest capex och förvärv, och den avgörande frågan är om de utgifterna täcks av driften, friskt och självfinansierande, eller av att ta in lån och eget kapital, beroende och skört. Storleken på capex i förhållande till avskrivningarna ger en ledtråd: capex tydligt över avskrivningarna antyder investering för tillväxt, capex ungefär lika med avskrivningarna antyder rent underhåll, och capex under avskrivningarna kan betyda att bolaget underinvesterar och tär på sina tillgångar.",
-        "Finansieringsflödet berättar slutligen om bolaget tar in eller ger tillbaka. Ett positivt finansieringsflöde betyder att bolaget tar in kapital, bra för en äkta investering men oroande om det täpper till ett hål i driften. Ett negativt finansieringsflöde, att betala av skuld, köpa tillbaka aktier eller dela ut, betyder oftast att bolaget genererar överskott och återför det, ett tecken på styrka.",
-        "Läser du tecknen tillsammans får du en livsfashistoria. Ett friskt moget bolag: starkt positivt operativt, måttligt negativt investerande, negativt finansierande. Det finansierar allt självt och ger överskottet tillbaka. Ett friskt tillväxtbolag: positivt och stigande operativt, stort negativt investerande, finansiering måttligt positiv eller neutral. Det öser kontanter i tillväxt, helst till största delen ur driften. Ett varningsmönster: svagt eller negativt operativt medan finansieringen är starkt positiv, verksamheten bär inte sig själv utan lever på utomstående kapital. Ett nedgångsmönster: krympande operativt, investerande som vänder positivt för att tillgångar säljs för att få in pengar, finansiering negativ för att skuld betalas av under press. Att sälja möblerna för att hålla sig flytande."
+        "Det operativa kassaflödet är grunden, källan allt annat till slut bör finansieras ur. Ett friskt bolag drar in stora och växande kontanter ur driften. Svagt eller negativt operativt kassaflöde är ett allvarligt bekymmer, om det inte är en äkta tidig tillväxtinvestering. Investeringsflödet rymmer mest capex och förvärv, och frågan som avgör är om de utgifterna täcks av driften, friskt och självfinansierande, eller av lån och eget kapital, beroende och skört. Capex i förhållande till avskrivningarna ger en ledtråd: capex tydligt över avskrivningarna antyder investering för tillväxt, capex ungefär lika med avskrivningarna antyder rent underhåll, och capex under avskrivningarna kan betyda att bolaget underinvesterar och tär på sina tillgångar.",
+        "Finansieringsflödet säger om bolaget tar in eller ger tillbaka. Ett positivt finansieringsflöde betyder att bolaget tar in kapital, bra för en äkta investering men oroande om det täpper till ett hål i driften. Ett negativt finansieringsflöde, alltså att betala av skuld, köpa tillbaka aktier eller dela ut, betyder oftast att bolaget går med överskott och ger det tillbaka. Ett tecken på styrka.",
+        "Läser du tecknen tillsammans får du en livshistoria. Ett friskt moget bolag: starkt positivt operativt, måttligt negativt investerande, negativt finansierande. Det finansierar allt självt och ger överskottet tillbaka. Ett friskt tillväxtbolag: positivt och stigande operativt, stort negativt investerande, finansiering måttligt positiv eller neutral. Det öser kontanter i tillväxt, helst till största delen ur driften. Ett varningsmönster: svagt eller negativt operativt medan finansieringen är starkt positiv. Verksamheten bär inte sig själv utan lever på utomstående kapital. Ett nedgångsmönster: krympande operativt, investerande som vänder positivt för att tillgångar säljs för att få in pengar, finansiering negativ för att skuld betalas av under press. Att sälja möblerna för att hålla sig flytande."
       ],
-      "takeaway": "Den första frågan är alltid enkel: finansieras bolaget av sin egen drift eller av utomstående pengar? Stäm av historien ledningen berättar mot mönstret i de tre flödena. Siffrorna är svårare att försköna än orden i en vd-kommentar."
+      "takeaway": "Första frågan är alltid enkel: finansieras bolaget av sin egen drift eller av utomstående pengar? Stäm av historien ledningen berättar mot mönstret i de tre flödena. Siffrorna är svårare att snygga till än orden i en vd-kommentar."
     },
     {
       "typ": "dataviz",
       "titel": "Samma sista rad, motsatta verkligheter",
-      "underrubrik": "Båda bolagen ökade sin kassa under året. Men det ena genererade kontanterna ur driften, det andra lånade och gav ut aktier för att täcka ett hål.",
+      "underrubrik": "Båda bolagen ökade sin kassa under året. Men det ena drog in pengarna ur driften, det andra lånade och gav ut aktier för att täcka ett hål.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -70,24 +70,24 @@
         "etiketter": "Mkr per flöde, illustrativa tal",
         "figurtext": "Illustrativa tal. Friskt landar på plus 20 i nettoförändring, Beroende på plus 30, men mönstret är motsatt."
       },
-      "slutsats": "Friskt bärs av driften: löpande kassaflöde täcker investeringarna och lämnar överskott som återförs till ägarna. Beroende brände 40 i driften och tog in 130 utifrån för att täcka hålet. Bedöm aldrig kontanter på enbart nettoförändringen, läs var de kom ifrån."
+      "slutsats": "Friskt bärs av driften: löpande kassaflöde täcker investeringarna och lämnar överskott som går till ägarna. Beroende brände 40 i driften och tog in 130 utifrån för att täcka hålet. Bedöm aldrig kontanter på bara nettoförändringen, läs var de kom ifrån."
     },
     {
       "typ": "reading",
       "kicker": "FRITT KASSAFLÖDE",
-      "lead": "För en ägare är fritt kassaflöde det viktigaste talet i hela finansen. Det är de kontanter som är dina efter att verksamheten gjort allt den behöver för att fortsätta rulla. I sin enklaste form: operativt kassaflöde minus capex.",
+      "lead": "För en ägare är fritt kassaflöde det viktigaste talet som finns. Det är de kontanter som är dina efter att verksamheten gjort allt den behöver för att fortsätta rulla. I sin enklaste form: operativt kassaflöde minus capex.",
       "highlight": "operativt kassaflöde minus capex",
       "brodtext": [
-        "Vinst är en åsikt. Operativt kassaflöde är bättre, men det blundar för de investeringar som krävs för att hålla verksamheten igång. Fritt kassaflöde är vad som blir kvar, det som kan delas ut, gå till återköp, betala av skuld eller återinvesteras i mer tillväxt. Capex, alltså investeringsutgifterna, är de pengar bolaget måste lägga på långsiktiga tillgångar för att fortsätta gå. Operativt kassaflöde smickrar kapitaltunga verksamheter eftersom det ignorerar de kontanter de tvingas ösa tillbaka i tillgångar. Fritt kassaflöde korrigerar det genom att dra bort capex. Ett bolags långsiktiga värde är i grunden summan av dess framtida fria kassaflöden.",
-        "Men all capex är inte lika, och här skiljer sig den skicklige analytikern från resten. Underhållscapex är vad som krävs bara för att hålla verksamheten igång på dagens nivå. Tillväxtcapex är den extra investering som bygger ut verksamheten. Ett bolag som lägger tungt på tillväxtcapex kan visa lågt fritt kassaflöde i dag, men om investeringen ger god avkastning skapar den värde i stället för att förstöra det. Att skilja de två åt kräver nästan alltid eget omdöme, eftersom bolag sällan delar upp capex rent åt dig. En grov utgångspunkt: avskrivningarna är en approximation av underhållscapex, så capex en bra bit över avskrivningarna brukar rymma tillväxt.",
-        "Var därför bekväm med lågt fritt kassaflöde när det beror på tung, högavkastande tillväxtinvestering, och vaksam när det beror på en kapitalhungrig verksamhet som måste spendera bara för att överleva. På raden kan de två se likadana ut. Telekom- och kabelbolag har klassiskt stor EBITDA och stort operativt kassaflöde men ihållande tunt fritt kassaflöde, eftersom de ständigt måste ösa kapital i sina nät bara för att hålla dem konkurrenskraftiga."
+        "Vinst är en åsikt. Operativt kassaflöde är bättre, men det blundar för de investeringar som krävs för att hålla verksamheten igång. Fritt kassaflöde är vad som blir kvar, det som kan delas ut, gå till återköp, betala av skuld eller stoppas tillbaka i mer tillväxt. Capex, alltså investeringsutgifterna, är de pengar bolaget måste lägga på långsiktiga tillgångar för att fortsätta gå. Operativt kassaflöde smickrar kapitaltunga verksamheter, eftersom det blundar för de kontanter de tvingas ösa tillbaka i tillgångar. Fritt kassaflöde rättar till det genom att dra bort capex. Ett bolags långsiktiga värde är i grunden summan av dess framtida fria kassaflöden.",
+        "Men all capex är inte lika, och här skiljer sig den skicklige analytikern från resten. Underhållscapex är vad som krävs bara för att hålla verksamheten igång på dagens nivå. Tillväxtcapex är den extra investering som bygger ut verksamheten. Ett bolag som lägger tungt på tillväxtcapex kan visa lågt fritt kassaflöde i dag, men om investeringen ger god avkastning skapar den värde i stället för att förstöra det. Att skilja de två åt kräver nästan alltid eget omdöme, för bolag delar sällan upp capex åt dig. En grov utgångspunkt: avskrivningarna ligger ungefär i nivå med underhållscapex, så capex en bra bit över avskrivningarna brukar rymma tillväxt.",
+        "Var alltså lugn med lågt fritt kassaflöde när det beror på tung tillväxtinvestering som ger god avkastning, och på din vakt när det beror på en kapitalhungrig verksamhet som måste spendera bara för att överleva. På raden kan de två se likadana ut. Telekom- och kabelbolag har klassiskt stor EBITDA och stort operativt kassaflöde men ihållande tunt fritt kassaflöde, eftersom de hela tiden måste ösa kapital i sina nät bara för att hålla dem konkurrenskraftiga."
       ],
-      "takeaway": "Förankra dig i fritt kassaflöde som det sannaste måttet på vad en verksamhet tjänar åt sina ägare. Dra alltid bort capex, och fråga sedan inte bara hur stor den är, utan vilken sort den är."
+      "takeaway": "Håll fast vid fritt kassaflöde som det sannaste måttet på vad en verksamhet tjänar åt sina ägare. Dra alltid bort capex, och fråga sedan inte bara hur stor den är, utan vilken sort den är."
     },
     {
       "typ": "dataviz",
       "titel": "Samma operativa kassaflöde, sex gånger så mycket fritt",
-      "underrubrik": "Två bolag drar in 200 Mkr ur driften. På operativt kassaflöde ser de jämförbara ut. På fritt kassaflöde ligger de milsvitt isär.",
+      "underrubrik": "Två bolag drar in 200 Mkr ur driften. På operativt kassaflöde ser de likvärdiga ut. På fritt kassaflöde ligger de milsvitt isär.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -97,33 +97,33 @@
           { "kategori": "Nät: fritt", "varde": 30, "accent": true }
         ],
         "etiketter": "Mkr, illustrativa tal, vid 200 Mkr operativt kassaflöde",
-        "figurtext": "Illustrativa tal. Mjukvara är kapitalsnålt, nästan allt blir fritt. Nät slukas av capex som krävs bara för att förbli konkurrenskraftigt."
+        "figurtext": "Illustrativa tal. Mjukvara är kapitalsnålt, nästan allt blir fritt. Nät slukas av capex som krävs bara för att hålla sig konkurrenskraftigt."
       },
-      "slutsats": "Därför övervärderas nätliknande bolag rutinmässigt av investerare som stannar vid operativt kassaflöde, och därför kommenderar kapitalsnåla verksamheter premievärderingar: mer av det de tjänar är fritt. Men ett tredje bolag med identiska 30 i fritt kunde bära raka motsatsen, om dess capex till största delen var tillväxt. Fråga alltid vilken sort capexen är."
+      "slutsats": "Därför övervärderas nätliknande bolag gång på gång av investerare som stannar vid operativt kassaflöde, och därför betalar marknaden en premie för kapitalsnåla verksamheter: mer av det de tjänar är fritt. Men ett tredje bolag med samma 30 i fritt kunde förtjäna raka motsatsen, om dess capex till största delen var tillväxt. Fråga alltid vilken sort capexen är."
     },
     {
       "typ": "reading",
       "kicker": "VINSTKVALITET",
-      "lead": "Tillbaka till det renaste testet: omvandlas vinsten till kontanter? Två bolag redovisar båda en nettovinst på 100 Mkr, men bakom samma rubrik döljer sig två helt olika verkligheter.",
+      "lead": "Tillbaka till det renaste testet: omvandlas vinsten till kontanter? Två bolag redovisar båda en nettovinst på 100 Mkr, men bakom samma rubrik gömmer sig två helt olika verkligheter.",
       "highlight": "omvandlas vinsten till kontanter",
       "brodtext": [
-        "Bolag Kontant har ett operativt kassaflöde på runt 110 Mkr, alltså strax över vinsten. Avskrivningar, en post utan kassaeffekt, läggs tillbaka, och rörelsekapitalet är väl kontrollerat. Vinsten blir till kontanter, du kan lita på de 100 Mkr.",
-        "Bolag Papper redovisar samma 100 Mkr, men dess operativa kassaflöde är bara 20 Mkr. Läs avstämningen och orsaken framträder: kundfordringarna hoppade upp 60 Mkr, försäljning som bokförts men inte drivits in, och lagret steg 30 Mkr, varor som staplas på hög. Tillsammans band det 90 Mkr som vinsten helt ignorerade. Vinsten sitter kvar i fordringar och lager, inte på banken.",
-        "Samma rubrikvinst, två helt olika bolag. Den som bara läser sista raden ser tvillingar. Läs kassaflödet och du ser ett friskt bolag bredvid ett som viftar med en röd flagga. Fortsätter Pappers vinst att överstiga dess kontanter kommer sanningen fram till slut, oftast smärtsamt. Vissa fordringar drivs aldrig in, en del lager kan behöva skrivas ned. Ställ alltid nettovinst bredvid operativt kassaflöde över flera år: följer kontanterna pålitligt vinsten kan du slappna av, springer vinsten konsekvent ifrån kontanterna, höj garden oavsett hur fin resultaträkningen ser ut."
+        "Bolag Kontant har ett operativt kassaflöde på runt 110 Mkr, alltså strax över vinsten. Avskrivningar, en post utan kassaeffekt, läggs tillbaka, och rörelsekapitalet hålls i schack. Vinsten blir till kontanter, du kan lita på de 100 Mkr.",
+        "Bolag Papper redovisar samma 100 Mkr, men dess operativa kassaflöde är bara 20 Mkr. Läs avstämningen och orsaken syns: kundfordringarna hoppade upp 60 Mkr, försäljning som bokförts men inte drivits in, och lagret steg 30 Mkr, varor som staplas på hög. Tillsammans band det 90 Mkr som vinsten helt blundade för. Vinsten sitter kvar i fordringar och lager, inte på banken.",
+        "Samma rubrikvinst, två helt olika bolag. Den som bara läser sista raden ser tvillingar. Läs kassaflödet och du ser ett friskt bolag bredvid ett som viftar med en röd flagga. Fortsätter Pappers vinst att överstiga dess kontanter kommer sanningen fram till slut, oftast smärtsamt. Vissa fordringar drivs aldrig in, en del lager kan behöva skrivas ned. Ställ alltid nettovinst bredvid operativt kassaflöde över flera år: följer kontanterna pålitligt vinsten kan du andas ut, springer vinsten år efter år ifrån kontanterna, höj garden hur fin resultaträkningen än ser ut."
       ],
       "takeaway": "Gör frågan blir vinsten till kontanter till det första testet du kör på varje bolag. En kvot mellan operativt kassaflöde och nettovinst runt eller över 1 över flera år säger att vinsten är backad av riktiga pengar."
     },
     {
       "typ": "reading",
       "kicker": "VAD SOM VARNAR",
-      "lead": "De flesta misstag springer ur samma rot: att stanna på fel nivå och behandla redovisad vinst som om den vore kontanter. Här är de tecken som ska få dig att höja garden.",
+      "lead": "De flesta misstag kommer ur samma rot: att stanna på fel nivå och behandla redovisad vinst som om den vore kontanter. Här är tecknen som ska få dig att höja garden.",
       "highlight": "att stanna på fel nivå",
       "brodtext": [
-        "På vinstkvaliteten varnar det när operativt kassaflöde konsekvent och tydligt ligger under nettovinsten, när gapet mellan redovisad vinst och genererade kontanter vidgas över tid, och när det gapet förklaras av svällande fordringar eller lager. Ett lönsamt bolag som ständigt måste ta in pengar eller låna för att finansiera den löpande driften är en motsägelse som sällan slutar väl.",
-        "På mönstret i de tre flödena varnar det när ett svagt eller negativt operativt kassaflöde hålls uppe av tunga, upprepade finansieringsinflöden, när kontanter bara står sig för att bolaget ständigt tar in lån och eget kapital, när investeringsflödet vänder positivt för att tillgångar säljs för att få in pengar, och när utdelning eller återköp finansieras av lån i stället för av operativt kassaflöde.",
-        "På fritt kassaflöde varnar det när det operativa kassaflödet ser starkt ut men fritt kassaflöde är ihållande tunt efter capex, när capex ligger konsekvent nära eller över det operativa kassaflödet så att inget blir fritt, och när fritt kassaflöde aldrig dyker upp trots år av påstådd tillväxtinvestering, alltså tillväxt som inte ger avkastning. Det legitima undantaget finns kvar: ett genuint tidigt bolag med sund enhetsekonomi får investera före vinst, men även då kontrollerar du att det operativa kassaflödet pekar åt rätt håll."
+        "På vinstkvaliteten varnar det när operativt kassaflöde år efter år och tydligt ligger under nettovinsten, när gapet mellan redovisad vinst och genererade kontanter vidgas över tid, och när det gapet förklaras av svällande fordringar eller lager. Ett lönsamt bolag som hela tiden måste ta in pengar eller låna för att finansiera den löpande driften är en motsägelse som sällan slutar väl.",
+        "På mönstret i de tre flödena varnar det när ett svagt eller negativt operativt kassaflöde hålls uppe av tunga, upprepade finansieringsinflöden, när kontanter bara står sig för att bolaget hela tiden tar in lån och eget kapital, när investeringsflödet vänder positivt för att tillgångar säljs för att få in pengar, och när utdelning eller återköp betalas med lån i stället för med operativt kassaflöde.",
+        "På fritt kassaflöde varnar det när det operativa kassaflödet ser starkt ut men fritt kassaflöde förblir tunt efter capex, när capex år efter år ligger nära eller över det operativa kassaflödet så att inget blir fritt, och när fritt kassaflöde aldrig dyker upp trots år av påstådd tillväxtinvestering, alltså tillväxt som inte ger avkastning. Det finns ett legitimt undantag: ett äkta tidigt bolag med sund enhetsekonomi får investera före vinst, men även då kollar du att det operativa kassaflödet pekar åt rätt håll."
       ],
-      "takeaway": "En verksamhet är bara så frisk som sin kontantgenerering. Det som varnar är genomgående detsamma: vinst och kontanter som går skilda vägar, och en drift som inte bär sig själv."
+      "takeaway": "En verksamhet är bara så frisk som de kontanter den drar in. Varningen är hela tiden densamma: vinst och kontanter som går skilda vägar, och en drift som inte bär sig själv."
     },
     {
       "typ": "quiz",
@@ -137,7 +137,7 @@
             "Att kontanter är lättare att manipulera än vinst"
           ],
           "ratt": [0],
-          "forklaring": "Vinst bygger på bedömningar, när intäkter bokförs, avskrivningstakt, vad som aktiveras. Kontanter är mycket svårare att putsa, pengarna rörde sig eller inte. Vinst beräknas dessutom på periodiserad basis, så vinst och kontanter kan se helt olika ut under en period."
+          "forklaring": "Vinst bygger på bedömningar: när intäkter bokförs, avskrivningstakt, vad som aktiveras. Kontanter går inte att putsa lika lätt, pengarna rörde sig eller inte. Vinst beräknas dessutom på periodiserad basis, så vinst och kontanter kan se helt olika ut under en period."
         },
         {
           "typ": "single",
@@ -148,7 +148,7 @@
             "För att avskrivningarna är för höga"
           ],
           "ratt": [1],
-          "forklaring": "Solvens handlar om kontanter, inte vinst. Ett lönsamt bolag vars kunder inte betalar eller som överinvesterar kan få slut på pengar och gå omkull precis lika säkert som ett olönsamt."
+          "forklaring": "Solvens handlar om kontanter, inte vinst. Ett lönsamt bolag vars kunder inte betalar eller som överinvesterar kan få slut på pengar och gå omkull lika säkert som ett olönsamt."
         },
         {
           "typ": "single",
@@ -159,7 +159,7 @@
             "EBITDA minus skatt"
           ],
           "ratt": [1],
-          "forklaring": "Fritt kassaflöde är operativt kassaflöde minus capex, de kontanter som blir kvar efter att verksamheten gjort de investeringar den behöver för att fortsätta rulla."
+          "forklaring": "Fritt kassaflöde är operativt kassaflöde minus capex, de kontanter som blir kvar när verksamheten gjort de investeringar den behöver för att fortsätta rulla."
         },
         {
           "typ": "single",
@@ -170,7 +170,7 @@
             "Nät är mer värt eftersom det investerar mer"
           ],
           "ratt": [1],
-          "forklaring": "På operativt kassaflöde ser de jämförbara ut, men på fritt kassaflöde, 180 mot 30 Mkr, ligger de milsvitt isär. Därför övervärderas nätliknande bolag rutinmässigt av dem som stannar vid operativt kassaflöde."
+          "forklaring": "På operativt kassaflöde ser de likvärdiga ut, men på fritt kassaflöde, 180 mot 30 Mkr, ligger de milsvitt isär. Därför övervärderas nätliknande bolag gång på gång av dem som stannar vid operativt kassaflöde."
         },
         {
           "typ": "single",
@@ -181,7 +181,7 @@
             "Ett nedgångsmönster där bolaget säljer tillgångar för att överleva"
           ],
           "ratt": [0],
-          "forklaring": "Driften bär bolaget, täcker investeringarna och lämnar överskott som återförs till ägarna via amortering, återköp eller utdelning. Det är bilden av mogen hälsa."
+          "forklaring": "Driften bär bolaget, täcker investeringarna och lämnar överskott som går till ägarna via amortering, återköp eller utdelning. Det är bilden av mogen hälsa."
         },
         {
           "typ": "multi",
@@ -194,7 +194,7 @@
             "Kontanter som bara står sig för att bolaget hela tiden tar in lån och eget kapital"
           ],
           "ratt": [0, 2],
-          "forklaring": "Hälsa är att driften bär bolaget: starkt operativt kassaflöde täcker investeringarna och lämnar överskott som återförs. Att hänga på finansieringskranen för att hålla totalen uppe är tvärtom en röd flagga."
+          "forklaring": "Hälsa är att driften bär bolaget: starkt operativt kassaflöde täcker investeringarna och lämnar överskott som går tillbaka till ägarna. Att hänga på finansieringskranen för att hålla totalen uppe är tvärtom en röd flagga."
         }
       ]
     }

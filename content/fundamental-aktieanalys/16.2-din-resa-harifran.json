@@ -10,23 +10,23 @@
       "typ": "intro",
       "kicker": "LEKTION 16.2",
       "titel": "Din resa härifrån",
-      "ingress": "Vi har gått hela vägen, från att en aktie är en ägarandel i en verksamhet till de svåraste fallen där värdet ligger i framtiden. Nu handlar det om hur du fortsätter på egen hand."
+      "ingress": "Vi har gått hela vägen, från att en aktie är en ägarandel i en verksamhet till de svåraste fallen där värdet ligger i framtiden. Nu handlar det om hur du går vidare själv."
     },
     {
       "typ": "reading",
       "kicker": "ALLT PÅ ETT ARK",
-      "lead": "Allt du lärt dig kokar ned till tre saker som hänger ihop: en process som tar en idé till ett beslut, ett skrivet case som förbinder dig till det beslutet, och en förvaltning som håller dig disciplinerad efteråt.",
-      "highlight": "en process som tar en idé till ett beslut, ett skrivet case som förbinder dig till det beslutet, och en förvaltning som håller dig disciplinerad efteråt",
+      "lead": "Allt du lärt dig kokar ned till tre delar som hänger ihop: en process som tar en idé till ett beslut, ett skrivet case som binder dig vid beslutet, och en förvaltning som håller dig disciplinerad efteråt.",
+      "highlight": "en process som tar en idé till ett beslut, ett skrivet case som binder dig vid beslutet, och en förvaltning som håller dig disciplinerad efteråt",
       "brodtext": [
-        "Ingen uppräkning av moduler nu. I stället en enda arbetsmetod du kan hålla i handen. Processen tar dig från snabbgallring till räkenskaper och kvalitet, vidare till värdering i intervall med felmarginal, och fram till ett beslut: köp, avstå eller bevaka.",
-        "Caset skriver du medan du fortfarande är objektiv: tes, antaganden, värde och felmarginal, storlek, och villkor som skulle visa att du har fel. Förvaltningen är vad du gör över tid, du stämmer av mot rapporterna, daterar caset när fakta ändras, och säljer bara på brusten tes, övervärdering eller ett klart bättre alternativ."
+        "Ingen uppräkning av moduler. I stället en arbetsmetod du kan hålla i handen. Processen tar dig från snabbgallring till räkenskaper och kvalitet, vidare till värdering i intervall med felmarginal, fram till ett beslut: köp, avstå eller bevaka.",
+        "Caset skriver du medan du fortfarande är objektiv: tes, antaganden, värde och felmarginal, storlek, och villkor som skulle visa att du har fel. Förvaltningen är vad du gör över tid. Du stämmer av mot rapporterna, daterar caset när fakta ändras, och säljer bara på brusten tes, övervärdering eller ett klart bättre alternativ."
       ],
-      "takeaway": "Process matar case matar förvaltning, och förvaltningen matar tillbaka till processen nästa gång ett antagande brister och en idé föds på nytt."
+      "takeaway": "Process matar case matar förvaltning. Och förvaltningen matar tillbaka till processen nästa gång ett antagande brister och en ny idé föds."
     },
     {
       "typ": "concept",
       "kicker": "EN ARBETSMETOD",
-      "titel": "Samma ark, andra frågor i varje ruta",
+      "titel": "Samma ark, nya frågor i varje ruta",
       "visual": {
         "typ": "flode",
         "noder": [
@@ -37,8 +37,8 @@
         "figurtext": "Konceptuell. De tre delarna är en kedja, och förvaltningen leder tillbaka till nästa idé."
       },
       "brodtext": [
-        "Arket bär även i kursens svåraste hörn, ett litet bolag vars värde ligger i framtiden. Klarar metoden det klarar den allt. Då byts vanliga frågor ut: är marknaden vinnbar, håller enhetsekonomin, räcker kassan dit eller tvingar den fram en utspädande emission?",
-        "Du arbetar i scenarier i stället för en enda prognos, väger ihop dem till ett värde som uttryckligen rymmer nollan, och dimensionerar positionen liten nog att en förlust är överlevbar. Samma tre delar, bara andra frågor i varje ruta."
+        "Arket bär även i kursens svåraste hörn, ett litet bolag vars värde ligger i framtiden. Klarar metoden det klarar den allt. Då byts frågorna ut: är marknaden vinnbar, håller enhetsekonomin, räcker kassan dit eller tvingar den fram en utspädande emission?",
+        "Du arbetar i scenarier i stället för en enda prognos, väger ihop dem till ett värde som rymmer nollan, och håller positionen liten nog att en förlust går att överleva. Samma tre delar, bara nya frågor i varje ruta."
       ]
     },
     {
@@ -47,8 +47,8 @@
       "lead": "Bär med dig de röda trådarna, för de håller genom allt. Vinst är en åsikt, kontanter ett faktum.",
       "highlight": "Vinst är en åsikt, kontanter ett faktum.",
       "brodtext": [
-        "Kvalitet är hög avkastning på kapital skyddad av en moat, med klok kapitalallokering ovanpå. Värde är nuvärdet av framtida kassaflöden, och varje metod är en genväg dit. Risk betyder permanent kapitalförlust, och felmarginalen är ditt försvar mot den.",
-        "Den verkliga kanten är inte intelligens, det är temperament och disciplin, satt i system genom det ark du nu har. Det här är utbildning, inte rådgivning. Bolagen genom kursen har varit undervisningsfall för tidlösa mönster, aldrig rekommendationer. Du fattar dina egna beslut och dimensionerar dem så att du överlever dina misstag, för du kommer göra dem."
+        "Kvalitet är hög avkastning på kapital skyddad av en moat, med klok kapitalallokering ovanpå. Värde är nuvärdet av framtida kassaflöden, och varje metod är en genväg dit. Risk är permanent kapitalförlust, och felmarginalen är ditt försvar mot den.",
+        "Den verkliga kanten är inte intelligens, den är temperament och disciplin, satt i system genom arket du nu har. Det här är utbildning, inte rådgivning. Bolagen i kursen har varit undervisningsfall för tidlösa mönster, aldrig rekommendationer. Du fattar dina egna beslut och håller dem så små att du överlever dina misstag, för du kommer göra dem."
       ],
       "rost": "sebastian",
       "takeaway": "Börja smått och fyll i ett case innan du köper, varje gång. Det är inte sexigt, men det är vanan som håller när det blåser, inte ett enskilt smart köp."
@@ -65,18 +65,18 @@
             "Köp, behåll och sälj"
           ],
           "ratt": [0],
-          "forklaring": "Processen tar en idé till ett beslut, caset förbinder dig till beslutet medan du är objektiv, och förvaltningen håller dig disciplinerad efteråt. De tre hänger ihop och matar tillbaka till varandra."
+          "forklaring": "Processen tar en idé till ett beslut, caset binder dig vid beslutet medan du är objektiv, och förvaltningen håller dig disciplinerad efteråt. De hänger ihop och matar tillbaka till varandra."
         },
         {
           "typ": "single",
           "fraga": "Varför skriver du ett case innan du köper?",
           "alternativ": [
             "För att garantera att aktien stiger",
-            "För att förbinda dig till tesen medan du fortfarande är objektiv, med villkor som skulle visa att du har fel",
+            "För att binda dig vid tesen medan du fortfarande är objektiv, med villkor som skulle visa att du har fel",
             "För att slippa stämma av mot rapporterna senare"
           ],
           "ratt": [1],
-          "forklaring": "Caset fångar din tes, dina antaganden, värde och felmarginal samt falsifieringsvillkor medan du är objektiv. Det är så du senare lär av dina utfall i stället för att upprepa dem."
+          "forklaring": "Caset fångar din tes, dina antaganden, värde och felmarginal samt villkor som visar att du har fel, allt medan du är objektiv. Det är så du senare lär av dina utfall i stället för att upprepa dem."
         },
         {
           "typ": "multi",
@@ -89,7 +89,7 @@
             "Felmarginalen är ditt försvar mot permanent kapitalförlust"
           ],
           "ratt": [0, 1, 3],
-          "forklaring": "Röda trådarna är att kontanter är faktum, att kanten är temperament och disciplin, och att felmarginalen försvarar mot permanent förlust. Risk betyder just permanent kapitalförlust, inte att kursen svänger."
+          "forklaring": "Röda trådarna är att kontanter är faktum, att kanten är temperament och disciplin, och att felmarginalen försvarar mot permanent förlust. Risk är permanent kapitalförlust, inte att kursen svänger."
         }
       ]
     }

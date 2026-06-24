@@ -10,16 +10,16 @@
       "typ": "intro",
       "kicker": "LEKTION 4.1",
       "titel": "Resultaträkningen",
-      "ingress": "Resultaträkningen svarar på en fråga: tjänade verksamheten pengar i år, och hur? Hela svaret ligger i vägen ned till sista raden, inte i sista raden själv."
+      "ingress": "Resultaträkningen svarar på en fråga: tjänade verksamheten pengar i år, och hur? Svaret ligger i vägen ned till sista raden, inte i raden själv."
     },
     {
       "typ": "reading",
       "kicker": "VARFÖR DET SPELAR ROLL",
-      "lead": "Tänk dig två bolag som lägger fram exakt samma sista rad: nettoresultat 95 Mkr. Vid första ögonkastet är de likvärdiga. Men det ena tjänade sina 95 på en frisk kärnverksamhet, det andra på att sälja en fastighet ett år då rörelsen gick med förlust. Samma siffra, två helt olika bolag.",
+      "lead": "Tänk dig två bolag med exakt samma sista rad: nettoresultat 95 Mkr. Vid första anblicken är de likvärdiga. Men det ena tjänade sina 95 på en frisk kärnverksamhet, det andra på att sälja en fastighet ett år då rörelsen gick med förlust. Samma siffra, två helt olika bolag.",
       "highlight": "Samma siffra, två helt olika bolag.",
       "brodtext": [
-        "Den som bara läste sista raden köpte det sämre av dem utan att veta om det. Därför läses resultaträkningen uppifrån och ned. Rapporten svarar på frågan om verksamheten tjänade pengar i år och hur, och hela svaret ligger i hur du tog dig ned till sista raden. Nettoresultatet ensamt säger nästan ingenting.",
-        "Vägen dit avslöjar vinstens källa och kvalitet, och det är den du betalar för som ägare. Det här är den mest lästa av de tre rapporterna, och att läsa den väl är grunden för allt annat i analysen."
+        "Den som bara läste sista raden köpte det sämre av dem utan att veta om det. Därför läser du resultaträkningen uppifrån och ned. Den svarar på om verksamheten tjänade pengar i år och hur, och svaret ligger i hur du tog dig ned till sista raden. Nettoresultatet ensamt säger nästan ingenting.",
+        "Vägen dit avslöjar var vinsten kommer ifrån och hur bra den är, och det är den du betalar för som ägare. Det här är den mest lästa av de tre rapporterna. Läser du den väl har du grunden för allt annat i analysen."
       ],
       "takeaway": "Bli varken upprymd eller orolig av sista raden förrän du sett vad som ligger ovanför den."
     },
@@ -40,34 +40,34 @@
         ],
         "figurtext": "Resultaträkningens kedja, från toppraden ned till vad ägarna får."
       },
-      "forklaring": "Resultaträkningen är en trappa. Du börjar med omsättningen högst upp och drar av kostnader i lager, ett i taget, tills du når vinsten längst ned. Omsättning minus kostnad för sålda varor ger bruttoresultat. Minus rörelsekostnader, alltså försäljning, administration och utveckling, ger rörelseresultat. Plus eller minus finansiella poster, framför allt räntor, ger resultat före skatt. Minus skatt ger nettoresultatet. Och nettoresultatet delat på antal aktier ger vinst per aktie, så håll utkik efter utspädning."
+      "forklaring": "Resultaträkningen är en trappa. Du börjar med omsättningen högst upp och drar av kostnader i lager, ett i taget, tills du når vinsten längst ned. Omsättning minus kostnad för sålda varor ger bruttoresultat. Minus rörelsekostnader, alltså försäljning, administration och utveckling, ger rörelseresultat. Plus eller minus finansiella poster, framför allt räntor, ger resultat före skatt. Minus skatt ger nettoresultatet. Och nettoresultatet delat på antal aktier ger vinst per aktie, så håll koll på utspädning."
     },
     {
       "typ": "reading",
       "kicker": "VARJE DELSUMMAS INNEBÖRD",
-      "lead": "Det viktiga är att varje lager skalar bort en egen sorts kostnad och att varje delsumma svarar på en egen fråga. Toppraden och sista raden ligger längst ifrån varandra, och allt intressant händer däremellan.",
+      "lead": "Varje lager skalar bort en egen sorts kostnad, och varje delsumma svarar på en egen fråga. Toppraden och sista raden ligger längst ifrån varandra, och allt intressant händer däremellan.",
       "highlight": "varje delsumma svarar på en egen fråga",
       "brodtext": [
-        "Omsättningen är toppraden, viktig men säger ingenting om lönsamhet på egen hand. Bruttoresultatet, omsättning minus den direkta kostnaden för det sålda, avslöjar produktens grundekonomi och prissättningskraft. Rörelseresultatet är vinsten från den faktiska verksamheten, före finansiering och skatt, och därmed det renaste måttet på hur kärnverksamheten presterar.",
-        "Resultat före skatt är rörelseresultatet efter räntor, så där syns skuldbördan. Nettoresultatet är vad som är kvar för ägarna när allt är betalt, inklusive skatt och engångsposter. Den avgörande professionella distinktionen är denna: rörelseresultatet visar verksamheten, nettoresultatet visar verksamheten plus finansiering, skatt och engångsposter. Vill du bedöma själva verksamheten förankrar du i rörelseresultatet och spårar vad som händer under det."
+        "Omsättningen är toppraden. Viktig, men på egen hand säger den ingenting om lönsamhet. Bruttoresultatet, omsättning minus den direkta kostnaden för det sålda, avslöjar produktens grundekonomi och prissättningskraft. Rörelseresultatet är vinsten från den faktiska verksamheten, före finansiering och skatt, och därmed det renaste måttet på hur kärnverksamheten presterar.",
+        "Resultat före skatt är rörelseresultatet efter räntor, så där syns skuldbördan. Nettoresultatet är vad som är kvar för ägarna när allt är betalt, skatt och engångsposter inräknat. Skillnaden du måste hålla isär: rörelseresultatet visar verksamheten, nettoresultatet visar verksamheten plus finansiering, skatt och engångsposter. Vill du bedöma själva verksamheten förankrar du i rörelseresultatet och följer vad som händer under det."
       ],
       "takeaway": "Läs trappan uppifrån och ned, men bedöm den från rörelseresultatet."
     },
     {
       "typ": "reading",
       "kicker": "BRUTTORESULTATET",
-      "lead": "Om du bara fick titta på en enda rad innan du bildade dig en uppfattning om bolaget, skulle bruttomarginalen vara en av de bästa du kunde välja. Den talar om produktens grundekonomi: hur stort utrymmet är mellan vad kunderna betalar och vad det kostar att leverera.",
+      "lead": "Fick du bara titta på en enda rad innan du bildade dig en uppfattning om bolaget, vore bruttomarginalen ett av de bästa valen. Den talar om produktens grundekonomi: hur stort utrymmet är mellan vad kunderna betalar och vad det kostar att leverera.",
       "highlight": "hur stort utrymmet är mellan vad kunderna betalar och vad det kostar att leverera",
       "brodtext": [
-        "Bruttomarginalen är bruttoresultatet delat på omsättningen, i procent. Den svarar på en enkel fråga: av varje krona i försäljning, hur mycket är kvar sedan du betalat för själva varan, innan någon kostnad för att driva bolaget? Ett mjukvarubolag kan behålla 90 kr av varje 100, en livsmedelsbutik kanske 25. Den skillnaden definierar vilken sorts verksamhet det är. Vad som ligger i kostnad för sålda varor varierar med affären: för en tillverkare material och fabriksarbete, för en handlare grossistkostnaden, för mjukvara servrar och support.",
-        "En hög och stabil bruttomarginal signalerar oftast prissättningskraft, ofta det finansiella fingeravtrycket av en konkurrensfördel. En verksamhet som kan ta långt mer betalt än sin kostnad har något kunderna värderar och konkurrenterna inte lätt kan kopiera. En verksamhet tvingad att prissätta strax över kostnad säljer i praktiken en råvara. Bevaka dessutom trenden över flera år: en långsamt sjunkande bruttomarginal är en tidig varning för eroderande prissättningskraft, ofta innan det syns längre ned i trappan."
+        "Bruttomarginalen är bruttoresultatet delat på omsättningen, i procent. Den svarar på en enkel fråga: av varje krona i försäljning, hur mycket är kvar sedan du betalat för själva varan, innan någon kostnad för att driva bolaget? Ett mjukvarubolag kan behålla 90 kr av varje 100, en livsmedelsbutik kanske 25. Den skillnaden avgör vilken sorts verksamhet det är. Vad som ligger i kostnad för sålda varor varierar med affären: för en tillverkare material och fabriksarbete, för en handlare grossistkostnaden, för mjukvara servrar och support.",
+        "En hög och stabil bruttomarginal är oftast ett tecken på prissättningskraft, det finansiella fingeravtrycket av en konkurrensfördel. En verksamhet som kan ta långt mer betalt än sin kostnad har något kunderna värderar och konkurrenterna inte lätt kan kopiera. En som tvingas prissätta strax över kostnad säljer i praktiken en råvara. Följ trenden över flera år: en långsamt sjunkande bruttomarginal varnar tidigt för att prissättningskraften eroderar, ofta innan det syns längre ned i trappan."
       ],
       "takeaway": "Bruttomarginalen sätter taket för all lönsamhet under den, eftersom varje kostnad längre ned tas ur det som bruttoraden lämnar kvar."
     },
     {
       "typ": "dataviz",
       "titel": "Samma smäll, olika utgång",
-      "underrubrik": "Två bolag tappar båda 5 procentenheter av bruttomarginalen i en kostnadschock. Bruttomarginalen är inte bara ett lönsamhetstal, utan ett mått på motståndskraft.",
+      "underrubrik": "Två bolag tappar båda 5 procentenheter av bruttomarginalen i en kostnadschock. Bruttomarginalen mäter inte bara lönsamhet, utan motståndskraft.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -79,7 +79,7 @@
         "etiketter": "Rörelseresultat i Mkr",
         "figurtext": "Illustrativa tal. Båda har omsättning 1 000 Mkr. H har 80 procents bruttomarginal och faller till 75, L har 15 procent och faller till 10. Eftersom L:s rörelsekostnader ligger kvar vänder bolaget till förlust."
       },
-      "slutsats": "Exakt samma kostnadschock är en repa för högmarginalbolaget och dödlig för lågmarginalbolaget. Kudden i bruttomarginalen är det som avgör vem som överlever en uppgång i insatskostnaderna."
+      "slutsats": "Exakt samma kostnadschock är en repa för högmarginalbolaget och dödlig för lågmarginalbolaget. Kudden i bruttomarginalen avgör vem som överlever en uppgång i insatskostnaderna."
     },
     {
       "typ": "reading",
@@ -87,19 +87,19 @@
       "lead": "Under bruttoraden sitter de operativa kostnaderna för att driva bolaget: försäljning, marknadsföring, administration och utveckling. Drar du dem från bruttoresultatet får du rörelseresultatet, alltså EBIT, vinsten verksamheten gör innan den betalar långivare och skatt.",
       "highlight": "vinsten verksamheten gör innan den betalar långivare och skatt",
       "brodtext": [
-        "EBIT är arbetshästen. Det är det renaste jämförelsemåttet mellan bolag eftersom det rensar bort kapitalstruktur, alltså ränta, och skatt, så att du kan jämföra verksamheter på enbart driften. En sak du behöver hålla isär är fasta mot rörliga rörelsekostnader. Rörliga kostnader skalar med försäljningen, som vissa provisioner och frakt. Fasta kostnader rör sig knappt med volymen, som lokaler, kärnlöner och merparten av utveckling.",
-        "Blandningen avgör den operativa hävstången. En verksamhet med höga fasta kostnader får vinster som svänger hårt med omsättningen, härligt på vägen upp och brutalt på vägen ned, medan en med höga rörliga kostnader får stadigare men mer begränsade marginaler. Bevaka förhållandet mellan lagren över tid: växer rörelseresultatet snabbare än omsättningen expanderar marginalen, växer det långsammare är marginalen under press."
+        "EBIT är arbetshästen. Det är det renaste jämförelsemåttet mellan bolag, eftersom det rensar bort kapitalstruktur, alltså ränta, och skatt, så att du kan jämföra verksamheter på bara driften. Här gäller det att hålla isär fasta och rörliga rörelsekostnader. Rörliga kostnader skalar med försäljningen, som vissa provisioner och frakt. Fasta kostnader rör sig knappt med volymen, som lokaler, kärnlöner och merparten av utveckling.",
+        "Blandningen avgör den operativa hävstången. Ett bolag med höga fasta kostnader får vinster som svänger hårt med omsättningen, härligt på vägen upp och brutalt på vägen ned. Ett med höga rörliga kostnader får stadigare men mer begränsade marginaler. Följ förhållandet mellan lagren över tid: växer rörelseresultatet snabbare än omsättningen expanderar marginalen, växer det långsammare är marginalen under press."
       ],
       "takeaway": "Förankra bedömningen av kärnverksamheten i rörelseresultatet, och läs den operativa hävstången för att förstå hur vinsten kommer att röra sig med omsättningen."
     },
     {
       "typ": "reading",
       "kicker": "FÄLLAN I EBITDA",
-      "lead": "Rörelseavsnittet är också där ett av analysens mest missbrukade nyckeltal bor: EBITDA, resultat före räntor, skatt, av- och nedskrivningar. Det finns överallt i investerarpresentationer och är på samma gång användbart och farligt.",
+      "lead": "I rörelseavsnittet bor också ett av analysens mest missbrukade nyckeltal: EBITDA, resultat före räntor, skatt, av- och nedskrivningar. Det finns överallt i investerarpresentationer och är på samma gång användbart och farligt.",
       "highlight": "på samma gång användbart och farligt",
       "brodtext": [
-        "EBITDA är EBIT med av- och nedskrivningar återlagda, och är därför alltid större än EBIT. Det legitima syftet är att lägga tillbaka icke kontanta poster, som fördelar kostnaden för tidigare investeringar över tid, för att grovt approximera operativt kassaflöde och göra bolag med olika tillgångsbas jämförbara. Fällan uppstår när det legitima syftet blir en vana.",
-        "Avskrivningar representerar en verklig ekonomisk kostnad: tillgångar slits ut och måste ersättas. För en kapitalintensiv verksamhet, med fabriker, nät eller tung utrustning, överskattar du den sanna lönsamheten kraftigt om du ignorerar dem. Charlie Munger satte fingret på det när han föreslog att man ska läsa EBITDA som vinst före en massa verkliga kostnader. Ett bolag som ständigt pekar dig mot EBITDA medan EBIT och kassaflöde är svaga döljer ofta tung kapitalförbrukning eller en dålig avkastning på sina tillgångar. Tumregeln är enkel: ju mer ett bolag betonar EBITDA framför EBIT, desto noggrannare ska tillgångarna och kontanterna granskas."
+        "EBITDA är EBIT med av- och nedskrivningar återlagda, och är därför alltid större än EBIT. Det legitima syftet är att lägga tillbaka poster som inte kostar kontanter, alltså kostnaden för tidigare investeringar fördelad över tid, för att grovt uppskatta operativt kassaflöde och göra bolag med olika tillgångsbas jämförbara. Fällan uppstår när det legitima syftet blir en vana.",
+        "Avskrivningar är en verklig ekonomisk kostnad: tillgångar slits ut och måste ersättas. För en kapitalintensiv verksamhet, med fabriker, nät eller tung utrustning, överskattar du lönsamheten kraftigt om du ignorerar dem. Charlie Munger satte fingret på det när han sa att EBITDA ska läsas som vinst före en massa verkliga kostnader. Ett bolag som ständigt pekar dig mot EBITDA medan EBIT och kassaflöde är svaga döljer ofta tung kapitalförbrukning eller dålig avkastning på sina tillgångar. Tumregeln är enkel: ju mer ett bolag betonar EBITDA framför EBIT, desto noggrannare granskar du tillgångarna och kontanterna."
       ],
       "takeaway": "Använd EBITDA där det passar, vid grov jämförelse och för kapitalsnåla bolag, men låt det aldrig ersätta EBIT eller fritt kassaflöde."
     },
@@ -118,7 +118,7 @@
         "etiketter": "Belopp i Mkr",
         "figurtext": "Illustrativa tal. Av 1 000 i omsättning blir bruttoresultatet 400 (40 procents bruttomarginal), rörelseresultatet 150 (15 procents rörelsemarginal) och nettoresultatet 95 efter ett finansnetto på 30 och skatt på cirka 25."
       },
-      "slutsats": "Det största läckaget sitter högt upp, i kostnaden för sålda varor, därnäst i rörelsekostnaderna. Sedan tar räntan sitt: 30 Mkr, en femtedel av rörelseresultatet, gick rakt till långivarna innan skatt och ägare. Det här bolaget bär en betydande skuld."
+      "slutsats": "Det största läckaget sitter högt upp, i kostnaden för sålda varor, därnäst i rörelsekostnaderna. Sedan tar räntan sitt: 30 Mkr, en femtedel av rörelseresultatet, gick rakt till långivarna innan skatt och ägare. Det här bolaget bär en tung skuld."
     },
     {
       "typ": "reading",
@@ -127,17 +127,17 @@
       "highlight": "Samma vinstsiffra är värd mer om den kommer ren från verksamheten",
       "brodtext": [
         "Vid varje rad ställer du samma fråga: är det här hållbart och från kärnverksamheten, eller engångsartat, finansiellt eller skattedrivet? Räkna marginalerna på varje nivå för att se var pengar görs och var de tappas. Bli misstänksam när nettoresultat och rörelseresultat berättar olika historier, för det gapet är nästan alltid engångsposter eller finansiella poster.",
-        "Det du vill se är en effektiv trappa: rörelseresultatet växer minst i takt med omsättningen, helst snabbare. Nettoresultatet drivs rent av rörelseresultatet, med minimala engångsposter. Räntebördan är låg i förhållande till rörelseresultatet. Och vinst per aktie växer minst lika snabbt som nettoresultatet, vilket betyder ett stabilt eller krympande antal aktier."
+        "Du vill se en effektiv trappa: rörelseresultatet växer minst i takt med omsättningen, helst snabbare. Nettoresultatet drivs rent av rörelseresultatet, med minimala engångsposter. Räntebördan är låg i förhållande till rörelseresultatet. Och vinst per aktie växer minst lika snabbt som nettoresultatet, vilket betyder ett stabilt eller krympande antal aktier."
       ],
       "takeaway": "En frisk trappa läcker lite och bär en vinst av hög kvalitet, driven av rörelsen snarare än av poster under den."
     },
     {
       "typ": "reading",
       "kicker": "VARNINGSSIGNALER",
-      "lead": "Det som varnar är en trappa som läcker och en vinst av låg kvalitet. De flesta misstagen samlas kring ett enda fel: att läsa nedifrån, att stirra på sista raden eller vinst per aktie och strunta i hur den byggdes.",
+      "lead": "Det som varnar är en trappa som läcker och en vinst av låg kvalitet. De flesta misstagen bottnar i ett enda fel: att läsa nedifrån, att stirra på sista raden eller vinst per aktie och strunta i hur den byggdes.",
       "highlight": "att läsa nedifrån",
       "brodtext": [
-        "Var vaksam när nettoresultatet ligger klart över rörelseresultatet, drivet av engångsposter eller finansiella poster. När omsättningen stiger medan rörelseresultatet står stilla eller faller, alltså marginalpress. När en stor andel av rörelseresultatet slukas av räntor. Och när vinst per aktie halkar efter det totala nettoresultatet, ett tecken på utspädning. Var också misstänksam när bruttomarginalen förbättras samtidigt som rörelsemarginalen inte gör det, för det kan vara kostnader som flyttats ned i trappan.",
+        "Var vaksam när nettoresultatet ligger klart över rörelseresultatet, drivet av engångsposter eller finansiella poster. När omsättningen stiger medan rörelseresultatet står stilla eller faller, alltså marginalpress. När räntor slukar en stor andel av rörelseresultatet. Och när vinst per aktie halkar efter det totala nettoresultatet, ett tecken på utspädning. Var också misstänksam när bruttomarginalen förbättras utan att rörelsemarginalen gör det, för då kan kostnader ha flyttats ned i trappan.",
         "På EBITDA-sidan varnar en ledning som konsekvent leder med EBITDA medan EBIT och kassaflöde är svaga, och ett stort, ihållande gap mellan EBITDA och EBIT som avslöjar tunga avskrivningar. Var särskilt vaksam när investeringarna ungefär matchar eller överstiger de avskrivningar som läggs tillbaka, för då är återläggningen i praktiken fiktiv."
       ],
       "takeaway": "Behandla aldrig ett engångslyft som hållbar rörelsevinst, bortse aldrig från räntan, och glöm aldrig att vinst per aktie hänger på antalet aktier."
@@ -147,14 +147,14 @@
       "fragor": [
         {
           "typ": "single",
-          "fraga": "Varför läser man resultaträkningen uppifrån och ned i stället för att börja med sista raden?",
+          "fraga": "Varför läser du resultaträkningen uppifrån och ned i stället för att börja med sista raden?",
           "alternativ": [
-            "För att vägen ned till nettoresultatet avslöjar vinstens källa och kvalitet",
+            "För att vägen ned till nettoresultatet avslöjar var vinsten kommer ifrån och hur bra den är",
             "För att sista raden alltid innehåller redovisningsfel",
             "För att omsättningen är det enda måttet på lönsamhet"
           ],
           "ratt": [0],
-          "forklaring": "Nettoresultatet ensamt säger lite. Två bolag kan visa samma sista rad men ha helt olika vinstkvalitet, och det är hur du tar dig ned till den som avslöjar källan."
+          "forklaring": "Nettoresultatet ensamt säger lite. Två bolag kan visa samma sista rad men ha helt olika vinstkvalitet, och det är vägen ned dit som avslöjar källan."
         },
         {
           "typ": "single",
@@ -165,7 +165,7 @@
             "Resultat före skatt"
           ],
           "ratt": [1],
-          "forklaring": "Rörelseresultatet visar verksamheten före räntor och skatt. Nettoresultatet visar verksamheten plus finansiering, skatt och engångsposter."
+          "forklaring": "Rörelseresultatet visar verksamheten före räntor och skatt. Nettoresultatet visar verksamheten plus finansiering, skatt och engångsposter ovanpå."
         },
         {
           "typ": "single",
@@ -187,7 +187,7 @@
             "Effekten blir alltid identisk eftersom nedgången är lika stor"
           ],
           "ratt": [0],
-          "forklaring": "Samma smäll är en repa för ett högmarginalbolag men kan vara dödlig för ett lågmarginalbolag, vars fasta rörelsekostnader gör att det vänder till förlust. Bruttomarginalen mäter motståndskraft."
+          "forklaring": "Samma smäll är en repa för ett högmarginalbolag men kan bli dödlig för ett lågmarginalbolag, vars fasta rörelsekostnader gör att det vänder till förlust. Bruttomarginalen mäter motståndskraft."
         },
         {
           "typ": "single",
@@ -198,7 +198,7 @@
             "Bolag B är mest lönsamt eftersom det har högst avskrivningar"
           ],
           "ratt": [1],
-          "forklaring": "EBIT är EBITDA minus avskrivningar: A får 180 (18 procent), B får 50 (5 procent). Trots identisk EBITDA är A över tre gånger så lönsamt på rörelsenivå, och hela skillnaden gömmer sig i avskrivningsraden."
+          "forklaring": "EBIT är EBITDA minus avskrivningar: A får 180 (18 procent), B får 50 (5 procent). Trots identisk EBITDA är A över tre gånger så lönsamt på rörelsenivå, och hela skillnaden göms i avskrivningsraden."
         },
         {
           "typ": "multi",

@@ -15,23 +15,23 @@
     {
       "typ": "reading",
       "kicker": "VARFÖR DET SPELAR ROLL",
-      "lead": "När du vet att en vinst måste dyka upp i eget kapital, att en köpt maskin måste synas både som ett kontantutflöde och som en ny tillgång, då slutar du läsa siffrorna och börjar förhöra dem.",
+      "lead": "När du vet att en vinst måste dyka upp i eget kapital, och att en köpt maskin måste synas både som ett kontantutflöde och som en ny tillgång, då slutar du läsa siffrorna och börjar förhöra dem.",
       "highlight": "då slutar du läsa siffrorna och börjar förhöra dem",
       "brodtext": [
-        "Du har mött rapporterna var för sig: resultaträkningen, balansräkningen och kassaflödet. Nu knyter vi ihop dem. En enda affär krusar genom alla tre, så när du kan kopplingarna förvandlas tre dokument till ett sammanlänkat system som du kan granska.",
-        "Det spelar roll i praktiken. Nästan all redovisningskosmetika bygger på att smickra en rapport och hoppas att läsaren inte följer effekten vidare till de andra två. Kan du länkarna lämnar de flesta lögner ett spår, för en siffra som skönmålats i en rapport skapar nästan alltid en motsägelse någon annanstans."
+        "Du har mött rapporterna var för sig: resultaträkningen, balansräkningen och kassaflödet. Nu knyter vi ihop dem. En enda affär krusar genom alla tre, så när du kan kopplingarna blir tre dokument ett sammanlänkat system du kan granska.",
+        "Det här spelar roll i praktiken. Nästan all redovisningskosmetika bygger på att smickra en rapport och hoppas att läsaren inte följer effekten vidare till de andra två. Kan du länkarna lämnar de flesta lögner ett spår, för en siffra som skönmålats på ett ställe skapar nästan alltid en motsägelse någon annanstans."
       ],
       "takeaway": "Läs aldrig en rapport ensam. Spåra varje siffra vidare och kontrollera att de tre berättar samma historia."
     },
     {
       "typ": "reading",
       "kicker": "DE TRE LÄNKARNA",
-      "lead": "Tre länkar håller ihop rapporterna. Lär dig dem och resten följer. Resultaträkningen flödar in i eget kapital, kassaflödet startar i vinsten och stämmer av den till kontanter, och nettoförändringen av kontanter är lika med förändringen av kassaraden.",
+      "lead": "Tre länkar håller ihop rapporterna. Lär dig dem så följer resten. Resultaträkningen flödar in i eget kapital, kassaflödet startar i vinsten och stämmer av den mot kontanter, och nettoförändringen av kontanter är lika med förändringen av kassaraden.",
       "highlight": "Tre länkar håller ihop rapporterna.",
       "brodtext": [
         "Resultaträkning till balansräkning. Nettovinsten minus utdelning ökar de balanserade vinstmedlen inom eget kapital. Eget kapital vid årets slut är eget kapital vid start plus vinst minus utdelning, plus eller minus några mindre poster. Resultaträkningen är alltså bron som höjer eller sänker eget kapital över året.",
-        "Resultaträkning till kassaflöde. Kassaflödesanalysen startar i nettovinsten och stämmer av den till verkliga kontanter genom att lägga tillbaka icke kontanta poster, som avskrivningar, och justera för förändringar i rörelsekapital.",
-        "Kassaflöde till balansräkning. Nettoförändringen av kontanter i kassaflödet är lika med förändringen av kassaraden på balansräkningen mellan två år. Och posterna under investering och finansiering ändrar sina motsvarigheter på balansräkningen: capex höjer anläggningstillgångarna, ny upplåning höjer skulderna, återköp sänker eget kapital."
+        "Resultaträkning till kassaflöde. Kassaflödesanalysen startar i nettovinsten och stämmer av den mot verkliga kontanter: den lägger tillbaka icke kontanta poster som avskrivningar och justerar för förändringar i rörelsekapital.",
+        "Kassaflöde till balansräkning. Nettoförändringen av kontanter i kassaflödet är lika med förändringen av kassaraden på balansräkningen mellan två år. Posterna under investering och finansiering ändrar sina motsvarigheter på balansräkningen: capex höjer anläggningstillgångarna, ny upplåning höjer skulderna, återköp sänker eget kapital."
       ],
       "takeaway": "Resultaträkningen lyfter eget kapital, kassaflödet stämmer av vinsten mot kontanter, och kontantförändringen landar på balansräkningens kassarad. Tre länkar, ett system."
     },
@@ -49,15 +49,15 @@
         ],
         "figurtext": "Resultaträkningen är bron mellan ingående och utgående eget kapital."
       },
-      "forklaring": "Resultaträkningen lyfter eller sänker balansräkningens eget kapital över året. Redovisar ett bolag nettovinst men eget kapital inte växer ungefär som vinst minus utdelning, utan nyemission, då skaver något och glappet är en signal att gräva i. Eftersom rapporterna måste stämma överens blir varje inkonsekvens en signal."
+      "forklaring": "Resultaträkningen lyfter eller sänker balansräkningens eget kapital över året. Redovisar ett bolag nettovinst men eget kapital inte växer ungefär som vinst minus utdelning, och ingen nyemission har skett, då skaver något. Glappet är en signal att gräva i. Eftersom rapporterna måste stämma överens blir varje inkonsekvens just det: en signal."
     },
     {
       "typ": "concept",
       "kicker": "VARFÖR DET ALLTID GÅR IHOP",
       "titel": "Balansräkningen balanserar, alltid",
       "brodtext": [
-        "Det som binder ihop allt är att balansräkningen alltid balanserar. Varje transaktion har två sidor, så varje förändring måste flöda igenom konsekvent. Tjänar ett bolag 100 i kontant vinst stiger tillgångarna, kontanter, med 100 och eget kapital, balanserade vinstmedel, med 100, och ekvationen står kvar i balans.",
-        "Köper det i stället en maskin för 100 kontant faller en tillgång, kontanter, med 100 medan en annan, utrustning, stiger med 100, i balans igen. Samma logik gäller varje affär bolaget gör under ett år. Just därför går det att korskolla: stiger tillgångarna utan någon synlig källa till kontanter eller finansiering, då saknas den andra sidan, och det är en röd flagga."
+        "Det som binder ihop allt är att balansräkningen alltid balanserar. Varje transaktion har två sidor, så varje förändring måste gå jämnt ut. Tjänar ett bolag 100 i kontant vinst stiger tillgångarna, alltså kontanter, med 100 och eget kapital, alltså balanserade vinstmedel, med 100. Ekvationen står kvar i balans.",
+        "Köper bolaget i stället en maskin för 100 kontant faller en tillgång, kontanter, med 100 medan en annan, utrustning, stiger med 100. I balans igen. Samma logik gäller varje affär under året. Därför går det att korskolla: stiger tillgångarna utan någon synlig källa till kontanter eller finansiering, då saknas den andra sidan. Det är en röd flagga."
       ]
     },
     {
@@ -74,7 +74,7 @@
         "etiketter": "Effekt av en kreditförsäljning på 100, samma period",
         "figurtext": "Illustrativa tal. Vinst plus 100, kundfordringar plus 100, kassaflöde 0."
       },
-      "slutsats": "Säljer ett bolag varor på kredit för 100 stiger intäkt och vinst med 100, och på balansräkningen stiger kundfordringar med 100. Men pengarna har inte kommit in, så rörelsekapitaljusteringen blir minus 100 och operativt kassaflöde blir 0. Samma affär rör alla tre rapporterna, och kassaflödet visar ärligt att inga pengar ännu kommit in."
+      "slutsats": "Säljer ett bolag varor på kredit för 100 stiger intäkt och vinst med 100, och kundfordringar på balansräkningen stiger med 100. Men pengarna har inte kommit in, så rörelsekapitaljusteringen blir minus 100 och operativt kassaflöde blir 0. Samma affär rör alla tre rapporterna, och kassaflödet visar ärligt att inga pengar ännu kommit in."
     },
     {
       "typ": "dataviz",
@@ -90,15 +90,15 @@
         ],
         "figurtext": "Illustrativa tal i Mkr. Operativt 100 plus 30 minus 20 lika med 110, investering minus 50, finansiering minus 40."
       },
-      "slutsats": "Allt knyts ihop. Vinsten lyfte eget kapital till 460. Kassaflödet stämde av samma vinst till en kontantförändring på plus 20. Balansräkningens kassa rörde sig exakt de plus 20, till 170. De 50 i capex höjde anläggningstillgångarna, dämpat av avskrivningarna. Hade en bit inte gått ihop, säg att vinsten var 100 men eget kapital steg 200 utan nyemission, då hade du vetat att något var fel. Tre rapporter, en uppsättning fakta."
+      "slutsats": "Allt knyts ihop. Vinsten lyfte eget kapital till 460. Kassaflödet stämde av samma vinst till en kontantförändring på plus 20. Balansräkningens kassa rörde sig exakt de plus 20, till 170. De 50 i capex höjde anläggningstillgångarna, dämpat av avskrivningarna. Hade en bit inte gått ihop, säg att vinsten var 100 men eget kapital steg 200 utan nyemission, då hade du vetat att något var fel. Tre rapporter, samma uppsättning fakta."
     },
     {
       "typ": "concept",
       "kicker": "EN HÄNDELSE, TRE ANSIKTEN",
       "titel": "Mönstret över rapporterna är diagnosen",
       "brodtext": [
-        "Nu nästa steg, det som skiljer en analytiker från en avläsare av nyckeltal. Samma ekonomiska händelse landar olika i de tre rapporterna, och mönstret över rapporterna är diagnosen. Tänk dig ett bolag som bestämmer sig för att växa hårt och säljer mer på generösa kreditvillkor. I resultaträkningen stiger intäkt och vinst. På balansräkningen sväller kundfordringar och lager, alltså rörelsekapitalet, och om tillväxten lånefinansieras stiger även skuldsidan. I kassaflödet binder det växande rörelsekapitalet kontanter, så operativt kassaflöde släpar efter vinsten, och med capex kan fritt kassaflöde bli negativt.",
-        "En enda händelse, tre olika ansikten. Inget av ansiktena ljuger, de beskriver samma sak ur olika vinklar. Lönsam försäljning och svällande balansräkning och dränerad kassa kan alla vara sanna samtidigt. Det är kombinationen, inte den enskilda rapporten, som ställer diagnosen: växer bolaget självfinansierande, eller köper det tillväxt med kapital det inte själv genererar? Drar vyerna isär, en stark resultaträkning motsagd av ett svagt kassaflöde, blir du nyfiken snarare än avvisande och kräver en förklaring du tror på."
+        "Nu kommer steget som skiljer en analytiker från någon som bara läser av nyckeltal. Samma ekonomiska händelse landar olika i de tre rapporterna, och mönstret över rapporterna är diagnosen. Tänk dig ett bolag som bestämmer sig för att växa hårt och säljer mer på generösa kreditvillkor. I resultaträkningen stiger intäkt och vinst. På balansräkningen sväller kundfordringar och lager, alltså rörelsekapitalet, och om tillväxten lånefinansieras stiger även skuldsidan. I kassaflödet binder det växande rörelsekapitalet kontanter, så operativt kassaflöde släpar efter vinsten, och med capex kan fritt kassaflöde bli negativt.",
+        "En enda händelse, tre olika ansikten. Inget av dem ljuger, de beskriver samma sak ur olika vinklar. Lönsam försäljning, svällande balansräkning och dränerad kassa kan vara sanna på samma gång. Det är kombinationen, inte den enskilda rapporten, som ställer diagnosen: växer bolaget självfinansierande, eller köper det tillväxt med kapital det inte själv genererar? Drar vyerna isär, en stark resultaträkning motsagd av ett svagt kassaflöde, då blir du nyfiken snarare än avvisande och kräver en förklaring du tror på."
       ]
     },
     {
@@ -107,8 +107,8 @@
       "lead": "Två bolag, båda beskrivna som växande och lönsamma. Den integrerade läsningen visar att samma rubrik kan dölja två motsatta verkligheter, och det är därför du aldrig bedömer ett bolag på en enda rapport.",
       "highlight": "samma rubrik kan dölja två motsatta verkligheter",
       "brodtext": [
-        "Bolag Kvalitet, läst som en helhet. Resultaträkningen: intäkterna växer stabilt och marginalen ligger fast, vinsten är ren. Balansräkningen: hög soliditet, låg nettoskuld, tillgångarna mest verkliga och produktiva. Kassaflödet: operativt kassaflöde följer vinsten, fritt kassaflöde är starkt och räcker till utdelning och bygger ändå kassa. Lägg ihop: tillväxten finansierar sig själv. Samma händelse, bolaget växer, lämnar tre rapporter som förstärker varandra.",
-        "Bolag Trubbel, samma rubrik. Resultaträkningen: intäkterna växer snabbt och redovisad vinst är positiv och stigande, ser spännande ut. Balansräkningen: låg soliditet, hög nettoskuld, en stor del av tillgångarna är goodwill från förvärv. Kassaflödet: operativt kassaflöde långt under vinsten eftersom fordringarna sväller, fritt kassaflöde negativt efter capex, och bolaget tar ständigt in ny skuld och ger ut aktier för att klara sig. Lägg ihop: tillväxten köps med kapital bolaget inte självt genererar. Resultaträkningen ensam såg utmärkt ut. Alla tre avslöjade risken."
+        "Bolag Kvalitet, läst som en helhet. Resultaträkningen: intäkterna växer stabilt, marginalen ligger fast, vinsten är ren. Balansräkningen: hög soliditet, låg nettoskuld, tillgångarna mest verkliga och produktiva. Kassaflödet: operativt kassaflöde följer vinsten, fritt kassaflöde är starkt nog att täcka utdelningen och ändå bygga kassa. Lägg ihop: tillväxten finansierar sig själv. Bolaget växer, och alla tre rapporterna förstärker varandra.",
+        "Bolag Trubbel, samma rubrik. Resultaträkningen: intäkterna växer snabbt, redovisad vinst är positiv och stigande, det ser spännande ut. Balansräkningen: låg soliditet, hög nettoskuld, en stor del av tillgångarna är goodwill från förvärv. Kassaflödet: operativt kassaflöde långt under vinsten eftersom fordringarna sväller, fritt kassaflöde negativt efter capex, och bolaget tar ständigt in ny skuld och ger ut aktier för att klara sig. Lägg ihop: tillväxten köps med kapital bolaget inte självt genererar. Resultaträkningen ensam såg utmärkt ut. Alla tre tillsammans avslöjade risken."
       ],
       "takeaway": "En gemensam rubrik, två motsatta utlåtanden. Bara den integrerade läsningen skiljer dem åt, och därför bedömer du aldrig ett bolag på en enda rapport."
     },
@@ -118,8 +118,8 @@
       "lead": "En erfaren investerare betar inte av lönsamt, starkt och kontant som tre separata prov. Du tänker i hela bolag, för det är hela bolag du äger.",
       "highlight": "Du tänker i hela bolag, för det är hela bolag du äger.",
       "brodtext": [
-        "Du tar in en händelse, en förvärvsdriven tillväxt, en marginalökning, en investeringsvåg, och frågar genast hur den borde se ut i alla tre rapporterna, och om verkligheten matchar. Använd kopplingarna som en inbyggd lögndetektor och leta systematiskt efter ställena där historien inte går jämnt ut, för det är där eventuella problem bor.",
-        "Målet är alltid ett integrerat utlåtande. Inte marginalen är 15 procent, skulden 2 gånger, fritt kassaflöde 80, utan det här är en lönsam, finansiellt stark, kontantgenererande verksamhet, eller var sanningen nu landar. Notera om din sammanvägning är ren eller kräver ett men, lönsamt men inga kontanter, växande men skört. Det men:et är ofta var risken bor."
+        "Du tar in en händelse, säg en förvärvsdriven tillväxt, en marginalökning eller en investeringsvåg, och frågar genast hur den borde se ut i alla tre rapporterna, och om verkligheten matchar. Använd kopplingarna som en inbyggd lögndetektor och leta systematiskt efter ställena där historien inte går jämnt ut. Det är där problemen bor.",
+        "Målet är alltid ett samlat utlåtande. Inte marginalen är 15 procent, skulden 2 gånger, fritt kassaflöde 80, utan det här är en lönsam, finansiellt stark, kontantgenererande verksamhet, eller var sanningen nu landar. Notera om din sammanvägning är ren eller kräver ett men: lönsamt men inga kontanter, växande men skört. Det men:et är ofta där risken bor."
       ],
       "takeaway": "Gå från att läsa rapporter till att bedöma bolag. Väg ihop lönsamhet, styrka och kontantgenerering till en enda ärlig mening, och var ärlig med eventuella men."
     },
@@ -146,7 +146,7 @@
             "Minus 100, eftersom kundfordringarna ökar"
           ],
           "ratt": [1],
-          "forklaring": "Vinsten stiger med 100 men pengarna har inte kommit in, så kundfordringar ökar och rörelsekapitaljusteringen blir minus 100. Summan blir 0, kassaflödet visar ärligt att inga pengar ännu kommit in."
+          "forklaring": "Vinsten stiger med 100, men pengarna har inte kommit in. Kundfordringar ökar och rörelsekapitaljusteringen blir minus 100. Summan blir 0: kassaflödet visar ärligt att inga pengar ännu kommit in."
         },
         {
           "typ": "single",
@@ -168,7 +168,7 @@
             "Oförändrad resultaträkning men starkt kassaflöde"
           ],
           "ratt": [0],
-          "forklaring": "Affären bokas när den sker, så vinsten stiger. Kundfordringar och lager sväller, alltså rörelsekapitalet, och det bundna kapitalet gör att operativt kassaflöde släpar efter. En händelse, tre ansikten."
+          "forklaring": "Affären bokas när den sker, så vinsten stiger. Kundfordringar och lager sväller, alltså rörelsekapitalet, och det bundna kapitalet gör att operativt kassaflöde släpar efter vinsten. En händelse, tre ansikten."
         },
         {
           "typ": "single",
@@ -179,7 +179,7 @@
             "Bli nyfiken och kräva en förklaring man tror på, eftersom vyerna drar isär"
           ],
           "ratt": [2],
-          "forklaring": "En stark resultaträkning motsagd av ett svagt kassaflöde är inte automatiskt fusk, men kräver en förklaring. Man vilar inte förrän man har den, det är där risken ofta bor."
+          "forklaring": "En stark resultaträkning motsagd av ett svagt kassaflöde är inte automatiskt fusk, men kräver en förklaring. Du vilar inte förrän du har den, för det är där risken ofta bor."
         },
         {
           "typ": "multi",

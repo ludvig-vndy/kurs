@@ -10,7 +10,7 @@
       "typ": "intro",
       "kicker": "LEKTION 7.1",
       "titel": "Att bedöma en ledning",
-      "ingress": "Ledningen är den mänskliga variabeln. Den kan få en fin verksamhet att växa med ränta på ränta, eller tyst tära ned den."
+      "ingress": "Ledningen är den mänskliga variabeln. Rätt personer får en fin verksamhet att växa med ränta på ränta. Fel personer tär tyst ned den."
     },
     {
       "typ": "reading",
@@ -18,10 +18,10 @@
       "lead": "Du kan hitta en underbar verksamhet med bred vallgrav och hög avkastning, och ändå förlora pengar om de som driver den är oärliga, inkompetenta eller felriktade mot ägarna.",
       "highlight": "förlora pengar om de som driver den är oärliga, inkompetenta eller felriktade mot ägarna",
       "brodtext": [
-        "Till skillnad från räkenskaperna går ledningen inte att reducera till ett nyckeltal. Men den går att bedöma. Du läser den genom tre fönster: vad ledningen faktiskt har gjort, hur ärligt den kommunicerar, och om dess incitament och ägande pekar åt samma håll som ditt.",
-        "Lär dig det, så skyddar du dig från fällan med en fin verksamhet i fel händer, och får lättare syn på det sällsyntare: en fin verksamhet som drivs av människor som förvaltar den väl."
+        "Räkenskaperna kokar du ned till nyckeltal. Ledningen gör du inte. Men du kan bedöma den, genom tre fönster: vad ledningen faktiskt har gjort, hur ärligt den berättar om det, och om dess incitament och ägande pekar åt samma håll som ditt.",
+        "Kan du det undviker du fällan med en fin verksamhet i fel händer. Och du får lättare syn på det sällsynta: en fin verksamhet som drivs av människor som förvaltar den väl."
       ],
-      "takeaway": "Ledningen går inte att läsa i ett nyckeltal, men den går att bedöma. Tre fönster räcker: spårhistorik, ärlighet och alignment."
+      "takeaway": "Ledningen syns inte i ett nyckeltal, men du kan ändå bedöma den. Tre fönster räcker: spårhistorik, ärlighet och alignment."
     },
     {
       "typ": "reading",
@@ -29,11 +29,11 @@
       "lead": "Att bedöma ledning kokar ned till tre frågor: vad de faktiskt gjort, hur ärligt de kommunicerar, och om incitament och ägande pekar åt samma håll som ditt.",
       "highlight": "vad de faktiskt gjort, hur ärligt de kommunicerar, och om incitament och ägande pekar åt samma håll som ditt",
       "brodtext": [
-        "Spårhistorik. Vad har de faktiskt gjort, inte vad de säger att de ska göra? Hur har avkastningen på kapital, värdet per aktie och kapitalallokeringen fallit ut under deras styre? En ledare som konsekvent fått värdet per aktie att växa har förtjänat förtroende. En med en historik av värdeförstörelse, utspädning eller dåliga affärer har inte det, hur imponerande visionen än låter. Väg historiken långt över löftena.",
-        "Ärlighet. Läs flera års aktieägarbrev, rapporter och kvartalssamtal. De bästa ledarna erkänner misstag rakt, förklarar vad som gick fel och talar i klara termer. Varningstecknen är spegelbilden: att aldrig medge ett fel, att skylla varje bakslag på externa faktorer, att ständigt luta sig mot justerade mått för att skyla verkligheten. Hur en ledning talar om dåliga nyheter är ett av de mest avslöjande testen på integritet.",
-        "Alignment, eget skinn i spelet. Människor svarar på incitament, så se på hur ledningen får betalt och om den äger aktier. Meningsfullt ägande riktar dem mot dig: de vinner när du vinner. Är bonusen knuten till värdeskapande mått som värde per aktie och avkastning på kapital, eller till storlek och kortsiktig vinst? Akta dig för ersättning som belönar imperiebyggande, alltså att växa omsättning eller tillgångar oavsett avkastning."
+        "Spårhistorik. Vad har de gjort, inte vad de lovar att göra? Titta på hur avkastningen på kapital, värdet per aktie och kapitalallokeringen fallit ut under deras styre. En ledare som år efter år fått värdet per aktie att växa har förtjänat ditt förtroende. En med en historik av värdeförstörelse, utspädning och dåliga affärer har inte det, hur imponerande visionen än låter. Väg historiken långt tyngre än löftena.",
+        "Ärlighet. Läs flera års aktieägarbrev, rapporter och kvartalssamtal. De bästa ledarna erkänner sina misstag rakt, förklarar vad som gick fel och säger det i klartext. Varningstecknen är spegelbilden: aldrig medge ett fel, skylla varje bakslag på omvärlden, ständigt luta sig mot justerade mått för att dölja hur det faktiskt gick. Hur en ledning pratar om dåliga nyheter avslöjar mer om dess integritet än nästan något annat.",
+        "Alignment, eget skinn i spelet. Människor gör det de får betalt för att göra, så se på hur ledningen ersätts och om den äger aktier. Ett rejält ägande riktar dem mot dig: de vinner när du vinner. Är bonusen knuten till värde per aktie och avkastning på kapital, eller till storlek och kortsiktig vinst? Akta dig för ersättning som belönar imperiebyggande, att växa omsättning eller tillgångar oavsett vad det ger i avkastning."
       ],
-      "takeaway": "En god ledning har en stark historik, kommunicerar ärligt och är riktad mot ägarna. Saknas någon av de tre är det en varning."
+      "takeaway": "En god ledning har en stark historik, kommunicerar ärligt och är riktad mot ägarna. Saknas något av de tre är det en varning."
     },
     {
       "typ": "concept",
@@ -44,18 +44,18 @@
         "element": [
           {
             "rubrik": "Värdeskapande",
-            "text": "Ägaroperatörer med eget skinn i spelet. Uppriktiga i varje årsbrev, även om floppar. Lät värdet per aktie växa, gjorde disciplinerade förvärv, återförde överskott och undvek utspädning. Lön knuten till värde per aktie och avkastning på kapital."
+            "text": "Ägaroperatörer med eget skinn i spelet. Uppriktiga i varje årsbrev, också om floppar. Lät värdet per aktie växa, köpte disciplinerat, gav tillbaka överskott och undvek utspädning. Lön knuten till värde per aktie och avkastning på kapital."
           },
           {
             "rubrik": "Värdeförstörande",
-            "text": "Chefer utan eget skinn i spelet. Erkänner aldrig ett misstag, skyller allt på marknadsförhållanden. Växte omsättningen via förvärv men värdet per aktie stod still. Överbetalade, staplade goodwill och skuld, spädde ut ägarna. Lön knuten till storlek."
+            "text": "Chefer utan eget skinn i spelet. Erkänner aldrig ett misstag, skyller allt på marknaden. Köpte sig till växande omsättning, men värdet per aktie stod still. Överbetalade, staplade goodwill och skuld, spädde ut ägarna. Lön knuten till storlek."
           }
         ],
-        "figurtext": "Två likartade verksamheter, förvaltade på rakt motsatt vis."
+        "figurtext": "Två likartade verksamheter, förvaltade på rakt motsatt sätt."
       },
       "brodtext": [
-        "Stanna vid att omsättningen växte i båda fallen och du missar allt. Den ena lät ägarnas värde växa med ränta på ränta, den andra byggde ett större bolag medan aktieägarna stod kvar på samma fläck.",
-        "Två fördjupningar är värda att lyfta. Ägaroperatörsfördelen: grundarledda och familjekontrollerade bolag med betydande insynsägande allokerar ofta kapital med ett långsiktigt ägarsinne, eftersom ledarna själva är ägare. Och kapitalallokering är ledningens viktigaste jobb: över tid väger besluten om vad man gör med kontanterna ofta tyngre för din avkastning än den dagliga driften."
+        "Ser du bara att omsättningen växte i båda fallen missar du allt. Den ena lät ägarnas värde växa med ränta på ränta. Den andra byggde ett större bolag medan aktieägarna stod kvar på samma fläck.",
+        "Två saker är värda att stanna vid. Ägaroperatörsfördelen: grundarledda och familjekontrollerade bolag, där ledarna själva äger en rejäl del, allokerar ofta kapital med ett långsiktigt ägarsinne. Och kapitalallokering är ledningens viktigaste jobb. Över tid avgör besluten om vad man gör med kontanterna din avkastning mer än den dagliga driften gör."
       ]
     },
     {
@@ -70,7 +70,7 @@
             "Omsättningstillväxt, marknadsandel och antal anställda"
           ],
           "ratt": [0],
-          "forklaring": "Ledningsbedömning kokar ned till tre frågor: vad de faktiskt gjort (spårhistorik), hur ärligt de kommunicerar, och om incitament och ägande pekar åt samma håll som ditt."
+          "forklaring": "Det kokar ned till tre frågor: vad de faktiskt gjort (spårhistorik), hur ärligt de kommunicerar, och om incitament och ägande pekar åt samma håll som ditt."
         },
         {
           "typ": "single",
@@ -81,7 +81,7 @@
             "De väger lika tungt och bör balanseras mot varandra"
           ],
           "ratt": [1],
-          "forklaring": "Bedöm på handling, inte ord. En historik av växande värde per aktie och god allokering förtjänar förtroende, hur imponerande visionen än låter."
+          "forklaring": "Bedöm på handling, inte ord. En historik av växande värde per aktie och god allokering förtjänar ditt förtroende, hur imponerande visionen än låter."
         },
         {
           "typ": "multi",
@@ -93,7 +93,7 @@
             "Bonus knuten till omsättning och storlek belönar imperiebyggande oavsett avkastning"
           ],
           "ratt": [0, 1],
-          "forklaring": "Genuint insynsägande och incitament kopplade till värde per aktie och avkastning på kapital riktar ledningen mot ägarna. Ersättning knuten till storlek är tvärtom en varning, eftersom den belönar imperiebyggande."
+          "forklaring": "Ett rejält insynsägande och incitament kopplade till värde per aktie och avkastning på kapital riktar ledningen mot ägarna. Ersättning knuten till storlek är tvärtom en varning: den belönar imperiebyggande."
         }
       ]
     }

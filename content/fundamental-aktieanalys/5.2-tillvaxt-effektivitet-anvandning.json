@@ -10,19 +10,19 @@
       "typ": "intro",
       "kicker": "LEKTION 5.2",
       "titel": "Tillväxt, effektivitet och rätt användning",
-      "ingress": "Tre färdigheter i en lektion: läsa vilken sorts tillväxt ett tal beskriver, se hur hårt kapitalet arbetar, och aldrig dra en slutsats av ett ensamt tal ur kontext."
+      "ingress": "Tre färdigheter i en lektion: läsa vilken sorts tillväxt ett tal beskriver, se hur hårt kapitalet arbetar, och aldrig dra en slutsats av ett ensamt tal utan kontext."
     },
     {
       "typ": "reading",
       "kicker": "GRUNDEN",
-      "lead": "Ett nyckeltal i sig är meningslöst. Det blir information först när det sätts i kontext.",
+      "lead": "Ett nyckeltal i sig är meningslöst. Det blir information först när du sätter det i kontext.",
       "highlight": "Ett nyckeltal i sig är meningslöst.",
       "brodtext": [
-        "Det vanligaste analysmisstaget är att dra en slutsats av ett tal i isolering. P/E är 8, alltså billigt. Marginalen är 30 procent, alltså fint. Skulden är 3 gånger, alltså riskfyllt. Var och en kan vara helt fel utan kontext. För en ägare är skillnaden dyr: sifferplockning leder dig in i värdefällor och ut ur goda bolag med samma säkerhet.",
-        "Ett enskilt nyckeltal behöver tre sorters kontext för att bli en signal i stället för en lös siffra. Trend över tid: riktningen betyder oftast mer än nivån, en marginal på 12 procent som stiger från 8 berättar något annat än samma 12 som faller från 18. Kollegor och bransch: ett tal är högt eller lågt bara mot rätt riktmärke, så jämför lika med lika. Affärsmodell: vissa tal är meningslösa för vissa modeller, churn för en abonnemangsverksamhet, lageromsättning för en handlare, bokfört värde för en bank.",
-        "Den här lektionen tar tre nyckeltalsfamiljer i tur och ordning: tillväxttalen och deras kvalitet, effektivitets- och omsättningstalen, och till sist hur du använder vilket tal som helst rätt. Samma princip ligger under alla tre. Talet pekar ut var du ska titta. Slutsatsen drar du själv."
+        "Det vanligaste analysmisstaget är att dra en slutsats av ett tal i isolering. P/E är 8, alltså billigt. Marginalen är 30 procent, alltså fint. Skulden är 3 gånger, alltså riskfyllt. Var och en av dem kan vara helt fel utan kontext. För dig som ägare är det dyrt: sifferplockning leder dig in i värdefällor och ut ur goda bolag med samma säkerhet.",
+        "Ett tal behöver tre sorters kontext för att bli en signal i stället för en lös siffra. Trend över tid: riktningen betyder oftast mer än nivån, en marginal på 12 procent som stiger från 8 säger något annat än samma 12 som faller från 18. Kollegor och bransch: ett tal är högt eller lågt bara mot rätt riktmärke, så jämför lika med lika. Affärsmodell: vissa tal är meningslösa för vissa modeller, churn för en abonnemangstjänst, lageromsättning för en handlare, bokfört värde för en bank.",
+        "Den här lektionen tar tre familjer av nyckeltal en i taget: tillväxttalen och deras kvalitet, effektivitets- och omsättningstalen, och till sist hur du använder vilket tal som helst rätt. Samma princip ligger under alla tre. Talet pekar ut var du ska titta. Slutsatsen drar du själv."
       ],
-      "takeaway": "Nyckeltalet är röken, verksamheten är elden. Talet säger dig var du ska titta, men det fattar aldrig beslutet åt dig."
+      "takeaway": "Talet är röken, verksamheten är elden. Det säger dig var du ska titta, men fattar aldrig beslutet åt dig."
     },
     {
       "typ": "concept",
@@ -31,24 +31,24 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Högkvalitativ tillväxt", "text": "Organisk ur den befintliga verksamheten, alltså genuin efterfrågan i en sund kärna. Lönsam, med stabila eller stigande marginaler där vinst och kontanter växer minst lika snabbt som omsättningen. Hållbar ur en repeterbar källa: en växande slutmarknad, verklig prissättningskraft, kunder som spenderar mer. Värd en premie." },
-          { "rubrik": "Lågkvalitativ tillväxt", "text": "Köpt genom förvärv som maskerar en platt kärna och ofta förstör värde via överbetalning. Olönsam, med marginaler som faller när bolaget växer, finansierad med skuld och nya aktier. Engångsartad ur en ändlig källa: en prishöjning, en ny marknad, en engångsvinst. Möjligen värdeförstörande, inte värd en hög multipel." }
+          { "rubrik": "Högkvalitativ tillväxt", "text": "Organisk ur den befintliga verksamheten, alltså verklig efterfrågan i en sund kärna. Lönsam, med stabila eller stigande marginaler där vinst och kontanter växer minst lika snabbt som omsättningen. Hållbar ur en källa som kan upprepas: en växande slutmarknad, prissättningskraft, kunder som spenderar mer. Värd en premie." },
+          { "rubrik": "Lågkvalitativ tillväxt", "text": "Köpt genom förvärv som döljer en platt kärna och ofta förstör värde genom överbetalning. Olönsam, med marginaler som faller när bolaget växer, finansierad med skuld och nya aktier. Engångsartad ur en källa som tar slut: en prishöjning, en ny marknad, en engångsvinst. Kanske värdeförstörande, inte värd en hög multipel." }
         ],
         "figurtext": "Samma rubriktakt, säg omsättningen upp 20 procent, kan vara endera. Kvaliteten avgör, inte takten."
       },
-      "forklaring": "En tillväxttakt ensam, säg omsättningen upp 25 procent, säger nästan ingenting förrän du ställt tre frågor. Är den organisk eller förvärvad? Det är det första och viktigaste snittet, eftersom förvärvad tillväxt kostar riktiga pengar och kan dölja en stagnerande kärna. Är den lönsam eller olönsam? Kontrollera alltid att vinst och fritt kassaflöde växer minst lika snabbt som omsättningen. Är den hållbar eller engångsartad? Fråga om källan kan upprepas. Marknaden betalar gärna en hög multipel för tillväxt som om all tillväxt vore lika god, och just där överbetalar den oftast."
+      "forklaring": "En tillväxttakt ensam, säg omsättningen upp 25 procent, säger nästan ingenting förrän du ställt tre frågor. Är den organisk eller förvärvad? Det är det första och viktigaste snittet, eftersom förvärvad tillväxt kostar riktiga pengar och kan dölja en kärna som står still. Är den lönsam eller olönsam? Kontrollera alltid att vinst och fritt kassaflöde växer minst lika snabbt som omsättningen. Är den hållbar eller engångsartad? Fråga om källan kan upprepas. Marknaden betalar gärna en hög multipel som om all tillväxt vore lika god, och just där överbetalar den oftast."
     },
     {
       "typ": "reading",
       "kicker": "ATT VÄGA TILLVÄXT MOT LÖNSAMHET",
-      "lead": "Acceptera aldrig en tillväxttakt för given. Bryt ned den i organisk mot förvärvad, lönsam mot olönsam, hållbar mot engångsartad, och föredra det första i varje par. Resten rabatterar du tills det bevisat sig.",
+      "lead": "Acceptera aldrig en tillväxttakt för given. Dela upp den i organisk mot förvärvad, lönsam mot olönsam, hållbar mot engångsartad, och föredra det första i varje par. Resten rabatterar du tills den bevisat sig.",
       "highlight": "Acceptera aldrig en tillväxttakt för given.",
       "brodtext": [
-        "Årsredovisningen ger normalt uppdelningen i organisk och förvärvad tillväxt. Hur du bedömer en förvärvsdriven modell på djupet, den disciplinerade serieförvärvaren mot imperiebyggaren, hör hemma i kapitalallokeringen längre fram. Här räcker det att du delar tillväxten i organisk och köpt och rabatterar den köpta delen tills den bevisat sig. Var framför allt vaksam mot att betala en hög multipel för tillväxt som är ändlig eller köpt.",
-        "En användbar lins för mjukvaru- och tillväxtbolag är regeln om 40: omsättningstillväxt i procent plus en lönsamhetsmarginal i procent bör överstiga ungefär 40, där marginalen är FCF-marginal eller rörelsemarginal, inte nettovinstmarginal. Den tvingar fram en samlad bedömning, så att du inte belönar tillväxt som sker på bekostnad av all lönsamhet. Behandla den som en tumregel, inte som en lag. Den fångar principen att tillväxt och lönsamhet alltid måste vägas tillsammans.",
+        "Årsredovisningen brukar ge uppdelningen i organisk och förvärvad tillväxt. Hur du bedömer en förvärvsdriven modell på djupet, den disciplinerade serieförvärvaren mot imperiebyggaren, kommer i kapitalallokeringen längre fram. Här räcker det att du delar tillväxten i organisk och köpt och rabatterar den köpta delen tills den bevisat sig. Var framför allt vaksam mot att betala en hög multipel för tillväxt som tar slut eller är köpt.",
+        "En användbar lins för mjukvaru- och tillväxtbolag är regeln om 40: omsättningstillväxt i procent plus en lönsamhetsmarginal i procent bör överstiga ungefär 40, där marginalen är FCF-marginal eller rörelsemarginal, inte nettovinstmarginal. Den tvingar fram en samlad bedömning, så att du inte belönar tillväxt som sker på bekostnad av all lönsamhet. Behandla den som en tumregel, inte en lag. Den fångar att tillväxt och lönsamhet alltid måste vägas tillsammans.",
         "Fråga därför aldrig bara hur snabbt det växer. Fråga vilken sorts tillväxt det är, och om den är värd att betala för."
       ],
-      "takeaway": "Bryt isär rapporterad tillväxt och kräv att vinst och fritt kassaflöde följer med. Tillväxt med försämrade marginaler eller krympande kontanter är en varning, inte en bedrift."
+      "takeaway": "Bryt isär den rapporterade tillväxten och kräv att vinst och fritt kassaflöde följer med. Tillväxt med fallande marginaler eller krympande kontanter är en varning, inte en bedrift."
     },
     {
       "typ": "dataviz",
@@ -63,7 +63,7 @@
         "etiketter": "Organisk del av omsättningstillväxten, procentenheter",
         "figurtext": "Illustrativa tal. Båda redovisar 20 procents omsättningstillväxt. Hos Organisk är hela ökningen organisk och rörelsemarginalen håller på 18 procent. Hos Förvärvad är bara 3 procentenheter organiska, resten köpt med skuld och nya aktier, och marginalen faller från 18 till 15 procent."
       },
-      "slutsats": "Hos Förvärvad åts hela omsättningstillväxten upp av marginalutspädning: rörelseresultatet blev detsamma som året innan, medan goodwill, skuld och antal aktier steg. Den som betalar en hög tillväxtmultipel köper en engångspuckel utklädd till tillväxthistoria. Takten skiljer dem inte. Det gör kvalitetsanalysen."
+      "slutsats": "Hos Förvärvad åt marginalfallet upp hela omsättningstillväxten: rörelseresultatet blev detsamma som året innan, medan goodwill, skuld och antal aktier steg. Den som betalar en hög tillväxtmultipel köper en engångspuckel utklädd till tillväxthistoria. Takten skiljer inte de två. Det gör kvalitetsanalysen."
     },
     {
       "typ": "reading",
@@ -71,11 +71,11 @@
       "lead": "Effektivitetstal mäter hur hårt ett bolag får varje krona kapital att arbeta. Det är den andra halvan av kvalitet, den som marginalen ensam inte fångar.",
       "highlight": "Det är den andra halvan av kvalitet, den som marginalen ensam inte fångar.",
       "brodtext": [
-        "Ett omsättningstal frågar i grunden: hur många gånger per år cyklar den här tillgången genom verksamheten, hur snabbt blir den till försäljning och kontanter? De viktigaste är lagrets omsättningshastighet (kostnad för sålda varor genom lager, eller lagerdagar som 365 delat på det), kundfordringsdagar (hur länge kunderna tar på sig att betala), och kapitalomsättningshastighet (omsättning genom totala tillgångar). Hög omsättningshastighet betyder att lite bundet kapital genererar mycket försäljning. Låg betyder att kapital ligger overksamt i lager, fordringar eller underutnyttjade tillgångar.",
-        "De här talen avslöjar operativ disciplin, hur stramt lager, fordringar och tillgångar hanteras. För en ägare är det skillnaden mellan kapital som sliter och kapital som ligger och slumrar. Hög kapitalomsättning betyder oftast en kapitalsnål modell som tenderar att ge hög avkastning, medan låg betyder kapitaltungt, vilket gör hög avkastning svårare att nå.",
-        "Bransch är nödvändig kontext. En livsmedelsbutik omsätter lagret många gånger om året, en juvelerare väldigt få. Jämför därför omsättningshastighet bara inom en bransch. Modeller som ligger långt ifrån varandra säger ingenting jämförda mot varandra."
+        "Ett omsättningstal frågar i grunden: hur många gånger per år snurrar den här tillgången genom verksamheten, hur snabbt blir den till försäljning och kontanter? De viktigaste är lagrets omsättningshastighet (kostnad för sålda varor genom lager, eller lagerdagar som 365 delat på det), kundfordringsdagar (hur länge kunderna tar på sig att betala) och kapitalomsättningshastighet (omsättning genom totala tillgångar). Hög omsättningshastighet betyder att lite bundet kapital ger mycket försäljning. Låg betyder att kapital ligger overksamt i lager, fordringar eller tillgångar som inte utnyttjas.",
+        "De här talen visar hur stramt lager, fordringar och tillgångar sköts. För dig som ägare är det skillnaden mellan kapital som sliter och kapital som ligger och slumrar. Hög kapitalomsättning betyder oftast en kapitalsnål modell som brukar ge hög avkastning, låg betyder kapitaltungt och gör hög avkastning svårare att nå.",
+        "Bransch är nödvändig kontext. En livsmedelsbutik omsätter lagret många gånger om året, en juvelerare väldigt få. Jämför därför omsättningshastighet bara inom samma bransch. Modeller som ligger långt ifrån varandra säger ingenting ställda mot varandra."
       ],
-      "takeaway": "Läs effektivitetstal som ett mått på hur stramt en verksamhet drivs. Den ena halvan av avkastning-på-kapital-ekvationen, marginalen är den andra."
+      "takeaway": "Läs effektivitetstal som ett mått på hur stramt en verksamhet drivs. Marginalen är den ena halvan av avkastningen på kapital, det här är den andra."
     },
     {
       "typ": "concept",
@@ -84,17 +84,17 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "DuPont för ROA och ROE", "text": "Bygger på nettovinst. Avkastning på tillgångar ungefär lika med nettomarginal gånger tillgångsomsättning, med totala tillgångar som bas. Samma uppdelning driver avkastningen på eget kapital, då med en extra hävstångsfaktor: marginal gånger omsättning gånger hävstång. Hävstången kan blåsa upp talet genom mer skuld, utan att driften blivit ett dugg bättre." },
-          { "rubrik": "ROIC-nedbrytningen", "text": "Bygger i stället på rörelseresultat efter skatt (NOPAT). Avkastning på investerat kapital ungefär lika med NOPAT-marginal gånger omsättning på investerat kapital, med investerat kapital som bas. Håll de två nedbrytningarna strikt isär: använd samma resultatmått och samma kapitalbas i båda faktorerna, blanda aldrig baserna." }
+          { "rubrik": "DuPont för ROA och ROE", "text": "Bygger på nettovinst. Avkastning på tillgångar ungefär lika med nettomarginal gånger tillgångsomsättning, med totala tillgångar som bas. Samma uppdelning driver avkastningen på eget kapital, då med en extra faktor för hävstång: marginal gånger omsättning gånger hävstång. Hävstången kan blåsa upp talet genom mer skuld, utan att driften blivit ett dugg bättre." },
+          { "rubrik": "ROIC-nedbrytningen", "text": "Bygger i stället på rörelseresultat efter skatt (NOPAT). Avkastning på investerat kapital ungefär lika med NOPAT-marginal gånger omsättning på investerat kapital, med investerat kapital som bas. Håll de två nedbrytningarna strikt isär: samma resultatmått och samma kapitalbas i båda faktorerna, blanda aldrig baserna." }
         ],
-        "figurtext": "Två nedbrytningar av samma idé. Poängen är spaktänkandet, inte att räkna ut talet på decimalen."
+        "figurtext": "Två nedbrytningar av samma idé. Poängen är att tänka i faktorer, inte att räkna ut talet på decimalen."
       },
-      "forklaring": "Den avgörande idén är att marginal gånger omsättningshastighet driver avkastningen på kapital. Två bolag med exakt samma marginal kan ha helt olika avkastning, eftersom det ena omsätter sina tillgångar långt snabbare. En verksamhet kan därför tjäna god avkastning på två helt olika sätt: hög marginal med låg omsättningshastighet, som ett lyxvarumärke, eller låg marginal med hög omsättningshastighet, som en lågprishandlare. Båda fungerar. Det avgörande är produkten av de två, inte någondera faktorn för sig."
+      "forklaring": "Den avgörande idén är att marginal gånger omsättningshastighet driver avkastningen på kapital. Två bolag med exakt samma marginal kan ha helt olika avkastning, om det ena omsätter sina tillgångar långt snabbare. En verksamhet kan alltså tjäna god avkastning på två helt olika sätt: hög marginal med låg omsättningshastighet, som ett lyxvarumärke, eller låg marginal med hög omsättningshastighet, som en lågprishandlare. Båda fungerar. Det som avgör är produkten av de två, inte någondera faktorn för sig."
     },
     {
       "typ": "dataviz",
       "titel": "Två vägar till samma avkastning",
-      "underrubrik": "Avkastning på tillgångar drivs av marginal gånger omsättningshastighet. Ett varumärke och en lågprishandlare kan nå samma tal på helt olika sätt.",
+      "underrubrik": "Avkastning på tillgångar drivs av marginal gånger omsättningshastighet. Ett varumärke och en lågprishandlare kan nå samma tal på var sitt sätt.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -104,7 +104,7 @@
         "etiketter": "Avkastning på tillgångar i procent (ROA)",
         "figurtext": "Illustrativa tal. Märke: 20 procent gånger 0,5 är lika med 10. Volym: 4 procent gånger 2,5 är lika med 10. Faller Volyms omsättning till 2,0 gånger blir avkastningen 8 procent."
       },
-      "slutsats": "Märke gör få försäljningar med feta marginaler, Volym tunna marginaler men cyklar kapitalet fem gånger så snabbt. Döm var och en på produkten av marginal och omsättningshastighet, inte på en enda faktor. Att straffa Volym för dess marginal, eller Märke för dess långsamma omsättning, är att missa det som faktiskt räknas."
+      "slutsats": "Märke gör få försäljningar med feta marginaler, Volym tunna marginaler men snurrar kapitalet fem gånger så snabbt. Döm var och en på produkten av marginal och omsättningshastighet, inte på en enda faktor. Att straffa Volym för sin marginal, eller Märke för sin långsamma omsättning, är att missa det som räknas."
     },
     {
       "typ": "reading",
@@ -113,7 +113,7 @@
       "highlight": "en drivkraft för avkastning och en tidig varningsmätare",
       "brodtext": [
         "Anta att Volyms kapitalomsättning börjar falla, från 2,5 gånger till 2,0 gånger, för att lagret staplas upp och inte säljs. Marginalen håller på 4 procent, men avkastningen på tillgångar faller till 4 procent gånger 2,0, alltså 8 procent. Det stigande lagret är ett tidigt tecken på att efterfrågan mjuknar, synligt i effektivitetstalet innan det dyker upp som ett vinstfall.",
-        "Bevaka därför omsättningstrenderna som ett tidigt varningssystem. Stigande lager- eller fordringsdagar medan försäljningen är platt eller fallande är en gul flagga även när vinsten fortfarande ser fin ut. Det kan signalera svagare efterfrågan, överproduktion eller slapp indrivning. Kombinera marginal och omsättningshastighet i huvudet, så anar du avkastningen innan du räknat ut den."
+        "Bevaka därför omsättningstrenderna som ett tidigt varningssystem. Stigande lager- eller fordringsdagar medan försäljningen är platt eller faller är en gul flagga även när vinsten fortfarande ser fin ut. Det kan betyda svagare efterfrågan, överproduktion eller slapp indrivning. Lägg ihop marginal och omsättningshastighet i huvudet, så anar du avkastningen innan du räknat ut den."
       ],
       "takeaway": "Stigande lager- eller fordringsdagar vid platt försäljning är en varning innan vinsten faller. Effektivitetstalet ser problemet före resultaträkningen."
     },
@@ -123,11 +123,11 @@
       "lead": "Ovanpå de tre kontexterna kommer tre vanor som gör avläsningen pålitlig, oavsett vilket tal du tittar på.",
       "highlight": "tre vanor som gör avläsningen pålitlig",
       "brodtext": [
-        "Nyckeltal måste kombineras. Inget enskilt tal fångar en verksamhet. En hög marginal är fin tills du ser låg omsättningshastighet och hög kapitalintensitet. Ett lågt P/E ser billigt ut tills du ser att vinsten är på en cyklisk topp eller att verksamheten är i nedgång. Läs talen tillsammans så att de korskollar varandra.",
-        "Var vaksam på det manipulerbara och vilseledande. Vissa tal smickras lätt: marginaler via aktivering, vinst per aktie via återköp. Andra är vilseledande vid extremer: P/E blir meningslöst nära noll i vinst, och vilket tal som helst snedvrids av engångsposter. En professionell vet vilka tal som kan ljuga och stämmer av dem mot kontanter och noterna.",
-        "Och minns att nyckeltal beskriver, de beslutar inte. Ett tal reser en fråga att undersöka. Marginalen föll är startpunkten för ett varför, inget annat. Använd talen för att hitta vad som ska granskas, gå sedan och förstå verksamheten bakom."
+        "Kombinera tal. Inget enskilt tal fångar en verksamhet. En hög marginal är fin tills du ser låg omsättningshastighet och hög kapitalintensitet. Ett lågt P/E ser billigt ut tills du ser att vinsten är på en cyklisk topp eller att verksamheten är på väg ner. Läs talen tillsammans, så kollar de varandra.",
+        "Var vaksam på det som går att putsa eller vilseleda med. Vissa tal smickras lätt: marginaler via aktivering, vinst per aktie via återköp. Andra blir vilseledande vid extremer: P/E säger ingenting nära noll i vinst, och vilket tal som helst snedvrids av engångsposter. Den som kan sitt jobb vet vilka tal som kan ljuga och stämmer av dem mot kontanter och noterna.",
+        "Och minns att nyckeltal beskriver, de beslutar inte. Ett tal reser en fråga att undersöka. Att marginalen föll är början på ett varför, inget annat. Använd talen för att hitta vad som ska granskas, gå sedan och förstå verksamheten bakom."
       ],
-      "takeaway": "Kombinera tal, misstänk de manipulerbara, och behandla varje tal som en fråga att undersöka, aldrig som ett färdigt facit."
+      "takeaway": "Kombinera tal, misstänk de som går att putsa, och behandla varje tal som en fråga att undersöka, aldrig som ett färdigt facit."
     },
     {
       "typ": "dataviz",
@@ -137,11 +137,11 @@
         "typ": "jamforelse",
         "element": [
           { "rubrik": "Mot historik: billigt", "text": "Om bolagets normala P/E legat runt 15 och vinsten är stabil, kan P/E 8 vara verkligt billigt. Marknaden kan ha blivit överdrivet pessimistisk." },
-          { "rubrik": "Mot affärsmodell och cykel: dyrt", "text": "Är det ett cykliskt bolag på toppen av sin cykel, är vinsten tillfälligt hög. Då är det låga P/E 8 i själva verket dyrt, eftersom vinsten är på väg att falla. Kombinerar du dessutom in nettoskuld på 5 gånger EBITDA och negativt fritt kassaflöde, speglar talet verklig risk, ingen rabatt att glädjas åt." }
+          { "rubrik": "Mot affärsmodell och cykel: dyrt", "text": "Är det ett cykliskt bolag på toppen av sin cykel, är vinsten tillfälligt hög. Då är låga P/E 8 i själva verket dyrt, eftersom vinsten är på väg att falla. Lägger du dessutom till nettoskuld på 5 gånger EBITDA och negativt fritt kassaflöde, speglar talet verklig risk, ingen rabatt att glädjas åt." }
         ],
         "figurtext": "Illustrativa tal. Samma P/E 8 kan betyda billigt, dyrt eller en värdefälla. Bara kontexten avgör."
       },
-      "slutsats": "Den som läste P/E 8 lika med billigt och stannade där kunde gå rakt in i vilket av misstagen som helst. Talet är identiskt i alla fyra fallen. Läs aldrig ett nyckeltal ensamt."
+      "slutsats": "Den som läste P/E 8 som billigt och stannade där kunde gå rakt in i vilket av misstagen som helst. Talet är identiskt i alla fyra fallen. Läs aldrig ett nyckeltal ensamt."
     },
     {
       "typ": "quiz",
@@ -157,7 +157,7 @@
             "Är tillväxten högre eller lägre än inflationen?"
           ],
           "ratt": [0, 1, 2],
-          "forklaring": "Högkvalitativ tillväxt är organisk, lönsam och hållbar. En takt säger nästan ingenting förrän du ställt de tre frågorna. Jämförelse med inflationen ingår inte i ramverket."
+          "forklaring": "Högkvalitativ tillväxt är organisk, lönsam och hållbar. Takten säger nästan ingenting förrän du ställt de tre frågorna. Jämförelse med inflationen ingår inte i ramverket."
         },
         {
           "typ": "single",
@@ -168,7 +168,7 @@
             "Som neutralt, eftersom förvärv alltid är värdeskapande på sikt"
           ],
           "ratt": [1],
-          "forklaring": "Köpt tillväxt med marginalutspädning, stigande skuld och fler aktier kan förstöra värde. Identisk takt kan vara hög eller låg kvalitet, och här är den låg."
+          "forklaring": "Köpt tillväxt med fallande marginal, stigande skuld och fler aktier kan förstöra värde. Samma takt kan vara hög eller låg kvalitet, och här är den låg."
         },
         {
           "typ": "single",
@@ -179,7 +179,7 @@
             "Bruttomarginal i procent plus rörelsemarginal i procent"
           ],
           "ratt": [0],
-          "forklaring": "Regeln om 40 lägger ihop omsättningstillväxt och en lönsamhetsmarginal, där marginalen är FCF- eller rörelsemarginal, inte nettovinstmarginal. Poängen är att väga tillväxt och lönsamhet tillsammans."
+          "forklaring": "Regeln om 40 lägger ihop omsättningstillväxt och en lönsamhetsmarginal, där marginalen är FCF- eller rörelsemarginal, inte nettovinstmarginal. Den väger tillväxt och lönsamhet tillsammans."
         },
         {
           "typ": "single",
@@ -190,7 +190,7 @@
             "40 procent"
           ],
           "ratt": [0],
-          "forklaring": "Avkastning på tillgångar ungefär lika med nettomarginal gånger tillgångsomsättning, alltså 20 procent gånger 0,5 lika med 10 procent. En hög marginal med låg omsättningshastighet kan ge samma avkastning som en låg marginal med hög."
+          "forklaring": "Avkastning på tillgångar ungefär lika med nettomarginal gånger tillgångsomsättning, alltså 20 procent gånger 0,5 lika med 10 procent. Hög marginal med låg omsättningshastighet kan ge samma avkastning som låg marginal med hög."
         },
         {
           "typ": "single",
@@ -212,7 +212,7 @@
             "Som rättvist värderat, eftersom P/E 8 ligger nära marknadssnittet"
           ],
           "ratt": [0],
-          "forklaring": "För ett cykliskt bolag på toppen är vinsten tillfälligt hög, så ett lågt P/E är i själva verket dyrt. Samma tal kan betyda billigt eller dyrt beroende på kontext."
+          "forklaring": "För ett cykliskt bolag på toppen är vinsten tillfälligt hög, så ett lågt P/E är i själva verket dyrt. Samma tal kan betyda billigt eller dyrt beroende på kontexten."
         }
       ]
     }

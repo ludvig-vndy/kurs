@@ -10,18 +10,18 @@
       "typ": "intro",
       "kicker": "LEKTION 4.2",
       "titel": "Balansräkningen",
-      "ingress": "Resultaträkningen visar hur året gick, ett flöde. Balansräkningen visar hur stark ställningen är just nu, en ögonblicksbild, och om bolaget kan överleva sina egna misstag."
+      "ingress": "Resultaträkningen visar hur året gick. Balansräkningen visar hur du står just nu, en ögonblicksbild, och om bolaget kan överleva sina egna misstag."
     },
     {
       "typ": "reading",
       "kicker": "GRUNDEN",
-      "lead": "Balansräkningen vilar på en enda ekvation: tillgångar lika med skulder plus eget kapital. Allt bolaget äger betalades antingen med pengar det är skyldigt andra eller med pengar som tillhör ägarna.",
+      "lead": "Balansräkningen vilar på en enda ekvation: tillgångar lika med skulder plus eget kapital. Allt bolaget äger har betalats antingen med pengar det är skyldigt andra eller med pengar som tillhör ägarna.",
       "highlight": "tillgångar lika med skulder plus eget kapital",
       "brodtext": [
-        "Flyttar du om den blir den tydligare: eget kapital lika med tillgångar minus skulder. Ägarnas andel är det som är kvar när du drar det skyldiga från det ägda. Ekvationen balanserar alltid, per konstruktion, eftersom varje krona i tillgångar är finansierad av antingen en skuld eller eget kapital.",
-        "Balansräkningen visar därför inte bara vad bolaget har, utan hur det är finansierat: blandningen av andras pengar mot ägarnas pengar. Den mixen avgör motståndskraften. Ett bolag finansierat mest med eget kapital är robust och kan inte tvingas in i problem av långivare. Ett bolag finansierat mest med skuld är skört, med fasta åtaganden som måste betalas oavsett hur verksamheten går."
+        "Flyttar du om den blir den tydligare: eget kapital lika med tillgångar minus skulder. Ägarnas andel är det som blir kvar när du drar det skyldiga från det ägda. Ekvationen går alltid ihop, eftersom varje krona i tillgångar är finansierad av antingen en skuld eller eget kapital.",
+        "Balansräkningen visar alltså inte bara vad bolaget har, utan hur det är finansierat: hur mycket är andras pengar och hur mycket är ägarnas. Den mixen avgör hur mycket bolaget tål. Är det mest finansierat med eget kapital är det robust och kan inte tvingas in i problem av långivare. Är det mest finansierat med skuld är det skört, med fasta betalningar som ska göras oavsett hur det går."
       ],
-      "takeaway": "Du läser balansräkningen för att svara på två frågor: kan det här bolaget överleva ett dåligt år, och vem har krav före mig? Aktieägaren står sist i kön, långivarna får betalt först."
+      "takeaway": "Du läser balansräkningen för att svara på två frågor: kan bolaget överleva ett dåligt år, och vem har krav före dig? Du som aktieägare står sist i kön. Långivarna får betalt först."
     },
     {
       "typ": "concept",
@@ -30,39 +30,39 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Tillgångar", "text": "Vad bolaget kontrollerar: kassa, kundfordringar och lager (omsättningstillgångar, som blir kontanter inom ett år), plus byggnader, utrustning, goodwill och immateriella tillgångar (anläggningstillgångar, med längre livslängd)." },
-          { "rubrik": "Skulder plus eget kapital", "text": "Hur tillgångarna finansierats. Skulder är vad bolaget är skyldigt: leverantörsskulder och kortfristig skuld plus långfristig skuld och avsättningar. Eget kapital är ägarnas rest: inbetalt aktiekapital plus balanserade vinstmedel." }
+          { "rubrik": "Tillgångar", "text": "Vad bolaget kontrollerar: kassa, kundfordringar och lager (omsättningstillgångar, som blir kontanter inom ett år), plus byggnader, utrustning, goodwill och immateriella tillgångar (anläggningstillgångar, som håller längre)." },
+          { "rubrik": "Skulder plus eget kapital", "text": "Hur tillgångarna har finansierats. Skulder är vad bolaget är skyldigt: leverantörsskulder och kortfristig skuld plus långfristig skuld och avsättningar. Eget kapital är det som blir kvar till ägarna: inbetalt aktiekapital plus balanserade vinstmedel." }
         ],
-        "figurtext": "Sidorna balanserar alltid, per konstruktion: tillgångar lika med skulder plus eget kapital."
+        "figurtext": "Sidorna går alltid ihop: tillgångar lika med skulder plus eget kapital."
       },
-      "forklaring": "Vänster sida visar vad bolaget äger, höger sida visar vem som betalat för det. Eftersom varje tillgång måste vara finansierad av antingen en skuld eller eget kapital är de två sidorna alltid lika stora. Skillnaden i mixen, andras pengar mot ägarnas, avgör hur motståndskraftigt bolaget är."
+      "forklaring": "Vänster sida visar vad bolaget äger, höger sida visar vem som har betalat för det. Eftersom varje tillgång måste vara finansierad av antingen en skuld eller eget kapital blir de två sidorna alltid lika stora. Hur mixen ser ut, andras pengar mot ägarnas, avgör hur mycket bolaget tål."
     },
     {
       "typ": "reading",
       "kicker": "OMSÄTTNINGSTILLGÅNGAR OCH RÖRELSEKAPITAL",
-      "lead": "Överst på tillgångssidan ligger det som rör sig fortast: omsättningstillgångar, sådant som blir kontanter inom ett år. Det är här balansräkningen möter den dagliga verkligheten av att driva en verksamhet, och här ett lönsamt bolag tyst kan få slut på kontanter.",
-      "highlight": "här ett lönsamt bolag tyst kan få slut på kontanter",
+      "lead": "Överst på tillgångssidan ligger det som rör sig fortast: omsättningstillgångar, sådant som blir kontanter inom ett år. Här möter balansräkningen vardagen i att driva ett bolag, och här kan ett lönsamt bolag tyst få slut på kontanter.",
+      "highlight": "här kan ett lönsamt bolag tyst få slut på kontanter",
       "brodtext": [
-        "Rörelsekapital är omsättningstillgångar minus kortfristiga skulder, ungefär de kontanter som binds i att driva verksamheten dag för dag. Den operativa kärnan är lager plus kundfordringar minus leverantörsskulder. Ju mer du har i lager och fordringar, desto mer av dina kontanter är inlåsta. Ju mer du är skyldig leverantörerna, desto mer finansierar du i praktiken verksamheten med deras pengar.",
-        "Nu kommer det som avgör allt. I en verksamhet med positivt rörelsekapitalbehov förbrukar tillväxt kontanter: ju snabbare du växer, desto mer lager och fordringar måste finansieras innan pengarna kommer tillbaka. Ett snabbväxande bolag kan vara lönsamt på resultaträkningen och ändå kontantsvältande, eftersom varje försäljning binder mer rörelsekapital. En verksamhet med negativ kassakonverteringscykel, där kunderna betalar innan leverantörerna ska betalas, har motsatt dynamik: där frigör tillväxt kontanter i stället för att förbruka dem."
+        "Rörelsekapital är omsättningstillgångar minus kortfristiga skulder, ungefär de kontanter som binds i att driva verksamheten dag för dag. Kärnan är lager plus kundfordringar minus leverantörsskulder. Ju mer du har i lager och fordringar, desto mer av dina kontanter är inlåsta. Ju mer du är skyldig leverantörerna, desto mer finansierar du verksamheten med deras pengar.",
+        "Här kommer det viktiga. När verksamheten behöver positivt rörelsekapital äter tillväxt kontanter: ju snabbare du växer, desto mer lager och fordringar måste finansieras innan pengarna kommer tillbaka. Ett snabbväxande bolag kan se lönsamt ut på resultaträkningen och ändå svälta på kontanter, för varje ny försäljning binder mer rörelsekapital. Har bolaget i stället negativ kassakonverteringscykel, där kunderna betalar innan leverantörerna ska ha sitt, blir det tvärtom: då frigör tillväxt kontanter."
       ],
-      "takeaway": "Lager eller fordringar som växer mycket snabbare än försäljningen är ett av de tidigaste varningstecknen du har, ofta synligt innan det slår mot vinsten."
+      "takeaway": "Lager eller fordringar som växer mycket snabbare än försäljningen är ett av de tidigaste varningstecken du har, ofta synligt innan det slår mot vinsten."
     },
     {
       "typ": "reading",
       "kicker": "SKULDSÄTTNING OCH FINANSIELL RISK",
-      "lead": "Ner till skuldsidan. Skuld är den enskilt vanligaste anledningen till att bra verksamheter blir dåliga investeringar, eller dör rakt av. Den fasta förpliktelsen, att betalas tillbaka med ränta oavsett hur det går, är vad som gör den farlig.",
-      "highlight": "Skuld är den enskilt vanligaste anledningen till att bra verksamheter blir dåliga investeringar",
+      "lead": "Ner till skuldsidan. Skuld är den vanligaste anledningen till att bra verksamheter blir dåliga investeringar, eller dör rakt av. Det som gör den farlig är att den ska betalas tillbaka med ränta oavsett hur det går.",
+      "highlight": "Skuld är den vanligaste anledningen till att bra verksamheter blir dåliga investeringar",
       "brodtext": [
-        "Tre enkla frågor fångar det mesta av risken. Hur mycket skuld finns i förhållande till vinsten, alltså kan bolaget bära lasten? Kan nuvarande vinster bekvämt täcka räntan? Och när förfaller skulden? Mät nettoskuld snarare än bruttoskuld, alltså total räntebärande skuld minus kassa, eftersom bolaget skulle kunna använda sina kontanter för att betala av skuld. Två nyckeltal sätter den i sammanhang: nettoskuld genom EBITDA, ungefär hur många års rörelseresultat det skulle ta att betala av skulden, och räntetäckning, rörelseresultat genom räntekostnad, alltså hur många gånger vinsten täcker räntenotan.",
-        "Sammanhanget avgör. Under cirka 1 till 2 gånger nettoskuld genom EBITDA är försiktigt, runt 3 börjar bli betydande, runt 4 till 5 eller mer är högt och skört, särskilt för en cyklisk verksamhet. Ett stabilt elbolag kan bära mer skuld tryggt än en cyklisk tillverkare. Glöm inte tidsaxeln heller: skuld måste refinansieras vid förfall, och en mur av skuld som förfaller ett dåligt år, eller i en frusen kreditmarknad, kan tvinga även ett lönsamt bolag in i nöd. Utspridda, långa förfall är tryggare. Allt detta vilar på hävstången: skuld skapar inget värde, den förstärker utfall, och eftersom skulden är fast faller all variabilitet på det egna kapitalet."
+        "Tre frågor fångar det mesta av risken. Hur mycket skuld finns det jämfört med vinsten, alltså orkar bolaget bära den? Räcker dagens vinster bekvämt för att betala räntan? Och när förfaller skulden? Räkna på nettoskuld i stället för bruttoskuld, alltså total räntebärande skuld minus kassa, eftersom bolaget kan använda sina kontanter för att betala av. Två nyckeltal sätter skulden i sammanhang: nettoskuld genom EBITDA, ungefär hur många års rörelseresultat det skulle ta att betala av den, och räntetäckning, rörelseresultat genom räntekostnad, alltså hur många gånger vinsten räcker till räntan.",
+        "Sammanhanget avgör. Under ungefär 1 till 2 gånger nettoskuld genom EBITDA är försiktigt, runt 3 börjar det bli kännbart, runt 4 till 5 eller mer är högt och skört, särskilt i en cyklisk verksamhet. Ett stabilt elbolag bär mer skuld tryggt än en cyklisk tillverkare. Glöm inte tidsaxeln: skuld måste refinansieras när den förfaller, och en mur av skuld som förfaller ett dåligt år, eller när kreditmarknaden frusit, kan pressa även ett lönsamt bolag in i nöd. Långa, utspridda förfall är tryggare. Allt det här vilar på hävstången: skuld skapar inget värde, den förstärker utfallet, och eftersom skulden är fast faller alla svängningar på det egna kapitalet."
       ],
-      "takeaway": "Ett stresstest skär igenom allt: skulle bolaget bekvämt kunna betala sin skuld om vinsten föll 40 procent och kreditmarknaden frös? En fin balansräkning klarar frågan, en skör vacklar på den."
+      "takeaway": "Ett stresstest skär igenom allt: skulle bolaget bekvämt kunna betala sin skuld om vinsten föll 40 procent och kreditmarknaden frös? En fin balansräkning klarar frågan, en skör vacklar."
     },
     {
       "typ": "dataviz",
       "titel": "Samma chock, två kapitalkuddar",
-      "underrubrik": "Två bolag med identisk verksamhet men olika skuld möter samma vinstfall på 40 procent. Hävstången, inte verksamheten, avgör vem som överlever. Räntetäckning är rörelseresultat genom räntekostnad.",
+      "underrubrik": "Två bolag med samma verksamhet men olika skuld möter samma vinstfall på 40 procent. Det är skulden, inte verksamheten, som avgör vem som överlever. Räntetäckning är rörelseresultat genom räntekostnad.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -74,7 +74,7 @@
         "etiketter": "Räntetäckning, antal gånger (illustrativ)",
         "figurtext": "Illustrativ. Samma rörelseresultat på 100, fall till 60. Trygg har ränta 8, Belånad har ränta 35. Talen är konstruerade för att visa mönstret, inte ett verkligt bolag."
       },
-      "slutsats": "För Trygg blir vinstfallet ett rutinmässigt dåligt år, räntetäckningen stannar bekvämt över sju gånger. För Belånad faller den nära ett, farligt nära att inte täcka räntan. Samma verksamhet, samma chock, men skulden ensam avgjorde vem som kunde utplånas."
+      "slutsats": "För Trygg blir vinstfallet bara ett vanligt dåligt år, räntetäckningen stannar bekvämt över sju gånger. För Belånad faller den nära ett, farligt nära att inte räcka till räntan. Samma verksamhet, samma smäll, men skulden ensam avgjorde vem som kunde slås ut."
     },
     {
       "typ": "reading",
@@ -82,10 +82,10 @@
       "lead": "Ett begrepp bär upp resten: soliditet är eget kapital delat med totala tillgångar. Den mäter hur stor del av tillgångarna som ägarna själva har finansierat, alltså hur tjock kapitalkudden är.",
       "highlight": "soliditet är eget kapital delat med totala tillgångar",
       "brodtext": [
-        "Hög soliditet betyder en tjock buffert som kan absorbera chocker, låg soliditet en tunn kudde. När tillgångarna faller absorberar det egna kapitalet hela förlusten, eftersom skulderna är fasta och inte krymper bara för att verksamheten blev sämre. Det är därför två bolag med samma verksamhetschock kan få helt olika utfall: kapitalkudden avgör vem som överlever.",
-        "Skilj soliditet från likviditet, för de fångar olika faror. Soliditet handlar om långsiktig stabilitet, likviditet om kortsiktig betalningsförmåga, alltså om bolaget kan betala sina räkningar det kommande året, omsättningstillgångar mot kortfristiga skulder. Ett bolag kan vara solvent men illikvitt, alltså ha tillgångar men inte tillräckligt med kontanter just nu, och det kan ändå knäcka det. En sista varning: eget kapital är ett bokfört värde, ett redovisningstal, och marknaden kan ha en helt annan uppfattning. Behandla siffrorna som uppskattningar och gå till noterna för att se vad som faktiskt ligger inuti."
+        "Hög soliditet är en tjock buffert som tar emot smällar, låg soliditet en tunn kudde. När tillgångarna faller tar det egna kapitalet hela förlusten, för skulderna är fasta och krymper inte bara för att verksamheten gick sämre. Det är därför två bolag som drabbas av samma smäll kan klara sig helt olika: kapitalkudden avgör vem som överlever.",
+        "Blanda inte ihop soliditet och likviditet, de fångar olika faror. Soliditet handlar om långsiktig stabilitet, likviditet om kortsiktig betalningsförmåga, alltså om bolaget kan betala sina räkningar det kommande året, omsättningstillgångar mot kortfristiga skulder. Ett bolag kan vara solvent men illikvitt, alltså ha tillgångar men inte tillräckligt med kontanter just nu, och det kan knäcka det. En sista varning: eget kapital är ett bokfört värde, ett redovisningstal, och marknaden kan tycka något helt annat. Behandla siffrorna som uppskattningar och gå till noterna för att se vad som faktiskt ligger bakom."
       ],
-      "takeaway": "Storleken och tryggheten i kapitalkudden är din felmarginal. Räkna alltid soliditeten, och skilj den från likviditeten, innan du litar på en resultaträkning."
+      "takeaway": "Hur stor och hur trygg kapitalkudden är, det är din felmarginal. Räkna alltid soliditeten, och skilj den från likviditeten, innan du litar på en resultaträkning."
     },
     {
       "typ": "dataviz",
@@ -99,18 +99,18 @@
         ],
         "figurtext": "Illustrativ. Ett bolag med tillgångar 1 000 och skulder 600 har eget kapital 400, alltså soliditet 40 procent."
       },
-      "slutsats": "En solid kudde absorberar chocker, en tunn lämnar lite marginal. Faller tillgångarna 200 från 1 000 stannar skulderna på 600, det egna kapitalet halveras till 200, och soliditeten faller till 25 procent. Hos ett bolag med bara 150 i eget kapital från start hade samma smäll gjort bolaget insolvent."
+      "slutsats": "En tjock kudde tar emot smällar, en tunn lämnar nästan ingen marginal. Faller tillgångarna 200 från 1 000 stannar skulderna på 600, det egna kapitalet halveras till 200, och soliditeten faller till 25 procent. Hade bolaget bara haft 150 i eget kapital från start hade samma smäll gjort det insolvent."
     },
     {
       "typ": "reading",
       "kicker": "VARNINGSTECKEN",
-      "lead": "När du läser en balansräkning letar du efter både styrka och skörhet på samma gång. En enda fråga skär igenom allt: vad händer med det här bolaget i ett dåligt år?",
+      "lead": "När du läser en balansräkning letar du efter styrka och skörhet samtidigt. En enda fråga skär igenom allt: vad händer med det här bolaget i ett dåligt år?",
       "highlight": "vad händer med det här bolaget i ett dåligt år",
       "brodtext": [
-        "Gröna tecken är en solid kapitalkudde med hög soliditet som kan absorbera chocker, måttlig skuld som är bekvämt täckt av tillgångar och vinster, stark likviditet med tillräckligt av omsättningstillgångar för de kortsiktiga åtagandena, och verkliga, produktiva tillgångar bakom siffrorna med litet beroende av goodwill.",
-        "Varningstecken är en tunn kapitalkudde jämfört med branschkollegor, tung skuld i förhållande till eget kapital särskilt med svaga eller volatila vinster, lager eller fordringar som växer mycket snabbare än försäljningen, skulder som närmar sig värdet på de verkliga icke-goodwill-tillgångarna, och en stor andel av tillgångarna som är goodwill eller mjuka immateriella poster snarare än produktiv egendom. De vanligaste misstagen är besläktade: att bara titta på resultaträkningen och missa den finansiella skörheten, att glömma att aktieägaren står sist i kön, och att behandla bokfört eget kapital som om det vore marknadsvärde."
+        "Gröna tecken är en tjock kapitalkudde med hög soliditet som tar emot smällar, måttlig skuld som är bekvämt täckt av tillgångar och vinster, stark likviditet med nog av omsättningstillgångar för de kortsiktiga åtagandena, och riktiga, produktiva tillgångar bakom siffrorna med litet beroende av goodwill.",
+        "Varningstecken är en tunn kapitalkudde jämfört med branschkollegor, tung skuld i förhållande till eget kapital, särskilt med svaga eller svängiga vinster, lager eller fordringar som växer mycket snabbare än försäljningen, skulder som närmar sig värdet på de riktiga tillgångarna utöver goodwill, och att en stor del av tillgångarna är goodwill eller mjuka immateriella poster i stället för produktiv egendom. De vanligaste misstagen hänger ihop: att bara titta på resultaträkningen och missa den finansiella skörheten, att glömma att aktieägaren står sist i kön, och att behandla bokfört eget kapital som om det vore marknadsvärde."
       ],
-      "takeaway": "En fästningsstark balansräkning överlever ett dåligt år, kanske utnyttjar det. En skör balansräkning gör ett dåligt år potentiellt dödligt, hur bra resultaträkningen än ser ut."
+      "takeaway": "En bergfast balansräkning överlever ett dåligt år, kanske drar nytta av det. En skör balansräkning kan göra ett dåligt år dödligt, hur bra resultaträkningen än ser ut."
     },
     {
       "typ": "quiz",
@@ -124,7 +124,7 @@
             "67 procent"
           ],
           "ratt": [1],
-          "forklaring": "Eget kapital är 1 000 minus 600, alltså 400. Soliditet är eget kapital genom totala tillgångar: 400 delat på 1 000, alltså 40 procent."
+          "forklaring": "Eget kapital är 1 000 minus 600, alltså 400. Soliditet är eget kapital genom totala tillgångar: 400 delat på 1 000 blir 40 procent."
         },
         {
           "typ": "single",
@@ -135,7 +135,7 @@
             "För att eget kapital alltid är bokfört värde"
           ],
           "ratt": [1],
-          "forklaring": "Soliditet är långsiktig stabilitet, likviditet är kortsiktig betalningsförmåga. Ett bolag kan ha tillgångar men ändå sakna kontanter just nu, och det kan knäcka det."
+          "forklaring": "Soliditet handlar om långsiktig stabilitet, likviditet om kortsiktig betalningsförmåga. Ett bolag kan ha tillgångar men ändå sakna kontanter just nu, och det kan knäcka det."
         },
         {
           "typ": "single",
@@ -146,18 +146,18 @@
             "Soliditeten är för hög"
           ],
           "ratt": [0],
-          "forklaring": "I en verksamhet med positivt rörelsekapitalbehov förbrukar tillväxt kontanter: ju snabbare det växer, desto mer kapital binds i lager och fordringar innan pengarna kommer tillbaka, även när vinsten stiger."
+          "forklaring": "När verksamheten behöver positivt rörelsekapital äter tillväxt kontanter: ju snabbare den växer, desto mer kapital binds i lager och fordringar innan pengarna kommer tillbaka, även när vinsten stiger."
         },
         {
           "typ": "single",
           "fraga": "Två bolag har identisk verksamhet och samma EBITDA, men olika skuld. Varför kan ett vinstfall på 40 procent vara ett rutinår för det ena och en existentiell kris för det andra?",
           "alternativ": [
-            "Hävstången förstorar utfallen: hög skuld förvandlar en överlevbar nedgång till en potentiell katastrof",
+            "Hävstången förstorar utfallen: hög skuld gör en hanterbar nedgång till en möjlig katastrof",
             "Det mer skuldsatta bolaget har sämre produkter",
             "Skuld skapar värde i goda tider och är därför alltid att föredra"
           ],
           "ratt": [0],
-          "forklaring": "Hävstång skapar inte värde, den förstärker utfall. Samma vinstfall kan vara hanterbart för ett lågbelånat bolag men dödligt för ett högbelånat, eftersom räntan är fast och faller på det egna kapitalet."
+          "forklaring": "Hävstång skapar inget värde, den förstärker utfallet. Samma vinstfall kan vara hanterbart för ett lågbelånat bolag men dödligt för ett högbelånat, eftersom räntan är fast och faller på det egna kapitalet."
         },
         {
           "typ": "single",
@@ -168,7 +168,7 @@
             "Skulden delad med antalet aktier"
           ],
           "ratt": [0],
-          "forklaring": "Nettoskuld är total räntebärande skuld minus kassa. Ett bolag med 500 i skuld men 400 i kassa har bara 100 i nettoskuld, eftersom kontanterna kan användas för att betala av skuld."
+          "forklaring": "Nettoskuld är total räntebärande skuld minus kassa. Ett bolag med 500 i skuld men 400 i kassa har bara 100 i nettoskuld, eftersom kontanterna kan användas för att betala av."
         },
         {
           "typ": "multi",

@@ -10,7 +10,7 @@
       "typ": "intro",
       "kicker": "LEKTION 13.1",
       "titel": "Från idé till case",
-      "ingress": "Att kunna delarna ger dig ingen process. En process tar dig från en lös idé till ett nedskrivet beslut du kan stå för, och säger i förväg vad som skulle få dig att ändra dig."
+      "ingress": "Att kunna delarna ger dig ingen process. En process tar dig från en lös idé till ett nedskrivet beslut du kan stå för, och säger på förhand vad som skulle få dig att ändra dig."
     },
     {
       "typ": "reading",
@@ -18,10 +18,10 @@
       "lead": "Vid det här laget kan du delarna. Du läser rapporterna, du räknar avkastning på kapitalet, du bygger en värdering och du känner igen dina egna biaser. Men att kunna delarna ger dig ännu ingen process.",
       "highlight": "att kunna delarna ger dig ännu ingen process",
       "brodtext": [
-        "Begåvade analytiker som kan varje formel utantill fattar ändå sina beslut spretigt. De tittar på det som råkar fånga ögat, fördjupar sig i det roliga och hoppar över det tråkiga. Varje gång når de sitt ja eller nej på en ny grund. En process botar det.",
-        "En investeringsprocess är inte en lista med moduler du checkar av. Det är en tratt där varje steg matar nästa, och där det du kom fram till i ett steg sätter villkoren för nästa. Kvalitetsbedömningen avgör hur snabbt du tillåter dig att låta värderingen växa. Tillväxtantagandet blir ett villkor du sedan bevakar. Felmarginalen avgör om en utmärkt verksamhet är ett köp idag. När stegen talar med varandra på det sättet blir analysen ett enda sammanhängande resonemang, och du investerar systematiskt i stället för att improvisera."
+        "Skickliga analytiker som kan varje formel utantill fattar ändå sina beslut spretigt. De tittar på det som råkar fånga ögat, gräver i det roliga och hoppar över det tråkiga. Varje gång når de sitt ja eller nej på ny grund. En process botar det.",
+        "En investeringsprocess är ingen lista med moduler du bockar av. Den är en tratt där varje steg matar nästa, och där det du kom fram till i ett steg sätter villkoren för det följande. Kvalitetsbedömningen avgör hur snabbt du låter värderingen växa. Tillväxtantagandet blir ett villkor du sedan bevakar. Felmarginalen avgör om en utmärkt verksamhet är ett köp idag. När stegen talar med varandra blir analysen ett enda sammanhängande resonemang, och du investerar systematiskt i stället för att improvisera."
       ],
-      "takeaway": "Skillnaden mellan amatör och proffs är inte vem som kan flest formler, utan vem som kör samma tratt varje gång och låter slutsatsen från ett steg binda nästa."
+      "takeaway": "Skillnaden mellan amatör och proffs är inte vem som kan flest formler. Det är vem som kör samma tratt varje gång och låter slutsatsen från ett steg binda nästa."
     },
     {
       "typ": "concept",
@@ -37,7 +37,7 @@
         ],
         "figurtext": "Idén gallras snabbt, de få som överlever fördjupas, och resultatet skrivs ned som ett case som faller ut i ett beslut."
       },
-      "forklaring": "Slutsatsen från ett steg binder nästa. Kvalitetsdomen disciplinerar tillväxtantagandet, tillväxtantagandet blir ett villkor att bevaka, och felmarginalen avgör om en utmärkt verksamhet är ett köp idag. När stegen pratar ihop sig blir analysen ett sammanhängande resonemang i stället för spridda intryck. Varje led är samtidigt en grind: faller idén på en grind, slutar du arbeta och går vidare."
+      "forklaring": "Slutsatsen från ett steg binder nästa. Kvalitetsdomen disciplinerar tillväxtantagandet, tillväxtantagandet blir ett villkor att bevaka, och felmarginalen avgör om en utmärkt verksamhet är ett köp idag. När stegen pratar ihop sig blir analysen ett sammanhängande resonemang i stället för spridda intryck. Varje led är samtidigt en grind. Faller idén på en grind slutar du arbeta och går vidare."
     },
     {
       "typ": "reading",
@@ -45,10 +45,10 @@
       "lead": "Idéer kommer från överallt: en produkt du använder, en rapport du läser, en kvantitativ screen, ett bolag någon du litar på nämner. Var de kommer ifrån spelar mindre roll. Det som avgör är hur snabbt du vågar förkasta dem.",
       "highlight": "Det som avgör är hur snabbt du vågar förkasta dem.",
       "brodtext": [
-        "De flesta idéer ska dö snabbt, och det är en färdighet i sig att låta dem göra det. Innan du lägger en timme på något ställer du tre frågor på fem minuter. Ligger idén innanför min kompetenscirkel? Förstår jag i grova drag hur bolaget tjänar pengar? Finns det ens en chans att det är felprissatt, eller är det uppenbart fullvärderat?",
-        "Förkasta inom fem minuter om svaret på den första är nej, om verksamheten är en black box du inte begriper, om balansräkningen ser akut sjuk ut, eller om bolaget lever på en berättelse utan spår av enhetsekonomi. Du sparar ditt djupa arbete för de få idéer som klarar gallringen. Att försöka djupanalysera allt är inte flit, det är slöseri med tid."
+        "De flesta idéer ska dö snabbt, och att låta dem göra det är en färdighet i sig. Innan du lägger en timme på något ställer du tre frågor på fem minuter. Ligger idén innanför din kompetenscirkel? Förstår du i grova drag hur bolaget tjänar pengar? Finns det ens en chans att det är felprissatt, eller är det uppenbart fullvärderat?",
+        "Förkasta inom fem minuter om svaret på den första är nej, om verksamheten är en svart låda du inte begriper, om balansräkningen ser akut sjuk ut, eller om bolaget lever på en berättelse utan spår av enhetsekonomi. Spara det djupa arbetet för de få idéer som klarar gallringen. Att försöka djupanalysera allt är inte flit, det är slöseri med tid."
       ],
-      "takeaway": "Snabbgallringen är tre frågor på fem minuter: cirkeln, modellen, möjligheten till felprissättning. Det vanligaste och helt korrekta utfallet är förkasta."
+      "takeaway": "Snabbgallringen är tre frågor på fem minuter: cirkeln, modellen, chansen till felprissättning. Det vanligaste utfallet är förkasta, och så ska det vara."
     },
     {
       "typ": "reading",
@@ -56,15 +56,15 @@
       "lead": "För de få som överlever följer du sekvensen, men håll hela tiden ögonen på hur varje steg matar nästa. Det är här tratten skiljer sig från en checklista.",
       "highlight": "håll hela tiden ögonen på hur varje steg matar nästa",
       "brodtext": [
-        "Du förstår verksamheten: modellen, enhetsekonomin, vad som driver tillväxten och hur förutsägbar den är. Det bestämmer hur mycket du över huvud taget vågar prognosticera. Du läser räkenskaperna som en helhet, resultaträkning, balansräkning och kassaflöde och hur de hänger ihop, och ser om vinsten backas av kontanter. Du bedömer kvaliteten: marginaler och deras trend, avkastning på kapitalet mot kapitalkostnaden, en vallgrav som skyddar avkastningen, en ledning som allokerar kapital väl.",
-        "Nu kommer den första riktiga kopplingen. Din kvalitets- och vallgravsdom matar direkt nästa steg: en verksamhet med hög, uthållig avkastning och en bred vallgrav får motivera en högre, mer uthållig tillväxt i prognosen, en svag verksamhet får det inte. Det antagandet går in i värderingen och kommer ut som ett intervall, aldrig ett falskt exakt tal. Du ställer värdet mot priset, prövar nedsidan och dig själv, och dimensionerar efter övertygelse och nedsida. Faller idén på en grind, utanför cirkeln, avkastning under kapitalkostnaden, ingen felmarginal eller en oacceptabel nedsida, avstår du och slutar arbeta. Det är meningen."
+        "Du förstår verksamheten: modellen, enhetsekonomin, vad som driver tillväxten och hur förutsägbar den är. Det bestämmer hur mycket du alls vågar prognosticera. Du läser räkenskaperna som en helhet, resultaträkning, balansräkning och kassaflöde och hur de hänger ihop, och ser om vinsten backas av kontanter. Du bedömer kvaliteten: marginalerna och deras trend, avkastningen på kapitalet mot kapitalkostnaden, en vallgrav som skyddar avkastningen, en ledning som allokerar kapital väl.",
+        "Nu kommer den första riktiga kopplingen. Din kvalitets- och vallgravsdom matar direkt nästa steg. En verksamhet med hög, uthållig avkastning och en bred vallgrav får motivera en högre och mer uthållig tillväxt i prognosen, en svag verksamhet får det inte. Det antagandet går in i värderingen och kommer ut som ett intervall, aldrig ett falskt exakt tal. Du ställer värdet mot priset, prövar nedsidan och dig själv, och dimensionerar efter övertygelse och nedsida. Faller idén på en grind, utanför cirkeln, avkastning under kapitalkostnaden, ingen felmarginal eller en oacceptabel nedsida, avstår du och slutar arbeta. Det är meningen."
       ],
       "takeaway": "Ett antagande du matar in är ett löfte du måste hålla. Antar du att marginalen håller och tillväxten ligger kvar i tonåren, har du samtidigt skrivit ned två saker att bevaka kvartal för kvartal."
     },
     {
       "typ": "dataviz",
       "titel": "Beslutspunkten är en grind, inte en känsla",
-      "underrubrik": "Samma bolag, oförändrad verksamhet, men priset bestämmer utfallet. Illustrativa tal.",
+      "underrubrik": "Samma bolag, samma verksamhet, men priset bestämmer utfallet. Illustrativa tal.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -72,9 +72,9 @@
           { "kategori": "Pris 9, värde 15", "varde": 40, "accent": true }
         ],
         "etiketter": "Felmarginal mot ett centralt värde kring 15 kronor, i procent. Illustrativt.",
-        "figurtext": "Illustrativa tal, inte ett verkligt bolag. Vid pris 14 mot värde 15 finns i praktiken ingen felmarginal, och grinden fäller bevaka. Faller priset till 9 vidgas felmarginalen till omkring 40 procent och beslutet faller ut som köp."
+        "figurtext": "Illustrativa tal, inte ett verkligt bolag. Vid pris 14 mot värde 15 finns i praktiken ingen felmarginal, och grinden fäller bevaka. Faller priset till 9 vidgas felmarginalen till omkring 40 procent och beslutet blir köp."
       },
-      "slutsats": "Samma bolag kan vara ett bevaka vid ett pris och ett köp vid ett lägre, utan att verksamheten ändrats. Det är felmarginalen mot värdet, inte humöret eller kursrörelsen, som fäller beslutet."
+      "slutsats": "Samma bolag kan vara ett bevaka vid ett pris och ett köp vid ett lägre, utan att verksamheten ändrats. Det är felmarginalen mot värdet som fäller beslutet, inte humöret eller kursrörelsen."
     },
     {
       "typ": "reading",
@@ -82,8 +82,8 @@
       "lead": "En tes som bara lever i ditt huvud är vag, ofalsifierbar och försvarslös mot dina egna biaser. Ett investeringscase är ett kort dokument du skriver medan du är objektiv, före eller vid köp, som fångar ditt resonemang.",
       "highlight": "ett kort dokument du skriver medan du är objektiv",
       "brodtext": [
-        "Längden spelar mindre roll. Det avgörande är att caset är falsifierbart: att det i förväg säger vad som skulle få dig att ändra dig. Ett case du inte kan falsifiera är ingen analys, det är ett hopp. Skrivandet tvingar dig att formulera exakt varför du investerar, vad caset vilar på och vad som skulle bevisa dig fel. Det skärper tänkandet, blottar svaga antaganden och skapar en daterad, objektiv notering.",
-        "Ett skrivet case är det starkaste försvaret mot att i tysthet flytta målstolparna och mot efterhandskänslan att du visste hela tiden. Du kan inte bortrationalisera ett bevis som borde få dig att sälja när villkoret står svart på vitt och daterat. Det är disciplinen som lyfter en magkänsla till en analys, och det är grunden för all förvaltning: du kan bara avgöra att en tes är brusten om du skrev ned vad den var och vad som skulle bryta den."
+        "Längden spelar mindre roll. Det avgörande är att caset är falsifierbart: att det på förhand säger vad som skulle få dig att ändra dig. Ett case du inte kan falsifiera är ingen analys, det är ett hopp. Skrivandet tvingar dig att formulera exakt varför du investerar, vad caset vilar på och vad som skulle bevisa dig fel. Det skärper tänkandet, blottar svaga antaganden och ger dig en daterad notering att gå tillbaka till.",
+        "Ett skrivet case är ditt starkaste försvar mot att i tysthet flytta målstolparna, och mot efterhandskänslan att du visste hela tiden. Du kan inte bortrationalisera ett bevis som borde få dig att sälja när villkoret står svart på vitt och daterat. Disciplinen lyfter en magkänsla till en analys, och den är grunden för all förvaltning. Du kan bara avgöra att en tes är brusten om du skrev ned vad den var och vad som skulle bryta den."
       ],
       "rost": "sebastian",
       "takeaway": "Skriv ned caset innan du köper, och skriv ned vad som skulle få dig att sälja. I lugnt väder är du klok. Mitt i en panik är du inte, och då ska lappen bestämma, inte magen."
@@ -95,11 +95,11 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Tesen, i en mening", "text": "Varför är det här en god verksamhet till ett bra pris, och hur väntas avkastningen komma, genom tillväxt, omvärdering eller kontantåterföring? Tesen tvingar fram klarhet: kan du inte formulera den kort förstår du den inte väl nog." },
-          { "rubrik": "Nyckelantagandena, tre till fem", "text": "Det caset vilar på, ofta färre och andra saker än du trodde. De berättar samtidigt vad du ska bevaka. Skriv ned dem, inte den optimistiska berättelsen de gav upphov till." },
-          { "rubrik": "Falsifieringsvillkoren, hjärtat", "text": "De specifika, observerbara saker som, om de inträffar, säger åt dig att ompröva och sannolikt sälja. Konkreta villkor skyddar dig, vaga som om det går dåligt skyddar dig mot ingenting." }
+          { "rubrik": "Tesen, i en mening", "text": "Varför är det här en god verksamhet till ett bra pris, och hur väntas avkastningen komma, genom tillväxt, omvärdering eller kontantåterföring? Tesen tvingar fram klarhet. Kan du inte formulera den kort förstår du den inte väl nog." },
+          { "rubrik": "Nyckelantagandena, tre till fem", "text": "Det caset vilar på, ofta färre och andra saker än du trodde. De talar samtidigt om vad du ska bevaka. Skriv ned dem, inte den optimistiska berättelsen de gav upphov till." },
+          { "rubrik": "Falsifieringsvillkoren, hjärtat", "text": "De specifika, observerbara saker som säger åt dig att ompröva och sannolikt sälja om de inträffar. Konkreta villkor skyddar dig. Ett vagt som om det går dåligt skyddar dig mot ingenting." }
         ],
-        "figurtext": "Utöver dessa tre noterar du värdering med felmarginal, positionsstorlek och datum, så att du har en objektiv måttstock att återvända till."
+        "figurtext": "Utöver dessa tre noterar du värdering med felmarginal, positionsstorlek och datum, så att du har en måttstock att gå tillbaka till."
       },
       "forklaring": "Caset binder ihop analysen, vad du antog, psykologin, vad du förbinder dig till medan du är lugn, och förvaltningen, vad du bevakar. Värdering, felmarginal och storlek noteras så att du har en måttstock kvar när känslan eller ankringen senare frestar dig, och allt dateras."
     },
@@ -109,10 +109,10 @@
       "lead": "Det viktigaste att förstå är var falsifieringsvillkoren kommer ifrån, för det är här caset väver ihop sig med resten av analysen. De skrivs inte fram ur tomma intet.",
       "highlight": "De skrivs inte fram ur tomma intet.",
       "brodtext": [
-        "Villkoren faller nästan gratis ut ur värderingen du redan byggt. När du prognosticerade skrev du in ett par antaganden som bar värdet: en tillväxttakt, en marginal, kanske en återinvesteringsnivå. Känslighetsanalysen visade vilka av dem värdet var ömtåligast mot. De antagandena är löften om verkligheten, och därför är de dina färdiga falsifieringsvillkor.",
+        "Villkoren faller nästan gratis ut ur värderingen du redan byggt. När du prognosticerade skrev du in ett par antaganden som bar värdet: en tillväxttakt, en marginal, kanske en återinvesteringsnivå. Känslighetsanalysen visade vilka av dem värdet var ömtåligast mot. De antagandena är löften om verkligheten, och därmed dina färdiga falsifieringsvillkor.",
         "Antog värderingen organisk tillväxt i låga tvåsiffriga tal blir negativ organisk tillväxt två kvartal i rad ett villkor. Antog den en bruttomarginal kring sjuttio procent skyddad av en vallgrav blir en marginal under en namngiven tröskel ett villkor. Andra goda villkor: förlusten av en nyckelkund, ett brutet lånevillkor, ett stort värdeförstörande förvärv, eller för ett tidigt bolag en framtvingad utspädande emission. Villkoren är alltså dina värderingsantaganden översatta till observerbara trösklar. Antagandet i värderingen och villkoret du bevakar är samma sak sett från två håll."
       ],
-      "takeaway": "Goda villkor är konkreta och observerbara. Översätt vart och ett av de antaganden som bar värdet till en tröskel, så har du dina villkor färdiga, och du betraktar aldrig caset som efterarbete."
+      "takeaway": "Goda villkor är konkreta och observerbara. Översätt vart och ett av de antaganden som bar värdet till en tröskel, så har du dina villkor färdiga och slipper se caset som efterarbete."
     },
     {
       "typ": "quiz",
@@ -126,7 +126,7 @@
             "Att man kan ta stegen i valfri ordning beroende på humör"
           ],
           "ratt": [0],
-          "forklaring": "En process är en tratt där stegen talar med varandra: kvalitetsdomen disciplinerar tillväxtantagandet, som i sin tur blir ett villkor att bevaka. Det gör analysen till ett sammanhängande resonemang i stället för spridda intryck."
+          "forklaring": "En process är en tratt där stegen talar med varandra. Kvalitetsdomen disciplinerar tillväxtantagandet, som i sin tur blir ett villkor att bevaka. Det gör analysen till ett sammanhängande resonemang i stället för spridda intryck."
         },
         {
           "typ": "single",
@@ -137,7 +137,7 @@
             "Att bygga en fullständig värdering innan man läst räkenskaperna"
           ],
           "ratt": [0],
-          "forklaring": "Snabbgallringen ställer tre frågor, ligger idén innanför cirkeln, begriper jag modellen, kan det vara felprissatt, och förkastar snabbt. Att försöka djupanalysera allt är slöseri, inte flit."
+          "forklaring": "Snabbgallringen ställer tre frågor, ligger idén innanför cirkeln, begriper du modellen, kan det vara felprissatt, och förkastar snabbt. Att försöka djupanalysera allt är slöseri, inte flit."
         },
         {
           "typ": "single",

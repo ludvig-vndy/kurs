@@ -18,7 +18,7 @@
       "lead": "En aktie som faller 40 procent och sedan återhämtar sig kostade dig ingenting, så länge du inte sålde på vägen ner. En aktie som faller 40 procent för att verksamheten varaktigt försämrats kostade dig 40 procent för gott.",
       "highlight": "En aktie som faller 40 procent och sedan återhämtar sig kostade dig ingenting",
       "brodtext": [
-        "Fråga tio personer i finansbranschen vad risk är, så svarar de flesta något i stil med hur mycket kursen svänger. Den definitionen sitter inbäddad i läroböcker och riskmått, och för en långsiktig, fundamental investerare är den fel på ett sätt som kostar pengar.",
+        "Fråga tio personer i finansbranschen vad risk är, så säger de flesta något om hur mycket kursen svänger. Den definitionen sitter inbäddad i läroböcker och riskmått. För en långsiktig, fundamental investerare är den fel, och felet kostar pengar.",
         "Det första fallet är en kursrörelse. Det andra är en förlust. Blandar du ihop dem fruktar du fel sak, agerar fel i en nedgång och bygger portföljen runt fel hot."
       ],
       "rost": "sebastian",
@@ -31,12 +31,12 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Volatilitet", "text": "Hur mycket priset rör sig upp och ner. För den som äger affärsvärde och har tid är det till stor del brus. Ett tillfälligt fall är ingen förlust om du varken säljer eller verksamheten skadas." },
-          { "rubrik": "Permanent förlust", "text": "Att förlora pengar du aldrig får tillbaka, för att verksamheten genuint blivit mindre värd, gått omkull, eller för att du betalade för ett värde som aldrig fanns." }
+          { "rubrik": "Volatilitet", "text": "Hur mycket priset rör sig upp och ner. Äger du affärsvärde och har tid är det mest brus. Ett tillfälligt fall är ingen förlust om du varken säljer eller verksamheten skadas." },
+          { "rubrik": "Permanent förlust", "text": "Att förlora pengar du aldrig får tillbaka, för att verksamheten blivit mindre värd, gått omkull, eller för att du betalade för ett värde som aldrig fanns." }
         ],
-        "figurtext": "Två väldigt olika fenomen kallas slarvigt för samma sak."
+        "figurtext": "Två olika saker kallas slarvigt för samma sak."
       },
-      "forklaring": "En högkvalitativ verksamhet vars aktie faller 30 procent i en marknadspanik har inte blivit en sämre verksamhet, värdet är detsamma, det är bara priset som rörde sig. Volatilitet blir en verklig kostnad bara om den tvingar eller frestar dig att sälja på botten."
+      "forklaring": "En stark verksamhet vars aktie faller 30 procent i en marknadspanik har inte blivit sämre. Värdet är detsamma, det är priset som rörde sig. Volatilitet kostar dig något bara om den tvingar eller frestar dig att sälja på botten."
     },
     {
       "typ": "concept",
@@ -44,8 +44,8 @@
       "titel": "De tre verkliga hoten",
       "brodtext": [
         "Den permanenta sorten kommer från tre håll, och de handlar alla om verksamheten och priset du betalade. Verksamheten försämras strukturellt, en bruten konkurrensfördel eller en döende bransch, så att värdet varaktigt faller. Bolaget går omkull, oftast under för mycket skuld. Eller du överbetalade så grovt att även en fin verksamhet inte kan växa in i priset.",
-        "Kurskurvans utseende säger ingenting om något av detta. Hela resonemanget vilar på två förutsättningar: en lång tidshorisont, så att tillfälliga fall hinner vända, och ingen tvångsförsäljning, så att du aldrig måste realisera ett fall vid sämsta möjliga tillfälle.",
-        "Därför är hävstång och korta horisonter farliga. De kan förvandla ren volatilitet till permanent förlust genom att tvinga fram en försäljning på botten. Att skydda din förmåga att sitta still är vad som låter dig behandla kursrörelser som brus."
+        "Kurskurvan säger ingenting om något av detta. Resonemanget vilar på två saker: en lång tidshorisont, så att tillfälliga fall hinner vända, och att du aldrig tvingas sälja, så att du inte måste realisera ett fall vid sämsta möjliga tillfälle.",
+        "Därför är hävstång och korta horisonter farliga. De förvandlar ren volatilitet till permanent förlust genom att tvinga fram en försäljning på botten. Skyddar du din förmåga att sitta still kan du behandla kursrörelser som brus."
       ]
     },
     {
@@ -54,10 +54,10 @@
       "lead": "En erfaren investerare frågar aldrig hur mycket svänger det här. Frågan är vad skulle kunna förstöra mitt kapital permanent. Den pekar mot verksamheten och priset, och kurskurvan svarar inte på den.",
       "highlight": "vad skulle kunna förstöra mitt kapital permanent",
       "brodtext": [
-        "Av det följer ett lugn som ser nästan märkligt ut utifrån. Faller en sund verksamhet i pris läser du det som ett möjligt tillfälle och behöver inte göra något alls. Vaksamheten riktas i stället mot det som skadar kapital: strukturell försämring, för mycket skuld, överbetalning.",
-        "En vanlig fallgrop: nybörjaren tror att en lugn, sällan handlad aktie automatiskt är trygg och att en volatil är farlig. Ofta är det tvärtom. Det skenbart lugna bolaget kan vara det skört finansierade. Det vanligaste misstaget av alla är att likställa risk med volatilitet och därmed sälja sunda verksamheter i paniker, vilket är just det som förvandlar ett tillfälligt fall till en permanent förlust."
+        "Det ger ett lugn som ser nästan märkligt ut utifrån. Faller en sund verksamhet i pris läser du det som ett möjligt köptillfälle och behöver inte göra något alls. Vaksamheten riktas mot det som verkligen skadar kapital: strukturell försämring, för mycket skuld, överbetalning.",
+        "En vanlig fallgrop: nybörjaren tror att en lugn, sällan handlad aktie är trygg och att en volatil är farlig. Ofta är det tvärtom. Det skenbart lugna bolaget kan vara det skört finansierade. Det vanligaste misstaget av alla är att sätta likhetstecken mellan risk och volatilitet och sälja sunda verksamheter i paniker, vilket är precis det som gör ett tillfälligt fall till en permanent förlust."
       ],
-      "takeaway": "Två kursfall som ser likadana ut på en graf kan vara helt olika till sin natur. Bara en förståelse av verksamheten och priset talar om vilket som är vilket."
+      "takeaway": "Två kursfall som ser likadana ut på en graf kan vara helt olika saker. Bara förståelse av verksamheten och priset talar om vilket som är vilket."
     },
     {
       "typ": "quiz",
@@ -71,7 +71,7 @@
             "Hur ofta aktien handlas på börsen"
           ],
           "ratt": [1],
-          "forklaring": "Risk är sannolikheten att förlora pengar du aldrig får tillbaka, inte hur mycket priset hoppar. Volatilitet är bara kursrörelse, inte förlust."
+          "forklaring": "Risk är sannolikheten att förlora pengar du aldrig får tillbaka, inte hur mycket priset hoppar. Volatilitet är kursrörelse, inte förlust."
         },
         {
           "typ": "single",
@@ -82,7 +82,7 @@
             "Ett säkert tecken på att verksamheten är skadad"
           ],
           "ratt": [1],
-          "forklaring": "Värdet är oförändrat, bara priset rörde sig. Håller du, eller köper mer, kostade fallet dig ingenting. Det blir en förlust bara om du säljer in i det."
+          "forklaring": "Värdet är oförändrat, det var priset som rörde sig. Håller du, eller köper mer, kostade fallet dig ingenting. Det blir en förlust bara om du säljer in i det."
         },
         {
           "typ": "multi",
@@ -95,7 +95,7 @@
             "Att kursen tillfälligt faller i en marknadspanik"
           ],
           "ratt": [0, 1, 2],
-          "forklaring": "De tre verkliga hoten handlar om verksamheten och priset du betalade: strukturell försämring, konkurs och överbetalning. Ett tillfälligt panikfall är volatilitet, inte permanent förlust."
+          "forklaring": "De tre verkliga hoten handlar om verksamheten och priset du betalade: strukturell försämring, konkurs och överbetalning. Ett tillfälligt panikfall är volatilitet, inte en permanent förlust."
         }
       ]
     }

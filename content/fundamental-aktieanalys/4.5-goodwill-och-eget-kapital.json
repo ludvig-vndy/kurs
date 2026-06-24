@@ -4,24 +4,24 @@
   "titel": "Goodwill och eget kapital",
   "niva": "Mellan",
   "tid_min": 12,
-  "mal": "Efter lektionen kan eleven bedöma kvaliteten på tillgångssidan i stället för bara dess storlek, räkna materiellt eget kapital, se nedskrivningsrisken i goodwill, och läsa det egna kapitalets sammansättning och utspädning genom en lins per aktie.",
+  "mal": "Efter lektionen kan du bedöma kvaliteten på tillgångssidan, inte bara storleken, räkna fram materiellt eget kapital, se nedskrivningsrisken i goodwill och läsa det egna kapitalets sammansättning och utspädning per aktie.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 4.5",
       "titel": "Goodwill och eget kapital",
-      "ingress": "Frågan är inte bara hur mycket eget kapital ett bolag har, utan vad det består av och hur det byggdes."
+      "ingress": "Hur mycket eget kapital ett bolag har är bara början. Det som räknas är vad det består av och hur det byggdes."
     },
     {
       "typ": "reading",
       "kicker": "TILLGÅNGARNAS KVALITET",
-      "lead": "En stor del av många bolags tillgångar är inte fysisk alls. Den är goodwill och immateriella tillgångar, redovisningsposter som oftast uppstått genom förvärv.",
+      "lead": "En stor del av många bolags tillgångar är inte fysisk alls. Det är goodwill och immateriella tillgångar, redovisningsposter som oftast uppstått genom förvärv.",
       "highlight": "En stor del av många bolags tillgångar är inte fysisk alls.",
       "brodtext": [
-        "De kan vara helt legitima. Men de är också där en balansräkning kan vara ihålig: tillgångar som ser solida ut men i själva verket representerar premien som betalades för tidigare affärer, och som kan skrivas ned på ett ögonblick om affärerna blev en besvikelse. Ett bolag kan visa en frisk kapitalkudde som mestadels är goodwill. Då är det verkliga stödet långt tunnare än det ser ut.",
-        "Att väga kvaliteten på tillgångssidan mot dess storlek skyddar dig från balansräkningar som är svagare än de verkar, och från serieförvärvare som förvandlar överbetalning till en tillgång på pappret. Du läser alltså inte bara storleken på det egna kapitalet, du går vidare till vad det består av."
+        "De kan vara helt legitima. Men de är också där en balansräkning kan bli ihålig: tillgångar som ser solida ut men egentligen är premien bolaget betalade för gamla affärer, och som kan skrivas ned på ett ögonblick om affärerna blev en besvikelse. Ett bolag kan visa en frisk kapitalkudde som mestadels är goodwill. Då är det verkliga stödet mycket tunnare än det ser ut.",
+        "Väg kvaliteten på tillgångssidan mot storleken, så skyddar du dig mot balansräkningar som är svagare än de verkar och mot serieförvärvare som gör överbetalning till en tillgång på pappret. Du nöjer dig inte med hur stort det egna kapitalet är. Du går vidare till vad det består av."
       ],
-      "takeaway": "Storleken på det egna kapitalet är bara halva frågan. Andra halvan är kvaliteten på tillgångarna som backar det."
+      "takeaway": "Storleken på det egna kapitalet är halva frågan. Den andra halvan är kvaliteten på tillgångarna som backar det."
     },
     {
       "typ": "reading",
@@ -29,10 +29,10 @@
       "lead": "Goodwill uppstår när ett bolag betalar mer för en verksamhet än det verkliga värdet av dess identifierbara nettotillgångar. Överskottet bokförs som en tillgång.",
       "highlight": "Goodwill uppstår när ett bolag betalar mer för en verksamhet än det verkliga värdet av dess identifierbara nettotillgångar.",
       "brodtext": [
-        "Ett exempel: betala 1 000 för ett bolag vars identifierbara nettotillgångar är värda 300, och 700 blir goodwill. Ju mer ett bolag överbetalar för förvärv, desto mer goodwill staplas upp. En balansräkning tung av goodwill är ofta fingeravtrycket av ett förvärvande bolag som har betalat stora premier.",
-        "Andra immateriella tillgångar är sådant som patent, varumärken, kundrelationer och aktiverad utveckling. Det är verkliga poster, men till skillnad från en fabrik eller kontanter har goodwill inget självständigt andrahandsvärde. Den är resten av ett köppris. En sista variant att vara vaksam på: vissa immateriella tillgångar uppstår genom att kostnader aktiveras, till exempel utveckling, vilket kan smickra vinsten. En stor och växande immateriell bas byggd från aktiverade kostnader är värd att granska."
+        "Betala 1 000 för ett bolag vars identifierbara nettotillgångar är värda 300, så blir 700 goodwill. Ju mer ett bolag överbetalar för sina förvärv, desto mer goodwill staplas upp. En balansräkning tung av goodwill är ofta fingeravtrycket av en köpare som betalat stora premier.",
+        "Andra immateriella tillgångar är patent, varumärken, kundrelationer och aktiverad utveckling. Det är verkliga poster, men till skillnad från en fabrik eller kontanter har goodwill inget eget andrahandsvärde. Den är resten av ett köppris. Var också vaksam på immateriella tillgångar som uppstår genom att kostnader aktiveras, till exempel utveckling, eftersom det kan smickra vinsten. En stor och växande immateriell bas byggd från aktiverade kostnader är värd att granska."
       ],
-      "takeaway": "Goodwill är inte en byggnad eller ett lager. Den är skillnaden mellan vad som betalades och vad de identifierbara tillgångarna var värda, alltså premien för en tidigare affär."
+      "takeaway": "Goodwill är ingen byggnad och inget lager. Den är skillnaden mellan vad som betalades och vad de identifierbara tillgångarna var värda, alltså premien för en gammal affär."
     },
     {
       "typ": "reading",
@@ -40,10 +40,10 @@
       "lead": "En viktig redovisningsdetalj: goodwill skrivs inte av, men den skrivs ned. Och nedskrivningar har ett otrevligt mönster.",
       "highlight": "goodwill skrivs inte av, men den skrivs ned",
       "brodtext": [
-        "Under modern redovisning skrivs goodwill inte av stadigt över tid. I stället prövas den för nedskrivning, och skrivs ned när den förvärvade verksamheten är värd mindre än sitt bokförda värde. De nedskrivningarna tenderar att komma i dåliga tider, allt på en gång, och de bekräftar att tidigare affärer förstörde värde. En nedskrivning är ett erkännande, i redovisningsform, att bolaget överbetalade.",
-        "Det leder till frågan om tillgångarnas kvalitet. Materiella, produktiva tillgångar, alltså kontanter, användbar egendom och utrustning, backar verkligen verksamheten. Goodwill och mjuka immateriella tillgångar gör det kanske inte. Dela därför mentalt balansräkningen i verkligt stöd och goodwill eller immateriellt, och titta på materiellt eget kapital, eget kapital minus goodwill och immateriella tillgångar, för att se den hårdare kudden under."
+        "Under modern redovisning skrivs goodwill inte av jämnt över tid. I stället prövas den löpande och skrivs ned när den förvärvade verksamheten är värd mindre än sitt bokförda värde. De nedskrivningarna kommer gärna i dåliga tider, allt på en gång, och bekräftar att gamla affärer förstörde värde. En nedskrivning är bolaget som erkänner, i redovisningsform, att det överbetalade.",
+        "Det leder rakt till frågan om tillgångarnas kvalitet. Materiella, produktiva tillgångar, alltså kontanter, egendom och utrustning som används, backar verkligen verksamheten. Goodwill och mjuka immateriella tillgångar gör det kanske inte. Dela därför balansräkningen i huvudet: verkligt stöd på ena sidan, goodwill och immateriellt på den andra. Titta på materiellt eget kapital, alltså eget kapital minus goodwill och immateriella tillgångar, för att se den hårdare kudden under."
       ],
-      "takeaway": "Nedskrivningar kommer sällan i goda tider och sällan lite i taget. De kommer i dåliga tider och allt på en gång, just när du minst behöver dem."
+      "takeaway": "Nedskrivningar kommer sällan i goda tider och sällan lite i taget. De kommer i dåliga tider, allt på en gång, just när du minst behöver dem."
     },
     {
       "typ": "concept",
@@ -52,12 +52,12 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Materiellt stöd", "text": "Kontanter, användbar egendom och utrustning backar verkligen verksamheten. De försvinner inte med en redovisningspost, och de har ett självständigt andrahandsvärde." },
-          { "rubrik": "Mjuka poster", "text": "Goodwill och immateriella tillgångar kan skrivas ned över en natt om tidigare affärer blev en besvikelse, utan att en enda krona kontanter rör sig." }
+          { "rubrik": "Materiellt stöd", "text": "Kontanter, egendom och utrustning som används backar verkligen verksamheten. De försvinner inte med en redovisningspost, och de har ett eget andrahandsvärde." },
+          { "rubrik": "Mjuka poster", "text": "Goodwill och immateriella tillgångar kan skrivas ned över en natt om gamla affärer blev en besvikelse, utan att en enda krona kontanter rör sig." }
         ],
         "figurtext": "Samma rubriksiffra för eget kapital kan dölja olika kvalitet under ytan."
       },
-      "forklaring": "Ett bolag kan redovisa 500 i eget kapital, men om 400 av det är goodwill är det materiella egna kapitalet bara 100. Skrivs goodwillen ned kan kudden du räknade med till stor del försvinna, trots att inga kontanter rörde sig. Därför räcker inte frågan hur mycket eget kapital, du måste fråga: eget kapital bestående av vad?"
+      "forklaring": "Ett bolag kan redovisa 500 i eget kapital, men om 400 av det är goodwill är det materiella egna kapitalet bara 100. Skrivs goodwillen ned kan kudden du räknade med till stor del försvinna, utan att en krona kontanter rörde sig. Därför räcker det inte att fråga hur mycket eget kapital. Du måste fråga: eget kapital bestående av vad?"
     },
     {
       "typ": "dataviz",
@@ -69,36 +69,36 @@
           { "etikett": "Materiellt eget kapital", "varde": 80, "accent": true },
           { "etikett": "Goodwill och immateriellt", "varde": 420 }
         ],
-        "figurtext": "Illustrativt: Bolag Uppblåst, eget kapital 500 Mkr varav 420 Mkr goodwill och immateriellt. Materiellt eget kapital blir 80 Mkr. Bolag Verklig med bara 50 Mkr goodwill skulle visa en nästan helt fylld kudde."
+        "figurtext": "Illustrativt: Bolag Uppblåst har eget kapital på 500 Mkr, varav 420 Mkr är goodwill och immateriellt. Materiellt eget kapital blir 80 Mkr. Bolag Verklig, med bara 50 Mkr goodwill, skulle visa en nästan helt fylld kudde."
       },
-      "slutsats": "Skrivs 300 Mkr goodwill ned faller Uppblåsts egna kapital från 500 till 200 över en natt, en kollaps på 60 procent i kudden, utan att en krona kontanter bytt händer. Bolag Verklig, med lite goodwill att skriva ned, påverkas knappt. Det enda sättet att se skillnaden i förväg var att titta bakom rubriksiffran."
+      "slutsats": "Skrivs 300 Mkr goodwill ned faller Uppblåsts egna kapital från 500 till 200 över en natt, en kollaps på 60 procent i kudden, utan att en krona kontanter bytt händer. Bolag Verklig har lite goodwill att skriva ned och påverkas knappt. Enda sättet att se skillnaden i förväg var att titta bakom rubriksiffran."
     },
     {
       "typ": "reading",
       "kicker": "EGET KAPITALETS SAMMANSÄTTNING",
-      "lead": "Eget kapital bär en historia. Den historien berättar om bolaget byggde sitt värde självt eller fick det överlämnat.",
+      "lead": "Eget kapital bär en historia. Den berättar om bolaget byggde sitt värde självt eller fick det överlämnat.",
       "highlight": "Eget kapital bär en historia.",
       "brodtext": [
-        "Eget kapital har två huvudkällor. Inbetalt kapital, alltså aktiekapital plus överkursfond, är pengar investerare lagt in genom att köpa aktier som bolaget gett ut. Balanserade vinstmedel är den ackumulerade vinst verksamheten tjänat genom åren och valt att behålla i stället för att dela ut.",
-        "Båda ökar det egna kapitalet, men de betyder motsatta saker. Balanserade vinstmedel är värde verksamheten genererade själv. Inbetalt kapital är värde tillfört utifrån, och när det tas in genom nya aktier späder det ut befintliga ägare. Ett högkvalitativt bolags egna kapital växer mestadels genom balanserade vinstmedel, vilket visar att bolaget genererar överskott och låter det växa med ränta på ränta. Ett svagares växer genom upprepade nyemissioner, ett tecken på att det ständigt måste ta in pengar från ägarna."
+        "Eget kapital har två huvudkällor. Inbetalt kapital, alltså aktiekapital plus överkursfond, är pengar investerare lagt in genom att köpa aktier som bolaget gett ut. Balanserade vinstmedel är den vinst verksamheten tjänat genom åren och valt att behålla i stället för att dela ut.",
+        "Båda ökar det egna kapitalet, men de betyder motsatta saker. Balanserade vinstmedel är värde verksamheten skapade själv. Inbetalt kapital är värde som tillförts utifrån, och när det tas in genom nya aktier späds befintliga ägare ut. Ett bra bolags egna kapital växer mest genom balanserade vinstmedel, vilket visar att bolaget tjänar pengar och låter dem växa med ränta på ränta. Ett svagare bolag växer genom upprepade nyemissioner, ett tecken på att det ständigt måste be ägarna om mer pengar."
       ],
-      "takeaway": "Samma krona eget kapital betyder olika saker beroende på varifrån den kom. Tjänad och behållen är ett styrkebesked, ständigt inhämtad utifrån är en varning."
+      "takeaway": "Samma krona eget kapital betyder olika saker beroende på var den kom ifrån. Tjänad och behållen är ett styrkebesked. Ständigt inhämtad utifrån är en varning."
     },
     {
       "typ": "reading",
       "kicker": "UTSPÄDNING, ÄGARLINSEN",
-      "lead": "Utspädning är den avgörande ägarlinsen. När ett bolag ger ut nya aktier delas det totala värdet på fler aktier, så att varje befintlig aktie representerar en mindre bit.",
+      "lead": "Utspädning är den avgörande ägarlinsen. När ett bolag ger ut nya aktier delas det totala värdet på fler aktier, så att varje befintlig aktie blir en mindre bit.",
       "highlight": "Utspädning är den avgörande ägarlinsen.",
       "brodtext": [
-        "Ges aktierna ut till ett rimligt pris och investeras pengarna väl kan utspädning vara acceptabel. Ges de ut billigt, eller för att finansiera förluster, urholkas befintliga ägares anspråk per aktie. Därför kan totaler ljuga. Ett bolag kan öka den totala nettovinsten medan vinsten per aktie stagnerar eller faller, om det gett ut aktier längs vägen. Som ägare avgörs din avkastning av talen per aktie, vinst per aktie och eget kapital per aktie, eftersom du tjänar på din bit.",
-        "Kolla därför alltid antalet aktier över tid. Det omvända till emission är återköp, som krymper antalet aktier och ökar varje kvarvarande ägares bit. Riktningen på antalet aktier är signalen. Stigande betyder utspädning, fallande betyder koncentration. Historien finns i rapporten över förändringar i eget kapital och i aktiehistoriken, samt i noter om optioner, konvertibler och nyemissioner."
+        "Ges aktierna ut till ett rimligt pris och investeras pengarna väl kan utspädningen vara helt okej. Ges de ut billigt, eller för att täcka förluster, urholkas det befintliga ägare äger per aktie. Därför kan totaler ljuga. Ett bolag kan öka den totala nettovinsten medan vinsten per aktie står still eller faller, om det gett ut aktier längs vägen. Som ägare avgörs din avkastning av talen per aktie, vinst per aktie och eget kapital per aktie, för du tjänar på din bit.",
+        "Kolla därför alltid antalet aktier över tid. Motsatsen till emission är återköp, som krymper antalet aktier och gör varje kvarvarande ägares bit större. Riktningen på antalet aktier är signalen. Stigande betyder utspädning, fallande betyder koncentration. Historien finns i rapporten över förändringar i eget kapital och i aktiehistoriken, plus i noter om optioner, konvertibler och nyemissioner."
       ],
       "takeaway": "Riktningen på antalet aktier är signalen. Stigande betyder utspädning, fallande betyder koncentration. Håll särskilt utkik efter aktiebaserad ersättning och konvertibler som källor till löpande utspädning."
     },
     {
       "typ": "dataviz",
       "titel": "Samma rubrik, motsatta utfall för ägaren",
-      "underrubrik": "Två bolag ökar båda total nettovinst från 100 till 150 Mkr på fem år, plus 50 procent. Bara antalet aktier skiljer dem åt.",
+      "underrubrik": "Båda bolagen ökar total nettovinst från 100 till 150 Mkr på fem år, plus 50 procent. Bara antalet aktier skiljer dem åt.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -110,16 +110,16 @@
         "etiketter": "Vinst per aktie i kronor, illustrativa tal",
         "figurtext": "Byggare höll antalet aktier på 50 miljoner: VPA 100 delat på 50 blir 2,00, sedan 150 delat på 50 blir 3,00. Utspädare lät aktierna stiga från 50 till 90 miljoner: VPA 100 delat på 50 blir 2,00, sedan 150 delat på 90 blir 1,67."
       },
-      "slutsats": "Samma tillväxt på 50 procent i total vinst, motsatta utfall för ägaren. Byggares aktieägare blev rikare per aktie, Utspädares fattigare trots den imponerande rubriken. Bolaget gjorde kakan större men skar din bit i fler skivor. Total vinst kan ljuga medan talen per aktie säger sanningen."
+      "slutsats": "Samma tillväxt på 50 procent i total vinst, motsatta utfall för ägaren. Byggares aktieägare blev rikare per aktie, Utspädares fattigare, trots den imponerande rubriken. Bolaget gjorde kakan större men skar din bit i fler skivor. Total vinst kan ljuga medan talen per aktie säger sanningen."
     },
     {
       "typ": "reading",
       "kicker": "SÅ TÄNKER EN ERFAREN INVESTERARE",
-      "lead": "Läs eget kapital som en uppteckning över hur värde finansierades och vad det består av. Siffran i sig säger lite, historien bakom säger allt.",
+      "lead": "Läs eget kapital som en uppteckning över hur värdet finansierades och vad det består av. Siffran i sig säger lite, historien bakom säger allt.",
       "highlight": "Siffran i sig säger lite, historien bakom säger allt.",
       "brodtext": [
-        "På tillgångssidan: en balansräkning dominerad av goodwill manar till försiktighet, eftersom kudden kan avdunsta via nedskrivning utan förvarning. Räkna materiellt eget kapital för att se det verkliga stödet, och behandla stor eller växande goodwill som en flagga att undersöka förvärvshistoriken. Avfärda ändå inte reflexmässigt alla immateriella tillgångar, ett starkt varumärke eller värdefulla patent kan vara mycket verkliga. Kravet är att förstå vad de är och om de är värda sitt bokförda värde.",
-        "På finansieringssidan: bolag vars egna kapital växte genom balanserade vinstmedel väger tungt, medan de som upprepat ger ut aktier möts med vaksamhet, särskilt när det sker för att finansiera förluster eller till låga priser. Ett stabilt eller krympande antal aktier är en grön flagga. Ihållande utspädning är en tyst dränering av avkastningen. Ett enkelt test fångar mycket: dra bort goodwill och immateriellt från eget kapital för att pröva kudden, och följ total vinst mot vinst per aktie sida vid sida över fem år för att pröva utspädningen."
+        "På tillgångssidan: en balansräkning dominerad av goodwill manar till försiktighet, för kudden kan avdunsta via en nedskrivning utan förvarning. Räkna materiellt eget kapital för att se det verkliga stödet, och behandla stor eller växande goodwill som en flagga att gräva i förvärvshistoriken. Men avfärda inte reflexmässigt alla immateriella tillgångar. Ett starkt varumärke eller värdefulla patent kan vara mycket verkliga. Kravet är att du förstår vad de är och om de är värda sitt bokförda värde.",
+        "På finansieringssidan: bolag vars egna kapital växte genom balanserade vinstmedel väger tungt, medan de som gång på gång ger ut aktier möts med vaksamhet, särskilt när det sker för att täcka förluster eller till låga priser. Ett stabilt eller krympande antal aktier är en grön flagga. Ihållande utspädning är en tyst dränering av din avkastning. Ett enkelt test fångar mycket: dra bort goodwill och immateriellt från eget kapital för att pröva kudden, och följ total vinst mot vinst per aktie sida vid sida över fem år för att pröva utspädningen."
       ],
       "takeaway": "Två kontroller, samma vana. Dra bort de mjuka posterna för att se hur verklig kudden är, och jämför per aktie mot totalt för att se om framgången är din eller bara bolagets."
     },
@@ -146,7 +146,7 @@
             "Den värderas upp varje år om förvärvet går bra"
           ],
           "ratt": [1],
-          "forklaring": "Goodwill skrivs inte av stadigt, utan prövas för nedskrivning. Nedskrivningarna kommer ofta i dåliga tider, allt på en gång, och är ett erkännande i redovisningsform att bolaget överbetalade."
+          "forklaring": "Goodwill skrivs inte av jämnt, utan prövas löpande för nedskrivning. Nedskrivningarna kommer ofta i dåliga tider, allt på en gång, och är bolaget som erkänner i redovisningsform att det överbetalade."
         },
         {
           "typ": "single",
@@ -168,7 +168,7 @@
             "De är två namn på samma sak"
           ],
           "ratt": [0],
-          "forklaring": "Balanserade vinstmedel är ackumulerad behållen vinst, alltså internt skapat värde. Inbetalt kapital är pengar investerare lagt in genom att köpa nya aktier, vilket späder ut befintliga ägare."
+          "forklaring": "Balanserade vinstmedel är behållen vinst, alltså värde bolaget skapat självt. Inbetalt kapital är pengar investerare lagt in genom att köpa nya aktier, vilket späder ut befintliga ägare."
         },
         {
           "typ": "single",
@@ -179,7 +179,7 @@
             "Den är opåverkad av antalet aktier"
           ],
           "ratt": [1],
-          "forklaring": "Total vinst kan ljuga. Om aktierna blir fler delas vinsten på fler delar, så vinsten per aktie kan falla trots att totalvinsten steg. Som ägare avgör talen per aktie din avkastning."
+          "forklaring": "Total vinst kan ljuga. Blir aktierna fler delas vinsten på fler delar, så vinsten per aktie kan falla trots att totalvinsten steg. Som ägare avgör talen per aktie din avkastning."
         },
         {
           "typ": "multi",
@@ -192,7 +192,7 @@
             "Nyemissioner till låga priser"
           ],
           "ratt": [0, 1, 3],
-          "forklaring": "Aktiebaserad ersättning, konvertibler och nyemissioner ökar antalet aktier och späder ut ägarna. Återköp är tvärtom motsatsen, det krymper antalet aktier och koncentrerar ägandet."
+          "forklaring": "Aktiebaserad ersättning, konvertibler och nyemissioner ökar antalet aktier och späder ut ägarna. Återköp är motsatsen: det krymper antalet aktier och koncentrerar ägandet."
         }
       ]
     }

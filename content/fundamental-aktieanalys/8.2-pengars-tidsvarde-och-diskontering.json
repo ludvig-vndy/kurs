@@ -10,29 +10,29 @@
       "typ": "intro",
       "kicker": "LEKTION 8.2",
       "titel": "Pengars tidsvärde och diskontering",
-      "ingress": "En krona i framtiden är värd mindre än en krona idag. Diskontering är verktyget som översätter framtida kontanter till dagens pengar."
+      "ingress": "En krona i framtiden är värd mindre än en krona idag. Diskontering översätter framtida kontanter till vad de är värda just nu."
     },
     {
       "typ": "reading",
       "kicker": "GRUNDEN",
-      "lead": "En krona idag slår en krona om ett år av tre skäl. Du kan investera dagens krona och tjäna avkastning på den, inflationen urholkar framtida kronor, och framtida kontanter är osäkra, de kanske aldrig kommer.",
+      "lead": "En krona idag slår en krona om ett år av tre skäl. Du kan investera dagens krona och tjäna avkastning, inflationen urholkar framtida kronor, och framtida kontanter är osäkra. De kanske aldrig kommer.",
       "highlight": "En krona idag slår en krona om ett år av tre skäl.",
       "brodtext": [
-        "Eftersom framtida kontanter är värda mindre drar du ner dem, diskonterar dem, med en ränta som speglar de faktorerna. Det enklaste sättet att förstå diskontering är som ränta på ränta baklänges. Ränta på ränta växer dagens pengar in i framtiden. Diskontering vänder på pilen och krymper framtida pengar tillbaka till idag.",
-        "Räntan du använder kallas diskonteringsräntan, och resultatet kallas nuvärdet: vad de framtida kontanterna är värda för dig just nu. Formen för nuvärde, framtida belopp delat med (1 + r) upphöjt till n, står i formelbilagan. Här räcker det att förstå vad den gör."
+        "Framtida kontanter är värda mindre, så du drar ner dem med en ränta som speglar de tre sakerna. Tänk på det som ränta på ränta baklänges. Ränta på ränta växer dagens pengar in i framtiden. Diskontering vänder på pilen och krymper framtida pengar tillbaka till idag.",
+        "Räntan kallas diskonteringsräntan, och resultatet kallas nuvärdet: vad de framtida kontanterna är värda för dig nu. Formeln, framtida belopp delat med (1 + r) upphöjt till n, står i formelbilagan. Här räcker det att du förstår vad den gör."
       ],
-      "takeaway": "Du försöker inte räkna fram framtiden. Du översätter framtida kontanter till dagens pengar så att belopp vid olika tidpunkter kan jämföras på rättvis grund."
+      "takeaway": "Du räknar inte fram framtiden. Du översätter framtida kontanter till dagens pengar, så att belopp vid olika tidpunkter går att jämföra rättvist."
     },
     {
       "typ": "concept",
       "kicker": "AVKASTNINGSKRAVET",
       "titel": "Räntan är inget mystiskt",
-      "forklaring": "Diskonteringsräntan är ditt avkastningskrav: den avkastning du kräver för att hålla investeringen givet dess risk. Mer risk ger högre krav, hårdare diskontering och lägre värde. Mindre risk ger lägre krav, mildare diskontering och högre värde. De allmänna räntorna matas också in, så när riskfria räntor stiger tenderar alla diskonteringsräntor att följa med upp, vilket pressar ner värderingar. Eftersom valet av ränta påverkar svaret så starkt är det en av de viktigaste bedömningarna i en värdering."
+      "forklaring": "Diskonteringsräntan är ditt avkastningskrav: avkastningen du kräver för att äga investeringen givet risken. Mer risk höjer kravet, vilket diskonterar hårdare och ger ett lägre värde. Mindre risk gör tvärtom. De allmänna räntorna spelar också in, så när de riskfria räntorna stiger följer diskonteringsräntorna med upp och pressar ner värderingar. Räntan styr svaret så hårt att den är en av de viktigaste bedömningarna du gör i en värdering."
     },
     {
       "typ": "dataviz",
       "titel": "Samma belopp, värt allt mindre ju längre fram",
-      "underrubrik": "100 kr som kommer om N år, diskonterade till idag vid 10 procents ränta. Beloppet är detsamma, men nuvärdet krymper med tiden.",
+      "underrubrik": "100 kr som faller ut om N år, diskonterade till idag vid 10 procents ränta. Beloppet är detsamma, men nuvärdet krymper ju längre fram du tittar.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -43,9 +43,9 @@
           { "kategori": "Om 30 år", "varde": 6 }
         ],
         "etiketter": "Nuvärde i kr av 100 kr som faller ut om N år, vid 10 procents diskonteringsränta.",
-        "figurtext": "Illustrativa tal ur källans räkneexempel: 100 kr om 1, 5, 10 och 30 år vid 10 procents ränta. Räntan är en mekanism, inte ett fryst facit."
+        "figurtext": "Illustrativa tal ur källans räkneexempel: 100 kr om 1, 5, 10 och 30 år vid 10 procents ränta. Räntan är en mekanism, inte ett fast facit."
       },
-      "slutsats": "Avlägsna kontanter krymper brutalt. Därför dominerar de närliggande kontanterna ett bolags värde, medan den avlägsna framtiden, även om den räknas, diskonteras hårt."
+      "slutsats": "Avlägsna kontanter krymper brutalt. Därför väger de närliggande kontanterna tyngst i ett bolags värde. Den avlägsna framtiden räknas också, men diskonteras hårt."
     },
     {
       "typ": "quiz",
@@ -59,7 +59,7 @@
             "För att framtida kronor beskattas hårdare"
           ],
           "ratt": [1],
-          "forklaring": "Pengars tidsvärde vilar på tre skäl: alternativkostnaden (du kan investera dagens krona), inflationen och osäkerheten i framtida kontanter."
+          "forklaring": "Pengars tidsvärde vilar på tre skäl: du kan investera dagens krona, inflationen urholkar framtida kronor, och framtida kontanter är osäkra."
         },
         {
           "typ": "single",
@@ -70,7 +70,7 @@
             "Justerar beloppet enbart för inflation"
           ],
           "ratt": [0],
-          "forklaring": "Diskontering är ränta på ränta baklänges: den krymper framtida kontanter tillbaka till ett nuvärde idag med hjälp av diskonteringsräntan."
+          "forklaring": "Diskontering är ränta på ränta baklänges. Den krymper framtida kontanter tillbaka till ett nuvärde idag med hjälp av diskonteringsräntan."
         },
         {
           "typ": "multi",
@@ -83,7 +83,7 @@
             "Värdet är mycket känsligt för exakt vilken ränta du väljer"
           ],
           "ratt": [0, 1, 3],
-          "forklaring": "Räntan är avkastningskravet för risken, inte ett fast tal: mer risk ger hårdare diskontering och lägre värde. Eftersom samma framtida kontanter blir mer än dubbelt så mycket värda vid 5 procent som vid 15, väger räntevalet tungt i varje värdering."
+          "forklaring": "Räntan är avkastningskravet för risken, inte ett fast tal. Mer risk ger hårdare diskontering och lägre värde. Samma framtida kontanter blir mer än dubbelt så mycket värda vid 5 procent som vid 15, så räntevalet väger tungt i varje värdering."
         }
       ]
     }

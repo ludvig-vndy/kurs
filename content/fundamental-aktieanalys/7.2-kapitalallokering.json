@@ -4,22 +4,22 @@
   "titel": "Kapitalallokering",
   "niva": "Mellan",
   "tid_min": 14,
-  "mal": "Efter lektionen kan eleven bedöma hur en ledning fördelar bolagets kontanter mellan de fem alternativen, skilja en disciplinerad förvärvare från en imperiebyggare, och avgöra när återköp och utdelning skapar respektive förstör värde per aktie.",
+  "mal": "Efter lektionen kan eleven bedöma hur en ledning fördelar bolagets kontanter mellan de fem alternativen, skilja en disciplinerad förvärvare från en imperiebyggare, och avgöra när återköp och utdelning skapar eller förstör värde per aktie.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 7.2",
       "titel": "Kapitalallokering",
-      "ingress": "Vad ledningen gör med bolagets kontanter avgör över en lång innehavsperiod ofta lika mycket som verksamheten själv, och är förmodligen dess enskilt viktigaste ansvar."
+      "ingress": "Över en lång innehavsperiod avgör vad ledningen gör med kontanterna ofta lika mycket som verksamheten själv. Det är förmodligen ledningens viktigaste jobb."
     },
     {
       "typ": "reading",
       "kicker": "VARFÖR DET SPELAR ROLL",
-      "lead": "En fin verksamhet kastar av sig en flod av kontanter, och den floden kan placeras lysande, så att värdet per aktie växer med ränta på ränta, eller slösas bort på lågavkastande tillväxt och prestige.",
-      "highlight": "den floden kan placeras lysande",
+      "lead": "En fin verksamhet kastar av sig en flod av kontanter. Den floden kan placeras lysande, så att värdet per aktie växer med ränta på ränta, eller slösas bort på lågavkastande tillväxt och prestige.",
+      "highlight": "Den floden kan placeras lysande",
       "brodtext": [
-        "Kapitalallokering är besluten om var bolagets vinster ska hamna, och förmodligen ledningens enskilt viktigaste ansvar. Två i grunden identiska verksamheter kan ge vitt skilda ägaravkastningar enbart utifrån hur skickligt deras ledare fördelar kapitalet. Förstår du allokeringens disciplin kan du avgöra om ett bolags vinster förvandlas till värde eller rinner ut i sanden.",
-        "Färdigheten underskattas för att den syns mindre än drift och strategi. Men över en lång horisont kan den dominera avkastningen, eftersom den verkar med ränta på ränta. En ledning som placerar varje års kontanter väl, år efter år, drar ifrån en som driver verksamheten kompetent men allokerar kapitalet slarvigt. De bästa långsiktiga värdeskaparna var sällan glamorösa operatörer, utan okonventionella kapitalallokerare som tänkte som investerare och lämnade tillbaka kontanter när det var rätt."
+        "Kapitalallokering är besluten om var bolagets vinster ska hamna, och förmodligen ledningens viktigaste jobb. Två i grunden identiska verksamheter kan ge vitt skilda ägaravkastningar bara utifrån hur skickligt deras ledare fördelar kapitalet. Förstår du disciplinen kan du avgöra om ett bolags vinster blir värde eller rinner ut i sanden.",
+        "Färdigheten underskattas för att den syns mindre än drift och strategi. Men över en lång horisont kan den dominera avkastningen, eftersom den verkar med ränta på ränta. En ledning som placerar varje års kontanter väl, år efter år, drar ifrån en som sköter driften kompetent men allokerar slarvigt. De bästa långsiktiga värdeskaparna var sällan glamorösa operatörer. De var okonventionella kapitalallokerare som tänkte som investerare och lämnade tillbaka kontanter när det var rätt."
       ],
       "rost": "sebastian",
       "takeaway": "Över tid avgörs din avkastning av vad ledningen gör med varje krona som blir över. Jag har sett lysande bolag malas ner av en chef som älskade att köpa dyrt för att känna sig stor."
@@ -31,26 +31,26 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Återinvestera i verksamheten", "text": "Organisk tillväxt och capex. Kraftfullast när bolaget kan plöja tillbaka kapital till hög avkastning, alltså hög ROIC med en lång bana framför sig. Det är motorn i en verklig ränta-på-ränta-maskin." },
+          { "rubrik": "Återinvestera i verksamheten", "text": "Organisk tillväxt och capex. Kraftfullast när bolaget kan plöja tillbaka kapital till hög avkastning, alltså hög ROIC med lång bana framför sig. Det är motorn i en riktig ränta-på-ränta-maskin." },
           { "rubrik": "Förvärva andra bolag", "text": "Kan skapa värde vid vettiga priser och god integration, men förstör det oftast genom överbetalning. Ett eget hantverk med egna fällor." },
           { "rubrik": "Betala av skuld", "text": "Klokt när hävstången är hög eller inget annat alternativ avkastar väl. Det avriskar och ger en avkastning lika med den sparade räntan." },
-          { "rubrik": "Dela ut till aktieägarna", "text": "Återför kontanter när bolaget inte kan återinvestera till hög avkastning. Pålitligt, men oflexibelt." },
-          { "rubrik": "Köpa tillbaka egna aktier", "text": "Återför kontanter genom att krympa antalet aktier, och skapar värde bara när aktien köps under sitt värde." }
+          { "rubrik": "Dela ut till aktieägarna", "text": "Återför kontanter när bolaget inte kan återinvestera till hög avkastning. Pålitligt, men stelt." },
+          { "rubrik": "Köpa tillbaka egna aktier", "text": "Återför kontanter genom att krympa antalet aktier. Skapar värde bara när aktien köps under sitt värde." }
         ],
         "figurtext": "De fem sakerna ett bolag i grunden kan göra med sina kontanter. Var och en har sin egen avkastningsprofil."
       },
-      "forklaring": "Det här är den ram du alltid återvänder till. Kapitalallokering är disciplinen att välja bland de fem så att värdet per aktie växer mest. Den skickliga allokeraren jämför dem ärligt, alternativ mot alternativ, utan böjelse, särskilt böjelsen för tillväxt som förstör värde."
+      "forklaring": "Det här är ramen du alltid återvänder till. Kapitalallokering är disciplinen att välja bland de fem så att värdet per aktie växer mest. Den skickliga allokeraren jämför dem ärligt, alternativ mot alternativ, utan böjelse. Särskilt böjelsen för tillväxt som förstör värde."
     },
     {
       "typ": "reading",
       "kicker": "DISCIPLINEN",
-      "lead": "Den styrande principen är avkastningen på den sista kronan. En rationell allokerare frågar, för varje krona: var skapar den här mest värde per aktie, och riktar den dit.",
+      "lead": "Den styrande principen är avkastningen på den sista kronan. För varje krona frågar en rationell allokerare: var skapar den mest värde per aktie? Och riktar den dit.",
       "highlight": "avkastningen på den sista kronan",
       "brodtext": [
-        "Kan verksamheten återinvestera till hög avkastning och det är det bästa alternativet, så återinvesterar man. Kan den inte placera en krona över sin kapitalkostnad, så skapar det mer värde att återföra den, genom utdelning eller återköp, än att tvinga fram lågavkastande tillväxt. Disciplinen ligger i att jämföra alternativen ärligt.",
-        "De bästa allokerarna är osentimentala och opportunistiska. De återinvesterar tungt när avkastningen är hög, köper tillbaka aktier när de är billiga, gör förvärv bara till goda priser, amorterar när det är klokt, och återför kontanter när de inte har något bättre för sig. De skiftar mellan de fem när läget ändras. Egot styr dem inte: de jagar inte storlek för storlekens skull, de överbetalar inte för att se ambitiösa ut, och de lämnar gärna tillbaka kapital."
+        "Kan verksamheten återinvestera till hög avkastning och det är bästa alternativet, så återinvesterar du. Kan den inte placera en krona över sin kapitalkostnad, skapar det mer värde att återföra den, genom utdelning eller återköp, än att tvinga fram lågavkastande tillväxt. Disciplinen ligger i att jämföra alternativen ärligt.",
+        "De bästa allokerarna är osentimentala och opportunistiska. De återinvesterar tungt när avkastningen är hög, köper tillbaka aktier när de är billiga, gör förvärv bara till goda priser, amorterar när det är klokt, och återför kontanter när de inte har något bättre för sig. De skiftar mellan de fem när läget ändras. Egot styr dem inte. De jagar inte storlek för storlekens skull, de överbetalar inte för att se ambitiösa ut, och de lämnar gärna tillbaka kapital."
       ],
-      "takeaway": "Den rationella flexibiliteten, kravet att varje krona tjänar sin bästa möjliga avkastning, skiljer en stor allokerare från mängden."
+      "takeaway": "Det som skiljer en stor allokerare från mängden är kravet att varje krona tjänar sin bästa möjliga avkastning."
     },
     {
       "typ": "reading",
@@ -58,10 +58,10 @@
       "lead": "Förvärv är det kapitalallokeringsbeslut som sannolikast förstör värde, och samtidigt det ledningen oftast frestas av. Ett förvärv skapar värde bara om köparen betalar mindre än verksamheten är värd för den, inklusive eventuella genuina synergier, och förstör värde om köparen betalar mer.",
       "highlight": "det kapitalallokeringsbeslut som sannolikast förstör värde",
       "brodtext": [
-        "Decennier av forskning pekar åt samma håll: de flesta förvärv lyckas inte skapa värde för det köpande bolagets aktieägare, oftast för att köparen betalar för mycket. Ändå är förvärv förföriska. De gör bolaget större snabbt, de ger rubriker, och de smickrar ett ego som vill bygga ett imperium.",
-        "Att överbetalning är normalfallet beror på flera samverkande skäl. Vinnarens förbannelse: i en konkurrensutsatt budgivning är vinnaren ofta den som tog mest fel uppåt. Synergier på papper: antagandena om kostnadsbesparingar och korsförsäljning är nästan alltid för optimistiska. Ego och storlek: en vd som vill leda ett större bolag har en böjelse att göra affären, inte att avstå. Och rådgivare med fel incitament, som inte tjänar något på att du går därifrån. Premien över marknadspriset överför då värde till säljarens aktieägare och lämnar köparens sämre ställda. Därför är skepsis rätt utgångsläge, och disciplin betyder att kunna gå därifrån när priset är för högt, hur lockande målet än är."
+        "Decennier av forskning pekar åt samma håll: de flesta förvärv skapar inte värde för det köpande bolagets aktieägare, oftast för att köparen betalar för mycket. Ändå är förvärv förföriska. De gör bolaget större snabbt, de ger rubriker, och de smickrar ett ego som vill bygga ett imperium.",
+        "Att överbetalning är normalfallet beror på flera saker som drar åt samma håll. Vinnarens förbannelse: i en konkurrensutsatt budgivning är vinnaren ofta den som tog mest fel uppåt. Synergier på papper: antagandena om kostnadsbesparingar och korsförsäljning är nästan alltid för optimistiska. Ego och storlek: en vd som vill leda ett större bolag lutar åt att göra affären, inte att avstå. Och rådgivare med fel incitament, som inte tjänar något på att du går därifrån. Premien över marknadspriset överför då värde till säljarens aktieägare och lämnar köparens sämre ställda. Därför är skepsis rätt utgångsläge, och disciplin betyder att kunna gå därifrån när priset är för högt, hur lockande målet än är."
       ],
-      "takeaway": "Tänk i en enkel matris av pris mot kvalitet: bästa utfallet är en god verksamhet till ett rimligt pris, värsta är en medelmåttig till ett högt."
+      "takeaway": "Tänk i en enkel matris av pris mot kvalitet. Bästa utfallet är en god verksamhet till ett rimligt pris, värsta är en medelmåttig till ett högt."
     },
     {
       "typ": "dataviz",
@@ -70,12 +70,12 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Disciplinerad serieförvärvare", "text": "Följer en repeterbar, värdeskapande spelbok. Köper små, ofta oglamorösa verksamheter till låga multiplar, gör det ofta, decentraliserar dem, och plöjer tillbaka kassaflödet i fler likadana affärer. Varje förvärv är litet nog att vara lågrisk och billigt nog att klara en hög avkastningsribba. Koncernens ROIC håller, och värdet per aktie växer med ränta på ränta." },
-          { "rubrik": "Imperiebyggare", "text": "Gör tvärtom: stora, dyra affärer för att växa snabbt, överbetalar, staplar på goodwill och skuld, och jagar storlek. Många av de stora katastroferna är transformativa affärer där premie och integrationsrisk dränker varje tänkt fördel. Omsättningsraden skjuter i höjden men värdet per aktie går ingenstans." }
+          { "rubrik": "Disciplinerad serieförvärvare", "text": "Följer en repeterbar spelbok som skapar värde. Köper små, ofta oglamorösa verksamheter till låga multiplar, gör det ofta, decentraliserar dem, och plöjer tillbaka kassaflödet i fler likadana affärer. Varje förvärv är litet nog att vara lågrisk och billigt nog att klara en hög avkastningsribba. Koncernens ROIC håller, och värdet per aktie växer med ränta på ränta." },
+          { "rubrik": "Imperiebyggare", "text": "Gör tvärtom. Stora, dyra affärer för att växa snabbt, överbetalar, staplar på goodwill och skuld, och jagar storlek. Många av de stora katastroferna är transformativa affärer där premie och integrationsrisk dränker varje tänkt fördel. Omsättningsraden skjuter i höjden men värdet per aktie går ingenstans." }
         ],
-        "figurtext": "Tillväxtkvalitetsdistinktionen tillämpad på förvärv. Internationellt är Constellation Software ett ofta nämnt exempel på den första typen, AOL och Time Warner en läroboksmiss av den andra."
+        "figurtext": "Skillnaden tillväxt mot kvalitet, tillämpad på förvärv. Internationellt nämns Constellation Software ofta som den första typen, AOL och Time Warner som en läroboksmiss av den andra."
       },
-      "slutsats": "Överbetalning lämnar finansiella spår, så du behöver inte gissa: en balansräkning som sväller av goodwill, stigande skuld och fler aktier, fallande ROIC, och goodwillnedskrivningar längre fram, redovisningens eget erkännande att en affär förstörde värde. Bedöm en förvärvare på priset den betalar och avkastningen den tjänar, inte på hur mycket den köper."
+      "slutsats": "Du behöver inte gissa, för överbetalning lämnar finansiella spår: en balansräkning som sväller av goodwill, stigande skuld och fler aktier, fallande ROIC, och goodwillnedskrivningar längre fram, redovisningens eget erkännande att en affär förstörde värde. Bedöm en förvärvare på priset den betalar och avkastningen den tjänar, inte på hur mycket den köper."
     },
     {
       "typ": "reading",
@@ -83,8 +83,8 @@
       "lead": "När ett bolag inte kan återinvestera kontanterna till hög avkastning kan det lämna tillbaka dem på två sätt, utdelning och återköp. Ett återköp är bara bolaget som köper en av sina egna aktier, så priset är allt.",
       "highlight": "priset är allt",
       "brodtext": [
-        "Samma regel gäller som för vilken investering som helst: ett återköp skapar värde om priset ligger under aktiens värde, och förstör värde om priset ligger över. Att köpa tillbaka en undervärderad aktie koncentrerar ägandet billigt och lyfter värdet per aktie för dem som stannar. Att köpa tillbaka en övervärderad aktie överför i stället förmögenhet till de säljande aktieägarna.",
-        "Här lurar det vanligaste misslyckandet, den procykliska återköpsfällan. Många bolag köper tillbaka tungt när verksamheten blomstrar och aktien är hög, eftersom det är då de har överskottskontanter och självförtroende. Sedan slutar de, eller har inte råd, när aktien är billig i en nedgång. Att köpa högt och inte lågt förstör värde. De bästa allokerarna gör tvärtom: de köper aggressivt när aktien är billig och avstår när den är dyr."
+        "Samma regel gäller som för vilken investering som helst. Ett återköp skapar värde om priset ligger under aktiens värde, och förstör värde om priset ligger över. Att köpa tillbaka en undervärderad aktie koncentrerar ägandet billigt och lyfter värdet per aktie för dem som stannar. Att köpa tillbaka en övervärderad aktie flyttar i stället förmögenhet till de säljande aktieägarna.",
+        "Här lurar det vanligaste misstaget, den procykliska återköpsfällan. Många bolag köper tillbaka tungt när verksamheten blomstrar och aktien är hög, för då har de överskottskontanter och självförtroende. Sedan slutar de, eller har inte råd, när aktien är billig i en nedgång. Att köpa högt och inte lågt förstör värde. De bästa allokerarna gör tvärtom. De köper aggressivt när aktien är billig och avstår när den är dyr."
       ],
       "takeaway": "Bedöm återköp på om de görs opportunistiskt till låga priser eller mekaniskt till vilket pris som helst."
     },
@@ -96,7 +96,7 @@
         "typ": "jamforelse",
         "element": [
           { "rubrik": "Scenario Billig: aktien i 70 kronor", "text": "Under sitt värde på runt 100. För 100 Mkr köps runt 1,43 miljoner aktier tillbaka. Bolaget betalade 70 för något värt 100 och fångade runt 30 kronor i värde per köpt aktie, vilket lyfte värdet per aktie för dem som stannade. Värde skapat." },
-          { "rubrik": "Scenario Dyr: aktien i 150 kronor", "text": "Över sitt värde. Samma 100 Mkr köper nu bara runt 0,67 miljoner aktier. Bolaget betalade 150 för något värt 100 och förstörde runt 50 kronor i värde per köpt aktie, överförde förmögenhet till säljarna och sänkte värdet per aktie för dem som stannade. Värde förstört." }
+          { "rubrik": "Scenario Dyr: aktien i 150 kronor", "text": "Över sitt värde. Samma 100 Mkr köper nu bara runt 0,67 miljoner aktier. Bolaget betalade 150 för något värt 100 och förstörde runt 50 kronor i värde per köpt aktie, flyttade förmögenhet till säljarna och sänkte värdet per aktie för dem som stannade. Värde förstört." }
         ],
         "figurtext": "Samma 100 Mkr, identiskt återköp. Köp till 70 skapade värde, köp till 150 förstörde det."
       },
@@ -105,11 +105,11 @@
     {
       "typ": "reading",
       "kicker": "UTDELNING: HÅLLBARHET ÄR NYCKELN",
-      "lead": "För utdelning är hållbarhet i stället nyckelfrågan. En utdelning är värdefull bara om den är bekvämt täckt av fritt kassaflöde med marginal.",
-      "highlight": "En utdelning är värdefull bara om den är bekvämt täckt av fritt kassaflöde med marginal.",
+      "lead": "För utdelning är hållbarhet i stället nyckelfrågan. En utdelning är värd något bara om den är bekvämt täckt av fritt kassaflöde med marginal.",
+      "highlight": "bara om den är bekvämt täckt av fritt kassaflöde med marginal",
       "brodtext": [
-        "Titta på utdelningsandelen, utdelning genom vinst, eller hellre genom fritt kassaflöde. En låg till måttlig andel är trygg och lämnar utrymme att växa. En andel nära eller över 100 procent av vinsten eller det fria kassaflödet är ansträngd och riskerar en sänkning. En utdelning som finansieras med lån snarare än kassaflöde är en röd flagga.",
-        "En växande, väl täckt utdelning signalerar självförtroende och disciplin, medan en sänkning är en smärtsam signal som oftast betyder problem. Den disciplinerade allokeraren väljer rationellt mellan kanalerna: återköp när aktien är billig, utdelning när den inte är det eller när ägarna värdesätter pålitlig inkomst. Återköp har dessutom fördelen att de kan pausas utan den signal en utdelningssänkning sänder."
+        "Titta på utdelningsandelen, utdelning genom vinst, eller hellre genom fritt kassaflöde. En låg till måttlig andel är trygg och lämnar utrymme att växa. En andel nära eller över 100 procent av vinsten eller det fria kassaflödet är ansträngd och riskerar en sänkning. En utdelning som finansieras med lån i stället för kassaflöde är en röd flagga.",
+        "En växande, väl täckt utdelning signalerar självförtroende och disciplin. En sänkning är en smärtsam signal som oftast betyder problem. Den disciplinerade allokeraren väljer rationellt mellan kanalerna: återköp när aktien är billig, utdelning när den inte är det eller när ägarna värdesätter pålitlig inkomst. Återköp har dessutom fördelen att de kan pausas utan den signal en utdelningssänkning sänder."
       ],
       "takeaway": "En hög direktavkastning imponerar inte. Hållbarheten bakom den gör det."
     },
@@ -119,10 +119,10 @@
       "lead": "Se kapitalallokering som ett av ledningens viktigaste jobb och bedöm det uttryckligen. Kör testet med den sista kronan i huvudet: skulle de här pengarna skapa mer värde återinvesterade, återförda, eller använda till återköp?",
       "highlight": "bedöm det uttryckligen",
       "brodtext": [
-        "Fråga hur varje års kontanter fördelades över de fem alternativen och om varje val skapade värde per aktie. Möt varje förvärv med skepsis, och låt din första fråga gälla priset. Klumpa aldrig ihop alla förvärvsbolag till en hög: skilj skarpt på den disciplinerade serieförvärvaren och imperiebyggaren, och väg de affärer en ledning avstod från lika tungt som dem den gjorde.",
-        "Anta aldrig att ett återköp är bra i sig, utan fråga om aktien var billig när den köptes, och var vaksam på den procykliska fällan. Utdelning bedömer du främst på hållbarhet: kontrollera att det fria kassaflödet täcker utbetalningen med god marginal, och behandla en ansträngd eller lånefinansierad utdelning som en risk. Bakom allt ligger övertygelsen att stor allokering får värde att växa med ränta på ränta över decennier, och att det skiljer de bästa ledningarna mer än karisma gör."
+        "Fråga hur varje års kontanter fördelades över de fem alternativen och om varje val skapade värde per aktie. Möt varje förvärv med skepsis, och låt din första fråga gälla priset. Klumpa aldrig ihop alla förvärvsbolag till en hög. Skilj skarpt på den disciplinerade serieförvärvaren och imperiebyggaren, och väg de affärer en ledning avstod från lika tungt som dem den gjorde.",
+        "Anta aldrig att ett återköp är bra i sig. Fråga om aktien var billig när den köptes, och var vaksam på den procykliska fällan. Utdelning bedömer du främst på hållbarhet: kontrollera att det fria kassaflödet täcker utbetalningen med god marginal, och behandla en ansträngd eller lånefinansierad utdelning som en risk. Bakom allt ligger att skicklig allokering får värde att växa med ränta på ränta över decennier, och att det skiljer de bästa ledningarna mer än karisma gör."
       ],
-      "takeaway": "Modellen är enkel: ett bolag är en hög kontanter som ska placeras, och allokerarens skicklighet avgör vad högen blir värd."
+      "takeaway": "Modellen är enkel. Ett bolag är en hög kontanter som ska placeras, och allokerarens skicklighet avgör vad högen blir värd."
     },
     {
       "typ": "quiz",
@@ -136,7 +136,7 @@
             "Spara, dela ut, förvärva, emittera aktier, höja löner"
           ],
           "ratt": [0],
-          "forklaring": "Ramen är de fem alternativen: återinvestera i verksamheten, förvärva, amortera skuld, dela ut, och återköpa egna aktier. Kapitalallokering är disciplinen att välja bland dem så att värdet per aktie växer mest."
+          "forklaring": "De fem alternativen är att återinvestera i verksamheten, förvärva, amortera skuld, dela ut, och återköpa egna aktier. Kapitalallokering är disciplinen att välja bland dem så att värdet per aktie växer mest."
         },
         {
           "typ": "single",
@@ -147,7 +147,7 @@
             "Att fördela kontanterna jämnt över alla fem för att sprida risken"
           ],
           "ratt": [1],
-          "forklaring": "Den rationella allokeraren frågar för varje krona var den skapar mest värde per aktie och riktar den dit. Kan kapitalet inte placeras över kapitalkostnaden skapar det mer värde att återföra det än att tvinga fram lågavkastande tillväxt."
+          "forklaring": "För varje krona frågar den rationella allokeraren var den skapar mest värde per aktie och riktar den dit. Kan kapitalet inte placeras över kapitalkostnaden skapar det mer värde att återföra det än att tvinga fram lågavkastande tillväxt."
         },
         {
           "typ": "single",
@@ -158,7 +158,7 @@
             "Alltid, eftersom förvärv ger snabb tillväxt"
           ],
           "ratt": [1],
-          "forklaring": "Ett förvärv skapar värde bara om köparen betalar mindre än verksamheten är värd, och förstör värde vid överbetalning. Eftersom överbetalning är normalfallet är skepsis rätt utgångsläge."
+          "forklaring": "Ett förvärv skapar värde bara om köparen betalar mindre än verksamheten är värd, och förstör värde vid överbetalning. Och eftersom överbetalning är normalfallet är skepsis rätt utgångsläge."
         },
         {
           "typ": "multi",
@@ -171,7 +171,7 @@
             "Snabbt växande omsättning från de stora affärerna"
           ],
           "ratt": [0, 1, 2],
-          "forklaring": "Överbetalning lämnar spår: svällande goodwill, stigande skuld och utspädning, fallande ROIC, och goodwillnedskrivningar. Snabbt växande omsättning säger inget om värdet per aktie, det är just det imperiebyggaren jagar."
+          "forklaring": "Överbetalning lämnar spår: svällande goodwill, stigande skuld och utspädning, fallande ROIC, och goodwillnedskrivningar. Snabbt växande omsättning säger inget om värdet per aktie, och det är precis det imperiebyggaren jagar."
         },
         {
           "typ": "single",
@@ -182,7 +182,7 @@
             "När aktien är som dyrast och bolaget har mest självförtroende"
           ],
           "ratt": [1],
-          "forklaring": "Ett återköp är bolaget som köper en av sina egna aktier, så priset är allt. Det skapar värde under aktiens värde och förstör värde över. Den procykliska fällan är att köpa högt och sluta lågt."
+          "forklaring": "Ett återköp är bolaget som köper en av sina egna aktier, så priset är allt. Det skapar värde under aktiens värde och förstör värde över. Den procykliska fällan är att köpa högt och sluta köpa lågt."
         },
         {
           "typ": "single",
@@ -193,7 +193,7 @@
             "Om utdelningen är högre än konkurrenternas"
           ],
           "ratt": [1],
-          "forklaring": "En utdelning är värdefull bara om den är hållbar. En låg till måttlig utdelningsandel är trygg, medan en andel nära eller över 100 procent, eller en lånefinansierad utdelning, är en risk. Direktavkastningen i sig säger inget om hållbarheten."
+          "forklaring": "En utdelning är värd något bara om den är hållbar. En låg till måttlig utdelningsandel är trygg, medan en andel nära eller över 100 procent, eller en lånefinansierad utdelning, är en risk. Direktavkastningen i sig säger inget om hållbarheten."
         }
       ]
     }

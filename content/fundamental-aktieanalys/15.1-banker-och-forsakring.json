@@ -10,16 +10,16 @@
       "typ": "intro",
       "kicker": "LEKTION 15.1",
       "titel": "Banker och försäkring",
-      "ingress": "I dessa bolag är skuld och risk inte faror vid sidan av rörelsen, de är själva affären. Därför måste du byta mätsticka innan du dömer."
+      "ingress": "I de här bolagen är skuld och risk inte faror vid sidan av rörelsen. De är affären. Byt mätsticka innan du dömer."
     },
     {
       "typ": "reading",
       "kicker": "VARFÖR DE BRYTER RAMVERKET",
-      "lead": "En bank tjänar pengar på att låna. Ett försäkringsbolag säljer en produkt vars verkliga kostnad det inte känner när det säljer den. Två olika affärer, men samma lärdom: kursens vanliga verktyg leder dig fel.",
+      "lead": "En bank tjänar pengar på att låna. Ett försäkringsbolag säljer en produkt vars verkliga kostnad det inte känner när det tar betalt. Två olika affärer, samma lärdom: kursens vanliga verktyg leder dig fel.",
       "highlight": "En bank tjänar pengar på att låna.",
       "brodtext": [
-        "Första gången du öppnar en banks årsredovisning med standardramverket i handen känns något trasigt. Skuldsättningen är enorm, soliditeten ligger på några få procent där ett vanligt bolag hade larmat, och rörelsemarginal och nettoskuld går knappt att räkna vettigt. Slutsatsen ligger nära: livsfarligt bolag, fly. Den slutsatsen vore fel. En tillverkare lånar för att finansiera fabriker, och skulden är en risk vid sidan av rörelsen. En bank tar in inlåning och kapital billigt och lånar ut det dyrare, så hela verksamheten är att hantera den skillnaden och risken den bär. Hög skuldsättning är då inte en röd flagga, det är affärsmodellen. Den verkliga risken sitter på andra ställen än du är van vid: i kvaliteten på utlåningen och i styrkan i kapitalet.",
-        "Försäkringsbolaget bryter ramverket på sitt eget sätt. En tillverkare vet vad varan kostade att göra. Ett försäkringsbolag får in premien i dag men vet inte förrän långt senare vad skadorna faktiskt blir. Den redovisade vinsten ett enskilt år är därför delvis en gissning om framtida skador, och gissningar kan vara fel. Eftersom kunderna sällan byter bolag är det lätt att placera in det i facket stabilt och defensivt och gå vidare, men det döljer både var pengarna tjänas och var riskerna sitter."
+        "Första gången du öppnar en banks årsredovisning med standardramverket i handen känns något trasigt. Skuldsättningen är enorm, soliditeten ligger på några få procent där ett vanligt bolag hade larmat, och rörelsemarginal och nettoskuld går knappt att räkna vettigt. Slutsatsen ligger nära: livsfarligt bolag, fly. Men den slutsatsen är fel. En tillverkare lånar för att bygga fabriker, och skulden är en risk vid sidan av rörelsen. En bank tar in inlåning och kapital billigt och lånar ut det dyrare. Hela verksamheten är att hantera den skillnaden och risken den bär. Hög skuldsättning är alltså inte en röd flagga, det är affärsmodellen. Den verkliga risken sitter någon annanstans än du är van vid: i kvaliteten på utlåningen och i styrkan i kapitalet.",
+        "Försäkringsbolaget bryter ramverket på sitt eget sätt. En tillverkare vet vad varan kostade att göra. Ett försäkringsbolag tar in premien i dag men vet inte förrän långt senare vad skadorna blir. Den redovisade vinsten ett enskilt år är därför delvis en gissning om framtida skador, och gissningar kan slå fel. Eftersom kunderna sällan byter bolag är det lätt att stämpla det som stabilt och defensivt och gå vidare. Men det döljer både var pengarna tjänas och var riskerna sitter."
       ],
       "rost": "sebastian",
       "takeaway": "Banker, försäkring och fastighet har lurat fler skickliga analytiker än något annat, för de ser billiga ut med fel mått. Kan du inte sektorns egna måttstickor, håll dig borta."
@@ -31,12 +31,12 @@
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Räntenetto och provisionsnetto", "text": "Räntenettot är ränteintäkter minus räntekostnader, skillnaden mellan vad banken får på utlåningen och betalar för sin finansiering. För de flesta banker är det den största intäkten och lever på utlåningsvolym och marginalens bredd. Provisionsnettot är avgifter som inte är ränta: betalningar, kort, kapitalförvaltning, courtage, rådgivning. Det är ofta stabilare och mindre kapitalkrävande, så en stor provisionsandel gör banken mindre känslig för räntor och kreditcykler." },
-          { "rubrik": "K/I-talet, kostnad genom intäkt", "text": "Rörelsekostnaderna delade med intäkterna, alltså hur många ören banken gör av med för att tjäna en krona. Lägre är bättre och speglar effektivitet. Det är banksektorns marginalanalys uttryckt baklänges: ett lågt K/I-tal är som en hög marginal." }
+          { "rubrik": "Räntenetto och provisionsnetto", "text": "Räntenettot är ränteintäkter minus räntekostnader, skillnaden mellan vad banken får på utlåningen och betalar för sin finansiering. För de flesta banker är det den största intäkten, och det lever på utlåningsvolym och hur bred marginalen är. Provisionsnettot är avgifter som inte är ränta: betalningar, kort, kapitalförvaltning, courtage, rådgivning. Det är ofta stabilare och kräver mindre kapital, så en stor provisionsandel gör banken mindre känslig för räntor och kreditcykler." },
+          { "rubrik": "K/I-talet, kostnad genom intäkt", "text": "Rörelsekostnaderna delade med intäkterna, alltså hur många ören banken gör av med för att tjäna en krona. Lägre är bättre. Det är banksektorns marginalanalys baklänges: ett lågt K/I-tal är som en hög marginal." }
         ],
         "figurtext": "Bankens intäkts- och kostnadssida, innan risken kommer in."
       },
-      "forklaring": "Räntenetto och provisionsnetto berättar hur banken tjänar pengar, och K/I-talet hur effektivt. Men inget av detta är där en bank lever eller dör. Det avgörs på risksidan, som inte syns i intäkterna alls."
+      "forklaring": "Räntenetto och provisionsnetto visar hur banken tjänar pengar, K/I-talet hur effektivt. Men det är inte här en bank lever eller dör. Det avgörs på risksidan, som inte syns i intäkterna alls."
     },
     {
       "typ": "reading",
@@ -44,10 +44,10 @@
       "lead": "Det som dödar banker är dåliga lån, sällan dålig drift. Kreditförluster uppstår när låntagare inte betalar tillbaka, och mot dem sätter banken av reserver, en buffert för lån som väntas gå dåligt.",
       "highlight": "Det som dödar banker är dåliga lån, sällan dålig drift.",
       "brodtext": [
-        "Här ligger något av det viktigaste i hela lektionen. Reserveringen är en bedömning som banken gör, och den är djupt cyklisk. I goda tider, när nästan ingen ställer in betalningarna, frestas banker att hålla reserverna låga, vilket lyfter den redovisade vinsten. När cykeln vänder kommer förlusterna i klump och reserverna måste höjas kraftigt, vilket slår mot vinsten precis när allt annat också är dåligt. En bank kan alltså se lysande lönsam ut på toppen av en kreditcykel, bara för att förlusterna ännu inte kommit. Låga kreditförluster betyder ibland bara att det ännu inte regnat.",
-        "Mot allt detta står bankens motståndskraft, och soliditeten i vanlig mening duger inte här. Du mäter med kapitaltäckning. Det centrala måttet är kärnprimärkapitalrelationen, på engelska CET1-kvoten: bankens kärnkapital, det egna kapital av högsta kvalitet som kan bära förluster, delat med dess riskvägda tillgångar. Tillgångarna viktas efter hur riskfyllda de är, så bolån väger mindre än osäkra företagslån. CET1-kvoten svarar på den enda fråga som räknas i en kris: hur mycket kan gå förlorat på utlåningen innan banken äter upp sitt egna kapital och hamnar i nöd? En hög CET1-kvot, med god marginal till myndighetens krav, är bankens verkliga säkerhetsmarginal. Det är hit du tittar i stället för soliditeten. Var därför som mest skeptisk när det ser som bäst ut: en bank som visar rekordvinst och nästan inga kreditförluster sent i en lång högkonjunktur förtjänar bara en följdfråga, är reserverna realistiska eller skjuts förlusterna framför sig?"
+        "Det här är något av det viktigaste i hela lektionen. Reserveringen är en bedömning banken gör, och den är djupt cyklisk. I goda tider, när nästan ingen ställer in betalningarna, frestas banker att hålla reserverna låga, vilket lyfter den redovisade vinsten. När cykeln vänder kommer förlusterna i klump och reserverna måste höjas kraftigt, precis när allt annat också är dåligt. En bank kan alltså se lysande lönsam ut på toppen av en kreditcykel, bara för att förlusterna ännu inte kommit. Låga kreditförluster betyder ibland bara att det inte har regnat än.",
+        "Mot det här står bankens motståndskraft, och soliditet i vanlig mening duger inte. Du mäter med kapitaltäckning. Det centrala måttet är kärnprimärkapitalrelationen, på engelska CET1-kvoten: bankens kärnkapital, det egna kapital av högsta kvalitet som kan bära förluster, delat med dess riskvägda tillgångar. Tillgångarna viktas efter hur riskfyllda de är, så bolån väger mindre än osäkra företagslån. CET1-kvoten svarar på den enda fråga som räknas i en kris: hur mycket kan gå förlorat på utlåningen innan banken äter upp sitt egna kapital och hamnar i nöd? En hög CET1-kvot, med god marginal till myndighetens krav, är bankens verkliga säkerhetsmarginal. Det är hit du tittar i stället för soliditeten. Var alltså som mest skeptisk när det ser som bäst ut. En bank som visar rekordvinst och nästan inga kreditförluster sent i en lång högkonjunktur förtjänar en följdfråga: är reserverna realistiska, eller skjuts förlusterna framför sig?"
       ],
-      "takeaway": "Banker är cykliska maskiner förklädda till stabila utdelningsbolag. Fråga inte hur hög vinsten är i år, fråga hur låneboken ser ut i lågkonjunktur och om kapitalet räcker för att stå kvar."
+      "takeaway": "Banker är cykliska maskiner förklädda till stabila utdelningsbolag. Fråga inte hur hög vinsten är i år. Fråga hur låneboken ser ut i lågkonjunktur, och om kapitalet räcker för att stå kvar."
     },
     {
       "typ": "reading",
@@ -55,24 +55,24 @@
       "lead": "För ett vanligt bolag lutar du mot EV/EBIT och P/E, men för en bank fungerar de illa. EV bygger på nettoskuld, som är meningslös när skuld är råvaran, och P/E vilar på en vinst som svänger med cykliska reserveringar.",
       "highlight": "EV bygger på nettoskuld, som är meningslös när skuld är råvaran",
       "brodtext": [
-        "I stället värderas banker oftast på P/B, pris genom bokfört eget kapital, tillsammans med ROE, avkastning på eget kapital. Logiken är att en banks tillgångar i huvudsak är finansiella och bokförda nära verkligt värde, så det egna kapitalet är ett rimligt ankare för vad banken är värd, medan ROE mäter hur väl banken förräntar det kapitalet. De två hänger ihop: hög och uthållig ROE förtjänar ett högre P/B, låg ROE ett lägre.",
-        "Men en hög ROE i en bank är ofta delvis hävstång snarare än överlägsen drift, så läs den alltid mot kapitaltäckningen. Granska dessutom ett lockande lågt P/B misstänksamt. Ibland är det ett fynd, men ofta är det marknaden som prisar in kommande kreditförluster som ännu inte syns i böckerna. Den verkliga risken byggs upp i tysthet under de goda åren, i lån som beviljats för lättvindigt, och varken P/E eller ett glänsande ROE-tal visar det förrän det är för sent."
+        "I stället värderas banker oftast på P/B, pris genom bokfört eget kapital, tillsammans med ROE, avkastning på eget kapital. En banks tillgångar är i huvudsak finansiella och bokförda nära verkligt värde, så det egna kapitalet är ett rimligt ankare för vad banken är värd, medan ROE mäter hur väl banken förräntar det kapitalet. De hänger ihop: hög och uthållig ROE förtjänar ett högre P/B, låg ROE ett lägre.",
+        "Men en hög ROE i en bank är ofta delvis hävstång, inte överlägsen drift, så läs den alltid mot kapitaltäckningen. Och se upp med ett lockande lågt P/B. Ibland är det ett fynd, men ofta är det marknaden som prisar in kommande kreditförluster som ännu inte syns i böckerna. Den verkliga risken byggs upp i tysthet under de goda åren, i lån som beviljats för lättvindigt, och varken P/E eller ett glänsande ROE-tal visar det förrän det är för sent."
       ],
       "takeaway": "Läs P/B och ROE ihop, och båda mot kapitaltäckningen. Ett lågt P/B är lika ofta en varning som ett fynd."
     },
     {
       "typ": "dataviz",
       "titel": "Två banker, samma ROE, olika öde",
-      "underrubrik": "Två banker av likartad storlek med samma redovisade ROE i år. På ytan lika bra, men vägen dit avgör vad som händer i en lågkonjunktur.",
+      "underrubrik": "Två banker av ungefär samma storlek med samma redovisade ROE i år. På ytan lika bra. Men vägen dit avgör vad som händer i en lågkonjunktur.",
       "visual": {
         "typ": "jamforelse",
         "element": [
-          { "rubrik": "Bank Stabil", "text": "Har vuxit utlåningen ungefär i takt med ekonomin, har bred spridning mellan bolån och branscher, ett lågt K/I-tal och en CET1-kvot med komfortabel marginal till kravet. Reserverna är väl tilltagna trots de goda tiderna. I lågkonjunkturen stiger kreditförlusterna och vinsten faller ett par år, men kapitalet bär förlusterna och banken står kvar, och kan till och med låna ut när andra drar sig tillbaka." },
-          { "rubrik": "Bank Jäkt", "text": "Har vuxit utlåningen betydligt snabbare än marknaden, lånat ut tungt mot en het sektor, redovisar minimala kreditförluster och har en CET1-kvot nära golvet. Den höga ROE:n vilar på hävstång och låga reserveringar. I lågkonjunkturen kommer förlusterna i klump, reserverna visar sig för små, den tunna bufferten naggas snabbt och banken tvingas kanske resa nytt kapital på usla villkor som späder ut ägarna." }
+          { "rubrik": "Bank Stabil", "text": "Har vuxit utlåningen ungefär i takt med ekonomin, har bred spridning mellan bolån och branscher, ett lågt K/I-tal och en CET1-kvot med god marginal till kravet. Reserverna är väl tilltagna trots de goda tiderna. I lågkonjunkturen stiger kreditförlusterna och vinsten faller ett par år, men kapitalet bär förlusterna och banken står kvar. Den kan till och med låna ut när andra drar sig tillbaka." },
+          { "rubrik": "Bank Jäkt", "text": "Har vuxit utlåningen mycket snabbare än marknaden, lånat ut tungt mot en het sektor, redovisar minimala kreditförluster och har en CET1-kvot nära golvet. Den höga ROE:n vilar på hävstång och låga reserveringar. I lågkonjunkturen kommer förlusterna i klump, reserverna visar sig för små, den tunna bufferten naggas snabbt och banken tvingas kanske resa nytt kapital på usla villkor som späder ut ägarna." }
         ],
         "figurtext": "Illustrativa bolag. Samma ROE på toppen, helt olika öde i botten."
       },
-      "slutsats": "Det som avgjorde var inte årets vinst utan kreditkvaliteten och kapitalet. Snabb utlåningstillväxt klart över marknaden och en CET1-kvot nära golvet är den klassiska kombinationen av uppbyggd risk, oavsett hur god ROE:n ser ut just nu."
+      "slutsats": "Det som avgjorde var inte årets vinst utan kreditkvaliteten och kapitalet. Snabb utlåningstillväxt klart över marknaden och en CET1-kvot nära golvet är den klassiska kombinationen av uppbyggd risk, hur god ROE:n än ser ut just nu."
     },
     {
       "typ": "reading",
@@ -80,15 +80,15 @@
       "lead": "Nu byter vi bolag. Det centrala måttet i skadeförsäkring är combined ratio, summan av skadeprocenten och omkostnadsprocenten. Den läser du först, och den säger om bolaget tjänar pengar på själva försäkringen.",
       "highlight": "Den läser du först",
       "brodtext": [
-        "Skadeprocenten är utbetalda och reserverade skador delat med premieintäkterna. Omkostnadsprocenten är drifts- och försäljningskostnader delat med premieintäkterna. Tillsammans bildar de combined ratio, och tolkningen är enkel: under 100 procent betyder att bolaget tjänar pengar på försäkringsaffären, det tar in mer i premier än det betalar i skador och kostnader. Över 100 procent betyder förlust på teckningen, som måste tjänas in på annat håll. Detta är försäkringsbolagets motsvarighet till marginalanalys.",
-        "Sedan kommer den eleganta delen, den som Warren Buffett byggt mycket av Berkshire Hathaways framgång på. Mellan att premien betalas in och skadan betalas ut sitter bolaget på pengarna, en pott som kallas float: premier som betalats in men ännu inte betalats ut i skador. Float är inte bolagets egna pengar, det är en skuld som ska regleras, men under tiden får bolaget placera den och behålla avkastningen. Har bolaget dessutom en combined ratio under 100 procent får det i praktiken betalt för att hålla och placera andras pengar, som ett lån med negativ ränta. Ett bolag som både tecknar lönsamt och placerar klokt blir därför en formidabel sammansättningsmaskin. Vänt åt andra hållet: tecknar bolaget med förlust, alltså combined ratio över 100, betalar det i själva verket för sin float, och då är charmen borta."
+        "Skadeprocenten är utbetalda och reserverade skador delat med premieintäkterna. Omkostnadsprocenten är drifts- och försäljningskostnader delat med premieintäkterna. Tillsammans bildar de combined ratio, och tolkningen är enkel. Under 100 procent betyder att bolaget tjänar pengar på försäkringsaffären, det tar in mer i premier än det betalar i skador och kostnader. Över 100 procent betyder förlust på teckningen, som måste tjänas in på annat håll. Det här är försäkringsbolagets marginalanalys.",
+        "Sedan kommer den eleganta delen, den som Warren Buffett byggt mycket av Berkshire Hathaways framgång på. Mellan att premien betalas in och skadan betalas ut sitter bolaget på pengarna, en pott som kallas float: premier som betalats in men ännu inte betalats ut i skador. Float är inte bolagets egna pengar, det är en skuld som ska regleras. Men under tiden får bolaget placera den och behålla avkastningen. Har bolaget dessutom en combined ratio under 100 procent får det i praktiken betalt för att hålla och placera andras pengar, som ett lån med negativ ränta. Ett bolag som både tecknar lönsamt och placerar klokt blir därför en formidabel sammansättningsmaskin. Vänt åt andra hållet: tecknar bolaget med förlust, alltså combined ratio över 100, betalar det i själva verket för sin float, och då är charmen borta."
       ],
-      "takeaway": "Combined ratio under 100 betyder lönsam teckning och gratis float att placera. Över 100 betyder att bolaget betalar för sin float. Börja alltid i combined ratio, inte i vinsten."
+      "takeaway": "Combined ratio under 100 betyder lönsam teckning och gratis float att placera. Över 100 betyder att bolaget betalar för sin float. Börja i combined ratio, inte i vinsten."
     },
     {
       "typ": "dataviz",
       "titel": "Combined ratio: linjen vid 100",
-      "underrubrik": "Combined ratio är skadeprocent plus omkostnadsprocent. Hela skillnaden mellan en värdemaskin och en läckande hink ligger kring den ena linjen vid 100.",
+      "underrubrik": "Combined ratio är skadeprocent plus omkostnadsprocent. Hela skillnaden mellan en värdemaskin och en läckande hink ligger kring linjen vid 100.",
       "visual": {
         "typ": "stapeldiagram",
         "data": [
@@ -99,7 +99,7 @@
         "etiketter": "Combined ratio i procent",
         "figurtext": "Illustrativa tal. Under 100 tjänar bolaget pengar på teckningen och får floaten gratis, över 100 betalar det för sin float."
       },
-      "slutsats": "Ett bolag strax under 100, säg kring 94 genom både lugna och stormiga år, tjänar pengar på teckningen och placerar sin float i praktiken gratis. Ett som ligger strax över, säg kring 103, går med förlust på teckningen och håller upp vinsten enbart med placeringsavkastning. Skillnaden syns inte i ett lugnt års vinst, bara i combined ratio."
+      "slutsats": "Ett bolag strax under 100, säg kring 94 genom både lugna och stormiga år, tjänar pengar på teckningen och placerar sin float i praktiken gratis. Ett som ligger strax över, säg kring 103, går med förlust på teckningen och håller upp vinsten med placeringsavkastning. Skillnaden syns inte i ett lugnt års vinst, bara i combined ratio."
     },
     {
       "typ": "reading",
@@ -107,10 +107,10 @@
       "lead": "Ett försäkringsbolag är inte ett stabilt icke-cykliskt bolag. Efterfrågan är visserligen stabil, men lönsamheten svänger, och tre krafter rör om i den redovisade vinsten.",
       "highlight": "Efterfrågan är visserligen stabil, men lönsamheten svänger",
       "brodtext": [
-        "Den första är reservsättning. Eftersom de slutliga skadekostnaderna inte är kända när premien tas in måste bolaget avsätta reserver för förväntade framtida utbetalningar. Sätts de för lågt ser vinsten bättre ut än den är, tills sanningen kommer i kapp och reserverna måste fyllas på. Sätts de försiktigt kan de senare lösas upp och lyfta vinsten. Precis som en banks kreditreserver är detta en bedömningspost som kan dölja eller skapa vinst, och en historik av att gång på gång stärka reserverna i efterhand avslöjar att tidigare redovisade vinster var för optimistiska.",
-        "Den andra är stora skadehändelser. Stormar, översvämningar, bränder och andra katastrofer kommer ojämnt. Ett lugnt år ser lysande ut, ett katastrofår kan slå hål i resultatet, vilket gör ett enskilt år opålitligt. Den tredje är försäkringscykeln, växlingen mellan mjuk och hård marknad. När många aktörer trängs pressas premierna nedåt och branschens lönsamhet sjunker. Efter stora förluster drar kapital sig tillbaka, premierna stiger och lönsamheten återvänder. Det gör branschen i grunden cyklisk, även om kunderna sällan byter bolag. Att en produkt är nödvändig gör alltså inte vinsten förutsägbar."
+        "Den första är reservsättning. Eftersom de slutliga skadekostnaderna inte är kända när premien tas in måste bolaget avsätta reserver för väntade framtida utbetalningar. Sätts de för lågt ser vinsten bättre ut än den är, tills sanningen kommer i kapp och reserverna måste fyllas på. Sätts de försiktigt kan de senare lösas upp och lyfta vinsten. Precis som en banks kreditreserver är det här en bedömningspost som kan dölja eller skapa vinst, och en historik av att gång på gång stärka reserverna i efterhand avslöjar att tidigare redovisade vinster var för optimistiska.",
+        "Den andra är stora skadehändelser. Stormar, översvämningar, bränder och andra katastrofer kommer ojämnt. Ett lugnt år ser lysande ut, ett katastrofår kan slå hål i resultatet, och då blir ett enskilt år opålitligt. Den tredje är försäkringscykeln, växlingen mellan mjuk och hård marknad. När många aktörer trängs pressas premierna nedåt och branschens lönsamhet sjunker. Efter stora förluster drar kapital sig tillbaka, premierna stiger och lönsamheten återvänder. Det gör branschen cyklisk i grunden, även om kunderna sällan byter bolag. Att en produkt är nödvändig gör alltså inte vinsten förutsägbar."
       ],
-      "takeaway": "Läs aldrig ett enskilt års vinst som sanning. Ett lysande år kan vara ett år utan katastrofer eller ett där för låga reserver släppte igenom vinst. Läs lönsamheten över en hel cykel."
+      "takeaway": "Läs aldrig ett enskilt års vinst som sanning. Ett lysande år kan vara ett år utan katastrofer, eller ett där för låga reserver släppte igenom vinst. Läs lönsamheten över en hel cykel."
     },
     {
       "typ": "reading",
@@ -119,7 +119,7 @@
       "highlight": "om bolaget tecknar lönsamt genom cykeln",
       "brodtext": [
         "Börja i combined ratio, inte i vinsten, för där syns teckningsdisciplinen. Ett bolag som år efter år håller sig under 100 procent prissätter risk klokt och säger nej till dålig affär. Ett som svajar runt eller över 100 lever på placeringsavkastning och tur. Läs floaten som det den är, en finansieringskälla, och fråga både hur stor den är och hur klokt den placeras. Lönsam teckning plus förnuftig placering bygger verkligt värde över tid.",
-        "Granska reservsättningen misstänksamt och bedöm soliditeten mot ett riktigt dåligt skadeår, för det är den som avgör om bolaget tål en stor storm ovanpå en cykelvändning. P/E är särskilt opålitligt här, eftersom vinsten i nämnaren svänger med katastrofer och reserveringar. Var också vaksam på snabb premietillväxt vunnen genom låga priser: det är ofta dålig risk som ännu inte syns, och en stabilt defensiv berättelse som varken combined ratio eller cykeln stöder. Stabil efterfrågan ger inte stabil lönsamhet."
+        "Granska reservsättningen med misstänksamhet och bedöm soliditeten mot ett riktigt dåligt skadeår, för det är den som avgör om bolaget tål en stor storm ovanpå en cykelvändning. P/E är särskilt opålitligt här, eftersom vinsten i nämnaren svänger med katastrofer och reserveringar. Var också vaksam på snabb premietillväxt vunnen med låga priser. Det är ofta dålig risk som ännu inte syns, dold i en defensiv berättelse som varken combined ratio eller cykeln stöder. Stabil efterfrågan ger inte stabil lönsamhet."
       ],
       "takeaway": "Se försäkringsbolaget som det är, en riskmaskin vars kvalitet avgörs av teckningsdisciplin, float och reservsättning över en cykel, inte av en lugn årssiffra."
     },
@@ -135,7 +135,7 @@
             "Skulderna i en bank är alltid statligt garanterade"
           ],
           "ratt": [0],
-          "forklaring": "En bank tjänar pengar på att låna, så hög skuldsättning är affärsmodellen, inte en varning. Därför byter man mätsticka från soliditet till kapitaltäckning, främst CET1-kvoten."
+          "forklaring": "En bank tjänar pengar på att låna, så hög skuldsättning är affärsmodellen, inte en varning. Därför byter du mätsticka från soliditet till kapitaltäckning, främst CET1-kvoten."
         },
         {
           "typ": "single",
