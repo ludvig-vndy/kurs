@@ -18,8 +18,8 @@
       "lead": "Pris är vad du betalar. Värde är vad du får. Priset är ett faktum, det står på skärmen och vem som helst kan läsa det. Värdet är en bedömning: din uppskattning av vad verksamheten är värd, baserat på de pengar den kommer att producera.",
       "highlight": "Pris är vad du betalar. Värde är vad du får.",
       "brodtext": [
-        "För det mesta ligger de två nära varandra, eftersom marknaden oftast är hyfsat förnuftig. Men ibland trycker rädsla ned priset under värdet, och då blir saker rea. Ibland trycker girighet upp priset över värdet, och då blir saker dyra.",
-        "En bra investerare köper när priset ligger under den egna uppskattningen av värdet, och avstår eller säljer när priset ligger långt över. Värde är dessutom ett intervall, inte en exakt punkt: du kommer aldrig att veta att ett bolag är värt exakt 247 kronor, men du kan med rimlig grund tro att det är värt någonstans mellan 200 och 280. Ett grovt spann räcker för att se om priset är billigt, rimligt eller dyrt."
+        "För det mesta ligger de två nära varandra, eftersom marknaden oftast är hyfsat förnuftig. Men ibland trycker rädsla ned priset under värdet, och då blir det rea. Ibland trycker girighet upp priset över värdet, och då blir det dyrt.",
+        "Du köper när priset ligger under din egen uppskattning av värdet, och avstår eller säljer när det ligger långt över. Värde är dessutom ett intervall, inte en exakt punkt: du kommer aldrig att veta att ett bolag är värt exakt 247 kronor, men du kan med rimlig grund tro att det är värt någonstans mellan 200 och 280. Ett grovt spann räcker för att se om priset är billigt, rimligt eller dyrt."
       ],
       "takeaway": "Du försöker inte förutsäga priset. Du uppskattar värdet och väntar tills priset erbjuder ett gap."
     },
@@ -35,11 +35,11 @@
         ],
         "figurtext": "Pris mot värde, två skilda storheter."
       },
-      "forklaring": "Priset sätts av den marginella köparen och säljaren och kan hoppa flera procent på en dag utan att något i verksamheten ändrats. Värdet är jämförelsevis stabilt: ett bolags verkliga värde svänger inte på grund av en tisdagsrubrik. Den skillnaden i rörlighet är precis där möjligheten bor."
+      "forklaring": "Priset sätts av den marginella köparen och säljaren och kan hoppa flera procent på en dag utan att något i verksamheten ändrats. Värdet är jämförelsevis stabilt: ett bolags verkliga värde svänger inte på grund av en tisdagsrubrik. Den skillnaden i rörlighet är där din möjlighet finns."
     },
     {
       "typ": "dataviz",
-      "titel": "I gapet bor möjligheten",
+      "titel": "I gapet finns möjligheten",
       "underrubrik": "Priset svänger runt värdet. När priset faller tydligt under värdet uppstår ett köpläge.",
       "visual": {
         "typ": "linjediagram",
@@ -64,7 +64,7 @@
         ],
         "figurtext": "Två frågor som nybörjaren slår ihop och den vane håller isär."
       },
-      "forklaring": "Den vane investeraren betygsätter först verksamhetens kvalitet och sedan köpets kvalitet, och köper bara när båda klarar ribban. Pris utan kvalitet är en värdefälla. Kvalitet utan prisdisciplin är hur man betalar för mycket för fina bolag och ändå förlorar pengar."
+      "forklaring": "Du betygsätter först verksamhetens kvalitet och sedan köpets, och köper bara när båda klarar ribban. Pris utan kvalitet är en värdefälla. Kvalitet utan prisdisciplin betyder att du betalar för mycket för fina bolag och ändå förlorar pengar."
     },
     {
       "typ": "reading",
