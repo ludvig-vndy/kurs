@@ -403,7 +403,7 @@
       "nummer": 11,
       "titel": "Investeringspsykologi",
       "niva": "Mellan",
-      "tid_min": 48,
+      "tid_min": 60,
       "blurb": "Den största risken sitter ofta mellan dina öron. Här lär du dig känna igen flockbeteende, rädsla och de tankefällor som får skickliga analytiker att fatta dåliga beslut, och bygga ett system som skyddar dig från dig själv.",
       "outcomes": [
         "Känna igen och motstå flock, rädsla och girighet",
@@ -442,6 +442,14 @@
           "tid_min": 13,
           "status": "klar",
           "fil": "11.4-position-sizing-och-odmjukhet.json"
+        },
+        {
+          "lektion": "11.5",
+          "titel": "Ur Sebastians huvud: hjärnan och tre dyrköpta läxor",
+          "niva": "Mellan",
+          "tid_min": 12,
+          "status": "klar",
+          "fil": "11.5-ur-sebastians-huvud.json"
         }
       ]
     },
