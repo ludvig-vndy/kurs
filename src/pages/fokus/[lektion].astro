@@ -178,9 +178,12 @@ function visualEl(v: VisualObj) {
           {lesson.steg.map((s, i) => {
             const gloss = stepGloss[i];
             const hasGloss = gloss.length > 0;
+            // Plain takeaways move to the right margin (when it's free of glosses)
+            // so they read as a side pull-quote, not an identical box at every step.
+            const sideTake = s.typ === 'reading' && !!s.takeaway && s.rost !== 'sebastian' && !hasGloss;
             return (
               <section
-                class:list={['step', { 'has-gloss': hasGloss, 'step--intro': s.typ === 'intro' }]}
+                class:list={['step', { 'has-gloss': hasGloss, 'has-aside': sideTake, 'step--intro': s.typ === 'intro' }]}
                 data-step
                 data-typ={s.typ}
                 aria-label={`Steg ${i + 1}`}
@@ -201,14 +204,15 @@ function visualEl(v: VisualObj) {
                       {s.kicker && <div class="kicker">{s.kicker}</div>}
                       <p class="s-lead">{before}<mark>{hl}</mark>{after}</p>
                       {s.brodtext && s.brodtext.map((para) => <p class="s-body">{para}</p>)}
-                      {s.takeaway && (s.rost === 'sebastian' ? (
+                      {s.takeaway && s.rost === 'sebastian' && (
                         <blockquote class="s-take s-take--sebastian">
                           <span class="s-take__by"><span class="s-take__mono" aria-hidden="true">S</span>Sebastian tänker</span>
                           {s.takeaway}
                         </blockquote>
-                      ) : (
+                      )}
+                      {s.takeaway && s.rost !== 'sebastian' && !sideTake && (
                         <blockquote class="s-take">{s.takeaway}</blockquote>
-                      ))}
+                      )}
                     </div>
                   );
                 })()}
@@ -265,6 +269,12 @@ function visualEl(v: VisualObj) {
                         <div class="gloss__def">{g.forklaring}</div>
                       </div>
                     ))}
+                  </aside>
+                )}
+
+                {sideTake && (
+                  <aside class="s-aside">
+                    <blockquote class="s-take s-take--side">{s.takeaway}</blockquote>
                   </aside>
                 )}
               </section>
@@ -343,8 +353,11 @@ function visualEl(v: VisualObj) {
   .steps { width: 100%; max-width: 960px; margin: 0 auto; }
   .step { display: none; }
   .step.is-active { display: block; animation: step-rise .5s cubic-bezier(.21,.7,.18,1) both; }
-  .step.is-active.has-gloss { display: grid; grid-template-columns: minmax(0, 660px) 210px; gap: 32px; justify-content: center; align-items: start; }
-  .step.is-active.has-gloss .s-col, .step.is-active.has-gloss .s-intro { margin: 0; }
+  .step.is-active.has-gloss, .step.is-active.has-aside { display: grid; grid-template-columns: minmax(0, 660px) 210px; gap: 32px; justify-content: center; align-items: start; }
+  .step.is-active.has-gloss .s-col, .step.is-active.has-gloss .s-intro, .step.is-active.has-aside .s-col { margin: 0; }
+  /* Plain takeaway as a margin pull-quote (sits beside the text, not a box at every bottom). */
+  .s-aside { grid-column: 2; padding-top: 4px; }
+  .s-take--side { margin-top: 0; font-size: 17px; line-height: 1.45; padding-left: 16px; }
   /* Calm pass: gentle fade with a minimal 6px rise (was 16px) on step change. */
   @keyframes step-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .step.is-active { animation: none; } }
@@ -428,8 +441,10 @@ function visualEl(v: VisualObj) {
 
   /* ── Mobile: gloss falls below the step content ── */
   @media (max-width: 920px) {
-    .step.is-active.has-gloss { display: block; }
-    .step.is-active.has-gloss .s-col, .step.is-active.has-gloss .s-intro { margin: 0 auto; }
+    .step.is-active.has-gloss, .step.is-active.has-aside { display: block; }
+    .step.is-active.has-gloss .s-col, .step.is-active.has-gloss .s-intro, .step.is-active.has-aside .s-col { margin: 0 auto; }
+    .s-aside { max-width: 660px; margin: 22px auto 0; }
+    .s-take--side { margin-top: 0; font-size: 19px; }
     .gloss { max-width: 660px; margin: 24px auto 0; border-top: 1px solid var(--rule); padding-top: 18px; }
   }
   @media (max-width: 680px) { .lhint { display: none; } }
