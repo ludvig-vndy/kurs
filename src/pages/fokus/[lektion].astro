@@ -202,7 +202,7 @@ function visualEl(v: VisualObj) {
                       <p class="s-lead">{before}<mark>{hl}</mark>{after}</p>
                       {s.brodtext && s.brodtext.map((para) => <p class="s-body">{para}</p>)}
                       {s.takeaway && (s.rost === 'sebastian' ? (
-                        <blockquote class="s-take s-take--sebbe">
+                        <blockquote class="s-take s-take--sebastian">
                           <span class="s-take__by"><span class="s-take__mono" aria-hidden="true">S</span>Sebastian tänker</span>
                           {s.takeaway}
                         </blockquote>
@@ -376,7 +376,7 @@ function visualEl(v: VisualObj) {
   /* Byline, not a shouty label: mixed case, light tracking, reads as a signature. */
   /* Sebastian tänker: a signed card with a monogram, distinct from the plain
      (unlabelled) takeaway above. Only steps with rost:"sebastian" get this. */
-  .s-take--sebbe { border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
+  .s-take--sebastian { border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
   .s-take__by { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 10px; }
   .s-take__mono { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--oxblood); color: var(--paper); font-family: var(--display); font-style: normal; font-size: 14px; font-weight: 500; letter-spacing: 0; flex: none; }
 
