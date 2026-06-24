@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Marginalen, typsnitts-alternativ (de-vintage)</title>
+<!--
+  Jamfor display-typsnittet (rubriker + wordmark) i fyra riktningar, samma
+  broadsheet-utsnitt i varje. Brodtext (Spectral) och etiketter (Plex Mono)
+  h  alls lika overallt, det enda som andras ar DISPLAY-typsnittet, som ar den
+  starkaste vintage-spaken. Tonerna ar redan de avtonade (platt papper,
+  tightare sparrning, rak standfirst).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#8A2E26;
+    --serif:"Spectral",Georgia,serif; --mono:"IBM Plex Mono",monospace;
+    --display:"Fraunces",Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .page{max-width:1000px; margin:0 auto; padding:40px clamp(20px,5vw,56px) 80px}
+  .intro{border-bottom:2px solid var(--rule-strong); padding-bottom:20px; margin-bottom:8px}
+  .intro h1{font-family:var(--display); font-weight:400; font-size:30px; letter-spacing:-.01em}
+  .intro p{color:var(--ink-soft); margin-top:10px; max-width:64ch; font-size:15px}
+
+  .variant{padding:34px 0; border-bottom:1px solid var(--rule)}
+  .variant__label{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--oxblood); margin-bottom:4px}
+  .variant__note{font-family:var(--mono); font-size:11px; letter-spacing:.02em; color:var(--muted); margin-bottom:24px}
+
+  /* ---- shared slice ---- */
+  .slice{max-width:760px}
+  .mast{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap}
+  .wm{font-family:var(--display); font-weight:500; font-size:clamp(26px,4vw,40px); letter-spacing:.04em; text-transform:uppercase; line-height:.9; color:var(--ink)}
+  .ed{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.7}
+  .rule{height:2px; background:var(--rule-strong); margin:14px 0 0}
+  .navrow{display:flex; gap:24px; padding:12px 0 0; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft)}
+  .kick{font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--oxblood); margin:34px 0 16px}
+  .head{font-family:var(--display); font-weight:300; font-size:clamp(32px,5vw,58px); line-height:1.02; letter-spacing:-.02em; max-width:15ch; color:var(--ink)}
+  .sf{font-family:var(--serif); font-size:19px; line-height:1.55; color:var(--ink-soft); max-width:54ch; margin-top:18px}
+  .card{margin-top:26px; border:1px solid var(--rule); border-left:3px solid var(--oxblood); background:var(--card); padding:18px 22px; max-width:560px}
+  .card__by{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--oxblood); margin-bottom:10px}
+  .mono-badge{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:var(--oxblood); color:var(--paper); font-family:var(--display); font-size:14px; font-weight:500; flex:none}
+  .card__q{font-family:var(--display); font-style:italic; font-size:19px; line-height:1.45; color:var(--ink); margin:0}
+
+  /* ---- per-variant display font ---- */
+  .v-fraunces { --display:"Fraunces",Georgia,serif; }
+
+  .v-tamed { --display:"Fraunces",Georgia,serif; }
+  .v-tamed .wm, .v-tamed .head, .v-tamed .mono-badge, .v-tamed .card__q { font-variation-settings:"opsz" 144, "SOFT" 0, "WONK" 0; }
+  .v-tamed .head { font-weight:400; }
+
+  .v-newsreader { --display:"Newsreader",Georgia,serif; }
+  .v-newsreader .head { font-weight:300; letter-spacing:-.01em; }
+
+  .v-outfit { --display:"Outfit",system-ui,sans-serif; }
+  .v-outfit .head { font-weight:500; letter-spacing:-.025em; }
+  .v-outfit .wm { font-weight:600; letter-spacing:.02em; }
+  .v-outfit .card__q { font-style:normal; font-weight:400; } /* sans: ingen kursiv */
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="intro">
+    <h1>Typsnitt: fyra riktningar</h1>
+    <p>Samma utsnitt i varje. Brodtext (Spectral) och etiketter (Plex Mono) ar identiska, bara display-typsnittet (wordmark + rubriker) byts, det ar den starkaste vintage-spaken. Papper, sparrning och rak standfirst ar redan de avtonade. Skrolla och jamfor kanslan.</p>
+  </div>
+
+  <!-- 1: Fraunces (nuvarande) -->
+  <section class="variant v-fraunces">
+    <div class="variant__label">Alternativ 1 — Fraunces (nuvarande)</div>
+    <div class="variant__note">Old-style, litterart, lite kvirkigt. Distinkt men lutar at vintage.</div>
+    <div class="slice">
+      <div class="mast"><span class="wm">Margin<span>alen</span></span><span class="ed">Fundamental aktieanalys<br>En kurs i sexton kapitel</span></div>
+      <div class="rule"></div>
+      <div class="navrow"><span>Hem</span><span>Kursöversikt</span><span>Analysverktyg</span><span>Ordlista</span></div>
+      <div class="kick">Onlinekurs i fundamental analys</div>
+      <h1 class="head">Lär dig analysera aktier som en ägare, inte en spekulant.</h1>
+      <p class="sf">Sexton kapitel, ett steg i taget: från vad en aktie faktiskt är, via att läsa en årsredovisning, till att sätta ett eget riktpris med felmarginal.</p>
+      <div class="card"><div class="card__by"><span class="mono-badge">S</span>Sebastian tänker</div><p class="card__q">Jag köper först när priset ligger under även mitt försiktiga scenario. Betalar jag för drömmen finns ingen marginal kvar.</p></div>
+    </div>
+  </section>
+
+  <!-- 2: Fraunces tamed -->
+  <section class="variant v-tamed">
+    <div class="variant__label">Alternativ 2 — Fraunces tamd (WONK 0, SOFT 0)</div>
+    <div class="variant__note">Samma typsnitt men utan de kvirkiga formerna, skarpare och lugnare. Liten andring, behaller identiteten.</div>
+    <div class="slice">
+      <div class="mast"><span class="wm">Margin<span>alen</span></span><span class="ed">Fundamental aktieanalys<br>En kurs i sexton kapitel</span></div>
+      <div class="rule"></div>
+      <div class="navrow"><span>Hem</span><span>Kursöversikt</span><span>Analysverktyg</span><span>Ordlista</span></div>
+      <div class="kick">Onlinekurs i fundamental analys</div>
+      <h1 class="head">Lär dig analysera aktier som en ägare, inte en spekulant.</h1>
+      <p class="sf">Sexton kapitel, ett steg i taget: från vad en aktie faktiskt är, via att läsa en årsredovisning, till att sätta ett eget riktpris med felmarginal.</p>
+      <div class="card"><div class="card__by"><span class="mono-badge">S</span>Sebastian tänker</div><p class="card__q">Jag köper först när priset ligger under även mitt försiktiga scenario. Betalar jag för drömmen finns ingen marginal kvar.</p></div>
+    </div>
+  </section>
+
+  <!-- 3: Newsreader -->
+  <section class="variant v-newsreader">
+    <div class="variant__label">Alternativ 3 — Newsreader (modern nyhetsserif)</div>
+    <div class="variant__note">Samtida, skarmoptimerad redaktionell serif. Tydligt mindre gammaldags, fortfarande serif och varm.</div>
+    <div class="slice">
+      <div class="mast"><span class="wm">Margin<span>alen</span></span><span class="ed">Fundamental aktieanalys<br>En kurs i sexton kapitel</span></div>
+      <div class="rule"></div>
+      <div class="navrow"><span>Hem</span><span>Kursöversikt</span><span>Analysverktyg</span><span>Ordlista</span></div>
+      <div class="kick">Onlinekurs i fundamental analys</div>
+      <h1 class="head">Lär dig analysera aktier som en ägare, inte en spekulant.</h1>
+      <p class="sf">Sexton kapitel, ett steg i taget: från vad en aktie faktiskt är, via att läsa en årsredovisning, till att sätta ett eget riktpris med felmarginal.</p>
+      <div class="card"><div class="card__by"><span class="mono-badge">S</span>Sebastian tänker</div><p class="card__q">Jag köper först när priset ligger under även mitt försiktiga scenario. Betalar jag för drömmen finns ingen marginal kvar.</p></div>
+    </div>
+  </section>
+
+  <!-- 4: Outfit (sans / Swiss) -->
+  <section class="variant v-outfit">
+    <div class="variant__label">Alternativ 4 — Outfit (geometrisk sans, Swiss-hall)</div>
+    <div class="variant__note">Sans-rubriker mot serif-brodtext. Mest samtida, langst fran vintage, men byter karaktar mest.</div>
+    <div class="slice">
+      <div class="mast"><span class="wm">Margin<span>alen</span></span><span class="ed">Fundamental aktieanalys<br>En kurs i sexton kapitel</span></div>
+      <div class="rule"></div>
+      <div class="navrow"><span>Hem</span><span>Kursöversikt</span><span>Analysverktyg</span><span>Ordlista</span></div>
+      <div class="kick">Onlinekurs i fundamental analys</div>
+      <h1 class="head">Lär dig analysera aktier som en ägare, inte en spekulant.</h1>
+      <p class="sf">Sexton kapitel, ett steg i taget: från vad en aktie faktiskt är, via att läsa en årsredovisning, till att sätta ett eget riktpris med felmarginal.</p>
+      <div class="card"><div class="card__by"><span class="mono-badge">S</span>Sebastian tänker</div><p class="card__q">Jag köper först när priset ligger under även mitt försiktiga scenario. Betalar jag för drömmen finns ingen marginal kvar.</p></div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
