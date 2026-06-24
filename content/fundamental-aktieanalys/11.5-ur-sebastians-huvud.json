@@ -14,6 +14,7 @@
     },
     {
       "typ": "reading",
+      "rost": "sebastian",
       "kicker": "HJÄRNAN MOT DIG",
       "lead": "Lägg märke till en sak hos dig själv: när en aktie rusar önskar du att du fick köpa den billigare, men när kursen väl faller blir du osäker och rädd och vill hellre sälja. Det är inte logik, det är biologi.",
       "highlight": "när en aktie rusar önskar du att du fick köpa den billigare, men när kursen väl faller blir du osäker och rädd och vill hellre sälja",
@@ -26,6 +27,7 @@
     },
     {
       "typ": "reading",
+      "rost": "sebastian",
       "kicker": "LÄXA 1: TIDIGA LÄKEMEDELSBOLAG",
       "lead": "Tidiga läkemedelsbolag är den plats på börsen där flest drömmar har krossats, och jag har slutat låtsas att jag skulle vara undantaget.",
       "highlight": "Tidiga läkemedelsbolag är den plats på börsen där flest drömmar har krossats",
@@ -38,6 +40,7 @@
     },
     {
       "typ": "reading",
+      "rost": "sebastian",
       "kicker": "LÄXA 2: ÖNSKETÄNKANDE",
       "lead": "Önsketänkande är det dyraste jag vet på börsen, för det får dig att läsa varje varningsklocka som ett köptillfälle.",
       "highlight": "Önsketänkande är det dyraste jag vet på börsen, för det får dig att läsa varje varningsklocka som ett köptillfälle.",
@@ -50,6 +53,7 @@
     },
     {
       "typ": "reading",
+      "rost": "sebastian",
       "kicker": "LÄXA 3: TÅLAMOD",
       "lead": "De aktier som gett mig absolut bäst avkastning har nästan alltid åkt berg och dalbana i ett par år först, och de flesta som ägde dem hoppade av innan det vände.",
       "highlight": "De aktier som gett mig absolut bäst avkastning har nästan alltid åkt berg och dalbana i ett par år först",

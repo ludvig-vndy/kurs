@@ -21,7 +21,7 @@ interface Fraga { typ: 'single' | 'multi'; fraga: string; underrubrik?: string; 
 interface Steg {
   typ: StegTyp; kicker?: string; titel?: string; ingress?: string; lead?: string; highlight?: string;
   brodtext?: string[]; takeaway?: string; visual?: VisualObj; forklaring?: string; underrubrik?: string;
-  slutsats?: string; fragor?: Fraga[];
+  slutsats?: string; fragor?: Fraga[]; rost?: string;
 }
 interface LessonJson { kapitel: number; lektion: string; titel: string; niva: string; tid_min: number; mal: string; steg: Steg[] }
 
@@ -201,7 +201,14 @@ function visualEl(v: VisualObj) {
                       {s.kicker && <div class="kicker">{s.kicker}</div>}
                       <p class="s-lead">{before}<mark>{hl}</mark>{after}</p>
                       {s.brodtext && s.brodtext.map((para) => <p class="s-body">{para}</p>)}
-                      {s.takeaway && <blockquote class="s-take">{s.takeaway}</blockquote>}
+                      {s.takeaway && (s.rost === 'sebastian' ? (
+                        <blockquote class="s-take s-take--sebbe">
+                          <span class="s-take__by"><span class="s-take__mono" aria-hidden="true">S</span>Sebastian tänker</span>
+                          {s.takeaway}
+                        </blockquote>
+                      ) : (
+                        <blockquote class="s-take">{s.takeaway}</blockquote>
+                      ))}
                     </div>
                   );
                 })()}
@@ -367,7 +374,11 @@ function visualEl(v: VisualObj) {
   .s-body { color: var(--ink-soft); margin: 0 0 18px; max-width: 62ch; }
   .s-take { margin-top: 26px; border-left: 2px solid var(--oxblood); padding: 4px 0 4px 22px; font-family: var(--display); font-style: italic; font-size: 21px; line-height: 1.4; color: var(--ink); }
   /* Byline, not a shouty label: mixed case, light tracking, reads as a signature. */
-  .s-take::before { content: "Sebastian tänker"; display: block; font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .01em; color: var(--oxblood); margin-bottom: 8px; }
+  /* Sebastian tänker: a signed card with a monogram, distinct from the plain
+     (unlabelled) takeaway above. Only steps with rost:"sebastian" get this. */
+  .s-take--sebbe { border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
+  .s-take__by { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 10px; }
+  .s-take__mono { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--oxblood); color: var(--paper); font-family: var(--display); font-style: normal; font-size: 14px; font-weight: 500; letter-spacing: 0; flex: none; }
 
   /* concept / dataviz */
   .s-ctitle { font-family: var(--display); font-weight: 400; font-size: clamp(26px,3.6vw,38px); line-height: 1.08; letter-spacing: -.015em; margin: 0 0 8px; }
