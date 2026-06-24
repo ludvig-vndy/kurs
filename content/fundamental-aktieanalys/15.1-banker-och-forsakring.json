@@ -21,7 +21,8 @@
         "Första gången du öppnar en banks årsredovisning med standardramverket i handen känns något trasigt. Skuldsättningen är enorm, soliditeten ligger på några få procent där ett vanligt bolag hade larmat, och rörelsemarginal och nettoskuld går knappt att räkna vettigt. Slutsatsen ligger nära: livsfarligt bolag, fly. Den slutsatsen vore fel. En tillverkare lånar för att finansiera fabriker, och skulden är en risk vid sidan av rörelsen. En bank tar in inlåning och kapital billigt och lånar ut det dyrare, så hela verksamheten är att hantera den skillnaden och risken den bär. Hög skuldsättning är då inte en röd flagga, det är affärsmodellen. Den verkliga risken sitter på andra ställen än du är van vid: i kvaliteten på utlåningen och i styrkan i kapitalet.",
         "Försäkringsbolaget bryter ramverket på sitt eget sätt. En tillverkare vet vad varan kostade att göra. Ett försäkringsbolag får in premien i dag men vet inte förrän långt senare vad skadorna faktiskt blir. Den redovisade vinsten ett enskilt år är därför delvis en gissning om framtida skador, och gissningar kan vara fel. Eftersom kunderna sällan byter bolag är det lätt att placera in det i facket stabilt och defensivt och gå vidare, men det döljer både var pengarna tjänas och var riskerna sitter."
       ],
-      "takeaway": "Läs aldrig en bank eller ett försäkringsbolag som ett vanligt bolag. Byt mätsticka innan du dömer, annars dömer du på fel grunder."
+      "rost": "sebastian",
+      "takeaway": "Banker, försäkring och fastighet har lurat fler skickliga analytiker än något annat, för de ser billiga ut med fel mått. Kan du inte sektorns egna måttstickor, håll dig borta."
     },
     {
       "typ": "concept",

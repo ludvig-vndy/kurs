@@ -61,6 +61,7 @@
         "Skilja återkommande intäkt från cyklisk och engångsartad",
         "Bedöma om tillväxten är ekonomiskt sund via enhetsekonomin"
       ],
+      "sebastian": "Innan jag tittar på en enda siffra vill jag förstå motorn: hur tjänar bolaget faktiskt pengar, och kommer intäkten tillbaka eller är det en engångsgrej? Förstår du inte modellen spelar siffrorna ingen roll.",
       "lektioner": [
         {
           "lektion": "2.1",
@@ -99,6 +100,7 @@
         "Skilja vad ledningen säger från vad siffrorna visar",
         "Veta var i noterna och revisionsberättelsen risker avslöjar sig"
       ],
+      "sebastian": "Årsredovisningen är ingen broschyr, det är bevis du ska förhöra. Jag läser den för att hitta det de helst inte vill att jag ska se: noten som ändrar allt, nyckeltalet som tyst försvann.",
       "lektioner": [
         {
           "lektion": "3.1",
@@ -129,6 +131,7 @@
         "Se hur en händelse syns i alla tre rapporterna",
         "Genomskåda svag vinstkvalitet och varningssignaler"
       ],
+      "sebastian": "De tre rapporterna är bolagets språk, och de flesta läser bara sista raden. Lär dig läsa alla tre ihop, så ser du skillnaden mellan en vinst som finns på riktigt och en som bara finns på pappret.",
       "lektioner": [
         {
           "lektion": "4.1",
@@ -191,6 +194,7 @@
         "Använda nyckeltal i kontext i stället för som ensamma tal",
         "Bedöma värdeskapande på ROIC mot kapitalkostnaden"
       ],
+      "sebastian": "Nyckeltal är inte poäng, de är ledtrådar. Det jag jagar mest är avkastningen på kapitalet: ett bolag som tjänar mycket på lite bundet kapital är en maskin, och de gömmer sig ofta bland de tristaste namnen.",
       "lektioner": [
         {
           "lektion": "5.1",
@@ -229,6 +233,7 @@
         "Skilja en verklig vallgrav från ett tillfälligt försprång",
         "Se en moats styrka i uthålligt hög avkastning över tid"
       ],
+      "sebastian": "Hög lönsamhet utan skydd är en inbjudan till konkurrenterna. Jag frågar alltid vad som hindrar någon rik och hungrig från att ta det här, och hur länge. Får jag inget svar är det ingen vallgrav, det är tur.",
       "lektioner": [
         {
           "lektion": "6.1",
@@ -259,6 +264,7 @@
         "Avgöra om kapitalallokeringen skapar eller förstör värde",
         "Se när förvärv och återköp lönar sig, och när de inte gör det"
       ],
+      "sebastian": "Till slut är det människor som förvaltar dina pengar. Den viktigaste frågan är vad de gör med varje krona som blir över, för där har fler förmögenheter byggts och förstörts än i själva verksamheten.",
       "lektioner": [
         {
           "lektion": "7.1",
@@ -289,6 +295,7 @@
         "Förstå hur diskontering översätter framtid till nutid",
         "Behandla en värdering som ett intervall, inte ett facit"
       ],
+      "sebastian": "Värde är inte priset på skärmen, det är nuvärdet av de pengar bolaget ger dig över tid. Den som säger sig veta det på kronan ljuger. Sikta på ett intervall och en rejäl marginal.",
       "lektioner": [
         {
           "lektion": "8.1",
@@ -319,6 +326,7 @@
         "Bygga en DCF och se var värdet kommer ifrån",
         "Sätta ett riktpris som ett intervall via scenarier"
       ],
+      "sebastian": "Här blir teorin verktyg, men låt dig inte luras av exaktheten. En modell är bara så bra som antagandena du matar in. Jag använder dem för att se vad priset redan kräver, inte för att jaga en exakt siffra.",
       "lektioner": [
         {
           "lektion": "9.1",
@@ -373,6 +381,7 @@
         "Köpa med en felmarginal som tål misstag och otur",
         "Kartlägga risker och tänka i sannolikheter"
       ],
+      "sebastian": "Risk är inte att det svänger, det är att pengarna inte kommer tillbaka. Hela mitt jobb är att förbättra oddsen och köpa med marginal, så att jag överlever att ha fel, för det kommer jag att ha ibland.",
       "lektioner": [
         {
           "lektion": "10.1",
@@ -411,6 +420,7 @@
         "Genomskåda bekräftelsebias, ankring och sunk cost",
         "Bygga ett system med position sizing och regler"
       ],
+      "sebastian": "Den största risken sitter mellan dina öron, inte i bolaget. Jag har förlorat mer på mitt eget temperament än på dålig analys. Det här kapitlet, och min egen lektion på slutet, handlar om att skydda dig från dig själv.",
       "lektioner": [
         {
           "lektion": "11.1",
@@ -465,6 +475,7 @@
         "Bedöma marknad, enhetsekonomi och finansieringsrisk",
         "Dimensionera positioner och överleva djupa kursfall"
       ],
+      "sebastian": "Tillväxtbolag är där både de största vinsterna och de största krossade drömmarna bor. Var tidig men kräv bevis, dimensionera så att ett misslyckande inte sänker dig, och ge fan i rena förhoppningar utan intäkter.",
       "lektioner": [
         {
           "lektion": "12.1",
@@ -543,6 +554,7 @@
         "Bevaka caset i stället för kursen",
         "Sälja av rätt skäl, inte av panik eller tristess"
       ],
+      "sebastian": "Kunskap blir pengar först som en vana. Skriv ned caset innan du köper, med vad som skulle få dig att sälja, och kör samma process varje gång. I lugnt väder är du klok, så låt det lugna jaget bestämma åt det stressade.",
       "lektioner": [
         {
           "lektion": "13.1",
@@ -573,6 +585,7 @@
         "Skilja rapporterade tal från härledda",
         "Landa i rätt fråga: vad är inbakat i priset"
       ],
+      "sebastian": "Här kör vi hela kedjan på ett riktigt bolag, en gång, från början till slut. Lägg märke till hur tråkigt och metodiskt det är. Just den tristessen är kanten de flesta inte orkar med.",
       "lektioner": [
         {
           "lektion": "14.1",
@@ -595,6 +608,7 @@
         "Värdera fastighetsbolag på substans och belåning",
         "Värdera cykliska bolag på normaliserad vinst"
       ],
+      "sebastian": "Vissa sektorer går inte att läsa med vanliga mått, och just därför luras folk. Banker, försäkring, fastighet och cykliska bolag ser billiga ut med fel lins. Kan du inte deras egna måttstickor, håll dig utanför.",
       "lektioner": [
         {
           "lektion": "15.1",
@@ -625,6 +639,7 @@
         "Förstå ISK, kapitalförsäkring och skatt som mekanism",
         "Lägga en plan för att fortsätta lära på egen hand"
       ],
+      "sebastian": "Nu blir allt praktiskt. Det viktigaste rådet jag kan ge: börja smått och bygg vanan. Disciplin slår begåvning på börsen, år efter år, och det är den som håller när det blåser.",
       "lektioner": [
         {
           "lektion": "16.1",

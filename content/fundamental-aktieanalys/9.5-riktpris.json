@@ -95,7 +95,8 @@
         "Ligger priset under till och med ditt konservativa fall är det tydligt billigt med en felmarginal. Du är skyddad även om dina antaganden var för rosiga. Ligger priset bara inom det optimistiska fallet kräver det att allt går rätt, det finns ingen marginal. Ligger det mitt i intervallet är det ungefär rättvist prissatt, utan tydlig kant åt något håll.",
         "Felmarginalen är skillnaden mellan vad något är värt och vad du betalar, ett skydd mot dina egna misstag och mot otur. Så avgör känslighetsanalysen om den finns. Det är inte en akademisk övning, det är skillnaden mellan ett köp du kan leva med om du har fel och ett köp som bara fungerar om du har rätt om allt."
       ],
-      "takeaway": "Köp under till och med ditt konservativa fall. Då finns en verklig marginal kvar även när några av antagandena visar sig för optimistiska."
+      "rost": "sebastian",
+      "takeaway": "Jag köper först när priset ligger under även mitt försiktiga scenario. Betalar jag för drömmen finns ingen marginal kvar den dagen verkligheten dyker upp, och det gör den alltid."
     },
     {
       "typ": "dataviz",
