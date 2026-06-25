@@ -33,7 +33,7 @@
         "celler": 28,
         "markerad": 9,
         "etikett": "DU",
-        "figurtext": "En aktie är en liten men fullt verklig del av allt bolaget äger och tjänar. Den gröna rutan är din."
+        "figurtext": "En aktie är en liten men fullt verklig del av allt bolaget äger och tjänar. Den markerade rutan är din."
       },
       "forklaring": "Ett aktiebolags ägande är uppdelat i andelar. Har bolaget gett ut tio miljoner aktier och du äger hundra av dem, äger du en hundratusendel av hela bolaget: kassan, varumärket, maskinerna, avtalen. Du har också rätt till en hundratusendel av varje krona bolaget tjänar från och med nu. Andelen är liten, men den är verklig och den är din."
     },
@@ -44,7 +44,7 @@
       "highlight": "priset och värdet",
       "brodtext": [
         "De två hänger ihop men är inte samma sak. En klassisk bild fångar varför: på kort sikt är marknaden en röstmaskin, en popularitetstävling där humöret bestämmer. På lång sikt är den en vågmaskin som väger faktiska resultat. Över dagar och veckor speglar kursen stämningar. Över år rör den sig mot verksamhetens värde.",
-        "Var kommer då en ägares avkastning ifrån? Ur tre källor: tillväxten i bolagets vinst, utdelningarna längs vägen, och förändringen i vad marknaden är villig att betala per krona vinst. De två första kommer ur verksamheten och går att analysera. Den tredje kommer ur stämningsläget och kan ingen förutsäga tillförlitligt. Så förankra ditt case i verksamheten och se humöret som en vind du inte rår över. Vi går djupare på pris mot värde i nästa lektion."
+        "Var kommer då en ägares avkastning ifrån? Ur tre källor: tillväxten i bolagets vinst, utdelningarna längs vägen, och förändringen i vad marknaden är villig att betala per krona vinst. De två första kommer ur verksamheten och går att analysera. Den tredje kommer ur marknadens humör, och det kan ingen förutsäga. Så förankra ditt case i verksamheten och se humöret som en vind du inte rår över. Vi går djupare på pris mot värde i nästa lektion."
       ],
       "takeaway": "Bygg ditt case på det verksamheten gör, inte på vad marknadens humör ska göra härnäst. Hoppet är ingen strategi."
     },

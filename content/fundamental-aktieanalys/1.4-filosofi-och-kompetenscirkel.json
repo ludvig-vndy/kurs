@@ -4,7 +4,7 @@
   "titel": "Filosofi och kompetenscirkel",
   "niva": "Nybörjare",
   "tid_min": 9,
-  "mal": "Efter lektionen kan eleven välja en sammanhängande investeringsfilosofi som passar temperament och edge, och hålla den inom det eleven faktiskt förstår.",
+  "mal": "Efter lektionen kan eleven välja en sammanhängande investeringsfilosofi som passar temperament och övertag, och hålla den inom det eleven faktiskt förstår.",
   "steg": [
     {
       "typ": "intro",
@@ -25,9 +25,9 @@
     },
     {
       "typ": "reading",
-      "kicker": "TEMPERAMENT OCH EDGE",
-      "lead": "Välj en filosofi som matchar två saker: ditt temperament och din edge. Temperament eftersom du måste leva med approachen genom dåliga perioder. Edge eftersom din approach bör spela på det du förstår bättre än mängden.",
-      "highlight": "ditt temperament och din edge",
+      "kicker": "TEMPERAMENT OCH ÖVERTAG",
+      "lead": "Välj en filosofi som matchar två saker: ditt temperament och ditt övertag. Temperamentet eftersom du måste leva med metoden genom dåliga perioder. Övertaget eftersom din metod bör spela på det du förstår bättre än mängden.",
+      "highlight": "ditt temperament och ditt övertag",
       "brodtext": [
         "En djup värdeinvesterare måste tåla att se fel ut under långa stunder. En kvalitetsinvesterare måste tåla att betala upp och se andra bli rika snabbare i spekulativa manier. Faran är inte vilken filosofi du väljer, utan att blanda dem osammanhängande: att köpa en värdeaktie och sedan paniksälja den för att den inte växer som en tillväxtaktie, alltså att lägga fel måttstock på fel verktyg.",
         "Värdera konsekvens högst av allt. Nästan vilken sund filosofi som helst, tillämpad med disciplin under lång tid, slår att hoppa mellan filosofier efter vad som är hett. Skatan som hoppar till vad som än glittrat och stigit nyligen kommer alltid ett steg efter. Skillnaden är inte intelligens, utan att den ena har ett system där lärande och disciplin växer med ränta på ränta."
@@ -71,7 +71,7 @@
             "Att hålla fast vid samma filosofi för länge"
           ],
           "ratt": [1],
-          "forklaring": "Stildrift gör att du konsekvent kommer sent till varje approach. Konsekvens slår klyftighet eftersom lärande och disciplin får växa med ränta på ränta."
+          "forklaring": "Stildrift gör att du konsekvent kommer sent till varje metod. Konsekvens slår klyftighet eftersom lärande och disciplin får växa med ränta på ränta."
         },
         {
           "typ": "single",
@@ -86,16 +86,16 @@
         },
         {
           "typ": "multi",
-          "fraga": "Vilka av dessa är tecken på en sammanhängande approach som hålls inom cirkeln?",
+          "fraga": "Vilka av dessa är tecken på en sammanhängande metod som hålls inom cirkeln?",
           "underrubrik": "Välj alla som stämmer",
           "alternativ": [
-            "Du kan beskriva din filosofi tydligt och vilka slags verksamheter den leder dig till",
+            "Du kan beskriva din metod tydligt och vilka slags verksamheter den leder dig till",
             "Du köpte något främst för att en känd investerare äger det",
             "Du kan ärligt säga att något ligger utanför din cirkel och avstå utan att tveka",
             "Du sätter dig snabbt in i en het bransch du inte följer för att inte missa en aktie som stigit"
           ],
           "ratt": [0, 2],
-          "forklaring": "En sammanhängande approach beskrivs i klartext och vet var dess kant går. Att luta sig mot någon annans övertygelse eller sänka ribban under FOMO är tvärtom varningstecken."
+          "forklaring": "En sammanhängande metod beskrivs i klartext och vet var dess gräns går. Att luta sig mot någon annans övertygelse eller sänka ribban för att inte missa en uppgång är tvärtom varningstecken."
         }
       ]
     }

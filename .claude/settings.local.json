@@ -96,7 +96,11 @@
       "Read(//tmp/**)",
       "PowerShell(git *)",
       "Bash(grep -E \"\\\\.app\\\\s*\\\\{|\\\\.app\\\\s*$\" src/layouts/AppShell.astro -A 3)",
-      "PowerShell($env:Path = $env:Path; Set-Location C:\\\\Dev\\\\kurs; node --test \"tools/__tests__/state-core.test.mjs\" 2>&1 | Select-Object -Last 15)"
+      "PowerShell($env:Path = $env:Path; Set-Location C:\\\\Dev\\\\kurs; node --test \"tools/__tests__/state-core.test.mjs\" 2>&1 | Select-Object -Last 15)",
+      "Bash(wrangler --version)",
+      "Bash(wrangler whoami *)",
+      "Bash(npx wrangler *)",
+      "Bash(set -e)"
     ]
   }
 }

@@ -132,12 +132,17 @@ const PASS_MARK = 80;
 
   /* ── Post-grading states ────────────────────────────────────────────── */
   .fq.is-graded .fq-opt { cursor: default; pointer-events: none; }
-  .fq-opt.is-correct { border-color: var(--good); background: var(--good-soft); }
+  /* Scoped to .is-graded so the verdict colours out-specify the "selected"
+     (:has(:checked)) background, otherwise a picked-correct option stays pink. */
+  .fq.is-graded .fq-opt.is-correct { border-color: var(--good); background: var(--good-soft); }
   .fq-opt.is-correct .fq-opt__icon { display: block; }
   .fq-opt.is-correct .fq-icon-ok { display: block; }
-  .fq-opt.is-wrong { border-color: var(--oxblood); background: var(--bad-soft); }
+  .fq.is-graded .fq-opt.is-wrong { border-color: var(--oxblood); background: var(--bad-soft); }
   .fq-opt.is-wrong .fq-opt__icon { display: block; }
   .fq-opt.is-wrong .fq-icon-no { display: block; }
+  /* A picked-correct marker should read green, not the neutral oxblood fill. */
+  .fq.is-graded .fq-opt.is-correct:has(.fq-opt__input:checked) .fq-opt__marker { border-color: var(--good); box-shadow: inset 0 0 0 5px var(--good); }
+  .fq.is-graded [data-multi='true'] .fq-opt.is-correct:has(.fq-opt__input:checked) .fq-opt__marker { box-shadow: inset 0 0 0 9px var(--good); }
   .fq-opt.is-wrong { animation: fq-shake 250ms ease; }
   @keyframes fq-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
   @media (prefers-reduced-motion: reduce) { .fq-opt.is-wrong { animation: none; } }
