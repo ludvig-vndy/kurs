@@ -94,7 +94,7 @@
     },
     {
       "typ": "dataviz",
-      "titel": "Tre fjärdedelar bor i terminalvärdet",
+      "titel": "Tre fjärdedelar sitter i terminalvärdet",
       "underrubrik": "Samma bolag, samma prognos. Så här fördelar sig totalvärdet mellan de fem noggrant prognostiserade åren och terminalvärdet.",
       "visual": {
         "typ": "andel",
@@ -116,7 +116,7 @@
         "Flexa sedan diskonteringsräntan med den eviga tillväxten kvar på 3 procent, och kom ihåg att även de explicita kassaflödenas nuvärde måste räknas om när räntan ändras. Vid 9 procent blir totalvärdet runt 2 126 Mkr, vid 10 procent runt 1 816 Mkr, vid 11 procent runt 1 584 Mkr. En enda procentenhet svänger värdet med omkring 15 procent åt gången. Och effekterna förstärker varandra: en något lägre ränta plus en något högre evig tillväxt kan tillsammans lyfta värdet enormt.",
         "Samma bolag, samma prognos, men värdet sträcker sig från under 1 600 till över 2 100 Mkr bara genom att vrida på två terminalantaganden inom rimliga gränser. Den noggranna femårsprognosen rör knappt totalen. Därför håller du de två konservativa, korskollar dem, och tror aldrig på en enda exakt DCF-siffra."
       ],
-      "takeaway": "En procentenhet hit eller dit i ränta eller evig tillväxt svänger värdet tvåsiffrigt i procent. Mest av värdet, och nästan all osäkerhet, bor i de två antagandena."
+      "takeaway": "En procentenhet hit eller dit i ränta eller evig tillväxt svänger värdet tvåsiffrigt i procent. Mest av värdet, och nästan all osäkerhet, sitter i de två antagandena."
     },
     {
       "typ": "reading",

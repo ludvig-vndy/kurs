@@ -4,13 +4,13 @@
   "titel": "Årsredovisningens delar",
   "niva": "Nybörjare",
   "tid_min": 8,
-  "mal": "Efter lektionen vet eleven vilka delar en årsredovisning består av, vad varje del är till för och var olika sorters svar bor.",
+  "mal": "Efter lektionen vet eleven vilka delar en årsredovisning består av, vad varje del är till för och var olika sorters svar finns.",
   "steg": [
     {
       "typ": "intro",
       "kicker": "LEKTION 3.1",
       "titel": "Årsredovisningens delar",
-      "ingress": "Årsredovisningen är den viktigaste källan du har om ett bolag. Att veta var olika sorters svar bor är en grundfärdighet."
+      "ingress": "Årsredovisningen är den viktigaste källan du har om ett bolag. Att veta var olika sorters svar finns är en grundfärdighet."
     },
     {
       "typ": "reading",
@@ -19,7 +19,7 @@
       "highlight": "delarna går att ordna på en skala",
       "brodtext": [
         "VD-ordet är ledningens egen berättelse om året, marknadsföring lindad runt fakta. Det visar vad ledningen vill att du ska titta på. Användbart för ton och prioriteringar, men den mest tillrättalagda delen. Förvaltningsberättelsen är mer reglerad och saklig: verksamheten, riskerna, den föreslagna utdelningen och väsentliga händelser.",
-        "De tre rapporterna är hjärtat, med standardiserade och reviderade siffror. Resultaträkningen visar lönsamheten över en period, balansräkningen ställningen vid en tidpunkt, kassaflödesanalysen de faktiska pengarna in och ut. Noterna är där detaljen bor, och ofta sanningen: redovisningsprinciper, skuldvillkor, segment och vad som ligger inuti raderna. Revisionsberättelsen är revisorns omdöme om bilden är rättvisande.",
+        "De tre rapporterna är hjärtat, med standardiserade och reviderade siffror. Resultaträkningen visar lönsamheten över en period, balansräkningen ställningen vid en tidpunkt, kassaflödesanalysen de faktiska pengarna in och ut. Noterna är där detaljen sitter, och ofta sanningen: redovisningsprinciper, skuldvillkor, segment och vad som ligger inuti raderna. Revisionsberättelsen är revisorns omdöme om bilden är rättvisande.",
         "Läsordningen som fungerar är ofta bakvänd mot hur dokumentet är tryckt. Skumma VD-ordet för tonen, gå sedan rakt till kassaflödet och noterna, och läs den polerade berättelsen sist. Då hinner historien inte ankra dig innan du sett siffrorna."
       ],
       "takeaway": "Behandla årsredovisningen som bevis du förhör, inte en historia du sväljer. Se siffran innan du läser meningen om den."
@@ -56,14 +56,14 @@
         },
         {
           "typ": "single",
-          "fraga": "Du vill veta hur ett bolags omsättning intäktsförs och när dess skulder förfaller. Var bor de svaren?",
+          "fraga": "Du vill veta hur ett bolags omsättning intäktsförs och när dess skulder förfaller. Var finns de svaren?",
           "alternativ": [
             "I VD-ordet",
             "I noterna",
             "I förvaltningsberättelsen"
           ],
           "ratt": [1],
-          "forklaring": "Detaljen bor i noterna: redovisningsprinciper och skuldvillkor. Rapporternas rader sammanfattar bara, noterna förklarar vad som ligger inuti dem."
+          "forklaring": "Detaljen finns i noterna: redovisningsprinciper och skuldvillkor. Rapporternas rader sammanfattar bara, noterna förklarar vad som ligger inuti dem."
         },
         {
           "typ": "multi",

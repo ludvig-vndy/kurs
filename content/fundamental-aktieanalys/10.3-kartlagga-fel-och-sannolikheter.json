@@ -18,7 +18,7 @@
       "lead": "Det kraftfullaste greppet är att vända på frågan. I stället för hur lyckas det här, fråga hur misslyckas det, eller förlorar jag pengar permanent.",
       "highlight": "I stället för hur lyckas det här, fråga hur misslyckas det",
       "brodtext": [
-        "Att medvetet bygga bear-caset, scenariot där det går illa, tvingar fram de risker som optimismen annars sopar under mattan. De bästa investerarna sliter med att döda sin egen tes. Misslyckas de håller tesen, lyckas de har de just sluppit en förlust.",
+        "Att medvetet bygga upp scenariot där det går illa tvingar fram de risker som optimismen annars sopar under mattan. De bästa investerarna sliter med att döda sin egen tes. Misslyckas de håller tesen, lyckas de har de just sluppit en förlust.",
         "Det svåra är hederligheten: att leta efter skäl att avstå precis när du blivit förtjust i idén. En pre-mortem hjälper. Föreställ dig att det gått några år och investeringen blivit en katastrof, och förklara varför. Då tvingar du fram misslyckandena konkret innan de hinner hända, i stället för att bortförklara dem efteråt."
       ],
       "takeaway": "Att tänka hårt på vad som kan gå fel är den mest underanvända och mest skyddande vanan du har. Inversion och pre-mortem gör den till rutin."
@@ -54,7 +54,7 @@
       "lead": "Kartläggningen syns tydligast när du ställer två bolag som ser likvärdigt billiga ut bredvid varandra. Säg att båda handlas till P/E 12 med hygglig tillväxt, men nedsidan visar helt olika risk (siffror illustrativa).",
       "highlight": "två bolag som ser likvärdigt billiga ut",
       "brodtext": [
-        "Det första bolaget har låg nettoskuld, runt 0,5 gånger EBITDA, en spridd kundbas där ingen kund står för mer än några få procent av intäkterna, liten regulatorisk exponering och en stabil verksamhet som är svår att disrumpera. Kartlägg nedsidan: även i en hård recession överlever det bekvämt tack vare den låga skulden, ett tappat kundkonto skaver knappt, och inget uppenbart tekniskt eller regulatoriskt hot tornar upp sig. Riskerna är verkliga men överlevbara, ingen av dem skulle ensam orsaka permanent förlust. Här skyddar en felmarginal dig på riktigt.",
+        "Det första bolaget har låg nettoskuld, runt 0,5 gånger EBITDA, en spridd kundbas där ingen kund står för mer än några få procent av intäkterna, liten regulatorisk exponering och en stabil verksamhet som är svår att slå ut. Kartlägg nedsidan: även i en hård recession överlever det bekvämt tack vare den låga skulden, ett tappat kundkonto skaver knappt, och inget uppenbart tekniskt eller regulatoriskt hot tornar upp sig. Riskerna är verkliga men överlevbara, ingen av dem skulle ensam orsaka permanent förlust. Här skyddar en felmarginal dig på riktigt.",
         "Det andra bolaget har hög nettoskuld, säg 4,5 gånger EBITDA, en enda kund som står för en stor del av intäkterna, verkar i en tungt reglerad bransch inför en möjlig regeländring, och i en sektor som en ny teknik börjar utmana. Kartlägg nedsidan: en nedgång kan bryta lånevillkoren, tappet av storkunden vore förödande, en regeländring kan slå mot verksamheten, och disruption kan urholka positionen. Flera av dem kan var för sig orsaka permanent förlust eller rentav ruin. Här räcker ingen felmarginal, och rätt svar kan vara att avstå.",
         "Båda såg lika billiga ut på P/E 12. Den som bara tittar på multipeln ser tvillingar. Den som kartlade vad som kan gå fel ser en sund möjlighet och en potentiell katastrof. Det är arbetet med nedsidan, inte multipeln, som skyddar kapitalet."
       ],
@@ -93,8 +93,8 @@
           "typ": "single",
           "fraga": "Vad är det kraftfullaste greppet för att kartlägga vad som kan gå fel?",
           "alternativ": [
-            "Att bygga det starkaste bull-caset och fråga hur investeringen lyckas",
-            "Att vända på frågan och medvetet konstruera bear-caset: hur misslyckas det, eller förlorar jag pengar permanent?",
+            "Att bygga det starkaste optimistiska scenariot och fråga hur investeringen lyckas",
+            "Att vända på frågan och medvetet konstruera det negativa scenariot: hur misslyckas det, eller förlorar jag pengar permanent?",
             "Att lita på att marknadspriset redan vägt in alla risker"
           ],
           "ratt": [1],

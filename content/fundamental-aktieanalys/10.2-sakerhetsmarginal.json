@@ -56,7 +56,7 @@
           "fraga": "Hur bör storleken på den felmarginal du kräver bestämmas?",
           "alternativ": [
             "Den ska alltid vara exakt 50 procent oavsett bolag",
-            "Den ska skala med osäkerheten: större rabatt för svårbedömda bolag, mindre där förståelsen är genuin",
+            "Den ska skala med osäkerheten: större rabatt för svårbedömda bolag, mindre där förståelsen är verklig",
             "Den ska vara större ju mer aktiens pris svänger"
           ],
           "ratt": [1],

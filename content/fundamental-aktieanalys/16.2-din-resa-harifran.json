@@ -48,7 +48,7 @@
       "highlight": "Vinst är en åsikt, kontanter ett faktum.",
       "brodtext": [
         "Kvalitet är hög avkastning på kapital skyddad av en moat, med klok kapitalallokering ovanpå. Värde är nuvärdet av framtida kassaflöden, och varje metod är en genväg dit. Risk är permanent kapitalförlust, och felmarginalen är ditt försvar mot den.",
-        "Den verkliga kanten är inte intelligens, den är temperament och disciplin, satt i system genom arket du nu har. Det här är utbildning, inte rådgivning. Bolagen i kursen har varit undervisningsfall för tidlösa mönster, aldrig rekommendationer. Du fattar dina egna beslut och håller dem så små att du överlever dina misstag, för du kommer göra dem."
+        "Det verkliga övertaget är inte intelligens, det är temperament och disciplin, satt i system genom arket du nu har. Det här är utbildning, inte rådgivning. Bolagen i kursen har varit undervisningsfall för tidlösa mönster, aldrig rekommendationer. Du fattar dina egna beslut och håller dem så små att du överlever dina misstag, för du kommer göra dem."
       ],
       "rost": "sebastian",
       "takeaway": "Börja smått och fyll i ett case innan du köper, varje gång. Det är inte sexigt, men det är vanan som håller när det blåser, inte ett enskilt smart köp."
@@ -84,12 +84,12 @@
           "underrubrik": "Välj alla som stämmer",
           "alternativ": [
             "Vinst är en åsikt, kontanter ett faktum",
-            "Den verkliga kanten är temperament och disciplin, inte intelligens",
+            "Det verkliga övertaget är temperament och disciplin, inte intelligens",
             "Risk betyder att kursen svänger mycket på kort sikt",
             "Felmarginalen är ditt försvar mot permanent kapitalförlust"
           ],
           "ratt": [0, 1, 3],
-          "forklaring": "Röda trådarna är att kontanter är faktum, att kanten är temperament och disciplin, och att felmarginalen försvarar mot permanent förlust. Risk är permanent kapitalförlust, inte att kursen svänger."
+          "forklaring": "Röda trådarna är att kontanter är faktum, att övertaget är temperament och disciplin, och att felmarginalen försvarar mot permanent förlust. Risk är permanent kapitalförlust, inte att kursen svänger."
         }
       ]
     }

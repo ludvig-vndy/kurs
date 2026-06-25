@@ -69,7 +69,7 @@
     {
       "typ": "reading",
       "kicker": "SYSTEMET",
-      "lead": "Kunskap om dina fällor räcker inte. I stundens hetta, en krasch, en mani, en position ned 50 procent, överväldigar känslan kunskapen, och du gör precis det du visste var fel. Du visste att man inte ska sälja i panik, och så säljer du i panik ändå.",
+      "lead": "Kunskap om dina fällor räcker inte. I stundens hetta, en krasch, en mani, en position ned 50 procent, överväldigar känslan kunskapen, och du gör precis det du visste var fel. Du visste att du inte ska sälja i panik, och så säljer du i panik ändå.",
       "highlight": "I stundens hetta, en krasch, en mani, en position ned 50 procent, överväldigar känslan kunskapen",
       "brodtext": [
         "Lösningen är ett system: regler och checklistor som du bygger i förväg, medan du är lugn, och som tar över när känslan annars skulle styra. Ett gott investeringssystem är ditt disciplinerade jag som skyddar dig mot ditt känslostyrda jag. Det låter ditt lugna jag binda ditt framtida känslostyrda jag, ungefär som Odysseus lät binda sig vid masten för att inte kunna lyda sirenernas sång. Eftersom du inte kan lita på att vara rationell i stunden, förbinder du dig i förväg.",
@@ -130,16 +130,16 @@
           "alternativ": [
             "Att den övermodige hade rätt eftersom analysen var god",
             "Att det var dimensioneringen, inte analysen, som avgjorde om det var överlevbart att ha otur",
-            "Att man aldrig ska investera i stora bolag"
+            "Att du aldrig ska investera i stora bolag"
           ],
           "ratt": [1],
           "forklaring": "Båda hade samma goda analys, men den övermodige tar en portföljkrympande smäll medan den disciplinerade tar en hanterbar. En korrekt analys kan ändå möta en framtid där oförutsägbara saker händer."
         },
         {
           "typ": "single",
-          "fraga": "Varför är en investerare som mest noggrann med storleken precis när hon känner sig som säkrast?",
+          "fraga": "Varför är du som mest noggrann med storleken precis när du känner dig som säkrast?",
           "alternativ": [
-            "För att hon då har råd att satsa allt",
+            "För att du då har råd att satsa allt",
             "För att självsäkerhet inte är detsamma som träffsäkerhet, och vi är ofta som mest tvärsäkra precis när vi har fel",
             "För att säkra kort aldrig kan misslyckas"
           ],

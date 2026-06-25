@@ -4,7 +4,7 @@
   "titel": "Vad risk faktiskt är",
   "niva": "Mellan",
   "tid_min": 9,
-  "mal": "Efter lektionen kan eleven definiera risk som sannolikheten för permanent kapitalförlust, skilja den från kursvolatilitet, och låta den skillnaden styra hur hen reagerar på nedgångar.",
+  "mal": "Efter lektionen kan eleven definiera risk som sannolikheten för permanent kapitalförlust, skilja den från kursvolatilitet, och låta den skillnaden styra hur du reagerar på nedgångar.",
   "steg": [
     {
       "typ": "intro",
@@ -55,7 +55,7 @@
       "highlight": "vad skulle kunna förstöra mitt kapital permanent",
       "brodtext": [
         "Det ger ett lugn som ser nästan märkligt ut utifrån. Faller en sund verksamhet i pris läser du det som ett möjligt köptillfälle och behöver inte göra något alls. Vaksamheten riktas mot det som verkligen skadar kapital: strukturell försämring, för mycket skuld, överbetalning.",
-        "En vanlig fallgrop: nybörjaren tror att en lugn, sällan handlad aktie är trygg och att en volatil är farlig. Ofta är det tvärtom. Det skenbart lugna bolaget kan vara det skört finansierade. Det vanligaste misstaget av alla är att sätta likhetstecken mellan risk och volatilitet och sälja sunda verksamheter i paniker, vilket är precis det som gör ett tillfälligt fall till en permanent förlust."
+        "En vanlig fallgrop: nybörjaren tror att en lugn, sällan handlad aktie är trygg och att en volatil är farlig. Ofta är det tvärtom. Det skenbart lugna bolaget kan vara det skört finansierade. Det vanligaste misstaget är att sätta likhetstecken mellan risk och volatilitet och sälja sunda verksamheter i paniker, vilket är det som gör ett tillfälligt fall till en permanent förlust."
       ],
       "takeaway": "Två kursfall som ser likadana ut på en graf kan vara helt olika saker. Bara förståelse av verksamheten och priset talar om vilket som är vilket."
     },

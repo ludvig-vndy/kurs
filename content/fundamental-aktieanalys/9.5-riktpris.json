@@ -92,7 +92,7 @@
       "lead": "Det avgörande är vad du gör med intervallet. Här möter det felmarginalen. Du håller priset mot spannet, och var priset hamnar avgör om du är skyddad eller om du satsar på att allt går rätt.",
       "highlight": "Det avgörande är vad du gör med intervallet",
       "brodtext": [
-        "Ligger priset under till och med ditt konservativa fall är aktien tydligt billig med en felmarginal. Du är skyddad även om dina antaganden var för rosiga. Ligger priset bara inom det optimistiska fallet krävs att allt går rätt, och då finns ingen marginal. Ligger det mitt i intervallet är aktien ungefär rättvist prissatt, utan kant åt något håll.",
+        "Ligger priset under till och med ditt konservativa fall är aktien tydligt billig med en felmarginal. Du är skyddad även om dina antaganden var för rosiga. Ligger priset bara inom det optimistiska fallet krävs att allt går rätt, och då finns ingen marginal. Ligger det mitt i intervallet är aktien ungefär rättvist prissatt, utan övertag åt något håll.",
         "Felmarginalen är skillnaden mellan vad något är värt och vad du betalar, ett skydd mot dina egna misstag och mot otur. Det är så känslighetsanalysen avgör om den finns. Det är ingen akademisk övning. Det är skillnaden mellan ett köp du kan leva med om du har fel och ett köp som bara fungerar om du har rätt om allt."
       ],
       "rost": "sebastian",
@@ -106,7 +106,7 @@
         "typ": "jamforelse",
         "element": [
           { "rubrik": "Pris runt 7 kr", "text": "Under till och med det konservativa fallet på 10,4. Tydligt billigt med en verklig felmarginal. Du är skyddad även om dina antaganden var för rosiga." },
-          { "rubrik": "Pris runt 15 kr", "text": "Mitt i intervallet, nära basfallet. Ungefär rättvist prissatt, ingen kant åt något håll. Du betalar för det troliga utfallet." },
+          { "rubrik": "Pris runt 15 kr", "text": "Mitt i intervallet, nära basfallet. Ungefär rättvist prissatt, inget övertag åt något håll. Du betalar för det troliga utfallet." },
           { "rubrik": "Pris runt 22 kr", "text": "Bara motiverat av det optimistiska fallet. Ingen marginal. Du satsar på att allt går rätt, och en besvikelse straffar sig direkt." }
         ],
         "figurtext": "Illustrativt, mot intervallet runt 10 till 24 kr per aktie."

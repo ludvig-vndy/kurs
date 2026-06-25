@@ -95,7 +95,7 @@
     {
       "typ": "reading",
       "kicker": "FÄLLAN I EBITDA",
-      "lead": "I rörelseavsnittet bor också ett av analysens mest missbrukade nyckeltal: EBITDA, resultat före räntor, skatt, av- och nedskrivningar. Det finns överallt i investerarpresentationer och är på samma gång användbart och farligt.",
+      "lead": "I rörelseavsnittet sitter också ett av analysens mest missbrukade nyckeltal: EBITDA, resultat före räntor, skatt, av- och nedskrivningar. Det finns överallt i investerarpresentationer och är på samma gång användbart och farligt.",
       "highlight": "på samma gång användbart och farligt",
       "brodtext": [
         "EBITDA är EBIT med av- och nedskrivningar återlagda, och är därför alltid större än EBIT. Det legitima syftet är att lägga tillbaka poster som inte kostar kontanter, alltså kostnaden för tidigare investeringar fördelad över tid, för att grovt uppskatta operativt kassaflöde och göra bolag med olika tillgångsbas jämförbara. Fällan uppstår när det legitima syftet blir en vana.",

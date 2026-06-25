@@ -141,7 +141,7 @@
             "I att vänta tills konkursrisken är helt eliminerad"
           ],
           "ratt": [0],
-          "forklaring": "Dessa bolag är oftast prissatta för framgång utan felmarginal på det vägda värdet. Kanten är asymmetri plus överlevnad över en korg: multipeln fångas tidigt, toppfallet kan vara flera gånger priset, och små positioner gör de troliga misslyckandena överlevbara."
+          "forklaring": "Dessa bolag är oftast prissatta för framgång utan felmarginal på det vägda värdet. Övertaget är asymmetri plus överlevnad över en korg: multipeln fångas tidigt, toppfallet kan vara flera gånger priset, och små positioner gör de troliga misslyckandena överlevbara."
         },
         {
           "typ": "multi",

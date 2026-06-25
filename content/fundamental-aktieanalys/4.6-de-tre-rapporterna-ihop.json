@@ -115,11 +115,11 @@
     {
       "typ": "reading",
       "kicker": "HUR EN ERFAREN INVESTERARE TÄNKER",
-      "lead": "En erfaren investerare betar inte av lönsamt, starkt och kontant som tre separata prov. Du tänker i hela bolag, för det är hela bolag du äger.",
+      "lead": "Du betar inte av lönsamt, starkt och kontant som tre separata prov. Du tänker i hela bolag, för det är hela bolag du äger.",
       "highlight": "Du tänker i hela bolag, för det är hela bolag du äger.",
       "brodtext": [
-        "Du tar in en händelse, säg en förvärvsdriven tillväxt, en marginalökning eller en investeringsvåg, och frågar genast hur den borde se ut i alla tre rapporterna, och om verkligheten matchar. Använd kopplingarna som en inbyggd lögndetektor och leta systematiskt efter ställena där historien inte går jämnt ut. Det är där problemen bor.",
-        "Målet är alltid ett samlat utlåtande. Inte marginalen är 15 procent, skulden 2 gånger, fritt kassaflöde 80, utan det här är en lönsam, finansiellt stark, kontantgenererande verksamhet, eller var sanningen nu landar. Notera om din sammanvägning är ren eller kräver ett men: lönsamt men inga kontanter, växande men skört. Det men:et är ofta där risken bor."
+        "Du tar in en händelse, säg en förvärvsdriven tillväxt, en marginalökning eller en investeringsvåg, och frågar genast hur den borde se ut i alla tre rapporterna, och om verkligheten matchar. Använd kopplingarna som en inbyggd lögndetektor och leta systematiskt efter ställena där historien inte går jämnt ut. Det är där problemen sitter.",
+        "Målet är alltid ett samlat utlåtande. Inte marginalen är 15 procent, skulden 2 gånger, fritt kassaflöde 80, utan det här är en lönsam, finansiellt stark, kontantgenererande verksamhet, eller var sanningen nu landar. Notera om din sammanvägning är ren eller kräver ett men: lönsamt men inga kontanter, växande men skört. Det men:et är ofta där risken sitter."
       ],
       "takeaway": "Gå från att läsa rapporter till att bedöma bolag. Väg ihop lönsamhet, styrka och kontantgenerering till en enda ärlig mening, och var ärlig med eventuella men."
     },
@@ -176,10 +176,10 @@
           "alternativ": [
             "Avvisa bolaget direkt som ett bedrägeri",
             "Lita på resultaträkningen eftersom vinsten är positiv",
-            "Bli nyfiken och kräva en förklaring man tror på, eftersom vyerna drar isär"
+            "Bli nyfiken och kräv en förklaring du tror på, eftersom vyerna drar isär"
           ],
           "ratt": [2],
-          "forklaring": "En stark resultaträkning motsagd av ett svagt kassaflöde är inte automatiskt fusk, men kräver en förklaring. Du vilar inte förrän du har den, för det är där risken ofta bor."
+          "forklaring": "En stark resultaträkning motsagd av ett svagt kassaflöde är inte automatiskt fusk, men kräver en förklaring. Du vilar inte förrän du har den, för det är där risken ofta sitter."
         },
         {
           "typ": "multi",

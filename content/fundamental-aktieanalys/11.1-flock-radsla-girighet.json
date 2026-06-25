@@ -18,7 +18,7 @@
       "lead": "När instinkten att haka på är som starkast är priset i förhållande till värdet oftast som sämst. Du blir inte inbjuden till festen förrän den nästan är slut.",
       "highlight": "När instinkten att haka på är som starkast är priset i förhållande till värdet oftast som sämst.",
       "brodtext": [
-        "Tänk dig en aktie som stigit kraftigt i ett år. Tidningarna skriver om den, dina kollegor pratar om den, och var och en som köpte tidigt verkar ha blivit rik. Magkänslan säger köp. Men den känslan, multiplicerad med tiotusentals andra, är vad som tryckte upp priset i första taget.",
+        "Tänk dig en aktie som stigit kraftigt i ett år. Tidningarna skriver om den, dina kollegor pratar om den, och var och en som köpte tidigt verkar ha blivit rik. Magkänslan säger köp. Men den känslan, multiplicerad med tiotusentals andra, är vad som tryckte upp priset från början.",
         "Mekanismen har två delar. Den första är socialt bevis: när vi är osäkra tolkar hjärnan andras handlingar som information, och om många köper måste de veta något. Problemet är att de flesta i flocken köper av exakt samma skäl, alltså för att andra köper, så det bevis du läser av är bara känsla som matar på sig själv.",
         "Den andra delen är FOMO, rädslan att missa. Här gör hjärnan två fel samtidigt. Den extrapolerar, alltså antar att det som stigit ska fortsätta stiga, och den tappar priset ur sikte. Blicken fäster vid uppgången och vid vad andra tjänat, och slutar fråga det enda som spelar roll: vad du betalar i förhållande till vad du får."
       ],
@@ -67,11 +67,11 @@
       "fragor": [
         {
           "typ": "single",
-          "fraga": "En erfaren investerare känner stark FOMO inför en aktie som stigit kraftigt på ett år. Hur tolkar hon själva känslan klokast?",
+          "fraga": "Du känner stark FOMO inför en aktie som stigit kraftigt på ett år. Hur tolkar du känslan klokast?",
           "alternativ": [
             "Som en signal att skynda sig in innan tåget går",
-            "Som en varning att hon kan vara sen och att priset speglar andras entusiasm, inte värde",
-            "Som ett bevis på att marknaden vet något hon inte vet"
+            "Som en varning att du kan vara sen och att priset speglar andras entusiasm, inte värde",
+            "Som ett bevis på att marknaden vet något du inte vet"
           ],
           "ratt": [1],
           "forklaring": "Stigande pris och popularitet är uttryck för flockens känsla, inte bevis på värde. Att det känns bekvämt och självklart betyder oftast att konsensus redan är inprisad."
