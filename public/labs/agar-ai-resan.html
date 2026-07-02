@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ägar-AI · Livsgången</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E0F11; --bg2:#131417; --card:#16181C; --card2:#1C1F24;
+    --line:#262A30; --line2:#333842;
+    --ink:#ECEEF1; --mut:#9AA1AC; --faint:#646B76;
+    --gold:#E0A43B; --gold-soft:#1F232C; --gold-d:#7E5E22;
+    --pos:#5FB89A; --pos-soft:#16241F;
+    --neg:#E0726F; --neg-soft:#261A1D; --neg-d:#6E3A33;
+    --disp:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.55}
+  .mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  button{font-family:inherit;cursor:pointer}
+  ::selection{background:var(--gold-soft)}
+  .pos{color:var(--pos)}.neg{color:var(--neg)}.gold{color:var(--gold)}.mutc{color:var(--mut)}.faintc{color:var(--faint)}
+
+  .top{display:flex;align-items:center;gap:10px;justify-content:center;padding:20px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .top .mark{width:20px;height:20px;border-radius:6px;background:linear-gradient(150deg,var(--gold),#c98a28);display:grid;place-items:center}
+  .top .mark svg{width:12px;height:12px;stroke:#15171a;stroke-width:2.2;fill:none}
+  .mock{font-size:9px;border:1px solid var(--line2);border-radius:6px;padding:3px 7px;margin-left:8px;letter-spacing:.05em}
+
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+  /* journey timeline */
+  .tl{display:flex;gap:0;margin:6px 0 34px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg2)}
+  .tl button{flex:1;background:none;border:none;border-right:1px solid var(--line);padding:11px 6px;color:var(--faint);transition:.14s}
+  .tl button:last-child{border-right:none}
+  .tl button:hover{color:var(--ink);background:var(--card)}
+  .tl button.on{background:var(--card2);color:var(--ink)}
+  .tl .d{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  .tl button.on .d{color:var(--gold)}
+  .tl .t{display:block;font-size:11px;margin-top:3px}
+  .tl button.done .d{color:var(--pos)}
+
+  /* narrator */
+  .narr{border:1px solid var(--gold-d);background:linear-gradient(140deg,#1b1d22,#16171b);border-radius:16px;padding:24px 26px;margin-bottom:26px}
+  .narr .step{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .narr h1{font-family:var(--disp);font-weight:600;font-size:28px;line-height:1.14;letter-spacing:-.4px;margin:0 0 10px}
+  .narr p{color:var(--mut);font-size:14.5px;line-height:1.62;margin:0}
+  .narr p b{color:var(--ink);font-weight:500}
+
+  .demo-label{display:flex;align-items:center;gap:10px;margin:0 2px 10px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .demo-label::after{content:'';flex:1;height:1px;background:var(--line)}
+  .demo{border:1px solid var(--line);border-radius:16px;padding:22px 24px;background:var(--bg)}
+
+  .nextbar{display:flex;gap:11px;margin-top:26px;flex-wrap:wrap}
+  .btn{border-radius:13px;padding:15px 24px;font-size:14.5px;border:1px solid var(--line2);background:var(--card2);color:var(--ink);transition:.15s;display:inline-flex;align-items:center;gap:9px;text-decoration:none}
+  .btn:hover{border-color:var(--gold)}
+  .btn.prim{background:var(--gold);border-color:var(--gold);color:#15171a;font-weight:600;flex:1;justify-content:center;font-size:15px}
+  .btn.prim:hover{background:#eeb24a}
+  .btn.ghost{color:var(--mut)}
+
+  /* map (intro) */
+  .map{display:flex;flex-direction:column;gap:0;border-left:2px solid var(--line2);margin:6px 0 6px 8px;padding-left:0}
+  .stop{position:relative;padding:0 0 26px 26px}
+  .stop:last-child{padding-bottom:2px}
+  .stop::before{content:'';position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--gold)}
+  .stop .sd{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .stop h3{font-family:var(--disp);font-weight:500;font-size:17px;margin:4px 0 4px}
+  .stop p{color:var(--mut);font-size:13.5px;line-height:1.55;margin:0;max-width:58ch}
+  .jobb{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;font-size:13.5px;color:var(--mut);line-height:1.6}
+  .jobb b{color:var(--ink);font-weight:500}
+
+  /* reused product components (from v2) */
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  h2.big{font-family:var(--disp);font-weight:600;font-size:26px;margin:6px 0 3px;letter-spacing:-.4px}
+  .sub{color:var(--mut);font-size:13.5px;margin-bottom:16px}
+  .front{border-top:1px solid var(--line2)}
+  .frow{display:grid;grid-template-columns:1fr auto;gap:8px 24px;padding:15px 2px;border-bottom:1px solid var(--line);align-items:start}
+  .fr-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .fr-name{font-family:var(--disp);font-weight:600;font-size:18px}
+  .fr-tk{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+  .stword{font-size:12px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .stword .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .frow p{color:var(--mut);font-size:13px;line-height:1.55;margin:5px 0 0;max-width:52ch}
+  .dblock{text-align:right;min-width:170px}
+  .dblock .price{font-family:var(--mono);font-size:14px}
+  .dblock .price .chg{font-size:11.5px;margin-left:7px}
+  .dblock .sp{margin:5px 0 4px;color:var(--faint)}
+  .dblock .micro{font-family:var(--mono);font-size:10px;color:var(--faint)}
+  .dblock .micro b{color:var(--mut);font-weight:500}
+  .endrow{padding:12px 2px;border-bottom:1px solid var(--line);font-size:12px;color:var(--faint);display:flex;gap:10px;align-items:baseline}
+  .endrow .el{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;flex:0 0 88px;padding-top:2px}
+  .endrow .ev b{color:var(--mut);font-weight:500}
+  .hl{outline:2px solid var(--neg-d);outline-offset:-2px;border-radius:10px;background:var(--neg-soft)}
+
+  .sent{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-family:var(--disp);font-size:17px;line-height:1.7;margin-bottom:12px}
+  .sent .co{color:var(--gold);font-weight:600}
+  .sent .fill{border-bottom:1.5px solid var(--gold-d);padding:0 2px}
+
+  .pcard{border:1px solid var(--line);border-radius:12px;padding:14px 16px 12px;margin-bottom:10px;background:var(--card)}
+  .pcard.rr{border-color:var(--neg-d)}
+  .pcard .ph{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+  .pcard .pt{font-family:var(--disp);font-weight:500;font-size:14.5px}
+  .pcard .pv{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--mut)}
+  .pchart svg{display:block;width:100%;height:54px;margin:9px 0 3px}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--faint)}
+  .pev{font-size:11.5px;color:var(--mut);margin-top:6px;line-height:1.5}
+  .tnote{background:var(--neg-soft);border:1px solid var(--neg-d);border-radius:11px;padding:12px 15px;font-size:12.5px;color:#f3c8c2;margin:12px 0 0;line-height:1.55}
+  .tnote b{color:#fff}
+
+  .verdict{font-family:var(--disp);font-size:16.5px;line-height:1.45;margin:0 0 4px}
+  .vlab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .tscroll{overflow-x:auto}
+  table.dt{width:100%;border-collapse:collapse;font-size:12px}
+  table.dt th{text-align:right;color:var(--faint);font-weight:500;font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 8px 12px;white-space:nowrap}
+  table.dt th:first-child{text-align:left;padding-left:0}
+  table.dt td{padding:8px 0 8px 12px;border-top:1px solid var(--line);font-family:var(--mono);text-align:right;white-space:nowrap}
+  table.dt td:first-child{text-align:left;font-family:var(--sans);color:var(--ink);padding-left:0}
+  .slabel{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:18px 0 10px;display:flex;gap:10px;align-items:center}
+  .slabel::after{content:'';flex:1;height:1px;background:var(--line)}
+
+  /* stats (day 90) */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:6px}
+  @media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--card);text-align:center}
+  .stat .v{font-family:var(--mono);font-size:24px}
+  .stat .k{font-size:11px;color:var(--mut);margin-top:5px;line-height:1.4}
+  .ledger{border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin-top:12px;overflow:hidden}
+  .lrow{display:flex;gap:12px;padding:11px 15px;border-bottom:1px solid var(--line);font-size:12.5px;align-items:baseline}
+  .lrow:last-child{border-bottom:none}
+  .lrow .ld{font-family:var(--mono);font-size:10px;color:var(--gold);flex:0 0 54px;letter-spacing:.05em}
+  .lrow .lt{color:var(--mut)}.lrow .lt b{color:var(--ink);font-weight:500}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+  .fade{animation:f .25s ease}@keyframes f{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="top"><span class="mark" id="mk"></span> Marginalen · Ägar-AI · Livsgången <span class="mock">DEMO · EXEMPELDATA</span></div>
+<div class="wrap">
+  <div class="tl" id="tl"></div>
+  <div id="body"></div>
+</div>
+
+<script>
+document.getElementById('mk').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#15171a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>';
+
+/* charts */
+function spark(pts,w=100,h=22,c='#646B76'){
+  const mn=Math.min(...pts),mx=Math.max(...pts),r=mx-mn||1;
+  const xs=pts.map((p,i)=>[(i/(pts.length-1))*(w-4)+2,h-3-((p-mn)/r)*(h-7)]);
+  const path=xs.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ');const l=xs[xs.length-1];
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${path}" fill="none" stroke="${c}" stroke-width="1.4"/><circle cx="${l[0]}" cy="${l[1]}" r="2" fill="${c}"/></svg>`;}
+function pillChart(pts,larm,status){
+  const W=560,H=54,P=6;const all=larm==null?pts:[...pts,larm];
+  const mn=Math.min(...all),mx=Math.max(...all),pad=(mx-mn||1)*0.18,lo=mn-pad,hi=mx+pad,r=hi-lo;
+  const y=v=>H-P-((v-lo)/r)*(H-2*P);
+  const xs=pts.map((p,i)=>[(i/(pts.length-1))*(W-14)+7,y(p)]);
+  const path=xs.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ');const l=xs[xs.length-1];
+  const col=status==='r'?'#E0726F':status==='y'?'#E0A43B':'#5FB89A';
+  const ll=larm==null?'':`<line x1="7" x2="${W-7}" y1="${y(larm).toFixed(1)}" y2="${y(larm).toFixed(1)}" stroke="#7E5E22" stroke-width="1" stroke-dasharray="4 4"/>`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${ll}<polyline points="${path}" fill="none" stroke="${col}" stroke-width="1.8"/><circle cx="${l[0]}" cy="${l[1]}" r="3" fill="${col}"/></svg>`;}
+function fmtChg(v){const s=v>0?'+':'';const c=v>0?'pos':v<0?'neg':'mutc';return `<span class="${c}">${s}${v.toFixed(1).replace('.',',')}%</span>`;}
+
+/* steps */
+const STEPS=[
+ {d:'Överblick',t:'Kartan'},
+ {d:'Dag 0',t:'Du säger varför'},
+ {d:'Dag 1',t:'Första morgonen'},
+ {d:'Dag 12',t:'Vi flaggar'},
+ {d:'Dag 47',t:'Rapportdagen'},
+ {d:'Dag 90',t:'Backspegeln'}
+];
+let step=0;
+const tl=document.getElementById('tl'),body=document.getElementById('body');
+function go(n){step=Math.max(0,Math.min(STEPS.length-1,n));render();window.scrollTo(0,0);}
+function render(){
+  tl.innerHTML=STEPS.map((s,i)=>`<button class="${i===step?'on':i<step?'done':''}" onclick="go(${i})"><span class="d">${s.d}</span><span class="t">${s.t}</span></button>`).join('');
+  body.className='fade';
+  [ch0,ch1,ch2,ch3,ch4,ch5][step]();
+}
+
+/* ch0: map */
+function ch0(){body.innerHTML=`
+  <div class="narr">
+    <div class="step">Livsgången · Överblick</div>
+    <h1>Så lever du med Ägar-AI</h1>
+    <p>Ett CRM förstår man för att loopen är känd: lägg in kunder, logga, följ upp. Här är loopen omvänd: <b>verktyget arbetar, du tittar till det.</b> Den här demon spelar upp de första 90 dagarna, steg för steg, i produktens riktiga ytor.</p>
+  </div>
+  <div class="map">
+    <div class="stop"><div class="sd">Dag 0 · en gång · ~10 min</div><h3>Du säger varför du äger</h3><p>Lägg in ett bolag, svara "varför äger du det?", sätt larmnivåer. Det är all setup som finns. Enda gången produkten ber dig arbeta.</p></div>
+    <div class="stop"><div class="sd">Dag 1 och framåt · 2 min per morgon</div><h3>Morgontitten</h3><p>Öppna Idag. Oftast: "inget rör ditt skäl". Då stänger du appen. Det är produktens succéläge, inte dess tomhet.</p></div>
+    <div class="stop"><div class="sd">Några gånger per år</div><h3>Vi flaggar</h3><p>En kurva korsar din larmlinje. Nu, och först nu, stör vi dig. Du ser vilken av dina egna förutsättningar som rörde sig, med bevis och källa.</p></div>
+    <div class="stop"><div class="sd">Varje kvartal · automatiskt</div><h3>Rapporten analyseras åt dig</h3><p>Bolaget släpper rapport 07:30. 07:31 ligger analysen klar: mot konsensus, mot i fjol, mot din tes. Varje siffra ur rapporten, ingen påhittad.</p></div>
+    <div class="stop"><div class="sd">Dag 90 · kvartalsvis</div><h3>Backspegeln</h3><p>Hur mycket tid kostade kvartalet? Nästan ingen. Och allt vi sa finns kvar, granskningsbart. Sen börjar loopen om.</p></div>
+  </div>
+  <div class="jobb"><b>Ditt totala jobb:</b> skriv skälet en gång per bolag · läs två minuter om dagen · besluta när det larmar. Produkten lyckas när du är inne lite, inte mycket.</div>
+  <div class="nextbar"><button class="btn prim" onclick="go(1)">Starta resan: Dag 0, du säger varför →</button></div>`;}
+
+/* ch1: day 0 */
+function ch1(){body.innerHTML=`
+  <div class="narr">
+    <div class="step">Steg 1 av 5 · Dag 0 · cirka 10 minuter, en gång</div>
+    <h1>Du säger varför du äger</h1>
+    <p>Du lägger in <b>Norlux Industri</b> och svarar på en enda fråga: varför äger du det? Sen gör vi svaret mätbart: tre pelare, var och en med en larmnivå <b>du</b> väljer. Detta är hela din arbetsinsats. Efter det här jobbar produkten, inte du.</p>
+  </div>
+  <div class="demo-label">Så ser det ut i produkten</div>
+  <div class="demo">
+    <div class="eyebrow">Ditt skäl, i en mening</div>
+    <h2 class="big">Varför äger du Norlux Industri?</h2>
+    <div class="sent" style="margin-top:12px">Jag äger en andel av <span class="co">Norlux Industri</span> som tjänar pengar genom att <span class="fill">köpa upp lönsamma småbolag och driva dem bättre</span>, och kommer tjäna mer för att <span class="fill">marknaden är fragmenterad och kassaflödet betalar nästa förvärv</span>.</div>
+    <div class="slabel">Dina pelare · med larmnivåer du satt själv</div>
+    ${pc('Organisk tillväxt över 8% per år','g','startläge 10%',[9,8,10,9,10,10],8,'larm 8,0%','Larmar om tillväxten faller under 8% två kvartal i rad.')}
+    ${pc('Stigande EBIT-marginal','g','startläge 18,8%',[17.9,18.0,18.3,18.5,18.8,18.8],18.0,'larm: under fjolårets 18,0%','Larmar om marginalen faller under fjolårets nivå.')}
+    ${pc('Ingen utspädning','g','148,2 M aktier',[148.2,148.2,148.2,148.2,148.2,148.2],null,'larm: antalet aktier ökar','Larmar om bolaget börjar ge ut nya aktier.')}
+  </div>
+  <div class="nextbar"><button class="btn ghost" onclick="go(0)">← Kartan</button><button class="btn prim" onclick="go(2)">Nästa steg: din första morgon →</button></div>`;}
+
+function pc(n,s,now,pts,larm,larmLab,ev){
+  return `<div class="pcard ${s==='r'?'rr':''}"><div class="ph"><span class="pt">${n}</span><span class="pv"><span class="${s==='r'?'neg':s==='y'?'gold':'pos'}">${s==='r'?'bruten':s==='y'?'bevaka':'håller'}</span> · ${now}</span></div>
+  <div class="pchart">${pillChart(pts,larm,s)}</div>
+  <div class="pmeta"><span>6 kvartal</span><span class="gold">${larmLab}</span><span>nu</span></div>
+  <div class="pev">${ev}</div></div>`;}
+
+/* ch2: day 1 */
+function ch2(){body.innerHTML=`
+  <div class="narr">
+    <div class="step">Steg 2 av 5 · Dag 1 · två minuter</div>
+    <h1>Första morgonen: ingenting. Och det är poängen.</h1>
+    <p>Du öppnar appen med kaffet. Norlux hade inga nyheter som rör ditt skäl, och det säger vi <b>rakt ut</b> i stället för att fylla skärmen med brus. Du stänger appen efter 40 sekunder. <b>Det är succéläget.</b> En vanlig app hade visat dig 12 rubriker för att hålla dig kvar. Vi visar noll, för noll var sanningen.</p>
+  </div>
+  <div class="demo-label">Så ser det ut i produkten</div>
+  <div class="demo">
+    <div class="eyebrow">God morgon</div>
+    <h2 class="big">Idag</h2>
+    <div class="sub">Ingenting rör ditt skäl. Du kan stänga appen.</div>
+    <div class="front">
+      <div class="frow">
+        <div><div class="fr-head"><span class="fr-name">Norlux Industri</span><span class="fr-tk">NORL</span><span class="stword faintc"><i class="d"></i>Lugnt</span></div>
+        <p>Inget kräver din uppmärksamhet. 4 nyheter bedömdes som brus och visas inte.</p></div>
+        <div class="dblock"><div class="price num">271,00 <span class="chg">${fmtChg(0.3)}</span></div>
+        <div class="sp">${spark([205,212,220,232,228,241,248,255,251,262,268,271],110,22,'#646B76')}</div>
+        <div class="micro">P/E <b>23,1</b> · EV/EBIT <b>18,0</b> · NS/EBITDA <b>1,5x</b></div></div>
+      </div>
+      <div class="endrow"><span class="el">Bortsorterat</span><span class="ev"><b>4 saker:</b> två kurskommentarer, ett marknadssvep, en upprepad rekommendation.</span></div>
+      <div class="endrow"><span class="el">Kommande</span><span class="ev"><b>9 jul</b> Norlux kapitalmarknadsdag</span></div>
+    </div>
+  </div>
+  <div class="nextbar"><button class="btn ghost" onclick="go(1)">← Dag 0</button><button class="btn prim" onclick="go(3)">Nästa steg: vi visar en flaggning →</button></div>`;}
+
+/* ch3: day 12 flag */
+function ch3(){body.innerHTML=`
+  <div class="narr">
+    <div class="step">Steg 3 av 5 · Dag 12 · första larmet</div>
+    <h1>Vi flaggar: en kurva korsade din linje</h1>
+    <p>Du har hunnit lägga in fyra bolag till. I morse hände det: <b>Telvios bruttomarginal korsade din larmnivå 40,0%.</b> Nu stör vi dig, för första gången på tolv dagar. Lägg märke till vad flaggan pekar på: inte kursen, utan <b>din egen förutsättning</b>. Och vad vi inte säger: sälj. Det ordet finns inte i produkten.</p>
+  </div>
+  <div class="demo-label">Så ser det ut i produkten · Idag</div>
+  <div class="demo">
+    <div class="eyebrow">God morgon</div>
+    <h2 class="big">Idag</h2>
+    <div class="sub">En sak rör dina bolag. Resten var brus.</div>
+    <div class="front">
+      <div class="frow hl">
+        <div><div class="fr-head"><span class="fr-name">Telvio</span><span class="fr-tk">TELV</span><span class="stword neg"><i class="d"></i>Skälet utmanat</span></div>
+        <p>Q3: bruttomarginalen föll till 38,0%, ned 3,5 pp. Din pelare om stigande marginal korsade larmnivån 40,0%.</p></div>
+        <div class="dblock"><div class="price num">84,20 <span class="chg">${fmtChg(-0.6)}</span></div>
+        <div class="sp">${spark([102,99,101,97,95,93,90,92,88,87,85,84],110,22,'#E0726F')}</div>
+        <div class="micro">P/E <b>11,2</b> · Dir <b>5,8%</b> · NS/EBITDA <b>2,1x</b></div></div>
+      </div>
+      <div class="frow"><div><div class="fr-head"><span class="fr-name">Norlux Industri</span><span class="fr-tk">NORL</span><span class="stword faintc"><i class="d"></i>Lugnt</span></div></div>
+        <div class="dblock"><div class="price num">274,50 <span class="chg">${fmtChg(0.2)}</span></div></div></div>
+      <div class="frow"><div><div class="fr-head"><span class="fr-name">Kavex · Brunna · Almi</span><span class="stword faintc"><i class="d"></i>Lugnt</span></div></div>
+        <div class="dblock"><div class="micro" style="padding-top:4px">inget kräver din uppmärksamhet</div></div></div>
+    </div>
+    <div class="demo-label" style="margin-top:20px">Du klickar på Telvio · fliken Ditt skäl</div>
+    ${pc('Stigande bruttomarginal','r','38,0%',[41.5,41.0,40.6,40.1,39.2,38.0],40.0,'larm 40,0%','Korsade larmnivån detta kvartal. Sex raka kvartal av fall. Skälet om marginalexpansion håller inte längre.')}
+    <div class="tnote"><b>Skälet är utmanat.</b> Det betyder inte sälj. Det betyder att en av dina egna förutsättningar inte längre håller. Ompröva den, i lugn och ro, inte hela innehavet i panik.</div>
+  </div>
+  <div class="nextbar"><button class="btn ghost" onclick="go(2)">← Dag 1</button><button class="btn prim" onclick="go(4)">Nästa steg: vi analyserar en kvartalsrapport →</button></div>`;}
+
+/* ch4: day 47 report */
+function ch4(){body.innerHTML=`
+  <div class="narr">
+    <div class="step">Steg 4 av 5 · Dag 47 · rapportdagen</div>
+    <h1>Norlux släpper Q3 kl 07:30. Kl 07:31 ligger det här klart.</h1>
+    <p>Du gjorde ingenting. Vi läste rapporten, ställde varje tal mot konsensus, mot i fjol och mot guidningen, <b>beräknat i kod, inte gissat av en AI</b>, och skrev slutsatsen överst. Längst ner: vad det betyder för just ditt skäl. Varje siffra kommer ur rapporten och går att spåra dit.</p>
+  </div>
+  <div class="demo-label">Så ser det ut i produkten · Rapportanalys</div>
+  <div class="demo">
+    <div class="vlab">AI · rapporten på 15 sekunder</div>
+    <p class="verdict">Stark rapport. Slår konsensus på tillväxt och kassaflöde, höjer guidningen. Inga röda flaggor, men Nordamerika är svagpunkten.</p>
+    <div class="slabel">Utfall mot konsensus, i fjol och guidning</div>
+    <div class="tscroll"><table class="dt">
+      <thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Konsensus</th><th>Mot kons.</th><th>I fjol</th><th>Mot i fjol</th><th>Guidning</th><th>Trend</th></tr></thead>
+      <tbody>
+        <tr><td>Omsättning</td><td>2 410</td><td class="mutc">2 350</td><td class="pos">+2,6%</td><td class="mutc">2 203</td><td class="pos">+9,4%</td><td class="faintc">·</td><td>${spark([2145,2203,2260,2255,2340,2410],72,16,'#5FB89A')}</td></tr>
+        <tr><td>Organisk tillväxt</td><td>11,0%</td><td class="mutc">8,5%</td><td class="pos">+2,5 pp</td><td class="mutc">8,0%</td><td class="pos">+3,0 pp</td><td class="faintc">7 till 9%</td><td>${spark([9,8,10,9,10,11],72,16,'#5FB89A')}</td></tr>
+        <tr><td>EBIT-marginal</td><td>19,2%</td><td class="mutc">18,3%</td><td class="pos">+0,9 pp</td><td class="mutc">18,0%</td><td class="pos">+1,2 pp</td><td class="faintc">·</td><td>${spark([17.9,18.0,18.3,18.5,18.8,19.2],72,16,'#5FB89A')}</td></tr>
+        <tr><td>Fritt kassaflöde</td><td>388</td><td class="mutc">340</td><td class="pos">+14,1%</td><td class="mutc">329</td><td class="pos">+17,9%</td><td class="faintc">·</td><td>${spark([300,329,355,342,371,388],72,16,'#5FB89A')}</td></tr>
+      </tbody></table></div>
+    <div class="slabel">Hur det rör ditt skäl</div>
+    <p style="font-size:13px;color:var(--mut);line-height:1.6;margin:0">Pelare 1 (tillväxt över 8%): bekräftad, 11,0%. Pelare 2 (stigande marginal): bekräftad, +1,2 pp. Pelare 3 (ingen utspädning): intakt, 148,2 M aktier. <span class="pos">Alla tre pelare håller.</span></p>
+  </div>
+  <div class="nextbar"><button class="btn ghost" onclick="go(3)">← Dag 12</button><button class="btn prim" onclick="go(5)">Nästa steg: kvartalet i backspegeln →</button></div>`;}
+
+/* ch5: day 90 */
+function ch5(){body.innerHTML=`
+  <div class="narr">
+    <div class="step">Steg 5 av 5 · Dag 90 · backspegeln</div>
+    <h1>Så lite tid kostade ett kvartal</h1>
+    <p>Nittio dagar med fem bolag. Det här är hela facit, och det är också <b>vårt bokslut mot dig</b>: allt vi flaggade och varje slutsats vi drog finns kvar med källa, inget raderat i efterhand. Sen börjar loopen om: morgontitt, flagga, rapport, backspegel.</p>
+  </div>
+  <div class="demo-label">Kvartalet i siffror</div>
+  <div class="demo">
+    <div class="stats">
+      <div class="stat"><div class="v num">74<span style="font-size:13px;color:var(--faint)"> / 90</span></div><div class="k">morgnar sa vi: ingenting idag</div></div>
+      <div class="stat"><div class="v num neg">3</div><div class="k">larm, alla mot dina egna larmnivåer</div></div>
+      <div class="stat"><div class="v num">2</div><div class="k">rapporter analyserade, klara inom en minut</div></div>
+      <div class="stat"><div class="v num gold">~41 min</div><div class="k">total tid i appen på 90 dagar</div></div>
+    </div>
+    <div class="slabel">Ansvarsliggaren · allt vi sa, med facit</div>
+    <div class="ledger">
+      <div class="lrow"><span class="ld">Dag 12</span><span class="lt"><b>Telvio:</b> pelaren stigande marginal bruten vid 38,0% mot larm 40,0%. Kvarstår. Du valde att behålla och bevaka utdelningstäckningen.</span></div>
+      <div class="lrow"><span class="ld">Dag 47</span><span class="lt"><b>Norlux:</b> Q3 stärkte alla tre pelare. Vi flaggade Nordamerika (-2%) som punkt att följa. Q4 avgör.</span></div>
+      <div class="lrow"><span class="ld">Dag 63</span><span class="lt"><b>Kavex:</b> insiderköp 2,1 Mkr, märkt som svag positiv signal, inte som köpskäl. Inget skäl ändrades.</span></div>
+      <div class="lrow"><span class="ld">Dag 90</span><span class="lt"><b>0</b> hallucinerade siffror. <b>47 + 39 + 44</b> brusnyheter bortsorterade per månad. Varje påstående spårbart till källa.</span></div>
+    </div>
+  </div>
+  <div class="nextbar">
+    <button class="btn ghost" onclick="go(0)">Börja om resan</button>
+    <a class="btn prim" href="agar-ai-v2.html">Öppna hela produkten (v2-mocken) →</a>
+  </div>`;}
+
+render();
+</script>
+</body>
+</html>

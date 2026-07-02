@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ägar-AI v2 · instrumentet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E0F11; --bg2:#131417; --card:#16181C; --card2:#1C1F24;
+    --line:#262A30; --line2:#333842;
+    --ink:#ECEEF1; --mut:#9AA1AC; --faint:#646B76;
+    --gold:#E0A43B; --gold-soft:#1F232C; --gold-d:#7E5E22;
+    --pos:#5FB89A; --pos-soft:#16241F;
+    --neg:#E0726F; --neg-soft:#261A1D; --neg-d:#6E3A33;
+    --disp:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.55}
+  .mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  button{font-family:inherit;cursor:pointer}
+  ::selection{background:var(--gold-soft)}
+  .ico{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
+  .ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .ico.sm svg{width:14px;height:14px}
+  .pos{color:var(--pos)}.neg{color:var(--neg)}.gold{color:var(--gold)}.mutc{color:var(--mut)}.faintc{color:var(--faint)}
+
+  /* shell */
+  .app{display:grid;grid-template-columns:224px 1fr;min-height:100vh}
+  .side{background:var(--bg2);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:3px;position:sticky;top:0;height:100vh}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:18px;padding:4px 10px 20px}
+  .logo .mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(150deg,var(--gold),#c98a28);display:grid;place-items:center;flex:0 0 auto}
+  .logo .mark svg{width:15px;height:15px;stroke:#15171a;stroke-width:2.2;fill:none}
+  .nav{background:none;border:none;color:var(--mut);text-align:left;padding:10px 11px;border-radius:9px;font-size:14px;display:flex;align-items:center;gap:11px;transition:background .16s,color .16s}
+  .nav:hover{background:var(--card);color:var(--ink)}
+  .nav.on{background:var(--card2);color:var(--ink)}
+  .nav.on .ico{color:var(--gold)}
+  .sidefoot{margin-top:auto;font-size:11px;color:var(--faint);padding:6px 10px;line-height:1.55}
+  .mocktag{font-family:var(--mono);font-size:9.5px;color:var(--faint);border:1px solid var(--line2);border-radius:7px;padding:5px 8px;letter-spacing:.04em;text-align:center;margin-bottom:9px}
+  .main{padding:28px 42px 90px;max-width:980px}
+  @media(max-width:760px){.app{grid-template-columns:1fr}.side{display:none}.main{padding:20px}}
+
+  .masthead{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:20px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .masthead .r{margin-left:auto;color:var(--mut)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  h1.big{font-family:var(--disp);font-weight:600;font-size:34px;margin:8px 0 3px;letter-spacing:-.5px;line-height:1.05}
+  .sub{color:var(--mut);font-size:14px;margin-bottom:20px}
+  .slab{display:flex;align-items:center;gap:12px;margin:28px 2px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+  .slab::after{content:'';flex:1;height:1px;background:var(--line)}
+
+  /* ===== front page rows with data blocks ===== */
+  .front{border-top:1px solid var(--line2);margin-top:4px}
+  .frow{display:grid;grid-template-columns:1fr auto;gap:8px 26px;padding:17px 4px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .14s;align-items:start}
+  .frow:hover{background:var(--bg2)}
+  .fr-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .fr-name{font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:-.2px}
+  .fr-tk{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.05em}
+  .stword{font-size:12px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .stword .d{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+  .frow p{color:var(--mut);font-size:13.5px;line-height:1.55;margin:6px 0 0;max-width:56ch}
+  .fr-src{margin-top:7px;font-size:11px;color:var(--faint);font-family:var(--mono)}
+  .dblock{text-align:right;min-width:190px}
+  .dblock .price{font-family:var(--mono);font-size:15px}
+  .dblock .price .chg{font-size:12px;margin-left:8px}
+  .dblock .sp{margin:6px 0 5px;color:var(--faint)}
+  .dblock .micro{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.02em}
+  .dblock .micro b{color:var(--mut);font-weight:500}
+  .frow.smallr .fr-name{font-size:15.5px;font-weight:500}
+  .frow.smallr p{margin-top:3px;font-size:12.5px}
+  .frow.smallr .dblock .price{font-size:13px}
+  .endrow{padding:13px 4px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--faint);display:flex;gap:10px;align-items:baseline;line-height:1.6}
+  .endrow .el{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;flex:0 0 92px;padding-top:2px}
+  .endrow .ev b{color:var(--mut);font-weight:500}
+  .endrow .ev i{font-style:normal;color:var(--mut)}
+
+  /* ===== stock page ===== */
+  .back{background:none;border:none;color:var(--mut);font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:7px;padding:0}
+  .back:hover{color:var(--ink)}
+  .shead{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:10px}
+  .shead h1{font-family:var(--disp);font-weight:600;font-size:29px;margin:0;letter-spacing:-.4px}
+  .factbar{display:flex;flex-wrap:wrap;gap:6px 0;align-items:baseline;font-family:var(--mono);font-size:12.5px;color:var(--mut);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 2px;margin-bottom:14px}
+  .factbar .f{display:inline-flex;gap:7px;align-items:baseline}
+  .factbar .k{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+  .factbar .v{color:var(--ink)}
+  .factbar .sep{margin:0 14px;color:var(--line2)}
+  .whyline{color:var(--mut);font-size:13.5px;margin:0 0 16px;border-left:2px solid var(--gold-d);padding-left:12px;line-height:1.5}
+  .whyline b{color:var(--faint);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px}
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:22px;overflow:auto}
+  .tab{background:none;border:none;color:var(--mut);padding:10px 14px;font-size:13.5px;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .14s}
+  .tab:hover{color:var(--ink)}.tab.on{color:var(--ink);border-bottom-color:var(--gold)}
+
+  /* two-lane: prose + data rail */
+  .lane{display:grid;grid-template-columns:1fr 264px;gap:24px;align-items:start}
+  @media(max-width:820px){.lane{grid-template-columns:1fr}}
+  .prose .lab{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+  .prose p{margin:0 0 11px;font-size:14.5px;line-height:1.62}
+  .tag{display:inline-block;font-size:10px;font-family:var(--mono);letter-spacing:.05em;border-radius:5px;padding:2px 7px;margin-right:7px;text-transform:uppercase}
+  .tag.fakta{background:var(--pos-soft);color:var(--pos)}.tag.slutsats{background:var(--gold-soft);color:var(--gold)}
+  .cit{font-family:var(--mono);font-size:9.5px;color:var(--gold);background:var(--gold-soft);border-radius:4px;padding:1px 5px;vertical-align:super;cursor:pointer;margin-left:2px}
+  .rail{display:flex;flex-direction:column;gap:9px}
+  .rail .rlab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:-2px}
+  .chip{border:1px solid var(--line);border-radius:10px;padding:10px 13px;background:var(--card)}
+  .chip .ck{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .chip .cv{display:flex;align-items:baseline;gap:9px;margin-top:3px}
+  .chip .cv .v{font-family:var(--mono);font-size:17px}
+  .chip .cv .dd{font-family:var(--mono);font-size:11.5px}
+  .chip .cc{font-size:11px;color:var(--mut);margin-top:2px}
+
+  /* tables */
+  .tscroll{overflow-x:auto}
+  table.dt{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.dt th{text-align:right;color:var(--faint);font-weight:500;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 9px 14px;white-space:nowrap}
+  table.dt th:first-child{text-align:left;padding-left:0}
+  table.dt td{padding:9px 0 9px 14px;border-top:1px solid var(--line);font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  table.dt td:first-child{text-align:left;font-family:var(--sans);color:var(--ink);padding-left:0}
+  table.dt tr:hover td{background:var(--bg2)}
+  table.dt td .u{color:var(--faint);font-size:10px;margin-left:3px}
+  .sparkcell{color:var(--faint)}
+  .note{font-size:11px;color:var(--faint);margin:8px 2px 0;font-family:var(--mono)}
+
+  /* verdict + minis + quotes */
+  .verdict{font-family:var(--disp);font-size:17.5px;line-height:1.45;margin:0 0 4px}
+  .vlab{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .mini h4{margin:0 0 9px;font-size:10.5px;font-family:var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+  .mini.good h4{color:var(--pos)}.mini.bad h4{color:var(--neg)}
+  .mini ul{margin:0;padding:0;list-style:none}
+  .mini li{font-size:13px;line-height:1.5;margin-bottom:7px;padding-left:15px;position:relative}
+  .mini li::before{content:'';position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--line2)}
+  .mini.good li::before{background:var(--pos)}.mini.bad li::before{background:var(--neg)}
+  .quote{border-left:2px solid var(--gold-d);padding:3px 0 3px 15px;margin:12px 0;font-size:14.5px;line-height:1.55;font-family:var(--disp);font-style:italic}
+  .quote .who{display:block;font-size:10.5px;color:var(--faint);font-family:var(--mono);font-style:normal;margin-top:5px}
+
+  /* pillar cards with threshold charts */
+  .pcard{border:1px solid var(--line);border-radius:12px;padding:15px 17px 13px;margin-bottom:11px;background:var(--card)}
+  .pcard.rr{border-color:var(--neg-d)}
+  .pcard .ph{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+  .pcard .pt{font-family:var(--disp);font-weight:500;font-size:15px}
+  .pcard .pv{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--mut)}
+  .pchart{margin:10px 0 4px;position:relative}
+  .pchart svg{display:block;width:100%;height:58px}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.03em}
+  .pev{font-size:12px;color:var(--mut);margin-top:7px;line-height:1.5}
+  .tnote{background:var(--neg-soft);border:1px solid var(--neg-d);border-radius:11px;padding:13px 15px;font-size:13px;color:#f3c8c2;margin-bottom:15px;line-height:1.55}
+  .tnote b{color:#fff}
+
+  /* chat */
+  .chat{display:flex;flex-direction:column;gap:13px;margin-bottom:16px}
+  .bub{max-width:92%;padding:13px 16px;border-radius:14px;font-size:14px;line-height:1.6}
+  .bub.u{align-self:flex-end;background:var(--gold);color:#15171a;font-weight:500}
+  .bub.a{align-self:flex-start;background:var(--card);border:1px solid var(--line)}
+  .bub.a table.dt{margin-top:10px;font-size:11.5px}
+  .bub.a table.dt td{padding:6px 0 6px 12px}
+  .seed{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .seedb{background:var(--card);border:1px solid var(--line2);border-radius:99px;padding:8px 13px;font-size:12.5px;color:var(--mut);transition:.14s}
+  .seedb:hover{border-color:var(--gold);color:var(--ink)}
+  .askbar{display:flex;gap:9px;position:sticky;bottom:14px}
+  .askbar input{flex:1;background:var(--card2);border:1px solid var(--line2);border-radius:12px;color:var(--ink);padding:12px 15px;font-size:14px;outline:none;font-family:var(--sans)}
+  .askbar input:focus{border-color:var(--gold)}
+  .askbar button{background:var(--gold);border:none;color:#15171a;border-radius:12px;padding:0 18px;font-weight:600}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><span class="mark" id="mk"></span> Ägar-AI</div>
+    <button class="nav on" data-view="idag"></button>
+    <button class="nav" data-view="fraga"></button>
+    <div class="sidefoot">
+      <div class="mocktag">V2 · PROTOTYP · EXEMPELDATA</div>
+      Fiktiva bolag och illustrativa siffror. Fokus: look and feel med data.
+    </div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+/* ============ icons ============ */
+const SVG={
+  today:'<path d="M12 2v7"/><path d="m4.9 11 1.4 1.4"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m17.7 12.4 1.4-1.4"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/>',
+  ask:'<path d="M9.9 15.5A2 2 0 0 0 8.5 14L2.4 12.5a.5.5 0 0 1 0-1L8.5 10A2 2 0 0 0 9.9 8.5l1.6-6.1a.5.5 0 0 1 1 0L14 8.5A2 2 0 0 0 15.5 9.9l6.1 1.6a.5.5 0 0 1 0 1L15.5 14a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0z"/>',
+  arrow:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>',
+  pulse:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
+};
+function svgi(n,w){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w||1.6}" stroke-linecap="round" stroke-linejoin="round">${SVG[n]||''}</svg>`;}
+function ic(n,c){return `<span class="ico ${c||''}">${svgi(n)}</span>`;}
+document.getElementById('mk').innerHTML=svgi('pulse',2.2);
+
+/* ============ chart helpers ============ */
+function spark(pts,w=72,h=20,color){
+  const mn=Math.min(...pts),mx=Math.max(...pts),r=mx-mn||1;
+  const xs=pts.map((p,i)=>[(i/(pts.length-1))*(w-4)+2, h-3-((p-mn)/r)*(h-7)]);
+  const path=xs.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ');
+  const last=xs[xs.length-1];
+  const c=color||'#646B76';
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${path}" fill="none" stroke="${c}" stroke-width="1.4"/><circle cx="${last[0]}" cy="${last[1]}" r="2" fill="${c}"/></svg>`;
+}
+function pillChart(pts,larm,status){
+  const W=560,H=58,P=6;
+  const all=larm==null?pts:[...pts,larm];
+  const mn=Math.min(...all),mx=Math.max(...all),pad=(mx-mn||1)*0.18,lo=mn-pad,hi=mx+pad,r=hi-lo;
+  const y=v=>H-P-((v-lo)/r)*(H-2*P);
+  const xs=pts.map((p,i)=>[(i/(pts.length-1))*(W-14)+7,y(p)]);
+  const path=xs.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ');
+  const last=xs[xs.length-1];
+  const col=status==='r'?'#E0726F':status==='y'?'#E0A43B':'#5FB89A';
+  const larmLine=larm==null?'':`<line x1="7" x2="${W-7}" y1="${y(larm).toFixed(1)}" y2="${y(larm).toFixed(1)}" stroke="#7E5E22" stroke-width="1" stroke-dasharray="4 4"/>`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${larmLine}<polyline points="${path}" fill="none" stroke="${col}" stroke-width="1.8"/><circle cx="${last[0]}" cy="${last[1]}" r="3" fill="${col}"/></svg>`;
+}
+function fmtChg(v){const s=v>0?'+':'';const c=v>0?'pos':v<0?'neg':'mutc';return `<span class="${c}">${s}${v.toFixed(1).replace('.',',')}%</span>`;}
+function d(cls,txt){return `<span class="${cls}">${txt}</span>`;}
+
+/* ============ data (fiktiv, illustrativ) ============ */
+const Q=['Q2 25','Q3 25','Q4 25','Q1 26','Q2 26','Q3 26'];
+const STOCKS={
+ NORL:{tk:'NORL',namn:'Norlux Industri',status:'ok',statusLab:'Skälet stärkt',
+  pris:284.50,idag:1.8,spark12:[205,212,220,232,228,241,248,255,251,262,271,284],
+  micro:['P/E 24,3','EV/EBIT 18,9','NS/EBITDA 1,4x'],
+  fact:{v52:'198,20 till 291,00',mcap:'42,2 mdkr',pe:'24,3',dir:'1,4%'},
+  why:'Lönsam förvärvsmaskin: organisk tillväxt över 8%, stigande marginal, ingen utspädning.',
+  event:'Q3: organisk tillväxt 11,0% mot guidning 7 till 9. FCF 388 Mkr, +18%. Höjd helårsguidning. Alla tre pelare håller.',src:'Q3-rapport · imorse 07:30',
+  what:[
+   {t:'fakta',txt:'Q3-rapporten kom imorse. Organisk tillväxt 11,0%, över bolagets guidning om 7 till 9%. Fritt kassaflöde 388 Mkr, upp 18% mot samma kvartal i fjol. Nettoskulden nere på 1,4x EBITDA.',c:1},
+   {t:'slutsats',txt:'Rapporten stärker ditt skäl på alla tre pelare: tillväxten håller, marginalen vidgas, aktieantalet står stilla. Marknaden lär fokusera på den höjda helårsguidningen. Svagheten att bevaka är Nordamerika, organiskt minus 2%.',c:0}],
+  rail:[
+   {k:'Organisk tillväxt Q3',v:'11,0%',dd:'+2,5 pp',dc:'pos',cc:'mot konsensus 8,5 · guidning 7 till 9'},
+   {k:'Fritt kassaflöde',v:'388 Mkr',dd:'+18%',dc:'pos',cc:'i fjol 329 Mkr · konvertering 95%'},
+   {k:'EBIT-marginal',v:'19,2%',dd:'+1,2 pp',dc:'pos',cc:'i fjol 18,0% · konsensus 18,3%'},
+   {k:'Nettoskuld/EBITDA',v:'1,4x',dd:'ned 0,3',dc:'pos',cc:'förvärvsutrymme kvar'},
+   {k:'Antal aktier',v:'148,2 M',dd:'oförändrat',dc:'mutc',cc:'11 kvartal i rad'}],
+  fund:{
+   rows:[
+    ['Omsättning, Mkr',[2145,2203,2260,2255,2340,2410],'+9,4%','pos',0],
+    ['Bruttomarginal, %',[40.6,40.8,40.9,41.0,41.1,41.2],'+0,4 pp','pos',1],
+    ['EBIT-marginal, %',[17.9,18.0,18.3,18.5,18.8,19.2],'+1,2 pp','pos',1],
+    ['VPA, kr',[2.71,2.84,3.02,2.95,3.18,3.41],'+20,1%','pos',2],
+    ['Fritt kassaflöde, Mkr',[300,329,355,342,371,388],'+17,9%','pos',0],
+    ['Nettoskuld/EBITDA, x',[1.9,1.7,1.6,1.6,1.5,1.4],'-0,3','pos',1]],
+   mult:[['P/E','24,3','21,0','+16%'],['EV/EBIT','18,9','16,4','+15%'],['EV/S','3,6','3,1','+16%'],['P/FCF','27,2','24,8','+10%']],
+   ai:'Det viktigaste i siffrorna just nu: marginaltrenden är intakt sex kvartal i rad och kassaflödet följer vinsten, det är kvalitet. Men multiplarna ligger 10 till 16% över bolagets eget 5-årssnitt: du betalar mer för samma bolag än marknaden brukat göra.'},
+  report:{
+   verdict:'Stark rapport. Slår konsensus på tillväxt och kassaflöde, höjer guidningen. Inga röda flaggor, men Nordamerika är svagpunkten.',
+   grid:[
+    ['Omsättning','2 410','2 350','+2,6%','pos','2 203','+9,4%','pos','·',[2145,2203,2260,2255,2340,2410]],
+    ['Organisk tillväxt','11,0%','8,5%','+2,5 pp','pos','8,0%','+3,0 pp','pos','7 till 9%',[9,8,10,9,10,11]],
+    ['Bruttomarginal','41,2%','41,0%','+0,2 pp','mutc','40,8%','+0,4 pp','pos','·',[40.6,40.8,40.9,41.0,41.1,41.2]],
+    ['EBIT-marginal','19,2%','18,3%','+0,9 pp','pos','18,0%','+1,2 pp','pos','·',[17.9,18.0,18.3,18.5,18.8,19.2]],
+    ['Fritt kassaflöde','388','340','+14,1%','pos','329','+17,9%','pos','·',[300,329,355,342,371,388]],
+    ['Nettoskuld/EBITDA','1,4x','1,7x','bättre','pos','1,7x','-0,3x','pos','under 2,0x',[1.9,1.7,1.6,1.6,1.5,1.4]]],
+   seg:[['Industrikomponenter','1 420','+11%','pos','20,1%','+1,0 pp','pos'],
+        ['Service','610','+14%','pos','24,3%','+2,1 pp','pos'],
+        ['Nordamerika','380','-2%','neg','11,2%','-0,8 pp','neg']],
+   good:['Organisk tillväxt 11%, klart över guidning','FCF-konvertering 95%','Nettoskuld ned till 1,4x','Höjd helårsguidning'],
+   bad:['Nordamerika organiskt -2%','Valutamotvind 1,5 pp på omsättningen','Rörelsekapital band mer än normalt'],
+   surprises:['Guidning höjd mitt under året','Servicemarginal på rekordnivå 24,3%'],
+   quotes:[{q:'Vi ser fortsatt stark efterfrågan i Europa och har höjt helårsmålet. Förvärvspipen är den bästa på flera år.',who:'VD · kvartalsrapporten s. 2'},
+           {q:'Kassaflödet ger oss råd att accelerera förvärv utan att öka skuldsättningen.',who:'CFO · webcast 09:10'}],
+   tes:'Pelare 1 (tillväxt över 8%): bekräftad, 11,0%. Pelare 2 (stigande marginal): bekräftad, +1,2 pp. Pelare 3 (ingen utspädning): intakt, 148,2 M aktier.'},
+  pillars:[
+   {n:'Organisk tillväxt över 8% per år',s:'g',now:'11,0%',pts:[9,8,10,9,10,11],larm:8,larmLab:'larm 8,0%',ev:'Sex kvartal: 9, 8, 10, 9, 10, 11. Trenden intakt och stigande, marginal till larmnivån.'},
+   {n:'Stigande EBIT-marginal',s:'g',now:'19,2%',pts:[17.9,18.0,18.3,18.5,18.8,19.2],larm:18.0,larmLab:'larm: under fjolårets 18,0%',ev:'Från 17,9 till 19,2% på sex kvartal. Servicemixen lyfter.'},
+   {n:'Ingen utspädning',s:'g',now:'148,2 M',pts:[148.2,148.2,148.2,148.2,148.2,148.2],larm:null,larmLab:'larm: antalet aktier ökar',ev:'Oförändrat 11 kvartal. Förvärv betalda med kassaflöde.'}],
+  chat:{
+   'Varför steg aktien idag?':{txt:'Aktien steg på Q3-rapporten. Organisk tillväxt 11,0% mot väntade 8,5% <a class="cit">1</a> och höjd helårsguidning <a class="cit">2</a>. <span class="tag slutsats">slutsats</span> Marknaden prissätter guidningen, inte bara kvartalet.',
+     data:{head:['','Utfall','Konsensus','Avvikelse'],rows:[['Org. tillväxt','11,0%','8,5%','<span class=pos>+2,5 pp</span>'],['FCF, Mkr','388','340','<span class=pos>+14,1%</span>']]}},
+   'Största risken?':{txt:'<span class="tag slutsats">slutsats</span> Nordamerika. Tredje kvartalet i rad med svag utveckling <a class="cit">1</a>. Litet i helheten (16% av omsättningen) men trenden pekar fel.',
+     data:{head:['Nordamerika','Q1 26','Q2 26','Q3 26'],rows:[['Organisk tillväxt','0%','-1%','<span class=neg>-2%</span>'],['EBIT-marginal','12,4%','11,8%','<span class=neg>11,2%</span>']]}}}
+ },
+ TELV:{tk:'TELV',namn:'Telvio',status:'bad',statusLab:'Skälet utmanat',
+  pris:84.20,idag:-0.6,spark12:[102,99,101,97,95,93,90,92,88,87,85,84],
+  micro:['P/E 11,2','Dir 5,8%','NS/EBITDA 2,1x'],
+  fact:{v52:'82,10 till 104,80',mcap:'18,6 mdkr',pe:'11,2',dir:'5,8%'},
+  why:'Stabil kassako med stigande marginal och trygg utdelning.',
+  event:'Q3: bruttomarginalen föll till 38,0%, ned 3,5 pp på prispress i mobil. Din pelare om stigande marginal korsade larmnivån 40%.',src:'Q3-rapport · igår 08:00',
+  what:[
+   {t:'fakta',txt:'Q3-bruttomarginalen föll till 38,0%, ned från 41,5% för ett år sedan, driven av prispress i mobilsegmentet. Fritt kassaflöde 910 Mkr, ned 12%. Utdelningen bekräftades.',c:1},
+   {t:'slutsats',txt:'Detta träffar pelare 2 direkt: kurvan korsade din larmnivå 40,0% detta kvartal. Utdelningen är inte hotad ännu (täckning 1,15x) men trenden i täckningen pekar fel. Marginalskälet behöver omprövas, inte hela innehavet.',c:0}],
+  rail:[
+   {k:'Bruttomarginal Q3',v:'38,0%',dd:'-3,5 pp',dc:'neg',cc:'i fjol 41,5 · din larmnivå 40,0'},
+   {k:'Fritt kassaflöde',v:'910 Mkr',dd:'-12%',dc:'neg',cc:'konsensus 1 050 Mkr'},
+   {k:'Utdelningstäckning',v:'1,15x',dd:'ned från 1,45',dc:'neg',cc:'larm vid 1,0x'},
+   {k:'Fiber, tillväxt',v:'+6%',dd:'tar andel',dc:'pos',cc:'ljuspunkten i rapporten'}],
+  fund:{
+   rows:[
+    ['Omsättning, Mkr',[8210,8180,8150,8160,8140,8120],'-1,1%','mutc',0],
+    ['Bruttomarginal, %',[41.5,41.0,40.6,40.1,39.2,38.0],'-3,5 pp','neg',1],
+    ['EBIT-marginal, %',[14.5,14.2,13.8,13.4,12.8,12.1],'-2,4 pp','neg',1],
+    ['Fritt kassaflöde, Mkr',[1034,1010,990,975,940,910],'-12,0%','neg',0]],
+   mult:[['P/E','11,2','13,4','-16%'],['EV/EBIT','9,8','11,6','-16%'],['Direktavkastning','5,8%','4,6%','högre'],['P/FCF','20,4','15,9','+28%']],
+   ai:'Läsanvisning: aktien ser billig ut mot eget snitt på P/E, men dyr på P/FCF, det är kassaflödet som viker, inte kursen som fallit för mycket. Klassisk marginalvarning: multipeln krymper långsammare än lönsamheten.'},
+  report:{
+   verdict:'Svag på marginal. Prispressen i mobil urholkar lönsamheten snabbare än väntat. Utdelningen står kvar, men täckningen tunnas ut.',
+   grid:[
+    ['Omsättning','8 120','8 200','-1,0%','mutc','8 210','-1,1%','mutc','·',[8210,8180,8150,8160,8140,8120]],
+    ['Bruttomarginal','38,0%','41,0%','-3,0 pp','neg','41,5%','-3,5 pp','neg','·',[41.5,41.0,40.6,40.1,39.2,38.0]],
+    ['EBIT-marginal','12,1%','14,0%','-1,9 pp','neg','14,5%','-2,4 pp','neg','·',[14.5,14.2,13.8,13.4,12.8,12.1]],
+    ['Fritt kassaflöde','910','1 050','-13,3%','neg','1 034','-12,0%','neg','·',[1034,1010,990,975,940,910]]],
+   seg:[['Mobil','4 210','-6%','neg','9,8%','-3,9 pp','neg'],
+        ['Bredband och fiber','2 480','+6%','pos','15,2%','+0,4 pp','pos'],
+        ['Företag','1 430','+1%','mutc','13,1%','-0,5 pp','neg']],
+   good:['Utdelningen bekräftad','Fiber växer 6% och tar andel'],
+   bad:['Bruttomarginal ned 3,5 pp','EBIT-marginal klart under konsensus','FCF ned 12%, täckningen tunnas ut'],
+   surprises:['Prispressen kom snabbare än bolaget flaggade i Q2'],
+   quotes:[{q:'Konkurrensen i mobil har intensifierats och pressat priserna mer än väntat.',who:'VD · kvartalsrapporten s. 3'}],
+   tes:'Pelare 2 (stigande marginal): bruten, kurvan korsade larmnivån 40,0%. Pelare 1 (stabil omsättning) håller. Pelare 3 (utdelning täckt): bevaka, täckningen föll till 1,15x mot larm 1,0x.'},
+  pillars:[
+   {n:'Stabil omsättning',s:'g',now:'-1,1%',pts:[8210,8180,8150,8160,8140,8120],larm:7960,larmLab:'larm: fall över 3% i årstakt',ev:'I stort sett platt sex kvartal. Inom normalt spann.'},
+   {n:'Stigande bruttomarginal',s:'r',now:'38,0%',pts:[41.5,41.0,40.6,40.1,39.2,38.0],larm:40.0,larmLab:'larm 40,0%',ev:'Korsade larmnivån detta kvartal. Sex raka kvartal av fall. Skälet om marginalexpansion håller inte längre.'},
+   {n:'Utdelning täckt av kassaflödet',s:'y',now:'1,15x',pts:[1.5,1.45,1.4,1.3,1.25,1.15],larm:1.0,larmLab:'larm 1,0x',ev:'Bekräftad utdelning, men täckningen har fallit sex kvartal i rad. Bevaka Q4.'}],
+  chat:{
+   'Håller mitt skäl?':{txt:'<span class="tag fakta">fakta</span> Delvis brutet. Bruttomarginalen korsade din larmnivå 40,0% detta kvartal <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen står kvar (täckning 1,15x mot larm 1,0x), men marginaldelen av skälet behöver omprövas.',
+     data:{head:['Pelare','Nu','Larm','Status'],rows:[['Stabil omsättning','-1,1%','-3%','<span class=pos>håller</span>'],['Stigande bruttomarginal','38,0%','40,0%','<span class=neg>bruten</span>'],['Utdelningstäckning','1,15x','1,0x','<span class=gold>bevaka</span>']]}}}
+ },
+ KAVX:{tk:'KAVX',namn:'Kavex Medical',status:'up',statusLab:'Insiderköp',
+  pris:156.00,idag:0.4,spark12:[138,141,140,144,147,146,150,152,151,154,155,156],
+  micro:['P/E 31,4','Brutto 72%','Återk. 63%'],
+  fact:{v52:'128,00 till 158,40',mcap:'9,4 mdkr',pe:'31,4',dir:'0,8%'},
+  why:'Nischmedtech med återkommande intäkter och hög marginal.',
+  event:'VD köpte aktier för 2,1 Mkr i går, första insiderköpet på 14 månader. Inget i ditt skäl ändras.',src:'FI insynsregister · igår 17:42',
+  what:[{t:'fakta',txt:'VD köpte aktier för 2,1 Mkr i går, det första insiderköpet på 14 månader.',c:1},
+        {t:'slutsats',txt:'Ett köp av den storleken efter lång tystnad signalerar förtroende. Svag positiv datapunkt, inget i ditt skäl ändras. Q3-rapporten kommer 2 juli.',c:0}],
+  rail:[{k:'Insiderköp',v:'2,1 Mkr',dd:'VD',dc:'gold',cc:'första på 14 månader'},
+        {k:'Återkommande intäkter',v:'63%',dd:'+1 pp',dc:'pos',cc:'pelare: över 60%'},
+        {k:'Nästa rapport',v:'2 jul',dd:'Q3',dc:'mutc',cc:'om 0 dagar i mocken'}],
+  fund:null,report:null,
+  pillars:[
+   {n:'Återkommande intäkter över 60%',s:'g',now:'63%',pts:[58,59,60,61,62,63],larm:60,larmLab:'larm 60%',ev:'Stigande andel sex kvartal i rad.'},
+   {n:'Bruttomarginal över 70%',s:'g',now:'72,4%',pts:[71,71.5,71.8,72,72.2,72.4],larm:70,larmLab:'larm 70%',ev:'Stabilt över golvet.'}],
+  chat:{'Vad betyder insiderköpet?':{txt:'<span class="tag fakta">fakta</span> VD köpte för 2,1 Mkr, första köpet på 14 månader <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Svag positiv signal, ersätter inte en rapport.',data:null}}
+ },
+ BRUN:{tk:'BRUN',namn:'Brunna Hydro',status:'calm',statusLab:'Lugnt',
+  pris:112.40,idag:0.1,spark12:[108,109,110,109,111,110,112,111,112,113,112,112],
+  micro:['P/E 14,8','Dir 4,6%','Täckn. 1,3x'],
+  fact:{v52:'104,20 till 115,60',mcap:'27,1 mdkr',pe:'14,8',dir:'4,6%'},
+  why:'Reglerad kassaflödesmaskin, låg risk, stabil utdelning.',
+  event:'Inget kräver din uppmärksamhet.',src:'6 nyheter bortsorterade som brus',
+  what:[{t:'slutsats',txt:'Inget av betydelse sedan du senast tittade. 6 inkomna nyheter bedömdes som brus och visas inte.',c:0}],
+  rail:[{k:'Utdelningstäckning',v:'1,3x',dd:'stabil',dc:'pos',cc:'larm vid 1,0x'}],
+  fund:null,report:null,
+  pillars:[{n:'Utdelning täckt av kassaflödet',s:'g',now:'1,3x',pts:[1.32,1.3,1.31,1.29,1.3,1.3],larm:1.0,larmLab:'larm 1,0x',ev:'Trygg täckning, ingen rörelse.'}],
+  chat:{}
+ },
+ ALMI:{tk:'ALMI',namn:'Almi Foods',status:'calm',statusLab:'Lugnt',
+  pris:68.90,idag:-0.2,spark12:[70,71,70,69,70,69,70,69,69,70,69,69],
+  micro:['P/E 16,2','Dir 3,1%','NS/EBITDA 1,1x'],
+  fact:{v52:'64,50 till 73,80',mcap:'6,2 mdkr',pe:'16,2',dir:'3,1%'},
+  why:'Defensiv stapelvara med långsam men säker tillväxt.',
+  event:'En riktkurssänkning, bedömd som brus. Inget rör ditt skäl.',src:'1 nyhet nedprioriterad',
+  what:[{t:'slutsats',txt:'En analytiker sänkte riktkursen men behöll rekommendationen. Lågprioriterat, ingen förändring i ditt skäl.',c:0}],
+  rail:[],fund:null,report:null,
+  pillars:[{n:'Stabil efterfrågan',s:'g',now:'intakt',pts:[100,101,100,101,101,102],larm:null,larmLab:'larm: volymfall två kvartal',ev:'Defensiv profil, ingen rörelse.'}],
+  chat:{}
+ }
+};
+const ORDER=['NORL','TELV','KAVX','BRUN','ALMI'];
+const ACTIVE=['TELV','NORL','KAVX'];
+
+/* ============ shell ============ */
+let view='idag',cur='NORL',curTab='oversikt';
+const main=document.getElementById('main');
+const NAVDEF=[['idag','today','Idag'],['fraga','ask','Fråga AI']];
+document.querySelectorAll('.nav').forEach(n=>{const dd=NAVDEF.find(x=>x[0]===n.dataset.view);n.innerHTML=ic(dd[1])+' <span>'+dd[2]+'</span>';
+  n.onclick=()=>{view=n.dataset.view;setNav();render();window.scrollTo(0,0);};});
+function setNav(){document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on',n.dataset.view===view));}
+function render(){({idag:renderIdag,fraga:renderFragaG,stock:renderStock}[view])();}
+const S=t=>STOCKS[t];
+const STCLS={ok:'pos',bad:'neg',up:'gold',calm:'faintc'};
+function stw(s){return `<span class="stword ${STCLS[s.status]}"><i class="d"></i>${s.statusLab}</span>`;}
+function goStock(tk){cur=tk;curTab='oversikt';view='stock';setNav();render();window.scrollTo(0,0);}
+function priceHTML(s){return `<div class="price num">${s.pris.toFixed(2).replace('.',',')} <span class="chg">${fmtChg(s.idag)}</span></div>`;}
+
+/* ============ Idag ============ */
+function renderIdag(){
+  main.innerHTML=`<div class="masthead">Marginalen · Ägar-AI<span class="r">Onsdag 2 juli 2026 · 15:42 · fördröjt 15 min</span></div>
+  <div class="eyebrow">God morgon</div><h1 class="big">Idag</h1>
+  <div class="sub">Tre saker rör dina bolag. Resten var brus.</div>
+  <div class="front">
+    ${ACTIVE.map(tk=>{const s=S(tk);return `
+      <div class="frow" onclick="goStock('${tk}')">
+        <div>
+          <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">${tk}</span>${stw(s)}</div>
+          <p>${s.event}</p>
+          <div class="fr-src">${s.src}</div>
+        </div>
+        <div class="dblock">
+          ${priceHTML(s)}
+          <div class="sp">${spark(s.spark12,110,24,s.idag>=0?'#5FB89A':'#E0726F')}</div>
+          <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
+        </div>
+      </div>`;}).join('')}
+    ${['BRUN','ALMI'].map(tk=>{const s=S(tk);return `
+      <div class="frow smallr" onclick="goStock('${tk}')">
+        <div>
+          <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">${tk}</span>${stw(s)}</div>
+          <p>${s.event}</p>
+        </div>
+        <div class="dblock">
+          ${priceHTML(s)}
+          <div class="sp">${spark(s.spark12,110,20,'#646B76')}</div>
+          <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
+        </div>
+      </div>`;}).join('')}
+    <div class="endrow"><span class="el">Bortsorterat</span><span class="ev"><b>47 saker</b> bedömdes som brus: kurskommentarer, marknadssvep, en upprepad behåll-rekommendation.</span></div>
+    <div class="endrow"><span class="el">Kommande</span><span class="ev"><i>2 jul</i> Kavex Q3 · <i>9 jul</i> Norlux kapitalmarknadsdag · <i>14 jul</i> Brunna utdelning · <i>22 jul</i> Almi Q3</span></div>
+    <div class="endrow"><span class="el">Portfölj</span><span class="ev"><b>1 284 300 kr</b> · +0,4% idag. Visas litet med flit, dagsrörelsen är spekulantens mått.</span></div>
+  </div>`;
+}
+
+/* ============ stock page ============ */
+function renderStock(){
+  const s=S(cur);
+  const tabs=[['oversikt','Vad har hänt'],...(s.report?[['rapport','Rapportanalys']]:[]),...(s.fund?[['fund','Fundamenta']]:[]),['skal','Ditt skäl'],['fraga','Fråga AI']];
+  main.innerHTML=`
+    <button class="back" onclick="view='idag';setNav();render()"><span class="ico sm" style="transform:scaleX(-1)">${svgi('arrow')}</span>Idag</button>
+    <div class="shead"><h1>${s.namn}</h1><span class="fr-tk">${s.tk}</span>${stw(s)}</div>
+    <div class="factbar num">
+      <span class="f"><span class="v">${s.pris.toFixed(2).replace('.',',')}</span> ${fmtChg(s.idag)}</span><span class="sep">·</span>
+      <span class="f"><span class="k">52 v</span><span class="v">${s.fact.v52}</span></span><span class="sep">·</span>
+      <span class="f"><span class="k">Börsvärde</span><span class="v">${s.fact.mcap}</span></span><span class="sep">·</span>
+      <span class="f"><span class="k">P/E</span><span class="v">${s.fact.pe}</span></span><span class="sep">·</span>
+      <span class="f"><span class="k">Dir.avk</span><span class="v">${s.fact.dir}</span></span>
+    </div>
+    <div class="whyline"><b>Varför du äger det</b>${s.why}</div>
+    <div class="tabs">${tabs.map(([id,lab])=>`<button class="tab ${curTab===id?'on':''}" data-tab="${id}" onclick="curTab='${id}';renderTab()">${lab}</button>`).join('')}</div>
+    <div id="tabbody"></div>`;
+  renderTab();
+}
+function renderTab(){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===curTab));
+  const s=S(cur),b=document.getElementById('tabbody');
+  if(curTab==='oversikt')b.innerHTML=tabOversikt(s);
+  else if(curTab==='rapport')b.innerHTML=tabRapport(s);
+  else if(curTab==='fund')b.innerHTML=tabFund(s);
+  else if(curTab==='skal')b.innerHTML=tabSkal(s);
+  else{b.innerHTML=tabChat(s);wireChat(s);}
+}
+function tabOversikt(s){
+  return `<div class="lane">
+    <div class="prose">
+      <div class="lab">${ic('ask','sm')} AI-sammanfattning · vad har hänt</div>
+      ${s.what.map(w=>`<p><span class="tag ${w.t}">${w.t}</span>${w.txt}${w.c?` <a class="cit">${w.c}</a>`:''}</p>`).join('')}
+    </div>
+    <div class="rail">
+      <div class="rlab">Talen bakom</div>
+      ${s.rail.map(c=>`<div class="chip"><div class="ck">${c.k}</div><div class="cv"><span class="v">${c.v}</span><span class="dd ${c.dc}">${c.dd}</span></div><div class="cc">${c.cc}</div></div>`).join('')||'<div class="cc" style="color:var(--faint);font-size:12px">Inga nya tal idag.</div>'}
+    </div>
+  </div>
+  <div class="slab">Ditt skäl just nu</div>
+  ${s.pillars.map(pcardHTML).join('')}`;
+}
+function pcardHTML(p){
+  const stTxt=p.s==='g'?'håller':p.s==='r'?'bruten':'bevaka';
+  const stCls=p.s==='g'?'pos':p.s==='r'?'neg':'gold';
+  return `<div class="pcard ${p.s==='r'?'rr':''}">
+    <div class="ph"><span class="pt">${p.n}</span><span class="pv"><span class="${stCls}">${stTxt}</span> · ${p.now}</span></div>
+    <div class="pchart">${pillChart(p.pts,p.larm,p.s)}</div>
+    <div class="pmeta"><span>${Q[0]}</span><span class="gold">${p.larmLab}</span><span>${Q[Q.length-1]}</span></div>
+    <div class="pev">${p.ev}</div>
+  </div>`;
+}
+function tabRapport(s){
+  const r=s.report;
+  return `<div class="vlab">${ic('ask','sm')} AI · rapporten på 15 sekunder</div>
+  <p class="verdict">${r.verdict}</p>
+  <div class="slab">Utfall mot konsensus, i fjol och guidning</div>
+  <div class="tscroll"><table class="dt">
+    <thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Konsensus</th><th>Mot kons.</th><th>I fjol</th><th>Mot i fjol</th><th>Guidning</th><th>Trend 6 kv</th></tr></thead>
+    <tbody>${r.grid.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td class="mutc">${g[2]}</td><td class="${g[4]}">${g[3]}</td><td class="mutc">${g[5]}</td><td class="${g[7]}">${g[6]}</td><td class="faintc">${g[8]}</td><td class="sparkcell">${spark(g[9],76,18,g[7]==='neg'?'#E0726F':'#5FB89A')}</td></tr>`).join('')}</tbody>
+  </table></div>
+  <div class="slab">Segment</div>
+  <div class="tscroll"><table class="dt">
+    <thead><tr><th>Segment</th><th>Omsättning, Mkr</th><th>Tillväxt</th><th>EBIT-marginal</th><th>Förändring</th></tr></thead>
+    <tbody>${r.seg.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td class="${g[3]}">${g[2]}</td><td>${g[4]}</td><td class="${g[6]}">${g[5]}</td></tr>`).join('')}</tbody>
+  </table></div>
+  <div class="cols">
+    <div class="mini good"><h4>Bra</h4><ul>${r.good.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="mini bad"><h4>Dåligt</h4><ul>${r.bad.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+  </div>
+  <div class="slab">Överraskningar</div>
+  <div class="mini"><ul>${r.surprises.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+  <div class="slab">Från ledningen</div>
+  ${r.quotes.map(q=>`<div class="quote">”${q.q}”<span class="who">${q.who}</span></div>`).join('')}
+  <div class="slab">Hur det rör ditt skäl</div>
+  <p style="font-size:14px;line-height:1.6;color:var(--mut);margin:0">${r.tes}</p>`;
+}
+function tabFund(s){
+  const f=s.fund;
+  return `<div class="vlab">${ic('ask','sm')} AI · läsanvisning</div>
+  <p class="verdict" style="font-size:15.5px">${f.ai}</p>
+  <div class="slab">Kvartalen</div>
+  <div class="tscroll"><table class="dt">
+    <thead><tr><th>Nyckeltal</th>${Q.map(q=>`<th>${q}</th>`).join('')}<th>Mot i fjol</th><th>Trend</th></tr></thead>
+    <tbody>${f.rows.map(row=>{const[name,pts,yoy,cls,dec]=row;
+      return `<tr><td>${name}</td>${pts.map(p=>`<td>${p.toLocaleString('sv-SE',{minimumFractionDigits:dec,maximumFractionDigits:dec})}</td>`).join('')}<td class="${cls}">${yoy}</td><td class="sparkcell">${spark(pts,76,18,cls==='neg'?'#E0726F':cls==='pos'?'#5FB89A':'#646B76')}</td></tr>`;}).join('')}</tbody>
+  </table></div>
+  <div class="slab">Multiplar mot egen historik</div>
+  <div class="tscroll"><table class="dt" style="max-width:520px">
+    <thead><tr><th>Multipel</th><th>Nu</th><th>5-årssnitt</th><th>Mot snittet</th></tr></thead>
+    <tbody>${f.mult.map(m=>{const neg=m[3].startsWith('+');return `<tr><td>${m[0]}</td><td>${m[1]}</td><td class="mutc">${m[2]}</td><td class="${neg?'neg':'pos'}">${m[3]}</td></tr>`;}).join('')}</tbody>
+  </table></div>
+  <div class="note">Jämförelsen är mot bolagets egen historik, aldrig ett omdöme om köpvärdhet. Exempeldata.</div>`;
+}
+function tabSkal(s){
+  const broken=s.pillars.some(p=>p.s==='r');
+  const note=broken?`<div class="tnote"><b>Skälet är utmanat.</b> En pelare korsade sin larmnivå. Det betyder inte sälj, det betyder att en av dina egna förutsättningar inte längre håller. Ompröva den, inte hela innehavet i panik.</div>`:'';
+  return `${note}
+  <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Du skrev ditt skäl som testbara pelare med larmnivåer. Kurvorna nedan är pelarnas underliggande mått, med din larmnivå ritad som streckad linje. Vi stör dig bara när en kurva korsar sin linje.</p>
+  ${s.pillars.map(pcardHTML).join('')}`;
+}
+function tabChat(s){
+  const qs=Object.keys(s.chat);
+  return `<div class="seed">${qs.map(q=>`<button class="seedb" onclick="ask('${q.replace(/'/g,"\\'")}')">${q}</button>`).join('')}</div>
+  <div class="chat" id="chat"><div class="bub a">Fråga mig om ${s.namn}. Jag svarar grundat, med källa och siffrorna synliga, och säger ifrån när jag inte vet.</div></div>
+  <div class="askbar"><input id="askin" placeholder="Fråga om ${s.namn}…"><button onclick="askIn()">Fråga</button></div>`;
+}
+function dataTable(dt){if(!dt)return '';
+  return `<table class="dt"><thead><tr>${dt.head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${dt.rows.map(r=>`<tr>${r.map((c,i)=>`<td${i===0?' style="font-family:var(--sans);color:var(--mut)"':''}>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;}
+let chatStock=null;
+function wireChat(s){chatStock=s;const i=document.getElementById('askin');if(i)i.onkeydown=e=>{if(e.key==='Enter')askIn();};}
+function ask(q){const s=chatStock||S(cur),chat=document.getElementById('chat');
+  chat.insertAdjacentHTML('beforeend',`<div class="bub u">${q}</div>`);
+  const a=s.chat[q];
+  const html=a?`${a.txt}${dataTable(a.data)}`:'<span class="tag slutsats">slutsats</span> Prototyp: förberedda svar på de föreslagna frågorna. I produkten hämtas svar och tabeller ur källdata.';
+  setTimeout(()=>{chat.insertAdjacentHTML('beforeend',`<div class="bub a">${html}</div>`);window.scrollTo(0,document.body.scrollHeight);},200);}
+function askIn(){const i=document.getElementById('askin');if(i&&i.value.trim()){ask(i.value.trim());i.value='';}}
+
+/* ============ global chat ============ */
+const GLOBAL={
+ 'Vad kräver mest uppmärksamhet?':{txt:'<span class="tag slutsats">slutsats</span> Telvio. Bruttomarginalen korsade din larmnivå 40,0% <a class="cit">1</a>. Norlux också, men positivt: stark rapport, alla pelare håller <a class="cit">2</a>.',
+   data:{head:['Bolag','Pelare','Nu','Larm'],rows:[['Telvio','Bruttomarginal','38,0%','<span class=neg>40,0% korsad</span>'],['Norlux','Org. tillväxt','11,0%','<span class=pos>8,0% håller</span>']]}},
+ 'Vilka skäl vacklar?':{txt:'<span class="tag fakta">fakta</span> Ett av fem: Telvio, pelaren om stigande marginal är bruten <a class="cit">1</a>. Utdelningstäckningen där är dessutom satt på bevakning (1,15x mot larm 1,0x).',data:null},
+ 'Dold koncentrationsrisk?':{txt:'<span class="tag slutsats">slutsats</span> Norlux och Telvio är båda känsliga för samma europeiska industricykel. Tillsammans 46% av portföljen. Ingen varning, men en korrelation värd att känna till.',
+   data:{head:['Innehav','Andel','Cykelkänslighet'],rows:[['Norlux','28%','europeisk industri'],['Telvio','18%','europeisk industri'],['Övriga tre','54%','blandad']]}}
+};
+function renderFragaG(){
+  main.innerHTML=`<div class="masthead">Marginalen · Ägar-AI<span class="r">Grundad AI</span></div>
+  <div class="eyebrow">Hela portföljen</div><h1 class="big">Fråga AI</h1>
+  <div class="sub">Svar med källa och siffrorna synliga, aldrig påhittade tal.</div>
+  <div class="seed">${Object.keys(GLOBAL).map(q=>`<button class="seedb" onclick="askG('${q.replace(/'/g,"\\'")}')">${q}</button>`).join('')}</div>
+  <div class="chat" id="gchat"><div class="bub a">Jag känner dina fem innehav och ditt skäl för varje. Fråga vad du vill.</div></div>
+  <div class="askbar"><input id="gin" placeholder="Fråga om din portfölj…"><button onclick="askGIn()">Fråga</button></div>`;
+  const i=document.getElementById('gin');if(i)i.onkeydown=e=>{if(e.key==='Enter')askGIn();};
+}
+function askG(q){const chat=document.getElementById('gchat');chat.insertAdjacentHTML('beforeend',`<div class="bub u">${q}</div>`);
+  const a=GLOBAL[q];const html=a?`${a.txt}${dataTable(a.data)}`:'<span class="tag slutsats">slutsats</span> Prototyp: förberedda svar på de föreslagna frågorna.';
+  setTimeout(()=>{chat.insertAdjacentHTML('beforeend',`<div class="bub a">${html}</div>`);window.scrollTo(0,document.body.scrollHeight);},200);}
+function askGIn(){const i=document.getElementById('gin');if(i&&i.value.trim()){askG(i.value.trim());i.value='';}}
+
+render();
+</script>
+</body>
+</html>
