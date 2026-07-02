@@ -143,14 +143,23 @@ Poängen: **de två första faserna kan byggas nästan utan datakostnad** tack v
 
 **Kursens roll i affären:** förtroendebygget och kundanskaffningen. Den som gått kursen har redan formulerat skäl för sina innehav (kursens övningar), alltså exakt onboarding-datat produkten behöver. Konverteringen kurs → verktyg är den första metriken att bevisa.
 
-**Sebastians roll:** rösten och ansiktet. "Sebastian tänker" finns redan i kursen; i produkten blir det trovärdigheten i tonen (morgonbriefens språk, pre-mortem-tänket). Investerar-personan säljer produkten som en AI aldrig kan.
+**Sebastians roll:** rösten och ansiktet. "Sebastian tänker" finns redan i kursen; i produkten blir det trovärdigheten i tonen (morgonbrevets språk, pre-mortem-tänket). Investerar-personan säljer produkten som en AI aldrig kan.
+
+**Morgonbrevet är hooken.** Produktens vana byggs inte av tid i appen utan av ett dagligt brev, 07:30, 90 sekunder, som man till slut vägrar vara utan. Tre beroende-lager: ritualen (dagligt medieformat som kräver noll av läsaren), tryggheten (larmsystemet man inte vågar stänga av när skälen väl är inskrivna) och identiteten (kvartalsbackspegeln och ansvarsliggaren). "Hands off" är produktens resultat, inte dess personlighet: produkten jobbar varje natt, brevet är kvittot.
+
+Brevets struktur, alltid tvådelad:
+1. **Dina bolag**: varje innehav mätt mot dina skäl. Oftast "inget rör ditt skäl", sagt rakt ut med proof-of-work-raden ("i natt lästes 51 saker, 0 rör dina skäl").
+2. **Att hålla koll på idag**: det generella (räntebesked, rapportsäsong, makro), men alltid filtrerat genom portföljen med en "för dig"-rad per punkt.
+3. På tysta dagar: **dagens Marginal-anteckning**, en lärobit ur kursen eller ett "Sebastian tänker" kopplat till portföljen. Dagligt värde utan fejkad brådska, och kurs-flywheelet blir en daglig muskel.
+
+Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (marknaden + en lärdom) som kundanskaffning och distribution, och det **personliga morgonbrevet** (din portfölj, dina skäl, larmen) som betalprodukt. Nyckelmåttet är brevets dagliga öppningsgrad, daglig touch, inte daglig tid.
 
 ---
 
 ## 8. Mått på framgång (per fas)
 
 - **Fas 1:** andel kursanvändare som testar rapportkollen; andel som kommer tillbaka med rapport nummer två; noll hallucinationsincidenter; betalkonvertering på väggen.
-- **Fas 2:** andel som skriver in skäl + pelare i onboardingen (kärnhandlingen); D7/D30-återkomst till morgonbriefen; larmprecision (andel larm användaren bedömer som relevanta); churn.
+- **Fas 2:** andel som skriver in skäl + pelare i onboardingen (kärnhandlingen); morgonbrevets dagliga öppningsgrad; D7/D30-återkomst; larmprecision (andel larm användaren bedömer som relevanta); churn.
 - **Genomgående:** tid till "klar" per session ska vara *låg*. Produkten lyckas när användaren lämnar snabbt och lugn, inte när den scrollar länge.
 
 ---

@@ -79,6 +79,22 @@
   .eco .er span{color:var(--mut)}
   .eco .ef{padding:10px 17px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line)}
 
+  /* morgonbrevet */
+  .brev{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden;max-width:620px}
+  .brev .bh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .brev .bh .bt{font-family:var(--disp);font-weight:600;font-size:18px}
+  .brev .bh .bd{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+  .bsec{padding:15px 20px 6px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+  .bitem{padding:9px 20px 12px}
+  .bitem+.bitem{border-top:1px solid var(--line)}
+  .bitem h4{font-family:var(--disp);font-size:15px;font-weight:500;margin:0 0 4px}
+  .bitem h4 .st{font-family:var(--sans);font-size:11.5px;font-weight:400;margin-left:8px}
+  .bitem p{font-size:12.5px;color:var(--mut);margin:0;line-height:1.55}
+  .bitem .fd{font-size:11.5px;color:var(--mut);margin-top:5px}
+  .bitem .fd b{color:var(--gold);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-right:6px}
+  .pw{padding:12px 20px;background:var(--bg2);font-family:var(--mono);font-size:11px;color:var(--faint);border-top:1px solid var(--line);line-height:1.6}
+  .pw b{color:var(--mut);font-weight:500}
+
   /* reused product components (from v2) */
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
   h2.big{font-family:var(--disp);font-weight:600;font-size:26px;margin:6px 0 3px;letter-spacing:-.4px}
@@ -175,7 +191,7 @@ function fmtChg(v){const s=v>0?'+':'';const c=v>0?'pos':v<0?'neg':'mutc';return 
 const STEPS=[
  {d:'Överblick',t:'Kartan'},
  {d:'Dag 0',t:'Du säger varför'},
- {d:'Dag 1',t:'Första morgonen'},
+ {d:'Dag 1',t:'Morgonbrevet'},
  {d:'Dag 12',t:'Vi flaggar'},
  {d:'Dag 47',t:'Rapportdagen'},
  {d:'Dag 90',t:'Backspegeln'}
@@ -198,7 +214,7 @@ function ch0(){body.innerHTML=`
   </div>
   <div class="map">
     <div class="stop"><div class="sd">Dag 0 · en gång · ~10 min</div><h3>Du säger varför du äger</h3><p>Lägg in ett bolag, svara "varför äger du det?", sätt larmnivåer. Det är all setup som finns. Enda gången produkten ber dig arbeta.</p></div>
-    <div class="stop"><div class="sd">Dag 1 och framåt · 2 min per morgon</div><h3>Morgontitten</h3><p>Öppna Idag. Oftast: "inget rör ditt skäl". Då stänger du appen. Det är produktens succéläge, inte dess tomhet.</p></div>
+    <div class="stop"><div class="sd">Dag 1 och framåt · 07:30 · 90 sekunder</div><h3>Morgonbrevet</h3><p>Två delar: dina bolag mätt mot dina skäl, och det generella som är värt att hålla koll på idag, alltid filtrerat genom din portfölj. Oftast: inget rör dina skäl. Då vet du det, med bevis, och är klar.</p></div>
     <div class="stop"><div class="sd">Några gånger per år</div><h3>Vi flaggar</h3><p>En kurva korsar din larmlinje. Nu, och först nu, stör vi dig. Du ser vilken av dina egna förutsättningar som rörde sig, med bevis och källa.</p></div>
     <div class="stop"><div class="sd">Varje kvartal · automatiskt</div><h3>Rapporten analyseras åt dig</h3><p>Bolaget släpper rapport 07:30. 07:31 ligger analysen klar: mot konsensus, mot i fjol, mot din tes. Varje siffra ur rapporten, ingen påhittad.</p></div>
     <div class="stop"><div class="sd">Dag 90 · kvartalsvis</div><h3>Backspegeln</h3><p>Hur mycket tid kostade kvartalet? Nästan ingen. Och allt vi sa finns kvar, granskningsbart. Sen börjar loopen om.</p></div>
@@ -230,7 +246,7 @@ function ch1(){body.innerHTML=`
     ${pc('Stigande EBIT-marginal','g','startläge 18,8%',[17.9,18.0,18.3,18.5,18.8,18.8],18.0,'larm: under fjolårets 18,0%','Larmar om marginalen faller under fjolårets nivå.')}
     ${pc('Ingen utspädning','g','148,2 M aktier',[148.2,148.2,148.2,148.2,148.2,148.2],null,'larm: antalet aktier ökar','Larmar om bolaget börjar ge ut nya aktier.')}
   </div>
-  <div class="nextbar"><button class="btn ghost" onclick="go(0)">← Kartan</button><button class="btn prim" onclick="go(2)">Nästa steg: din första morgon →</button></div>`;}
+  <div class="nextbar"><button class="btn ghost" onclick="go(0)">← Kartan</button><button class="btn prim" onclick="go(2)">Nästa steg: ditt första morgonbrev →</button></div>`;}
 
 function pc(n,s,now,pts,larm,larmLab,ev){
   return `<div class="pcard ${s==='r'?'rr':''}"><div class="ph"><span class="pt">${n}</span><span class="pv"><span class="${s==='r'?'neg':s==='y'?'gold':'pos'}">${s==='r'?'bruten':s==='y'?'bevaka':'håller'}</span> · ${now}</span></div>
@@ -238,28 +254,39 @@ function pc(n,s,now,pts,larm,larmLab,ev){
   <div class="pmeta"><span>6 kvartal</span><span class="gold">${larmLab}</span><span>nu</span></div>
   <div class="pev">${ev}</div></div>`;}
 
-/* ch2: day 1 */
+/* ch2: day 1, morgonbrevet */
 function ch2(){body.innerHTML=`
   <div class="narr">
-    <div class="step">Steg 2 av 5 · Dag 1 · två minuter</div>
-    <h1>Första morgonen: ingenting. Och det är poängen.</h1>
-    <p>Du öppnar appen med kaffet. Norlux hade inga nyheter som rör ditt skäl, och det säger vi <b>rakt ut</b> i stället för att fylla skärmen med brus. Du stänger appen efter 40 sekunder. <b>Det är succéläget.</b> En vanlig app hade visat dig 12 rubriker för att hålla dig kvar. Vi visar noll, för noll var sanningen.</p>
+    <div class="step">Steg 2 av 5 · Dag 1 · 07:30 · 90 sekunder</div>
+    <h1>Ditt första morgonbrev</h1>
+    <p>Klockan 07:30 ligger brevet i inkorgen. Det har två delar: <b>dina bolag</b> mätt mot dina skäl, och <b>det generella</b> som är värt att hålla koll på idag, alltid filtrerat genom din portfölj ("för dig betyder det..."). Idag rör inget ditt skäl, och det säger vi rakt ut, tillsammans med beviset att vi faktiskt letat. <b>Det här är hooken:</b> brevet du läser med kaffet varje morgon, och till slut vägrar vara utan.</p>
   </div>
-  <div class="demo-label">Så ser det ut i produkten</div>
+  <div class="demo-label">Så ser det ut · i inkorgen eller appen</div>
   <div class="demo">
-    <div class="eyebrow">God morgon</div>
-    <h2 class="big">Idag</h2>
-    <div class="sub">Ingenting rör ditt skäl. Du kan stänga appen.</div>
-    <div class="front">
-      <div class="frow">
-        <div><div class="fr-head"><span class="fr-name">Norlux Industri</span><span class="fr-tk">NORL</span><span class="stword faintc"><i class="d"></i>Lugnt</span></div>
-        <p>Inget kräver din uppmärksamhet. 4 nyheter bedömdes som brus och visas inte.</p></div>
-        <div class="dblock"><div class="price num">271,00 <span class="chg">${fmtChg(0.3)}</span></div>
-        <div class="sp">${spark([205,212,220,232,228,241,248,255,251,262,268,271],110,22,'#646B76')}</div>
-        <div class="micro">P/E <b>23,1</b> · EV/EBIT <b>18,0</b> · NS/EBITDA <b>1,5x</b></div></div>
+    <div class="brev">
+      <div class="bh"><span class="bt">Marginalen Morgon</span><span class="bd">Torsdag 3 juli · 07:30 · 90 sek läsning</span></div>
+      <div class="bsec">Dina bolag</div>
+      <div class="bitem">
+        <h4>Norlux Industri <span class="st faintc">· lugnt, skälet håller</span></h4>
+        <p>Inga nyheter som rör dina tre pelare. Kursen 271,00, men det är inte därför du äger det.</p>
       </div>
-      <div class="endrow"><span class="el">Bortsorterat</span><span class="ev"><b>4 saker:</b> två kurskommentarer, ett marknadssvep, en upprepad rekommendation.</span></div>
-      <div class="endrow"><span class="el">Kommande</span><span class="ev"><b>9 jul</b> Norlux kapitalmarknadsdag</span></div>
+      <div class="bsec">Att hålla koll på idag</div>
+      <div class="bitem">
+        <h4>Riksbanken lämnar räntebesked 09:30</h4>
+        <p>Marknaden väntar sig oförändrat. Rörelser slår brett mot börsen under dagen.</p>
+        <div class="fd"><b>För dig</b>Norlux har nettoskuld 1,4x EBITDA: låg räntekänslighet. Ingen åtgärd.</div>
+      </div>
+      <div class="bitem">
+        <h4>Rapportsäsongen drar igång i Norden</h4>
+        <p>Ett dussin storbolag rapporterar de närmaste dagarna.</p>
+        <div class="fd"><b>För dig</b>Inget av dem ligger i din portfölj. Norlux Q3 kommer 15 augusti, vi läser den åt dig.</div>
+      </div>
+      <div class="bsec">Dagens Marginal-anteckning</div>
+      <div class="bitem">
+        <h4>Sebastian tänker: goodwill hos förvärvare</h4>
+        <p>Du äger en förvärvsmaskin. Då är goodwill-posten inte kosmetik, den är kvittot på vad bolaget betalat för sina köp. Så här läser du den mot avkastningen ... <span class="gold">Läs lektionen (3 min) →</span></p>
+      </div>
+      <div class="pw"><b>I natt:</b> 9 nyheter, registerposter och flöden lästa om Norlux. 0 rör ditt skäl. Klart, du kan lägga ifrån dig telefonen.</div>
     </div>
   </div>
   <div class="nextbar"><button class="btn ghost" onclick="go(1)">← Dag 0</button><button class="btn prim" onclick="go(3)">Nästa steg: vi visar en flaggning →</button></div>`;}
