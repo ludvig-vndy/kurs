@@ -71,6 +71,13 @@
   .stop p{color:var(--mut);font-size:13.5px;line-height:1.55;margin:0;max-width:58ch}
   .jobb{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;font-size:13.5px;color:var(--mut);line-height:1.6}
   .jobb b{color:var(--ink);font-weight:500}
+  .eco{margin-top:24px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);overflow:hidden}
+  .eco .ecl{padding:13px 17px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .eco .er{display:flex;gap:12px;padding:12px 17px;border-bottom:1px solid var(--line);font-size:13px;align-items:baseline}
+  .eco .er:last-of-type{border-bottom:none}
+  .eco .er b{color:var(--ink);font-weight:500;font-family:var(--disp);font-size:14px;flex:0 0 auto}
+  .eco .er span{color:var(--mut)}
+  .eco .ef{padding:10px 17px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line)}
 
   /* reused product components (from v2) */
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
@@ -185,9 +192,9 @@ function render(){
 /* ch0: map */
 function ch0(){body.innerHTML=`
   <div class="narr">
-    <div class="step">Livsgången · Överblick</div>
-    <h1>Så lever du med Ägar-AI</h1>
-    <p>Ett CRM förstår man för att loopen är känd: lägg in kunder, logga, följ upp. Här är loopen omvänd: <b>verktyget arbetar, du tittar till det.</b> Den här demon spelar upp de första 90 dagarna, steg för steg, i produktens riktiga ytor.</p>
+    <div class="step">Demo · Livsgången · Överblick</div>
+    <h1>Så fungerar tjänsten</h1>
+    <p>Du säger en gång <b>varför du äger dina bolag</b>. Sedan är tjänsten <b>hands off</b>: den läser rapporter, pressmeddelanden och register åt dig och stör dig bara när något rör ditt skäl. Du tittar till den två minuter om dagen. <b>Det här är en demo</b> som spelar upp de första 90 dagarna, steg för steg, i produktens riktiga ytor. All data är exempeldata.</p>
   </div>
   <div class="map">
     <div class="stop"><div class="sd">Dag 0 · en gång · ~10 min</div><h3>Du säger varför du äger</h3><p>Lägg in ett bolag, svara "varför äger du det?", sätt larmnivåer. Det är all setup som finns. Enda gången produkten ber dig arbeta.</p></div>
@@ -196,7 +203,14 @@ function ch0(){body.innerHTML=`
     <div class="stop"><div class="sd">Varje kvartal · automatiskt</div><h3>Rapporten analyseras åt dig</h3><p>Bolaget släpper rapport 07:30. 07:31 ligger analysen klar: mot konsensus, mot i fjol, mot din tes. Varje siffra ur rapporten, ingen påhittad.</p></div>
     <div class="stop"><div class="sd">Dag 90 · kvartalsvis</div><h3>Backspegeln</h3><p>Hur mycket tid kostade kvartalet? Nästan ingen. Och allt vi sa finns kvar, granskningsbart. Sen börjar loopen om.</p></div>
   </div>
-  <div class="jobb"><b>Ditt totala jobb:</b> skriv skälet en gång per bolag · läs två minuter om dagen · besluta när det larmar. Produkten lyckas när du är inne lite, inte mycket.</div>
+  <div class="jobb"><b>Ditt totala jobb:</b> skriv skälet en gång per bolag · läs två minuter om dagen · besluta när det larmar. Huvudpulsen är hands off, produkten lyckas när du är inne lite, inte mycket.</div>
+  <div class="eco">
+    <div class="ecl">Huvudpulsen är det du ser i demon. Runt den finns resten av paketet:</div>
+    <div class="er"><b>Kursen i aktieanalys</b><span>Marginalen: skolan och filosofin bakom tjänsten. Lär dig → öva → äg.</span></div>
+    <div class="er"><b>Analysverktygen</b><span>checklistor och verktyg från kursen, för när du vill göra jobbet själv.</span></div>
+    <div class="er"><b>Warrant-verktyget</b><span>"Hitta bästa hävstångsprodukten": separat, taktiskt verktyg för hävstång.</span></div>
+    <div class="ef">Demon nedan visar bara huvudpulsen.</div>
+  </div>
   <div class="nextbar"><button class="btn prim" onclick="go(1)">Starta resan: Dag 0, du säger varför →</button></div>`;}
 
 /* ch1: day 0 */
