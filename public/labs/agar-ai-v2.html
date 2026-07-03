@@ -117,6 +117,7 @@
   @media(max-width:680px){.duo{grid-template-columns:1fr}}
   .kv{font-family:var(--mono);font-size:24px;margin-top:2px}
   .ownnote{font-size:12px;color:var(--mut);margin-top:9px;line-height:1.55}
+  .slabel{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:14px 0 9px}
 
   /* two-lane: prose + data rail */
   .lane{display:grid;grid-template-columns:1fr 264px;gap:24px;align-items:start}
@@ -545,7 +546,38 @@ const STOCKS={
   chat:{}
  }
 };
-const ORDER=['NORL','TELV','KAVX','BRUN','ALMI'];
+STOCKS.VOLT={tk:'VOLT',namn:'Voltcell',status:'up',statusLab:'Milstolpe i september',growth:true,
+  pris:24.60,idag:1.2,spark12:[14,17,15,19,22,18,21,26,23,27,25,24.6],
+  micro:['Kassa 410 Mkr','Runway ~21 mån','Tillväxt +64%'],
+  factArr:[['52 v','11,80 till 31,40'],['Börsvärde','2,1 mdkr'],['Kassa','410 Mkr'],['Runway','~21 mån'],['Tillväxt','+64%']],
+  fact:{v52:'11,80 till 31,40',mcap:'2,1 mdkr',pe:'saknas',dir:'0%'},
+  why:'Tillväxtcase: batteriteknik före genombrottet. Kan mångdubblas om certifieringen och volymkontrakten landar, kan också misslyckas. Därför: litet innehav och hårda vakter.',
+  event:'Tillväxtcase under bevakning. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader i nuvarande takt. Inget nytt att agera på.',src:'Q2-rapport · milstolpsbevakning',
+  what:[
+   {t:'fakta',txt:'Q2: försäljningen växte 64% till 96 miljoner, från låg nivå. Förlusten var 58 miljoner i kvartalet, cirka 19 miljoner i månaden i förbrukningstakt (burn). Kassan är 410 miljoner: den räcker ungefär 21 månader i den här takten. Av varje hundralapp i försäljning blev 31 kronor kvar efter direkta kostnader, upp från 24 i fjol.',c:1},
+   {t:'slutsats',txt:'Caset följer planen: tillväxten håller, lönsamheten per såld krona rör sig åt rätt håll och kassan räcker förbi nästa milstolpe, certifieringsbeskedet i september. Största risken just nu är tiden: varje försening äter av kassan och ökar risken för att bolaget måste ta in pengar på dåliga villkor.',c:0}],
+  rail:[
+   {k:'Kassa och runway',v:'410 Mkr',dd:'~21 mån',dc:'pos',cc:'din gräns: larm under 18 månader'},
+   {k:'Förbrukningstakt (burn)',v:'19 Mkr',dd:'per månad',dc:'mutc',cc:'förlusten 58 Mkr i kvartalet'},
+   {k:'Tillväxt',v:'+64%',dd:'accelererar',dc:'pos',cc:'från låg nivå · sex kvartal i rad över 40'},
+   {k:'Bruttomarginal',v:'31%',dd:'+7',dc:'pos',cc:'procentenheter på ett år · bolagets mål 45'},
+   {k:'Utspädning i år',v:'+2,1%',dd:'optioner',dc:'mutc',cc:'din gräns: 5% per år'}],
+  fund:null,report:null,
+  scen:{rows:[
+    ['Pessimistiskt','Certifieringen misslyckas eller försenas kraftigt, nyemission på svaga villkor','~8 kr','-67%','neg'],
+    ['Bas','Certifiering i höst, gradvisa kontrakt under 2027','~35 kr','+42%','mutc'],
+    ['Optimistiskt','Certifiering plus volymkontrakt med två tillverkare','~90 kr','+266%','pos']],
+   note:'Kurs i dag 24,60. Asymmetrin är själva caset: nedsidan är begränsad till insatsen, uppsidan är flera gånger den. Skyddet är inte att gissa rätt, det är storleken: innehavet ska vara så litet att det pessimistiska utfallet inte skadar dig (lektion 11.4 i Marginalen). Värdena är illustrativa scenarioräkningar, inte prognoser.',
+   mil:[['Sep 2026','Certifieringsbesked, EU-marknaden'],['Q4 2026','Första volymkontraktet enligt bolagets egen plan'],['Feb 2027','Bokslut: bruttomarginalen mot målet 45%']]},
+  pillars:[
+   {n:'Kassan räcker mer än 18 månader',s:'g',now:'~21 mån',pts:[30,28,26,25,23,21],larm:18,larmLab:'larm 18 mån',ev:'Räknat på nuvarande förbrukningstakt. Att den tickar ner är normalt, men under 18 månader tvingas bolag ofta ta in pengar på motpartens villkor.'},
+   {n:'Tillväxt över 40% per år',s:'g',now:'+64%',pts:[45,52,48,58,61,64],larm:40,larmLab:'larm 40%',ev:'Från låg nivå, men accelererande sex kvartal i rad. Tillväxten är hela caset.'},
+   {n:'Bruttomarginalen rör sig mot målet 45%',s:'g',now:'31%',pts:[24,25,27,28,30,31],larm:null,larmLab:'larm: faller två kvartal i rad',ev:'Visar att affären bär sig bättre för varje såld enhet. Målet 45% är bolagets eget.'},
+   {n:'Utspädning under 5% per år',s:'g',now:'+2,1%',pts:[0.5,1.0,1.3,1.6,1.9,2.1],larm:5,larmLab:'larm 5%',ev:'Bara optionsprogram hittills. En nyemission är inte automatiskt fel i ett tillväxtcase, men den ska ske på styrka, inte av nöd.'}],
+  chat:{'Hur stor är risken?':{txt:'<span class="tag fakta">fakta</span> Det här är ditt mest riskfyllda innehav: bolaget förlorar pengar och caset hänger på certifieringen i september <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Risken begränsas inte av att gissa rätt utan av storleken: i det pessimistiska scenariot (~8 kr) förlorar du merparten av insatsen. Håll innehavet så litet att det utfallet inte skadar dig.',
+    data:{head:['Scenario','Värde per aktie','Mot kurs 24,60'],rows:[['Pessimistiskt','~8 kr','<span class=neg>-67%</span>'],['Bas','~35 kr','<span class=mutc>+42%</span>'],['Optimistiskt','~90 kr','<span class=pos>+266%</span>']]}}}
+};
+const ORDER=['NORL','TELV','KAVX','BRUN','ALMI','VOLT'];
 const ACTIVE=['TELV','NORL','KAVX'];
 
 /* ============ shell ============ */
@@ -584,6 +616,19 @@ function renderIdag(){
           <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
         </div>
       </div>`;}).join('')}
+    ${(()=>{const s=S('VOLT');return `
+      <div class="frow" onclick="goStock('VOLT')">
+        <div>
+          <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">VOLT</span>${stw(s)}</div>
+          <p>${s.event}</p>
+          <div class="fr-src">${s.src}</div>
+        </div>
+        <div class="dblock">
+          ${priceHTML(s)}
+          <div class="sp">${spark(s.spark12,110,24,C().gold)}</div>
+          <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
+        </div>
+      </div>`;})()}
     ${['BRUN','ALMI'].map(tk=>{const s=S(tk);return `
       <div class="frow smallr" onclick="goStock('${tk}')">
         <div>
@@ -608,17 +653,15 @@ function renderStock(){
   const anchors=[['hant','Vad har hänt'],['skal','Varför du äger'],
     ...(s.report?[['rapport','Rapporten']]:[]),
     ...(s.fund?[['fund','Fundamenta']]:[]),
+    ...(s.scen?[['scen','Scenarier & milstolpar']]:[]),
     ...(x?[['agare','Ägare & insyn'],['blankutd','Blankning & utdelning'],['kalhist','Kalender & historik']]:[]),
     ['fraga','Fråga AI']];
   main.innerHTML=`
     <button class="back" onclick="view='idag';setNav();render()"><span class="ico sm" style="transform:scaleX(-1)">${svgi('arrow')}</span>Idag</button>
     <div class="shead"><h1>${s.namn}</h1><span class="fr-tk">${s.tk}</span>${stw(s)}</div>
     <div class="factbar num">
-      <span class="f"><span class="v">${s.pris.toFixed(2).replace('.',',')}</span> ${fmtChg(s.idag)}</span><span class="sep">·</span>
-      <span class="f"><span class="k">52 v</span><span class="v">${s.fact.v52}</span></span><span class="sep">·</span>
-      <span class="f"><span class="k">Börsvärde</span><span class="v">${s.fact.mcap}</span></span><span class="sep">·</span>
-      <span class="f"><span class="k">P/E</span><span class="v">${s.fact.pe}</span></span><span class="sep">·</span>
-      <span class="f"><span class="k">Dir.avk</span><span class="v">${s.fact.dir}</span></span>
+      <span class="f"><span class="v">${s.pris.toFixed(2).replace('.',',')}</span> ${fmtChg(s.idag)}</span>
+      ${(s.factArr||[['52 v',s.fact.v52],['Börsvärde',s.fact.mcap],['P/E',s.fact.pe],['Dir.avk',s.fact.dir]]).map(f=>`<span class="sep">·</span><span class="f"><span class="k">${f[0]}</span><span class="v">${f[1]}</span></span>`).join('')}
     </div>
     <div class="whyline"><b>Varför du äger det</b>${s.why}</div>
     <div class="anchbar" id="anchbar">${anchors.map(([id,l])=>`<button class="anch" data-a="${id}" onclick="jumpTo('${id}')">${l}</button>`).join('')}</div>
@@ -626,6 +669,7 @@ function renderStock(){
     <section class="sec" id="sec-skal"><div class="sech"><h2>Varför du äger det</h2><span class="sm">det du bad oss hålla koll på</span></div>${tabSkal(s)}</section>
     ${s.report?`<section class="sec" id="sec-rapport"><div class="sech"><h2>Senaste rapporten</h2><span class="sm">Q3 2026</span></div>${tabRapport(s)}</section>`:''}
     ${s.fund?`<section class="sec" id="sec-fund"><div class="sech"><h2>Fundamenta</h2><span class="sm">ur rapporterna · exempeldata</span></div>${tabFund(s)}</section>`:''}
+    ${s.scen?secScen(s):''}
     ${x?secAgare(s)+secBlankUtd(s)+secKalHist(s):''}
     <section class="sec" id="sec-fraga"><div class="sech"><h2>Fråga AI</h2><span class="sm">grundat · med källa</span></div>${tabChat(s)}</section>`;
   wireChat(s);wireAnchors();
@@ -643,6 +687,14 @@ function secHant(s){
     <div class="rail"><div class="rlab">Siffrorna bakom</div>
       ${s.rail.map(c=>`<div class="chip"><div class="ck">${c.k}</div><div class="cv"><span class="v">${c.v}</span><span class="dd ${c.dc}">${c.dd}</span></div><div class="cc">${c.cc}</div></div>`).join('')||'<div class="cc" style="color:var(--faint);font-size:12px">Inga nya tal idag.</div>'}
     </div></div>`;
+}
+function secScen(s){const sc=s.scen;
+  return `<section class="sec" id="sec-scen"><div class="sech"><h2>Scenarier & milstolpar</h2><span class="sm">tillväxtcase · illustrativa räkningar</span></div>
+    <div class="tscroll"><table class="dt"><thead><tr><th>Scenario</th><th style="text-align:left">Antagande</th><th>Värde per aktie</th><th>Mot kurs i dag</th></tr></thead><tbody>
+    ${sc.rows.map(r=>`<tr><td>${r[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--mut);white-space:normal">${r[1]}</td><td>${r[2]}</td><td class="${r[4]}">${r[3]}</td></tr>`).join('')}</tbody></table></div>
+    <p class="pev" style="max-width:66ch;margin-top:10px">${sc.note}</p>
+    <div class="slabel" style="margin-top:16px">Milstolpar vi bevakar</div>
+    <table class="dt" style="max-width:540px"><tbody>${sc.mil.map(m=>`<tr><td style="font-family:var(--mono);color:var(--gold);font-size:11px;white-space:nowrap">${m[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--ink);white-space:normal">${m[1]}</td></tr>`).join('')}</tbody></table></section>`;
 }
 function secAgare(s){const x=s.extras;
   return `<section class="sec" id="sec-agare"><div class="sech"><h2>Ägare & insyn</h2><span class="sm">FI insynsregister · exempeldata</span></div>
@@ -794,6 +846,10 @@ function renderBrevet(){
       <h4>Kavex Medical <span class="st gold">· insiderköp</span></h4>
       <p>VD köpte aktier för 2,1 miljoner i går, första köpet på 14 månader. En trevlig signal, inte mer än så.</p>
     </div>
+    <div class="bitem click" onclick="goStock('VOLT')">
+      <h4>Voltcell <span class="st gold">· tillväxtcase, lugnt</span></h4>
+      <p>Inget nytt. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader. Vi säger till när beskedet kommer.</p>
+    </div>
     <div class="bitem">
       <h4>Brunna Hydro · Almi Foods <span class="st faintc">· lugnt</span></h4>
       <p>Inget nytt av betydelse för dig.</p>
@@ -881,7 +937,9 @@ const TERMS={
  'direktavkastning':{t:'Direktavkastning',d:'Utdelningen delat med aktiekursen, i procent per år.'},
  'goodwill':{t:'Goodwill',d:'Skillnaden mellan vad ett bolag betalade för ett köp och vad det köpta bolagets tillgångar var värda på pappret. Kvittot på förvärvens prislapp.'},
  'insynsköp':{t:'Insynsköp',d:'När vd, styrelse eller ledning köper aktier i sitt eget bolag. Måste anmälas till Finansinspektionen och blir offentligt.'},
- 'utspädning':{t:'Utspädning',d:'När bolaget ger ut nya aktier och din andel av bolaget blir mindre.'}
+ 'utspädning':{t:'Utspädning',d:'När bolaget ger ut nya aktier och din andel av bolaget blir mindre.'},
+ 'runway':{t:'Runway',d:'Hur länge kassan räcker i nuvarande förlusttakt. Under 18 månader tvingas bolag ofta ta in pengar på motpartens villkor.'},
+ 'burn':{t:'Burn (förbrukningstakt)',d:'Hur mycket pengar bolaget gör av med per månad utöver vad det drar in. Kassan delat med burn ger runway.'}
 };
 const TERMKEYS=Object.keys(TERMS).sort((a,b)=>b.length-a.length);
 function termify(root){

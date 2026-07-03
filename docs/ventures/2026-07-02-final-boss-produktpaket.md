@@ -76,6 +76,7 @@ Varje steg återanvänder förra stegets spine (grundnings-motor, citat-arkitekt
 2. **Verktygen från utbildningen** (analysverktyget, checklistorna, formelbilagan): gör-det-själv-bänken. Bor under skolan; på sikt bryggan in i tjänsten: checklistan du fyller i för ett bolag är råmaterialet till "varför äger du det" i Ägarkollen, och kan längre fram ligga i bolagshubben som "din egen analys", förifylld med bolagets siffror.
 3. **Tjänsten: Ägarkollen** (arbetsnamn under namnbeslut; betald kärna). Ägarbrevet 07:30, bevakningen med larm, rapportanalysen, bolagshubben, Förklara-AI ("vad menas med det här?").
 4. **Sidobyggnaden: warrantverktyget** ("Hitta bästa hävstångsprodukten"). Egen dörr, egen målgrupp, utanför prenumerationen. Fristående gratisverktyg med mäklar-affiliate, länkad från huset men aldrig del av ägarberättelsen.
+5. **Upptäcktsdörren: Spaningen** (Ludvigs befintliga momentum-/screeningverktyg). Hittar lägen över ett universum; Ägarkollen analyserar och vaktar det man väljer att äga. Kedjan: Spaningen hittar caset → Tillväxtläget i Ägarkollen tar hand om det. Fristående, egen ton.
 
 **Trappan gratis → betalt:**
 - **Gratis (tratten):** kursens första kapitel, det generella Ägarbrevet i Sebastians röst, ordlistan, warrantverktyget.
@@ -131,6 +132,7 @@ Den minsta produkt som bevisar tesen, och det första betalbara.
 - Onboardingen från prototypen: varför du äger + saker att vakta + gränser.
 - **Teskrossaren i köpflödet:** innan bolaget läggs till bygger AI:n det starkaste motargumentet, ur verifierbara källor (blankningsdata, bolagets egna nyckeltalstrender, riskavsnittet i årsredovisningen). Inga fria "historiska analogier", de hallucinerar.
 - **Beslutsdagboken (kärnfunktion, inte verktyg):** varje köp/sälj loggas med motiveringen i stunden, AI:n följer upp mot facit i backspegeln och bygger över tid en bias-profil ("du säljer vinnare tidigt"). Alternativkostnaden mot index är en lins i samma liggare. Beskrivning av det förflutna, aldrig uppmaning, där går rådgivningslinjen. Delar datamodell med ansvarsliggaren.
+- **Tillväxtläget:** bolag markerade som tillväxtcase får andra default-vakter (runway över 18 månader, utspädningstak, tillväxtgolv, bruttomarginal mot bolagets eget mål), annan mätpanel (kassa, burn, runway i stället för P/E och utdelning), scenariovärdering enligt kursens lektion 12.7 med asymmetrin utskriven, milstolpsbevakning och obligatorisk teskross. Samma motor, annan konfiguration; kursens kapitel 12 är facit. Det är här den stora avkastningen och risken bor, och vakterna är riskbegränsningen.
 - Morgonbrevet som utskick (mejl/push) och förstasidan i appen.
 - Bevakning: pressmeddelanden (MFN/Cision-flöden), FI:s insynsregister, FI:s blankningsregister, rapportkalender. Rapportkollen blir rapportanalysen per bolag.
 - Bolagshubben enligt v2-mocken: ägare & insyn, blankning, utdelning, kalender och **historik/händelselogg** (uppflyttad från V3, den bär både "allt samlat per bolag" och ansvarsliggaren).
