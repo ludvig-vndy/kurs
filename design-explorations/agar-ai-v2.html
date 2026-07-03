@@ -260,6 +260,47 @@
   html[data-theme="light"] .btn.prim{background:#E5B04A;border-color:#E5B04A;color:#241C09}
   .btn.ghost{color:var(--mut)}
 
+  /* ===== hävstång (taktiskt verktyg, samma tema) ===== */
+  .lvnote{display:flex;gap:12px;background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:11px;padding:13px 15px;margin-bottom:18px;font-size:13px;color:var(--mut);line-height:1.55}
+  .lvnote b{color:var(--ink);font-weight:500}
+  .lvctrl{display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:10px}
+  .cg{display:flex;align-items:center;gap:8px}
+  .cg .cl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .seg{display:flex;background:var(--card);border:1px solid var(--line2);border-radius:9px;overflow:hidden}
+  .seg button{background:none;border:none;color:var(--mut);padding:7px 11px;font-size:12.5px;white-space:nowrap;transition:.12s}
+  .seg button.on{background:var(--card2);color:var(--ink)}
+  .seg button.on.up{color:var(--pos)}.seg button.on.dn{color:var(--neg)}
+  .seg button:hover{color:var(--ink)}
+  .lvhint{font-size:12px;color:var(--faint);margin:0 2px 18px;line-height:1.5}
+  .lvhint b{color:var(--mut)}
+  .lvhero{background:var(--card);border:1px solid var(--gold-d);border-radius:15px;padding:20px;margin-bottom:12px}
+  .lvhero .hb{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+  .lvhero .hn{font-family:var(--disp);font-size:20px;font-weight:600}
+  .lvhero .hs{color:var(--faint);font-size:11.5px;margin-top:2px;font-family:var(--mono)}
+  .lvmet{display:grid;grid-template-columns:repeat(3,auto);gap:12px 26px;margin-top:14px}
+  @media(min-width:700px){.lvmet{grid-template-columns:repeat(6,auto)}}
+  .lvmet .k{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-family:var(--mono)}
+  .lvmet .v{font-family:var(--mono);font-size:16px;margin-top:2px}
+  .lvbk{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:16px}
+  @media(max-width:640px){.lvbk{grid-template-columns:1fr}}
+  .bkc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .bkc .l{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:8px;font-family:var(--mono)}
+  .bkc .n{font-family:var(--disp);font-weight:500;font-size:13.5px}
+  .bkc .e{color:var(--faint);font-size:11.5px;margin-top:1px}
+  .bkc .big{font-family:var(--mono);font-size:19px;margin-top:10px}
+  .bkc .nt{font-size:10.5px;color:var(--mut);margin-top:3px}
+  .avoidrow{border-left:3px solid var(--neg);background:var(--bg2);border-radius:10px;padding:11px 14px;margin-bottom:14px;font-size:13px;color:var(--mut)}
+  .avoidrow b{color:var(--ink)}
+  table.dt tr.dom td{opacity:.4}
+  .tp{display:inline-block;font-size:9.5px;border-radius:5px;padding:2px 6px;margin-left:7px;font-family:var(--sans)}
+  .tp.long{background:var(--pos-soft);color:var(--pos)}.tp.warr{background:var(--gold-soft);color:var(--gold)}
+  .isinbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;margin-top:16px;max-width:540px}
+  .isinbox h3{font-family:var(--disp);font-weight:600;font-size:14.5px;margin:0 0 3px}
+  .isinbox p{color:var(--mut);font-size:12px;margin:0 0 11px}
+  .isinbox input{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:9px;color:var(--ink);padding:10px 12px;font-family:var(--mono);font-size:12.5px;outline:none}
+  .isinbox input:focus{border-color:var(--gold)}
+  .isinres{margin-top:10px;font-size:12.5px;line-height:1.5;display:none}
+
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -279,7 +320,7 @@
     </div>
     <div class="fm">
       <div class="fmt">Vid sidan om</div>
-      <a href="havstangssok-mock.html">Hitta bästa hävstångsprodukten →</a>
+      <a href="#" onclick="view='havstang';setNav();render();window.scrollTo(0,0);return false">Hitta bästa hävstångsprodukten →</a>
       <a href="agar-ai-resan.html">Se 90-dagarsdemon →</a>
     </div>
     <div class="sidefoot">
@@ -517,7 +558,7 @@ document.getElementById('thbtn').onclick=()=>{curTheme=curTheme==='light'?'dark'
 document.getElementById('addbtn').innerHTML=ic('plus')+' <span>Lägg till bolag</span>';
 document.getElementById('addbtn').onclick=()=>{obStep=0;obSel=null;view='start';setNav();render();window.scrollTo(0,0);};
 function setNav(){document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on',n.dataset.view===view));}
-function render(){({brevet:renderBrevet,idag:renderIdag,fraga:renderFragaG,stock:renderStock,start:renderStart}[view])();termify(main);}
+function render(){({brevet:renderBrevet,idag:renderIdag,fraga:renderFragaG,stock:renderStock,start:renderStart,havstang:renderHav}[view])();termify(main);}
 const S=t=>STOCKS[t];
 const STCLS={ok:'pos',bad:'neg',up:'gold',calm:'faintc'};
 function stw(s){return `<span class="stword ${STCLS[s.status]}"><i class="d"></i>${s.statusLab}</span>`;}
@@ -869,6 +910,90 @@ document.addEventListener('click',e=>{
   if(term){e.stopPropagation();openTerm(term.dataset.t);return;}
   if(!e.target.closest('.tpop'))document.getElementById('tpop').classList.remove('show');
 },true);
+
+/* ============ Hävstång (taktiskt verktyg, samma tema) ============ */
+const WARR=[
+ {em:'Morgan Stanley',typ:'Mini',lev:5.8,spread:0.19,carry:0.030,ko:21,liq:3,isin:'DE000MS01A21'},
+ {em:'Vontobel',typ:'Turbo',lev:9.6,spread:0.30,carry:0.045,ko:9,liq:2,isin:'DE000VT09B44'},
+ {em:'BNP Paribas',typ:'Mini',lev:5.2,spread:0.35,carry:0.012,ko:34,liq:2,isin:'DE000BN05C12'},
+ {em:'UBS',typ:'Warrant',lev:6.0,spread:0.55,carry:0.020,ko:null,liq:1,warr:true,isin:'DE000UB06D33'},
+ {em:'Nordea',typ:'Mini',lev:4.0,spread:0.22,carry:0.028,ko:28,liq:3,isin:'SE000NDA040'},
+ {em:'SEB',typ:'Mini',lev:7.1,spread:0.25,carry:0.038,ko:16,liq:2,isin:'SE000SEB071'},
+ {em:'Citi',typ:'Mini',lev:5.7,spread:0.40,carry:0.050,ko:18,liq:1,isin:'DE000CITI018'},
+ {em:'Société Générale',typ:'Mini',lev:6.5,spread:0.24,carry:0.034,ko:19,liq:3,isin:'DE000SG06E55'},
+ {em:'Goldman Sachs',typ:'Turbo',lev:8.2,spread:0.33,carry:0.041,ko:12,liq:2,isin:'DE000GS08F21'},
+ {em:'Handelsbanken',typ:'Mini',lev:3.2,spread:0.28,carry:0.026,ko:37,liq:2,isin:'SE000SHB032'},
+ {em:'Morgan Stanley',typ:'Turbo',lev:11.0,spread:0.31,carry:0.048,ko:7,liq:2,isin:'DE000MS12H09'},
+ {em:'BNP Paribas',typ:'Mini',lev:8.0,spread:0.29,carry:0.039,ko:14,liq:2,isin:'DE000BN13I44'}
+];
+const LDAYS={idag:1,dagar:5,veckor:20,manader:90},LBAND={lag:[2,5],medel:[5,8.5],hog:[8,13]};
+const LWDEF={idag:{c:70,s:25,l:15,q:35},dagar:{c:55,s:40,l:20,q:25},veckor:{c:45,s:55,l:20,q:15},manader:{c:50,s:65,l:15,q:10}};
+const HLAB={idag:'idag',dagar:'några dagar',veckor:'några veckor',manader:'några månader'};
+const lev={under:'NORL',dir:'long',risk:'medel',hor:'idag'};
+function ldrag(p){return p.spread+p.carry*LDAYS[lev.hor];}
+function lko(p){const d=LDAYS[lev.hor];return p.warr?0.04*Math.sqrt(d/20):Math.min(1,(p.lev*Math.sqrt(d))/(p.ko*4));}
+function lcand(){const[a,b]=LBAND[lev.risk];return WARR.filter(p=>p.lev>=a&&p.lev<=b);}
+function lscore(p,set){const dr=set.map(ldrag),rk=set.map(lko),lq=set.map(x=>(3-x.liq)/2),c=(LBAND[lev.risk][0]+LBAND[lev.risk][1])/2,h=(LBAND[lev.risk][1]-LBAND[lev.risk][0])/2||1,lvv=set.map(x=>Math.abs(x.lev-c)/h);
+  const nz=(v,a)=>{const mn=Math.min(...a),mx=Math.max(...a);return mx-mn<1e-9?0:(v-mn)/(mx-mn);};
+  const w=LWDEF[lev.hor],sum=w.c+w.s+w.l+w.q;
+  return 1-(w.c*nz(ldrag(p),dr)+w.s*nz(lko(p),rk)+w.l*nz(Math.abs(p.lev-c)/h,lvv)+w.q*nz((3-p.liq)/2,lq))/sum;}
+function ldom(set){const d=new Set();for(const b of set){for(const a of set){if(a===b)continue;const sim=Math.abs(a.lev-b.lev)/b.lev<0.10,aKo=a.warr?Infinity:a.ko,bKo=b.warr?Infinity:b.ko;
+  if(sim&&a.spread<=b.spread&&a.carry<=b.carry&&aKo>=bKo&&a.liq>=b.liq&&(a.spread<b.spread||a.carry<b.carry||aKo>bKo||a.liq>b.liq)){d.add(b);break;}}}return d;}
+function lvKo(p){return p.warr?'ingen':p.ko+'%';}
+function renderHav(){
+  main.innerHTML=`<div class="masthead">Ägarkollen · av Marginalen<span class="r">Vid sidan om · taktiskt verktyg</span></div>
+  <div class="eyebrow">Hävstång</div><h1 class="big">Hitta bästa hävstångsprodukten</h1>
+  <div class="sub">Vill du ta en kort, taktisk position mot ett av dina bolag jämför vi produkterna från alla utgivare och rankar efter dina val.</div>
+  <div class="lvnote"><div><b>Det här är ett annat verktyg än resten av Ägarkollen.</b> Hävstångsprodukter (mini futures, warranter, turbos) är för korta lägen, inte för ägande. Går det åt fel håll kan hela beloppet försvinna. Använd det medvetet, och litet.</div></div>
+  <div class="lvctrl">
+    <div class="cg"><span class="cl">Bolag</span><div class="seg" id="lu">${ORDER.map(t=>`<button data-v="${t}" class="${lev.under===t?'on':''}">${S(t).tk}</button>`).join('')}</div></div>
+    <div class="cg"><span class="cl">Du tror på</span><div class="seg" id="ld"><button data-v="long" class="up ${lev.dir==='long'?'on':''}">Uppgång</button><button data-v="short" class="dn ${lev.dir==='short'?'on':''}">Nedgång</button></div></div>
+    <div class="cg"><span class="cl">Risk</span><div class="seg" id="lr">${['lag','medel','hog'].map(r=>`<button data-v="${r}" class="${lev.risk===r?'on':''}">${{lag:'Låg',medel:'Medel',hog:'Hög'}[r]}</button>`).join('')}</div></div>
+    <div class="cg"><span class="cl">Hur länge</span><div class="seg" id="lh">${['idag','dagar','veckor','manader'].map(hh=>`<button data-v="${hh}" class="${lev.hor===hh?'on':''}">${{idag:'Idag',dagar:'Dagar',veckor:'Veckor',manader:'Månader'}[hh]}</button>`).join('')}</div></div>
+  </div>
+  <div class="lvhint"><b>Tiden styr svaret.</b> Handlar du idag är köp- och säljskillnaden (spreaden) nästan hela kostnaden. Håller du i månader är det den dagliga finansieringsavgiften som äter mest. Byt tid och se vinnaren ändras.</div>
+  <div id="lvres"></div>`;
+  [['lu','under'],['ld','dir'],['lr','risk'],['lh','hor']].forEach(([id,key])=>document.getElementById(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{lev[key]=b.dataset.v;renderHav();}));
+  renderLvRes();
+}
+function renderLvRes(){
+  const set=lcand(),scored=set.map(p=>({p,sc:lscore(p,set)})).sort((a,b)=>b.sc-a.sc),best=scored[0];
+  const cheap=set.slice().sort((a,b)=>ldrag(a)-ldrag(b))[0],safe=set.slice().sort((a,b)=>lko(a)-lko(b))[0],hi=set.slice().sort((a,b)=>b.lev-a.lev)[0];
+  const dirL=lev.dir==='long'?'upp':'ner',dom=ldom(set),tp=p=>p.warr?'warr':'long';
+  document.getElementById('lvres').innerHTML=`
+  <div class="lvhero"><div class="hb">Bäst enligt dina val · ${S(lev.under).namn} ${dirL} · ${HLAB[lev.hor]}</div>
+    <div class="hn">${best.p.typ} · ${best.p.em}</div>
+    <div class="hs">${best.p.isin} · rankad på kostnad, avstånd till knock-out, hävstång och likviditet · fördröjd data</div>
+    <div class="lvmet">
+      <div><div class="k">Hävstång</div><div class="v">${best.p.lev.toFixed(1)}x</div></div>
+      <div><div class="k">Spread</div><div class="v">${best.p.spread.toFixed(2)}%</div></div>
+      <div><div class="k">Avgift per dag</div><div class="v">${best.p.warr?'ingen':best.p.carry.toFixed(3)+'%'}</div></div>
+      <div><div class="k">Till knock-out</div><div class="v">${lvKo(best.p)}</div></div>
+      <div><div class="k">Kostnad, perioden</div><div class="v">${ldrag(best.p).toFixed(2)}%</div></div>
+      <div><div class="k">Likviditet</div><div class="v">${['','låg','medel','hög'][best.p.liq]}</div></div>
+    </div></div>
+  <div class="lvbk">
+    <div class="bkc"><div class="l">Högst hävstång</div><div class="n">${hi.typ}</div><div class="e">${hi.em}</div><div class="big">${hi.lev.toFixed(1)}x</div><div class="nt">${hi.lev>LBAND[lev.risk][1]?'över din valda risknivå':'hög risk'}</div></div>
+    <div class="bkc"><div class="l">Billigast</div><div class="n">${cheap.typ}</div><div class="e">${cheap.em}</div><div class="big">${ldrag(cheap).toFixed(2)}%</div><div class="nt">lägst kostnad över din period</div></div>
+    <div class="bkc"><div class="l">Längst till knock-out</div><div class="n">${safe.typ}</div><div class="e">${safe.em}</div><div class="big">${lvKo(safe)}</div><div class="nt">${safe.warr?'kan inte slås ut':'störst marginal innan produkten dör'}</div></div>
+  </div>
+  <div class="avoidrow"><b>${dom.size} av ${set.length} produkter är strikt sämre:</b> ett annat alternativ slår dem på både pris, avgift, avstånd till knock-out och likviditet. De är gråade i listan.</div>
+  <div class="slab">Alla relevanta produkter</div>
+  <div class="tscroll"><table class="dt"><thead><tr><th>Produkt</th><th>Hävstång</th><th>Spread</th><th>Avgift/dag</th><th>Till knock-out</th><th>Kostnad, perioden</th></tr></thead><tbody>
+  ${scored.map(({p})=>`<tr class="${dom.has(p)?'dom':''}"><td>${p.em}<span class="tp ${tp(p)}">${p.typ}</span></td><td>${p.lev.toFixed(1)}x</td><td>${p.spread.toFixed(2)}%</td><td>${p.warr?'ingen':p.carry.toFixed(3)+'%'}</td><td>${lvKo(p)}</td><td>${ldrag(p).toFixed(2)}%</td></tr>`).join('')}
+  </tbody></table></div>
+  <div class="isinbox"><h3>Äger du redan en hävstångsprodukt?</h3><p>Klistra in dess ISIN-kod, så ser du om någon annan utgivare har ett billigare likvärdigt alternativ i dag.</p>
+    <input id="lisin" placeholder="t.ex. DE000CITI018" value="DE000CITI018"><div class="isinres" id="lisinres"></div></div>`;
+  const inp=document.getElementById('lisin');inp.oninput=lvCheckIsin;lvCheckIsin();
+}
+function lvCheckIsin(){const v=(document.getElementById('lisin').value||'').trim().toUpperCase(),el=document.getElementById('lisinres');
+  const owned=WARR.find(p=>p.isin.toUpperCase()===v);if(!owned){el.style.display='none';return;}
+  const better=WARR.filter(a=>{if(a===owned)return false;const sim=Math.abs(a.lev-owned.lev)/owned.lev<0.18,aKo=a.warr?Infinity:a.ko,oKo=owned.warr?Infinity:owned.ko;
+    return sim&&a.spread<=owned.spread&&a.carry<=owned.carry&&aKo>=oKo&&a.liq>=owned.liq&&(a.spread<owned.spread||a.carry<owned.carry);}).sort((a,b)=>ldrag(a)-ldrag(b));
+  el.style.display='block';el.innerHTML=`<div style="color:var(--mut)">Du äger <b style="color:var(--ink)">${owned.typ} · ${owned.em}</b> (${owned.lev.toFixed(1)}x, spread ${owned.spread.toFixed(2)}%, avgift ${owned.carry.toFixed(3)}% per dag).</div>`+
+    (better.length?`<div style="margin-top:5px;color:var(--neg)">${better.length} likvärdig${better.length>1?'a':''} produkt${better.length>1?'er':''} är billigare i dag. Bäst: <b style="color:var(--pos)">${better[0].em} ${better[0].typ}</b>, spread ${better[0].spread.toFixed(2)}%, avgift ${better[0].carry.toFixed(3)}% per dag, ${lvKo(better[0])} till knock-out.</div>`
+    :`<div style="margin-top:5px;color:var(--pos)">Ingen likvärdig produkt slår den på alla punkter just nu. Bra val.</div>`);
+}
 
 applyTheme();render();
 </script>
