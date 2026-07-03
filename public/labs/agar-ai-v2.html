@@ -585,7 +585,7 @@ STOCKS.VOLT={tk:'VOLT',namn:'Voltcell',status:'up',statusLab:'Milstolpe i septem
   micro:['Kassa 410 Mkr','Runway ~21 mån','Tillväxt +64%'],
   factArr:[['52 v','11,80 till 31,40'],['Börsvärde','2,1 mdkr'],['Kassa','410 Mkr'],['Runway','~21 mån'],['Tillväxt','+64%']],
   fact:{v52:'11,80 till 31,40',mcap:'2,1 mdkr',pe:'saknas',dir:'0%'},
-  why:'Tillväxtcase: batteriteknik före genombrottet. Kan mångdubblas om certifieringen och volymkontrakten landar, kan också misslyckas. Därför: litet innehav och hårda vakter.',
+  why:'Tillväxtcase: batteriteknik före genombrottet. Kan mångdubblas om certifieringen och volymkontrakten landar, kan också misslyckas. Därför: ett litet innehav och tydliga gränser.',
   event:'Tillväxtcase under bevakning. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader i nuvarande takt. Inget nytt att agera på.',src:'Q2-rapport · milstolpsbevakning',
   what:[
    {t:'fakta',txt:'Q2: försäljningen växte 64% till 96 miljoner, från låg nivå. Förlusten var 58 miljoner i kvartalet, cirka 19 miljoner i månaden i förbrukningstakt (burn). Kassan är 410 miljoner: den räcker ungefär 21 månader i den här takten. Av varje hundralapp i försäljning blev 31 kronor kvar efter direkta kostnader, upp från 24 i fjol.',c:1},
@@ -865,7 +865,7 @@ function bpage(i){
   const arrow=(txt,tk)=>`<button class="btn" onclick="goStock('${tk}')">${txt}</button>`;
   if(i===0)return{k:'Ägarbrevet · onsdag 2 juli',r:'07:30 · sida 1 av 8',h:`
     <h2 class="uh">God morgon. Tre saker har hänt i dina bolag.</h2>
-    <p class="ul">Resten var lugnt, och det säger vi rakt ut. Hela utgåvan tar cirka 90 sekunder.</p>
+    <p class="ul">Resten av portföljen är lugn. Hela utgåvan tar ungefär 90 sekunder.</p>
     <div class="uitem"><span class="ud" style="background:var(--neg)"></span><div><b>Telvio</b> <span>· lönsamheten gick under din gräns</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Norlux Industri</b> <span>· stark rapport, höjd prognos</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>Kavex Medical</b> <span>· insiderköp, och Q3 släpps i dag</span></div></div>
@@ -879,7 +879,7 @@ function bpage(i){
     <div class="ufoot">${arrow('Öppna Telvio','TELV')}</div>`};
   if(i===2)return{k:'Sida 3 · Stark rapport',r:'NORL',h:`
     <h2 class="uh">Norlux växte 11 procent av egen kraft</h2>
-    <p class="ul">Mer än bolagets egen prognos (7 till 9). Och prognosen för året höjdes. Allt du bad oss vakta håller.</p>
+    <p class="ul">Mer än bolagets egen prognos, som låg på 7 till 9. Dessutom höjdes prognosen för resten av året. Allt vi bevakar åt dig ser bra ut.</p>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Tillväxt 11,0%</b> <span>· väntat var 8,5</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>388 miljoner kvar i kassan</b> <span>· fritt kassaflöde, upp 18%</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Höjd prognos</b> <span>· ovanligt mitt under året</span></div></div>
@@ -889,31 +889,31 @@ function bpage(i){
     <p class="ul">Första köpet på 14 månader. En trevlig signal, inte mer än så. Och klockan 08:00 i dag släpper Kavex sin Q3-rapport: analysen ligger i appen några minuter senare. Du behöver inte göra något.</p>
     <div class="ufoot">${arrow('Öppna Kavex','KAVX')}</div>`};
   if(i===4)return{k:'Sida 5 · Lugnt',r:'3 bolag',h:`
-    <h2 class="uh">Här hände ingenting, och det är ett besked</h2>
+    <h2 class="uh">I de här tre är det lugnt</h2>
     <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>Voltcell</b> <span>· tillväxtcase. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader. Vi säger till när beskedet kommer.</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--line2)"></span><div><b>Brunna Hydro · Almi Foods</b> <span>· inget nytt av betydelse för dig.</span></div></div>
-    <p class="unote"><b style="color:var(--mut)">I natt:</b> vi läste 51 nyheter, registerposter och flöden om dina sex bolag. Tre saker rörde dig, du har just läst dem.</p>
+    <p class="unote"><b style="color:var(--mut)">I natt:</b> vi läste 51 nyheter, registerposter och flöden om dina sex bolag. Tre saker var viktiga för dig, och dem har du just läst.</p>
     <div class="ufoot"><button class="btn" onclick="goBP(5)">Vidare ${ic('arrow','sm')}</button></div>`};
   if(i===5)return{k:'Sida 6 · Att hålla koll på i dag',r:'allmänt',h:`
     <h2 class="uh">Riksbanken lämnar räntebesked 09:30</h2>
-    <p class="ul">De flesta räknar med oförändrad ränta. Blir det en överraskning rör det hela börsen.</p>
+    <p class="ul">De flesta räknar med oförändrad ränta. Blir det en överraskning påverkar det hela börsen.</p>
     <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>För dig</b> <span>· Telvio har högst skuld av dina bolag och är mest känsligt. Norlux och Almi påverkas knappt.</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--line2)"></span><div><b>Kavex Q3 kl 08:00</b> <span>· vi läser den åt dig.</span></div></div>
     <div class="ufoot"><button class="btn" onclick="goBP(6)">Vidare ${ic('arrow','sm')}</button></div>`};
   if(i===6)return{k:'Sida 7 · Upptäckten · från Spaningen',r:'valbar · på/av',h:`
-    <h2 class="uh">Två rörelser utanför din portfölj</h2>
-    <p class="ul">Spaningen fångar lägen över hela marknaden. Det här är inte råd, det är rörelser. Rätt väg in är processen: teskrossaren först, sen ett skäl, sen eventuellt ett litet innehav.</p>
+    <h2 class="uh">Två aktier utanför din portfölj rör på sig</h2>
+    <p class="ul">Spaningen bevakar hela marknaden och fångar aktier som rör sig. Det här är inte köptips, det är uppslag. Börja alltid med att låta oss leta motargument, och köp i så fall lite, med tydliga gränser.</p>
     <div class="spx"><div class="sh"><b>Nordfiber</b><span class="tk3">NFIB · industri · fiktivt exempel</span></div>
-      <p>Bröt över sitt 200-dagarssnitt i går på dubbel volym. Redan lågt värderad mot sin egen historik.</p>
-      <div class="btnrow"><button class="sbtn" onclick="this.textContent='Skickad till teskrossaren ✓';this.disabled=true">Låt teskrossaren titta</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
+      <p>Steg i går över sitt snitt för de senaste 200 dagarna, med dubbelt så hög handel som vanligt. Värderas redan lågt jämfört med sin egen historik.</p>
+      <div class="btnrow"><button class="sbtn" onclick="this.textContent='Vi letar motargument ✓';this.disabled=true">Leta motargument åt mig</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
     <div class="spx"><div class="sh"><b>Selora</b><span class="tk3">SELO · programvara · fiktivt exempel</span></div>
       <p>Tre insynsköp på två veckor efter ett kursfall. Rapporten kommer om tolv dagar.</p>
-      <div class="btnrow"><button class="sbtn" onclick="this.textContent='Skickad till teskrossaren ✓';this.disabled=true">Låt teskrossaren titta</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
+      <div class="btnrow"><button class="sbtn" onclick="this.textContent='Vi letar motargument ✓';this.disabled=true">Leta motargument åt mig</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
     <p class="unote">Visas ett par gånger i veckan. Kan stängas av i inställningarna.</p>
     <div class="ufoot"><button class="btn" onclick="goBP(7)">Vidare ${ic('arrow','sm')}</button></div>`};
   return{k:'Sida 8 · Klart',r:'',h:`
     <h2 class="uh">Du är uppdaterad.</h2>
-    <p class="ul">Tre händelser, ett räntebesked och två rörelser att eventuellt pröva. Cirka 90 sekunder. Vi läser vidare: du hör av oss i morgon 07:30, eller direkt om en gräns passeras.</p>
+    <p class="ul">Tre händelser, ett räntebesked och två aktier att titta närmare på om du vill. Ungefär 90 sekunder. Vi läser vidare: nästa brev kommer i morgon 07:30, och passeras en gräns säger vi till direkt.</p>
     <div class="ufoot"><button class="btn ghost" onclick="view='idag';setNav();render();window.scrollTo(0,0)">Till Dina bolag</button><button class="btn prim" onclick="goBP(0)">Läs om utgåvan</button></div>`};
 }
 function renderBrevet(){
@@ -973,7 +973,7 @@ function renderStart(){
   }else{
     const cn=S(obSel||'NORL').namn;
     body=`<div class="eyebrow">Klart</div><h1 class="big">Vi håller koll på ${cn} åt dig</h1>
-    <div class="sub">Från och med nu läser vi allt om bolaget. Du hör av oss i Ägarbrevet varje morgon, och direkt om en gräns passeras.</div>
+    <div class="sub">Från och med nu läser vi allt om bolaget. Vi hör av oss i Ägarbrevet varje morgon, och direkt om en gräns passeras.</div>
     <div class="vrow"><div class="vn">Det här händer nu</div>
       <div style="font-size:13px;color:var(--mut);line-height:1.7">I morgon 07:30: ditt första Ägarbrev med ${cn} i.<br>Vid rapport: analysen klar inom minuter.<br>Om en gräns passeras: vi säger till samma morgon.</div></div>
     <div class="obnav"><button class="btn ghost" onclick="obStep=0;obSel=null;renderStart()">Lägg till ett bolag till</button>
