@@ -79,7 +79,7 @@ V1 var för kommunikativ. Allt löstes upp i meningar; siffror fanns bara inuti 
 
 ## 8. Språket: tre lager (lika styrande som det visuella)
 
-1. **Berättarrösten:** ren pratsvenska, korta meningar, varierad rytm, inga staplade inskott. **Noll intern produktjargong**: orden huvudpuls, hands off, hook, flagga, pelare, tes, skäl-som-telegram får aldrig nå användarens skärm. Statusord i klartext: "Ser bra ut", "Något har ändrats", "Lugnt".
+1. **Berättarrösten:** ren pratsvenska, korta meningar, varierad rytm, inga staplade inskott. Antites-reflexen 'det är inte X, det är Y' är bannlyst som manér; en kontrast får bara stå där kontrasten är själva poängen ('räknat i kod, inte gissat av en AI'). **Noll intern produktjargong**: orden huvudpuls, hands off, hook, flagga, pelare, tes, skäl-som-telegram får aldrig nå användarens skärm. Statusord i klartext: "Ser bra ut", "Något har ändrats", "Lugnt".
 2. **Termerna lärs ut, göms inte:** vardagsförklaringen först, facktermen i parentes vid första förekomst ("det rapporterna kallar organisk tillväxt"). Termerna blir klickbara mot ordlistan/lektionerna. Pedagogiken är målet: användaren ska så småningom förstå rapportspråket själv.
 3. **Tabellerna:** rapporternas riktiga språk (P/E, EBIT, bruttomarginal). Det är dit användaren ska ta sig.
 
