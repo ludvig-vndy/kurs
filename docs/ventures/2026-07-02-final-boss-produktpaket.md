@@ -12,8 +12,11 @@ Detta dokument är index och strategi. Artefakterna som hör till:
 |---|---|---|
 | `docs/ventures/2026-06-30-havstangssok-produktforslag.md` | Full spec för hävstångssöket (data, arkitektur, affär) | Klar som underlag |
 | `docs/ventures/2026-06-30-agar-ai-produktforslag.md` | Full spec för ägar-AI:n (AI-arkitektur, datamodell, källor, säkerhet, roadmap) | Klar som underlag |
-| `design-explorations/agar-ai.html` | Klickbar produktprototyp: onboarding + app i ett flöde | Levande UX-spec |
+| `design-explorations/agar-ai-v2.html` | Primär produktmock: förstasida, bolagshubb (lång sida + ankarmeny), rapportanalys, fundamenta, larmgrafer, ägare/insyn/blankning/utdelning. Ljust tema standard, växlare. Live: `/labs/agar-ai-v2.html` | Levande UX-spec |
+| `design-explorations/agar-ai-resan.html` | Guidad 90-dagarsdemo med morgonbrevet, kartan och backspegeln. Live: `/labs/agar-ai-resan.html` | Säljdemon (visa denna först) |
+| `design-explorations/agar-ai.html` | Äldre helhetsprototyp: onboarding (skäl + gränser) och hävstångsflik | Källa; görs om i v2-formspråk |
 | `design-explorations/havstangssok-mock.html` | Klickbar beslutsmotor för hävstång (fristående) | Levande UX-spec |
+| `docs/ventures/2026-07-02-designbrief-agar-ai-look-and-feel.md` | Designbriefen: instrumentkänslan, komponenter, språkregler | Styrande för all produkt-UI |
 | Marginalen (kursen, live på Cloudflare Pages) | 115 lektioner textkurs + 51 lektioner Fokus-spelare, broadsheet-varumärke, quiz, repetition/SRS, ordlista, Sebastians röst invävd | Byggd, deployad, lösenordsskyddad |
 | Marginalen analysverktyg (`/verktyg`) | Checklistedrivet analysverktyg i broadsheet-tema | Byggd |
 
@@ -34,6 +37,8 @@ Det är hela produkten. Alla ytor är den meningen från olika håll:
 - **Hävstångssöket**: separat dörr för taktiska lägen, "bäst enligt dina kriterier", aldrig "AI rekommenderar".
 
 Sebastian bad oss designa produkten som får en investerare att känna "jag kan inte investera utan den här längre". Svaret är inte mer data (det är en terminal, det finns redan). Svaret är att produkten **känner till ditt skäl** och skyddar din uppmärksamhet åt dig. Ingen neutral terminal kan göra det, för de vet inte vad du tror.
+
+**Säljmeningen utåt är Sebastians:** *"Spara maximalt med tid, utan att missa någonting om dina investeringar."* Den förstås på fem sekunder. Skäl-arkitekturen är maskinen som gör den meningen sann, den behöver aldrig nämnas i pitchen.
 
 ---
 
@@ -95,6 +100,8 @@ Varje steg återanvänder förra stegets spine (grundnings-motor, citat-arkitekt
 ### Fas 1: Rapportkollen (smakprovet), cirka 4 till 6 veckor
 Den minsta produkt som bevisar tesen, och det första betalbara.
 
+*Scope-val att ta:* trendgrafer kräver att vi backfillar 6 till 8 gamla rapporter per bolag (gratis data, men arbete). Två lägen löser det: "klistra in valfri rapport" funkar för alla bolag utan historik, medan full analys med trender ges för en utvald bolagslista, förslagsvis de bolag betapanelen äger (30 till 50 svenska bolag). Konsensusjämförelser väntar till fas 3; fas 1 jämför mot bolagets egen historik och egen prognos, och det sägs ärligt.
+
 - **Input:** användaren klistrar in en rapport (PDF/URL) eller väljer bolag när rapporten släpps.
 - **Pipeline:** strukturerad extraktion av rapporterade tal → delta mot tidigare kvartal (i kod) → LLM narrerar verdikt/bra/dåligt/överraskningar/citat → verifieringslager korskollar varje tal mot extraktionen → output med källhänvisning per påstående.
 - **UI:** exakt rapportanalys-fliken i `agar-ai.html`.
@@ -102,11 +109,13 @@ Den minsta produkt som bevisar tesen, och det första betalbara.
 - **Lansering:** till kursens användare först (beta). Gratis X rapporter, sedan betalvägg.
 - **Bevisar:** grundnings-motorn (hela spinen för fas 2), betalviljan, och flödet kurs → verktyg.
 
-### Fas 2: Innehavs-AI:n (beta), cirka 3 till 4 månader därefter
+### Fas 2: Bevakningstjänsten (beta), cirka 3 till 4 månader därefter
 - Konton + manuell/CSV-import av innehav (ingen broker-koppling i beta).
-- Onboardingen från prototypen: skälet + pelare + larmvillkor.
-- Förstasidan + morgonutskick (mejl/push): "3 saker rör dina bolag".
-- Bevakning: pressmeddelanden (MFN/Cision-flöden), FI:s insynsregister, FI:s blankningsregister, rapportkalender. Rapportkollen blir rapportanalys-fliken.
+- Onboardingen från prototypen: varför du äger + saker att vakta + gränser.
+- Morgonbrevet som utskick (mejl/push) och förstasidan i appen.
+- Bevakning: pressmeddelanden (MFN/Cision-flöden), FI:s insynsregister, FI:s blankningsregister, rapportkalender. Rapportkollen blir rapportanalysen per bolag.
+- Bolagshubben enligt v2-mocken: ägare & insyn, blankning, utdelning, kalender och **historik/händelselogg** (uppflyttad från V3, den bär både "allt samlat per bolag" och ansvarsliggaren).
+- **Täckningslistan** per bolag: "det här bevakar vi för Norlux", som gör löftet "du missar inget" verifierbart.
 - Grundad chat per bolag och över portföljen.
 - **Släppkrav:** samma noll-hallucination-grind + att larm bara triggar på materiella händelser (mätt mot en manuellt bedömd facit-vecka).
 
@@ -125,6 +134,7 @@ Beslutsmotorn är färdigdesignad. Kräver egen datapipeline (emittentfiler, pro
 | Fas 1 | Rapporterna själva (PDF/IR-sidor), användaren tillhandahåller eller vi hämtar | ~0 kr + LLM-kostnad (ören till enstaka kronor per analys) | Hela rapportkollen |
 | Fas 2 | MFN.se/Cision-flöden (pressmeddelanden), FI:s insynsregister, FI:s blankningsregister, Riksbanken/SCB (makro), bolagens IR-kalendrar | I princip gratis (offentliga register och flöden) | Bevakning + morgonbrief |
 | Fas 3 | Fundamenta-historik + estimat: Börsdata/Millistream/Infront eller S&P/FactSet | Från hundralappar (privat API) till betydande årslicenser (kommersiellt), förhandlas när intäkt finns | Konsensusdelta, multiplar, korsrisk |
+| Fas 2 | Dagliga stängningskurser + fördröjd kursdata (EOD) | Billigt | Faktarad, kurs och sparklines på förstasidan och bolagssidan |
 | Fas 4 | Emittenternas dagliga produktfiler + Nasdaq-marknadsdata (fördröjd) | Måttligt + licens | Warrantsöket |
 
 Poängen: **de två första faserna kan byggas nästan utan datakostnad** tack vare Nordens offentliga register. Den dyra datan (estimat, realtid) köps först när betalande användare finns. AI-kostnaden hålls nere genom att analyser görs per bolag och återanvänds av alla som äger bolaget.
@@ -195,8 +205,8 @@ Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (markna
 
 ## 11. Öppna beslut (Ludvig + Sebastian)
 
-1. **Namn/varumärke:** allt under Marginalen (rekommenderas: en tratt, ett förtroende), eller eget produktnamn för verktyget? "Ägar-AI" är arbetsnamn, inte förslag.
-2. **Prissättningshypotes** för Premium (149/199/249) att testa i beta.
+1. **Namn/varumärke:** kandidater framtagna: **Vaka** (rekommenderad: känslan, "vi vakar över dina bolag"), **Ägarbrevet** (tratten, kan även bli namnet på brevet inuti Vaka) och **Bolagskollen** (begripligheten). "Ägar-AI" var arbetsnamn. Viktig flagga: **Marginalen Bank** finns; en betald finanstjänst under namnet Marginalen är en varumärkeskrock i samma bransch. Rekommendation: eget produktnamn med "av Marginalen" som avsändare, PRV/EUIPO-koll via jurist innan låsning. Visuellt är huset redan tvådelat med avsikt: papper/oxblod för kursen (tidningen), grafit/guld eller ljust instrument-tema för tjänsten (terminalen), samma hus, två uttryck.
+2. **Prissättningshypotes att testa i beta:** Premium ~199 kr/mån (brevet, bevakningen, rapportanalys mot egen historik) och Pro ~995 kr/mån (Sebastians nivå: konsensus och multiplar när fas 3-datan finns, korsrisk, ansvarsliggaren, persona-element som månadsgenomgång i liten krets). Grundarpris till de första hundra. De två nivåerna definierar varandra; 1 000 Premium + 200 Pro är ~4,8 Mkr/år.
 3. **Roller och ägande:** vem gör vad (bygge, innehåll, distribution/röst), och bolagsstruktur när betalning slås på.
 4. **Kursens betalmodell:** förblir kursen gratis tratt, eller blir den del av prenumerationen (bundle)?
 5. **Data i fas 3:** licensiera (Börsdata/Millistream, snabbt och rent) eller bygga egna connectors (billigt, skört). Rekommendation: licensiera när intäkten bär det.
@@ -204,7 +214,36 @@ Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (markna
 
 ---
 
-## 12. Svar på Sebastians tre stående frågor
+## 12. Utbildningen i tjänsten: så kommer Marginalen in
+
+Kursen är inte en granne till tjänsten, den är en komponent i den. Sex konkreta mekanismer, i stigande byggkostnad:
+
+1. **Språket lär ut (byggt).** Trelagersregeln: berättarrösten pratar vardagssvenska, facktermen står i parentes vid första förekomst ("växte av egen kraft, det rapporterna kallar organisk tillväxt"), tabellerna talar rapporternas riktiga språk. Användaren växer genom lagren. Efter tre månader med morgonbrevet kan hen läsa en rapport själv, det är kursens uppdrag i produktform.
+2. **Klickbara termer (billig).** Varje term i parentes länkar till ordlistan (finns redan på kurssajten) och vidare till lektionen. "Bruttomarginal" är alltid tre minuter från sin förklaring.
+3. **Dagens Marginal-anteckning i morgonbrevet (mockad).** På tysta dagar fylls brevet med en lärobit eller ett "Sebastian tänker", vald utifrån portföljen: äger du en förvärvare får du goodwill-lektionen. Dagligt värde utan fejkad brådska, och kursens 115 lektioner blir en innehållsbank som redan är skriven.
+4. **Kontextuella lektioner vid händelser (medel).** När ett larm går följer rätt lektion med: bruten marginalpunkt → lektionen om marginaler; insynsköp → lektionen om insynshandel. Undervisning i det ögonblick användaren är som mest mottaglig.
+5. **Kursens övningar blir onboardingens data (medel).** Den som gått kursen har redan skrivit "jag äger en andel av ett bolag som tjänar pengar genom att ...". Det svaret importeras som utgångspunkt när samma bolag läggs in i tjänsten. Kursen fyller i onboardingen.
+6. **Kursframsteg styr språknivån (senare, unik).** Den som klarat räkenskapskapitlen får tätare facktermer och färre parenteser; nybörjaren får fler förklaringar. Ingen konkurrent kan kopiera det, för ingen annan äger både skolan och tjänsten.
+
+Tratten i andra riktningen: gratisbrevet innehåller en lektion i veckan, kursen är gratis, och varje lektionsslut pekar mot tjänsten ("vill du att vi håller koll på det här åt dig?").
+
+## 13. Saknas-listan: ärlig inventering
+
+**Design/mock (görbart nu, utan beslut):**
+- Onboardingen finns bara i gamla formspråket och gamla språket ("tes"); ska göras om i v2-stil med nya orden och kopplas in i v2-mocken.
+- Morgonbrevet finns bara i resan-demon; ska in i v2 som egen yta (brevet är ju produkten).
+- Hävstångsverktyget ligger i gamla prototypfilen; flyttas in bakom egen dörr i v2 eller parkeras.
+- Tomma tillstånd (ny användare, inga innehav), inställningar, mobilvy.
+- Landningssida för tjänsten (pelargrafen som hjältebild, Sebastians säljmening).
+- Klickbara termer → ordlista (mekanism 2 ovan) i mocken.
+
+**Teknik (fas 1 och 2, planerad i §5, noll byggd):** konton och betalning, grundnings-motorn med eval-svit, datainhämtning (MFN, FI, rapporter), bevakningsjobb, mejl/push-utskick.
+
+**Innehåll:** morgonbrevets redaktionella mallar (tyst dag, larmdag, rapportdag), Sebastians gratis-brev nummer ett, produkt-copyns husstil dokumenterad (trelagersregeln in i designbriefen: gjort).
+
+**Affär/juridik (beslut, §11):** namn + varumärkeskoll, MiFID-genomläsning, prishypotesen i betan, bolagsstruktur, betapanelens rekrytering.
+
+## 14. Svar på Sebastians tre stående frågor
 
 **"Hur ser den perfekta produkten ut?"** Den är designad och klickbar: `agar-ai.html`. Öppna den, gå onboardingen, landa på förstasidan, klicka in på Telvio. Det är produkten.
 

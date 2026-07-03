@@ -30,8 +30,8 @@ V1 var för kommunikativ. Allt löstes upp i meningar; siffror fanns bara inuti 
 - Inter: UI, brödtext, etiketter.
 - JetBrains Mono med tabulära siffror: **all numerik, utan undantag.** Tal högerställs i kolumner. Enheter och etiketter i 10 till 11 px versal mono med spärrning.
 
-**Färg**
-- Grafit + guld-paletten ligger fast (bakgrund #0E0F11, kort #16181C, guld #E0A43B, salvie #5FB89A, korall #E0726F).
+**Färg och tema**
+- Två teman, **ljust som standard** (Sebastians beslut 2026-07-03), växlare i UI, valet sparas. Ljust: varmt off-white #F7F6F3, vita kort, mörk guld #9C6B10 (text-kontrast), dova grönt/rött. Mörkt: grafit #0E0F11, kort #16181C, guld #E0A43B, salvie #5FB89A, korall #E0726F. Grafer följer temat via palettobjekt, aldrig hårdkodade färger.
 - Färg är betydelse, aldrig dekor: grönt/rött endast för avvikelse mot förväntan eller mot användarens larmvillkor. Neutral data är grå/vit.
 - Guld är uppmärksamhet och AI-röst (etiketter, citatmarkörer, tröskellinjer i fokus), inte utfyllnad.
 
@@ -77,16 +77,37 @@ V1 var för kommunikativ. Allt löstes upp i meningar; siffror fanns bara inuti 
 - Lugnet: inga pulserande badges, ingen FOMO-mekanik, inga notisräknare i rött.
 - Ingen rådgivning: multiplar jämförs mot egen historik, aldrig mot "borde".
 
-## 8. Anti-patterns (får inte hända)
+## 8. Språket: tre lager (lika styrande som det visuella)
+
+1. **Berättarrösten:** ren pratsvenska, korta meningar, varierad rytm, inga staplade inskott. **Noll intern produktjargong**: orden huvudpuls, hands off, hook, flagga, pelare, tes, skäl-som-telegram får aldrig nå användarens skärm. Statusord i klartext: "Ser bra ut", "Något har ändrats", "Lugnt".
+2. **Termerna lärs ut, göms inte:** vardagsförklaringen först, facktermen i parentes vid första förekomst ("det rapporterna kallar organisk tillväxt"). Termerna blir klickbara mot ordlistan/lektionerna. Pedagogiken är målet: användaren ska så småningom förstå rapportspråket själv.
+3. **Tabellerna:** rapporternas riktiga språk (P/E, EBIT, bruttomarginal). Det är dit användaren ska ta sig.
+
+Frågeförslag i chatten formuleras som en människa ställer dem ("Har något ändrats i mina bolag?", "Äger jag för mycket av samma sak?"), aldrig som funktionsnamn.
+
+## 9. Fas-märkning per komponent (designa inte in olicensierad data)
+
+| Komponent | Datakrav | Fas |
+|---|---|---|
+| Rapportanalys: utfall, i fjol, egen prognos, trend | Rapporterna själva (+ backfill för trend) | 1 |
+| Pelargraf med larmlinje (hjälten) | Användarens inmatning + extraherad historik | 1 |
+| Morgonbrev, bevakning, insyn, blankning, utdelning, kalender, historiklogg, täckningslista | Gratis register (FI, MFN) + egen liggare | 2 |
+| Faktarad, kurs, 12-mån sparklines | EOD-/fördröjd kursdata (billig) | 2 |
+| Konsensuskolumnen, multiplar mot 5-årssnitt | Estimat-/fundamentalicens | 3 (blir Pro-innehåll) |
+
+Mockar får visa målbilden, men varje pitch mot betaanvändare visar bara den fas som byggs.
+
+## 10. Anti-patterns (får inte hända)
 
 - Lådor, piller och färgade kantlister som informationsbärare.
 - Färg som dekor eller AI-prosa utan sin siffra intill.
 - Grafer som utsmyckning, staplar för staplarnas skull.
 - Emoji som ikoner (endast vektorikoner, ett formspråk, 1,6 px streck).
 - Tankstreck och halvstreck i copy (kursens regel gäller produkten).
+- Intern strategijargong i UI-copy (se §8).
 - Påhittade tal: i mockar markeras allt som exempeldata; i produkt kommer varje tal ur källdata via grundnings-motorn.
 
-## 9. Referenser
+## 11. Referenser
 
 - **Börsdata**: densitet, tabellärlighet, siffror-först.
 - **Koyfin**: faktarad, mörk professionell yta utan Bloomberg-brus.
