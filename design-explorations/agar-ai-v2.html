@@ -261,6 +261,40 @@
   html[data-theme="light"] .btn.prim{background:#E5B04A;border-color:#E5B04A;color:#241C09}
   .btn.ghost{color:var(--mut)}
 
+  /* ===== morgonutgåvan (brevet som sidor) ===== */
+  .utgwrap{max-width:660px}
+  .utg{border:1px solid var(--line);border-radius:16px;background:var(--card);min-height:440px;padding:26px 28px 22px;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(35,37,43,.05)}
+  .utg .uk{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;justify-content:space-between;gap:10px}
+  .utg .uk .r2{color:var(--faint)}
+  .utg h2.uh{font-family:var(--disp);font-weight:600;font-size:24px;line-height:1.18;margin:0 0 10px;letter-spacing:-.3px}
+  .utg p.ul{font-size:14px;color:var(--mut);line-height:1.62;margin:0 0 12px}
+  .utg .unote{font-size:12px;color:var(--faint);line-height:1.5;margin:8px 0 0}
+  .uitem{padding:11px 0;border-top:1px solid var(--line);display:flex;gap:11px;align-items:baseline;font-size:13.5px}
+  .uitem:first-of-type{border-top:none}
+  .uitem .ud{width:7px;height:7px;border-radius:50%;flex:0 0 auto;position:relative;top:-1px}
+  .uitem b{font-family:var(--disp);font-weight:600}
+  .uitem span{color:var(--mut)}
+  .uchart{margin:10px 0 4px}
+  .uchart svg{display:block;width:100%;height:64px}
+  .ufoot{margin-top:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:16px}
+  .unav{display:flex;align-items:center;gap:12px;margin-top:14px;max-width:660px}
+  .udots{display:flex;gap:6px;flex:1;justify-content:center}
+  .udots i{width:6px;height:6px;border-radius:50%;background:var(--line2);cursor:pointer;transition:.15s}
+  .udots i.on{background:var(--gold-b);width:18px;border-radius:4px}
+  .uarr{width:40px;height:40px;border-radius:11px;border:1px solid var(--line2);background:var(--card);color:var(--mut);display:grid;place-items:center;cursor:pointer;transition:.14s}
+  .uarr:hover{border-color:var(--gold);color:var(--ink)}
+  .uarr.off{opacity:.3;pointer-events:none}
+  .uarr svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .spx{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:10px;background:var(--bg2)}
+  .spx .sh{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+  .spx .sh b{font-family:var(--disp);font-weight:600;font-size:14.5px}
+  .spx .sh .tk3{font-family:var(--mono);font-size:10px;color:var(--faint)}
+  .spx p{font-size:12.5px;color:var(--mut);margin:5px 0 0;line-height:1.55}
+  .spx .btnrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .sbtn{font-size:11.5px;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:6px 11px;cursor:pointer;color:var(--mut);transition:.14s}
+  .sbtn:hover{border-color:var(--gold);color:var(--ink)}
+  .sbtn:disabled{opacity:.6;pointer-events:none}
+
   /* ===== hävstång (taktiskt verktyg, samma tema) ===== */
   .lvnote{display:flex;gap:12px;background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:11px;padding:13px 15px;margin-bottom:18px;font-size:13px;color:var(--mut);line-height:1.55}
   .lvnote b{color:var(--ink);font-weight:500}
@@ -825,54 +859,78 @@ function askG(q){const chat=document.getElementById('gchat');chat.insertAdjacent
 function askGIn(){const i=document.getElementById('gin');if(i&&i.value.trim()){askG(i.value.trim());i.value='';}}
 
 /* ============ Ägarbrevet (ytan) ============ */
+let bIdx=0;const BPN=8;
+function goBP(i){bIdx=Math.max(0,Math.min(BPN-1,i));renderBrevet();termify(main);window.scrollTo(0,0);}
+function bpage(i){
+  const arrow=(txt,tk)=>`<button class="btn" onclick="goStock('${tk}')">${txt}</button>`;
+  if(i===0)return{k:'Ägarbrevet · onsdag 2 juli',r:'07:30 · sida 1 av 8',h:`
+    <h2 class="uh">God morgon. Tre saker har hänt i dina bolag.</h2>
+    <p class="ul">Resten var lugnt, och det säger vi rakt ut. Hela utgåvan tar cirka 90 sekunder.</p>
+    <div class="uitem"><span class="ud" style="background:var(--neg)"></span><div><b>Telvio</b> <span>· lönsamheten gick under din gräns</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Norlux Industri</b> <span>· stark rapport, höjd prognos</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>Kavex Medical</b> <span>· insiderköp, och Q3 släpps i dag</span></div></div>
+    <div class="ufoot"><button class="btn prim" onclick="goBP(1)">Bläddra ${ic('arrow','sm')}</button></div>`};
+  if(i===1)return{k:'Sida 2 · Något har ändrats',r:'TELV',h:`
+    <h2 class="uh">Telvio: lönsamheten gick under din gräns</h2>
+    <p class="ul">Av varje hundralapp bolaget säljer för blev 38 kronor kvar efter direkta kostnader (bruttomarginal 38,0%). Din gräns går vid 40. Utdelningen står kvar, men marginalen som ska betala den krymper.</p>
+    <div class="uchart">${pillChart([41.5,41.0,40.6,40.1,39.2,38.0],40,'r')}</div>
+    <div class="pmeta"><span>6 kvartal</span><span class="gold">larm 40,0%</span><span>nu</span></div>
+    <p class="unote">Det betyder inte sälj. Det betyder att något du räknade med inte stämmer längre. Titta på just den delen i lugn och ro.</p>
+    <div class="ufoot">${arrow('Öppna Telvio','TELV')}</div>`};
+  if(i===2)return{k:'Sida 3 · Stark rapport',r:'NORL',h:`
+    <h2 class="uh">Norlux växte 11 procent av egen kraft</h2>
+    <p class="ul">Mer än bolagets egen prognos (7 till 9). Och prognosen för året höjdes. Allt du bad oss vakta håller.</p>
+    <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Tillväxt 11,0%</b> <span>· väntat var 8,5</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>388 miljoner kvar i kassan</b> <span>· fritt kassaflöde, upp 18%</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Höjd prognos</b> <span>· ovanligt mitt under året</span></div></div>
+    <div class="ufoot">${arrow('Läs hela analysen','NORL')}</div>`};
+  if(i===3)return{k:'Sida 4 · Insiderköp',r:'KAVX',h:`
+    <h2 class="uh">VD i Kavex köpte aktier för 2,1 miljoner</h2>
+    <p class="ul">Första köpet på 14 månader. En trevlig signal, inte mer än så. Och klockan 08:00 i dag släpper Kavex sin Q3-rapport: analysen ligger i appen några minuter senare. Du behöver inte göra något.</p>
+    <div class="ufoot">${arrow('Öppna Kavex','KAVX')}</div>`};
+  if(i===4)return{k:'Sida 5 · Lugnt',r:'3 bolag',h:`
+    <h2 class="uh">Här hände ingenting, och det är ett besked</h2>
+    <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>Voltcell</b> <span>· tillväxtcase. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader. Vi säger till när beskedet kommer.</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--line2)"></span><div><b>Brunna Hydro · Almi Foods</b> <span>· inget nytt av betydelse för dig.</span></div></div>
+    <p class="unote"><b style="color:var(--mut)">I natt:</b> vi läste 51 nyheter, registerposter och flöden om dina sex bolag. Tre saker rörde dig, du har just läst dem.</p>
+    <div class="ufoot"><button class="btn" onclick="goBP(5)">Vidare ${ic('arrow','sm')}</button></div>`};
+  if(i===5)return{k:'Sida 6 · Att hålla koll på i dag',r:'allmänt',h:`
+    <h2 class="uh">Riksbanken lämnar räntebesked 09:30</h2>
+    <p class="ul">De flesta räknar med oförändrad ränta. Blir det en överraskning rör det hela börsen.</p>
+    <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>För dig</b> <span>· Telvio har högst skuld av dina bolag och är mest känsligt. Norlux och Almi påverkas knappt.</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--line2)"></span><div><b>Kavex Q3 kl 08:00</b> <span>· vi läser den åt dig.</span></div></div>
+    <div class="ufoot"><button class="btn" onclick="goBP(6)">Vidare ${ic('arrow','sm')}</button></div>`};
+  if(i===6)return{k:'Sida 7 · Upptäckten · från Spaningen',r:'valbar · på/av',h:`
+    <h2 class="uh">Två rörelser utanför din portfölj</h2>
+    <p class="ul">Spaningen fångar lägen över hela marknaden. Det här är inte råd, det är rörelser. Rätt väg in är processen: teskrossaren först, sen ett skäl, sen eventuellt ett litet innehav.</p>
+    <div class="spx"><div class="sh"><b>Nordfiber</b><span class="tk3">NFIB · industri · fiktivt exempel</span></div>
+      <p>Bröt över sitt 200-dagarssnitt i går på dubbel volym. Redan lågt värderad mot sin egen historik.</p>
+      <div class="btnrow"><button class="sbtn" onclick="this.textContent='Skickad till teskrossaren ✓';this.disabled=true">Låt teskrossaren titta</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
+    <div class="spx"><div class="sh"><b>Selora</b><span class="tk3">SELO · programvara · fiktivt exempel</span></div>
+      <p>Tre insynsköp på två veckor efter ett kursfall. Rapporten kommer om tolv dagar.</p>
+      <div class="btnrow"><button class="sbtn" onclick="this.textContent='Skickad till teskrossaren ✓';this.disabled=true">Låt teskrossaren titta</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
+    <p class="unote">Visas ett par gånger i veckan. Kan stängas av i inställningarna.</p>
+    <div class="ufoot"><button class="btn" onclick="goBP(7)">Vidare ${ic('arrow','sm')}</button></div>`};
+  return{k:'Sida 8 · Klart',r:'',h:`
+    <h2 class="uh">Du är uppdaterad.</h2>
+    <p class="ul">Tre händelser, ett räntebesked och två rörelser att eventuellt pröva. Cirka 90 sekunder. Vi läser vidare: du hör av oss i morgon 07:30, eller direkt om en gräns passeras.</p>
+    <div class="ufoot"><button class="btn ghost" onclick="view='idag';setNav();render();window.scrollTo(0,0)">Till Dina bolag</button><button class="btn prim" onclick="goBP(0)">Läs om utgåvan</button></div>`};
+}
 function renderBrevet(){
+  const p=bpage(bIdx);
   main.innerHTML=`<div class="masthead">Ägarkollen · av Marginalen<span class="r">Onsdag 2 juli 2026 · 07:30</span></div>
   <div class="eyebrow">God morgon</div><h1 class="big">Ägarbrevet</h1>
-  <div class="sub">90 sekunder, sen är du klar. Kommer även som mejl.</div>
-  <div class="brev">
-    <div class="bh"><span class="bt">Ägarbrevet</span><span class="bd">Onsdag 2 juli · 07:30 · 90 sek läsning</span></div>
-    <div class="bsec">Dina bolag</div>
-    <div class="bitem click" onclick="goStock('NORL')">
-      <h4>Norlux Industri <span class="st pos">· stark rapport i morse</span></h4>
-      <p>Växte 11,0% av egen kraft, mer än egna prognosen. 388 miljoner kvar i kassan (fritt kassaflöde), upp 18%. Höjd prognos för året. Allt du bad oss vakta håller.</p>
-      <div class="fd"><b>Läs mer</b>Hela analysen ligger klar i appen →</div>
+  <div class="sub">Morgonens utgåva, sida för sida. Kommer även som mejl. Piltangenterna funkar.</div>
+  <div class="utgwrap">
+    <div class="utg"><div class="uk"><span>${p.k}</span><span class="r2">${p.r}</span></div>${p.h}</div>
+    <div class="unav">
+      <button class="uarr ${bIdx===0?'off':''}" onclick="goBP(bIdx-1)"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      <div class="udots">${Array.from({length:BPN},(_,i)=>`<i class="${i===bIdx?'on':''}" onclick="goBP(${i})"></i>`).join('')}</div>
+      <button class="uarr ${bIdx===BPN-1?'off':''}" onclick="goBP(bIdx+1)"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
     </div>
-    <div class="bitem click" onclick="goStock('TELV')">
-      <h4>Telvio <span class="st neg">· något har ändrats</span></h4>
-      <p>Lönsamheten föll till 38,0% i gårdagens rapport och gick under din gräns på 40. Utdelningen står kvar, men marginalen som ska betala den krymper.</p>
-      <div class="fd"><b>Se kurvan</b>Grafen mot din gräns finns på bolagssidan →</div>
-    </div>
-    <div class="bitem click" onclick="goStock('KAVX')">
-      <h4>Kavex Medical <span class="st gold">· insiderköp</span></h4>
-      <p>VD köpte aktier för 2,1 miljoner i går, första köpet på 14 månader. En trevlig signal, inte mer än så.</p>
-    </div>
-    <div class="bitem click" onclick="goStock('VOLT')">
-      <h4>Voltcell <span class="st gold">· tillväxtcase, lugnt</span></h4>
-      <p>Inget nytt. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader. Vi säger till när beskedet kommer.</p>
-    </div>
-    <div class="bitem">
-      <h4>Brunna Hydro · Almi Foods <span class="st faintc">· lugnt</span></h4>
-      <p>Inget nytt av betydelse för dig.</p>
-    </div>
-    <div class="bsec">Att hålla koll på idag</div>
-    <div class="bitem">
-      <h4>Riksbanken lämnar räntebesked 09:30</h4>
-      <p>De flesta räknar med oförändrad ränta. Blir det en överraskning rör det hela börsen.</p>
-      <div class="fd"><b>För dig</b>Telvio har högst skuld av dina bolag (2,1 årsvinster) och är mest känsligt. Norlux och Almi påverkas knappt.</div>
-    </div>
-    <div class="bitem">
-      <h4>Kavex släpper sin Q3-rapport i dag</h4>
-      <p>Rapporten kommer 08:00.</p>
-      <div class="fd"><b>För dig</b>Du äger Kavex. Analysen ligger i appen några minuter efter släppet, du behöver inte göra något.</div>
-    </div>
-    <div class="bsec">Dagens Marginalen-anteckning</div>
-    <div class="bitem">
-      <h4>Sebastian tänker: goodwill hos bolag som köper bolag</h4>
-      <p>Du äger ett bolag som köper andra bolag (Norlux). Då är posten goodwill inte kosmetika, den är kvittot på vad köpen kostat. Så här ser du om pengarna varit väl använda ... <a href="/fokus" style="color:var(--gold);text-decoration:none">Läs lektionen i Marginalen (3 min) →</a></p>
-    </div>
-    <div class="pw"><b>I natt:</b> vi läste 51 nyheter, registerposter och flöden om dina fem bolag. 3 saker rör dig, de står ovanför. Resten var brus.</div>
   </div>`;
 }
+document.addEventListener('keydown',e=>{if(view!=='brevet')return;if(e.key==='ArrowRight')goBP(bIdx+1);if(e.key==='ArrowLeft')goBP(bIdx-1);});
 
 /* ============ Lägg till bolag (onboarding) ============ */
 let obStep=0,obSel=null;
