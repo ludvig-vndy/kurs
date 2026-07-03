@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hitta bästa hävstångsprodukten — mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0D11; --bg2:#0E1217; --card:#141A21; --card2:#1A222B;
+    --line:#222C36; --line2:#2C3845;
+    --ink:#EAEEF3; --mut:#8A96A4; --faint:#5C6873;
+    --long:#15C9A0; --long-d:#0E8E72; --short:#FF5C72;
+    --gold:#F5C451; --accent:#15C9A0;
+    --disp:'Outfit',system-ui,sans-serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+  a{color:inherit}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  /* top bar */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,13,17,.82);backdrop-filter:blur(10px);z-index:30}
+  .brand{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.2px;display:flex;gap:9px;align-items:center}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--long);box-shadow:0 0 12px var(--long)}
+  .mocktag{font-family:var(--mono);font-size:10.5px;color:var(--faint);border:1px solid var(--line2);border-radius:99px;padding:4px 10px;letter-spacing:.04em}
+
+  /* landing */
+  #landing{min-height:74vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 0}
+  .h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,5vw,52px);line-height:1.05;margin:0 0 14px;letter-spacing:-.5px}
+  .sub{color:var(--mut);font-size:16px;max-width:520px;margin:0 auto 34px;line-height:1.5}
+  .searchbox{width:min(560px,90vw);position:relative}
+  .searchbox input{width:100%;background:var(--card);border:1px solid var(--line2);border-radius:14px;color:var(--ink);font-size:18px;font-family:var(--sans);padding:18px 20px 18px 52px;outline:none;transition:border-color .15s,box-shadow .15s}
+  .searchbox input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(21,201,160,.13)}
+  .searchbox .ic{position:absolute;left:19px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:19px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+  .chip{background:var(--card);border:1px solid var(--line2);border-radius:99px;padding:8px 15px;font-size:13.5px;color:var(--mut);cursor:pointer;transition:.14s}
+  .chip:hover{color:var(--ink);border-color:var(--accent);background:var(--card2)}
+
+  /* wizard */
+  #wizard{display:none;padding:48px 0 80px}
+  .wcard{max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:34px 32px}
+  .wtop{display:flex;align-items:center;gap:10px;margin-bottom:26px;font-size:13px;color:var(--mut)}
+  .wtop .u{color:var(--ink);font-weight:600;background:var(--card2);border:1px solid var(--line2);border-radius:8px;padding:5px 11px;font-family:var(--disp)}
+  .steps{display:flex;gap:6px;margin-bottom:30px}
+  .pip{height:3px;flex:1;border-radius:2px;background:var(--line2);transition:.2s}
+  .pip.on{background:var(--accent)}
+  .q{font-family:var(--disp);font-weight:500;font-size:23px;margin:0 0 20px}
+  .opts{display:grid;gap:10px}
+  .opts.two{grid-template-columns:1fr 1fr}
+  .opts.three{grid-template-columns:1fr 1fr 1fr}
+  .opt{background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:16px;cursor:pointer;font-size:15px;text-align:center;transition:.14s;font-weight:500}
+  .opt small{display:block;color:var(--faint);font-weight:400;font-size:12px;margin-top:4px}
+  .opt:hover{border-color:var(--accent);background:#18222b}
+  .opt.up:hover,.opt.up.sel{border-color:var(--long);color:var(--long);box-shadow:inset 0 0 0 1px var(--long)}
+  .opt.down:hover,.opt.down.sel{border-color:var(--short);color:var(--short);box-shadow:inset 0 0 0 1px var(--short)}
+  .opt.sel{border-color:var(--accent);background:#16242c;color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+  .wback{margin-top:24px;background:none;border:none;color:var(--faint);cursor:pointer;font-size:13px;font-family:var(--sans)}
+  .wback:hover{color:var(--mut)}
+
+  /* results */
+  #results{display:none;padding:26px 0 90px}
+  .rhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:6px}
+  .rhead h2{font-family:var(--disp);font-weight:600;font-size:24px;margin:0}
+  .cover{color:var(--faint);font-size:12.5px;margin:4px 0 22px;font-family:var(--mono)}
+
+  .controls{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:8px}
+  .cgroup{display:flex;align-items:center;gap:8px}
+  .clab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+  .seg{display:flex;background:var(--card);border:1px solid var(--line2);border-radius:9px;overflow:hidden}
+  .seg button{background:none;border:none;color:var(--mut);padding:7px 11px;font-size:12.5px;cursor:pointer;font-family:var(--sans);white-space:nowrap;transition:.12s}
+  .seg button.on{background:var(--card2);color:var(--ink)}
+  .seg button.on.up{color:var(--long)} .seg button.on.down{color:var(--short)}
+  .seg button:hover{color:var(--ink)}
+
+  .hint{font-size:12px;color:var(--faint);margin:10px 2px 22px;display:flex;gap:7px;align-items:flex-start}
+  .hint b{color:var(--mut);font-weight:600}
+
+  /* hero best card */
+  .hero{background:linear-gradient(180deg,#16222b,#131a21);border:1px solid var(--long-d);border-radius:18px;padding:24px;position:relative;overflow:hidden;margin-bottom:16px}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(700px 200px at 80% -40%,rgba(21,201,160,.16),transparent)}
+  .hbadge{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--long);display:flex;align-items:center;gap:9px;position:relative}
+  .stars{color:var(--gold);letter-spacing:2px;font-size:13px}
+  .hbody{display:flex;flex-wrap:wrap;gap:18px 26px;align-items:flex-start;justify-content:space-between;margin-top:12px;position:relative}
+  .hname{font-family:var(--disp);font-size:22px;font-weight:600;margin:0 0 3px}
+  .hsub{color:var(--mut);font-size:13px}
+  .why{margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;position:relative}
+  .wtag{font-size:12px;background:rgba(21,201,160,.1);border:1px solid var(--long-d);color:#8fe9d3;border-radius:7px;padding:5px 10px}
+  .metrics{display:grid;grid-template-columns:repeat(4,auto);gap:10px 28px}
+  .met .k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .met .v{font-family:var(--mono);font-size:18px;font-weight:500;margin-top:2px}
+  .cta{margin-top:18px;display:flex;gap:10px;position:relative}
+  .btn{font-family:var(--sans);font-size:13px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid var(--line2);background:var(--card2);color:var(--ink);transition:.14s}
+  .btn:hover{border-color:var(--accent)}
+  .btn.prim{background:var(--long);border-color:var(--long);color:#04120e;font-weight:600}
+  .btn.prim:hover{background:#1ad8ab}
+
+  /* bucket grid */
+  .buckets{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  .bk{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px}
+  .bk .lab{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:9px;display:flex;align-items:center;gap:6px}
+  .bk .nm{font-family:var(--disp);font-weight:500;font-size:14.5px;line-height:1.25}
+  .bk .em{color:var(--faint);font-size:12px;margin-top:2px}
+  .bk .big{font-family:var(--mono);font-size:21px;font-weight:600;margin-top:11px}
+  .bk .note{font-size:11.5px;color:var(--mut);margin-top:4px}
+  .bk.warn .big{color:var(--gold)}
+
+  /* avoid strip */
+  .avoid{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--short);border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+  .avoid .t{font-size:13.5px}.avoid .t b{color:var(--ink)}
+  .avoid .t span{color:var(--mut)}
+  .linkbtn{background:none;border:none;color:var(--accent);cursor:pointer;font-size:13px;font-family:var(--sans)}
+
+  /* two-col lower */
+  .lower{display:grid;grid-template-columns:1fr 320px;gap:16px}
+  @media(max-width:820px){.lower{grid-template-columns:1fr}.buckets{grid-template-columns:1fr 1fr}.metrics{grid-template-columns:repeat(2,auto)}}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .panel h3{font-family:var(--disp);font-weight:600;font-size:15px;margin:0 0 4px}
+  .panel p.d{color:var(--mut);font-size:12.5px;margin:0 0 16px}
+  .slider{margin-bottom:15px}
+  .slider .row{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px}
+  .slider .row span:last-child{font-family:var(--mono);color:var(--mut)}
+  input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:3px;background:var(--line2);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 0 4px rgba(21,201,160,.15)}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:right;color:var(--faint);font-weight:500;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:0 0 10px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  td{padding:11px 0;border-bottom:1px solid var(--line);font-family:var(--mono)}
+  td.nm{font-family:var(--sans)}
+  tr.dom td{opacity:.4}
+  .pill{display:inline-block;font-size:10.5px;border-radius:5px;padding:2px 7px;font-family:var(--sans)}
+  .pill.long{background:rgba(21,201,160,.12);color:var(--long)} .pill.short{background:rgba(255,92,114,.12);color:var(--short)}
+  .pill.warr{background:rgba(245,196,81,.12);color:var(--gold)}
+
+  /* isin */
+  .isin input{width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:10px;color:var(--ink);padding:11px 13px;font-family:var(--mono);font-size:13px;outline:none}
+  .isin input:focus{border-color:var(--accent)}
+  .isinres{margin-top:12px;font-size:13px;line-height:1.5;display:none}
+  .isinres .own{color:var(--mut)} .isinres b{color:var(--ink)}
+  .isinres .beat{color:var(--short)}
+
+  /* toast */
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#10303;border:1px solid var(--long-d);background:#0f2a24;color:#bff1e4;padding:12px 18px;border-radius:12px;font-size:13px;box-shadow:0 14px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s;max-width:90vw;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .sec-title{font-family:var(--disp);font-weight:600;font-size:13px;color:var(--mut);margin:26px 2px 12px;letter-spacing:.02em}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand"><span class="dot"></span> Hävstångssök</div>
+  <div class="mocktag">MOCKUP · EXEMPELDATA · ILLUSTRATIVA SIFFROR</div>
+</div>
+
+<!-- LANDING -->
+<section id="landing">
+  <div class="wrap">
+    <h1 class="h1">Hitta bästa hävstångsprodukten</h1>
+    <p class="sub">Du vill ha exponering mot något. Vi jämför alla emittenter och visar vilken produkt som är bäst för just ditt syfte. På fem sekunder.</p>
+    <div class="searchbox">
+      <span class="ic">⌕</span>
+      <input id="search" placeholder="Vad vill du handla?" autocomplete="off">
+    </div>
+    <div class="chips">
+      <span class="chip">Tesla</span><span class="chip">NVIDIA</span><span class="chip">OMXS30</span>
+      <span class="chip">Guld</span><span class="chip">Olja</span><span class="chip">Bitcoin</span><span class="chip">S&P 500</span>
+    </div>
+  </div>
+</section>
+
+<!-- WIZARD -->
+<section id="wizard"><div class="wrap">
+  <div class="wcard">
+    <div class="wtop">Du handlar <span class="u" id="w-underlying">Tesla</span></div>
+    <div class="steps"><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+    <div id="w-step"></div>
+    <button class="wback" id="w-back">← Tillbaka</button>
+  </div>
+</div></section>
+
+<!-- RESULTS -->
+<section id="results"><div class="wrap">
+  <div class="rhead"><h2 id="r-title">Tesla</h2></div>
+  <div class="cover" id="r-cover"></div>
+
+  <div class="controls">
+    <div class="cgroup"><span class="clab">Riktning</span>
+      <div class="seg" id="seg-dir">
+        <button data-v="long" class="up">Upp</button><button data-v="short" class="down">Ner</button>
+      </div></div>
+    <div class="cgroup"><span class="clab">Risk</span>
+      <div class="seg" id="seg-risk">
+        <button data-v="lag">Låg</button><button data-v="medel">Medel</button><button data-v="hog">Hög</button>
+      </div></div>
+    <div class="cgroup"><span class="clab">Horisont</span>
+      <div class="seg" id="seg-hor">
+        <button data-v="idag">Idag</button><button data-v="dagar">Dagar</button><button data-v="veckor">Veckor</button><button data-v="manader">Månader</button>
+      </div></div>
+  </div>
+  <div class="hint">⚡ <span><b>Horisonten styr svaret.</b> Intradag straffar spread, månader straffar finansieringskostnad och knock-out-risk. Byt horisont och se #1 ändras.</span></div>
+
+  <div class="hero" id="hero"></div>
+
+  <div class="sec-title">Bäst i varje kategori</div>
+  <div class="buckets" id="buckets"></div>
+
+  <div class="avoid" id="avoid"></div>
+
+  <div class="lower">
+    <div class="panel">
+      <h3>Alla relevanta produkter</h3>
+      <p class="d">Rankade efter din valda viktning. Gråa rader är strikt sämre än ett alternativ (dominerade).</p>
+      <table id="tbl"><thead><tr>
+        <th>Produkt</th><th>Häv.</th><th>Spread</th><th>Fin./dag</th><th>Till KO</th><th>Kostnad/period</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Vad väger tyngst?</h3>
+        <p class="d">Wizarden satte vikterna. Dra själv, så rankar listan om direkt. Transparent, ingen "AI rekommenderar".</p>
+        <div class="slider"><div class="row"><span>Låg kostnad</span><span id="lv-cost">—</span></div><input type="range" id="w-cost" min="0" max="100"></div>
+        <div class="slider"><div class="row"><span>Säkerhet (KO)</span><span id="lv-safe">—</span></div><input type="range" id="w-safe" min="0" max="100"></div>
+        <div class="slider"><div class="row"><span>Hög hävstång</span><span id="lv-lev">—</span></div><input type="range" id="w-lev" min="0" max="100"></div>
+        <div class="slider"><div class="row"><span>Likviditet</span><span id="lv-liq">—</span></div><input type="range" id="w-liq" min="0" max="100"></div>
+      </div>
+      <div class="panel isin" style="margin-top:16px">
+        <h3>Äger du redan en produkt?</h3>
+        <p class="d">Klistra in ett ISIN, så ser du om något slår den idag.</p>
+        <input id="isin" placeholder="t.ex. DE000VX1A2B3" value="DE000CITI018">
+        <div class="isinres" id="isinres"></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- mock data (illustrativ, fiktiva produkter) ---------- */
+const P = [
+  {id:1, em:'Morgan Stanley', typ:'Mini',    lev:5.8, spread:0.19, carry:0.030, ko:21, liq:3, oms:4200, pris:4.21, idag:6.1, isin:'DE000MS01A21'},
+  {id:2, em:'Vontobel',       typ:'Turbo',   lev:9.6, spread:0.30, carry:0.045, ko:9,  liq:2, oms:3100, pris:2.88, idag:9.8, isin:'DE000VT09B44'},
+  {id:3, em:'BNP Paribas',    typ:'Mini',    lev:5.2, spread:0.35, carry:0.012, ko:34, liq:2, oms:1500, pris:6.40, idag:5.4, isin:'DE000BN05C12'},
+  {id:4, em:'UBS',            typ:'Warrant', lev:6.0, spread:0.55, carry:0.020, ko:null,liq:1, oms:600,  pris:1.17, idag:11.2,isin:'DE000UB06D33', warr:true},
+  {id:5, em:'Nordea',         typ:'Mini',    lev:4.0, spread:0.22, carry:0.028, ko:28, liq:3, oms:2600, pris:7.95, idag:4.2, isin:'SE000NDA040'},
+  {id:6, em:'SEB',            typ:'Mini',    lev:7.1, spread:0.25, carry:0.038, ko:16, liq:2, oms:1900, pris:3.40, idag:7.7, isin:'SE000SEB071'},
+  {id:7, em:'Citi',           typ:'Mini',    lev:5.7, spread:0.40, carry:0.050, ko:18, liq:1, oms:300,  pris:5.02, idag:6.0, isin:'DE000CITI018'},
+  {id:8, em:'Société Générale',typ:'Mini',   lev:6.5, spread:0.24, carry:0.034, ko:19, liq:3, oms:2200, pris:4.66, idag:7.0, isin:'DE000SG06E55'},
+  {id:9, em:'Goldman Sachs',  typ:'Turbo',   lev:8.2, spread:0.33, carry:0.041, ko:12, liq:2, oms:900,  pris:3.11, idag:8.6, isin:'DE000GS08F21'},
+  {id:10,em:'Handelsbanken',  typ:'Mini',    lev:3.2, spread:0.28, carry:0.026, ko:37, liq:2, oms:700,  pris:9.10, idag:3.4, isin:'SE000SHB032'},
+  {id:11,em:'Vontobel',       typ:'Warrant', lev:4.5, spread:0.60, carry:0.018, ko:null,liq:1, oms:250,  pris:0.92, idag:8.1, isin:'DE000VT11G77', warr:true},
+  {id:12,em:'Morgan Stanley', typ:'Turbo',   lev:11.0,spread:0.31, carry:0.048, ko:7,  liq:2, oms:1400, pris:1.74, idag:12.9,isin:'DE000MS12H09'},
+  {id:13,em:'BNP Paribas',    typ:'Mini',    lev:8.0, spread:0.29, carry:0.039, ko:14, liq:2, oms:1100, pris:2.55, idag:8.4, isin:'DE000BN13I44'},
+  {id:14,em:'Citi',           typ:'Turbo',   lev:6.8, spread:0.45, carry:0.052, ko:15, liq:1, oms:200,  pris:3.98, idag:6.7, isin:'DE000CITI144'},
+];
+const DAYS = {idag:1, dagar:5, veckor:20, manader:90};
+const HLAB = {idag:'idag', dagar:'några dagar', veckor:'några veckor', manader:'några månader'};
+const BAND = {lag:[2,5.0], medel:[5.0,8.5], hog:[8.0,13]};
+const WDEF = { // wizard-satta vikter per horisont (kostnad, säkerhet, hävstång, likviditet)
+  idag:   {cost:70, safe:25, lev:15, liq:35},
+  dagar:  {cost:55, safe:40, lev:20, liq:25},
+  veckor: {cost:45, safe:55, lev:20, liq:15},
+  manader:{cost:50, safe:65, lev:15, liq:10},
+};
+
+const state = {underlying:'Tesla', dir:'long', risk:'medel', hor:'manader', w:{...WDEF.manader}, lastBest:null};
+
+/* ---------- derived metrics ---------- */
+function days(){return DAYS[state.hor];}
+function dragPct(p){ return p.spread + p.carry*days(); }            // tur/retur-spread + finansiering över perioden
+function koRisk(p){                                                  // 0..~1, högre = farligare
+  const d=days();
+  if(p.warr) return 0.04*Math.sqrt(d/20);                            // warrant kan ej knockas ut, bara tidsvärde
+  return Math.min(1, (p.lev*Math.sqrt(d))/(p.ko*4));
+}
+function inBand(p){ const[a,b]=BAND[state.risk]; return p.lev>=a && p.lev<=b; }
+function candidates(){ return P.filter(inBand); }                    // riktning är samma data i mocken
+
+/* ---------- scoring ---------- */
+function score(p, set){
+  const drags=set.map(dragPct), risks=set.map(koRisk);
+  const lq=set.map(x=>(3-x.liq)/2), center=(BAND[state.risk][0]+BAND[state.risk][1])/2, half=(BAND[state.risk][1]-BAND[state.risk][0])/2||1;
+  const levs=set.map(x=>Math.abs(x.lev-center)/half);
+  const nz=(v,a)=>{const mn=Math.min(...a),mx=Math.max(...a);return mx-mn<1e-9?0:(v-mn)/(mx-mn);};
+  const costN=nz(dragPct(p),drags), riskN=nz(koRisk(p),risks), liqN=nz((3-p.liq)/2,lq), levN=nz(Math.abs(p.lev-center)/half,levs);
+  const w=state.w, sum=w.cost+w.safe+w.lev+w.liq||1;
+  const pen=(w.cost*costN + w.safe*riskN + w.lev*levN + w.liq*liqN)/sum;
+  return {val:Math.round((1-pen)*100), costN, riskN, liqN, levN};
+}
+function whyTags(p,sc){
+  const t=[]; const items=[['cost',sc.costN,()=>`lägst kostnad över ${HLAB[state.hor]} (${dragPct(p).toFixed(2)}%)`],
+    ['safe',sc.riskN,()=> p.warr?'kan inte knockas ut':`tryggt avstånd till KO (${p.ko}%)`],
+    ['liq',sc.liqN,()=>'hög likviditet'],['lev',sc.levN,()=>'matchar din hävstång']];
+  items.sort((a,b)=>a[1]-b[1]); // lägst penalty = starkaste skäl
+  for(let i=0;i<3;i++){ if(items[i][1]<0.5||i<2) t.push(items[i][2]()); }
+  return t.slice(0,3);
+}
+
+/* ---------- dominance ---------- */
+function dominated(set){
+  const dom=new Set();
+  for(const b of set){ for(const a of set){ if(a===b) continue;
+    const simLev=Math.abs(a.lev-b.lev)/b.lev<0.10;
+    const aKo=a.warr?Infinity:a.ko, bKo=b.warr?Infinity:b.ko;
+    const better = a.spread<=b.spread && a.carry<=b.carry && aKo>=bKo && a.liq>=b.liq;
+    const strict = a.spread<b.spread || a.carry<b.carry || aKo>bKo || a.liq>b.liq;
+    if(simLev && better && strict){ dom.add(b.id); break; }
+  }}
+  return dom;
+}
+
+/* ---------- render ---------- */
+function fmtKo(p){return p.warr?'ingen KO':p.ko+'%';}
+function bestBy(set,fn,dir=1){return set.slice().sort((a,b)=>(fn(a)-fn(b))*dir)[0];}
+
+function render(flip){
+  const set=candidates();
+  // scores
+  const scored=set.map(p=>({p,sc:score(p,set)})).sort((a,b)=>b.sc.val-a.sc.val);
+  const best=scored[0];
+
+  // hero
+  const tags=whyTags(best.p,best.sc).map(t=>`<span class="wtag">✓ ${t}</span>`).join('');
+  document.getElementById('hero').innerHTML=`
+    <div class="hbadge">★ BÄST TOTALT <span class="stars">★★★★★</span> <span style="color:var(--faint)">matchpoäng ${best.sc.val}/100</span></div>
+    <div class="hbody">
+      <div>
+        <div class="hname">${best.p.typ} ${state.dir==='long'?'Long':'Short'} · ${best.p.em}</div>
+        <div class="hsub">${best.p.isin} · uppdaterad 15:42 (fördröjt 15 min)</div>
+        <div class="why">${tags}</div>
+      </div>
+      <div class="metrics">
+        <div class="met"><div class="k">Eff. hävstång</div><div class="v">${best.p.lev.toFixed(1)}x</div></div>
+        <div class="met"><div class="k">Spread</div><div class="v">${best.p.spread.toFixed(2)}%</div></div>
+        <div class="met"><div class="k">Fin./dag</div><div class="v">${best.p.warr?'—':best.p.carry.toFixed(3)+'%'}</div></div>
+        <div class="met"><div class="k">Till KO</div><div class="v">${fmtKo(best.p)}</div></div>
+        <div class="met"><div class="k">Kostnad/${HLAB[state.hor].split(' ').pop()}</div><div class="v">${dragPct(best.p).toFixed(2)}%</div></div>
+        <div class="met"><div class="k">Likviditet</div><div class="v">${['','låg','medel','hög'][best.p.liq]}</div></div>
+        <div class="met"><div class="k">Senast</div><div class="v">${best.p.pris.toFixed(2)}</div></div>
+        <div class="met"><div class="k">Idag</div><div class="v" style="color:var(--long)">+${best.p.idag.toFixed(1)}%</div></div>
+      </div>
+    </div>
+    <div class="cta"><button class="btn prim">Till mäklaren</button><button class="btn">Visa KID</button><button class="btn">Lägg i bevakning</button></div>`;
+
+  // buckets
+  const hi=bestBy(set,p=>p.lev,-1), cheap=bestBy(set,p=>dragPct(p),1),
+        safe=bestBy(set,p=>koRisk(p),1), traded=bestBy(set,p=>p.oms,-1);
+  const bk=(lab,p,big,note,cls='')=>`<div class="bk ${cls}"><div class="lab">${lab}</div>
+     <div class="nm">${p.typ} ${state.dir==='long'?'Long':'Short'}</div><div class="em">${p.em}</div>
+     <div class="big">${big}</div><div class="note">${note}</div></div>`;
+  document.getElementById('buckets').innerHTML=
+    bk('▲ Högst hävstång',hi,hi.lev.toFixed(1)+'x',hi.lev>BAND[state.risk][1]?'över din risknivå':'hög risk')+
+    bk('◆ Billigast',cheap,dragPct(cheap).toFixed(2)+'%','lägst kostnad över perioden')+
+    bk('⛨ Säkraste',safe,fmtKo(safe),safe.warr?'kan inte knockas ut':'längst till knock-out','warn')+
+    bk('● Mest handlad',traded,traded.oms.toLocaleString('sv')+' st','högst omsättning idag');
+
+  // avoid
+  const dom=dominated(set);
+  document.getElementById('avoid').innerHTML=
+    `<div class="t"><b>${dom.size} av ${set.length} relevanta är strikt sämre</b> <span>— ett annat alternativ slår dem på varje axel (spread, finansiering, KO, likviditet).</span></div>
+     <button class="linkbtn">Visa de dominerade →</button>`;
+
+  // table
+  const tb=document.querySelector('#tbl tbody');
+  tb.innerHTML=scored.map(({p})=>{
+    const isd=dom.has(p.id);
+    const tp=p.warr?'warr':(state.dir==='long'?'long':'short');
+    return `<tr class="${isd?'dom':''}">
+      <td class="nm">${p.em} <span class="pill ${tp}">${p.typ}</span></td>
+      <td>${p.lev.toFixed(1)}x</td><td>${p.spread.toFixed(2)}%</td>
+      <td>${p.warr?'—':p.carry.toFixed(3)+'%'}</td><td>${fmtKo(p)}</td><td>${dragPct(p).toFixed(2)}%</td></tr>`;
+  }).join('');
+
+  // toast on winner flip
+  if(flip && state.lastBest && state.lastBest!==best.p.id){
+    const prev=P.find(x=>x.id===state.lastBest);
+    toast(`#1 bytte från ${prev.em} till ${best.p.em} — ${state.hor==='idag'?'spread':'finansiering & KO-risk'} väger nu tyngst.`);
+  }
+  state.lastBest=best.p.id;
+  checkIsin();
+}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3400);}
+
+/* ---------- isin ---------- */
+function checkIsin(){
+  const v=document.getElementById('isin').value.trim().toUpperCase();
+  const el=document.getElementById('isinres');
+  const owned=P.find(p=>p.isin.toUpperCase()===v);
+  if(!owned){el.style.display='none';return;}
+  const set=candidates().length?P:P;
+  const better=P.filter(a=>{
+    if(a.id===owned.id) return false;
+    const simLev=Math.abs(a.lev-owned.lev)/owned.lev<0.18;
+    const aKo=a.warr?Infinity:a.ko, oKo=owned.warr?Infinity:owned.ko;
+    return simLev && a.spread<=owned.spread && a.carry<=owned.carry && aKo>=oKo && a.liq>=owned.liq &&
+           (a.spread<owned.spread||a.carry<owned.carry);
+  }).sort((a,b)=>dragPct(a)-dragPct(b));
+  el.style.display='block';
+  el.innerHTML=`<div class="own">Du äger <b>${owned.typ} · ${owned.em}</b> (${owned.lev.toFixed(1)}x, spread ${owned.spread.toFixed(2)}%, fin. ${owned.carry.toFixed(3)}%/dag).</div>`+
+    (better.length?`<div class="beat" style="margin-top:6px">▸ ${better.length} produkt${better.length>1?'er':''} dominerar den idag. Bäst: <b style="color:var(--long)">${better[0].em} ${better[0].typ}</b> — spread ${better[0].spread.toFixed(2)}%, fin. ${better[0].carry.toFixed(3)}%/dag, ${fmtKo(better[0])} till KO.</div>`
+    :`<div style="margin-top:6px;color:var(--long)">▸ Inget alternativ slår den på alla axlar just nu. Bra val.</div>`);
+}
+
+/* ---------- wizard ---------- */
+const wsteps=[
+  {q:'Hur tror du att marknaden går?', key:'dir', cls:'two', opts:[['Upp','long','up'],['Ner','short','down']]},
+  {q:'Hur mycket risk vill du ta?', key:'risk', cls:'three', opts:[['Låg','lag','','lägre hävstång, långt till KO'],['Medel','medel','','balans'],['Hög','hog','','hög hävstång, nära KO']]},
+  {q:'Hur länge tänker du hålla?', key:'hor', cls:'two', opts:[['Idag','idag','','intradag'],['Några dagar','dagar',''],['Några veckor','veckor',''],['Några månader','manader','']]},
+];
+let wi=0;
+function showWizard(u){
+  state.underlying=u; document.getElementById('w-underlying').textContent=u;
+  document.getElementById('landing').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById('wizard').style.display='block';
+  wi=0; renderStep(); window.scrollTo(0,0);
+}
+function renderStep(){
+  document.querySelectorAll('.pip').forEach((p,i)=>p.classList.toggle('on',i<=wi));
+  const s=wsteps[wi];
+  const cur=state[s.key];
+  const html=`<div class="q">${s.q}</div><div class="opts ${s.cls}">`+
+    s.opts.map(o=>`<div class="opt ${o[2]||''} ${cur===o[1]?'sel':''}" data-v="${o[1]}">${o[0]}${o[3]?`<small>${o[3]}</small>`:''}</div>`).join('')+`</div>`;
+  document.getElementById('w-step').innerHTML=html;
+  document.getElementById('w-back').style.visibility=wi===0?'hidden':'visible';
+  document.querySelectorAll('#w-step .opt').forEach(el=>el.onclick=()=>{
+    state[s.key]=el.dataset.v;
+    if(wi<wsteps.length-1){wi++;renderStep();}
+    else finishWizard();
+  });
+}
+document.getElementById('w-back').onclick=()=>{ if(wi>0){wi--;renderStep();} else { document.getElementById('wizard').style.display='none'; document.getElementById('landing').style.display='flex'; } };
+
+function finishWizard(){
+  state.w={...WDEF[state.hor]};
+  document.getElementById('wizard').style.display='none';
+  document.getElementById('results').style.display='block';
+  document.getElementById('r-title').textContent=state.underlying;
+  syncControls(); syncSliders(); state.lastBest=null; render(false); window.scrollTo(0,0);
+}
+
+/* ---------- results controls ---------- */
+function syncControls(){
+  setSeg('seg-dir',state.dir); setSeg('seg-risk',state.risk); setSeg('seg-hor',state.hor);
+  document.getElementById('r-cover').textContent=`Vi jämför 142 produkter från 7 emittenter mot ditt syfte (${state.dir==='long'?'upp':'ner'} · ${state.risk} risk · ${HLAB[state.hor]}). Visar de mest relevanta. Exempeldata.`;
+}
+function setSeg(id,v){document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));}
+function bindSeg(id,key,onhor){
+  document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{
+    state[key]=b.dataset.v; setSeg(id,b.dataset.v);
+    if(onhor){state.w={...WDEF[state.hor]}; syncSliders();}
+    document.getElementById('r-cover').textContent=`Vi jämför 142 produkter från 7 emittenter mot ditt syfte (${state.dir==='long'?'upp':'ner'} · ${state.risk} risk · ${HLAB[state.hor]}). Visar de mest relevanta. Exempeldata.`;
+    render(onhor);
+  });
+}
+bindSeg('seg-dir','dir',false); bindSeg('seg-risk','risk',false); bindSeg('seg-hor','hor',true);
+
+function syncSliders(){
+  const m={cost:'w-cost',safe:'w-safe',lev:'w-lev',liq:'w-liq'};
+  for(const k in m){document.getElementById(m[k]).value=state.w[k];}
+  syncSliderLabels();
+}
+function syncSliderLabels(){
+  const sum=state.w.cost+state.w.safe+state.w.lev+state.w.liq||1;
+  const pc=v=>Math.round(v/sum*100)+'%';
+  document.getElementById('lv-cost').textContent=pc(state.w.cost);
+  document.getElementById('lv-safe').textContent=pc(state.w.safe);
+  document.getElementById('lv-lev').textContent=pc(state.w.lev);
+  document.getElementById('lv-liq').textContent=pc(state.w.liq);
+}
+[['w-cost','cost'],['w-safe','safe'],['w-lev','lev'],['w-liq','liq']].forEach(([id,k])=>{
+  document.getElementById(id).addEventListener('input',e=>{state.w[k]=+e.target.value;syncSliderLabels();render(false);});
+});
+document.getElementById('isin').addEventListener('input',checkIsin);
+
+/* ---------- landing wiring ---------- */
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>showWizard(c.textContent));
+document.getElementById('search').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.value.trim()) showWizard(e.target.value.trim());
+});
+</script>
+</body>
+</html>

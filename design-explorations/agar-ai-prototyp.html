@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ägar-AI — produktprototyp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* neutral graphite, gold trust accent */
+    --bg:#0E0F11; --bg2:#131417; --card:#16181C; --card2:#1C1F24;
+    --line:#262A30; --line2:#333842;
+    --ink:#ECEEF1; --mut:#9AA1AC; --faint:#646B76;
+    --gold:#E0A43B; --gold-soft:#1F232C; --gold-d:#7E5E22;
+    --pos:#5FB89A; --pos-soft:#16241F; --pos-d:#2F5C4C;
+    --neg:#E0726F; --neg-soft:#261A1D; --neg-d:#6E3A33;
+    --disp:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.55}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  button{font-family:inherit}
+  ::selection{background:var(--gold-soft);color:var(--ink)}
+
+  /* icons */
+  .ico{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
+  .ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .ico.sm svg{width:15px;height:15px}
+  .ico.lg svg{width:22px;height:22px}
+
+  /* shell */
+  .app{display:grid;grid-template-columns:234px 1fr;min-height:100vh}
+  .side{background:var(--bg2);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:3px;position:sticky;top:0;height:100vh}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:18px;letter-spacing:-.2px;padding:4px 10px 20px}
+  .logo .mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(150deg,var(--gold),#c98a28);display:grid;place-items:center;color:#1b1407;flex:0 0 auto}
+  .logo .mark svg{width:15px;height:15px;stroke:#1b1407;stroke-width:2}
+  .nav{background:none;border:none;color:var(--mut);text-align:left;padding:10px 11px;border-radius:9px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:11px;transition:background .16s,color .16s}
+  .nav:hover{background:var(--card);color:var(--ink)}
+  .nav.on{background:var(--card2);color:var(--ink)}
+  .nav.on .ico{color:var(--gold)}
+  .nav .ico svg{width:17px;height:17px}
+  .sidefoot{margin-top:auto;font-size:11px;color:var(--faint);padding:10px;line-height:1.55}
+  .mocktag{font-family:var(--mono);font-size:9.5px;color:var(--faint);border:1px solid var(--line2);border-radius:7px;padding:5px 8px;letter-spacing:.04em;text-align:center;margin-bottom:9px}
+
+  .main{padding:30px 46px 90px;max-width:900px}
+  @media(max-width:720px){.app{grid-template-columns:1fr}.side{display:none}.main{padding:22px}}
+
+  /* masthead / eyebrow */
+  .masthead{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:22px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .masthead .r{margin-left:auto;color:var(--mut)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  h1.big{font-family:var(--disp);font-weight:600;font-size:36px;margin:8px 0 3px;letter-spacing:-.5px;line-height:1.04}
+  .sub{color:var(--mut);font-size:14.5px;margin-bottom:24px}
+
+  /* portfolio pulse (quiet by design) */
+  .pulse{display:flex;align-items:baseline;gap:13px;border:1px solid var(--line);background:var(--bg2);border-radius:12px;padding:13px 17px;margin-bottom:12px}
+  .pulse .v{font-family:var(--mono);font-size:15px;color:var(--mut)}
+  .pulse .chg{font-family:var(--mono);font-size:13px;color:var(--pos)}
+  .pulse .nb{margin-left:auto;font-size:11.5px;color:var(--faint);max-width:320px;text-align:right;line-height:1.45}
+
+  /* section labels with rule */
+  .slab{display:flex;align-items:center;gap:12px;margin:30px 2px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+  .slab::after{content:'';flex:1;height:1px;background:var(--line)}
+  .slab .ct{background:var(--card2);border:1px solid var(--line2);border-radius:99px;padding:1px 8px;color:var(--mut)}
+
+  /* attention card */
+  .acard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px 19px;margin-bottom:11px;position:relative;cursor:pointer;transition:border-color .16s,transform .16s}
+  .acard:hover{border-color:var(--line2);transform:translateY(-1px)}
+  .acard::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;background:var(--line2)}
+  .acard.neg::before{background:var(--neg)} .acard.pos::before{background:var(--pos)} .acard.warn::before{background:var(--gold)}
+  .acard .top{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+  .nmtag{font-family:var(--disp);font-size:14px;font-weight:600}
+  .tk{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.05em}
+  .sentiment{font-size:10.5px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-left:auto;display:flex;align-items:center;gap:5px}
+  .sentiment.neg{color:var(--neg)} .sentiment.pos{color:var(--pos)} .sentiment.neu{color:var(--mut)}
+  .acard h3{font-family:var(--disp);font-weight:500;font-size:19px;margin:0 0 7px;line-height:1.25;letter-spacing:-.2px}
+  .acard p{color:var(--mut);font-size:13.5px;margin:0;line-height:1.6}
+  .acard .foot{display:flex;gap:9px;margin-top:13px;flex-wrap:wrap;align-items:center}
+  .src{font-size:11px;color:var(--faint);border:1px solid var(--line2);border-radius:7px;padding:4px 9px;display:inline-flex;gap:6px;align-items:center}
+  .src .ico svg{width:13px;height:13px}.src b{color:var(--mut);font-weight:500}
+  .lk{font-size:12.5px;color:var(--gold);text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-left:auto}
+  .lk .ico svg{width:14px;height:14px}
+
+  /* quiet rows */
+  .quiet{border:1px solid var(--line);border-radius:12px;background:var(--bg2);overflow:hidden}
+  .qrow{display:flex;align-items:center;gap:11px;padding:13px 17px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .14s}
+  .qrow:last-child{border-bottom:none}.qrow:hover{background:var(--card)}
+  .qrow .t{font-size:13.5px}.qrow .t b{font-weight:600;font-family:var(--disp)}
+  .qrow .meta{margin-left:auto;font-size:11px;color:var(--faint);font-family:var(--mono);letter-spacing:.04em}
+
+  .filtered{margin-top:15px;font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:9px;line-height:1.5}
+  .filtered .ico{color:var(--faint)}.filtered b{color:var(--mut);font-weight:500}
+
+  /* calendar */
+  .cal{display:flex;gap:9px;margin-top:8px;overflow:auto;padding-bottom:4px}
+  .calc{flex:0 0 auto;border:1px solid var(--line);border-radius:11px;padding:11px 14px;min-width:128px;background:var(--bg2)}
+  .calc .d{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.04em}
+  .calc .n{font-size:13.5px;margin-top:4px;font-weight:600;font-family:var(--disp)}
+  .calc .e{font-size:11.5px;color:var(--faint);margin-top:1px}
+
+  /* briefing CTA */
+  .briefcta{display:flex;align-items:center;gap:15px;background:linear-gradient(120deg,#1b1d22,#16171b);border:1px solid var(--gold-d);border-radius:14px;padding:18px 20px;margin:10px 0 4px;cursor:pointer;transition:border-color .16s,transform .16s}
+  .briefcta:hover{border-color:var(--gold);transform:translateY(-1px)}
+  .briefcta .ring{width:42px;height:42px;border-radius:50%;background:var(--gold-soft);display:grid;place-items:center;color:var(--gold);flex:0 0 auto}
+  .briefcta .ring svg{width:21px;height:21px}
+  .briefcta .t b{font-family:var(--disp);font-weight:600;font-size:17px}
+  .briefcta .t p{margin:2px 0 0;color:var(--mut);font-size:13px}
+  .briefcta .go{margin-left:auto;color:var(--gold);font-size:13px;display:flex;align-items:center;gap:6px}
+
+  /* holdings */
+  .hrow{display:flex;align-items:center;gap:15px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;background:var(--card);transition:border-color .16s,transform .16s}
+  .hrow:hover{border-color:var(--line2);transform:translateY(-1px)}
+  .hrow .nm{font-family:var(--disp);font-weight:600;font-size:16px}
+  .hrow .tk2{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:1px}
+  .hrow .status{margin-left:auto}
+  .pill{font-size:11px;border-radius:99px;padding:4px 11px;font-family:var(--sans);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+  .pill .ico svg{width:12px;height:12px}
+  .pill.ok{background:var(--pos-soft);color:var(--pos)}
+  .pill.bad{background:var(--neg-soft);color:var(--neg)}
+  .pill.up{background:var(--gold-soft);color:var(--gold)}
+  .pill.calm{background:var(--card2);color:var(--mut)}
+
+  /* stock page */
+  .back{background:none;border:none;color:var(--mut);cursor:pointer;font-size:13px;margin-bottom:16px;display:flex;align-items:center;gap:7px;padding:0}
+  .back:hover{color:var(--ink)}.back .ico svg{width:15px;height:15px}
+  .shead{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:4px}
+  .shead h1{font-family:var(--disp);font-weight:600;font-size:30px;margin:0;letter-spacing:-.4px}
+  .thesisline{color:var(--mut);font-size:14px;margin:8px 0 20px;border-left:2px solid var(--gold-d);padding-left:13px;line-height:1.5}
+  .thesisline b{color:var(--ink);font-weight:500;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--faint)}
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:24px;overflow:auto}
+  .tab{background:none;border:none;color:var(--mut);padding:11px 15px;cursor:pointer;font-size:13.5px;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .14s}
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--ink);border-bottom-color:var(--gold)}
+
+  .whatcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:19px 21px;margin-bottom:18px}
+  .whatcard .lab{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .whatcard .lab .ico svg{width:14px;height:14px}
+  .whatcard p{margin:0 0 11px;font-size:14.5px;line-height:1.62}
+  .whatcard p:last-child{margin-bottom:0}
+  .cit{font-family:var(--mono);font-size:9.5px;color:var(--gold);background:var(--gold-soft);border-radius:4px;padding:1px 5px;vertical-align:super;cursor:pointer;text-decoration:none;margin-left:2px}
+  .tag{display:inline-block;font-size:10px;font-family:var(--mono);letter-spacing:.05em;border-radius:5px;padding:2px 7px;margin-right:7px;text-transform:uppercase}
+  .tag.fakta{background:var(--pos-soft);color:var(--pos)}
+  .tag.slutsats{background:var(--gold-soft);color:var(--gold)}
+
+  /* delta grid */
+  .dgrid{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:4px}
+  .dgrid th{text-align:right;color:var(--faint);font-weight:500;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 11px}
+  .dgrid th:first-child,.dgrid td:first-child{text-align:left}
+  .dgrid td{padding:12px 0;border-top:1px solid var(--line);font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .dgrid td.m{font-family:var(--sans);color:var(--ink)}
+  .beat{color:var(--pos)} .miss{color:var(--neg)} .inl{color:var(--mut)}
+  .spark{display:inline-flex;gap:2px;align-items:flex-end;height:18px}
+  .spark i{width:3px;background:var(--line2);border-radius:1px;display:block}
+  .spark i.up{background:var(--pos-d)}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .mini{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .mini h4{margin:0 0 11px;font-size:11px;font-family:var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:7px}
+  .mini.good h4{color:var(--pos)} .mini.bad h4{color:var(--neg)}
+  .mini.good h4 .ico,.mini.bad h4 .ico{}
+  .mini ul{margin:0;padding-left:0;list-style:none}
+  .mini li{font-size:13.5px;line-height:1.5;margin-bottom:10px;padding-left:17px;position:relative;color:var(--ink)}
+  .mini li:last-child{margin-bottom:0}
+  .mini li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--line2)}
+  .mini.good li::before{background:var(--pos)} .mini.bad li::before{background:var(--neg)}
+
+  .quote{border-left:2px solid var(--gold-d);padding:3px 0 3px 15px;margin:13px 0;font-size:15px;line-height:1.55;font-family:var(--disp);font-style:italic;font-weight:400}
+  .quote .who{display:block;font-size:11px;color:var(--faint);font-family:var(--mono);font-style:normal;margin-top:6px;letter-spacing:.03em}
+
+  /* thesis pillars */
+  .pillar{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:11px;background:var(--card)}
+  .pillar .ph{display:flex;align-items:center;gap:12px}
+  .light{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+  .light.g{background:var(--pos);box-shadow:0 0 9px rgba(116,187,160,.7)}
+  .light.r{background:var(--neg);box-shadow:0 0 9px rgba(221,126,114,.7)}
+  .light.y{background:var(--gold);box-shadow:0 0 9px rgba(224,164,59,.6)}
+  .pillar .pt{font-family:var(--disp);font-weight:500;font-size:15.5px}
+  .pillar .pv{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--mut)}
+  .pillar .ev{margin:11px 0 0 21px;font-size:12.5px;color:var(--mut);line-height:1.6}
+  .pillar.rr{border-color:var(--neg-d)}
+
+  .tnote{background:var(--neg-soft);border:1px solid var(--neg-d);border-radius:11px;padding:14px 16px;font-size:13.5px;color:#f3c8c2;margin-bottom:17px;line-height:1.55;display:flex;gap:11px}
+  .tnote .ico{color:var(--neg);flex:0 0 auto;margin-top:1px}.tnote b{color:#fff}
+
+  /* chat */
+  .chat{display:flex;flex-direction:column;gap:13px;margin-bottom:16px}
+  .bub{max-width:90%;padding:14px 17px;border-radius:15px;font-size:14px;line-height:1.62}
+  .bub.u{align-self:flex-end;background:var(--gold);color:#1b1407;font-weight:500}
+  .bub.a{align-self:flex-start;background:var(--card);border:1px solid var(--line)}
+  .seed{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+  .seedb{background:var(--card);border:1px solid var(--line2);border-radius:99px;padding:9px 14px;font-size:12.5px;color:var(--mut);cursor:pointer;transition:border-color .14s,color .14s}
+  .seedb:hover{border-color:var(--gold);color:var(--ink)}
+  .askbar{display:flex;gap:9px;position:sticky;bottom:14px}
+  .askbar input{flex:1;background:var(--card2);border:1px solid var(--line2);border-radius:12px;color:var(--ink);padding:13px 16px;font-size:14px;outline:none;font-family:var(--sans)}
+  .askbar input:focus{border-color:var(--gold)}
+  .askbar button{background:var(--gold);border:none;color:#1b1407;border-radius:12px;padding:0 19px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px}
+  .askbar button .ico svg{width:15px;height:15px}
+
+  /* hävstång */
+  .lvnote{display:flex;gap:12px;background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:11px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--mut);line-height:1.55}
+  .lvnote .ico{color:var(--gold);flex:0 0 auto;margin-top:1px}.lvnote b{color:var(--ink);font-weight:500}
+  .lvctrl{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:14px}
+  .cg{display:flex;align-items:center;gap:9px}.cg .cl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .seg{display:flex;background:var(--card);border:1px solid var(--line2);border-radius:9px;overflow:hidden}
+  .seg button{background:none;border:none;color:var(--mut);padding:8px 12px;font-size:12.5px;cursor:pointer;white-space:nowrap;transition:background .12s,color .12s}
+  .seg button.on{background:var(--card2);color:var(--ink)}
+  .seg button.on.up{color:var(--pos)} .seg button.on.dn{color:var(--neg)}
+  .seg button:hover{color:var(--ink)}
+  .lvhint{font-size:12px;color:var(--faint);margin:10px 2px 20px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+  .lvhint .ico{color:var(--gold)}.lvhint b{color:var(--mut)}
+  .lvhero{background:linear-gradient(160deg,#1b1d22,#16171b);border:1px solid var(--gold-d);border-radius:16px;padding:22px;margin-bottom:14px}
+  .lvhero .hb{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:9px;margin-bottom:11px}
+  .lvhero .hn{font-family:var(--disp);font-size:21px;font-weight:600}
+  .lvhero .hs{color:var(--mut);font-size:12.5px;margin-top:2px;font-family:var(--mono)}
+  .lvmet{display:grid;grid-template-columns:repeat(4,auto);gap:12px 26px;margin-top:16px}
+  .lvmet .k{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-family:var(--mono)}
+  .lvmet .v{font-family:var(--mono);font-size:17px;margin-top:3px}
+  .lvbk{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:640px){.lvbk{grid-template-columns:1fr}.lvmet{grid-template-columns:1fr 1fr}}
+  .bkc{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px}
+  .bkc .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:9px;font-family:var(--mono)}
+  .bkc .n{font-family:var(--disp);font-weight:500;font-size:14px}.bkc .e{color:var(--faint);font-size:12px;margin-top:1px}
+  .bkc .big{font-family:var(--mono);font-size:20px;margin-top:11px}.bkc .nt{font-size:11px;color:var(--mut);margin-top:4px}
+
+  /* briefing overlay */
+  .ov{position:fixed;inset:0;background:rgba(10,8,5,.78);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;z-index:60;padding:20px}
+  .ov.show{display:flex;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .bcard{width:min(560px,94vw);background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:30px;position:relative;animation:rise .26s cubic-bezier(.2,.7,.2,1)}
+  @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+  .bprog{display:flex;gap:6px;margin-bottom:24px}
+  .bprog i{height:3px;flex:1;border-radius:2px;background:var(--line2);transition:background .3s}
+  .bprog i.on{background:var(--gold)}
+  .bclose{position:absolute;top:20px;right:22px;background:none;border:none;color:var(--faint);cursor:pointer;padding:4px}
+  .bclose:hover{color:var(--ink)}.bclose svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .bcard .eb{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:13px;display:flex;align-items:center;gap:8px}
+  .bcard h2{font-family:var(--disp);font-weight:600;font-size:25px;margin:0 0 13px;line-height:1.2;letter-spacing:-.3px}
+  .bcard p{color:var(--mut);font-size:14.5px;line-height:1.62;margin:0 0 17px}
+  .bsrc{font-size:11px;color:var(--faint);border:1px solid var(--line2);border-radius:7px;padding:4px 9px;display:inline-flex;gap:6px;align-items:center;margin-bottom:18px}
+  .bsrc .ico svg{width:13px;height:13px}
+  .bnav{display:flex;gap:10px}
+  .bnav button{flex:1;border-radius:12px;padding:13px;cursor:pointer;font-size:13.5px;border:1px solid var(--line2);background:var(--card2);color:var(--ink);transition:border-color .14s}
+  .bnav button:hover{border-color:var(--gold)}
+  .bnav button.prim{background:var(--gold);border-color:var(--gold);color:#1b1407;font-weight:600}
+  .done{text-align:center;padding:12px 0}
+  .done .ic{width:48px;height:48px;border-radius:50%;background:var(--pos-soft);color:var(--pos);display:grid;place-items:center;margin:0 auto 14px}
+  .done .ic svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:2}
+  .done .bg{font-family:var(--disp);font-size:26px;font-weight:600;margin-bottom:6px}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><span class="mark" id="logomark"></span> Ägar-AI</div>
+    <button class="nav on" data-view="idag"></button>
+    <button class="nav" data-view="innehav"></button>
+    <button class="nav" data-view="havstang"></button>
+    <button class="nav" data-view="fraga"></button>
+    <div class="sidefoot">
+      <div class="mocktag">PROTOTYP · EXEMPELDATA</div>
+      Fiktiv exempelportfölj. Alla bolag och siffror är illustrativa.
+    </div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+<div class="ov" id="ov"><div class="bcard" id="bcard"></div></div>
+
+<script>
+/* ---------------- icons (Lucide-style, inline SVG) ---------------- */
+const SVG={
+  today:'<path d="M12 2v7"/><path d="m4.9 11 1.4 1.4"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m17.7 12.4 1.4-1.4"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/>',
+  holdings:'<path d="m12.8 2.2a2 2 0 0 0-1.6 0L2.6 6.1a1 1 0 0 0 0 1.8l8.6 3.9a2 2 0 0 0 1.6 0l8.6-3.9a1 1 0 0 0 0-1.8Z"/><path d="m22 17.7-9.2 4.1a2 2 0 0 1-1.6 0L2 17.7"/><path d="m22 12.7-9.2 4.1a2 2 0 0 1-1.6 0L2 12.7"/>',
+  lev:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  ask:'<path d="M9.9 15.5A2 2 0 0 0 8.5 14L2.4 12.5a.5.5 0 0 1 0-1L8.5 10A2 2 0 0 0 9.9 8.5l1.6-6.1a.5.5 0 0 1 1 0L14 8.5A2 2 0 0 0 15.5 9.9l6.1 1.6a.5.5 0 0 1 0 1L15.5 14a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/>',
+  coffee:'<path d="M10 2v2"/><path d="M14 2v2"/><path d="M6 2v2"/><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>',
+  file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+  arrow:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  alert:'<path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  filter:'<polygon points="22 3 2 3 10 12.5 10 19 14 21 14 12.5 22 3"/>',
+  cal:'<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  bolt:'<path d="M13 2 3 14h7l-1 8 10-12h-7z"/>',
+  trend:'<path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/>',
+  building:'<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"/>',
+  pulse:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
+};
+function ic(n,cls){return `<span class="ico ${cls||''}"><svg viewBox="0 0 24 24">${SVG[n]||''}</svg></span>`;}
+document.getElementById('logomark').innerHTML='<svg viewBox="0 0 24 24" fill="none">'+SVG.pulse+'</svg>';
+const NAVDEF=[['idag','today','Idag'],['innehav','holdings','Innehav'],['havstang','lev','Hävstång'],['fraga','ask','Fråga AI']];
+document.querySelectorAll('.nav').forEach(n=>{const d=NAVDEF.find(x=>x[0]===n.dataset.view);n.innerHTML=ic(d[1])+' <span>'+d[2]+'</span>';n.onclick=()=>{view=n.dataset.view;setNav();render();window.scrollTo(0,0);};});
+
+/* ---------------- data (fiktivt, illustrativt) ---------------- */
+const STOCKS={
+  NORL:{tk:'NORL',namn:'Norlux Industri',status:'ok',statusLab:'Tes stärkt',
+    thesis:'Lönsam förvärvsmaskin: organisk tillväxt över 8%, stigande marginal, ingen utspädning.',
+    what:[{t:'fakta',txt:'Q3-rapporten kom imorse. Organisk tillväxt blev 11%, över bolagets egen guidning om 7 till 9%, och fritt kassaflöde steg 18% mot samma kvartal i fjol.',c:1},
+      {t:'slutsats',txt:'Rapporten stärker din tes på alla tre pelare: tillväxten håller, marginalen vidgas, och antalet aktier är oförändrat. Marknaden lär fokusera på den höjda helårsguidningen.',c:0}],
+    report:{verdict:'Stark rapport. Slår på tillväxt och kassaflöde, höjer guidningen. Inga röda flaggor.',
+      rows:[['Omsättning','2 410 Mkr','+9,4%','beat','2 350 Mkr',[6,7,7,8,9,10]],['Organisk tillväxt','11,0%','mål 7-9%','beat','8,5%',[5,6,6,7,8,10]],['Bruttomarginal','41,2%','+0,4 pp','inl','41,0%',[7,7,8,8,8,8]],['EBIT-marginal','19,2%','+1,2 pp','beat','18,3%',[6,6,7,7,8,9]],['Fritt kassaflöde','388 Mkr','+18%','beat','340 Mkr',[5,6,6,7,8,9]],['Nettoskuld/EBITDA','1,4x','-0,3x','beat','1,7x',[9,8,8,7,6,5]]],
+      good:['Organisk tillväxt 11%, klart över guidning','FCF-konvertering 95%, mycket stark','Nettoskuld ned till 1,4x','Höjd helårsguidning'],
+      bad:['Nordamerika svagt, organiskt -2%','Valutamotvind drog 1,5 pp','Rörelsekapital band något mer kapital'],
+      surprises:['Guidning höjd mitt under året','Servicesegmentets marginal nådde rekord'],
+      quotes:[{q:'Vi ser fortsatt stark efterfrågan i Europa och har höjt helårsmålet. Förvärvspipen är den bästa på flera år.',who:'VD, i kvartalsrapporten'},{q:'Kassaflödet ger oss råd att accelerera förvärv utan att öka skuldsättningen.',who:'CFO, på webcasten 09:10'}],
+      tes:'Pelare 1 (tillväxt >8%) bekräftad till 11%. Pelare 2 (stigande marginal) bekräftad, EBIT +1,2 pp. Pelare 3 (ingen utspädning) intakt.'},
+    pillars:[{n:'Organisk tillväxt över 8% per år',s:'g',v:'Q3: 11%',ev:'Senaste 6 kvartal: 9, 8, 10, 9, 10, 11%. Trenden intakt och stigande.'},
+      {n:'Stigande rörelsemarginal',s:'g',v:'19,2%',ev:'EBIT-marginal från 18,0% till 19,2% på ett år. Servicemixen lyfter.'},
+      {n:'Ingen utspädning',s:'g',v:'oförändrat',ev:'148,2 miljoner aktier, oförändrat i 11 kvartal. Förvärv betalda med kassaflöde.'}],
+    chat:{'Varför steg aktien idag?':'Aktien steg på Q3-rapporten. Två orsaker: organisk tillväxt blev 11% mot väntade 8,5% <a class="cit">1</a>, och bolaget höjde helårsguidningen <a class="cit">2</a>. <span class="tag slutsats">slutsats</span> Marknaden prissätter sannolikt den höjda guidningen, inte bara kvartalet.',
+      'Är tesen intakt?':'<span class="tag fakta">fakta</span> Ja, och stärkt. Alla tre pelare bekräftas: tillväxt 11% <a class="cit">1</a>, EBIT-marginal +1,2 pp <a class="cit">1</a>, aktieantal oförändrat <a class="cit">3</a>.',
+      'Största risken?':'<span class="tag slutsats">slutsats</span> Tydligaste svagheten är Nordamerika, organiskt -2% <a class="cit">1</a>. Litet idag men värt att följa. <span class="tag fakta">fakta</span> Skuldsättningen är låg (1,4x) så finansiell risk är begränsad.'}},
+  TELV:{tk:'TELV',namn:'Telvio',status:'bad',statusLab:'Tes utmanad',
+    thesis:'Stabil kassako med stigande marginal och trygg utdelning.',
+    what:[{t:'fakta',txt:'Q3-bruttomarginalen föll till 38,0%, ned från 41,5% för ett år sedan, drivet av prispress i mobilsegmentet.',c:1},
+      {t:'slutsats',txt:'Detta träffar pelare 2 i din tes (stigande marginal) direkt. Pelaren går från grön till röd. Utdelningen är inte hotad ännu, men marginaltesen behöver omprövas.',c:0}],
+    report:{verdict:'Svag på marginal. Prispress urholkar lönsamheten. Utdelningen står kvar tills vidare.',
+      rows:[['Omsättning','8 120 Mkr','-1,1%','inl','8 200 Mkr',[8,8,7,7,7,7]],['Bruttomarginal','38,0%','-3,5 pp','miss','41,0%',[9,9,8,8,7,6]],['EBIT-marginal','12,1%','-2,4 pp','miss','14,0%',[8,8,7,7,6,5]],['Fritt kassaflöde','910 Mkr','-12%','miss','1 050 Mkr',[8,8,7,7,6,6]]],
+      good:['Utdelningen bekräftad','Fiber växer 6% och tar andel'],
+      bad:['Bruttomarginal ned 3,5 pp på prispress','EBIT-marginal under förväntan','FCF ned 12%'],
+      surprises:['Prispressen kom snabbare än bolaget flaggat'],
+      quotes:[{q:'Konkurrensen i mobil har intensifierats och pressat priserna mer än väntat.',who:'VD, i kvartalsrapporten'}],
+      tes:'Pelare 2 (stigande marginal) bryts: marginalen faller. Pelare 1 (stabil kassako) och utdelning intakt tills vidare.'},
+    pillars:[{n:'Stabil omsättning',s:'g',v:'-1,1%',ev:'I stort sett platt, inom normalt spann.'},
+      {n:'Stigande bruttomarginal',s:'r',v:'38,0% ned',ev:'Föll 3,5 pp på prispress. Tesen om marginalexpansion håller inte längre.'},
+      {n:'Trygg utdelning',s:'y',v:'bekräftad',ev:'Står kvar, men FCF-täckningen försämras. Bevaka.'}],
+    chat:{'Är tesen intakt?':'<span class="tag fakta">fakta</span> Nej, delvis bruten. Pelaren om stigande marginal motsägs: bruttomarginalen föll 3,5 pp till 38,0% <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen står kvar, men marginaltesen behöver omprövas, inte nödvändigtvis hela caset.',
+      'Vad bör jag hålla koll på?':'<span class="tag slutsats">slutsats</span> Tre saker nästa kvartal: om prispressen stabiliseras, om FCF räcker till utdelningen, och om fiber fortsätter ta andel <a class="cit">1</a>.'}},
+  KAVX:{tk:'KAVX',namn:'Kavex Medical',status:'up',statusLab:'Insiderköp',
+    thesis:'Nischmedtech med återkommande intäkter och hög marginal.',
+    what:[{t:'fakta',txt:'VD köpte aktier för 2,1 Mkr i går, det första insiderköpet på 14 månader.',c:1},
+      {t:'slutsats',txt:'Insiderköp är ingen garanti, men ett köp av den storleken efter lång tystnad signalerar förtroende. Inget i din tes ändras, det är en svag positiv datapunkt.',c:0}],
+    report:null,pillars:[{n:'Återkommande intäkter över 60%',s:'g',v:'63%',ev:'Stabil abonnemangsbas.'},{n:'Bruttomarginal över 70%',s:'g',v:'72%',ev:'Håller sig högt.'}],
+    chat:{'Vad betyder insiderköpet?':'<span class="tag fakta">fakta</span> VD köpte för 2,1 Mkr, första köpet på 14 månader <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> En svag positiv signal om förtroende. Ersätter inte en rapport, men riktningen är värd att notera.'}},
+  BRUN:{tk:'BRUN',namn:'Brunna Hydro',status:'calm',statusLab:'Lugnt',
+    thesis:'Reglerad kassaflödesmaskin, låg risk, stabil utdelning.',
+    what:[{t:'slutsats',txt:'Inget av betydelse har hänt sedan du senast tittade. En generisk marknadskommentar och en upprepad analytikerrekommendation filtrerades bort.',c:0}],
+    report:null,pillars:[{n:'Reglerad intäkt',s:'g',v:'stabil',ev:'Inga förändringar i regelverket.'},{n:'Utdelning täckt av FCF',s:'g',v:'1,3x',ev:'Trygg täckning.'}],
+    chat:{'Har något hänt?':'<span class="tag fakta">fakta</span> Nej. Sedan din senaste inloggning har inget materiellt skett. <span class="tag slutsats">slutsats</span> 6 inkomna nyheter bedömdes som brus. Du behöver inte göra något.'}},
+  ALMI:{tk:'ALMI',namn:'Almi Foods',status:'calm',statusLab:'Lugnt',
+    thesis:'Defensiv stapelvara med långsam men säker tillväxt.',
+    what:[{t:'slutsats',txt:'En analytiker sänkte riktkursen men behöll rekommendationen. Bedömt som lågprioriterat, ingen förändring i din tes.',c:0}],
+    report:null,pillars:[{n:'Stabil efterfrågan',s:'g',v:'intakt',ev:'Defensiv profil.'}],chat:{}}
+};
+const ORDER=['NORL','TELV','KAVX','BRUN','ALMI'];
+const BRIEF=[
+  {tk:'TELV',kind:'attn',eb:'1 av 3 · Kräver din uppmärksamhet',h:'Telvios marginaltes är utmanad',p:'Q3-bruttomarginalen föll till 38,0% (ned 3,5 pp) på prispress i mobil. Det träffar din pelare om stigande marginal, pelaren går från grön till röd. Utdelningen står kvar tills vidare.',s:'negativ',src:'Q3-rapport'},
+  {tk:'NORL',kind:'attn',eb:'2 av 3 · Kräver din uppmärksamhet',h:'Norlux levererade en stark rapport',p:'Organisk tillväxt 11% (över guidning), fritt kassaflöde +18%, höjd helårsguidning. Alla tre pelare i din tes bekräftas. Marknaden lär fokusera på den höjda guidningen.',s:'positiv',src:'Q3-rapport'},
+  {tk:'KAVX',kind:'worth',eb:'3 av 3 · Värt att veta',h:'VD i Kavex köpte aktier för 2,1 Mkr',p:'Första insiderköpet på 14 månader. En svag positiv signal om förtroende. Inget i din tes ändras.',s:'positiv',src:'FI insynsregister'}
+];
+
+/* ---------------- warrants (hävstång) ---------------- */
+const WARR=[
+  {em:'Morgan Stanley',typ:'Mini',lev:5.8,spread:0.19,carry:0.030,ko:21,liq:3},
+  {em:'Vontobel',typ:'Turbo',lev:9.6,spread:0.30,carry:0.045,ko:9,liq:2},
+  {em:'BNP Paribas',typ:'Mini',lev:5.2,spread:0.35,carry:0.012,ko:34,liq:2},
+  {em:'UBS',typ:'Warrant',lev:6.0,spread:0.55,carry:0.020,ko:null,liq:1,warr:true},
+  {em:'SEB',typ:'Mini',lev:7.1,spread:0.25,carry:0.038,ko:16,liq:2},
+  {em:'Société Générale',typ:'Mini',lev:6.5,spread:0.24,carry:0.034,ko:19,liq:3},
+  {em:'Goldman Sachs',typ:'Turbo',lev:8.2,spread:0.33,carry:0.041,ko:12,liq:2},
+  {em:'Nordea',typ:'Mini',lev:4.0,spread:0.22,carry:0.028,ko:28,liq:3}
+];
+const LDAYS={idag:1,dagar:5,veckor:20,manader:90}, LBAND={lag:[2,5],medel:[5,8.5],hog:[8,13]};
+const LWDEF={idag:{c:70,s:25,l:15,q:35},dagar:{c:55,s:40,l:20,q:25},veckor:{c:45,s:55,l:20,q:15},manader:{c:50,s:65,l:15,q:10}};
+const lev={under:'NORL',dir:'long',risk:'medel',hor:'idag'};
+function ldrag(p){return p.spread+p.carry*LDAYS[lev.hor];}
+function lko(p){const d=LDAYS[lev.hor];return p.warr?0.04*Math.sqrt(d/20):Math.min(1,(p.lev*Math.sqrt(d))/(p.ko*4));}
+function lcand(){const[a,b]=LBAND[lev.risk];return WARR.filter(p=>p.lev>=a&&p.lev<=b);}
+function lscore(p,set){const dr=set.map(ldrag),rk=set.map(lko),lq=set.map(x=>(3-x.liq)/2),c=(LBAND[lev.risk][0]+LBAND[lev.risk][1])/2,h=(LBAND[lev.risk][1]-LBAND[lev.risk][0])/2||1,lv=set.map(x=>Math.abs(x.lev-c)/h);
+  const nz=(v,a)=>{const mn=Math.min(...a),mx=Math.max(...a);return mx-mn<1e-9?0:(v-mn)/(mx-mn);};
+  const w=LWDEF[lev.hor],sum=w.c+w.s+w.l+w.q;
+  return 1-(w.c*nz(ldrag(p),dr)+w.s*nz(lko(p),rk)+w.l*nz(Math.abs(p.lev-c)/h,lv)+w.q*nz((3-p.liq)/2,lq))/sum;}
+
+/* ---------------- state + render ---------------- */
+let view='idag',curStock='NORL',curTab='oversikt';
+const main=document.getElementById('main'),S=t=>STOCKS[t];
+function setNav(){document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on',n.dataset.view===view));}
+function render(){({idag:renderIdag,innehav:renderInnehav,havstang:renderHav,fraga:renderFraga,stock:renderStock}[view])();}
+
+function renderIdag(){
+  const att=BRIEF.filter(b=>b.kind==='attn'),worth=BRIEF.filter(b=>b.kind==='worth');
+  main.innerHTML=`
+    <div class="masthead">Marginalen · Ägar-AI<span class="r">Måndag 30 juni 2026</span></div>
+    <div class="eyebrow">God morgon</div>
+    <h1 class="big">Idag</h1>
+    <div class="sub">Tre saker rör dina bolag. Elva gjorde det inte.</div>
+    <div class="pulse"><span class="v">1 284 300 kr</span><span class="chg">+0,4%</span>
+      <span class="nb">Vi visar dagsrörelsen litet med flit. Att stirra på den är spekulantens vana, inte ägarens.</span></div>
+    <div class="briefcta" onclick="openBrief()">
+      <span class="ring">${ic('coffee')}</span>
+      <div class="t"><b>Starta morgonbriefingen</b><p>60 sekunder, kort för kort. Klart vet du allt som hänt.</p></div>
+      <span class="go">Starta ${ic('arrow','sm')}</span></div>
+    <div class="slab">Kräver din uppmärksamhet <span class="ct">${att.length}</span></div>
+    ${att.map(cardHTML).join('')}
+    <div class="slab">Värt att veta <span class="ct">${worth.length}</span></div>
+    <div class="quiet">
+      ${worth.map(b=>`<div class="qrow" onclick="goStock('${b.tk}')"><div class="t"><b>${S(b.tk).namn}</b> · ${b.h}</div><div class="meta">${b.tk}</div></div>`).join('')}
+      <div class="qrow" onclick="goStock('BRUN')"><div class="t">Brunna Hydro och Almi Foods: inget kräver din uppmärksamhet</div><div class="meta">lugnt</div></div>
+    </div>
+    <div class="filtered">${ic('filter','sm')} <span><b>47 saker filtrerades bort</b> som brus: kurskommentarer, generiska marknadssvep, en upprepad behåll-rekommendation.</span></div>
+    <div class="slab">Kommande</div>
+    <div class="cal">
+      <div class="calc"><div class="d">2 JUL</div><div class="n">Kavex Medical</div><div class="e">Q3-rapport</div></div>
+      <div class="calc"><div class="d">9 JUL</div><div class="n">Norlux</div><div class="e">Kapitalmarknadsdag</div></div>
+      <div class="calc"><div class="d">14 JUL</div><div class="n">Brunna Hydro</div><div class="e">Utdelning x-dag</div></div>
+      <div class="calc"><div class="d">22 JUL</div><div class="n">Almi Foods</div><div class="e">Q3-rapport</div></div>
+    </div>`;
+}
+function cardHTML(b){const cls=b.s==='negativ'?'neg':b.s==='positiv'?'pos':'warn',sl=b.s==='negativ'?'neg':b.s==='positiv'?'pos':'neu';
+  return `<div class="acard ${cls}" onclick="goStock('${b.tk}')"><div class="top"><span class="nmtag">${S(b.tk).namn}</span><span class="tk">${b.tk}</span>
+    <span class="sentiment ${sl}">${b.s}</span></div><h3>${b.h}</h3><p>${b.p}</p>
+    <div class="foot"><span class="src">${ic('file','sm')}<b>${b.src}</b></span>
+      <a class="lk" onclick="event.stopPropagation();goStock('${b.tk}')">Öppna ${b.tk} ${ic('arrow','sm')}</a></div></div>`;
+}
+function renderInnehav(){
+  main.innerHTML=`<div class="masthead">Marginalen · Ägar-AI<span class="r">Din portfölj</span></div>
+    <div class="eyebrow">Fem bolag</div><h1 class="big">Innehav</h1>
+    <div class="sub">Statusen visar din tes, inte dagskursen.</div>
+    ${ORDER.map(tk=>{const s=S(tk),pc={ok:'ok',bad:'bad',up:'up',calm:'calm'}[s.status],pi={ok:'check',bad:'alert',up:'trend',calm:''}[s.status];
+      return `<div class="hrow" onclick="goStock('${tk}')"><div><div class="nm">${s.namn}</div><div class="tk2">${tk}</div></div>
+        <div class="status"><span class="pill ${pc}">${pi?ic(pi,'sm'):''}${s.statusLab}</span></div></div>`;}).join('')}`;
+}
+function goStock(tk){curStock=tk;curTab='oversikt';view='stock';setNav();render();window.scrollTo(0,0);}
+
+function renderStock(){
+  const s=S(curStock),pc={ok:'ok',bad:'bad',up:'up',calm:'calm'}[s.status],pi={ok:'check',bad:'alert',up:'trend',calm:''}[s.status];
+  main.innerHTML=`<button class="back" onclick="view='innehav';setNav();render()"><span class="ico sm" style="transform:scaleX(-1)"><svg viewBox="0 0 24 24">${SVG.arrow}</svg></span>Innehav</button>
+    <div class="shead"><h1>${s.namn}</h1><span class="pill ${pc}">${pi?ic(pi,'sm'):''}${s.statusLab}</span></div>
+    <div class="thesisline"><b>Din tes</b>${s.thesis}</div>
+    <div class="tabs">${tabBtn('oversikt','Vad har hänt')}${s.report?tabBtn('rapport','Rapportanalys'):''}${tabBtn('tes','Tes-spårning')}${tabBtn('fraga','Fråga AI')}</div>
+    <div id="tabbody"></div>`;
+  renderTab();
+}
+function tabBtn(id,lab){return `<button class="tab ${curTab===id?'on':''}" data-tab="${id}" onclick="curTab='${id}';renderTab()">${lab}</button>`;}
+function renderTab(){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===curTab));
+  const s=S(curStock),b=document.getElementById('tabbody');
+  if(curTab==='oversikt')b.innerHTML=tabOversikt(s);
+  else if(curTab==='rapport')b.innerHTML=tabRapport(s);
+  else if(curTab==='tes')b.innerHTML=tabTes(s);
+  else{b.innerHTML=tabFraga(s);wireChat(s);}
+}
+function tabOversikt(s){return `<div class="whatcard"><div class="lab">${ic('ask','sm')} AI-sammanfattning · vad har hänt</div>
+    ${s.what.map(w=>`<p><span class="tag ${w.t}">${w.t}</span>${w.txt}${w.c?` <a class="cit">${w.c}</a>`:''}</p>`).join('')}</div>
+    <div class="slab">Din tes just nu</div>${s.pillars.map(pillarHTML).join('')}`;}
+function pillarHTML(p){return `<div class="pillar ${p.s==='r'?'rr':''}"><div class="ph"><span class="light ${p.s}"></span>
+    <span class="pt">${p.n}</span><span class="pv">${p.v}</span></div><div class="ev">${p.ev}</div></div>`;}
+function tabRapport(s){const r=s.report;if(!r)return '<p style="color:var(--mut)">Ingen rapport att analysera just nu.</p>';
+  return `<div class="whatcard"><div class="lab">${ic('ask','sm')} AI · rapporten på 15 sekunder</div><p style="font-size:16.5px;font-family:var(--disp);line-height:1.45">${r.verdict}</p></div>
+    <div class="slab">Utfall mot konsensus och trend</div>
+    <table class="dgrid"><thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Mot väntat</th><th>Konsensus</th><th>Trend</th></tr></thead><tbody>
+    ${r.rows.map(x=>`<tr><td class="m">${x[0]}</td><td>${x[1]}</td><td class="${x[3]}">${x[2]}</td><td style="color:var(--faint)">${x[4]}</td><td>${spark(x[5])}</td></tr>`).join('')}</tbody></table>
+    <div class="cols"><div class="mini good"><h4>${ic('check','sm')} Bra</h4><ul>${r.good.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="mini bad"><h4>${ic('x','sm')} Dåligt</h4><ul>${r.bad.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>
+    <div class="slab">Överraskningar mot förväntan</div><div class="mini"><ul>${r.surprises.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="slab">Från ledningen</div>${r.quotes.map(q=>`<div class="quote">”${q.q}”<span class="who">${q.who}</span></div>`).join('')}
+    <div class="whatcard" style="margin-top:18px"><div class="lab">${ic('ask','sm')} Hur det rör din tes</div><p>${r.tes}</p></div>`;}
+function spark(a){const mx=Math.max(...a);return `<span class="spark">${a.map((v,i)=>`<i class="${i===a.length-1?'up':''}" style="height:${4+v/mx*14}px"></i>`).join('')}</span>`;}
+function tabTes(s){const note=s.status==='bad'?`<div class="tnote">${ic('alert')}<div><b>Tesen är utmanad.</b> En av dina pelare har vänt till rött sedan senaste rapporten. Det betyder inte sälj, det betyder att en av dina egna förutsättningar inte längre håller. Ompröva den, inte hela caset i panik.</div></div>`:'';
+  return `${note}<div class="whatcard"><div class="lab">${ic('ask','sm')} Din tes, i pelare du själv satt</div>
+    <p style="color:var(--mut);font-size:13.5px;margin:0">Du skrev din tes som testbara påståenden. AI:n bevakar varje pelare mot nyheter och rapporter och larmar bara när en pelare faktiskt rör sig.</p></div>
+    ${s.pillars.map(p=>`<div class="pillar ${p.s==='r'?'rr':''}"><div class="ph"><span class="light ${p.s}"></span>
+      <span class="pt">${p.n}</span><span class="pv">${p.s==='g'?'håller':p.s==='r'?'bruten':'bevaka'} · ${p.v}</span></div><div class="ev">${p.ev}</div></div>`).join('')}`;}
+function tabFraga(s){const qs=Object.keys(s.chat);
+  return `<div class="seed">${qs.map(q=>`<button class="seedb" onclick="ask('${q.replace(/'/g,"\\'")}')">${q}</button>`).join('')}</div>
+    <div class="chat" id="chat"><div class="bub a">Fråga mig vad som helst om ${s.namn}. Jag svarar grundat i rapporter, pressmeddelanden och register, med källa, och säger ifrån när jag inte vet.</div></div>
+    <div class="askbar"><input id="askin" placeholder="Fråga om ${s.namn}…"><button onclick="askFromInput()">${ic('ask','sm')} Fråga</button></div>`;}
+let curChatStock=null;
+function wireChat(s){curChatStock=s;const i=document.getElementById('askin');if(i)i.onkeydown=e=>{if(e.key==='Enter')askFromInput();};}
+function ask(q){const s=curChatStock||S(curStock),chat=document.getElementById('chat');
+  chat.insertAdjacentHTML('beforeend',`<div class="bub u">${q}</div>`);
+  const ans=s.chat[q]||'<span class="tag slutsats">slutsats</span> Det här är en prototyp, så jag har förberett svar på de föreslagna frågorna. I produkten hämtas svaret grundat ur dina bolags rapporter och nyheter, alltid med källa.';
+  setTimeout(()=>{chat.insertAdjacentHTML('beforeend',`<div class="bub a">${ans}</div>`);window.scrollTo(0,document.body.scrollHeight);},220);}
+function askFromInput(){const i=document.getElementById('askin');if(i&&i.value.trim()){ask(i.value.trim());i.value='';}}
+
+function renderFraga(){
+  main.innerHTML=`<div class="masthead">Marginalen · Ägar-AI<span class="r">Grundad AI</span></div>
+    <div class="eyebrow">Hela portföljen</div><h1 class="big">Fråga AI</h1>
+    <div class="sub">Fråga över alla dina innehav. Svar med källa, aldrig påhittade siffror.</div>
+    <div class="seed">
+      <button class="seedb" onclick="askGlobal('Vad kräver mest uppmärksamhet?')">Vad kräver mest uppmärksamhet?</button>
+      <button class="seedb" onclick="askGlobal('Vilka teser är utmanade?')">Vilka teser är utmanade?</button>
+      <button class="seedb" onclick="askGlobal('Dold koncentrationsrisk?')">Dold koncentrationsrisk?</button></div>
+    <div class="chat" id="gchat"><div class="bub a">Jag känner till dina fem innehav och din tes för varje. Fråga vad du vill, jag svarar grundat och med källa.</div></div>
+    <div class="askbar"><input id="gin" placeholder="Fråga om din portfölj…"><button onclick="askGlobalInput()">${ic('ask','sm')} Fråga</button></div>`;
+  const i=document.getElementById('gin');if(i)i.onkeydown=e=>{if(e.key==='Enter')askGlobalInput();};
+}
+const GLOBAL={'Vad kräver mest uppmärksamhet?':'<span class="tag slutsats">slutsats</span> Telvio. <span class="tag fakta">fakta</span> Q3-bruttomarginalen föll 3,5 pp till 38,0% <a class="cit">1</a>, vilket bryter din pelare om stigande marginal. Norlux kräver också uppmärksamhet, men positivt: stark rapport som stärker tesen <a class="cit">2</a>.',
+  'Vilka teser är utmanade?':'<span class="tag fakta">fakta</span> En av fem: <b>Telvio</b>, där pelaren om stigande marginal vänt till rött <a class="cit">1</a>. Norlux stärktes, övriga tre är intakta.',
+  'Dold koncentrationsrisk?':'<span class="tag slutsats">slutsats</span> En värd att notera: Norlux och Telvio är båda känsliga för samma europeiska industricykel <a class="cit">1</a>. Tillsammans 46% av portföljen. Inte en varning, men en korrelation du kanske inte tänkt på.'};
+function askGlobal(q){const chat=document.getElementById('gchat');chat.insertAdjacentHTML('beforeend',`<div class="bub u">${q}</div>`);
+  const ans=GLOBAL[q]||'<span class="tag slutsats">slutsats</span> I produkten svarar jag grundat över hela din portfölj, med källa. Prototyp med förberedda svar på de föreslagna frågorna.';
+  setTimeout(()=>{chat.insertAdjacentHTML('beforeend',`<div class="bub a">${ans}</div>`);window.scrollTo(0,document.body.scrollHeight);},220);}
+function askGlobalInput(){const i=document.getElementById('gin');if(i&&i.value.trim()){askGlobal(i.value.trim());i.value='';}}
+
+/* ---------------- hävstång view ---------------- */
+function renderHav(){
+  const u=S(lev.under);
+  main.innerHTML=`<div class="masthead">Marginalen · Ägar-AI<span class="r">Taktiskt verktyg</span></div>
+    <div class="eyebrow">Hävstång</div><h1 class="big">Hitta bästa hävstångsprodukten</h1>
+    <div class="sub">Vill du ta en taktisk hävstångsposition mot ett av dina bolag, jämför vi alla emittenter och rankar.</div>
+    <div class="lvnote">${ic('alert')}<div><b>Det här är ett annat verktyg än resten av appen.</b> Hävstång (mini futures, warranter, turbos) är för kortare, taktiska lägen, inte för ägande. Använd det medvetet, och litet.</div></div>
+    <div class="lvctrl">
+      <div class="cg"><span class="cl">Underliggande</span><div class="seg" id="lu">${ORDER.slice(0,4).map(t=>`<button data-v="${t}" class="${lev.under===t?'on':''}">${STOCKS[t].tk}</button>`).join('')}</div></div>
+      <div class="cg"><span class="cl">Riktning</span><div class="seg" id="ld"><button data-v="long" class="up ${lev.dir==='long'?'on':''}">Upp</button><button data-v="short" class="dn ${lev.dir==='short'?'on':''}">Ner</button></div></div>
+      <div class="cg"><span class="cl">Risk</span><div class="seg" id="lr">${['lag','medel','hog'].map(r=>`<button data-v="${r}" class="${lev.risk===r?'on':''}">${{lag:'Låg',medel:'Medel',hog:'Hög'}[r]}</button>`).join('')}</div></div>
+      <div class="cg"><span class="cl">Horisont</span><div class="seg" id="lh">${['idag','dagar','veckor','manader'].map(h=>`<button data-v="${h}" class="${lev.hor===h?'on':''}">${{idag:'Idag',dagar:'Dagar',veckor:'Veckor',manader:'Månader'}[h]}</button>`).join('')}</div></div>
+    </div>
+    <div class="lvhint">${ic('bolt','sm')}<span><b>Horisonten styr svaret.</b> Intradag straffar spread, månader straffar finansieringskostnad. Byt horisont och se #1 ändras.</span></div>
+    <div id="lvres"></div>`;
+  ['lu','ld','lr','lh'].forEach((id,i)=>{const key=['under','dir','risk','hor'][i];
+    document.getElementById(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{lev[key]=b.dataset.v;renderHav();});});
+  renderLvRes();
+}
+function renderLvRes(){
+  const set=lcand(),scored=set.map(p=>({p,sc:lscore(p,set)})).sort((a,b)=>b.sc-a.sc),best=scored[0];
+  const cheap=set.slice().sort((a,b)=>ldrag(a)-ldrag(b))[0],safe=set.slice().sort((a,b)=>lko(a)-lko(b))[0],hi=set.slice().sort((a,b)=>b.lev-a.lev)[0];
+  const dirL=lev.dir==='long'?'Long':'Short';
+  document.getElementById('lvres').innerHTML=`
+    <div class="lvhero"><div class="hb">★ Bäst totalt · för ${STOCKS[lev.under].namn} ${dirL}</div>
+      <div class="hn">${best.p.typ} ${dirL} · ${best.p.em}</div>
+      <div class="hs">matchpoäng ${Math.round(best.sc*100)}/100 · uppdaterad 15:42 (fördröjt)</div>
+      <div class="lvmet">
+        <div><div class="k">Eff. hävstång</div><div class="v">${best.p.lev.toFixed(1)}x</div></div>
+        <div><div class="k">Spread</div><div class="v">${best.p.spread.toFixed(2)}%</div></div>
+        <div><div class="k">Fin./dag</div><div class="v">${best.p.warr?'—':best.p.carry.toFixed(3)+'%'}</div></div>
+        <div><div class="k">Till KO</div><div class="v">${best.p.warr?'ingen':best.p.ko+'%'}</div></div>
+      </div></div>
+    <div class="lvbk">
+      <div class="bkc"><div class="l">Högst hävstång</div><div class="n">${hi.typ} ${dirL}</div><div class="e">${hi.em}</div><div class="big">${hi.lev.toFixed(1)}x</div><div class="nt">${hi.lev>LBAND[lev.risk][1]?'över din risknivå':'hög risk'}</div></div>
+      <div class="bkc"><div class="l">Billigast</div><div class="n">${cheap.typ} ${dirL}</div><div class="e">${cheap.em}</div><div class="big">${ldrag(cheap).toFixed(2)}%</div><div class="nt">lägst kostnad över perioden</div></div>
+      <div class="bkc"><div class="l">Säkraste</div><div class="n">${safe.typ} ${dirL}</div><div class="e">${safe.em}</div><div class="big">${safe.warr?'ingen KO':safe.ko+'%'}</div><div class="nt">${safe.warr?'kan inte knockas ut':'längst till knock-out'}</div></div>
+    </div>`;
+}
+
+/* ---------------- briefing ---------------- */
+let bi=0;
+function openBrief(){bi=0;document.getElementById('ov').classList.add('show');renderBrief();}
+function closeBrief(){document.getElementById('ov').classList.remove('show');}
+function renderBrief(){const c=document.getElementById('bcard');
+  if(bi>=BRIEF.length){c.innerHTML=`<button class="bclose" onclick="closeBrief()"><svg viewBox="0 0 24 24">${SVG.x}</svg></button>
+    <div class="done"><div class="ic"><svg viewBox="0 0 24 24">${SVG.check}</svg></div><div class="bg">Klart.</div>
+    <p style="color:var(--mut)">Tre saker idag. Du är uppdaterad på under en minut. Resten var brus.</p>
+    <div class="bnav" style="margin-top:18px"><button class="prim" onclick="closeBrief()">Stäng</button></div></div>`;return;}
+  const b=BRIEF[bi];
+  c.innerHTML=`<button class="bclose" onclick="closeBrief()"><svg viewBox="0 0 24 24">${SVG.x}</svg></button>
+    <div class="bprog">${BRIEF.map((_,i)=>`<i class="${i<=bi?'on':''}"></i>`).join('')}</div>
+    <div class="eb">${ic('today','sm')} ${b.eb}</div><h2>${b.h}</h2><p>${b.p}</p>
+    <div class="bsrc">${ic('file','sm')} ${S(b.tk).namn} · ${b.src}</div>
+    <div class="bnav"><button onclick="closeBrief();goStock('${b.tk}')">Öppna ${b.tk}</button>
+      <button class="prim" onclick="bi++;renderBrief()">${bi===BRIEF.length-1?'Avsluta':'Nästa'} ${ic('arrow','sm')}</button></div>`;
+}
+document.getElementById('ov').addEventListener('click',e=>{if(e.target.id==='ov')closeBrief();});
+
+render();
+</script>
+</body>
+</html>

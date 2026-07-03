@@ -260,10 +260,10 @@ const STOCKS={
   micro:['P/E 24,3','EV/EBIT 18,9','NS/EBITDA 1,4x'],
   fact:{v52:'198,20 till 291,00',mcap:'42,2 mdkr',pe:'24,3',dir:'1,4%'},
   why:'Lönsam förvärvsmaskin: organisk tillväxt över 8%, stigande marginal, ingen utspädning.',
-  event:'Q3: organisk tillväxt 11,0% mot guidning 7 till 9. FCF 388 Mkr, +18%. Höjd helårsguidning. Alla tre pelare håller.',src:'Q3-rapport · imorse 07:30',
+  event:'Q3: växte 11,0% av egen kraft, mer än egna prognosen 7 till 9. 388 miljoner kvar i kassan, upp 18%. Höjd prognos för året. Allt du bad oss vakta håller.',src:'Q3-rapport · imorse 07:30',
   what:[
-   {t:'fakta',txt:'Q3-rapporten kom imorse. Försäljningen växte 11,0% av egen kraft, utan förvärv, över bolagets egen prognos om 7 till 9%. Kassaflödet, pengarna som blir kvar efter alla utgifter och investeringar, blev 388 Mkr, upp 18% mot i fjol. Skulden motsvarar nu 1,4 årsvinster.',c:1},
-   {t:'slutsats',txt:'Rapporten stärker ditt skäl på alla tre punkter: tillväxten håller, lönsamheten ökar och antalet aktier står stilla. Marknaden lär fästa sig vid den höjda prognosen. Svagheten att hålla ögonen på är Nordamerika, där försäljningen krympte 2%.',c:0}],
+   {t:'fakta',txt:'Rapporten kom i morse, och den var stark. Försäljningen växte 11,0% helt av egen kraft, mer än bolaget självt hade utlovat (7 till 9). När allt var betalt blev 388 miljoner kvar i kassan, 18% mer än i fjol. Och skulden kryper nedåt, motsvarar nu 1,4 årsvinster.',c:1},
+   {t:'slutsats',txt:'Allt du pekade ut som viktigt håller fortfarande: tillväxten är kvar, lönsamheten stiger och inga nya aktier har getts ut. Det marknaden lär prata om är den höjda prognosen. Det enda värt att hålla ett öga på är Nordamerika, där försäljningen backade 2%.',c:0}],
   rail:[
    {k:'Tillväxt av egen kraft, Q3',v:'11,0%',dd:'+2,5',dc:'pos',cc:'procentenheter över väntade 8,5 · egen prognos 7 till 9'},
    {k:'Kassaflöde, fritt',v:'388 Mkr',dd:'+18%',dc:'pos',cc:'i fjol 329 · 95% av vinsten blev riktiga pengar'},
@@ -279,7 +279,7 @@ const STOCKS={
     ['Fritt kassaflöde, Mkr',[300,329,355,342,371,388],'+17,9%','pos',0],
     ['Nettoskuld/EBITDA, x',[1.9,1.7,1.6,1.6,1.5,1.4],'-0,3','pos',1]],
    mult:[['P/E','24,3','21,0','+16%'],['EV/EBIT','18,9','16,4','+15%'],['EV/S','3,6','3,1','+16%'],['P/FCF','27,2','24,8','+10%']],
-   ai:'Det viktigaste i siffrorna: lönsamheten har förbättrats sex kvartal i rad och vinsten blir faktiskt pengar på kontot, det är kvalitet. Men aktien kostar 10 till 16% mer än den brukat, mätt mot bolagets egen vinst de senaste fem åren. Du betalar alltså mer för samma bolag än marknaden brukat göra.'},
+   ai:'Tar du bara med dig en sak härifrån: lönsamheten har blivit bättre sex kvartal i rad, och vinsten blir riktiga pengar på kontot. Det är kvalitet. Baksidan är priset. Aktien kostar 10 till 16% mer än den brukar, mätt mot bolagets egen vinst. Du betalar mer för samma bolag än folk gjort tidigare.'},
   report:{
    verdict:'Stark rapport. Bolaget växer snabbare än väntat, tjänar mer per såld krona och höjer sin egen prognos för året. Inga varningstecken, men Nordamerika går trögt.',
    grid:[
@@ -306,15 +306,15 @@ const STOCKS={
    utd:[['2022','2,00'],['2023','2,40'],['2024','2,80'],['2025','3,20'],['2026','3,60 föreslagen']],
    utdNext:'Nästa x-dag 12 maj 2027 · direktavkastning 1,4% · fem höjningar i rad',
    kal:[['9 jul 2026','Kapitalmarknadsdag'],['23 okt 2026','Q4-rapport'],['11 feb 2027','Bokslutskommuniké']],
-   hist:[['2 jul 26','Q3: stark rapport, höjd guidning. Vår analys: alla tre pelare håller.'],['3 apr 26','Förvärv: norsk komponenttillverkare, cirka 180 Mkr, betalt med kassaflöde.'],['9 feb 26','Q2: i linje med förväntan. Marginal +0,4 pp.'],['21 nov 25','Q1: organisk tillväxt 8%, precis på pelarens gräns. Vi noterade, larmade inte.']]},
+   hist:[['2 jul 26','Q3: stark rapport, höjd prognos. Vår analys: alla tre punkter håller.'],['3 apr 26','Förvärv: norsk komponenttillverkare, cirka 180 miljoner, betalt med egna pengar.'],['9 feb 26','Q2: i linje med förväntan. Lönsamheten upp 0,4 procentenheter.'],['21 nov 25','Q1: växte 8% av egen kraft, precis på din gräns. Vi noterade, men larmade inte.']]},
   pillars:[
    {n:'Organisk tillväxt över 8% per år',s:'g',now:'11,0%',pts:[9,8,10,9,10,11],larm:8,larmLab:'larm 8,0%',ev:'Sex kvartal: 9, 8, 10, 9, 10, 11. Trenden intakt och stigande, marginal till larmnivån.'},
    {n:'Stigande rörelsemarginal',s:'g',now:'19,2%',pts:[17.9,18.0,18.3,18.5,18.8,19.2],larm:18.0,larmLab:'larm: under fjolårets 18,0%',ev:'Från 17,9 till 19,2% på sex kvartal. En växande andel service, med högre lönsamhet, lyfter.'},
    {n:'Ingen utspädning',s:'g',now:'148,2 M',pts:[148.2,148.2,148.2,148.2,148.2,148.2],larm:null,larmLab:'larm: antalet aktier ökar',ev:'Oförändrat 11 kvartal. Förvärv betalda med kassaflöde.'}],
   chat:{
-   'Varför steg aktien idag?':{txt:'Aktien steg på Q3-rapporten. Försäljningen växte 11,0% av egen kraft mot väntade 8,5% <a class="cit">1</a>, och bolaget höjde sin egen prognos för året <a class="cit">2</a>. <span class="tag slutsats">slutsats</span> Marknaden prissätter prognosen, inte bara kvartalet.',
+   'Varför steg aktien idag?':{txt:'Rapporten, helt enkelt. Bolaget växte 11,0% av egen kraft när marknaden räknat med 8,5 <a class="cit">1</a>, och höjde dessutom sin prognos för året <a class="cit">2</a>. <span class="tag slutsats">slutsats</span> Det är nog höjningen folk handlar på, inte kvartalet i sig.',
      data:{head:['','Utfall','Väntat','Skillnad'],rows:[['Org. tillväxt','11,0%','8,5%','<span class=pos>+2,5 pp</span>'],['FCF, Mkr','388','340','<span class=pos>+14,1%</span>']]}},
-   'Största risken?':{txt:'<span class="tag slutsats">slutsats</span> Nordamerika. Försäljningen där har backat tre kvartal i rad <a class="cit">1</a>. Litet i helheten (16% av försäljningen) men fel riktning.',
+   'Största risken?':{txt:'<span class="tag slutsats">slutsats</span> Nordamerika. Försäljningen där har backat tre kvartal i rad <a class="cit">1</a>. En liten del av helheten, 16%, men åt fel håll.',
      data:{head:['Nordamerika','Q1 26','Q2 26','Q3 26'],rows:[['Tillväxt egen kraft','0%','-1%','<span class=neg>-2%</span>'],['Rörelsemarginal','12,4%','11,8%','<span class=neg>11,2%</span>']]}}}
  },
  TELV:{tk:'TELV',namn:'Telvio',status:'bad',statusLab:'Skälet utmanat',
@@ -322,10 +322,10 @@ const STOCKS={
   micro:['P/E 11,2','Dir 5,8%','NS/EBITDA 2,1x'],
   fact:{v52:'82,10 till 104,80',mcap:'18,6 mdkr',pe:'11,2',dir:'5,8%'},
   why:'Stabil kassako med stigande marginal och trygg utdelning.',
-  event:'Q3: bruttomarginalen föll till 38,0%, ned 3,5 pp på prispress i mobil. Din pelare om stigande marginal korsade larmnivån 40%.',src:'Q3-rapport · igår 08:00',
+  event:'Q3: lönsamheten föll till 38,0%, ned 3,5 procentenheter i priskriget på mobilsidan. Den gick därmed under din gräns på 40%.',src:'Q3-rapport · igår 08:00',
   what:[
-   {t:'fakta',txt:'Q3: av varje hundralapp i försäljning blev 38 kronor kvar efter direkta kostnader (bruttomarginal 38,0%), ned från 41,50 för ett år sedan. Orsaken är prispress på mobilsidan. Kassaflödet föll 12% till 910 Mkr. Utdelningen bekräftades.',c:1},
-   {t:'slutsats',txt:'Det här träffar din andra punkt rakt av: kurvan korsade din larmnivå 40,0% i kvartalet. Utdelningen är inte hotad ännu, det kommer in 1,15 kronor för varje utdelad krona, men trenden pekar åt fel håll. Ompröva marginaldelen av ditt skäl, inte hela innehavet.',c:0}],
+   {t:'fakta',txt:'Lönsamheten viker. Av varje hundralapp bolaget säljer för blir nu 38 kronor kvar efter direkta kostnader. För ett år sedan var det 41,50. Boven är priskriget på mobilsidan. Kassaflödet föll 12% till 910 miljoner. Utdelningen står kvar.',c:1},
+   {t:'slutsats',txt:'Det här är precis det du bad oss vakta: kurvan gick under din gräns på 40,0% i kvartalet. Utdelningen klarar sig än så länge, det kommer in 1,15 kronor för varje krona som delas ut, men riktningen är fel. Ta ställning till den delen i lugn och ro. Resten av ditt skäl står som det stod.',c:0}],
   rail:[
    {k:'Bruttomarginal Q3',v:'38,0%',dd:'-3,5',dc:'neg',cc:'procentenheter ned · i fjol 41,5 · din larmnivå 40,0'},
    {k:'Kassaflöde, fritt',v:'910 Mkr',dd:'-12%',dc:'neg',cc:'väntat: 1 050 Mkr'},
@@ -338,7 +338,7 @@ const STOCKS={
     ['EBIT-marginal, %',[14.5,14.2,13.8,13.4,12.8,12.1],'-2,4 pp','neg',1],
     ['Fritt kassaflöde, Mkr',[1034,1010,990,975,940,910],'-12,0%','neg',0]],
    mult:[['P/E','11,2','13,4','-16%'],['EV/EBIT','9,8','11,6','-16%'],['Direktavkastning','5,8%','4,6%','högre'],['P/FCF','20,4','15,9','+28%']],
-   ai:'Läsanvisning: aktien ser billig ut mot vinsten (P/E 11,2 mot eget snitt 13,4) men dyr mot kassaflödet. Det betyder att det inte är kursen som fallit för mycket, det är pengarna in som viker. Ett klassiskt varningsmönster.'},
+   ai:'Aktien ser billig ut om du tittar på vinsten: P/E 11,2 mot 13,4 som den brukar ligga på. Men mot kassaflödet är den dyr. Översatt: det är inte kursen som fallit för mycket, det är pengarna in som viker. Det mönstret är värt respekt.'},
   report:{
    verdict:'Svag rapport. Priskriget på mobilsidan äter lönsamheten snabbare än väntat. Utdelningen står kvar, men marginalen som ska betala den krymper.',
    grid:[
@@ -368,7 +368,7 @@ const STOCKS={
    {n:'Stigande bruttomarginal',s:'r',now:'38,0%',pts:[41.5,41.0,40.6,40.1,39.2,38.0],larm:40.0,larmLab:'larm 40,0%',ev:'Korsade din larmnivå i kvartalet. Sex raka kvartal av fall. Antagandet om stigande lönsamhet håller inte längre.'},
    {n:'Utdelning täckt av kassaflödet',s:'y',now:'1,15x',pts:[1.5,1.45,1.4,1.3,1.25,1.15],larm:1.0,larmLab:'larm 1,0x',ev:'Utdelningen är bekräftad, men marginalen krymper: 1,15 kronor in per utdelad krona, sex kvartal av fall. Bevaka Q4.'}],
   chat:{
-   'Håller mitt skäl?':{txt:'<span class="tag fakta">fakta</span> Delvis brutet. Lönsamheten (bruttomarginalen) korsade din larmnivå 40,0% i kvartalet <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen står kvar, 1,15 kronor in per utdelad krona mot din larmnivå 1,0, men marginaldelen av skälet behöver omprövas.',
+   'Håller mitt skäl?':{txt:'<span class="tag fakta">fakta</span> Inte helt. Lönsamheten gick under din gräns på 40,0% i kvartalet <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen ser okej ut än så länge, 1,15 kronor in per utdelad krona mot din gräns 1,0. Men den del av ditt skäl som handlar om stigande lönsamhet håller inte längre. Den behöver du tänka om.',
      data:{head:['Pelare','Nu','Larm','Status'],rows:[['Stabil försäljning','-1,1%','-3%','<span class=pos>håller</span>'],['Stigande lönsamhet','38,0%','40,0%','<span class=neg>bruten</span>'],['Utdelningens täckning','1,15x','1,0x','<span class=gold>bevaka</span>']]}}}
  },
  KAVX:{tk:'KAVX',namn:'Kavex Medical',status:'up',statusLab:'Insiderköp',
@@ -376,17 +376,17 @@ const STOCKS={
   micro:['P/E 31,4','Brutto 72%','Återk. 63%'],
   fact:{v52:'128,00 till 158,40',mcap:'9,4 mdkr',pe:'31,4',dir:'0,8%'},
   why:'Nischmedtech med återkommande intäkter och hög marginal.',
-  event:'VD köpte aktier för 2,1 Mkr i går, första insiderköpet på 14 månader. Inget i ditt skäl ändras.',src:'FI insynsregister · igår 17:42',
+  event:'VD köpte aktier för 2,1 miljoner i går, första köpet på 14 månader. Inget i ditt skäl ändras.',src:'FI insynsregister · igår 17:42',
   what:[{t:'fakta',txt:'VD köpte aktier för 2,1 Mkr i går, det första insiderköpet på 14 månader.',c:1},
-        {t:'slutsats',txt:'Ett köp av den storleken efter lång tystnad signalerar förtroende. Svag positiv datapunkt, inget i ditt skäl ändras. Q3-rapporten kommer 2 juli.',c:0}],
+        {t:'slutsats',txt:'När en VD köper för 2,1 miljoner efter 14 månaders tystnad brukar det betyda förtroende för det egna bolaget. Ingen garanti, men en trevlig signal. Ditt skäl påverkas inte. Rapporten kommer 2 juli.',c:0}],
   rail:[{k:'Insiderköp',v:'2,1 Mkr',dd:'VD',dc:'gold',cc:'första på 14 månader'},
         {k:'Återkommande intäkter',v:'63%',dd:'+1 pp',dc:'pos',cc:'din punkt: över 60%'},
-        {k:'Nästa rapport',v:'2 jul',dd:'Q3',dc:'mutc',cc:'om 0 dagar i mocken'}],
+        {k:'Nästa rapport',v:'2 jul',dd:'Q3',dc:'mutc',cc:'släpps idag'}],
   fund:null,report:null,
   pillars:[
    {n:'Återkommande intäkter över 60%',s:'g',now:'63%',pts:[58,59,60,61,62,63],larm:60,larmLab:'larm 60%',ev:'Stigande andel sex kvartal i rad.'},
    {n:'Bruttomarginal över 70%',s:'g',now:'72,4%',pts:[71,71.5,71.8,72,72.2,72.4],larm:70,larmLab:'larm 70%',ev:'Stabilt över golvet.'}],
-  chat:{'Vad betyder insiderköpet?':{txt:'<span class="tag fakta">fakta</span> VD köpte för 2,1 Mkr, första köpet på 14 månader <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Svag positiv signal, ersätter inte en rapport.',data:null}}
+  chat:{'Vad betyder insiderköpet?':{txt:'<span class="tag fakta">fakta</span> VD köpte för 2,1 miljoner, första köpet på 14 månader <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> En trevlig signal, men inte mer än så. Rapporter väger tyngre än köp, och nästa kommer 2 juli.',data:null}}
  },
  BRUN:{tk:'BRUN',namn:'Brunna Hydro',status:'calm',statusLab:'Lugnt',
   pris:112.40,idag:0.1,spark12:[108,109,110,109,111,110,112,111,112,113,112,112],
@@ -394,7 +394,7 @@ const STOCKS={
   fact:{v52:'104,20 till 115,60',mcap:'27,1 mdkr',pe:'14,8',dir:'4,6%'},
   why:'Reglerad kassaflödesmaskin, låg risk, stabil utdelning.',
   event:'Inget kräver din uppmärksamhet.',src:'6 nyheter bortsorterade som brus',
-  what:[{t:'slutsats',txt:'Inget av betydelse sedan du senast tittade. 6 inkomna nyheter bedömdes som brus och visas inte.',c:0}],
+  what:[{t:'slutsats',txt:'Ingenting som spelar roll har hänt sedan du var här sist. Sex nyheter kom in, ingen rörde ditt skäl, så vi la dem åt sidan.',c:0}],
   rail:[{k:'Utdelningstäckning',v:'1,3x',dd:'stabil',dc:'pos',cc:'larm vid 1,0x'}],
   fund:null,report:null,
   pillars:[{n:'Utdelning täckt av kassaflödet',s:'g',now:'1,3x',pts:[1.32,1.3,1.31,1.29,1.3,1.3],larm:1.0,larmLab:'larm 1,0x',ev:'Trygg täckning, ingen rörelse.'}],
@@ -405,8 +405,8 @@ const STOCKS={
   micro:['P/E 16,2','Dir 3,1%','NS/EBITDA 1,1x'],
   fact:{v52:'64,50 till 73,80',mcap:'6,2 mdkr',pe:'16,2',dir:'3,1%'},
   why:'Defensiv stapelvara med långsam men säker tillväxt.',
-  event:'En riktkurssänkning, bedömd som brus. Inget rör ditt skäl.',src:'1 nyhet nedprioriterad',
-  what:[{t:'slutsats',txt:'En analytiker sänkte riktkursen men behöll rekommendationen. Lågprioriterat, ingen förändring i ditt skäl.',c:0}],
+  event:'En analytiker sänkte sin riktkurs. Vi bedömde det som brus.',src:'1 nyhet nedprioriterad',
+  what:[{t:'slutsats',txt:'En analytiker sänkte sin riktkurs men ändrade inget annat. Sånt händer titt som tätt och rör inte ditt skäl.',c:0}],
   rail:[],fund:null,report:null,
   pillars:[{n:'Stabil efterfrågan',s:'g',now:'intakt',pts:[100,101,100,101,101,102],larm:null,larmLab:'larm: volymfall två kvartal',ev:'Defensiv profil, ingen rörelse.'}],
   chat:{}
@@ -593,15 +593,15 @@ function tabFund(s){
 }
 function tabSkal(s){
   const broken=s.pillars.some(p=>p.s==='r');
-  const note=broken?`<div class="tnote"><b>Skälet är utmanat.</b> En av dina punkter korsade sin larmnivå. Det betyder inte sälj, det betyder att en av dina egna förutsättningar inte längre håller. Ompröva den, inte hela innehavet i panik.</div>`:'';
+  const note=broken?`<div class="tnote"><b>Skälet är utmanat.</b> En av dina punkter gick under sin gräns. Det betyder inte sälj. Det betyder att något du räknade med inte stämmer längre. Ta ställning till just den delen, i lugn och ro.</div>`:'';
   return `${note}
-  <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Du skrev ditt skäl som testbara punkter med larmnivåer. Kurvorna nedan är punkternas underliggande mått, med din larmnivå ritad som streckad linje. Vi stör dig bara när en kurva korsar sin linje.</p>
+  <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Det här är dina egna punkter, med gränser du själv satt. Den streckade linjen i varje graf är din gräns. Så länge kurvorna håller sig på rätt sida hör du inget från oss.</p>
   ${s.pillars.map(pcardHTML).join('')}`;
 }
 function tabChat(s){
   const qs=Object.keys(s.chat);
   return `<div class="seed">${qs.map(q=>`<button class="seedb" onclick="ask('${q.replace(/'/g,"\\'")}')">${q}</button>`).join('')}</div>
-  <div class="chat" id="chat"><div class="bub a">Fråga mig om ${s.namn}. Jag svarar grundat, med källa och siffrorna synliga, och säger ifrån när jag inte vet.</div></div>
+  <div class="chat" id="chat"><div class="bub a">Fråga vad du vill om ${s.namn}. Jag svarar med siffrorna synliga och källan bredvid, och säger ärligt till när jag inte vet.</div></div>
   <div class="askbar"><input id="askin" placeholder="Fråga om ${s.namn}…"><button onclick="askIn()">Fråga</button></div>`;
 }
 function dataTable(dt){if(!dt)return '';
@@ -617,10 +617,10 @@ function askIn(){const i=document.getElementById('askin');if(i&&i.value.trim()){
 
 /* ============ global chat ============ */
 const GLOBAL={
- 'Vad kräver mest uppmärksamhet?':{txt:'<span class="tag slutsats">slutsats</span> Telvio. Lönsamheten korsade din larmnivå 40,0% <a class="cit">1</a>. Norlux också, men positivt: stark rapport, alla dina punkter håller <a class="cit">2</a>.',
+ 'Vad kräver mest uppmärksamhet?':{txt:'<span class="tag slutsats">slutsats</span> Telvio. Lönsamheten gick under din gräns på 40,0% <a class="cit">1</a>. Norlux vill också ha en stund av dig, men av trevligare skäl: stark rapport, allt du bad oss vakta håller <a class="cit">2</a>.',
    data:{head:['Bolag','Pelare','Nu','Larm'],rows:[['Telvio','Lönsamhet','38,0%','<span class=neg>40,0% korsad</span>'],['Norlux','Tillväxt','11,0%','<span class=pos>8,0% håller</span>']]}},
- 'Vilka skäl vacklar?':{txt:'<span class="tag fakta">fakta</span> Ett av fem: Telvio, punkten om stigande lönsamhet är bruten <a class="cit">1</a>. Utdelningens täckning där bevakas dessutom (1,15 mot larm 1,0).',data:null},
- 'Dold koncentrationsrisk?':{txt:'<span class="tag slutsats">slutsats</span> Norlux och Telvio är båda känsliga för samma europeiska industricykel. Tillsammans 46% av portföljen. Ingen varning, men en korrelation värd att känna till.',
+ 'Vilka skäl vacklar?':{txt:'<span class="tag fakta">fakta</span> Ett av fem. Telvio: lönsamheten stiger inte längre som du räknade med <a class="cit">1</a>. Vi håller också ett extra öga på utdelningen där, 1,15 kronor in per utdelad krona mot din gräns 1,0.',data:null},
+ 'Dold koncentrationsrisk?':{txt:'<span class="tag slutsats">slutsats</span> En sak är bra att känna till: Norlux och Telvio påverkas av samma europeiska industrikonjunktur. Tillsammans är de 46% av din portfölj. Ingen varning, men de kan dippa samtidigt.',
    data:{head:['Innehav','Andel','Cykelkänslighet'],rows:[['Norlux','28%','europeisk industri'],['Telvio','18%','europeisk industri'],['Övriga tre','54%','blandad']]}}
 };
 function renderFragaG(){
