@@ -506,7 +506,7 @@ const STOCKS={
     ['EBIT-marginal, %',[14.5,14.2,13.8,13.4,12.8,12.1],'-2,4 pp','neg',1],
     ['Fritt kassaflöde, Mkr',[1034,1010,990,975,940,910],'-12,0%','neg',0]],
    mult:[['P/E','11,2','13,4','-16%'],['EV/EBIT','9,8','11,6','-16%'],['Direktavkastning','5,8%','4,6%','högre'],['P/FCF','20,4','15,9','+28%']],
-   ai:'Aktien ser billig ut om du tittar på vinsten: P/E 11,2 mot 13,4 som den brukar ligga på. Men mot kassaflödet är den dyr. Översatt: det är inte kursen som fallit för mycket, det är pengarna in som viker. Det mönstret är värt respekt.'},
+   ai:'Aktien ser billig ut om du tittar på vinsten: P/E 11,2 mot 13,4 som den brukar ligga på. Men mot kassaflödet är den dyr. Översatt: kassaflödet försämras snabbare än kursen hunnit falla. Ha respekt för det mönstret.'},
   report:{
    verdict:'Svag rapport. Priskriget på mobilsidan äter lönsamheten snabbare än väntat. Utdelningen står kvar, men marginalen som ska betala den krymper.',
    grid:[
@@ -601,14 +601,14 @@ STOCKS.VOLT={tk:'VOLT',namn:'Voltcell',status:'up',statusLab:'Milstolpe i septem
     ['Pessimistiskt','Certifieringen misslyckas eller försenas kraftigt, nyemission på svaga villkor','~8 kr','-67%','neg'],
     ['Bas','Certifiering i höst, gradvisa kontrakt under 2027','~35 kr','+42%','mutc'],
     ['Optimistiskt','Certifiering plus volymkontrakt med två tillverkare','~90 kr','+266%','pos']],
-   note:'Kurs i dag 24,60. Asymmetrin är själva caset: nedsidan är begränsad till insatsen, uppsidan är flera gånger den. Skyddet är inte att gissa rätt, det är storleken: innehavet ska vara så litet att det pessimistiska utfallet inte skadar dig (lektion 11.4 i Marginalen). Värdena är illustrativa scenarioräkningar, inte prognoser.',
+   note:'Kurs i dag 24,60. Asymmetrin är själva caset: nedsidan är begränsad till insatsen, uppsidan är flera gånger den. Skyddet ligger i storleken: köp så lite att det pessimistiska utfallet inte skadar dig (lektion 11.4 i Marginalen). Värdena är illustrativa räkneexempel.',
    mil:[['Sep 2026','Certifieringsbesked, EU-marknaden'],['Q4 2026','Första volymkontraktet enligt bolagets egen plan'],['Feb 2027','Bokslut: bruttomarginalen mot målet 45%']]},
   pillars:[
    {n:'Kassan räcker mer än 18 månader',s:'g',now:'~21 mån',pts:[30,28,26,25,23,21],larm:18,larmLab:'larm 18 mån',ev:'Räknat på nuvarande förbrukningstakt. Att den tickar ner är normalt, men under 18 månader tvingas bolag ofta ta in pengar på motpartens villkor.'},
    {n:'Tillväxt över 40% per år',s:'g',now:'+64%',pts:[45,52,48,58,61,64],larm:40,larmLab:'larm 40%',ev:'Från låg nivå, men accelererande sex kvartal i rad. Tillväxten är hela caset.'},
    {n:'Bruttomarginalen rör sig mot målet 45%',s:'g',now:'31%',pts:[24,25,27,28,30,31],larm:null,larmLab:'larm: faller två kvartal i rad',ev:'Visar att affären bär sig bättre för varje såld enhet. Målet 45% är bolagets eget.'},
-   {n:'Utspädning under 5% per år',s:'g',now:'+2,1%',pts:[0.5,1.0,1.3,1.6,1.9,2.1],larm:5,larmLab:'larm 5%',ev:'Bara optionsprogram hittills. En nyemission är inte automatiskt fel i ett tillväxtcase, men den ska ske på styrka, inte av nöd.'}],
-  chat:{'Hur stor är risken?':{txt:'<span class="tag fakta">fakta</span> Det här är ditt mest riskfyllda innehav: bolaget förlorar pengar och caset hänger på certifieringen i september <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Risken begränsas inte av att gissa rätt utan av storleken: i det pessimistiska scenariot (~8 kr) förlorar du merparten av insatsen. Håll innehavet så litet att det utfallet inte skadar dig.',
+   {n:'Utspädning under 5% per år',s:'g',now:'+2,1%',pts:[0.5,1.0,1.3,1.6,1.9,2.1],larm:5,larmLab:'larm 5%',ev:'Bara optionsprogram hittills. En nyemission kan vara helt rimlig i ett tillväxtcase, så länge den görs från styrka, med tid och pengar kvar att förhandla med.'}],
+  chat:{'Hur stor är risken?':{txt:'<span class="tag fakta">fakta</span> Det här är ditt mest riskfyllda innehav: bolaget förlorar pengar och caset hänger på certifieringen i september <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Det som begränsar risken är storleken: i det pessimistiska scenariot (~8 kr) förlorar du merparten av insatsen. Håll innehavet så litet att det utfallet inte skadar dig.',
     data:{head:['Scenario','Värde per aktie','Mot kurs 24,60'],rows:[['Pessimistiskt','~8 kr','<span class=neg>-67%</span>'],['Bas','~35 kr','<span class=mutc>+42%</span>'],['Optimistiskt','~90 kr','<span class=pos>+266%</span>']]}}}
 };
 const ORDER=['NORL','TELV','KAVX','BRUN','ALMI','VOLT'];
@@ -814,7 +814,7 @@ function tabFund(s){
 }
 function tabSkal(s){
   const broken=s.pillars.some(p=>p.s==='r');
-  const note=broken?`<div class="tnote"><b>Något du räknade med har ändrats.</b> En av kurvorna gick under gränsen du satte. Det betyder inte sälj. Titta på just den delen i lugn och ro och bestäm själv.</div>`:'';
+  const note=broken?`<div class="tnote"><b>Något du räknade med har ändrats.</b> En av kurvorna gick under gränsen du satte. Titta på just den delen i lugn och ro och bestäm själv.</div>`:'';
   return `${note}
   <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Det här är dina egna punkter, med gränser du själv satt. Den streckade linjen i varje graf är din gräns. Så länge kurvorna håller sig på rätt sida hör du inget från oss.</p>
   ${s.pillars.map(pcardHTML).join('')}`;
@@ -875,7 +875,7 @@ function bpage(i){
     <p class="ul">Av varje hundralapp bolaget säljer för blev 38 kronor kvar efter direkta kostnader (bruttomarginal 38,0%). Din gräns går vid 40. Utdelningen står kvar, men marginalen som ska betala den krymper.</p>
     <div class="uchart">${pillChart([41.5,41.0,40.6,40.1,39.2,38.0],40,'r')}</div>
     <div class="pmeta"><span>6 kvartal</span><span class="gold">larm 40,0%</span><span>nu</span></div>
-    <p class="unote">Det betyder inte sälj. Det betyder att något du räknade med inte stämmer längre. Titta på just den delen i lugn och ro.</p>
+    <p class="unote">Något du räknade med stämmer inte längre. Titta på just den delen i lugn och ro och bestäm själv.</p>
     <div class="ufoot">${arrow('Öppna Telvio','TELV')}</div>`};
   if(i===2)return{k:'Sida 3 · Stark rapport',r:'NORL',h:`
     <h2 class="uh">Norlux växte 11 procent av egen kraft</h2>
@@ -902,7 +902,7 @@ function bpage(i){
     <div class="ufoot"><button class="btn" onclick="goBP(6)">Vidare ${ic('arrow','sm')}</button></div>`};
   if(i===6)return{k:'Sida 7 · Upptäckten · från Spaningen',r:'valbar · på/av',h:`
     <h2 class="uh">Två aktier utanför din portfölj rör på sig</h2>
-    <p class="ul">Spaningen bevakar hela marknaden och fångar aktier som rör sig. Det här är inte köptips, det är uppslag. Börja alltid med att låta oss leta motargument, och köp i så fall lite, med tydliga gränser.</p>
+    <p class="ul">Spaningen bevakar hela marknaden och fångar aktier som rör sig. Se dem som uppslag att granska. Börja alltid med att låta oss leta motargument, och köp i så fall lite, med tydliga gränser.</p>
     <div class="spx"><div class="sh"><b>Nordfiber</b><span class="tk3">NFIB · industri · fiktivt exempel</span></div>
       <p>Steg i går över sitt snitt för de senaste 200 dagarna, med dubbelt så hög handel som vanligt. Värderas redan lågt jämfört med sin egen historik.</p>
       <div class="btnrow"><button class="sbtn" onclick="this.textContent='Vi letar motargument ✓';this.disabled=true">Leta motargument åt mig</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
