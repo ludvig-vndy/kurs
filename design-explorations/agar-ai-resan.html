@@ -215,9 +215,9 @@ function fmtChg(v){const s=v>0?'+':'';const c=v>0?'pos':v<0?'neg':'mutc';return 
 /* steps */
 const STEPS=[
  {d:'Överblick',t:'Kartan'},
- {d:'Dag 0',t:'Du säger varför'},
+ {d:'Dag 0',t:'Du berättar varför'},
  {d:'Dag 1',t:'Morgonbrevet'},
- {d:'Dag 12',t:'Vi flaggar'},
+ {d:'Dag 12',t:'Vi säger till'},
  {d:'Dag 47',t:'Rapportdagen'},
  {d:'Dag 90',t:'Backspegeln'}
 ];
@@ -235,22 +235,22 @@ function ch0(){body.innerHTML=`
   <div class="narr">
     <div class="step">Demo · Livsgången · Överblick</div>
     <h1>Så fungerar tjänsten</h1>
-    <p>Du berättar en gång <b>varför du äger dina bolag</b>. Sen sköter tjänsten resten, <b>hands off</b>: den läser rapporter, pressmeddelanden och register åt dig, och hör bara av sig när något rör just ditt skäl. Två minuter om dagen räcker. <b>Det här är en demo</b> av de första 90 dagarna, precis som de skulle kännas i produkten. All data är påhittad exempeldata.</p>
+    <p>Du berättar en gång <b>varför du äger dina aktier</b>. Sen jobbar tjänsten åt dig: den läser rapporter, pressmeddelanden och register, och säger till när något viktigt händer i just dina bolag. Du läser ett kort brev varje morgon, det tar två minuter. <b>Det här är en demo</b> av de första 90 dagarna, precis som de skulle kännas i produkten. All data är påhittad exempeldata.</p>
   </div>
   <div class="map">
-    <div class="stop"><div class="sd">Dag 0 · en gång · ~10 min</div><h3>Du säger varför du äger</h3><p>Lägg in ett bolag, berätta varför du äger det och sätt dina gränser. Mer än så behöver du aldrig göra, och det är enda gången produkten ber dig om något.</p></div>
-    <div class="stop"><div class="sd">Dag 1 och framåt · 07:30 · 90 sekunder</div><h3>Morgonbrevet</h3><p>Två delar: dina bolag, och det allmänna som är värt att veta idag, alltid översatt till vad det betyder för just dig. De flesta dagar är svaret: ingenting rör ditt skäl. Då vet du det, och är klar.</p></div>
-    <div class="stop"><div class="sd">Några gånger per år</div><h3>Vi flaggar</h3><p>En kurva går under din gräns. Då, och först då, hör vi av oss. Du ser exakt vilken av dina förutsättningar som rört sig, med siffror och källa.</p></div>
+    <div class="stop"><div class="sd">Dag 0 · en gång · ~10 min</div><h3>Du berättar varför du äger dina aktier</h3><p>Lägg in ett bolag, berätta varför du äger det och sätt dina gränser. Mer än så behöver du aldrig göra, och det är enda gången produkten ber dig om något.</p></div>
+    <div class="stop"><div class="sd">Dag 1 och framåt · 07:30 · 90 sekunder</div><h3>Morgonbrevet</h3><p>Två delar: dina bolag, och det allmänna som är värt att veta idag, alltid översatt till vad det betyder för just dig. De flesta dagar är svaret: inget viktigt har hänt. Då vet du det, och är klar.</p></div>
+    <div class="stop"><div class="sd">Några gånger per år</div><h3>Vi säger till när något händer</h3><p>En kurva går under din gräns. Då, och först då, hör vi av oss. Du ser exakt vad som ändrats, med siffror och källa.</p></div>
     <div class="stop"><div class="sd">Varje kvartal · automatiskt</div><h3>Rapporten analyseras åt dig</h3><p>Bolaget släpper sin rapport 07:30. En minut senare ligger analysen klar: mot vad marknaden väntade sig, mot i fjol och mot ditt skäl. Varje siffra kommer ur rapporten, ingen är påhittad.</p></div>
     <div class="stop"><div class="sd">Dag 90 · kvartalsvis</div><h3>Backspegeln</h3><p>Hur mycket tid kostade kvartalet dig? Nästan ingen alls. Och allt vi sagt ligger kvar, öppet att granska. Sen börjar det om.</p></div>
   </div>
-  <div class="jobb"><b>Ditt totala jobb:</b> skriv skälet en gång per bolag · läs två minuter om dagen · besluta när det larmar. Huvudpulsen är hands off, produkten lyckas när du är inne lite, inte mycket.</div>
+  <div class="jobb"><b>Så här enkelt är det:</b> berätta varför du äger dina aktier (en gång). Läs morgonbrevet (två minuter). Får du ett larm tittar du efter vad som hänt och bestämmer själv vad du vill göra. Resten sköter vi.</div>
   <div class="eco">
-    <div class="ecl">Huvudpulsen är det du ser i demon. Runt den finns resten av paketet:</div>
-    <div class="er"><b>Kursen i aktieanalys</b><span>Marginalen: skolan och filosofin bakom tjänsten. Lär dig → öva → äg.</span></div>
+    <div class="ecl">Demon visar själva bevakningstjänsten. I paketet finns också:</div>
+    <div class="er"><b>Kursen i aktieanalys</b><span>Marginalen: kursen som lär dig tänka som en ägare, inte en spekulant.</span></div>
     <div class="er"><b>Analysverktygen</b><span>checklistor och verktyg från kursen, för när du vill göra jobbet själv.</span></div>
-    <div class="er"><b>Warrant-verktyget</b><span>"Hitta bästa hävstångsprodukten": separat, taktiskt verktyg för hävstång.</span></div>
-    <div class="ef">Demon nedan visar bara huvudpulsen.</div>
+    <div class="er"><b>Warrant-verktyget</b><span>"Hitta bästa hävstångsprodukten": ett eget verktyg för den som handlar med hävstång.</span></div>
+    <div class="ef">Demon nedan visar bara bevakningstjänsten.</div>
   </div>
   <div class="nextbar"><button class="btn prim" onclick="go(1)">Starta resan: Dag 0, du säger varför →</button></div>`;}
 
@@ -259,14 +259,14 @@ function ch1(){body.innerHTML=`
   <div class="narr">
     <div class="step">Steg 1 av 5 · Dag 0 · cirka 10 minuter, en gång</div>
     <h1>Du säger varför du äger</h1>
-    <p>Du lägger in <b>Norlux Industri</b> och svarar på en enda fråga: varför äger du det? Sen gör vi svaret mätbart tillsammans: tre konkreta punkter, med varsin gräns som <b>du</b> väljer. Mer jobb än så här blir det aldrig. Härifrån är det vi som jobbar, inte du.</p>
+    <p>Du lägger in <b>Norlux Industri</b> och svarar på en enda fråga: varför äger du det? Sen gör vi om svaret till tre konkreta saker att hålla koll på, med en gräns för varje som <b>du</b> själv sätter. Mer jobb än så här blir det aldrig. Härifrån är det vi som jobbar, inte du.</p>
   </div>
   <div class="demo-label">Så ser det ut i produkten</div>
   <div class="demo">
     <div class="eyebrow">Ditt skäl, i en mening</div>
     <h2 class="big">Varför äger du Norlux Industri?</h2>
     <div class="sent" style="margin-top:12px">Jag äger en andel av <span class="co">Norlux Industri</span> som tjänar pengar genom att <span class="fill">köpa upp lönsamma småbolag och driva dem bättre</span>, och kommer tjäna mer för att <span class="fill">marknaden är fragmenterad och kassaflödet betalar nästa förvärv</span>.</div>
-    <div class="slabel">Dina punkter · med larmnivåer du satt själv</div>
+    <div class="slabel">Det här håller vi koll på åt dig · gränserna sätter du själv</div>
     ${pc('Växer minst 8% per år av egen kraft','g','startläge 10%',[9,8,10,9,10,10],8,'larm 8,0%','Larmar om tillväxten, utan förvärv, faller under 8% två kvartal i rad.')}
     ${pc('Stigande lönsamhet (rörelsemarginal)','g','startläge 18,8%',[17.9,18.0,18.3,18.5,18.8,18.8],18.0,'larm: under fjolårets 18,0%','Larmar om lönsamheten faller under fjolårets nivå.')}
     ${pc('Ingen utspädning','g','148,2 M aktier',[148.2,148.2,148.2,148.2,148.2,148.2],null,'larm: antalet aktier ökar','Larmar om bolaget börjar ge ut nya aktier.')}
@@ -284,7 +284,7 @@ function ch2(){body.innerHTML=`
   <div class="narr">
     <div class="step">Steg 2 av 5 · Dag 1 · 07:30 · 90 sekunder</div>
     <h1>Ditt första morgonbrev</h1>
-    <p>Klockan 07:30 ligger brevet i inkorgen. Det har två delar: <b>dina bolag</b> mätt mot dina skäl, och <b>det generella</b> som är värt att hålla koll på idag, alltid filtrerat genom din portfölj ("för dig betyder det..."). Idag rör inget ditt skäl, och det säger vi rakt ut, tillsammans med beviset att vi faktiskt letat. <b>Det här är hooken:</b> brevet du läser med kaffet varje morgon, och till slut vägrar vara utan.</p>
+    <p>Klockan 07:30 ligger brevet i inkorgen. Det har två delar: <b>dina bolag</b>, och <b>det allmänna</b> som är värt att veta idag, alltid med en rad om vad det betyder för just dig. Idag har inget viktigt hänt i ditt bolag, och då säger vi det rakt ut, tillsammans med beviset att vi faktiskt letat. <b>Tanken är enkel:</b> ett brev du läser med kaffet varje morgon, och efter ett tag inte vill vara utan.</p>
   </div>
   <div class="demo-label">Så ser det ut · i inkorgen eller appen</div>
   <div class="demo">
@@ -292,8 +292,8 @@ function ch2(){body.innerHTML=`
       <div class="bh"><span class="bt">Marginalen Morgon</span><span class="bd">Torsdag 3 juli · 07:30 · 90 sek läsning</span></div>
       <div class="bsec">Dina bolag</div>
       <div class="bitem">
-        <h4>Norlux Industri <span class="st faintc">· lugnt, skälet håller</span></h4>
-        <p>Inga nyheter som rör dina tre punkter. Kursen står i 271, men det är ju inte därför du äger bolaget.</p>
+        <h4>Norlux Industri <span class="st faintc">· lugnt, allt ser bra ut</span></h4>
+        <p>Inget nytt av betydelse för dig. Kursen står i 271, men det är ju inte därför du äger bolaget.</p>
       </div>
       <div class="bsec">Att hålla koll på idag</div>
       <div class="bitem">
@@ -314,23 +314,23 @@ function ch2(){body.innerHTML=`
       <div class="pw"><b>I natt:</b> vi läste 9 saker om Norlux, nyheter, registerposter och flöden. Ingen av dem rör ditt skäl. Det var allt, du kan lägga ifrån dig telefonen.</div>
     </div>
   </div>
-  <div class="nextbar"><button class="btn ghost" onclick="go(1)">← Dag 0</button><button class="btn prim" onclick="go(3)">Nästa steg: vi visar en flaggning →</button></div>`;}
+  <div class="nextbar"><button class="btn ghost" onclick="go(1)">← Dag 0</button><button class="btn prim" onclick="go(3)">Nästa steg: vad händer när något ändras? →</button></div>`;}
 
 /* ch3: day 12 flag */
 function ch3(){body.innerHTML=`
   <div class="narr">
     <div class="step">Steg 3 av 5 · Dag 12 · första larmet</div>
-    <h1>Vi flaggar: en kurva korsade din linje</h1>
-    <p>Du har hunnit lägga in fyra bolag till. I morse hände det: <b>Telvios lönsamhet gick under din gräns på 40,0%</b> (bruttomarginalen: hur mycket som blir kvar av varje hundralapp bolaget säljer för). Nu stör vi dig, för första gången på tolv dagar. Lägg märke till vad flaggan pekar på: inte kursen, utan <b>din egen förutsättning</b>. Och vad vi inte säger: sälj. Det ordet finns inte i produkten.</p>
+    <h1>Vi säger till: något du ville vakta har ändrats</h1>
+    <p>Du har hunnit lägga in fyra bolag till. I morse hände det: <b>Telvios lönsamhet gick under din gräns på 40,0%</b> (bruttomarginalen: hur mycket som blir kvar av varje hundralapp bolaget säljer för). Nu stör vi dig, för första gången på tolv dagar. Lägg märke till vad vi larmar om: inte att kursen fallit, utan att <b>något du själv sa var viktigt</b> har ändrats. Och vad vi inte säger: sälj. Det ordet finns inte i produkten.</p>
   </div>
   <div class="demo-label">Så ser det ut i produkten · Idag</div>
   <div class="demo">
     <div class="eyebrow">God morgon</div>
     <h2 class="big">Idag</h2>
-    <div class="sub">En sak rör dina bolag. Resten var brus.</div>
+    <div class="sub">En sak har hänt i dina bolag. Resten var brus.</div>
     <div class="front">
       <div class="frow hl">
-        <div><div class="fr-head"><span class="fr-name">Telvio</span><span class="fr-tk">TELV</span><span class="stword neg"><i class="d"></i>Skälet utmanat</span></div>
+        <div><div class="fr-head"><span class="fr-name">Telvio</span><span class="fr-tk">TELV</span><span class="stword neg"><i class="d"></i>Något har ändrats</span></div>
         <p>Q3: lönsamheten föll till 38,0%, ned 3,5 procentenheter på ett år. Den gick därmed under din gräns på 40.</p></div>
         <div class="dblock"><div class="price num">84,20 <span class="chg">${fmtChg(-0.6)}</span></div>
         <div class="sp">${spark([102,99,101,97,95,93,90,92,88,87,85,84],110,22,C().neg)}</div>
@@ -341,9 +341,9 @@ function ch3(){body.innerHTML=`
       <div class="frow"><div><div class="fr-head"><span class="fr-name">Kavex · Brunna · Almi</span><span class="stword faintc"><i class="d"></i>Lugnt</span></div></div>
         <div class="dblock"><div class="micro" style="padding-top:4px">inget kräver din uppmärksamhet</div></div></div>
     </div>
-    <div class="demo-label" style="margin-top:20px">Du klickar på Telvio · fliken Ditt skäl</div>
+    <div class="demo-label" style="margin-top:20px">Du klickar på Telvio och ser vad som hänt</div>
     ${pc('Stigande lönsamhet (bruttomarginal)','r','38,0%',[41.5,41.0,40.6,40.1,39.2,38.0],40.0,'larm 40,0%','Korsade din larmnivå i kvartalet. Sex raka kvartal av fall. Antagandet om stigande lönsamhet håller inte längre.')}
-    <div class="tnote"><b>Skälet är utmanat.</b> Det betyder inte sälj. Det betyder att något du räknade med inte stämmer längre. Ta ställning till just den delen, i lugn och ro.</div>
+    <div class="tnote"><b>Något du räknade med har ändrats.</b> Det betyder inte sälj. Titta på just den delen i lugn och ro och bestäm själv.</div>
   </div>
   <div class="nextbar"><button class="btn ghost" onclick="go(2)">← Dag 1</button><button class="btn prim" onclick="go(4)">Nästa steg: vi analyserar en kvartalsrapport →</button></div>`;}
 
@@ -352,13 +352,13 @@ function ch4(){body.innerHTML=`
   <div class="narr">
     <div class="step">Steg 4 av 5 · Dag 47 · rapportdagen</div>
     <h1>Norlux släpper Q3 kl 07:30. Kl 07:31 ligger det här klart.</h1>
-    <p>Du gjorde ingenting. Vi läste rapporten åt dig och ställde varje siffra mot vad marknaden väntade sig, mot i fjol och mot bolagets egen prognos, <b>räknat i kod, inte gissat av en AI</b>. Slutsatsen står överst, och längst ner ser du vad rapporten betyder för just ditt skäl. Varje siffra går att spåra tillbaka till rapporten.</p>
+    <p>Du gjorde ingenting. Vi läste rapporten åt dig och ställde varje siffra mot vad marknaden väntade sig (konsensus), mot i fjol och mot bolagets egen prognos (guidning), <b>räknat i kod, inte gissat av en AI</b>. Slutsatsen står överst, och längst ner ser du vad rapporten betyder för just ditt skäl. Varje siffra går att spåra tillbaka till rapporten.</p>
   </div>
   <div class="demo-label">Så ser det ut i produkten · Rapportanalys</div>
   <div class="demo">
     <div class="vlab">AI · rapporten på 15 sekunder</div>
     <p class="verdict">Stark rapport. Bolaget växer snabbare än väntat, tjänar mer per såld krona och höjer sin egen prognos för året. Inga varningstecken, men Nordamerika går trögt.</p>
-    <div class="slabel">Utfall mot väntat, i fjol och bolagets egen prognos</div>
+    <div class="slabel">Utfall mot väntat (konsensus), i fjol och bolagets egen prognos (guidning)</div>
     <div class="tscroll"><table class="dt">
       <thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Väntat</th><th>Mot väntat</th><th>I fjol</th><th>Mot i fjol</th><th>Egen prognos</th><th>Trend</th></tr></thead>
       <tbody>
@@ -367,7 +367,7 @@ function ch4(){body.innerHTML=`
         <tr><td>EBIT-marginal</td><td>19,2%</td><td class="mutc">18,3%</td><td class="pos">+0,9 pp</td><td class="mutc">18,0%</td><td class="pos">+1,2 pp</td><td class="faintc">·</td><td>${spark([17.9,18.0,18.3,18.5,18.8,19.2],72,16,C().pos)}</td></tr>
         <tr><td>Fritt kassaflöde</td><td>388</td><td class="mutc">340</td><td class="pos">+14,1%</td><td class="mutc">329</td><td class="pos">+17,9%</td><td class="faintc">·</td><td>${spark([300,329,355,342,371,388],72,16,C().pos)}</td></tr>
       </tbody></table></div>
-    <div class="slabel">Hur det rör ditt skäl</div>
+    <div class="slabel">Vad det betyder för dig</div>
     <p style="font-size:13px;color:var(--mut);line-height:1.6;margin:0">Punkt 1 (tillväxt över 8%): bekräftad, 11,0%. Punkt 2 (stigande lönsamhet): bekräftad, +1,2 procentenheter. Punkt 3 (ingen utspädning): intakt, 148,2 miljoner aktier. <span class="pos">Alla tre håller.</span></p>
   </div>
   <div class="nextbar"><button class="btn ghost" onclick="go(3)">← Dag 12</button><button class="btn prim" onclick="go(5)">Nästa steg: kvartalet i backspegeln →</button></div>`;}

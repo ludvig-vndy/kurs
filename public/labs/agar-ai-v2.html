@@ -255,14 +255,14 @@ function d(cls,txt){return `<span class="${cls}">${txt}</span>`;}
 /* ============ data (fiktiv, illustrativ) ============ */
 const Q=['Q2 25','Q3 25','Q4 25','Q1 26','Q2 26','Q3 26'];
 const STOCKS={
- NORL:{tk:'NORL',namn:'Norlux Industri',status:'ok',statusLab:'Skälet stärkt',
+ NORL:{tk:'NORL',namn:'Norlux Industri',status:'ok',statusLab:'Ser bra ut',
   pris:284.50,idag:1.8,spark12:[205,212,220,232,228,241,248,255,251,262,271,284],
   micro:['P/E 24,3','EV/EBIT 18,9','NS/EBITDA 1,4x'],
   fact:{v52:'198,20 till 291,00',mcap:'42,2 mdkr',pe:'24,3',dir:'1,4%'},
   why:'Lönsam förvärvsmaskin: organisk tillväxt över 8%, stigande marginal, ingen utspädning.',
   event:'Q3: växte 11,0% av egen kraft, mer än egna prognosen 7 till 9. 388 miljoner kvar i kassan, upp 18%. Höjd prognos för året. Allt du bad oss vakta håller.',src:'Q3-rapport · imorse 07:30',
   what:[
-   {t:'fakta',txt:'Rapporten kom i morse, och den var stark. Försäljningen växte 11,0% helt av egen kraft, mer än bolaget självt hade utlovat (7 till 9). När allt var betalt blev 388 miljoner kvar i kassan, 18% mer än i fjol. Och skulden kryper nedåt, motsvarar nu 1,4 årsvinster.',c:1},
+   {t:'fakta',txt:'Rapporten kom i morse, och den var stark. Försäljningen växte 11,0% helt av egen kraft, det rapporterna kallar organisk tillväxt, mer än bolaget självt hade utlovat (7 till 9). När allt var betalt blev 388 miljoner kvar i kassan (fritt kassaflöde), 18% mer än i fjol. Och skulden kryper nedåt, motsvarar nu 1,4 årsvinster.',c:1},
    {t:'slutsats',txt:'Allt du pekade ut som viktigt håller fortfarande: tillväxten är kvar, lönsamheten stiger och inga nya aktier har getts ut. Det marknaden lär prata om är den höjda prognosen. Det enda värt att hålla ett öga på är Nordamerika, där försäljningen backade 2%.',c:0}],
   rail:[
    {k:'Tillväxt av egen kraft, Q3',v:'11,0%',dd:'+2,5',dc:'pos',cc:'procentenheter över väntade 8,5 · egen prognos 7 till 9'},
@@ -317,14 +317,14 @@ const STOCKS={
    'Största risken?':{txt:'<span class="tag slutsats">slutsats</span> Nordamerika. Försäljningen där har backat tre kvartal i rad <a class="cit">1</a>. En liten del av helheten, 16%, men åt fel håll.',
      data:{head:['Nordamerika','Q1 26','Q2 26','Q3 26'],rows:[['Tillväxt egen kraft','0%','-1%','<span class=neg>-2%</span>'],['Rörelsemarginal','12,4%','11,8%','<span class=neg>11,2%</span>']]}}}
  },
- TELV:{tk:'TELV',namn:'Telvio',status:'bad',statusLab:'Skälet utmanat',
+ TELV:{tk:'TELV',namn:'Telvio',status:'bad',statusLab:'Något har ändrats',
   pris:84.20,idag:-0.6,spark12:[102,99,101,97,95,93,90,92,88,87,85,84],
   micro:['P/E 11,2','Dir 5,8%','NS/EBITDA 2,1x'],
   fact:{v52:'82,10 till 104,80',mcap:'18,6 mdkr',pe:'11,2',dir:'5,8%'},
   why:'Stabil kassako med stigande marginal och trygg utdelning.',
   event:'Q3: lönsamheten föll till 38,0%, ned 3,5 procentenheter i priskriget på mobilsidan. Den gick därmed under din gräns på 40%.',src:'Q3-rapport · igår 08:00',
   what:[
-   {t:'fakta',txt:'Lönsamheten viker. Av varje hundralapp bolaget säljer för blir nu 38 kronor kvar efter direkta kostnader. För ett år sedan var det 41,50. Boven är priskriget på mobilsidan. Kassaflödet föll 12% till 910 miljoner. Utdelningen står kvar.',c:1},
+   {t:'fakta',txt:'Lönsamheten viker. Av varje hundralapp bolaget säljer för blir nu 38 kronor kvar efter direkta kostnader, det som kallas bruttomarginal. För ett år sedan var det 41,50. Boven är priskriget på mobilsidan. Kassaflödet föll 12% till 910 miljoner. Utdelningen står kvar.',c:1},
    {t:'slutsats',txt:'Det här är precis det du bad oss vakta: kurvan gick under din gräns på 40,0% i kvartalet. Utdelningen klarar sig än så länge, det kommer in 1,15 kronor för varje krona som delas ut, men riktningen är fel. Ta ställning till den delen i lugn och ro. Resten av ditt skäl står som det stod.',c:0}],
   rail:[
    {k:'Bruttomarginal Q3',v:'38,0%',dd:'-3,5',dc:'neg',cc:'procentenheter ned · i fjol 41,5 · din larmnivå 40,0'},
@@ -368,8 +368,8 @@ const STOCKS={
    {n:'Stigande bruttomarginal',s:'r',now:'38,0%',pts:[41.5,41.0,40.6,40.1,39.2,38.0],larm:40.0,larmLab:'larm 40,0%',ev:'Korsade din larmnivå i kvartalet. Sex raka kvartal av fall. Antagandet om stigande lönsamhet håller inte längre.'},
    {n:'Utdelning täckt av kassaflödet',s:'y',now:'1,15x',pts:[1.5,1.45,1.4,1.3,1.25,1.15],larm:1.0,larmLab:'larm 1,0x',ev:'Utdelningen är bekräftad, men marginalen krymper: 1,15 kronor in per utdelad krona, sex kvartal av fall. Bevaka Q4.'}],
   chat:{
-   'Håller mitt skäl?':{txt:'<span class="tag fakta">fakta</span> Inte helt. Lönsamheten gick under din gräns på 40,0% i kvartalet <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen ser okej ut än så länge, 1,15 kronor in per utdelad krona mot din gräns 1,0. Men den del av ditt skäl som handlar om stigande lönsamhet håller inte längre. Den behöver du tänka om.',
-     data:{head:['Pelare','Nu','Larm','Status'],rows:[['Stabil försäljning','-1,1%','-3%','<span class=pos>håller</span>'],['Stigande lönsamhet','38,0%','40,0%','<span class=neg>bruten</span>'],['Utdelningens täckning','1,15x','1,0x','<span class=gold>bevaka</span>']]}}}
+   'Hur illa är det?':{txt:'<span class="tag fakta">fakta</span> En av tre saker du bad oss vakta har vikit: lönsamheten gick under din gräns på 40,0% i kvartalet <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen ser okej ut än så länge, 1,15 kronor in per utdelad krona mot din gräns 1,0. Men den del av ditt skäl som handlar om stigande lönsamhet håller inte längre. Den behöver du tänka om.',
+     data:{head:['Vi håller koll på','Nu','Din gräns','Läge'],rows:[['Stabil försäljning','-1,1%','-3%','<span class=pos>håller</span>'],['Stigande lönsamhet','38,0%','40,0%','<span class=neg>bruten</span>'],['Utdelningens täckning','1,15x','1,0x','<span class=gold>bevaka</span>']]}}}
  },
  KAVX:{tk:'KAVX',namn:'Kavex Medical',status:'up',statusLab:'Insiderköp',
   pris:156.00,idag:0.4,spark12:[138,141,140,144,147,146,150,152,151,154,155,156],
@@ -434,7 +434,7 @@ function priceHTML(s){return `<div class="price num">${s.pris.toFixed(2).replace
 function renderIdag(){
   main.innerHTML=`<div class="masthead">Marginalen · Ägar-AI<span class="r">Onsdag 2 juli 2026 · 15:42 · fördröjt 15 min</span></div>
   <div class="eyebrow">God morgon</div><h1 class="big">Idag</h1>
-  <div class="sub">Tre saker rör dina bolag. Resten var brus.</div>
+  <div class="sub">Tre saker har hänt i dina bolag. Resten var brus.</div>
   <div class="front">
     ${ACTIVE.map(tk=>{const s=S(tk);return `
       <div class="frow" onclick="goStock('${tk}')">
@@ -470,7 +470,7 @@ function renderIdag(){
 /* ============ stock page ============ */
 function renderStock(){
   const s=S(cur),x=s.extras;
-  const anchors=[['hant','Vad har hänt'],['skal','Ditt skäl'],
+  const anchors=[['hant','Vad har hänt'],['skal','Varför du äger'],
     ...(s.report?[['rapport','Rapporten']]:[]),
     ...(s.fund?[['fund','Fundamenta']]:[]),
     ...(x?[['agare','Ägare & insyn'],['blankutd','Blankning & utdelning'],['kalhist','Kalender & historik']]:[]),
@@ -488,7 +488,7 @@ function renderStock(){
     <div class="whyline"><b>Varför du äger det</b>${s.why}</div>
     <div class="anchbar" id="anchbar">${anchors.map(([id,l])=>`<button class="anch" data-a="${id}" onclick="jumpTo('${id}')">${l}</button>`).join('')}</div>
     <section class="sec" id="sec-hant"><div class="sech"><h2>Vad har hänt</h2><span class="sm">AI · grundat · citerat</span></div>${secHant(s)}</section>
-    <section class="sec" id="sec-skal"><div class="sech"><h2>Ditt skäl</h2><span class="sm">punkter mot dina larmnivåer</span></div>${tabSkal(s)}</section>
+    <section class="sec" id="sec-skal"><div class="sech"><h2>Varför du äger det</h2><span class="sm">det du bad oss hålla koll på</span></div>${tabSkal(s)}</section>
     ${s.report?`<section class="sec" id="sec-rapport"><div class="sech"><h2>Senaste rapporten</h2><span class="sm">Q3 2026</span></div>${tabRapport(s)}</section>`:''}
     ${s.fund?`<section class="sec" id="sec-fund"><div class="sech"><h2>Fundamenta</h2><span class="sm">ur rapporterna · exempeldata</span></div>${tabFund(s)}</section>`:''}
     ${x?secAgare(s)+secBlankUtd(s)+secKalHist(s):''}
@@ -505,7 +505,7 @@ function wireAnchors(){
 function secHant(s){
   return `<div class="lane">
     <div class="prose">${s.what.map(w=>`<p><span class="tag ${w.t}">${w.t}</span>${w.txt}${w.c?` <a class="cit">${w.c}</a>`:''}</p>`).join('')}</div>
-    <div class="rail"><div class="rlab">Talen bakom</div>
+    <div class="rail"><div class="rlab">Siffrorna bakom</div>
       ${s.rail.map(c=>`<div class="chip"><div class="ck">${c.k}</div><div class="cv"><span class="v">${c.v}</span><span class="dd ${c.dc}">${c.dd}</span></div><div class="cc">${c.cc}</div></div>`).join('')||'<div class="cc" style="color:var(--faint);font-size:12px">Inga nya tal idag.</div>'}
     </div></div>`;
 }
@@ -553,7 +553,7 @@ function tabRapport(s){
   const r=s.report;
   return `<div class="vlab">${ic('ask','sm')} AI · rapporten på 15 sekunder</div>
   <p class="verdict">${r.verdict}</p>
-  <div class="slab">Utfall mot väntat, i fjol och bolagets egen prognos</div>
+  <div class="slab">Utfall mot väntat (konsensus), i fjol och bolagets egen prognos (guidning)</div>
   <div class="tscroll"><table class="dt">
     <thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Väntat</th><th>Mot väntat</th><th>I fjol</th><th>Mot i fjol</th><th>Egen prognos</th><th>Trend 6 kv</th></tr></thead>
     <tbody>${r.grid.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td class="mutc">${g[2]}</td><td class="${g[4]}">${g[3]}</td><td class="mutc">${g[5]}</td><td class="${g[7]}">${g[6]}</td><td class="faintc">${g[8]}</td><td class="sparkcell">${spark(g[9],76,18,g[7]==='neg'?C().neg:C().pos)}</td></tr>`).join('')}</tbody>
@@ -571,7 +571,7 @@ function tabRapport(s){
   <div class="mini"><ul>${r.surprises.map(x=>`<li>${x}</li>`).join('')}</ul></div>
   <div class="slab">Från ledningen</div>
   ${r.quotes.map(q=>`<div class="quote">”${q.q}”<span class="who">${q.who}</span></div>`).join('')}
-  <div class="slab">Hur det rör ditt skäl</div>
+  <div class="slab">Vad det betyder för dig</div>
   <p style="font-size:14px;line-height:1.6;color:var(--mut);margin:0">${r.tes}</p>`;
 }
 function tabFund(s){
@@ -593,7 +593,7 @@ function tabFund(s){
 }
 function tabSkal(s){
   const broken=s.pillars.some(p=>p.s==='r');
-  const note=broken?`<div class="tnote"><b>Skälet är utmanat.</b> En av dina punkter gick under sin gräns. Det betyder inte sälj. Det betyder att något du räknade med inte stämmer längre. Ta ställning till just den delen, i lugn och ro.</div>`:'';
+  const note=broken?`<div class="tnote"><b>Något du räknade med har ändrats.</b> En av kurvorna gick under gränsen du satte. Det betyder inte sälj. Titta på just den delen i lugn och ro och bestäm själv.</div>`:'';
   return `${note}
   <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Det här är dina egna punkter, med gränser du själv satt. Den streckade linjen i varje graf är din gräns. Så länge kurvorna håller sig på rätt sida hör du inget från oss.</p>
   ${s.pillars.map(pcardHTML).join('')}`;
@@ -618,9 +618,9 @@ function askIn(){const i=document.getElementById('askin');if(i&&i.value.trim()){
 /* ============ global chat ============ */
 const GLOBAL={
  'Vad kräver mest uppmärksamhet?':{txt:'<span class="tag slutsats">slutsats</span> Telvio. Lönsamheten gick under din gräns på 40,0% <a class="cit">1</a>. Norlux vill också ha en stund av dig, men av trevligare skäl: stark rapport, allt du bad oss vakta håller <a class="cit">2</a>.',
-   data:{head:['Bolag','Pelare','Nu','Larm'],rows:[['Telvio','Lönsamhet','38,0%','<span class=neg>40,0% korsad</span>'],['Norlux','Tillväxt','11,0%','<span class=pos>8,0% håller</span>']]}},
- 'Vilka skäl vacklar?':{txt:'<span class="tag fakta">fakta</span> Ett av fem. Telvio: lönsamheten stiger inte längre som du räknade med <a class="cit">1</a>. Vi håller också ett extra öga på utdelningen där, 1,15 kronor in per utdelad krona mot din gräns 1,0.',data:null},
- 'Dold koncentrationsrisk?':{txt:'<span class="tag slutsats">slutsats</span> En sak är bra att känna till: Norlux och Telvio påverkas av samma europeiska industrikonjunktur. Tillsammans är de 46% av din portfölj. Ingen varning, men de kan dippa samtidigt.',
+   data:{head:['Bolag','Vad','Nu','Din gräns'],rows:[['Telvio','Lönsamhet','38,0%','<span class=neg>40,0% korsad</span>'],['Norlux','Tillväxt','11,0%','<span class=pos>8,0% håller</span>']]}},
+ 'Har något ändrats i mina bolag?':{txt:'<span class="tag fakta">fakta</span> Ett av fem. Telvio: lönsamheten stiger inte längre som du räknade med <a class="cit">1</a>. Vi håller också ett extra öga på utdelningen där, 1,15 kronor in per utdelad krona mot din gräns 1,0.',data:null},
+ 'Äger jag för mycket av samma sak?':{txt:'<span class="tag slutsats">slutsats</span> En sak är bra att känna till: Norlux och Telvio påverkas av samma europeiska industrikonjunktur. Tillsammans är de 46% av din portfölj. Ingen varning, men de kan dippa samtidigt.',
    data:{head:['Innehav','Andel','Cykelkänslighet'],rows:[['Norlux','28%','europeisk industri'],['Telvio','18%','europeisk industri'],['Övriga tre','54%','blandad']]}}
 };
 function renderFragaG(){
