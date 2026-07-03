@@ -602,7 +602,15 @@ STOCKS.VOLT={tk:'VOLT',namn:'Voltcell',status:'up',statusLab:'Milstolpe i septem
     ['Bas','Certifiering i höst, gradvisa kontrakt under 2027','~35 kr','+42%','mutc'],
     ['Optimistiskt','Certifiering plus volymkontrakt med två tillverkare','~90 kr','+266%','pos']],
    note:'Kurs i dag 24,60. Asymmetrin är själva caset: nedsidan är begränsad till insatsen, uppsidan är flera gånger den. Skyddet ligger i storleken: köp så lite att det pessimistiska utfallet inte skadar dig (lektion 11.4 i Marginalen). Värdena är illustrativa räkneexempel.',
-   mil:[['Sep 2026','Certifieringsbesked, EU-marknaden'],['Q4 2026','Första volymkontraktet enligt bolagets egen plan'],['Feb 2027','Bokslut: bruttomarginalen mot målet 45%']]},
+   mil:[['Sep 2026','Certifieringsbesked, EU-marknaden'],['Q4 2026','Första volymkontraktet enligt bolagets egen plan'],['Feb 2027','Bokslut: bruttomarginalen mot målet 45%']],
+   loften:[
+    ['Q1 2024','CE-certifiering "under första halvåret 2025"','Kom i november 2025','sen'],
+    ['Q3 2024','Pilotkontrakt med europeisk tillverkare "innan årsskiftet"','Tecknades i februari 2026','sen'],
+    ['Q4 2024','Bruttomarginal över 25% under 2025','Nåddes i Q3 2025','höll'],
+    ['Q2 2025','Ingen nyemission "under överskådlig tid"','Håller hittills','höll'],
+    ['Q1 2026','EU-certifiering klar september 2026','Väntar på besked','öppet']],
+   loftenNote:'Två av fyra avgjorda löften höll tidplanen. Sena besked har hittills inneburit ungefär ett halvårs försening, räkna med det när du läser nästa löfte.',
+   emis:'Kapitalanskaffning: två emissioner sedan 2022, senast i mars 2024 till kurs 15,50 (18% rabatt mot dåvarande kurs). Total utspädning sedan starten: cirka 24%.'},
   pillars:[
    {n:'Kassan räcker mer än 18 månader',s:'g',now:'~21 mån',pts:[30,28,26,25,23,21],larm:18,larmLab:'larm 18 mån',ev:'Räknat på nuvarande förbrukningstakt. Att den tickar ner är normalt, men under 18 månader tvingas bolag ofta ta in pengar på motpartens villkor.'},
    {n:'Tillväxt över 40% per år',s:'g',now:'+64%',pts:[45,52,48,58,61,64],larm:40,larmLab:'larm 40%',ev:'Från låg nivå, men accelererande sex kvartal i rad. Tillväxten är hela caset.'},
@@ -687,7 +695,7 @@ function renderStock(){
   const anchors=[['hant','Vad har hänt'],['skal','Varför du äger'],
     ...(s.report?[['rapport','Rapporten']]:[]),
     ...(s.fund?[['fund','Fundamenta']]:[]),
-    ...(s.scen?[['scen','Scenarier & milstolpar']]:[]),
+    ...(s.scen?[['scen','Scenarier & löften']]:[]),
     ...(x?[['agare','Ägare & insyn'],['blankutd','Blankning & utdelning'],['kalhist','Kalender & historik']]:[]),
     ['fraga','Fråga AI']];
   main.innerHTML=`
@@ -723,12 +731,18 @@ function secHant(s){
     </div></div>`;
 }
 function secScen(s){const sc=s.scen;
-  return `<section class="sec" id="sec-scen"><div class="sech"><h2>Scenarier & milstolpar</h2><span class="sm">tillväxtcase · illustrativa räkningar</span></div>
+  const lof=sc.loften?`
+    <div class="slabel" style="margin-top:18px">Löften och utfall · ur bolagets egna pressmeddelanden</div>
+    <div class="tscroll"><table class="dt"><thead><tr><th>När</th><th style="text-align:left">Vad ledningen lovade</th><th style="text-align:left">Hur det gick</th></tr></thead><tbody>
+    ${sc.loften.map(r=>`<tr><td style="font-family:var(--mono);color:var(--faint);font-size:10.5px;white-space:nowrap;vertical-align:top">${r[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--ink);white-space:normal;line-height:1.5">${r[1]}</td><td style="text-align:left;font-family:var(--sans);white-space:normal;line-height:1.5" class="${r[3]==='höll'?'pos':r[3]==='sen'?'neg':'mutc'}">${r[2]}</td></tr>`).join('')}</tbody></table></div>
+    <div class="ownnote">${sc.loftenNote}</div>
+    <div class="ownnote">${sc.emis}</div>`:'';
+  return `<section class="sec" id="sec-scen"><div class="sech"><h2>Scenarier, milstolpar & löften</h2><span class="sm">tillväxtcase · illustrativt</span></div>
     <div class="tscroll"><table class="dt"><thead><tr><th>Scenario</th><th style="text-align:left">Antagande</th><th>Värde per aktie</th><th>Mot kurs i dag</th></tr></thead><tbody>
     ${sc.rows.map(r=>`<tr><td>${r[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--mut);white-space:normal">${r[1]}</td><td>${r[2]}</td><td class="${r[4]}">${r[3]}</td></tr>`).join('')}</tbody></table></div>
     <p class="pev" style="max-width:66ch;margin-top:10px">${sc.note}</p>
     <div class="slabel" style="margin-top:16px">Milstolpar vi bevakar</div>
-    <table class="dt" style="max-width:540px"><tbody>${sc.mil.map(m=>`<tr><td style="font-family:var(--mono);color:var(--gold);font-size:11px;white-space:nowrap">${m[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--ink);white-space:normal">${m[1]}</td></tr>`).join('')}</tbody></table></section>`;
+    <table class="dt" style="max-width:540px"><tbody>${sc.mil.map(m=>`<tr><td style="font-family:var(--mono);color:var(--gold);font-size:11px;white-space:nowrap">${m[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--ink);white-space:normal">${m[1]}</td></tr>`).join('')}</tbody></table>${lof}</section>`;
 }
 function secAgare(s){const x=s.extras;
   return `<section class="sec" id="sec-agare"><div class="sech"><h2>Ägare & insyn</h2><span class="sm">FI insynsregister · exempeldata</span></div>
