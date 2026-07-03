@@ -129,15 +129,22 @@ Den minsta produkt som bevisar tesen, och det första betalbara.
 ### Fas 2: Bevakningstjänsten (beta), cirka 3 till 4 månader därefter
 - Konton + manuell/CSV-import av innehav (ingen broker-koppling i beta).
 - Onboardingen från prototypen: varför du äger + saker att vakta + gränser.
+- **Teskrossaren i köpflödet:** innan bolaget läggs till bygger AI:n det starkaste motargumentet, ur verifierbara källor (blankningsdata, bolagets egna nyckeltalstrender, riskavsnittet i årsredovisningen). Inga fria "historiska analogier", de hallucinerar.
+- **Beslutsdagboken (kärnfunktion, inte verktyg):** varje köp/sälj loggas med motiveringen i stunden, AI:n följer upp mot facit i backspegeln och bygger över tid en bias-profil ("du säljer vinnare tidigt"). Alternativkostnaden mot index är en lins i samma liggare. Beskrivning av det förflutna, aldrig uppmaning, där går rådgivningslinjen. Delar datamodell med ansvarsliggaren.
 - Morgonbrevet som utskick (mejl/push) och förstasidan i appen.
 - Bevakning: pressmeddelanden (MFN/Cision-flöden), FI:s insynsregister, FI:s blankningsregister, rapportkalender. Rapportkollen blir rapportanalysen per bolag.
 - Bolagshubben enligt v2-mocken: ägare & insyn, blankning, utdelning, kalender och **historik/händelselogg** (uppflyttad från V3, den bär både "allt samlat per bolag" och ansvarsliggaren).
 - **Täckningslistan** per bolag: "det här bevakar vi för Norlux", som gör löftet "du missar inget" verifierbart.
-- Grundad chat per bolag och över portföljen.
+- **Insynskontext:** köp/sälj i relation till personens lön (ur årsredovisningen) och egna historik. Fakta-kontext, aldrig rankat "signalvärde" (implicit rekommendation).
+- Grundad chat per bolag och över portföljen, plus **Fråga Marginalen v1** (coachen över kursen + ordlistan, se §12).
 - **Släppkrav:** samma noll-hallucination-grind + att larm bara triggar på materiella händelser (mätt mot en manuellt bedömd facit-vecka).
 
 ### Fas 3: Fördjupning (V2/V3 i spec-dokumentet)
-Broker-koppling (Tink), estimat/konsensus på riktigt (datalicens), earnings-call-läge, portfölj-korsrisk, historik/ansvarstidslinje ("AI:n sa X förra kvartalet, så blev det"), mobil-PWA med push.
+Broker-koppling (Tink), estimat/konsensus på riktigt (datalicens), mobil-PWA med push, samt:
+- **Stämmo- och presentationssammanfattaren** (earnings-call-läget, ASR): fokus på gapet mellan rapporten och Q&A:n, vilka frågor ledningen duckade. Samma ASR-investering matar coachens transkript-korpus.
+- **Portföljröntgen/korsrisk** (Pro): kvalitativ version är grundbar ("tre av dina bolag delar samma slutkund"); kvantifierade fall-scenarier ("62% faller om ...") är pseudoprecision och byggs inte.
+- **Screener på svenska** (Pro/expansion): kräver fundamenta-licensen; obs att "lista med motivering per bolag" ligger nära rekommendation, formuleras som objektiv filtrering.
+- **Scenariosimulator:** hävstångsdelen (±1/2/5/10% på underliggande) är deterministisk och kan byggas när som helst; portföljnivån kräver faktormodeller för att vara ärlig och skjuts tills det finns.
 
 ### Fas 4: Warrantsöket som satellit (om/när)
 Beslutsmotorn är färdigdesignad. Kräver egen datapipeline (emittentfiler, produktlivscykel). Eget varumärke eller tydligt avskild yta, så att ägarberättelsen förblir ren.
@@ -241,8 +248,9 @@ Kursen är inte en granne till tjänsten, den är en komponent i den. Sex konkre
 4. **Kontextuella lektioner vid händelser (medel).** När ett larm går följer rätt lektion med: bruten marginalpunkt → lektionen om marginaler; insynsköp → lektionen om insynshandel. Undervisning i det ögonblick användaren är som mest mottaglig.
 5. **Kursens övningar blir onboardingens data (medel).** Den som gått kursen har redan skrivit "jag äger en andel av ett bolag som tjänar pengar genom att ...". Det svaret importeras som utgångspunkt när samma bolag läggs in i tjänsten. Kursen fyller i onboardingen.
 6. **Kursframsteg styr språknivån (senare, unik).** Den som klarat räkenskapskapitlen får tätare facktermer och färre parenteser; nybörjaren får fler förklaringar. Ingen konkurrent kan kopiera det, för ingen annan äger både skolan och tjänsten.
+7. **Fråga Marginalen: coachen.** Samma grundnings-motor, ny korpus: kursens 115 lektioner + ordlistan (v1, redan skriven och kvalitetsgrindad), sedan kurerade Discord-svar från Sebastian och coacherna, sedan transkriberingar (fas 3, samma ASR som stämmosammanfattaren). Medlemmen frågar fritt och får svar i husets röst med källa; det botten inte kan eskaleras till människa, och människosvaret blir ny korpus. Ersätter tradingcoacher gradvis, inte dag ett. Guardrails: metodfrågor besvaras, positionsfrågor ("ska jag sälja X?") styrs om till processen ("vad var ditt skäl, har det ändrats?"), vilket är bättre coaching än ett ja/nej och håller rådgivningslinjen. Discord-medlemmarnas frågor anonymiseras/destilleras innan de blir korpus (GDPR); coachernas svar används med deras godkännande. Värdet: innehållet är redan producerat och betalt, konkurrenter måste skriva sitt först.
 
-Tratten i andra riktningen: gratisbrevet innehåller en lektion i veckan, kursen är gratis, och varje lektionsslut pekar mot tjänsten ("vill du att vi håller koll på det här åt dig?").
+Tratten i andra riktningen: gratisbrevet innehåller en lektion i veckan, kursens första kapitel är gratis, och varje lektionsslut pekar mot tjänsten ("vill du att vi håller koll på det här åt dig?").
 
 ## 13. Saknas-listan: ärlig inventering
 
@@ -256,7 +264,7 @@ Tratten i andra riktningen: gratisbrevet innehåller en lektion i veckan, kursen
 
 **Teknik (fas 1 och 2, planerad i §5, noll byggd):** konton och betalning, grundnings-motorn med eval-svit, datainhämtning (MFN, FI, rapporter), bevakningsjobb, mejl/push-utskick.
 
-**Innehåll:** morgonbrevets redaktionella mallar (tyst dag, larmdag, rapportdag), Sebastians gratis-brev nummer ett, produkt-copyns husstil dokumenterad (trelagersregeln in i designbriefen: gjort).
+**Innehåll:** morgonbrevets redaktionella mallar (tyst dag, larmdag, rapportdag), Sebastians gratis-brev nummer ett, produkt-copyns husstil dokumenterad (trelagersregeln in i designbriefen: gjort), Discord-korpusen till coachen (export, kuratering, anonymisering och coachernas godkännande).
 
 **Affär/juridik (beslut, §11):** namn + varumärkeskoll, MiFID-genomläsning, prishypotesen i betan, bolagsstruktur, betapanelens rekrytering.
 
