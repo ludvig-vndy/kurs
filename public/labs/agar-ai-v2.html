@@ -15,8 +15,21 @@
     --gold:#E0A43B; --gold-soft:#1F232C; --gold-d:#7E5E22;
     --pos:#5FB89A; --pos-soft:#16241F;
     --neg:#E0726F; --neg-soft:#261A1D; --neg-d:#6E3A33;
+    --bgt:rgba(14,15,17,.92);
     --disp:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
   }
+  html[data-theme="light"]{
+    --bg:#F7F6F3; --bg2:#F1EFEA; --card:#FFFFFF; --card2:#F3F1EB;
+    --line:#E6E3DB; --line2:#D2CEC3;
+    --ink:#23252B; --mut:#5C6470; --faint:#8B929B;
+    --gold:#9C6B10; --gold-soft:#F6ECD8; --gold-d:#C9A45C;
+    --pos:#1E7A5C; --pos-soft:#E4F0EA;
+    --neg:#BA4A42; --neg-soft:#F7E6E4; --neg-d:#DCA69F;
+    --bgt:rgba(247,246,243,.92);
+  }
+  html[data-theme="light"] .askbar button{background:#E5B04A;color:#241C09}
+  html[data-theme="light"] .bub.u{background:#E5B04A;color:#241C09}
+  html[data-theme="light"] .logo .mark, html[data-theme="light"] .top .mark{background:linear-gradient(150deg,#E5B04A,#c98a28)}
   *{box-sizing:border-box}
   html,body{margin:0;min-height:100%}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.55}
@@ -89,7 +102,9 @@
   .whyline{color:var(--mut);font-size:13.5px;margin:0 0 16px;border-left:2px solid var(--gold-d);padding-left:12px;line-height:1.5}
   .whyline b{color:var(--faint);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px}
   /* single-page: sticky anchor bar + sections */
-  .anchbar{position:sticky;top:0;z-index:20;background:rgba(14,15,17,.92);backdrop-filter:blur(8px);display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);margin:0 0 4px;padding:6px 0}
+  .anchbar{position:sticky;top:0;z-index:20;background:var(--bgt);backdrop-filter:blur(8px);display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);margin:0 0 4px;padding:6px 0}
+  .thbtn{width:100%;background:none;border:1px solid var(--line2);border-radius:9px;color:var(--mut);padding:8px;font-size:12px;margin-bottom:9px;transition:.14s}
+  .thbtn:hover{border-color:var(--gold);color:var(--ink)}
   .anch{background:none;border:none;color:var(--mut);padding:8px 12px;font-size:12.5px;border-radius:8px;white-space:nowrap;transition:.14s}
   .anch:hover{color:var(--ink)}
   .anch.on{color:var(--ink);background:var(--card2)}
@@ -184,6 +199,7 @@
     <button class="nav on" data-view="idag"></button>
     <button class="nav" data-view="fraga"></button>
     <div class="sidefoot">
+      <button class="thbtn" id="thbtn"></button>
       <div class="mocktag">V2 · PROTOTYP · EXEMPELDATA</div>
       Fiktiva bolag och illustrativa siffror. Fokus: look and feel med data.
     </div>
@@ -204,13 +220,21 @@ function svgi(n,w){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentC
 function ic(n,c){return `<span class="ico ${c||''}">${svgi(n)}</span>`;}
 document.getElementById('mk').innerHTML=svgi('pulse',2.2);
 
+/* ============ theme ============ */
+const PAL={dark:{pos:'#5FB89A',neg:'#E0726F',gold:'#E0A43B',neu:'#646B76',larm:'#7E5E22'},
+           light:{pos:'#1E7A5C',neg:'#C04A42',gold:'#B07A1E',neu:'#9AA0A8',larm:'#C9A45C'}};
+let curTheme=localStorage.getItem('agarai-theme')||'light';
+function C(){return PAL[curTheme];}
+function applyTheme(){document.documentElement.dataset.theme=curTheme;
+  const b=document.getElementById('thbtn');if(b)b.textContent=curTheme==='light'?'Byt till mörkt tema':'Byt till ljust tema';}
+
 /* ============ chart helpers ============ */
 function spark(pts,w=72,h=20,color){
   const mn=Math.min(...pts),mx=Math.max(...pts),r=mx-mn||1;
   const xs=pts.map((p,i)=>[(i/(pts.length-1))*(w-4)+2, h-3-((p-mn)/r)*(h-7)]);
   const path=xs.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ');
   const last=xs[xs.length-1];
-  const c=color||'#646B76';
+  const c=color||C().neu;
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${path}" fill="none" stroke="${c}" stroke-width="1.4"/><circle cx="${last[0]}" cy="${last[1]}" r="2" fill="${c}"/></svg>`;
 }
 function pillChart(pts,larm,status){
@@ -221,8 +245,8 @@ function pillChart(pts,larm,status){
   const xs=pts.map((p,i)=>[(i/(pts.length-1))*(W-14)+7,y(p)]);
   const path=xs.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ');
   const last=xs[xs.length-1];
-  const col=status==='r'?'#E0726F':status==='y'?'#E0A43B':'#5FB89A';
-  const larmLine=larm==null?'':`<line x1="7" x2="${W-7}" y1="${y(larm).toFixed(1)}" y2="${y(larm).toFixed(1)}" stroke="#7E5E22" stroke-width="1" stroke-dasharray="4 4"/>`;
+  const col=status==='r'?C().neg:status==='y'?C().gold:C().pos;
+  const larmLine=larm==null?'':`<line x1="7" x2="${W-7}" y1="${y(larm).toFixed(1)}" y2="${y(larm).toFixed(1)}" stroke="${C().larm}" stroke-width="1" stroke-dasharray="4 4"/>`;
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${larmLine}<polyline points="${path}" fill="none" stroke="${col}" stroke-width="1.8"/><circle cx="${last[0]}" cy="${last[1]}" r="3" fill="${col}"/></svg>`;
 }
 function fmtChg(v){const s=v>0?'+':'';const c=v>0?'pos':v<0?'neg':'mutc';return `<span class="${c}">${s}${v.toFixed(1).replace('.',',')}%</span>`;}
@@ -238,13 +262,13 @@ const STOCKS={
   why:'Lönsam förvärvsmaskin: organisk tillväxt över 8%, stigande marginal, ingen utspädning.',
   event:'Q3: organisk tillväxt 11,0% mot guidning 7 till 9. FCF 388 Mkr, +18%. Höjd helårsguidning. Alla tre pelare håller.',src:'Q3-rapport · imorse 07:30',
   what:[
-   {t:'fakta',txt:'Q3-rapporten kom imorse. Organisk tillväxt 11,0%, över bolagets guidning om 7 till 9%. Fritt kassaflöde 388 Mkr, upp 18% mot samma kvartal i fjol. Nettoskulden nere på 1,4x EBITDA.',c:1},
-   {t:'slutsats',txt:'Rapporten stärker ditt skäl på alla tre pelare: tillväxten håller, marginalen vidgas, aktieantalet står stilla. Marknaden lär fokusera på den höjda helårsguidningen. Svagheten att bevaka är Nordamerika, organiskt minus 2%.',c:0}],
+   {t:'fakta',txt:'Q3-rapporten kom imorse. Försäljningen växte 11,0% av egen kraft, utan förvärv, över bolagets egen prognos om 7 till 9%. Kassaflödet, pengarna som blir kvar efter alla utgifter och investeringar, blev 388 Mkr, upp 18% mot i fjol. Skulden motsvarar nu 1,4 årsvinster.',c:1},
+   {t:'slutsats',txt:'Rapporten stärker ditt skäl på alla tre punkter: tillväxten håller, lönsamheten ökar och antalet aktier står stilla. Marknaden lär fästa sig vid den höjda prognosen. Svagheten att hålla ögonen på är Nordamerika, där försäljningen krympte 2%.',c:0}],
   rail:[
-   {k:'Organisk tillväxt Q3',v:'11,0%',dd:'+2,5 pp',dc:'pos',cc:'mot konsensus 8,5 · guidning 7 till 9'},
-   {k:'Fritt kassaflöde',v:'388 Mkr',dd:'+18%',dc:'pos',cc:'i fjol 329 Mkr · konvertering 95%'},
-   {k:'EBIT-marginal',v:'19,2%',dd:'+1,2 pp',dc:'pos',cc:'i fjol 18,0% · konsensus 18,3%'},
-   {k:'Nettoskuld/EBITDA',v:'1,4x',dd:'ned 0,3',dc:'pos',cc:'förvärvsutrymme kvar'},
+   {k:'Tillväxt av egen kraft, Q3',v:'11,0%',dd:'+2,5',dc:'pos',cc:'procentenheter över väntade 8,5 · egen prognos 7 till 9'},
+   {k:'Kassaflöde, fritt',v:'388 Mkr',dd:'+18%',dc:'pos',cc:'i fjol 329 · 95% av vinsten blev riktiga pengar'},
+   {k:'Rörelsemarginal (EBIT)',v:'19,2%',dd:'+1,2',dc:'pos',cc:'procentenheter upp · i fjol 18,0 · väntat 18,3'},
+   {k:'Skuld mot årsvinst',v:'1,4x',dd:'ned 0,3',dc:'pos',cc:'nettoskuld/EBITDA · utrymme för fler förvärv'},
    {k:'Antal aktier',v:'148,2 M',dd:'oförändrat',dc:'mutc',cc:'11 kvartal i rad'}],
   fund:{
    rows:[
@@ -255,9 +279,9 @@ const STOCKS={
     ['Fritt kassaflöde, Mkr',[300,329,355,342,371,388],'+17,9%','pos',0],
     ['Nettoskuld/EBITDA, x',[1.9,1.7,1.6,1.6,1.5,1.4],'-0,3','pos',1]],
    mult:[['P/E','24,3','21,0','+16%'],['EV/EBIT','18,9','16,4','+15%'],['EV/S','3,6','3,1','+16%'],['P/FCF','27,2','24,8','+10%']],
-   ai:'Det viktigaste i siffrorna just nu: marginaltrenden är intakt sex kvartal i rad och kassaflödet följer vinsten, det är kvalitet. Men multiplarna ligger 10 till 16% över bolagets eget 5-årssnitt: du betalar mer för samma bolag än marknaden brukat göra.'},
+   ai:'Det viktigaste i siffrorna: lönsamheten har förbättrats sex kvartal i rad och vinsten blir faktiskt pengar på kontot, det är kvalitet. Men aktien kostar 10 till 16% mer än den brukat, mätt mot bolagets egen vinst de senaste fem åren. Du betalar alltså mer för samma bolag än marknaden brukat göra.'},
   report:{
-   verdict:'Stark rapport. Slår konsensus på tillväxt och kassaflöde, höjer guidningen. Inga röda flaggor, men Nordamerika är svagpunkten.',
+   verdict:'Stark rapport. Bolaget växer snabbare än väntat, tjänar mer per såld krona och höjer sin egen prognos för året. Inga varningstecken, men Nordamerika går trögt.',
    grid:[
     ['Omsättning','2 410','2 350','+2,6%','pos','2 203','+9,4%','pos','·',[2145,2203,2260,2255,2340,2410]],
     ['Organisk tillväxt','11,0%','8,5%','+2,5 pp','pos','8,0%','+3,0 pp','pos','7 till 9%',[9,8,10,9,10,11]],
@@ -268,12 +292,12 @@ const STOCKS={
    seg:[['Industrikomponenter','1 420','+11%','pos','20,1%','+1,0 pp','pos'],
         ['Service','610','+14%','pos','24,3%','+2,1 pp','pos'],
         ['Nordamerika','380','-2%','neg','11,2%','-0,8 pp','neg']],
-   good:['Organisk tillväxt 11%, klart över guidning','FCF-konvertering 95%','Nettoskuld ned till 1,4x','Höjd helårsguidning'],
-   bad:['Nordamerika organiskt -2%','Valutamotvind 1,5 pp på omsättningen','Rörelsekapital band mer än normalt'],
-   surprises:['Guidning höjd mitt under året','Servicemarginal på rekordnivå 24,3%'],
+   good:['Växte 11% av egen kraft, klart över egen prognos','95% av vinsten blev riktiga pengar','Skulden fortsatte ner, nu 1,4 årsvinster','Höjd prognos för helåret'],
+   bad:['Nordamerika krympte 2%','Valutan åt upp 1,5 procentenheter av tillväxten','Mer pengar än vanligt låstes i lager och kundfordringar'],
+   surprises:['Prognosen höjdes mitt under året, ovanligt för bolaget','Servicedelen nådde rekordlönsamhet, 24,3%'],
    quotes:[{q:'Vi ser fortsatt stark efterfrågan i Europa och har höjt helårsmålet. Förvärvspipen är den bästa på flera år.',who:'VD · kvartalsrapporten s. 2'},
            {q:'Kassaflödet ger oss råd att accelerera förvärv utan att öka skuldsättningen.',who:'CFO · webcast 09:10'}],
-   tes:'Pelare 1 (tillväxt över 8%): bekräftad, 11,0%. Pelare 2 (stigande marginal): bekräftad, +1,2 pp. Pelare 3 (ingen utspädning): intakt, 148,2 M aktier.'},
+   tes:'Punkt 1 (tillväxt över 8%): bekräftad, 11,0%. Punkt 2 (stigande lönsamhet): bekräftad, +1,2 procentenheter. Punkt 3 (ingen utspädning): intakt, 148,2 miljoner aktier.'},
   extras:{
    agare:[['Familjen Norling, via bolag','21,4%'],['Investmentbolaget Vindarna','9,8%'],['Fondbolaget Kärnan','6,2%'],['Styrelse och ledning totalt','3,1%']],
    insyn:[['12 jun 26','VD','Köp','2,1 Mkr','pos'],['3 apr 26','CFO','Köp','0,6 Mkr','pos'],['18 dec 25','Ledamot','Köp','0,4 Mkr','pos'],['2 okt 25','Affärsområdeschef','Sälj','0,3 Mkr','neg']],
@@ -285,13 +309,13 @@ const STOCKS={
    hist:[['2 jul 26','Q3: stark rapport, höjd guidning. Vår analys: alla tre pelare håller.'],['3 apr 26','Förvärv: norsk komponenttillverkare, cirka 180 Mkr, betalt med kassaflöde.'],['9 feb 26','Q2: i linje med förväntan. Marginal +0,4 pp.'],['21 nov 25','Q1: organisk tillväxt 8%, precis på pelarens gräns. Vi noterade, larmade inte.']]},
   pillars:[
    {n:'Organisk tillväxt över 8% per år',s:'g',now:'11,0%',pts:[9,8,10,9,10,11],larm:8,larmLab:'larm 8,0%',ev:'Sex kvartal: 9, 8, 10, 9, 10, 11. Trenden intakt och stigande, marginal till larmnivån.'},
-   {n:'Stigande EBIT-marginal',s:'g',now:'19,2%',pts:[17.9,18.0,18.3,18.5,18.8,19.2],larm:18.0,larmLab:'larm: under fjolårets 18,0%',ev:'Från 17,9 till 19,2% på sex kvartal. Servicemixen lyfter.'},
+   {n:'Stigande rörelsemarginal',s:'g',now:'19,2%',pts:[17.9,18.0,18.3,18.5,18.8,19.2],larm:18.0,larmLab:'larm: under fjolårets 18,0%',ev:'Från 17,9 till 19,2% på sex kvartal. En växande andel service, med högre lönsamhet, lyfter.'},
    {n:'Ingen utspädning',s:'g',now:'148,2 M',pts:[148.2,148.2,148.2,148.2,148.2,148.2],larm:null,larmLab:'larm: antalet aktier ökar',ev:'Oförändrat 11 kvartal. Förvärv betalda med kassaflöde.'}],
   chat:{
-   'Varför steg aktien idag?':{txt:'Aktien steg på Q3-rapporten. Organisk tillväxt 11,0% mot väntade 8,5% <a class="cit">1</a> och höjd helårsguidning <a class="cit">2</a>. <span class="tag slutsats">slutsats</span> Marknaden prissätter guidningen, inte bara kvartalet.',
-     data:{head:['','Utfall','Konsensus','Avvikelse'],rows:[['Org. tillväxt','11,0%','8,5%','<span class=pos>+2,5 pp</span>'],['FCF, Mkr','388','340','<span class=pos>+14,1%</span>']]}},
-   'Största risken?':{txt:'<span class="tag slutsats">slutsats</span> Nordamerika. Tredje kvartalet i rad med svag utveckling <a class="cit">1</a>. Litet i helheten (16% av omsättningen) men trenden pekar fel.',
-     data:{head:['Nordamerika','Q1 26','Q2 26','Q3 26'],rows:[['Organisk tillväxt','0%','-1%','<span class=neg>-2%</span>'],['EBIT-marginal','12,4%','11,8%','<span class=neg>11,2%</span>']]}}}
+   'Varför steg aktien idag?':{txt:'Aktien steg på Q3-rapporten. Försäljningen växte 11,0% av egen kraft mot väntade 8,5% <a class="cit">1</a>, och bolaget höjde sin egen prognos för året <a class="cit">2</a>. <span class="tag slutsats">slutsats</span> Marknaden prissätter prognosen, inte bara kvartalet.',
+     data:{head:['','Utfall','Väntat','Skillnad'],rows:[['Org. tillväxt','11,0%','8,5%','<span class=pos>+2,5 pp</span>'],['FCF, Mkr','388','340','<span class=pos>+14,1%</span>']]}},
+   'Största risken?':{txt:'<span class="tag slutsats">slutsats</span> Nordamerika. Försäljningen där har backat tre kvartal i rad <a class="cit">1</a>. Litet i helheten (16% av försäljningen) men fel riktning.',
+     data:{head:['Nordamerika','Q1 26','Q2 26','Q3 26'],rows:[['Tillväxt egen kraft','0%','-1%','<span class=neg>-2%</span>'],['Rörelsemarginal','12,4%','11,8%','<span class=neg>11,2%</span>']]}}}
  },
  TELV:{tk:'TELV',namn:'Telvio',status:'bad',statusLab:'Skälet utmanat',
   pris:84.20,idag:-0.6,spark12:[102,99,101,97,95,93,90,92,88,87,85,84],
@@ -300,12 +324,12 @@ const STOCKS={
   why:'Stabil kassako med stigande marginal och trygg utdelning.',
   event:'Q3: bruttomarginalen föll till 38,0%, ned 3,5 pp på prispress i mobil. Din pelare om stigande marginal korsade larmnivån 40%.',src:'Q3-rapport · igår 08:00',
   what:[
-   {t:'fakta',txt:'Q3-bruttomarginalen föll till 38,0%, ned från 41,5% för ett år sedan, driven av prispress i mobilsegmentet. Fritt kassaflöde 910 Mkr, ned 12%. Utdelningen bekräftades.',c:1},
-   {t:'slutsats',txt:'Detta träffar pelare 2 direkt: kurvan korsade din larmnivå 40,0% detta kvartal. Utdelningen är inte hotad ännu (täckning 1,15x) men trenden i täckningen pekar fel. Marginalskälet behöver omprövas, inte hela innehavet.',c:0}],
+   {t:'fakta',txt:'Q3: av varje hundralapp i försäljning blev 38 kronor kvar efter direkta kostnader (bruttomarginal 38,0%), ned från 41,50 för ett år sedan. Orsaken är prispress på mobilsidan. Kassaflödet föll 12% till 910 Mkr. Utdelningen bekräftades.',c:1},
+   {t:'slutsats',txt:'Det här träffar din andra punkt rakt av: kurvan korsade din larmnivå 40,0% i kvartalet. Utdelningen är inte hotad ännu, det kommer in 1,15 kronor för varje utdelad krona, men trenden pekar åt fel håll. Ompröva marginaldelen av ditt skäl, inte hela innehavet.',c:0}],
   rail:[
-   {k:'Bruttomarginal Q3',v:'38,0%',dd:'-3,5 pp',dc:'neg',cc:'i fjol 41,5 · din larmnivå 40,0'},
-   {k:'Fritt kassaflöde',v:'910 Mkr',dd:'-12%',dc:'neg',cc:'konsensus 1 050 Mkr'},
-   {k:'Utdelningstäckning',v:'1,15x',dd:'ned från 1,45',dc:'neg',cc:'larm vid 1,0x'},
+   {k:'Bruttomarginal Q3',v:'38,0%',dd:'-3,5',dc:'neg',cc:'procentenheter ned · i fjol 41,5 · din larmnivå 40,0'},
+   {k:'Kassaflöde, fritt',v:'910 Mkr',dd:'-12%',dc:'neg',cc:'väntat: 1 050 Mkr'},
+   {k:'Utdelningens täckning',v:'1,15x',dd:'ned från 1,45',dc:'neg',cc:'kronor in per utdelad krona · larm vid 1,0'},
    {k:'Fiber, tillväxt',v:'+6%',dd:'tar andel',dc:'pos',cc:'ljuspunkten i rapporten'}],
   fund:{
    rows:[
@@ -314,9 +338,9 @@ const STOCKS={
     ['EBIT-marginal, %',[14.5,14.2,13.8,13.4,12.8,12.1],'-2,4 pp','neg',1],
     ['Fritt kassaflöde, Mkr',[1034,1010,990,975,940,910],'-12,0%','neg',0]],
    mult:[['P/E','11,2','13,4','-16%'],['EV/EBIT','9,8','11,6','-16%'],['Direktavkastning','5,8%','4,6%','högre'],['P/FCF','20,4','15,9','+28%']],
-   ai:'Läsanvisning: aktien ser billig ut mot eget snitt på P/E, men dyr på P/FCF, det är kassaflödet som viker, inte kursen som fallit för mycket. Klassisk marginalvarning: multipeln krymper långsammare än lönsamheten.'},
+   ai:'Läsanvisning: aktien ser billig ut mot vinsten (P/E 11,2 mot eget snitt 13,4) men dyr mot kassaflödet. Det betyder att det inte är kursen som fallit för mycket, det är pengarna in som viker. Ett klassiskt varningsmönster.'},
   report:{
-   verdict:'Svag på marginal. Prispressen i mobil urholkar lönsamheten snabbare än väntat. Utdelningen står kvar, men täckningen tunnas ut.',
+   verdict:'Svag rapport. Priskriget på mobilsidan äter lönsamheten snabbare än väntat. Utdelningen står kvar, men marginalen som ska betala den krymper.',
    grid:[
     ['Omsättning','8 120','8 200','-1,0%','mutc','8 210','-1,1%','mutc','·',[8210,8180,8150,8160,8140,8120]],
     ['Bruttomarginal','38,0%','41,0%','-3,0 pp','neg','41,5%','-3,5 pp','neg','·',[41.5,41.0,40.6,40.1,39.2,38.0]],
@@ -325,11 +349,11 @@ const STOCKS={
    seg:[['Mobil','4 210','-6%','neg','9,8%','-3,9 pp','neg'],
         ['Bredband och fiber','2 480','+6%','pos','15,2%','+0,4 pp','pos'],
         ['Företag','1 430','+1%','mutc','13,1%','-0,5 pp','neg']],
-   good:['Utdelningen bekräftad','Fiber växer 6% och tar andel'],
-   bad:['Bruttomarginal ned 3,5 pp','EBIT-marginal klart under konsensus','FCF ned 12%, täckningen tunnas ut'],
+   good:['Utdelningen bekräftad','Fiber växer 6% och tar marknadsandelar'],
+   bad:['Lönsamheten föll brant, 3,5 procentenheter på ett år','Rörelsemarginalen klart under förväntan','Kassaflödet ned 12%, utdelningens täckning tunnas ut'],
    surprises:['Prispressen kom snabbare än bolaget flaggade i Q2'],
    quotes:[{q:'Konkurrensen i mobil har intensifierats och pressat priserna mer än väntat.',who:'VD · kvartalsrapporten s. 3'}],
-   tes:'Pelare 2 (stigande marginal): bruten, kurvan korsade larmnivån 40,0%. Pelare 1 (stabil omsättning) håller. Pelare 3 (utdelning täckt): bevaka, täckningen föll till 1,15x mot larm 1,0x.'},
+   tes:'Punkt 2 (stigande lönsamhet): bruten, kurvan korsade din larmnivå 40,0%. Punkt 1 (stabil försäljning) håller. Punkt 3 (utdelningen täckt): bevaka, 1,15 kronor in per utdelad krona mot larm 1,0.'},
   extras:{
    agare:[['Pensionsbolaget Norra','14,2%'],['Fondbolaget Kärnan','8,9%'],['Familjestiftelsen Telve','5,4%'],['Styrelse och ledning totalt','0,4%']],
    insyn:[['20 maj 26','Ledamot','Sälj','1,2 Mkr','neg'],['2 feb 26','CFO','Sälj','0,8 Mkr','neg']],
@@ -340,12 +364,12 @@ const STOCKS={
    kal:[['24 okt 2026','Q4-rapport'],['11 feb 2027','Bokslutskommuniké'],['14 apr 2027','X-dag utdelning']],
    hist:[['1 jul 26','Q3: bruttomarginal 38,0%. Pelare bruten, vår flagga skickad samma morgon.'],['20 maj 26','Insynssälj: ledamot 1,2 Mkr.'],['28 apr 26','Q2: bolaget flaggade själva för prispress i mobil.'],['12 feb 26','Bokslut: utdelningen höjdes till 4,80.']]},
   pillars:[
-   {n:'Stabil omsättning',s:'g',now:'-1,1%',pts:[8210,8180,8150,8160,8140,8120],larm:7960,larmLab:'larm: fall över 3% i årstakt',ev:'I stort sett platt sex kvartal. Inom normalt spann.'},
-   {n:'Stigande bruttomarginal',s:'r',now:'38,0%',pts:[41.5,41.0,40.6,40.1,39.2,38.0],larm:40.0,larmLab:'larm 40,0%',ev:'Korsade larmnivån detta kvartal. Sex raka kvartal av fall. Skälet om marginalexpansion håller inte längre.'},
-   {n:'Utdelning täckt av kassaflödet',s:'y',now:'1,15x',pts:[1.5,1.45,1.4,1.3,1.25,1.15],larm:1.0,larmLab:'larm 1,0x',ev:'Bekräftad utdelning, men täckningen har fallit sex kvartal i rad. Bevaka Q4.'}],
+   {n:'Stabil försäljning',s:'g',now:'-1,1%',pts:[8210,8180,8150,8160,8140,8120],larm:7960,larmLab:'larm: fall över 3% i årstakt',ev:'I stort sett platt sex kvartal. Inom normalt spann.'},
+   {n:'Stigande bruttomarginal',s:'r',now:'38,0%',pts:[41.5,41.0,40.6,40.1,39.2,38.0],larm:40.0,larmLab:'larm 40,0%',ev:'Korsade din larmnivå i kvartalet. Sex raka kvartal av fall. Antagandet om stigande lönsamhet håller inte längre.'},
+   {n:'Utdelning täckt av kassaflödet',s:'y',now:'1,15x',pts:[1.5,1.45,1.4,1.3,1.25,1.15],larm:1.0,larmLab:'larm 1,0x',ev:'Utdelningen är bekräftad, men marginalen krymper: 1,15 kronor in per utdelad krona, sex kvartal av fall. Bevaka Q4.'}],
   chat:{
-   'Håller mitt skäl?':{txt:'<span class="tag fakta">fakta</span> Delvis brutet. Bruttomarginalen korsade din larmnivå 40,0% detta kvartal <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen står kvar (täckning 1,15x mot larm 1,0x), men marginaldelen av skälet behöver omprövas.',
-     data:{head:['Pelare','Nu','Larm','Status'],rows:[['Stabil omsättning','-1,1%','-3%','<span class=pos>håller</span>'],['Stigande bruttomarginal','38,0%','40,0%','<span class=neg>bruten</span>'],['Utdelningstäckning','1,15x','1,0x','<span class=gold>bevaka</span>']]}}}
+   'Håller mitt skäl?':{txt:'<span class="tag fakta">fakta</span> Delvis brutet. Lönsamheten (bruttomarginalen) korsade din larmnivå 40,0% i kvartalet <a class="cit">1</a>. <span class="tag slutsats">slutsats</span> Utdelningen står kvar, 1,15 kronor in per utdelad krona mot din larmnivå 1,0, men marginaldelen av skälet behöver omprövas.',
+     data:{head:['Pelare','Nu','Larm','Status'],rows:[['Stabil försäljning','-1,1%','-3%','<span class=pos>håller</span>'],['Stigande lönsamhet','38,0%','40,0%','<span class=neg>bruten</span>'],['Utdelningens täckning','1,15x','1,0x','<span class=gold>bevaka</span>']]}}}
  },
  KAVX:{tk:'KAVX',namn:'Kavex Medical',status:'up',statusLab:'Insiderköp',
   pris:156.00,idag:0.4,spark12:[138,141,140,144,147,146,150,152,151,154,155,156],
@@ -356,7 +380,7 @@ const STOCKS={
   what:[{t:'fakta',txt:'VD köpte aktier för 2,1 Mkr i går, det första insiderköpet på 14 månader.',c:1},
         {t:'slutsats',txt:'Ett köp av den storleken efter lång tystnad signalerar förtroende. Svag positiv datapunkt, inget i ditt skäl ändras. Q3-rapporten kommer 2 juli.',c:0}],
   rail:[{k:'Insiderköp',v:'2,1 Mkr',dd:'VD',dc:'gold',cc:'första på 14 månader'},
-        {k:'Återkommande intäkter',v:'63%',dd:'+1 pp',dc:'pos',cc:'pelare: över 60%'},
+        {k:'Återkommande intäkter',v:'63%',dd:'+1 pp',dc:'pos',cc:'din punkt: över 60%'},
         {k:'Nästa rapport',v:'2 jul',dd:'Q3',dc:'mutc',cc:'om 0 dagar i mocken'}],
   fund:null,report:null,
   pillars:[
@@ -397,6 +421,7 @@ const main=document.getElementById('main');
 const NAVDEF=[['idag','today','Idag'],['fraga','ask','Fråga AI']];
 document.querySelectorAll('.nav').forEach(n=>{const dd=NAVDEF.find(x=>x[0]===n.dataset.view);n.innerHTML=ic(dd[1])+' <span>'+dd[2]+'</span>';
   n.onclick=()=>{view=n.dataset.view;setNav();render();window.scrollTo(0,0);};});
+document.getElementById('thbtn').onclick=()=>{curTheme=curTheme==='light'?'dark':'light';localStorage.setItem('agarai-theme',curTheme);applyTheme();render();};
 function setNav(){document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on',n.dataset.view===view));}
 function render(){({idag:renderIdag,fraga:renderFragaG,stock:renderStock}[view])();}
 const S=t=>STOCKS[t];
@@ -420,7 +445,7 @@ function renderIdag(){
         </div>
         <div class="dblock">
           ${priceHTML(s)}
-          <div class="sp">${spark(s.spark12,110,24,s.idag>=0?'#5FB89A':'#E0726F')}</div>
+          <div class="sp">${spark(s.spark12,110,24,s.idag>=0?C().pos:C().neg)}</div>
           <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
         </div>
       </div>`;}).join('')}
@@ -432,7 +457,7 @@ function renderIdag(){
         </div>
         <div class="dblock">
           ${priceHTML(s)}
-          <div class="sp">${spark(s.spark12,110,20,'#646B76')}</div>
+          <div class="sp">${spark(s.spark12,110,20,C().neu)}</div>
           <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
         </div>
       </div>`;}).join('')}
@@ -463,7 +488,7 @@ function renderStock(){
     <div class="whyline"><b>Varför du äger det</b>${s.why}</div>
     <div class="anchbar" id="anchbar">${anchors.map(([id,l])=>`<button class="anch" data-a="${id}" onclick="jumpTo('${id}')">${l}</button>`).join('')}</div>
     <section class="sec" id="sec-hant"><div class="sech"><h2>Vad har hänt</h2><span class="sm">AI · grundat · citerat</span></div>${secHant(s)}</section>
-    <section class="sec" id="sec-skal"><div class="sech"><h2>Ditt skäl</h2><span class="sm">pelare mot dina larmnivåer</span></div>${tabSkal(s)}</section>
+    <section class="sec" id="sec-skal"><div class="sech"><h2>Ditt skäl</h2><span class="sm">punkter mot dina larmnivåer</span></div>${tabSkal(s)}</section>
     ${s.report?`<section class="sec" id="sec-rapport"><div class="sech"><h2>Senaste rapporten</h2><span class="sm">Q3 2026</span></div>${tabRapport(s)}</section>`:''}
     ${s.fund?`<section class="sec" id="sec-fund"><div class="sech"><h2>Fundamenta</h2><span class="sm">ur rapporterna · exempeldata</span></div>${tabFund(s)}</section>`:''}
     ${x?secAgare(s)+secBlankUtd(s)+secKalHist(s):''}
@@ -499,7 +524,7 @@ function secBlankUtd(s){const x=s.extras;
     <div class="duo">
       <div><div class="slabel" style="margin-top:0">Blankning, andel av aktier</div>
         <div class="kv ${x.blank.cls}">${x.blank.nu}</div>
-        <div class="ownnote"><span class="${x.blank.cls}">${x.blank.trend}.</span> ${x.blank.note}</div></div>
+        <div class="ownnote"><span class="${x.blank.cls}">${x.blank.trend}.</span> ${x.blank.note} Blankat = aktier som lånats och sålts i väntan på nedgång.</div></div>
       <div><div class="slabel" style="margin-top:0">Utdelning per aktie, kr</div>
         <table class="dt"><tbody>${x.utd.map(u=>`<tr><td>${u[0]}</td><td>${u[1]}</td></tr>`).join('')}</tbody></table>
         <div class="ownnote">${x.utdNext}</div></div>
@@ -528,10 +553,10 @@ function tabRapport(s){
   const r=s.report;
   return `<div class="vlab">${ic('ask','sm')} AI · rapporten på 15 sekunder</div>
   <p class="verdict">${r.verdict}</p>
-  <div class="slab">Utfall mot konsensus, i fjol och guidning</div>
+  <div class="slab">Utfall mot väntat, i fjol och bolagets egen prognos</div>
   <div class="tscroll"><table class="dt">
-    <thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Konsensus</th><th>Mot kons.</th><th>I fjol</th><th>Mot i fjol</th><th>Guidning</th><th>Trend 6 kv</th></tr></thead>
-    <tbody>${r.grid.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td class="mutc">${g[2]}</td><td class="${g[4]}">${g[3]}</td><td class="mutc">${g[5]}</td><td class="${g[7]}">${g[6]}</td><td class="faintc">${g[8]}</td><td class="sparkcell">${spark(g[9],76,18,g[7]==='neg'?'#E0726F':'#5FB89A')}</td></tr>`).join('')}</tbody>
+    <thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Väntat</th><th>Mot väntat</th><th>I fjol</th><th>Mot i fjol</th><th>Egen prognos</th><th>Trend 6 kv</th></tr></thead>
+    <tbody>${r.grid.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td class="mutc">${g[2]}</td><td class="${g[4]}">${g[3]}</td><td class="mutc">${g[5]}</td><td class="${g[7]}">${g[6]}</td><td class="faintc">${g[8]}</td><td class="sparkcell">${spark(g[9],76,18,g[7]==='neg'?C().neg:C().pos)}</td></tr>`).join('')}</tbody>
   </table></div>
   <div class="slab">Segment</div>
   <div class="tscroll"><table class="dt">
@@ -557,20 +582,20 @@ function tabFund(s){
   <div class="tscroll"><table class="dt">
     <thead><tr><th>Nyckeltal</th>${Q.map(q=>`<th>${q}</th>`).join('')}<th>Mot i fjol</th><th>Trend</th></tr></thead>
     <tbody>${f.rows.map(row=>{const[name,pts,yoy,cls,dec]=row;
-      return `<tr><td>${name}</td>${pts.map(p=>`<td>${p.toLocaleString('sv-SE',{minimumFractionDigits:dec,maximumFractionDigits:dec})}</td>`).join('')}<td class="${cls}">${yoy}</td><td class="sparkcell">${spark(pts,76,18,cls==='neg'?'#E0726F':cls==='pos'?'#5FB89A':'#646B76')}</td></tr>`;}).join('')}</tbody>
+      return `<tr><td>${name}</td>${pts.map(p=>`<td>${p.toLocaleString('sv-SE',{minimumFractionDigits:dec,maximumFractionDigits:dec})}</td>`).join('')}<td class="${cls}">${yoy}</td><td class="sparkcell">${spark(pts,76,18,cls==='neg'?C().neg:cls==='pos'?C().pos:C().neu)}</td></tr>`;}).join('')}</tbody>
   </table></div>
   <div class="slab">Multiplar mot egen historik</div>
   <div class="tscroll"><table class="dt" style="max-width:520px">
-    <thead><tr><th>Multipel</th><th>Nu</th><th>5-årssnitt</th><th>Mot snittet</th></tr></thead>
+    <thead><tr><th>Värderingsmått</th><th>Nu</th><th>Eget 5-årssnitt</th><th>Mot snittet</th></tr></thead>
     <tbody>${f.mult.map(m=>{const neg=m[3].startsWith('+');return `<tr><td>${m[0]}</td><td>${m[1]}</td><td class="mutc">${m[2]}</td><td class="${neg?'neg':'pos'}">${m[3]}</td></tr>`;}).join('')}</tbody>
   </table></div>
   <div class="note">Jämförelsen är mot bolagets egen historik, aldrig ett omdöme om köpvärdhet. Exempeldata.</div>`;
 }
 function tabSkal(s){
   const broken=s.pillars.some(p=>p.s==='r');
-  const note=broken?`<div class="tnote"><b>Skälet är utmanat.</b> En pelare korsade sin larmnivå. Det betyder inte sälj, det betyder att en av dina egna förutsättningar inte längre håller. Ompröva den, inte hela innehavet i panik.</div>`:'';
+  const note=broken?`<div class="tnote"><b>Skälet är utmanat.</b> En av dina punkter korsade sin larmnivå. Det betyder inte sälj, det betyder att en av dina egna förutsättningar inte längre håller. Ompröva den, inte hela innehavet i panik.</div>`:'';
   return `${note}
-  <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Du skrev ditt skäl som testbara pelare med larmnivåer. Kurvorna nedan är pelarnas underliggande mått, med din larmnivå ritad som streckad linje. Vi stör dig bara när en kurva korsar sin linje.</p>
+  <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Du skrev ditt skäl som testbara punkter med larmnivåer. Kurvorna nedan är punkternas underliggande mått, med din larmnivå ritad som streckad linje. Vi stör dig bara när en kurva korsar sin linje.</p>
   ${s.pillars.map(pcardHTML).join('')}`;
 }
 function tabChat(s){
@@ -592,9 +617,9 @@ function askIn(){const i=document.getElementById('askin');if(i&&i.value.trim()){
 
 /* ============ global chat ============ */
 const GLOBAL={
- 'Vad kräver mest uppmärksamhet?':{txt:'<span class="tag slutsats">slutsats</span> Telvio. Bruttomarginalen korsade din larmnivå 40,0% <a class="cit">1</a>. Norlux också, men positivt: stark rapport, alla pelare håller <a class="cit">2</a>.',
-   data:{head:['Bolag','Pelare','Nu','Larm'],rows:[['Telvio','Bruttomarginal','38,0%','<span class=neg>40,0% korsad</span>'],['Norlux','Org. tillväxt','11,0%','<span class=pos>8,0% håller</span>']]}},
- 'Vilka skäl vacklar?':{txt:'<span class="tag fakta">fakta</span> Ett av fem: Telvio, pelaren om stigande marginal är bruten <a class="cit">1</a>. Utdelningstäckningen där är dessutom satt på bevakning (1,15x mot larm 1,0x).',data:null},
+ 'Vad kräver mest uppmärksamhet?':{txt:'<span class="tag slutsats">slutsats</span> Telvio. Lönsamheten korsade din larmnivå 40,0% <a class="cit">1</a>. Norlux också, men positivt: stark rapport, alla dina punkter håller <a class="cit">2</a>.',
+   data:{head:['Bolag','Pelare','Nu','Larm'],rows:[['Telvio','Lönsamhet','38,0%','<span class=neg>40,0% korsad</span>'],['Norlux','Tillväxt','11,0%','<span class=pos>8,0% håller</span>']]}},
+ 'Vilka skäl vacklar?':{txt:'<span class="tag fakta">fakta</span> Ett av fem: Telvio, punkten om stigande lönsamhet är bruten <a class="cit">1</a>. Utdelningens täckning där bevakas dessutom (1,15 mot larm 1,0).',data:null},
  'Dold koncentrationsrisk?':{txt:'<span class="tag slutsats">slutsats</span> Norlux och Telvio är båda känsliga för samma europeiska industricykel. Tillsammans 46% av portföljen. Ingen varning, men en korrelation värd att känna till.',
    data:{head:['Innehav','Andel','Cykelkänslighet'],rows:[['Norlux','28%','europeisk industri'],['Telvio','18%','europeisk industri'],['Övriga tre','54%','blandad']]}}
 };
@@ -612,7 +637,7 @@ function askG(q){const chat=document.getElementById('gchat');chat.insertAdjacent
   setTimeout(()=>{chat.insertAdjacentHTML('beforeend',`<div class="bub a">${html}</div>`);window.scrollTo(0,document.body.scrollHeight);},200);}
 function askGIn(){const i=document.getElementById('gin');if(i&&i.value.trim()){askG(i.value.trim());i.value='';}}
 
-render();
+applyTheme();render();
 </script>
 </body>
 </html>
