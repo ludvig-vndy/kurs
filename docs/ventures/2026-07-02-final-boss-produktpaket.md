@@ -68,6 +68,23 @@ Tre av fyra idéer är samma produkt: kursen, rapportkollen och innehavs-AI:n de
 
 Varje steg återanvänder förra stegets spine (grundnings-motor, citat-arkitektur, konton) och förra stegets tratt (kursen). Det är så diamanten byggs utan att bli fyra halvfärdiga stenar.
 
+### Husets karta (innehållet, var allt bor)
+
+**Avsändaren är Marginalen. Tre rum och en sidobyggnad:**
+
+1. **Skolan: kursen** (betald, se beslut 4; första kapitlet gratis som smakprov). 115 lektioner/Fokus, quiz, repetition, ordlistan. Dubbelroll: ordlistan och lektionerna är samtidigt Förklara-AI:ns svarsmotor i tjänsten.
+2. **Verktygen från utbildningen** (analysverktyget, checklistorna, formelbilagan): gör-det-själv-bänken. Bor under skolan; på sikt bryggan in i tjänsten: checklistan du fyller i för ett bolag är råmaterialet till "varför äger du det" i Ägarkollen, och kan längre fram ligga i bolagshubben som "din egen analys", förifylld med bolagets siffror.
+3. **Tjänsten: Ägarkollen** (arbetsnamn under namnbeslut; betald kärna). Ägarbrevet 07:30, bevakningen med larm, rapportanalysen, bolagshubben, Förklara-AI ("vad menas med det här?").
+4. **Sidobyggnaden: warrantverktyget** ("Hitta bästa hävstångsprodukten"). Egen dörr, egen målgrupp, utanför prenumerationen. Fristående gratisverktyg med mäklar-affiliate, länkad från huset men aldrig del av ägarberättelsen.
+
+**Trappan gratis → betalt:**
+- **Gratis (tratten):** kursens första kapitel, det generella Ägarbrevet i Sebastians röst, ordlistan, warrantverktyget.
+- **Kursen:** engångsköp (riktmärke 995 till 1 995 kr, testas), och ingår i årsprenumerationen på tjänsten (gör årsköpet självklart).
+- **Premium ~199 kr/mån:** personliga Ägarbrevet, bevakningen, rapportanalyserna, Förklara-AI.
+- **Pro ~995 kr/mån:** konsensus och multiplar (fas 3-datan), korsrisk, ansvarsliggaren, Sebastians krets.
+
+Poängen med kartan: inget befintligt är vid sidan om. Kursen är svarsmotor, onboarding-data och egen intäkt; verktygen är bryggan till skälet; ordlistan är Förklara-läget; warranten är en egen liten affär som driver trafik till huset.
+
 ---
 
 ## 4. Tillgångsinventering: vad som redan finns och vad det bevisar
@@ -145,7 +162,7 @@ Poängen: **de två första faserna kan byggas nästan utan datakostnad** tack v
 
 **Tratten:** Marginalen (kursen) → Rapportkollen (smakprov, freemium) → Innehavs-AI (prenumeration) → Pro/B2B.
 
-- **Gratis:** kursen (eller kursens kärna), N rapportanalyser per månad, 1 bolag bevakat.
+- **Gratis:** kursens första kapitel, det generella Ägarbrevet, ordlistan, N rapportanalyser per månad. Kursen i sin helhet är betald (beslut 4).
 - **Premium, riktpris 149 till 249 kr/mån:** obegränsade innehav och rapportanalyser, morgonbrief, skäl-bevakning med larm, chat.
 - **Pro, 499 till 990 kr/mån:** djup historik, export, korsrisk, prioriterad data, ansvarstidslinje.
 - **Senare B2B:** API/white-label av grundnings-motorn och den nordiska händelsedatan; förvaltare/family office-nivå med team och compliance-loggar. Det är den durabla högmarginalintäkten.
@@ -208,7 +225,7 @@ Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (markna
 1. **Namn/varumärke:** kandidater framtagna: **Vaka** (rekommenderad: känslan, "vi vakar över dina bolag"), **Ägarbrevet** (tratten, kan även bli namnet på brevet inuti Vaka) och **Bolagskollen** (begripligheten). "Ägar-AI" var arbetsnamn. Viktig flagga: **Marginalen Bank** finns; en betald finanstjänst under namnet Marginalen är en varumärkeskrock i samma bransch. Rekommendation: eget produktnamn med "av Marginalen" som avsändare, PRV/EUIPO-koll via jurist innan låsning. Visuellt är huset redan tvådelat med avsikt: papper/oxblod för kursen (tidningen), grafit/guld eller ljust instrument-tema för tjänsten (terminalen), samma hus, två uttryck.
 2. **Prissättningshypotes att testa i beta:** Premium ~199 kr/mån (brevet, bevakningen, rapportanalys mot egen historik) och Pro ~995 kr/mån (Sebastians nivå: konsensus och multiplar när fas 3-datan finns, korsrisk, ansvarsliggaren, persona-element som månadsgenomgång i liten krets). Grundarpris till de första hundra. De två nivåerna definierar varandra; 1 000 Premium + 200 Pro är ~4,8 Mkr/år.
 3. **Roller och ägande:** vem gör vad (bygge, innehåll, distribution/röst), och bolagsstruktur när betalning slås på.
-4. **Kursens betalmodell:** förblir kursen gratis tratt, eller blir den del av prenumerationen (bundle)?
+4. **Kursens betalmodell:** beslutat i grunden: kursen är betald, första kapitlet gratis som smakprov. Kvar att välja: engångspriset (riktmärke 995 till 1 995 kr, testas mot betapanelen) och bundlingen (rekommendation: kursen ingår i årsprenumerationen på tjänsten, det gör årsköpet självklart och matar onboardingen med färdiga skäl).
 5. **Data i fas 3:** licensiera (Börsdata/Millistream, snabbt och rent) eller bygga egna connectors (billigt, skört). Rekommendation: licensiera när intäkten bär det.
 6. **Warrantsöket:** parkeras (rekommenderas tills fas 2 lever), eller startas som satellit med eget namn.
 
