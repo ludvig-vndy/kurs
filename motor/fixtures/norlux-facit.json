@@ -1,0 +1,16 @@
+{
+  "bolag": "Norlux Industri",
+  "period": "Q3 2026",
+  "jamforelse": "Q3 2025",
+  "fakta": {
+    "omsattning": { "nu": 2410, "fjol": 2203, "enhet": "Mkr" },
+    "organisk_tillvaxt": { "nu": 11.0, "fjol": 8.0, "enhet": "%" },
+    "bruttomarginal": { "nu": 41.2, "fjol": 40.8, "enhet": "%" },
+    "ebit": { "nu": 463, "fjol": 397, "enhet": "Mkr" },
+    "ebit_marginal": { "nu": 19.2, "fjol": 18.0, "enhet": "%" },
+    "fritt_kassaflode": { "nu": 388, "fjol": 329, "enhet": "Mkr" },
+    "nettoskuld_ebitda": { "nu": 1.4, "fjol": 1.7, "enhet": "x" },
+    "antal_aktier": { "nu": 148.2, "fjol": 148.2, "enhet": "M" }
+  },
+  "guidning": { "ny_lag": 9, "ny_hog": 11, "gammal_lag": 7, "gammal_hog": 9, "avser": "organisk tillväxt, helår, %" }
+}
