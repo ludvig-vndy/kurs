@@ -17,6 +17,8 @@ Detta dokument är index och strategi. Artefakterna som hör till:
 | `design-explorations/agar-ai.html` | Äldre helhetsprototyp: onboarding (skäl + gränser) och hävstångsflik | Källa; görs om i v2-formspråk |
 | `design-explorations/havstangssok-mock.html` | Klickbar beslutsmotor för hävstång (fristående) | Levande UX-spec |
 | `docs/ventures/2026-07-02-designbrief-agar-ai-look-and-feel.md` | Designbriefen: instrumentkänslan, komponenter, språkregler | Styrande för all produkt-UI |
+| `design-explorations/agarkollen-karta.html` | Interaktiv funktionskarta över hela huset med korskopplingar och fas-badges. Live: `/labs/agarkollen-karta.html` | Diskussionsverktyg |
+| `docs/ventures/2026-07-06-value-proposition.md` | Delbar one-pager: löftet, paketets innehåll med status, trappan, vallgraven | Skickas till externa |
 | Marginalen (kursen, live på Cloudflare Pages) | 115 lektioner textkurs + 51 lektioner Fokus-spelare, broadsheet-varumärke, quiz, repetition/SRS, ordlista, Sebastians röst invävd | Byggd, deployad, lösenordsskyddad |
 | Marginalen analysverktyg (`/verktyg`) | Checklistedrivet analysverktyg i broadsheet-tema | Byggd |
 
@@ -143,7 +145,7 @@ Den minsta produkt som bevisar tesen, och det första betalbara.
 - **Rapportförberedelsen:** två dagar före rapport får du nyckelfrågorna: vad ledningen lovade förra kvartalet, hur dina gränser ligger till, blankningsläget. Du går in i rapportdagen förberedd i stället för att reagera efteråt. Konsensusfrågorna tillkommer i fas 3.
 - **Utdelningskollen:** tolv månaders kalender över väntade utdelningar med grundad hållbarhetsflagga ur rapporterna ("utdelningen är större än det fria kassaflödet, det brukar inte hålla länge"). Utdelningsjägarna är en stor, lojal och betalningsvillig svensk grupp.
 - **Insynskontext:** köp/sälj i relation till personens lön (ur årsredovisningen) och egna historik: "största köpet sedan 2021, tredje på två veckor". Mönstret är värdet, inte händelsen. Fakta-kontext, aldrig rankat "signalvärde" (implicit rekommendation).
-- Grundad chat per bolag och över portföljen, plus **Fråga Marginalen v1** (coachen över kursen + ordlistan, se §12).
+- Grundad chat per bolag och över portföljen, plus **Fråga Marginalen v1** (coachen över kursen + ordlistan, se §12) och **Fråga bolaget**: fritextfrågor mot bolagets hela dokumentstack, årsredovisningar, rapporter och prospekt ("hur ser skuldförfallen ut 2027?"), besvarade på sekunder med sidhänvisning. Samma extraktionsmotor som rapportanalysen; AlphaSense och BamSEC gör detta för amerikanska bolag, ingen gör det bra på svenska dokument.
 - **Släppkrav:** samma noll-hallucination-grind + att larm bara triggar på materiella händelser (mätt mot en manuellt bedömd facit-vecka).
 
 ### Fas 3: Fördjupning (V2/V3 i spec-dokumentet)
