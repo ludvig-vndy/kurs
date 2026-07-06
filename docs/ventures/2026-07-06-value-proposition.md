@@ -1,4 +1,4 @@
-# Ägarkollen · av Marginalen — value proposition och paketets innehåll
+# Ägarkollen · av Marginalen · value proposition och paketets innehåll
 
 *2026-07-06. Delbar one-pager. Status per rad: **live** (byggt och deployat), **mock** (klickbart på /labs), **fas 2/3** (planerat, se final boss-dokumentet). Ägarkollen är arbetsnamn.*
 
@@ -9,13 +9,13 @@ Du berättar varför du äger dina aktier. Vi läser allt, varje dag, och säger
 
 ---
 
-## Skolan: Marginalen — live
+## Skolan: Marginalen · live
 - **Kursen:** 115 lektioner + 51 interaktiva Fokus-lektioner, från "vad är en aktie" till multibagger-analys. Kapitel 1 gratis som smakprov.
 - **Quiz, repetition och ordlista**, inbyggt.
 - **Analysverktyget:** checklistor för den som vill göra jobbet själv.
 - *Roll i paketet:* lär kunden tänka som ägare, blir AI:ns svarskorpus, och kursens övningar blir färdiga skäl i tjänsten.
 
-## Tjänsten: Ägarkollen — mock på /labs
+## Tjänsten: Ägarkollen · mock på /labs
 
 **Dagliga pulsen**
 - **Ägarbrevet 07:30** *(mock)*: morgonens utgåva sida för sida. Dina bolag, det allmänna översatt till "för dig", lärobit på tysta dagar, Upptäckten från Spaningen sist och valbar. Beviset varje dag: "i natt läste vi 51 saker, tre rörde dig."
@@ -49,7 +49,7 @@ Du berättar varför du äger dina aktier. Vi läser allt, varje dag, och säger
 - **Warrantverktyget** *(mock, inline)*: "Hitta bästa hävstångsprodukten", rankat efter dina val, dominansfiltrering, ISIN-koll. Egen dörr, affiliate-intäkt.
 - **Spaningen** *(live, separat)*: hittar aktier som rör sig; Ägarkollen granskar och vaktar det du väljer.
 
-## Grunden — regler i allt
+## Grunden · regler i allt
 - Siffror kommer ur källdokument, aldrig ur AI:ns minne. Allt har källhänvisning. "Vet ej" är ett tillåtet svar.
 - Aldrig köp- eller säljråd. Vi visar vad som ändrats, du bestämmer.
 - Klarspråk: vardagssvenska först, facktermen i parentes tills du kan den, tabellerna på rapporternas riktiga språk.
