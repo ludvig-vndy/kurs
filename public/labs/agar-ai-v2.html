@@ -295,6 +295,23 @@
   .sbtn:hover{border-color:var(--gold);color:var(--ink)}
   .sbtn:disabled{opacity:.6;pointer-events:none}
 
+  /* ===== impulsbromsen ===== */
+  .sellbtn{margin-left:auto;background:none;border:1px solid var(--line2);border-radius:9px;color:var(--mut);font-size:12px;padding:7px 12px;cursor:pointer;transition:.14s}
+  .sellbtn:hover{border-color:var(--neg);color:var(--neg)}
+  .ibov{position:fixed;inset:0;background:rgba(20,20,22,.45);backdrop-filter:blur(4px);display:none;place-items:center;z-index:90;padding:18px}
+  .ibov.show{display:grid}
+  .ibcard{width:min(560px,94vw);background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:24px 26px;max-height:90vh;overflow:auto;box-shadow:0 22px 60px rgba(20,20,22,.25)}
+  .ibcard .ik{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .ibcard h2{font-family:var(--disp);font-weight:600;font-size:21px;margin:0 0 12px;letter-spacing:-.3px}
+  .ibskal{border-left:2px solid var(--gold-d);padding:2px 0 2px 13px;margin:0 0 14px;font-family:var(--disp);font-size:15.5px;line-height:1.5}
+  .ibskal .d8{font-family:var(--mono);font-size:10px;color:var(--faint);display:block;margin-top:5px;letter-spacing:.05em;font-style:normal}
+  .ibq{font-size:14px;font-weight:600;margin:14px 0 8px}
+  .ibcard textarea{width:100%;min-height:74px;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;color:var(--ink);font-family:var(--sans);font-size:13.5px;padding:11px 13px;outline:none;resize:vertical}
+  .ibcard textarea:focus{border-color:var(--gold)}
+  .ibrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .ibres{font-size:13.5px;line-height:1.6;background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:13px 15px;margin-top:14px}
+  .ibnote{font-size:11px;color:var(--faint);margin-top:10px;font-family:var(--mono)}
+
   /* ===== hävstång (taktiskt verktyg, samma tema) ===== */
   .lvnote{display:flex;gap:12px;background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:11px;padding:13px 15px;margin-bottom:18px;font-size:13px;color:var(--mut);line-height:1.55}
   .lvnote b{color:var(--ink);font-weight:500}
@@ -367,6 +384,7 @@
   <main class="main" id="main"></main>
 </div>
 <div class="tpop" id="tpop"></div>
+<div class="ibov" id="ibov"></div>
 
 <script>
 /* ============ icons ============ */
@@ -700,7 +718,7 @@ function renderStock(){
     ['fraga','Fråga AI']];
   main.innerHTML=`
     <button class="back" onclick="view='idag';setNav();render()"><span class="ico sm" style="transform:scaleX(-1)">${svgi('arrow')}</span>Idag</button>
-    <div class="shead"><h1>${s.namn}</h1><span class="fr-tk">${s.tk}</span>${stw(s)}</div>
+    <div class="shead"><h1>${s.namn}</h1><span class="fr-tk">${s.tk}</span>${stw(s)}<button class="sellbtn" onclick="openIB()">Funderar du på att sälja?</button></div>
     <div class="factbar num">
       <span class="f"><span class="v">${s.pris.toFixed(2).replace('.',',')}</span> ${fmtChg(s.idag)}</span>
       ${(s.factArr||[['52 v',s.fact.v52],['Börsvärde',s.fact.mcap],['P/E',s.fact.pe],['Dir.avk',s.fact.dir]]).map(f=>`<span class="sep">·</span><span class="f"><span class="k">${f[0]}</span><span class="v">${f[1]}</span></span>`).join('')}
@@ -1124,6 +1142,39 @@ function lvCheckIsin(){const v=(document.getElementById('lisin').value||'').trim
     (better.length?`<div style="margin-top:5px;color:var(--neg)">${better.length} likvärdig${better.length>1?'a':''} produkt${better.length>1?'er':''} är billigare i dag. Bäst: <b style="color:var(--pos)">${better[0].em} ${better[0].typ}</b>, spread ${better[0].spread.toFixed(2)}%, avgift ${better[0].carry.toFixed(3)}% per dag, ${lvKo(better[0])} till knock-out.</div>`
     :`<div style="margin-top:5px;color:var(--pos)">Ingen likvärdig produkt slår den på alla punkter just nu. Bra val.</div>`);
 }
+
+/* ============ Impulsbromsen ============ */
+const IBDATE={NORL:'14 mars 2025',TELV:'2 juni 2024',KAVX:'19 november 2025',BRUN:'8 oktober 2023',ALMI:'8 oktober 2023',VOLT:'22 april 2026'};
+function openIB(){
+  const s=S(cur);
+  const p=s.pillars&&s.pillars.length?(s.pillars.find(x=>x.s==='r')||s.pillars[0]):null;
+  document.getElementById('ibov').innerHTML=`<div class="ibcard">
+    <div class="ik">Impulsbromsen · innan du säljer</div>
+    <h2>Innan du säljer ${s.namn}</h2>
+    <div class="ibskal">"${s.why}"<span class="d8">Ditt skäl, som du skrev det ${IBDATE[cur]||'när du la in bolaget'}</span></div>
+    ${p?`<div class="uchart">${pillChart(p.pts,p.larm,p.s)}</div><div class="pmeta"><span>${p.n}</span><span class="gold">${p.larmLab}</span><span>nu: ${p.now}</span></div>`:''}
+    <div class="ibq">Vad har ändrats i sak sedan du skrev det här?</div>
+    <textarea id="ibtxt" placeholder="Skriv vad som ändrats i verksamheten, inte i kursen ..."></textarea>
+    <div class="ibrow">
+      <button class="btn ghost" onclick="ibAnswer(false)">Inget har egentligen ändrats</button>
+      <button class="btn prim" onclick="ibAnswer(true)">Spara i beslutsdagboken</button>
+    </div>
+    <div id="ibres"></div>
+    <div class="ibnote">Vi säger aldrig åt dig att sälja eller behålla. Beslutet är alltid ditt.</div>
+  </div>`;
+  document.getElementById('ibov').classList.add('show');
+}
+function ibAnswer(changed){
+  const t=(document.getElementById('ibtxt').value||'').trim();
+  const el=document.getElementById('ibres');
+  if(changed&&!t){el.innerHTML=`<div class="ibres">Skriv först vad som ändrats, det är hela poängen med bromsen.</div>`;return;}
+  if(changed){
+    el.innerHTML=`<div class="ibres"><b>Sparat i din beslutsdagbok.</b> Du skrev: "${t.replace(/</g,'&lt;')}". Stämmer det har ditt skäl ändrats, och då är det här ett genomtänkt beslut. Vi följer upp mot facit i backspegeln.</div>`;
+  } else {
+    el.innerHTML=`<div class="ibres"><b>Då vet du vad det här är.</b> Ditt skäl står kvar som du skrev det, och kursen ingår inte i det. Säljer du ändå är det ett känslobeslut, och nu gör du det i så fall med öppna ögon. Det här ögonblicket sparas i din beslutsdagbok.</div>`;
+  }
+}
+document.getElementById('ibov').addEventListener('click',e=>{if(e.target.id==='ibov')document.getElementById('ibov').classList.remove('show');});
 
 applyTheme();render();
 </script>

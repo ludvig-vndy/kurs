@@ -114,7 +114,7 @@ const N=[
  {id:'HUBB',x:1245,y:490,cls:'hub c-hubb',t:'Bolagshubben',s:'allt samlat per bolag, en sida',fas:'fas 1-2',
   po:'Sebastians "allt samlat per bolag": en scrollbar sida med ankarmeny som ersätter tio flikar hos IR, mäklaren, FI och Google. Slutsats överst, data under, källa längst ner.'},
  {id:'DISC',x:980,y:800,cls:'hub c-disc',t:'Omdöme & disciplin',s:'verktygen mot ditt eget psyke',fas:'fas 2',
-  po:'Kursens tes är att psyket styr utfallet. Det här klustret attackerar det: logga besluten, pröva tesen innan köp, och se facit i efterhand utan skönmålning.'},
+  po:'Kursens tes är att psyket styr utfallet. Det här klustret attackerar det: logga besluten, pröva skälet innan köp, bromsa impulsen vid sälj, och se facit i efterhand utan skönmålning. Vallgravstesen: bevakning blir commodity, men beteendedatan som samlas här blir mer värdefull för varje månad och kan inte kopieras.'},
  {id:'ASK',x:480,y:810,cls:'hub c-ask',t:'Fråga & förklara',s:'du ska aldrig behöva lämna appen för att förstå något i den',fas:'fas 1-2',
   po:'Sebastians insikt: folk frågar ändå ChatGPT. Här fångas beteendet i kontext, med rätt siffror på skärmen och kursens innehåll som svarsmotor.'},
  {id:'SIDE',x:235,y:505,cls:'hub c-side',t:'Vid sidan om',s:'egna dörrar, egna målgrupper',fas:'',
@@ -128,33 +128,37 @@ const N=[
   po:'Gratis (SEO + tratten) och samtidigt Förklara-lägets innehåll. Samma text, två användningar.'},
  // puls leaves
  {id:'BREV',x:1005,y:80,cls:'c-puls',t:'Ägarbrevet 07:30',s:'dina bolag + att hålla koll på idag + lärobit',fas:'fas 2',
-  po:'Hooken. Två delar: dina bolag mot dina skäl, och det allmänna översatt till "för dig". Tysta dagar fylls med en lärobit ur kursen. Proof-of-work-raden ("51 lästa i natt, 0 rör dig") gör anti-bruset trovärdigt. Gratisversionen i Sebastians röst är kundanskaffningen.'},
+  po:'Hooken. Två delar: dina bolag mot dina skäl, och det allmänna översatt till "för dig". Tysta dagar fylls med en lärobit ur kursen. Proof-of-work-raden ("51 lästa i natt, 0 rör dig") gör anti-bruset trovärdigt. Gratisversionen i Sebastians röst är kundanskaffningen. Nyheterna dedupliceras och graderas ("17 artiklar, 16 är samma TT-telegram, 1 innehåller ny information"), och två dagar före rapport kommer rapportförberedelsen: fjolårslöftena, dina gränsers läge, blankningen.'},
  {id:'VAKTER',x:1330,y:100,cls:'c-puls',t:'Vakter & larm',s:'dina gränser, ritade som linjer',fas:'fas 1-2',
   po:'Killer-visualen: kurvan mot din egen larmlinje. Larm betyder aldrig sälj, det betyder att något du själv sa var viktigt har ändrats. Ingen konkurrent vet var användarens gräns går.'},
  // hubb leaves
  {id:'RAPPORT',x:1400,y:360,cls:'c-hubb',t:'Rapportanalysen',s:'klar minuter efter släppet',fas:'fas 1',
   po:'Första byggbara biten och smakprovet: utfall mot i fjol och bolagets egen prognos (konsensus blir Pro-uppgradering). Verdikt i en mening, delta-grid, citat, och "vad det betyder för dig" längst ner. Noll hallucinerade tal är släppkravet.'},
  {id:'DATA',x:1420,y:590,cls:'c-hubb',t:'Registerdatan',s:'ägare · insyn · blankning · utdelning · kalender · historik',fas:'fas 2 · gratis data',
-  po:'Nordens gratisguld: FI:s insyns- och blankningsregister, utdelningshistorik, bolagskalender och händelselogg. Plus täckningslistan som gör "du missar inget" verifierbart.'},
- {id:'TILLVX',x:1330,y:710,cls:'c-hubb',t:'Tillväxtläget',s:'runway · scenarier · milstolpar',fas:'fas 2',
-  po:'Samma motor, annan konfiguration för olönsamma bolag: runway-vakt (förvarning om nödemission), tillväxtgolv, utspädningstak, scenariovärdering med asymmetrin utskriven och milstolpsbevakning. Kursens kapitel 12 är facit. Här finns den stora avkastningen och risken, vakterna är riskbegränsningen.'},
+  po:'Nordens gratisguld: FI:s insyns- och blankningsregister, utdelningshistorik, bolagskalender och händelselogg. Plus täckningslistan som gör "du missar inget" verifierbart, och utdelningskollen: tolv månaders kalender med hållbarhetsflagga ur rapporterna.'},
+ {id:'TILLVX',x:1330,y:710,cls:'c-hubb',t:'Tillväxtläget',s:'runway · scenarier · löften',fas:'fas 2',
+  po:'Samma motor, annan konfiguration för olönsamma bolag: runway-vakt (förvarning om nödemission), tillväxtgolv, utspädningstak, scenariovärdering med asymmetrin utskriven och milstolpsbevakning. Plus löftesliggaren (ledningens löften mot facit), emissionshistoriken och utspädningsvakten som läser kallelser och prospekt i förväg. Kursens kapitel 12 är facit, och det här är go-to-market-spjutspetsen: segmentet saknar verktyg helt.'},
  // disc leaves
  {id:'DAGBOK',x:1150,y:895,cls:'c-disc',t:'Beslutsdagboken',s:'motivering vid affär, facit i efterhand',fas:'fas 2',
-  po:'Listans krona: varje köp/sälj loggas med skälet i stunden, AI:n följer upp mot vad som faktiskt hände och bygger en bias-profil ("du säljer vinnare tidigt"). Alternativkostnaden mot index är en lins i samma liggare. Beskrivning av ditt förflutna, aldrig uppmaning.'},
+  po:'Listans krona: varje köp/sälj loggas med skälet i stunden, AI:n följer upp mot vad som faktiskt hände och bygger en bias-profil ("du säljer vinnare tidigt"). Alternativkostnaden mäts mot två speglar: index och din egen ursprungliga plan, den disciplinerade tvillingen, som sätter en krona på vad beteendet kostar. Beskrivning av ditt förflutna, aldrig uppmaning.'},
  {id:'TESKROSS',x:810,y:905,cls:'c-disc',t:'Teskrossaren',s:'motargumentet innan pengarna',fas:'fas 2',
   po:'Innan ett bolag läggs till bygger AI:n starkaste bear-caset ur verifierbara källor: blankningsdata, bolagets egna trender, riskavsnittet. Obligatorisk i tillväxtläget, där önsketänkandet kostar mest.'},
+ {id:'IMPULS',x:985,y:925,cls:'c-disc',t:'Impulsbromsen',s:'ditt skäl visas när du vill sälja',fas:'fas 2',
+  po:'När du är på väg att sälja visas ditt ursprungliga skäl och frågan: vad har ändrats i sak? Kan du inte svara vet du själv att affären är känslostyrd. Ögonblicket sparas i beslutsdagboken. Ritual i appen först, kopplad till säljordern när broker-kopplingen finns.'},
  // ask leaves
  {id:'FORKLARA',x:320,y:900,cls:'c-ask',t:'Förklara-läget',s:'"vad menas med det här?"',fas:'fas 1-2',
   po:'Klicka på vilken term, rad eller mening som helst och få vardagsförklaringen + länken till lektionen. Grundat i det som redan står på skärmen: minimal hallucinationsyta, noll rådgivningsrisk, och det är utbildningsintegrationen i praktiken.'},
  {id:'COACH',x:610,y:912,cls:'c-ask',t:'Coachen',s:'Fråga Marginalen, fritext',fas:'v1 fas 1-2',
   po:'Samma grundningsmotor, växande korpus: kursen + ordlistan (v1, redan skriven), sedan kurerade Discord-svar, sedan transkriberingar. Metodfrågor besvaras; "ska jag sälja X?" styrs om till processen, vilket är bättre coaching än ett ja/nej. Det botten inte kan eskaleras till människa, och svaret blir ny korpus. Ersätter tradingcoacher gradvis.'},
+ {id:'FRAGABOLAG',x:455,y:940,cls:'c-ask',t:'Fråga bolaget',s:'"hur ser skuldförfallen ut 2027?"',fas:'fas 1-2',
+  po:'Fritextfrågor mot bolagets hela dokumentstack: årsredovisningar, rapporter, prospekt. Svar på sekunder med sidhänvisning, i stället för en timmes letande i noterna. Samma extraktionsmotor som rapportanalysen.'},
  // side leaves
  {id:'WARRANT',x:95,y:415,cls:'c-side',t:'Warrantverktyget',s:'"Hitta bästa hävstångsprodukten"',fas:'byggd som vy',
   po:'Beslutsmotor för den taktiska tradern: bäst enligt dina val, dominansfiltrering ("17 är strikt sämre"), ISIN-kollen. Egen dörr utanför prenumerationen; intäkt via mäklar-affiliate. Ärligt inramad: för korta lägen, inte ägande.'},
  {id:'SPANING',x:95,y:600,cls:'c-side',t:'Spaningen',s:'upptäckten: momentum & lägen',fas:'finns · separat',
   po:'Ludvigs befintliga verktyg: hittar lägen över ett universum (uppstickare, guldlägen, scorecards). Fristående med egen ton. Kedjan: Spaningen hittar caset, Ägarkollen analyserar och vaktar det.'},
- {id:'FAS3',x:210,y:700,cls:'c-side',t:'Fas 3-hyllan',s:'stämmo/Q&A-gap · screener · korsrisk · broker-koppling',fas:'fas 3',
-  po:'Det som kräver dyrare data eller ASR: stämmosammanfattaren (gapet mellan rapport och Q&A), screenern på svenska, kvantifierad korsrisk och broker-koppling. Medvetet parkerat tills intäkten bär licenserna.'}
+ {id:'FAS3',x:210,y:700,cls:'c-side',t:'Fas 3-hyllan',s:'screener · omvärld · skattehjälp · korsrisk · broker',fas:'fas 3',
+  po:'Det som kräver dyrare data eller mer infrastruktur: screenern på svenska, omvärldsbevakningen (konkurrenters vinstvarningar, ny branschreglering), veckans avvikelser, skattehjälpen och broker-kopplingen. Medvetet parkerat tills intäkten bär det. Stämmobevakningen är struken.'}
 ];
 const E=[
  // core structure
@@ -162,8 +166,8 @@ const E=[
  ['MARG','KURS'],['MARG','VERKTYG'],['MARG','ORDLISTA'],
  ['PULS','BREV'],['PULS','VAKTER'],
  ['HUBB','RAPPORT'],['HUBB','DATA'],['HUBB','TILLVX'],
- ['DISC','DAGBOK'],['DISC','TESKROSS'],
- ['ASK','FORKLARA'],['ASK','COACH'],
+ ['DISC','DAGBOK'],['DISC','TESKROSS'],['DISC','IMPULS'],
+ ['ASK','FORKLARA'],['ASK','COACH'],['ASK','FRAGABOLAG'],
  ['SIDE','WARRANT'],['SIDE','SPANING'],['SIDE','FAS3'],
  // cross-links (korrelationerna)
  ['KURS','COACH','cross','kursen är coachens svarskorpus, redan skriven och kvalitetsgrindad'],
@@ -176,11 +180,13 @@ const E=[
  ['SPANING','TILLVX','cross','Spaningen hittar caset, tillväxtläget analyserar och vaktar det'],
  ['TILLVX','KURS','cross','kursens kapitel 12 (multibagger-linsen) är tillväxtlägets facit'],
  ['TESKROSS','SKAL','cross','prövar skälet innan pengarna är på bordet'],
+ ['IMPULS','SKAL','cross','ditt ursprungliga skäl visas i säljögonblicket: vad har ändrats i sak?'],
+ ['FRAGABOLAG','RAPPORT','cross','samma extraktionsmotor, hela dokumentstacken som korpus'],
  ['DAGBOK','BREV','cross','uppföljningen mot facit landar i backspegeln och brevet'],
  ['DATA','TESKROSS','cross','blankningsdatan är bear-casets råvara'],
  ['WARRANT','AFFAR','cross','fristående gratis, intäkt via mäklar-affiliate'],
  ['BREV','AFFAR','cross','gratisbrevet i Sebastians röst är kundanskaffningsmotorn'],
- ['FAS3','COACH','cross','samma ASR-investering: stämmotranskript + coachens korpus'],
+ ['FAS3','COACH','cross','transkriberingen (ASR) byggs för coachens korpus'],
  ['DAGBOK','PRINCIP','cross','beskriver ditt förflutna, ger aldrig uppmaningar: rådgivningslinjen']
 ];
 
