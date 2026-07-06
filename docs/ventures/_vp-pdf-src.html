@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<title>Ägarkollen · value proposition</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page{size:A4;margin:16mm 15mm 18mm}
+  :root{
+    --ink:#23252B; --mut:#5C6470; --faint:#8B929B;
+    --gold:#9C6B10; --gold-b:#E0A43B; --gold-soft:#F6ECD8; --gold-d:#C9A45C;
+    --line:#E2DFD6; --pos:#1E7A5C;
+    --disp:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);color:var(--ink);font-size:10.5pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:6px;font-family:var(--mono);font-size:7.5pt;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  h1{font-family:var(--disp);font-weight:700;font-size:21pt;letter-spacing:-.3px;margin:14px 0 2px;line-height:1.1}
+  .meta{font-family:var(--mono);font-size:7.5pt;color:var(--faint);letter-spacing:.05em;margin-bottom:14px}
+  .lofte{background:var(--gold-soft);border-left:3px solid var(--gold-b);padding:10px 14px;margin:0 0 16px;border-radius:0 8px 8px 0}
+  .lofte .l1{font-family:var(--disp);font-weight:600;font-size:12.5pt;font-style:italic}
+  .lofte .l2{color:var(--mut);font-size:9.5pt;margin-top:3px}
+  h2{font-family:var(--disp);font-weight:600;font-size:12pt;margin:16px 0 6px;letter-spacing:-.2px;display:flex;align-items:baseline;gap:8px}
+  h2 .st{font-family:var(--mono);font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-d);border-radius:4px;padding:1px 6px;position:relative;top:-1px}
+  h3{font-family:var(--sans);font-weight:600;font-size:9.5pt;margin:10px 0 3px;color:var(--ink)}
+  h3 .st{font-family:var(--mono);font-weight:400;font-size:6.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-left:6px}
+  ul{margin:2px 0 8px;padding-left:15px}
+  li{margin-bottom:2.5px;color:var(--mut)}
+  li b{color:var(--ink);font-weight:600}
+  .roll{font-size:9pt;color:var(--faint);font-style:italic;margin:2px 0 0}
+  .rule{border:none;border-top:1px solid var(--line);margin:12px 0}
+  .vall{border:1.5px solid var(--gold-d);border-radius:8px;padding:10px 14px;margin:14px 0 0;background:#FDFBF6}
+  .vall b{font-family:var(--disp)}
+  .foot{margin-top:14px;font-family:var(--mono);font-size:7pt;color:var(--faint);letter-spacing:.03em;border-top:1px solid var(--line);padding-top:7px}
+  .cols{columns:2;column-gap:26px}
+  .keep{break-inside:avoid}
+  .pb{break-before:page}
+</style>
+</head>
+<body>
+
+<div class="mast"><span>Ägarkollen · av Marginalen</span><span>Arbetsnamn · konfidentiellt utkast</span></div>
+<h1>Value proposition och paketets innehåll</h1>
+<div class="meta">2026-07-06 · status per rad: LIVE (byggt och ute) · MOCK (klickbar prototyp) · FAS 2/3 (planerat)</div>
+
+<div class="lofte">
+  <div class="l1">Spara maximalt med tid utan att missa någonting om dina investeringar.</div>
+  <div class="l2">Du berättar varför du äger dina aktier. Vi läser allt, varje dag, och säger till när något du bryr dig om ändras.</div>
+</div>
+
+<div class="cols">
+
+<div class="keep">
+<h2>Skolan: Marginalen <span class="st">live</span></h2>
+<ul>
+<li><b>Kursen:</b> 115 lektioner + 51 interaktiva Fokus-lektioner, från "vad är en aktie" till multibagger-analys. Kapitel 1 gratis som smakprov.</li>
+<li><b>Quiz, repetition och ordlista</b>, inbyggt.</li>
+<li><b>Analysverktyget:</b> checklistor för den som vill göra jobbet själv.</li>
+</ul>
+<p class="roll">Rollen: lär kunden tänka som ägare, blir AI:ns svarskorpus, och kursens övningar blir färdiga skäl i tjänsten.</p>
+</div>
+
+<div class="keep">
+<h2>Tjänsten: Ägarkollen <span class="st">mock på /labs</span></h2>
+
+<h3>Dagliga pulsen</h3>
+<ul>
+<li><b>Ägarbrevet 07:30</b> <i>(mock)</i>: morgonens utgåva sida för sida. Dina bolag, det allmänna översatt till "för dig", lärobit på tysta dagar, Upptäckten från Spaningen sist och valbar. Beviset varje dag: "i natt läste vi 51 saker, tre rörde dig."</li>
+<li><b>Vakter & larm</b> <i>(mock, hjärtat)</i>: du sätter gränserna, vi ritar kurvan mot dem. Vi hör av oss bara när en gräns passeras.</li>
+<li><b>Nyhetsbevakning med deduplicering</b> <i>(fas 2)</i>: "17 artiklar i dag, 16 är samma TT-telegram, 1 innehåller ny information."</li>
+<li><b>Rapportförberedelsen</b> <i>(fas 2)</i>: två dagar före rapport: vad ledningen lovade sist, dina gränsers läge, blankningen.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h3>Bolagshubben <span class="st">mock</span></h3>
+<ul>
+<li>Allt om ett bolag på en sida: rapportanalys klar minuter efter släppet, kvartalshistorik, ägare & insynshandel med mönster ("största köpet sedan 2021, tredje på två veckor"), blankning, utdelning med hållbarhetsflagga <i>(fas 2)</i>, kalender, händelselogg och listan över exakt vad vi bevakar.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h3>Tillväxtläget <span class="st">mock · spjutspetsen</span></h3>
+<ul>
+<li>För bolagen utan vinst: de svåraste att analysera och de sämst betjänade. Kassa/runway-vakt, utspädningstak, scenariovärdering med asymmetrin utskriven, milstolpsbevakning.</li>
+<li><b>Löftesliggaren:</b> ledningens löften ur gamla pressmeddelanden följda mot facit ("två av fyra höll tidplanen").</li>
+<li><b>Emissionshistoriken:</b> alla kapitalanskaffningar med kurs och rabatt.</li>
+<li><b>Utspädningsvakten</b> <i>(fas 2)</i>: läser kallelser och prospekt, varnar för bemyndiganden och konvertibelförfall i förväg.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h3>Beteendespåret <span class="st">fas 2 · vallgraven</span></h3>
+<ul>
+<li><b>Beslutsdagboken:</b> varje affär loggad med skälet i stunden, följd mot facit, med bias-profil över tid.</li>
+<li><b>Impulsbromsen</b> <i>(mock)</i>: när du vill sälja visas ditt ursprungliga skäl och frågan "vad har ändrats i sak?". Kan du inte svara vet du själv vad affären är.</li>
+<li><b>Den disciplinerade tvillingen:</b> vad hade hänt om du följt din egen plan? Skillnaden sätter en krona på vad beteendet kostar.</li>
+<li><b>Teskrossaren:</b> starkaste motargumentet framletat innan du köper, ur verifierbara källor.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h3>Fråga & förklara <span class="st">mock</span></h3>
+<ul>
+<li><b>Förklara-läget:</b> klicka på vilken term som helst, få vardagsförklaringen + lektionen.</li>
+<li><b>Fråga bolaget:</b> fritextfrågor mot bolagets hela dokumentstack ("hur ser skuldförfallen ut 2027?"), svar på sekunder med sidhänvisning.</li>
+<li><b>Coachen</b> <i>(fas 1 till 2)</i>: fritextfrågor mot kursen + kurerade svar från Sebastian och coacherna, med eskalering till människa.</li>
+<li><b>Onboardingen</b> <i>(mock)</i>: "Varför äger du bolaget?" i klartext, tre saker att hålla koll på, gränser du sätter själv.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h2>Vid sidan om</h2>
+<ul>
+<li><b>Warrantverktyget</b> <i>(mock, inline)</i>: "Hitta bästa hävstångsprodukten", rankat efter dina val, dominansfiltrering, ISIN-koll. Egen dörr, affiliate-intäkt.</li>
+<li><b>Spaningen</b> <i>(live, separat)</i>: hittar aktier som rör sig; Ägarkollen granskar och vaktar det du väljer.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h2>Grunden · regler i allt</h2>
+<ul>
+<li>Siffror kommer ur källdokument, aldrig ur AI:ns minne. Allt har källhänvisning. "Vet ej" är ett tillåtet svar.</li>
+<li>Aldrig köp- eller säljråd. Vi visar vad som ändrats, du bestämmer.</li>
+<li>Klarspråk: vardagssvenska först, facktermen i parentes tills du kan den, tabellerna på rapporternas riktiga språk.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h2>Affären</h2>
+<ul>
+<li><b>Gratis:</b> kursens kapitel 1, generella Ägarbrevet i Sebastians röst, ordlistan, warrantverktyget.</li>
+<li><b>Kursen:</b> engångsköp (995 till 1 995 kr testas), ingår i årsprenumerationen.</li>
+<li><b>Premium ~199 kr/mån:</b> personliga brevet, bevakningen, rapportanalyserna, fråga & förklara.</li>
+<li><b>Pro ~995 kr/mån:</b> konsensusdata, korsrisk, ansvarsliggaren, Sebastians krets.</li>
+</ul>
+</div>
+
+<div class="keep">
+<h2>Byggs härnäst</h2>
+<ul>
+<li>Konton och betalning · extraktionsmotorn med noll-hallucinationskrav · gratis registerdata (FI, MFN) · mejlutskicket.</li>
+<li>Fas 1 är rapportanalysen, 4 till 6 veckor.</li>
+</ul>
+</div>
+
+</div>
+
+<div class="vall keep">
+<b>Vallgraven.</b> Sammanfattningar och bevakning blir commodity inom några år. Beteendedatan, skäl, gränser, beslut och avvikelser över tid, blir bara mer värdefull ju längre användaren stannar, och den kan ingen konkurrent replikera. <b>Bevakningen är inträdesbiljetten. Beteendedatan är vallgraven.</b>
+</div>
+
+<div class="foot">Klickbart: /labs/agar-ai-v2.html (produkten) · /labs/agar-ai-resan.html (90-dagarsdemon) · /labs/agarkollen-karta.html (funktionskartan) · allt fiktiv exempeldata</div>
+
+</body>
+</html>
