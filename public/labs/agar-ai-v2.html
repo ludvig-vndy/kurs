@@ -720,7 +720,7 @@ function frowHTML(tk,small){
     <div>
       <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">${tk}</span>${stw(s)}</div>
       <p>${s.event}</p>
-      ${s.tes&&!small?`<div class="fr-tes"><span class="tl2">Din tes</span>${s.tes.map(t=>`<span class="tchip ${t[1]}"><i></i>${t[0]}</span>`).join('')}</div>`:''}
+      ${s.tes&&!small?`<div class="fr-tes"><span class="tl2">Håller koll på</span>${s.tes.map(t=>`<span class="tchip ${t[1]}"><i></i>${t[0]}</span>`).join('')}</div>`:''}
       <div class="fr-src">${s.src}</div>
     </div>
     <div class="dstack">
@@ -885,7 +885,7 @@ function tabSkal(s){
   const broken=s.pillars.some(p=>p.s==='r');
   const note=broken?`<div class="tnote"><b>Något du räknade med har ändrats.</b> En av kurvorna gick under gränsen du satte. Titta på just den delen i lugn och ro och bestäm själv.</div>`:'';
   return `${note}
-  <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Det här är dina egna punkter, med gränser du själv satt. Den streckade linjen i varje graf är din gräns. Så länge kurvorna håller sig på rätt sida hör du inget från oss.</p>
+  <p style="color:var(--mut);font-size:13px;margin:0 0 16px;max-width:64ch">Det här är punkterna vi håller koll på åt dig, med nivåer du kan godkänna eller ändra. Den streckade linjen i varje graf är nivån där vi säger till. Så länge kurvorna håller sig på rätt sida hör du inget från oss.</p>
   ${s.pillars.map(pcardHTML).join('')}`;
 }
 function tabChat(s){
@@ -1038,7 +1038,7 @@ function renderStart(){
   }else if(obStep===1){
     const cn=S(obSel||'NORL').namn;
     body=`<div class="eyebrow">Steg 2 av 4 · valfritt</div><h1 class="big">Vill du att vi vaktar något särskilt i ${cn}?</h1>
-    <div class="sub">Vi har skrivit ett förslag på ditt skäl utifrån bolagets profil. Ändra orden, eller hoppa över: vi läser och sammanfattar allt oavsett.</div>
+    <div class="sub">Vi har skrivit ett förslag på varför du äger det, utifrån bolagets profil. Ändra orden, eller hoppa över: vi läser och sammanfattar allt oavsett.</div>
     <div class="sent">Jag äger en andel av <span class="co">${cn}</span> som tjänar pengar genom att
       <input value="${OB.a}" size="30">, och kommer tjäna mer för att <input value="${OB.b}" size="30">.</div>
     <a class="course" href="/fokus/kapitel/1">
@@ -1053,10 +1053,10 @@ function renderStart(){
       <button class="btn ghost" onclick="obSkip=true;obStep=3;renderStart()">Hoppa över, bevaka allt</button>
       <button class="btn prim" onclick="obSkip=false;obStep=2;renderStart()">Använd förslaget ${ic('arrow','sm')}</button></div>`;
   }else if(obStep===2){
-    body=`<div class="eyebrow">Steg 3 av 4</div><h1 class="big">Tre vakter, med gränser du kan ändra</h1>
-    <div class="sub">Förslag ur ditt skäl, med gränser satta efter kursens tumregler. Vi hör bara av oss särskilt när en gräns passeras.</div>
+    body=`<div class="eyebrow">Steg 3 av 4</div><h1 class="big">Tre saker vi håller koll på åt dig</h1>
+    <div class="sub">Byggda på varför du äger det. Nivån för när vi säger till kommer från kursens tumregler; ändra den om du vill.</div>
     ${OB.vakter.map(v=>`<div class="vrow"><div class="vn">${v[0]}</div>
-      <div class="vg"><span class="gl">Gräns</span><input value="${v[1]}"></div></div>`).join('')}
+      <div class="vg"><span class="gl">Säg till när</span><input value="${v[1]}"></div></div>`).join('')}
     <div class="obnav"><button class="btn ghost" onclick="obStep=1;renderStart()">Tillbaka</button>
       <button class="btn prim" onclick="obStep=3;renderStart()">Fortsätt ${ic('arrow','sm')}</button></div>`;
   }else{

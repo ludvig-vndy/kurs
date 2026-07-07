@@ -131,6 +131,16 @@ Den minsta produkt som bevisar tesen, och det första betalbara.
 - **Lansering:** till kursens användare först (beta). Gratis X rapporter, sedan betalvägg.
 - **Bevisar:** grundnings-motorn (hela spinen för fas 2), betalviljan, och flödet kurs → verktyg.
 
+### Snittet: kärnan först (sorterat 2026-07-07, på Sebastians fråga)
+
+Listan över allt vi vill bygga är lång; produkten får inte bli det. Sorteringsprincipen är tre frågor: kräver den noll inmatning av användaren? bär den morgonbrevet? kräver den motorn (och är därmed svår att kopiera)? Det ger tre lager:
+
+1. **Kärnan (utan den finns ingen produkt):** morgonbrevet med dedup och väsentlighetsgradering; rapportanalysen; bolagssidan med insynshandel i kontext, blankning, utdelning och kalender förklarat på svenska; tillväxtpaketet (utspädningsvakten, löftesliggaren, emissionshistoriken) som betalningsdrivare; grundad Fråga AI. Allt i kärnan fungerar utan att användaren fyllt i någonting utöver sina innehav.
+2. **Fördjupningen (efter beta, förstärker vanan):** tes-lagret (valfritt, AI-föreslaget), rapportförberedelsen, utdelningskollen, impulsbromsen + beslutsdagboken (vallgraven), ljudutgåvan.
+3. **Expansionen (Pro/fas 3):** screenern på naturligt språk, portföljröntgen, veckans avvikelser, skattehjälpen, omvärldsbevakningen, kontrafaktiska portföljen.
+
+Orden i produkten följer med: "skäl", "gräns", "vakt" och "tes" är interna begrepp, aldrig inmatningsfält. Användaren möter frågor i klartext: "Varför äger du det?" besvaras med ett färdigt förslag att godkänna, och "gräns" heter "när vi säger till" (se designbriefen §8).
+
 ### Fas 2: Bevakningstjänsten (beta), cirka 3 till 4 månader därefter
 - Konton + manuell/CSV-import av innehav (ingen broker-koppling i beta).
 - Onboardingen: innehav räcker. Allt bevakas och sammanfattas per default, med väsentlighetsgradering (påverkar det vinsten, kassaflödet, utspädningen, ledningen). Skäl + vakter är ett valfritt lager som AI:n föreslår färdigt ur bolagets profil, skäl som utdata i stället för inmatningskrav. Mushiga skäl ("tror på det långsiktigt, stark trend") översätts till vaktbara variabler ("larm om tillväxten viker två kvartal i rad"). Beslutat 2026-07-07 efter Sebastians invändning: folk kan inte formulera skäl dag ett, och ska inte behöva.

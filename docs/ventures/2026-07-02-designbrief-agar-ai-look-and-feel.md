@@ -87,6 +87,8 @@ V1 var för kommunikativ. Allt löstes upp i meningar; siffror fanns bara inuti 
 
 Frågeförslag i chatten formuleras som en människa ställer dem ("Har något ändrats i mina bolag?", "Äger jag för mycket av samma sak?"), aldrig som funktionsnamn.
 
+**Inmatningsspråket (tillägg 2026-07-07):** "skäl", "gräns", "vakt" och "tes" är interna begrepp och får aldrig vara etiketter på inmatningsfält. Ställ frågan i klartext i stället: "Varför äger du det?" med ett färdigt förslag att godkänna i stället för ett tomt fält; "När ska vi säga till?" i stället för "sätt en gräns". Användaren ska aldrig behöva förstå ett begrepp för att komma vidare, och AI:n ska aldrig förvänta sig bättre svar än "jag vill tjäna pengar, känns bra, stark trend": det svaret ska räcka, resten föreslår vi.
+
 ## 9. Fas-märkning per komponent (designa inte in olicensierad data)
 
 | Komponent | Datakrav | Fas |
