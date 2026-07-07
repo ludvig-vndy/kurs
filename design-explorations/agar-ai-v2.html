@@ -379,6 +379,15 @@
   .isinbox input:focus{border-color:var(--ox)}
   .isinres{margin-top:10px;font-size:12.5px;line-height:1.5;display:none}
 
+  /* ===== brevet som ljud ===== */
+  .pod{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;max-width:660px;margin:-6px 0 16px}
+  .podbtn{width:34px;height:34px;border-radius:50%;border:none;background:var(--ox);color:var(--ox-ink);display:grid;place-items:center;flex:0 0 auto;padding:0}
+  .podmid{flex:1;min-width:0}
+  .podl{font-size:12px;color:var(--mut);margin-bottom:6px}
+  .podbar{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+  .podbar i{display:block;height:100%;width:0;background:var(--ox)}
+  .podt{font-family:var(--mono);font-size:11px;color:var(--faint)}
+
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -976,6 +985,7 @@ function renderBrevet(){
   main.innerHTML=`<div class="masthead">Ägarkollen · av Marginalen<span class="r">Onsdag 2 juli 2026 · 07:30</span></div>
   <div class="eyebrow">God morgon</div><h1 class="big">Ägarbrevet</h1>
   <div class="sub">Morgonens utgåva, sida för sida. Kommer även som mejl. Piltangenterna funkar.</div>
+  <div class="pod"><button class="podbtn" id="podbtn" onclick="podToggle()"></button><div class="podmid"><div class="podl">Lyssna på utgåvan · morgonens brev som AI-röst, samma granskade text <span class="faintc">· prototyp, ingen ljudfil</span></div><div class="podbar"><i id="podprog"></i></div></div><div class="podt num" id="podt">2:10</div></div>
   <div class="utgwrap">
     <div class="utg"><div class="uk"><span>Ägarbrevet · onsdag 2 juli</span><span class="r2">07:30 · sida ${bIdx+1} av ${BPN}</span></div>${bpage(bIdx)}
       ${bIdx<BPN-1?`<div style="margin-top:auto;padding-top:18px"><button class="blad" onclick="goBP(${bIdx+1})">Bläddra →</button></div>`:''}</div>
@@ -986,8 +996,28 @@ function renderBrevet(){
     </div>
     <div class="ukbd"><kbd>←</kbd> <kbd>→</kbd> för att bläddra</div>
   </div>`;
+  podPaint();
 }
 
+/* ============ Ägarbrevet som ljud (prototyp) ============ */
+let podOn=false,podS=0,podTimer=null;const PODLEN=130;
+function podIco(){return podOn
+  ?'<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M7 5h4v14H7z"/><path d="M13 5h4v14h-4z"/></svg>'
+  :'<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="margin-left:2px"><path d="M8 5v14l11-7z"/></svg>';}
+function podPaint(){
+  const b=document.getElementById('podbtn'),p=document.getElementById('podprog'),t=document.getElementById('podt');
+  if(!b)return;
+  b.innerHTML=podIco();
+  if(p)p.style.width=(podS/PODLEN*100)+'%';
+  const r=PODLEN-podS;
+  if(t)t.textContent=Math.floor(r/60)+':'+String(r%60).padStart(2,'0');
+}
+function podToggle(){
+  podOn=!podOn;
+  if(podOn){podTimer=setInterval(()=>{podS++;if(podS>=PODLEN){podS=PODLEN;podOn=false;clearInterval(podTimer);}podPaint();},1000);}
+  else clearInterval(podTimer);
+  podPaint();
+}
 document.addEventListener('keydown',e=>{if(view!=='brevet')return;if(e.key==='ArrowRight')goBP(bIdx+1);if(e.key==='ArrowLeft')goBP(bIdx-1);});
 
 /* ============ Lägg till bolag (onboarding) ============ */
