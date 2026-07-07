@@ -65,3 +65,14 @@ Hela logiken är färdig; nycklarna är två miljövariabler (`OPENAI_API_KEY`, 
 - **`eval-llm.mjs`**: selen som väljer modell. Kör fixturerna mot facit per modell och räknar rättprocent, kostnad och tid. `--torr` kör utan nycklar med de deterministiska extraktorerna som låtsas-LLM och bevisar hela jämförelselogiken: 37/37.
 
 Nyckeldagen: `$env:OPENAI_API_KEY="sk-..."` och sedan `node motor/eval-llm.mjs --modell gpt-5.4-mini --modell claude-haiku`. Tabellen som kommer ut väljer modell per steg.
+
+### Första skarpa eval-resultatet (2026-07-07, Anthropic-nyckel)
+
+| Modell | Norlux | Lifco | Kallelse | Avtal | Kostnad hela evalen |
+|---|---|---|---|---|---|
+| claude-haiku | 8/8 | 18/18 | 8/8 | 3/3 | $0,024 |
+| claude-sonnet | 8/8 | 18/18 | 8/8 | 3/3 | $0,063 |
+
+Haikus enda miss i första körningen var en teckenkonvention (valutaeffekt -3,5 mot facits 3,5), åtgärdad genom skarpare fältbeskrivning, inte en hallucination. Slutsats: billigaste Claude-modellen klarar extraktionen perfekt på alla fyra dokumenttyperna.
+
+`run-llm.mjs`: hela pipelinen med LLM som narratör. Första körningen: Haiku skrev klarspråksanalysen, grinden spårade alla 21 tal till källa, kostnad $0,0034 per analys. Modellen skriver, koden räknar, grinden granskar: arkitekturen håller även med riktig LLM.

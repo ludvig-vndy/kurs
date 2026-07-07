@@ -46,7 +46,7 @@ const KALLOR = [
       { id: 'omsattning', beskrivning: 'Omsättning helåret i miljoner SEK, fjolåret i parentesen', enhet: 'Mkr' },
       { id: 'omsattning_rapporterad_yoy', beskrivning: 'Omsättningens rapporterade tillväxt i procent (ordet "upp")', enhet: '%' },
       { id: 'organisk_tillvaxt', beskrivning: 'Organisk tillväxt i procent (ordet "organiskt")', enhet: '%' },
-      { id: 'valutaeffekt', beskrivning: 'Valutaeffektens storlek i procent (drog ned omsättningen med)', enhet: '%' },
+      { id: 'valutaeffekt', beskrivning: 'Valutaeffektens storlek i procent (drog ned omsättningen med). Ange beloppet som positivt tal', enhet: '%' },
       { id: 'ebita', beskrivning: 'EBITA i miljoner SEK, fjolåret i parentesen', enhet: 'Mkr' },
       { id: 'ebita_rapporterad_yoy', beskrivning: 'EBITA:s rapporterade tillväxt i procent', enhet: '%' },
       { id: 'ebita_marginal', beskrivning: 'EBITA-marginal i procent, fjolåret i parentesen', enhet: '%' },
