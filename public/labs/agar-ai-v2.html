@@ -673,7 +673,18 @@ STOCKS.VOLT={tk:'VOLT',namn:'Voltcell',status:'up',statusLab:'Milstolpe i septem
     ['Q2 2025','Ingen nyemission "under överskådlig tid"','Håller hittills','höll'],
     ['Q1 2026','EU-certifiering klar september 2026','Väntar på besked','öppet']],
    loftenNote:'Två av fyra avgjorda löften höll tidplanen. Sena besked har hittills inneburit ungefär ett halvårs försening, räkna med det när du läser nästa löfte.',
-   emis:'Kapitalanskaffning: två emissioner sedan 2022, senast i mars 2024 till kurs 15,50 (18% rabatt mot dåvarande kurs). Total utspädning sedan starten: cirka 24%.'},
+   emis:'Kapitalanskaffning: två emissioner sedan 2022, senast i mars 2024 till kurs 15,50 (18% rabatt mot dåvarande kurs). Total utspädning sedan starten: cirka 24%.',
+   trappa:[
+    ['Tekniken bevisad i pilotmiljö','klart 2023','pos'],
+    ['Första betalda piloten i drift','klart, februari 2026','pos'],
+    ['EU-certifiering','pågår, besked väntas i september','gold'],
+    ['Första volymkontraktet','nästa steg, bolagets egen plan Q4 2026','mutc'],
+    ['Positivt kassaflöde','bolagets mål 2028','mutc']],
+   avtal:[
+    ['maj 26','Ramavtal','europeisk fordonstillverkare','Ett ramavtal binder inga volymer och inga priser. Det flyttar inte caset förrän första avropet kommer.'],
+    ['feb 26','Pilotkontrakt, bindande','tysk systemintegratör','Första gången någon betalar för tekniken i skarp drift. Steg 2 på casetrappan, avklarat.'],
+    ['okt 25','Avsiktsförklaring (LOI)','asiatisk batteritillverkare','Inte bindande, och har inte följts av avtal på åtta månader. Bevaka.']],
+   avtalNote:'Så läser vi avtalen: bindande order flyttar caset, ramavtal och avsiktsförklaringar är löften. Två av tre besked det senaste året är fortfarande löften. Fiktivt exempel.'},
   pillars:[
    {n:'Kassan räcker mer än 18 månader',s:'g',now:'~21 mån',pts:[30,28,26,25,23,21],larm:18,larmLab:'larm 18 mån',ev:'Räknat på nuvarande förbrukningstakt. Att den tickar ner är normalt, men under 18 månader tvingas bolag ofta ta in pengar på motpartens villkor.'},
    {n:'Tillväxt över 40% per år',s:'g',now:'+64%',pts:[45,52,48,58,61,64],larm:40,larmLab:'larm 40%',ev:'Från låg nivå, men accelererande sex kvartal i rad. Tillväxten är hela caset.'},
@@ -786,6 +797,14 @@ function secHant(s){
     </div></div>`;
 }
 function secScen(s){const sc=s.scen;
+  const trappa=sc.trappa?`
+    <div class="slabel" style="margin-top:18px">Casetrappan · var bolaget står på sin egen resa</div>
+    <table class="dt" style="max-width:640px"><tbody>${sc.trappa.map((t,i)=>`<tr><td style="font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap;vertical-align:top">Steg ${i+1}</td><td style="text-align:left;font-family:var(--sans);color:var(--ink);white-space:normal;line-height:1.5">${t[0]}</td><td style="text-align:left;font-family:var(--sans);white-space:normal;line-height:1.5" class="${t[2]}">${t[1]}</td></tr>`).join('')}</tbody></table>
+    <div class="ownnote">Varje nyhet placeras på trappan: det är så du ser om ett besked flyttar caset eller bara låter bra.</div>`:'';
+  const avtal=sc.avtal?`
+    <div class="slabel" style="margin-top:18px">Avtal & besked · vad de faktiskt binder</div>
+    <div class="tscroll"><table class="dt"><thead><tr><th>När</th><th style="text-align:left">Avtal och motpart</th><th style="text-align:left">Vad det betyder för caset</th></tr></thead><tbody>${sc.avtal.map(a=>`<tr><td style="font-family:var(--mono);color:var(--faint);font-size:10.5px;white-space:nowrap;vertical-align:top">${a[0]}</td><td style="text-align:left;font-family:var(--sans);white-space:normal;line-height:1.5;vertical-align:top"><span style="color:var(--ink);font-weight:600">${a[1]}</span><br><span style="color:var(--mut);font-size:12px">${a[2]}</span></td><td style="text-align:left;font-family:var(--sans);color:var(--mut);white-space:normal;line-height:1.5">${a[3]}</td></tr>`).join('')}</tbody></table></div>
+    <div class="ownnote">${sc.avtalNote||''}</div>`:'';
   const lof=sc.loften?`
     <div class="slabel" style="margin-top:18px">Löften och utfall · ur bolagets egna pressmeddelanden</div>
     <div class="tscroll"><table class="dt"><thead><tr><th>När</th><th style="text-align:left">Vad ledningen lovade</th><th style="text-align:left">Hur det gick</th></tr></thead><tbody>
@@ -797,7 +816,7 @@ function secScen(s){const sc=s.scen;
     ${sc.rows.map(r=>`<tr><td>${r[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--mut);white-space:normal">${r[1]}</td><td>${r[2]}</td><td class="${r[4]}">${r[3]}</td></tr>`).join('')}</tbody></table></div>
     <p class="pev" style="max-width:66ch;margin-top:10px">${sc.note}</p>
     <div class="slabel" style="margin-top:16px">Milstolpar vi bevakar</div>
-    <table class="dt" style="max-width:540px"><tbody>${sc.mil.map(m=>`<tr><td style="font-family:var(--mono);color:var(--gold);font-size:11px;white-space:nowrap">${m[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--ink);white-space:normal">${m[1]}</td></tr>`).join('')}</tbody></table>${lof}</section>`;
+    <table class="dt" style="max-width:540px"><tbody>${sc.mil.map(m=>`<tr><td style="font-family:var(--mono);color:var(--gold);font-size:11px;white-space:nowrap">${m[0]}</td><td style="text-align:left;font-family:var(--sans);color:var(--ink);white-space:normal">${m[1]}</td></tr>`).join('')}</tbody></table>${trappa}${avtal}${lof}</section>`;
 }
 function secAgare(s){const x=s.extras;
   return `<section class="sec" id="sec-agare"><div class="sech"><h2>Ägare & insyn</h2><span class="sm">FI insynsregister · exempeldata</span></div>
