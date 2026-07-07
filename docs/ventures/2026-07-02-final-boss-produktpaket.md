@@ -28,17 +28,17 @@ Sebastians beställningar i original: `Jag vill att du agerar som en världsleda
 
 ## 1. Vad vi faktiskt bygger, i en mening
 
-> **Du säger varför du äger dina bolag. Vi bevakar det skälet dygnet runt och stör dig bara när det rör sig.**
+> **Allt som händer i dina bolag: läst, sorterat och sammanfattat åt dig varje morgon. Säger du dessutom varför du äger, vaktar vi det också.**
 
 Det är hela produkten. Alla ytor är den meningen från olika håll:
 
-- **Onboardingen**: du sätter skälet i ord (kursens kärnövning, "kan du inte säga det i en mening äger du inte, du gissar").
-- **Förstasidan**: dina bolag, sorterade efter vad som rörde dina skäl idag. Resten bortfiltrerat.
-- **Rapportanalysen**: ändrar den här rapporten ditt skäl? Delta mot 8 till 12 kvartal och konsensus, beräknat i kod, förklarat av AI, allt citerat.
+- **Onboardingen**: lägg in innehaven, klart, bevakningen startar direkt. Skäl och gränser är ett valfritt lager som AI:n föreslår färdigt (kursens kärnövning "kan du säga det i en mening?" blir en inbjudan, inte ett prov).
+- **Förstasidan**: dina bolag, allt väsentligt sammanfattat och bruset bortsorterat. Har du en tes flaggas det som rör den särskilt.
+- **Rapportanalysen**: hela rapporten sammanfattad, delta mot 8 till 12 kvartal och konsensus, beräknat i kod, förklarat av AI, allt citerat. Har du en tes får du dessutom svaret på "ändrar det här ditt skäl?".
 - **Fråga AI**: grundad chat över dina innehav, med källa, aldrig påhittade siffror.
 - **Hävstångssöket**: separat dörr för taktiska lägen, "bäst enligt dina kriterier", aldrig "AI rekommenderar".
 
-Sebastian bad oss designa produkten som får en investerare att känna "jag kan inte investera utan den här längre". Svaret är inte mer data (det är en terminal, det finns redan). Svaret är att produkten **känner till ditt skäl** och skyddar din uppmärksamhet åt dig. Ingen neutral terminal kan göra det, för de vet inte vad du tror.
+Sebastian bad oss designa produkten som får en investerare att känna "jag kan inte investera utan den här längre". Svaret är inte mer data (det är en terminal, det finns redan). Svaret är att produkten **läser allt och skyddar din uppmärksamhet åt dig**, och för den som vill: känner till ditt skäl och vaktar det. Tidsbesparingen är det alla vill ha dag ett. Tesen är fördjupningen som gör tjänsten personlig och som ingen neutral terminal kan kopiera.
 
 **Säljmeningen utåt är Sebastians:** *"Spara maximalt med tid, utan att missa någonting om dina investeringar."* Den förstås på fem sekunder. Skäl-arkitekturen är maskinen som gör den meningen sann, den behöver aldrig nämnas i pitchen.
 
@@ -50,7 +50,7 @@ Dessa löper genom kursen, prototyperna och allt som byggs. De är samtidigt pro
 
 1. **Siffror är deterministiska, språk är AI.** Tal extraheras ur strukturerad källa, deltan beräknas i kod, LLM:en förklarar men räknar aldrig och minns aldrig tal. Ett verifieringslager korskollar varje numeriskt påstående före visning. En hallucinerad siffra är ett blockerande fel, inte en bugg.
 2. **Allt citerat, allt märkt.** Varje påstående länkar till tidsstämplad primärkälla och märks `fakta` (källa), `slutsats` (resonemang) eller `vet ej`. "Vet ej" är en tillåten och inbyggd utväg.
-3. **Ägare, inte spekulant.** Dagsavkastningen visas liten med flit. Statusen på förstasidan är skälets status, inte kursens. Lugn är en feature: "inget kräver din uppmärksamhet" är ett fullvärdigt svar.
+3. **Ägare, inte spekulant.** Dagsavkastningen visas liten med flit. Statusen på förstasidan är bolagets läge i sak (och tesens status när en tes finns), inte kursens. Lugn är en feature: "inget kräver din uppmärksamhet" är ett fullvärdigt svar.
 4. **Information, aldrig rådgivning (MiFID II-linjen).** Aldrig "köp/sälj/vad du bör göra". Alltid "vad har ändrats mot ditt skäl" och "vad du kan hålla koll på". Ranking i hävstångssöket är "bäst enligt dina valda kriterier" med synlig formel och justerbara vikter.
 5. **Aldrig betald ranking, aldrig såld individdata.** Neutraliteten är varumärket. Intäkt kommer från användare och B2B, inte från emittenter eller annonsörer.
 6. **Anti-brus som löfte.** "3 saker rör dina bolag, 47 filtrerades bort" visas öppet. Produkten mäts på hur lite tid användaren behöver, inte hur länge hen stannar.
@@ -88,7 +88,7 @@ Varje steg återanvänder förra stegets spine (grundnings-motor, citat-arkitekt
 
 Poängen med kartan: inget befintligt är vid sidan om. Kursen är svarsmotor, onboarding-data och egen intäkt; verktygen är bryggan till skälet; ordlistan är Förklara-läget; warranten är en egen liten affär som driver trafik till huset.
 
-**Vallgravstesen (Sebastians formulering, antagen 2026-07-06):** sammanfattningar och bevakning blir commodity inom några år, alla kommer ha det. Beteendedatan, skäl, gränser, beslut och avvikelser över tid, blir bara mer värdefull ju längre användaren stannar, och den kan ingen konkurrent replikera. Den kontrafaktiska portföljen kräver både skäl-historik och transaktionshistorik, alltså exakt det tjänsten samlar från första dagen. Bevakningen är inträdesbiljetten. Beteendedatan är vallgraven.
+**Vallgravstesen (Sebastians formulering, antagen 2026-07-06):** sammanfattningar och bevakning blir commodity inom några år, alla kommer ha det. Beteendedatan, skäl, gränser, beslut och avvikelser över tid, blir bara mer värdefull ju längre användaren stannar, och den kan ingen konkurrent replikera. Den kontrafaktiska portföljen kräver både skäl-historik och transaktionshistorik, alltså exakt det tjänsten samlar från första dagen. Bevakningen är inträdesbiljetten. Beteendedatan är vallgraven. Beslut 2026-07-07: tesen är därför ett valfritt lager som AI:n föreslår färdigt, aldrig porten in; beteendedatat byggs ändå från dag ett via beslutsdagboken, impulsbromsen och köp-historiken.
 
 ---
 
@@ -101,7 +101,7 @@ Poängen med kartan: inget befintligt är vid sidan om. Kursen är svarsmotor, o
 - **Vad den bevisar:** filosofin finns på pränt, varumärket finns, innehållsmaskinen fungerar, och sifferpolicyn ("hitta aldrig på ett tal") är redan kultur. Kursen är dessutom betaväggen: de första betalande användarna av verktygen finns bland kursens användare.
 
 **`agar-ai.html`** (prototyp, ett sammanhängande flöde):
-- Onboarding: "Varför äger du bolaget?" → skälet i en mening → mätbara pelare med larmvillkor → pre-mortem → klart. Kurslänkar invävda (1.1, 11.3, kapitel 10): flywheelen syns.
+- Onboarding: lägg in bolag → bevakning och sammanfattningar startar direkt → valfritt: AI-föreslaget skäl med mätbara pelare och larmvillkor att godkänna eller ändra. Kurslänkar invävda (1.1, 11.3, kapitel 10): flywheelen syns.
 - Förstasidan: bolagen är sidan. Fem bolag sorterade efter vad som hänt, status som ord (Skälet stärkt/utmanat/Insiderköp/Lugnt), händelsen under sitt bolag, bortsorterat + kommande + portfölj som stillsamma slutrader.
 - Aktiesida: Vad har hänt (fakta/slutsats + citat), Rapportanalys (verdikt, delta-grid mot konsensus + trend, bra/dåligt, överraskningar, VD/CFO-citat, "hur det rör ditt skäl"), Ditt skäl (pelare med status och bevis), Fråga AI (grundad chat).
 - Hävstång: egen dörr bakom skiljelinje, med ärlig inramning och full beslutsmotor (horisonten styr #1, dominanstabell, ISIN-koll).
@@ -133,7 +133,7 @@ Den minsta produkt som bevisar tesen, och det första betalbara.
 
 ### Fas 2: Bevakningstjänsten (beta), cirka 3 till 4 månader därefter
 - Konton + manuell/CSV-import av innehav (ingen broker-koppling i beta).
-- Onboardingen från prototypen: varför du äger + saker att vakta + gränser.
+- Onboardingen: innehav räcker. Allt bevakas och sammanfattas per default, med väsentlighetsgradering (påverkar det vinsten, kassaflödet, utspädningen, ledningen). Skäl + vakter är ett valfritt lager som AI:n föreslår färdigt ur bolagets profil, skäl som utdata i stället för inmatningskrav. Mushiga skäl ("tror på det långsiktigt, stark trend") översätts till vaktbara variabler ("larm om tillväxten viker två kvartal i rad"). Beslutat 2026-07-07 efter Sebastians invändning: folk kan inte formulera skäl dag ett, och ska inte behöva.
 - **Teskrossaren i köpflödet:** innan bolaget läggs till bygger AI:n det starkaste motargumentet, ur verifierbara källor (blankningsdata, bolagets egna nyckeltalstrender, riskavsnittet i årsredovisningen). Inga fria "historiska analogier", de hallucinerar.
 - **Beslutsdagboken (kärnfunktion, inte verktyg):** varje köp/sälj loggas med motiveringen i stunden, AI:n följer upp mot facit i backspegeln och bygger över tid en bias-profil ("du säljer vinnare tidigt"). Alternativkostnaden mäts i samma liggare mot två speglar: index, och din egen ursprungliga plan (**den disciplinerade tvillingen**). Skillnaden mot tvillingen sätter en krona på vad beteendet kostar, produktens starkaste säljargument. Beskrivning av det förflutna, aldrig uppmaning, där går rådgivningslinjen. Delar datamodell med ansvarsliggaren.
 - **Impulsbromsen:** när du är på väg att sälja visas ditt ursprungliga skäl och frågan "vad har ändrats i sak sedan du skrev det här?". Kan du inte svara vet du själv att affären är känslostyrd. Ritual i appen i fas 2, kopplad till själva säljordern när broker-kopplingen finns.
@@ -179,33 +179,34 @@ Poängen: **de två första faserna kan byggas nästan utan datakostnad** tack v
 
 ## 7. Affärsmodell och tratt
 
-**Tratten:** Marginalen (kursen) → Rapportkollen (smakprov, freemium) → Innehavs-AI (prenumeration) → Pro/B2B.
+**Tratten:** Gratis smakprov → Marginalen-medlemskapet (utbildningen, verktygen ingår) → Pro → B2B.
 
-- **Gratis:** kursens första kapitel, det generella Ägarbrevet, ordlistan, N rapportanalyser per månad. Kursen i sin helhet är betald (beslut 4).
-- **Premium, riktpris 149 till 249 kr/mån:** obegränsade innehav och rapportanalyser, morgonbrief, skäl-bevakning med larm, chat.
-- **Pro, 499 till 990 kr/mån:** djup historik, export, korsrisk, prioriterad data, ansvarstidslinje.
+- **Modellen (Sebastians inriktning, antagen 2026-07-07): vi tar betalt för utbildningen, verktygen ingår.** Ett köpbeslut, en prislapp: du går med i Marginalen och får en matig utbildning, och med den följer verktyg och funktioner du inte kommer kunna vara utan. Verktygen säljs aldrig styckvis; de är skälet att stanna och förnya. Mekaniken under är ett årsmedlemskap, eftersom verktygen har löpande kostnader (data, AI-inferens, drift) som ett rent engångsköp inte kan bära. Förnyelsen motiveras av verktygen plus levande innehåll: coachen, nya moduler, Sebastians genomgångar.
+- **Gratis:** kursens första kapitel, det generella Ägarbrevet, ordlistan, N rapportanalyser per månad som smakprov.
+- **Medlemskapet, riktpris 1 995 till 2 495 kr/år (motsvarar 166 till 208 kr/mån):** hela utbildningen + personliga Ägarbrevet, bevakningen, rapportanalyserna, tillväxtläget, Fråga Marginalen. Priset testas mot betapanelen.
+- **Pro, 499 till 990 kr/mån:** djup historik, export, korsrisk, prioriterad data, ansvarstidslinje, Sebastians månadsgenomgång i liten krets.
 - **Senare B2B:** API/white-label av grundnings-motorn och den nordiska händelsedatan; förvaltare/family office-nivå med team och compliance-loggar. Det är den durabla högmarginalintäkten.
 - **Warrantsöket:** egen freemium + affiliate till mäklare (aldrig betald ranking).
 
-**Kursens roll i affären:** förtroendebygget och kundanskaffningen. Den som gått kursen har redan formulerat skäl för sina innehav (kursens övningar), alltså exakt onboarding-datat produkten behöver. Konverteringen kurs → verktyg är den första metriken att bevisa.
+**Kursens roll i affären:** förtroendebygget och kundanskaffningen. Den som gått kursen har redan formulerat skäl för sina innehav (kursens övningar), alltså exakt onboarding-datat produkten behöver. Kursen och verktygen är samma köp, så tratten har ett enda betalsteg: konverteringen gratis → medlemskap är den första metriken att bevisa.
 
 **Sebastians roll:** rösten och ansiktet. "Sebastian tänker" finns redan i kursen; i produkten blir det trovärdigheten i tonen (morgonbrevets språk, pre-mortem-tänket). Investerar-personan säljer produkten som en AI aldrig kan.
 
 **Morgonbrevet är hooken.** Produktens vana byggs inte av tid i appen utan av ett dagligt brev, 07:30, 90 sekunder, som man till slut vägrar vara utan. Tre beroende-lager: ritualen (dagligt medieformat som kräver noll av läsaren), tryggheten (larmsystemet man inte vågar stänga av när skälen väl är inskrivna) och identiteten (kvartalsbackspegeln och ansvarsliggaren). "Hands off" är produktens resultat, inte dess personlighet: produkten jobbar varje natt, brevet är kvittot.
 
 Brevets struktur, alltid tvådelad:
-1. **Dina bolag**: varje innehav mätt mot dina skäl. Oftast "inget rör ditt skäl", sagt rakt ut med proof-of-work-raden ("i natt lästes 51 saker, 0 rör dina skäl").
+1. **Dina bolag**: varje innehav med allt väsentligt sammanfattat, och tesens status där en tes finns. Oftast "inget kräver din uppmärksamhet", sagt rakt ut med proof-of-work-raden ("i natt lästes 51 saker, 3 var värda din tid").
 2. **Att hålla koll på idag**: det generella (räntebesked, rapportsäsong, makro), men alltid filtrerat genom portföljen med en "för dig"-rad per punkt.
 3. På tysta dagar: **dagens Marginal-anteckning**, en lärobit ur kursen eller ett "Sebastian tänker" kopplat till portföljen. Dagligt värde utan fejkad brådska, och kurs-flywheelet blir en daglig muskel.
 
-Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (marknaden + en lärdom) som kundanskaffning och distribution, och det **personliga morgonbrevet** (din portfölj, dina skäl, larmen) som betalprodukt. Nyckelmåttet är brevets dagliga öppningsgrad, daglig touch, inte daglig tid.
+Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (marknaden + en lärdom) som kundanskaffning och distribution, och det **personliga morgonbrevet** (din portfölj, sammanfattningarna, larmen) som betalprodukt. Nyckelmåttet är brevets dagliga öppningsgrad, daglig touch, inte daglig tid.
 
 ---
 
 ## 8. Mått på framgång (per fas)
 
 - **Fas 1:** andel kursanvändare som testar rapportkollen; andel som kommer tillbaka med rapport nummer två; noll hallucinationsincidenter; betalkonvertering på väggen.
-- **Fas 2:** andel som skriver in skäl + pelare i onboardingen (kärnhandlingen); morgonbrevets dagliga öppningsgrad; D7/D30-återkomst; larmprecision (andel larm användaren bedömer som relevanta); churn.
+- **Fas 2:** morgonbrevets dagliga öppningsgrad (kärnmåttet); D7/D30-återkomst; andel som aktiverar tes-lagret (fördjupningsmåttet, inte porten); larmprecision (andel larm användaren bedömer som relevanta); churn.
 - **Genomgående:** tid till "klar" per session ska vara *låg*. Produkten lyckas när användaren lämnar snabbt och lugn, inte när den scrollar länge.
 
 ---
@@ -231,7 +232,7 @@ Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (markna
 
 **30 till 60 dagar:**
 - Rapportkollen i beta till panelen, ingen betalvägg än; mät och iterera på verdikt-kvaliteten.
-- Skriv den publika berättelsen (landningssida: "du säger varför du äger, vi bevakar skälet").
+- Skriv den publika berättelsen (landningssida: "vi läser allt om dina bolag och sammanfattar det varje morgon, du slipper gräva").
 
 **60 till 90 dagar:**
 - Betalvägg på; publik lansering till kurslistan.
@@ -241,10 +242,10 @@ Tvånivåtratten: ett **gratis generellt morgonbrev** i Sebastians röst (markna
 
 ## 11. Öppna beslut (Ludvig + Sebastian)
 
-1. **Namn/varumärke:** kandidater framtagna: **Vaka** (rekommenderad: känslan, "vi vakar över dina bolag"), **Ägarbrevet** (tratten, kan även bli namnet på brevet inuti Vaka) och **Bolagskollen** (begripligheten). "Ägar-AI" var arbetsnamn. Viktig flagga: **Marginalen Bank** finns; en betald finanstjänst under namnet Marginalen är en varumärkeskrock i samma bransch. Rekommendation: eget produktnamn med "av Marginalen" som avsändare, PRV/EUIPO-koll via jurist innan låsning. Visuellt är huset redan tvådelat med avsikt: papper/oxblod för kursen (tidningen), grafit/guld eller ljust instrument-tema för tjänsten (terminalen), samma hus, två uttryck.
-2. **Prissättningshypotes att testa i beta:** Premium ~199 kr/mån (brevet, bevakningen, rapportanalys mot egen historik) och Pro ~995 kr/mån (Sebastians nivå: konsensus och multiplar när fas 3-datan finns, korsrisk, ansvarsliggaren, persona-element som månadsgenomgång i liten krets). Grundarpris till de första hundra. De två nivåerna definierar varandra; 1 000 Premium + 200 Pro är ~4,8 Mkr/år.
+1. **Namn/varumärke:** kandidater framtagna: **Vaka** (rekommenderad: känslan, "vi vakar över dina bolag"), **Ägarbrevet** (tratten, kan även bli namnet på brevet inuti Vaka) och **Bolagskollen** (begripligheten). "Ägar-AI" var arbetsnamn. Viktig flagga: **Marginalen Bank** finns; en betald finanstjänst under namnet Marginalen är en varumärkeskrock i samma bransch. Rekommendation: eget produktnamn med "av Marginalen" som avsändare, PRV/EUIPO-koll via jurist innan låsning. Visuellt är huset sedan 2026-07-07 ett: papper/oxblod-redaktionen är basen för både kursen och tjänsten, med datainstrumenten som funktionslager ovanpå (se designbriefen §4).
+2. **Prissättningshypotes att testa i beta (omlagd 2026-07-07 enligt Sebastians modell):** ett årsmedlemskap där utbildningen är det man betalar för och verktygen ingår, riktmärke 1 995 till 2 495 kr/år, plus Pro ~995 kr/mån (Sebastians nivå: konsensus och multiplar när fas 3-datan finns, korsrisk, ansvarsliggaren, månadsgenomgång i liten krets). Grundarpris till de första hundra. Räkneexempel: 1 500 medlemmar à 2 000 kr + 150 Pro à 995 kr/mån är ~4,8 Mkr/år.
 3. **Roller och ägande:** vem gör vad (bygge, innehåll, distribution/röst), och bolagsstruktur när betalning slås på.
-4. **Kursens betalmodell:** beslutat i grunden: kursen är betald, första kapitlet gratis som smakprov. Kvar att välja: engångspriset (riktmärke 995 till 1 995 kr, testas mot betapanelen) och bundlingen (rekommendation: kursen ingår i årsprenumerationen på tjänsten, det gör årsköpet självklart och matar onboardingen med färdiga skäl).
+4. **Kursens betalmodell:** beslutat: kursen är betald, första kapitlet gratis som smakprov, och bundlingen är avgjord genom Sebastians modell (2026-07-07): utbildningen ÄR medlemskapet, verktygen ingår. Inget separat kurspris behövs; kvar att välja är medlemskapets årspris (se beslut 2).
 5. **Data i fas 3:** licensiera (Börsdata/Millistream, snabbt och rent) eller bygga egna connectors (billigt, skört). Rekommendation: licensiera när intäkten bär det.
 6. **Warrantsöket:** parkeras (rekommenderas tills fas 2 lever), eller startas som satellit med eget namn.
 

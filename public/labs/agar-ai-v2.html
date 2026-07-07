@@ -693,7 +693,7 @@ document.querySelectorAll('.nav').forEach(n=>{const dd=NAVDEF.find(x=>x[0]===n.d
   n.onclick=()=>{view=n.dataset.view;setNav();render();window.scrollTo(0,0);};});
 document.getElementById('thbtn').onclick=()=>{curTheme=curTheme==='light'?'dark':'light';localStorage.setItem('agarai-theme',curTheme);applyTheme();render();};
 document.getElementById('addbtn').innerHTML=ic('plus')+' <span>Lägg till bolag</span>';
-document.getElementById('addbtn').onclick=()=>{obStep=0;obSel=null;view='start';setNav();render();window.scrollTo(0,0);};
+document.getElementById('addbtn').onclick=()=>{obStep=0;obSel=null;obSkip=false;view='start';setNav();render();window.scrollTo(0,0);};
 function setNav(){document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on',n.dataset.view===view));}
 function render(){({brevet:renderBrevet,idag:renderIdag,fraga:renderFragaG,stock:renderStock,start:renderStart,havstang:renderHav}[view])();termify(main);}
 const S=t=>STOCKS[t];
@@ -1021,7 +1021,7 @@ function podToggle(){
 document.addEventListener('keydown',e=>{if(view!=='brevet')return;if(e.key==='ArrowRight')goBP(bIdx+1);if(e.key==='ArrowLeft')goBP(bIdx-1);});
 
 /* ============ Lägg till bolag (onboarding) ============ */
-let obStep=0,obSel=null;
+let obStep=0,obSel=null,obSkip=false;
 const OB={a:'köpa upp lönsamma småbolag och driva dem bättre',b:'marknaden är fragmenterad och kassaflödet betalar nästa förvärv',
   vakter:[['Växer minst 8% per år av egen kraft','säg till om det faller under 8% två kvartal i rad'],
           ['Stigande lönsamhet (rörelsemarginal)','säg till om den faller under fjolårets nivå'],
@@ -1031,29 +1031,30 @@ function renderStart(){
   let body='';
   if(obStep===0){
     body=`<div class="eyebrow">Lägg till bolag · steg 1 av 4</div><h1 class="big">Vilket bolag äger du?</h1>
-    <div class="sub">Vi börjar med ett. Du kan lägga till fler sen.</div>
+    <div class="sub">Mer behövs inte: bevakning och sammanfattningar startar direkt. Resten är valfritt.</div>
     <div class="chips2">${ORDER.map(t=>`<span class="chip2 ${obSel===t?'sel':''}" onclick="obSel='${t}';renderStart()">${S(t).namn}</span>`).join('')}</div>
     <div class="obnav"><button class="btn ghost" onclick="view='brevet';setNav();render()">Avbryt</button>
       <button class="btn prim" ${obSel?'':'disabled style="opacity:.4;pointer-events:none"'} onclick="obStep=1;renderStart()">Fortsätt ${ic('arrow','sm')}</button></div>`;
   }else if(obStep===1){
     const cn=S(obSel||'NORL').namn;
-    body=`<div class="eyebrow">Steg 2 av 4</div><h1 class="big">Varför äger du ${cn}?</h1>
-    <div class="sub">Kan du inte säga det i en mening äger du inte ännu, du gissar. Fyll i luckorna.</div>
+    body=`<div class="eyebrow">Steg 2 av 4 · valfritt</div><h1 class="big">Vill du att vi vaktar något särskilt i ${cn}?</h1>
+    <div class="sub">Vi har skrivit ett förslag på ditt skäl utifrån bolagets profil. Ändra orden, eller hoppa över: vi läser och sammanfattar allt oavsett.</div>
     <div class="sent">Jag äger en andel av <span class="co">${cn}</span> som tjänar pengar genom att
       <input value="${OB.a}" size="30">, och kommer tjäna mer för att <input value="${OB.b}" size="30">.</div>
     <a class="course" href="/fokus/kapitel/1">
       <span class="ico" style="color:var(--gold)">${svgi('cap')}</span>
-      <span class="ct"><b>Osäker på hur du sätter ord på det?</b><span>Kapitel 1 i Marginalen är gratis: Vad det innebär att äga en aktie</span></span>
+      <span class="ct"><b>Vill du kunna skriva det själv?</b><span>Kapitel 1 i Marginalen är gratis: Vad det innebär att äga en aktie</span></span>
       <span class="arr">${svgi('arrow')}</span></a>
     <a class="course" href="/fokus">
       <span class="ico" style="color:var(--gold)">${svgi('bulb')}</span>
       <span class="ct"><b>Har du gått kursen?</b><span>Då har du redan skrivit den här meningen i övningarna. Vi hämtar ditt svar.</span></span>
       <span class="arr">${svgi('arrow')}</span></a>
     <div class="obnav"><button class="btn ghost" onclick="obStep=0;renderStart()">Tillbaka</button>
-      <button class="btn prim" onclick="obStep=2;renderStart()">Fortsätt ${ic('arrow','sm')}</button></div>`;
+      <button class="btn ghost" onclick="obSkip=true;obStep=3;renderStart()">Hoppa över, bevaka allt</button>
+      <button class="btn prim" onclick="obSkip=false;obStep=2;renderStart()">Använd förslaget ${ic('arrow','sm')}</button></div>`;
   }else if(obStep===2){
-    body=`<div class="eyebrow">Steg 3 av 4</div><h1 class="big">Vad ska vi hålla koll på åt dig?</h1>
-    <div class="sub">Tre konkreta saker ur ditt svar, med en gräns för varje. Vi hör bara av oss om en gräns passeras.</div>
+    body=`<div class="eyebrow">Steg 3 av 4</div><h1 class="big">Tre vakter, med gränser du kan ändra</h1>
+    <div class="sub">Förslag ur ditt skäl, med gränser satta efter kursens tumregler. Vi hör bara av oss särskilt när en gräns passeras.</div>
     ${OB.vakter.map(v=>`<div class="vrow"><div class="vn">${v[0]}</div>
       <div class="vg"><span class="gl">Gräns</span><input value="${v[1]}"></div></div>`).join('')}
     <div class="obnav"><button class="btn ghost" onclick="obStep=1;renderStart()">Tillbaka</button>
@@ -1061,10 +1062,12 @@ function renderStart(){
   }else{
     const cn=S(obSel||'NORL').namn;
     body=`<div class="eyebrow">Klart</div><h1 class="big">Vi håller koll på ${cn} åt dig</h1>
-    <div class="sub">Från och med nu läser vi allt om bolaget. Vi hör av oss i Ägarbrevet varje morgon, och direkt om en gräns passeras.</div>
+    <div class="sub">${obSkip
+      ?'Vi läser allt om bolaget, sorterar bort bruset och sammanfattar varje morgon. Vill du senare att vi vaktar något särskilt finns förslaget kvar under Varför du äger det.'
+      :'Vi läser allt om bolaget och sammanfattar varje morgon. Dina tre vakter är igång: passeras en gräns säger vi till direkt.'}</div>
     <div class="vrow"><div class="vn">Det här händer nu</div>
-      <div style="font-size:13px;color:var(--mut);line-height:1.7">I morgon 07:30: ditt första Ägarbrev med ${cn} i.<br>Vid rapport: analysen klar inom minuter.<br>Om en gräns passeras: vi säger till samma morgon.</div></div>
-    <div class="obnav"><button class="btn ghost" onclick="obStep=0;obSel=null;renderStart()">Lägg till ett bolag till</button>
+      <div style="font-size:13px;color:var(--mut);line-height:1.7">I morgon 07:30: ditt första Ägarbrev med ${cn} i.<br>Vid rapport: analysen klar inom minuter.<br>${obSkip?'Alla väsentliga händelser: sammanfattade och graderade.':'Om en gräns passeras: vi säger till samma morgon.'}</div></div>
+    <div class="obnav"><button class="btn ghost" onclick="obStep=0;obSel=null;obSkip=false;renderStart()">Lägg till ett bolag till</button>
       <button class="btn prim" onclick="view='brevet';setNav();render()">Öppna Ägarbrevet ${ic('arrow','sm')}</button></div>`;
   }
   main.innerHTML=`<div class="masthead">Ägarkollen · av Marginalen<span class="r">Kom igång</span></div><div class="obwrap">${pips}${body}</div>`;
