@@ -83,7 +83,7 @@ Alla fyra modeller extraherar felfritt på alla fyra dokumenttyperna. Skillnader
 
 ## Nattjobbet (2026-07-07)
 
-`node motor/natt.mjs` är alphans dagliga körning: läser bevakningslistan (`bolag.json`), upptäcker nya pressmeddelanden i varje bolags MFN-flöde (arkivet i motor/in/arkiv.json minns sedda länkar), hämtar, typbestämmer (`faltlistor.mjs`), extraherar/klassificerar med citatkrav, sparar data per bolag (motor/out/data/) och renderar bolagssidor (motor/out/bolag-<id>.html) med korskontroller räknade i kod (t.ex. PM:ets utspädningssiffra mot aktieantalen). Första skarpa körningen: 8 Unibap-dokument, $0,04. Andra körningen: 0 nya, ingen kostnad, idempotent.
+`node motor/natt.mjs` är alphans dagliga körning: läser bevakningslistan (`bolag.json`), upptäcker nya pressmeddelanden i varje bolags MFN-flöde (arkivet i motor/in/arkiv.json minns sedda länkar), hämtar, typbestämmer (`faltlistor.mjs`), extraherar/klassificerar med citatkrav, sparar data per bolag (motor/out/data/) och renderar bolagssidor (motor/out/bolag-<id>.html) med korskontroller räknade i kod (t.ex. PM:ets utspädningssiffra mot aktieantalen). Varje körning tar upp till maxNya osedda länkar, så de första körningarna betar av historiken bakåt tills arkivet är ikapp; därefter hämtas bara färska PM. Två första körningarna: 16 Unibap-dokument för totalt $0,09.
 
 Schemaläggning på Windows: sätt först nyckeln som användarvariabel (kör själv: `setx ANTHROPIC_API_KEY "sk-ant-..."`), sedan:
 ```
