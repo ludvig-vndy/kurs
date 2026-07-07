@@ -1,5 +1,9 @@
 {
   "kommentar": "Alphans bevakningslista. feed = MFN-sida som nattjobbet läser nya länkar ur. Testurval per arketyp (förvärvare, förhoppningsbolag, kassako, nischmedtech, högt flöde, defensivt), inte investeringsuppslag.",
+  "utskick": {
+    "till": ["ludvig@bytekin.se"],
+    "fran": "Ägarkollen <onboarding@resend.dev>"
+  },
   "bolag": [
     { "id": "unibap", "namn": "Unibap Space Solutions", "feed": "https://mfn.se/all/a/unibap-space-solutions", "maxNya": 6 },
     { "id": "lifco", "namn": "Lifco", "feed": "https://mfn.se/a/lifco", "maxNya": 6 },

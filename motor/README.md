@@ -98,3 +98,9 @@ Claude läser PDF:er direkt via dokumentblock i API-anropet, ingen pdftotext och
 ## Sex bolag i drift (2026-07-08)
 
 Bevakningslistan täcker nu sex arketyper: Unibap (förhoppningsbolag), Lifco (förvärvare, egen artikel-URL-form på MFN vilket generaliserade länkmönstret), Evolution (högt flöde), Telia (kassako), Sectra (nischbolag med kundavtal), Axfood (defensivt). Verklighetsfynd från första helkörningen, båda åtgärdade: typbestämningen var för generös (återköp, personnyheter och inbjudningar nådde avtalsklassificeraren; brus-mönster prövas nu före rapport, och förvärv fick egen typ) och varje bolag publicerar språkdubbletter (SV+EN), vilket är fas 2-dedupens existensberättigande i förväg. Klassificeraren själv dömde rätt på riktiga avtal: Sectras kundavtal blev bindande order, Telias partnerskap avsiktsförklaring.
+
+## Mejlutskicket, alphans sista pusselbit (2026-07-08)
+
+`render-brev.mjs` renderar dagsbrevet ur nattens faktiska fynd (nya dokument per bolag, lugna bolag redovisas uttryckligen) som mejlvänlig HTML, och `skicka.mjs` postar det via Resend (ren fetch, RESEND_API_KEY i miljön). natt.mjs sparar alltid brevet till motor/out/brev-<datum>.html och mejlar när nyckeln finns. Utan verifierad domän skickar Resend från onboarding@resend.dev och bara till kontoägarens adress, vilket räcker för alphan; för utskick till fler verifieras en egen domän i Resend-konsolen (två DNS-poster). Mottagare och avsändare konfigureras i bolag.json under "utskick".
+
+Alphans hela loop är därmed komplett: MFN-flöden → nya dokument upptäcks → HTML eller rapport-PDF läses → extraktion med citatkrav → korskontroller i kod → bolagssidor + dagsbrev → mejl. Det som återstår är nycklar i miljön (setx: ANTHROPIC_API_KEY, RESEND_API_KEY) och schtasks-raden ovan.

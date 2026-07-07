@@ -12,6 +12,8 @@ import { hamta } from './hamta.mjs';
 import { extraheraLLM, klassificeraAvtalLLM } from './extract-llm.mjs';
 import { FALT, bestamTyp } from './faltlistor.mjs';
 import { renderBolag } from './render-bolag.mjs';
+import { renderDagsbrev } from './render-brev.mjs';
+import { skicka } from './skicka.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
@@ -22,6 +24,7 @@ const arkiv = existsSync(arkivFil) ? JSON.parse(readFileSync(arkivFil, 'utf8')) 
 mkdirSync(p('./out/data'), { recursive: true });
 
 let totKostnad = 0, totNya = 0;
+const dagensPoster = [], lugna = [];
 
 for (const bolag of konf.bolag) {
   try {
@@ -83,7 +86,10 @@ for (const bolag of konf.bolag) {
     data.dokument.unshift(post);
     arkiv[bolag.id][url] = post.datum;
     totNya++;
+    if (post.typ !== 'ovrigt' && !post.fel) dagensPoster.push({ bolag: bolag.namn, post });
   }
+  if (!nya.length || nya.every(u => false)) lugna.push(bolag.namn);
+  else if (!dagensPoster.some(dp => dp.bolag === bolag.namn)) lugna.push(bolag.namn);
 
   // 3. Spara + rendera.
   data.uppdaterad = new Date().toISOString().slice(0, 16).replace('T', ' ');
@@ -105,4 +111,22 @@ a{color:#8A2E26} .m{font-family:monospace;font-size:11px;color:#8A8172}</style><
 writeFileSync(p('./out/index.html'), index, 'utf8');
 
 writeFileSync(arkivFil, JSON.stringify(arkiv, null, 1));
+
+// Dagsbrevet: renderas ur nattens fynd och mejlas om Resend-nyckel finns.
+const datum = new Date().toISOString().slice(0, 10);
+const brevHtml = renderDagsbrev({ datum, poster: dagensPoster, lugna });
+const brevFil = p(`./out/brev-${datum}.html`);
+writeFileSync(brevFil, brevHtml, 'utf8');
+console.log(`\nDagsbrevet: ${brevFil} (${dagensPoster.length} poster, ${lugna.length} lugna bolag)`);
+
+if (konf.utskick && process.env.RESEND_API_KEY) {
+  try {
+    const amne = `Ägarbrevet · ${dagensPoster.length} ${dagensPoster.length === 1 ? 'sak' : 'saker'} i dina bolag · ${datum}`;
+    const r = await skicka({ till: konf.utskick.till, fran: konf.utskick.fran, amne, html: brevHtml });
+    console.log(`Mejlat till ${konf.utskick.till.join(', ')} (id ${r.id})`);
+  } catch (e) { console.log(`MEJLFEL: ${e.message.slice(0, 160)}`); }
+} else {
+  console.log('Mejl: RESEND_API_KEY saknas i miljön, brevet sparades bara lokalt.');
+}
+
 console.log(`\nKLART: ${totNya} nya dokument · kostnad $${totKostnad.toFixed(4)} · modell ${MODELL}`);
