@@ -9,10 +9,12 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { hamta } from './hamta.mjs';
-import { extraheraLLM, klassificeraAvtalLLM } from './extract-llm.mjs';
+import { extraheraLLM, klassificeraAvtalLLM, bestamTypLLM } from './extract-llm.mjs';
 import { FALT, bestamTyp } from './faltlistor.mjs';
 import { renderBolag } from './render-bolag.mjs';
 import { renderDagsbrev } from './render-brev.mjs';
+import { hittaTal } from './verify.mjs';
+import { hamtaInsyn } from './hamta-insyn.mjs';
 import { skicka } from './skicka.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
@@ -48,9 +50,10 @@ for (const bolag of konf.bolag) {
   const dataFil = p(`./out/data/${bolag.id}.json`);
   const data = existsSync(dataFil) ? JSON.parse(readFileSync(dataFil, 'utf8')) : { id: bolag.id, namn: bolag.namn, dokument: [] };
 
+  const talSetts = [];
   for (const url of nya) {
     const slug = url.split('/').pop();
-    const typ = bestamTyp(slug);
+    let typ = bestamTyp(slug);
     const namn = `${bolag.id}-${slug.slice(0, 60)}`;
     let post = { url, typ, rubrik: slug.replace(/-[a-f0-9]+$/, '').replace(/-/g, ' '), datum: new Date().toISOString().slice(0, 10) };
     try {
@@ -58,6 +61,30 @@ for (const bolag of konf.bolag) {
       const text = readFileSync(h.fil, 'utf8');
       const rubrikRad = text.split('\n').find(r => r.trim().length > 25);
       if (rubrikRad) post.rubrik = rubrikRad.split('>').pop().trim().slice(0, 140);
+
+      // Språkdubbletter (SV+EN av samma besked): jämför dokumentets talmängd med
+      // övriga i samma körning. Hög överlappning = samma nyhet, ingen LLM-kostnad.
+      // Bara inom samma typ, och aldrig för rapport/kallelse/emission: en rapport
+      // delar siffror med kvartalets övriga PM utan att vara en dubblett av dem.
+      const tal = new Set(hittaTal(text).map(t => t.varde));
+      const tvilling = talSetts.find(ts => {
+        if (ts.typ !== typ || !['avtal', 'forvarv', 'ovrigt'].includes(typ)) return false;
+        if (ts.tal.size < 5 || tal.size < 5) return false;
+        let snitt = 0; for (const v of tal) if (ts.tal.has(v)) snitt++;
+        return snitt / new Set([...tal, ...ts.tal]).size >= 0.6;
+      });
+      talSetts.push({ url, tal, typ });
+      if (tvilling) {
+        post.dublett_av = tvilling.url;
+        console.log(`  = dublett   ${post.rubrik.slice(0, 66)}`);
+      } else {
+
+      // Slug-reglernas fallback är "avtal"; LLM:en typbestämmer de fallen billigt.
+      if (typ === 'avtal') {
+        const tl = await bestamTypLLM(text, MODELL);
+        totKostnad += tl.kostnad_usd;
+        if (tl.typ !== 'avtal') { typ = tl.typ; post.typ = typ; }
+      }
 
       if (typ === 'avtal' || typ === 'forvarv') {
         const r = await klassificeraAvtalLLM([{ id: 'pm1', text }], MODELL);
@@ -79,6 +106,7 @@ for (const bolag of konf.bolag) {
         post.fakta = r.fakta; post.kallor = r.kallor; post.anmarkningar = r.fel; totKostnad += r.kostnad_usd;
       }
       console.log(`  + ${typ.padEnd(9)} ${post.rubrik.slice(0, 70)}`);
+      }
     } catch (e) {
       post.fel = e.message;
       console.log(`  ! ${typ.padEnd(9)} ${slug.slice(0, 50)}: ${e.message.slice(0, 80)}`);
@@ -86,10 +114,26 @@ for (const bolag of konf.bolag) {
     data.dokument.unshift(post);
     arkiv[bolag.id][url] = post.datum;
     totNya++;
-    if (post.typ !== 'ovrigt' && !post.fel) dagensPoster.push({ bolag: bolag.namn, post });
+    if (post.typ !== 'ovrigt' && !post.fel && !post.dublett_av) dagensPoster.push({ bolag: bolag.namn, post });
   }
   if (!nya.length || nya.every(u => false)) lugna.push(bolag.namn);
   else if (!dagensPoster.some(dp => dp.bolag === bolag.namn)) lugna.push(bolag.namn);
+
+  // 3b. Insynsregistret (FI, öppen data): summeras per bolag; nya poster efter
+  // baslinjen flaggas i dagsbrevet. Ingen LLM behövs, registret är strukturerat.
+  try {
+    const insyn = await hamtaInsyn(bolag.namn);
+    writeFileSync(p(`./out/data/${bolag.id}-insyn.json`), JSON.stringify(insyn, null, 1));
+    data.insyn = { netto_12m: insyn.netto_12m, antal_12m: insyn.transaktioner.length, senaste: insyn.transaktioner.slice(0, 5), kalla: insyn.kalla };
+    const senastSedd = arkiv[bolag.id].__insyn;
+    if (insyn.transaktioner[0]) arkiv[bolag.id].__insyn = insyn.transaktioner[0].pub;
+    if (senastSedd) {
+      for (const t of insyn.transaktioner.filter(t => t.pub > senastSedd).slice(0, 3)) {
+        dagensPoster.push({ bolag: bolag.namn, post: { typ: 'insyn', datum: t.pub, url: 'https://marknadssok.fi.se/publiceringsklient', rubrik: `Insynshandel: ${t.karaktar} av ${t.befattning || t.person}`, bevis: `${t.person} (${t.befattning}) ${t.karaktar.toLowerCase()} ${t.volym} st à ${t.pris} ${t.valuta}, publicerat ${t.pub}` } });
+      }
+    }
+    console.log(`  insyn: ${insyn.transaktioner.length} transaktioner 12 mån${senastSedd ? '' : ' (baslinje satt, nya flaggas från nästa körning)'}`);
+  } catch (e) { console.log(`  insyn: kunde inte hämtas (${e.message.slice(0, 70)})`); }
 
   // 3. Spara + rendera.
   data.uppdaterad = new Date().toISOString().slice(0, 16).replace('T', ' ');

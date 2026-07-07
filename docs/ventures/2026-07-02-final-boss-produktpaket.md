@@ -130,6 +130,7 @@ Den minsta produkt som bevisar tesen, och det första betalbara.
 - **Kvalitetsgrind före lansering:** en eval-svit med kända rapporter där varje numeriskt påstående verifieras automatiskt. Noll hallucinerade tal är släppkravet, samma anda som kursens grindar.
 - **Lansering:** till kursens användare först (beta). Gratis X rapporter, sedan betalvägg.
 - **Bevisar:** grundnings-motorn (hela spinen för fas 2), betalviljan, och flödet kurs → verktyg.
+- **Utfall (2026-07-08):** tekniken klar och överträffad (motorn körs på riktiga dokument, Rapportkollen finns som verktyg i motor/rapportkollen.mjs). Produktytan som öppet freemium byggdes inte: ersatt av alphan + den stängda lanseringen via Sebastian, och betalvilje-beviset flyttar till betapanelen. Medveten ombyggnad, inte ett hål.
 
 ### Snittet: kärnan först (sorterat 2026-07-07, på Sebastians fråga)
 

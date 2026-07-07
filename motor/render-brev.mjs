@@ -2,12 +2,13 @@
 // fixturer. Mejlvänlig HTML (inline-stil, en kolumn). Lugna bolag redovisas
 // uttryckligen, tystnad är ett besked.
 
-const TYPNAMN = { rapport: 'Rapport', kallelse: 'Kallelse', emission: 'Emission', avtal: 'Avtal', forvarv: 'Förvärv', ovrigt: 'Övrigt' };
+const TYPNAMN = { rapport: 'Rapport', kallelse: 'Kallelse', emission: 'Emission', avtal: 'Avtal', forvarv: 'Förvärv', insyn: 'Insynshandel', ovrigt: 'Övrigt' };
 
 function fmt(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace('.', ','); }
 
 function radFakta(post) {
   if (post.klass) return `Klass: <b>${post.klass}</b>. <i>"${(post.bevis || '').slice(0, 180)}"</i>`;
+  if (post.bevis) return `<i>${post.bevis.slice(0, 200)}</i>`;
   if (post.fakta && Object.keys(post.fakta).length) {
     return Object.entries(post.fakta).slice(0, 3)
       .map(([id, f]) => `${id.replace(/_/g, ' ')}: <b>${fmt(f.nu)}</b>${f.fjol != null ? ` (${fmt(f.fjol)})` : ''}`)

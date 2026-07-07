@@ -104,3 +104,13 @@ Bevakningslistan täcker nu sex arketyper: Unibap (förhoppningsbolag), Lifco (f
 `render-brev.mjs` renderar dagsbrevet ur nattens faktiska fynd (nya dokument per bolag, lugna bolag redovisas uttryckligen) som mejlvänlig HTML, och `skicka.mjs` postar det via Resend (ren fetch, RESEND_API_KEY i miljön). natt.mjs sparar alltid brevet till motor/out/brev-<datum>.html och mejlar när nyckeln finns. Utan verifierad domän skickar Resend från onboarding@resend.dev och bara till kontoägarens adress, vilket räcker för alphan; för utskick till fler verifieras en egen domän i Resend-konsolen (två DNS-poster). Mottagare och avsändare konfigureras i bolag.json under "utskick".
 
 Alphans hela loop är därmed komplett: MFN-flöden → nya dokument upptäcks → HTML eller rapport-PDF läses → extraktion med citatkrav → korskontroller i kod → bolagssidor + dagsbrev → mejl. Det som återstår är nycklar i miljön (setx: ANTHROPIC_API_KEY, RESEND_API_KEY) och schtasks-raden ovan.
+
+## Nattens fas 2-paket (2026-07-08)
+
+- **Rapportkollen** (`rapportkollen.mjs`): fas 1-ytan som verktyg. URL eller fil in, grindad analys ut som HTML: extraktion med citat, förändringar i kod, LLM-narration, grinden före visning. Blockeras narrationen visas fälten ändå.
+- **Språkdubbletts-dedup** i nattjobbet: talmängdsjämförelse inom samma körning, bara för avtal/förvärv/övrigt (en rapport delar siffror med kvartalets PM utan att vara dubblett), tröskel 0,6. Dubbletter kostar ingen LLM och visas kompakt.
+- **LLM-typbestämning** av fallback-dokument (`bestamTypLLM`): slug-reglernas "avtal"-fall typbestäms av billigaste modellen innan dyra steg.
+- **FI:s insynsregister** (`hamta-insyn.mjs`): öppen data, CSV per utgivare (UTF-16), summeras per bolag (12 mån, netto, senaste transaktioner) in i bolagssidan; nya poster efter baslinjen flaggas i dagsbrevet. Ingen LLM, registret är strukturerat.
+- **Fråga AI v0** (`fraga.mjs`): frågor mot dokumentarkivet med produktkedjan i miniatyr: scope-vakt, hämtning, svar enbart ur utdragen, och KÄLLGRINDEN: varje tal i svaret måste finnas i utdragen modellen fick. Bevisat skarpt: modellen försökte själv räkna fram tranche-storlekar (72 292 013 minus 62 304 860), grinden blockerade; efter skärpt instruktion svarar den ur källan och passerar.
+- **NBSP-fixen**: MFN-texter använder hårda mellanslag i tal; normaliseras nu i både hamta och hittaTal. Utan den missar talmatchning tyst, viktigaste buggfixen i natt.
+- **Täckningslistan**: bolagssidan redovisar vilka källor som bevakas, löftet "du missar inget" i verifierbar form.

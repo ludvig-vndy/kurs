@@ -24,6 +24,8 @@ function korskontroller(dok) {
 }
 
 function dokSektion(dok) {
+  if (dok.dublett_av) return `
+  <div class="sek" style="padding:9px 20px"><p class="mut" style="margin:0">Språkdubblett av samma besked, ej analyserad separat: ${(dok.rubrik || '').split('>').pop().trim().slice(0, 90)}</p></div>`;
   const kk = korskontroller(dok);
   const falt = dok.fakta ? Object.entries(dok.fakta).map(([id, f]) => `
       <tr><td class="fid">${id}</td><td class="fv">${fmt(f.nu)}${f.fjol != null ? ` <span class="jmf">(jmf ${fmt(f.fjol)})</span>` : ''} <span class="enh">${f.enhet || ''}</span></td></tr>
@@ -73,7 +75,16 @@ export function renderBolag(data) {
   <h1>${data.namn}</h1>
   <p class="sub">${data.dokument.length} dokument bevakade · varje siffra med ordagrant citat ur källan · korskontroller räknade i kod</p>
   <div class="varn">ALPHA · RIKTIG DATA · MASKINLÄST, MÄNSKLIGT OGRANSKAD · ALDRIG RÅD</div>
+  ${data.insyn ? `
+  <div class="sek">
+    <div class="et">Insynshandel · FI:s register · 12 månader</div>
+    <p style="font-family:var(--mono);font-size:13px;margin:0 0 8px">${data.insyn.antal_12m} transaktioner · netto ${fmt(Math.round(data.insyn.netto_12m / 1000))} tkr ${data.insyn.netto_12m >= 0 ? 'köp' : 'sälj'}</p>
+    ${data.insyn.senaste.map(t => `<p class="cit" style="font-style:normal">${t.pub} · ${t.person} (${t.befattning}) · ${t.karaktar} · ${t.volym != null ? fmt(t.volym) + ' st' : ''} ${t.pris != null ? 'à ' + fmt(t.pris) + ' ' + t.valuta : ''}</p>`).join('')}
+    <p class="len"><a href="${data.insyn.kalla}">Registret hos FI →</a></p>
+  </div>` : ''}
   ${data.dokument.map(dokSektion).join('\n')}
+  <div class="sek"><div class="et">Det här bevakas för bolaget</div>
+    <p class="mut" style="margin:0">MFN-flödet (pressmeddelanden, rapporter, kallelser, emissioner) · rapport-PDF-bilagor · FI:s insynsregister. Fler källor kopplas i takt med bygget; listan är löftet "du missar inget" i verifierbar form.</p></div>
   <div class="foot">Ägarkollen är arbetsnamn · källor: bolagets egna pressmeddelanden via MFN · information, aldrig råd</div>
 </div></body></html>`;
 }

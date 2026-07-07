@@ -14,7 +14,7 @@ export function stadaHtml(html) {
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
     .replace(/<(br|\/p|\/div|\/li|\/h[1-6]|\/tr)[^>]*>/gi, '\n')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"')
+    .replace(/&nbsp;/g, ' ').replace(/[   ]/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"')
     .replace(/&#8211;|&ndash;/g, ' till ').replace(/&#8212;|&mdash;/g, ', ')
     .replace(/&aring;/g, 'å').replace(/&auml;/g, 'ä').replace(/&ouml;/g, 'ö')
     .replace(/&Aring;/g, 'Å').replace(/&Auml;/g, 'Ä').replace(/&Ouml;/g, 'Ö')

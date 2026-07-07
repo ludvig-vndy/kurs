@@ -51,6 +51,18 @@ Hårda regler:
 4. Ange som "bevis" den ordagranna mening som avgör klassningen.
 Svara med ENDAST JSON: {"klassningar": [{"id": "<pm_id>", "klass": "<en av de tre>", "bevis": "<ordagrann mening>"}]}`;
 
+// Typbestämning med LLM för dokument där slug-reglerna inte räcker (fallback-
+// fallen). Billigaste modellen, ett ord tillbaka.
+const SYSTEM_TYP = `Klassificera dokumentet i EXAKT en typ: rapport (delårs/helårsrapport med siffror), kallelse (till stämma), emission (kapitalanskaffning), forvarv (bolagsköp), avtal (order/ramavtal/samarbete med extern part), ovrigt (personnytt, inbjudningar, återköp, hållbarhet, övrig information).
+Svara ENDAST med JSON: {"typ": "<en av sex>"}`;
+
+export async function bestamTypLLM(text, modellnamn) {
+  const svar = await anropa(modellnamn, { system: SYSTEM_TYP, prompt: text.slice(0, 4000), maxTokens: 50 });
+  const rå = tolkaJson(svar.text);
+  const ok = ['rapport', 'kallelse', 'emission', 'forvarv', 'avtal', 'ovrigt'].includes(rå.typ);
+  return { typ: ok ? rå.typ : 'avtal', kostnad_usd: svar.kostnad_usd };
+}
+
 export async function klassificeraAvtalLLM(pmLista, modellnamn) {
   const prompt = pmLista.map(pm => `=== ${pm.id} ===\n${pm.text}`).join('\n\n');
   const svar = await anropa(modellnamn, { system: SYSTEM_KLASS, prompt, maxTokens: 1500 });

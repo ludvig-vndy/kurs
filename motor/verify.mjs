@@ -33,7 +33,8 @@ function samlaTillatna(ex, c) {
   return lista;
 }
 
-function hittaTal(text) {
+export function hittaTal(text) {
+  text = text.replace(/[   ]/g, ' '); // hårda/smala mellanslag i tal
   const ut = [];
   const re = /(?<![A-Za-zÅÄÖåäö\d])(-?\d{1,3}(?: \d{3})+|-?\d+)(?:,(\d+))?/g;
   let m;
