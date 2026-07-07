@@ -29,3 +29,4 @@ rost*.csv
 *.zip
 *standalone*.html
 motor/out/
+motor/in/
