@@ -53,3 +53,15 @@ Detta är "extraktionsmotorn med noll-hallucinationskrav" ur final boss §5 fas 
 ## Ljudutgåvan v0 (2026-07-07)
 
 `node motor/ljud.mjs` gör Ägarbrevet hörbart: narrationen går genom noll-hallucinationsgrinden (ogranskad text läses aldrig upp), sedan genom uttalsnormaliseraren (`tts-normalize.mjs`: tal blir ord, "1,15 kronor" blir "en krona och femton öre", procenttecken blir ordet procent, kvoter och parenteser blir talspråk; egen facit-svit i `test-normalize.mjs`), och syntetiseras till `motor/out/agarbrevet-norlux.wav` med Windows inbyggda svenska röst (Microsoft Bengt, WinRT). Bengt är en demo-röst; i produktion byts syntessteget mot neural TTS med exakt samma manus, det är därför normaliseringen ligger i vår kod och inte hos rösten. Manuset landar på cirka 90 sekunder, brevets format.
+
+## LLM-lagret (skrivet 2026-07-07, väntar på nycklar)
+
+Hela logiken är färdig; nycklarna är två miljövariabler (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`):
+
+- **`llm.mjs`**: leverantörsagnostisk klient via fetch, inga nya beroenden. Pristabell för kostnadsräkning per anrop (ögonblicksbild, uppdatera mot aktuella prislistor).
+- **`extract-llm.mjs`**: extraktion bakom samma schema som de deterministiska adaptrarna. Fältlistan definierar vad som hämtas, modellen får aldrig välja egna fält, citat är obligatoriskt och "vet ej" uttrycks genom frånvaro. Även avtalsklassning med bevismening.
+- **`narrate-llm.mjs`**: modellen skriver, verify.mjs granskar innan texten får användas. Stilreglerna (klarspråk, inga råd, inga tankstreck) ligger i systemprompten.
+- **`klassificera-fraga.mjs`**: scope-vakten för Fråga AI, billig klassificering (portfolj/bolag/kurs/utanfor) före det dyra steget, med standardavböjningen som konstant.
+- **`eval-llm.mjs`**: selen som väljer modell. Kör fixturerna mot facit per modell och räknar rättprocent, kostnad och tid. `--torr` kör utan nycklar med de deterministiska extraktorerna som låtsas-LLM och bevisar hela jämförelselogiken: 37/37.
+
+Nyckeldagen: `$env:OPENAI_API_KEY="sk-..."` och sedan `node motor/eval-llm.mjs --modell gpt-5.4-mini --modell claude-haiku`. Tabellen som kommer ut väljer modell per steg.
