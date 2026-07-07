@@ -1,0 +1,105 @@
+{
+ "kapitel": 17,
+ "lektion": "17.4",
+ "titel": "Löftesliggaren",
+ "niva": "Avancerad",
+ "tid_min": 11,
+ "mal": "Efter lektionen kan eleven föra bok över ledningens utfästelser mot utfall och läsa emissionshistoriken som kvitto på bolagets förhandlingsläge.",
+ "steg": [
+  {
+   "typ": "intro",
+   "kicker": "LEKTION 17.4",
+   "titel": "Löftesliggaren",
+   "ingress": "I ett förhoppningsbolag är nästan hela värdet framtid, och framtiden når dig genom ledningens löften. Håller de? Den här lektionen byter magkänsla mot bokföring: två enkla register som graderar avsändaren."
+  },
+  {
+   "typ": "reading",
+   "kicker": "MARKNADENS MINNE ÄR KORT",
+   "lead": "Löften avges ett i taget, med månader emellan, och när utfallet kommer har de flesta glömt formuleringen. Bolaget påminner inte, för brutna löften nämns sällan i pressmeddelanden. Marknadens minne är kort, och det utnyttjas.",
+   "highlight": "Marknadens minne är kort, och det utnyttjas.",
+   "brodtext": [
+    "Löftesliggaren är motmedlet: en tabell med fyra kolumner. Datum, vad ledningen lovade med deras egna ord, vad som hände, och domen: höll, sen eller bruten. Källorna är bolagets egna dokument, så det finns inget tyckande i registret. Varje kvartal bokförs utfallen för öppna löften.",
+    "Om ledningens utfästelser systematiskt spricker är bolagets kommunikation en opålitlig mätare, och då vet du faktiskt inte vad du äger. Just i förhoppningsbolag hör liggaren därför hemma mitt i analysen: du köper löften, alltså är löftesgivarens facit en del av caset."
+   ],
+   "takeaway": "För bok: datum, löfte med ledningens egna ord, utfall, dom. Bolagets dokument är källan, inte minnet."
+  },
+  {
+   "typ": "concept",
+   "kicker": "TVÅ REGISTER SOM HÄNGER IHOP",
+   "titel": "Den ledande indikatorn och kvittot",
+   "visual": {
+    "typ": "jamforelse",
+    "element": [
+     {
+      "rubrik": "Löftesliggaren, ledande",
+      "text": "Ledningens utfästelser följda mot utfall. Brutna tidslöften förbrukar förtroende innan det syns någon annanstans. Mönstret bedöms, inte enskilda missar: förhoppningsbolag verkar i osäkerhet och förseningar hör till."
+     },
+     {
+      "rubrik": "Emissionshistoriken, kvittot",
+      "text": "Varje kapitalanskaffning med datum, belopp, teckningskurs och rabatt. Små rabatter med långa mellanrum: pengar togs in från styrka. Täta emissioner med växande rabatter: bolaget finansieras på motpartens villkor, och din andel betalar."
+     }
+    ],
+    "figurtext": "Förbrukat förtroende höjer priset på nästa emission, och priset syns som rabatt i historiken."
+   },
+   "forklaring": "Den erfarne använder liggaren för kalibrering snarare än fördömande. Har ledningens under första halvåret hittills inneburit ungefär ett halvårs försening, läser du nästa tidsangivelse med det påslaget. Liggaren blir en översättningstabell från bolagets tid till verklig tid, direkt användbar när nästa milstolpe ställs mot kassans räckvidd."
+  },
+  {
+   "typ": "concept",
+   "kicker": "ETT FACIT UR LIGGAREN",
+   "titel": "Sen men levererar, eller levererar inte?",
+   "brodtext": [
+    "Voltcells påhittade liggare efter två år: certifiering utlovad under första halvåret kom i november, sen med ungefär ett halvår. Pilotkontrakt innan årsskiftet tecknades i februari, sen med två månader. Bruttomarginalmålet höll. Ingen nyemission under överskådlig tid har hållit hittills. Facit: två av fyra avgjorda löften höll tidplanen, förseningarna var månader snarare än år, och inget löfte försvann tyst. En ledning som levererar sent men levererar, och nästa tidslöfte läses med ett halvårs mentalt påslag.",
+    "Varningsmönstren är de motsatta: löften som försvinner ur kommunikationen utan att avrapporteras, tidsangivelser som blir vagare för varje presentation, emissioner som kommer tätare med växande rabatter. Och den giftigaste kombinationen av allt: ett stort löfte med datum, en kassa som inte räcker förbi datumet, och en historik av förseningar. Där är sannolikheten hög att nästa emission görs från svaghet."
+   ]
+  },
+  {
+   "typ": "quiz",
+   "fragor": [
+    {
+     "typ": "single",
+     "fraga": "Vad är en löftesliggare?",
+     "alternativ": [
+      "En lista över bolagets patent",
+      "En daterad lista över ledningens utfästelser, var och en följd till sitt utfall: höll, sen eller bruten",
+      "En sammanställning av analytikernas riktkurser"
+     ],
+     "ratt": [1],
+     "forklaring": "Liggaren förvandlar minnet till bokföring. Utan den bedöms varje nytt löfte i ett vakuum, med den bedöms det mot avsändarens facit."
+    },
+    {
+     "typ": "single",
+     "fraga": "Varför är löfteshistoriken särskilt viktig i förhoppningsbolag?",
+     "alternativ": [
+      "För att förhoppningsbolag enligt lag måste hålla sina prognoser",
+      "För att stora bolag aldrig bryter löften",
+      "För att nästan hela värdet ligger i framtiden och ledningens utfästelser är enda bron dit"
+     ],
+     "ratt": [2],
+     "forklaring": "I ett lönsamt bolag kan du räkna på det som finns. I ett förhoppningsbolag köper du löften, och då är löftesgivarens historik en del av analysen."
+    },
+    {
+     "typ": "single",
+     "fraga": "Vad avslöjar emissionshistoriken?",
+     "alternativ": [
+      "Hur ofta och till vilka villkor bolaget tagit in pengar: växande rabatter betyder förhandling från svaghet",
+      "Vilken bank bolaget använder",
+      "Ingenting, gamla emissioner saknar betydelse"
+     ],
+     "ratt": [0],
+     "forklaring": "Rabatten är priset bolaget fick betala för kapitalet, och raden av rabatter bildar ett mönster som speglar förhandlingsläget över tid."
+    },
+    {
+     "typ": "single",
+     "fraga": "Ledningen lovade certifiering under första halvåret, beskedet kom i november. Hur bokförs det?",
+     "alternativ": [
+      "Det raderas eftersom certifieringen till slut kom",
+      "Som sen med ungefärlig försening, och nästa tidsangivelse läses med den förseningen som påslag",
+      "Som höll, eftersom riktningen stämde"
+     ],
+     "ratt": [1],
+     "forklaring": "Steget togs, det är den goda nyheten. Kalibreringen är den andra: den här ledningens halvår har hittills betytt ungefär ett år."
+    }
+   ]
+  }
+ ]
+}

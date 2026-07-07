@@ -1,0 +1,102 @@
+{
+ "kapitel": 17,
+ "lektion": "17.1",
+ "titel": "Casetrappan",
+ "niva": "Avancerad",
+ "tid_min": 12,
+ "mal": "Efter lektionen kan eleven rita ett förhoppningsbolags casetrappa med avbockningsbara steg och placera varje nyhet på den, i stället för att bedöma besked på rubrik och tonläge.",
+ "steg": [
+  {
+   "typ": "intro",
+   "kicker": "LEKTION 17.1",
+   "titel": "Casetrappan",
+   "ingress": "Ett förhoppningsbolag bärs av en berättelse om framtiden. Berättelser går att älska. Den här lektionen ger dig verktyget som gör dem prövbara i stället: bolagets resa som en trappa av steg som antingen bockats av eller inte."
+  },
+  {
+   "typ": "reading",
+   "kicker": "BERÄTTELSEN MÅSTE BLI PRÖVBAR",
+   "lead": "Ett förhoppningsbolags berättelse låter ofta likadan år efter år: stor marknad, unik teknik, genombrott runt hörnet. Utan struktur kan du inte skilja ett bolag som rör sig framåt från ett som står still och berättar bra.",
+   "highlight": "skilja ett bolag som rör sig framåt från ett som står still och berättar bra",
+   "brodtext": [
+    "Kursen svänger på nyheter, och nyheterna låter alltid viktiga. Casetrappan löser det genom att byta fråga. I stället för att fråga om ett besked låter bra frågar du var på sin egen resa bolaget står, och om beskedet flyttade det ett steg.",
+    "Trappan ritas när du analyserar bolaget första gången, innan du äger det. Ritad i efterhand blir den ett bekräftelseverktyg: du kommer att omtolka stegen så att de passar det som redan hänt. Ritad i förväg är den en måttstock du inte kan förhandla med."
+   ],
+   "takeaway": "Byt fråga: inte om beskedet låter bra, utan om det flyttade bolaget ett steg på dess egen resa."
+  },
+  {
+   "typ": "concept",
+   "kicker": "SÅ RITAS TRAPPAN",
+   "titel": "Resan i avbockningsbara steg",
+   "visual": {
+    "typ": "flode",
+    "noder": [
+     {"etikett": "Teknik bevisad i verklig miljö"},
+     {"etikett": "Första betalda piloten"},
+     {"etikett": "Certifiering eller godkännande"},
+     {"etikett": "Första volymkontraktet"},
+     {"etikett": "Positivt kassaflöde"}
+    ],
+    "figurtext": "En typisk casetrappa för ett teknikbolag. Varje steg är en händelse som antingen har inträffat eller inte."
+   },
+   "forklaring": "Rita fyra till sex konkreta steg från idé till lönsam affär. Regeln är att varje steg ska gå att bocka av: en bindande order från en betalande kund är ett trappsteg, stort intresse från marknaden är det inte. Sedan har varje nyhet en enda uppgift, att placeras. Antingen flyttar beskedet bolaget ett steg uppåt, eller så står bolaget kvar där det stod. De flesta besked, även de med entusiastiska rubriker, lämnar bolaget på samma steg."
+  },
+  {
+   "typ": "concept",
+   "kicker": "TID ÄR DEN DOLDA KOSTNADEN",
+   "titel": "Tre nyheter, en stegförflyttning",
+   "brodtext": [
+    "Voltcell är ett påhittat batteriteknikbolag med illustrativa siffror. Under våren kom tre pressmeddelanden. Ett samarbetsavtal med en asiatisk tillverkare: inget bindande, bolaget står kvar på steg två. Ett betalt pilotkontrakt: steg två bockades av, ett riktigt framsteg. Ett ramavtal med potentiellt ordervärde i hundramiljonersklassen: låter stort, men utan garanterade volymer står bolaget kvar och väntar på certifieringen.",
+    "Tre nyheter, en stegförflyttning. Utan trappan hade alla tre sett ut som framsteg. Och lägg till tidens dimension: ett bolag som förlorar pengar betalar för varje månad med sin kassa, så att stå still på trappan är inte neutralt, det är en långsam förlust. Frågan om vilket steg bolaget står på följs alltid av hur länge det stått där och hur länge kassan räcker. Många besked utan stegförflyttning är mönstret hos bolag som lever på berättelsen."
+   ]
+  },
+  {
+   "typ": "quiz",
+   "fragor": [
+    {
+     "typ": "single",
+     "fraga": "Vad är en casetrappa?",
+     "alternativ": [
+      "En teknisk analys av kursens stödnivåer",
+      "Bolagets resa nedbruten i konkreta steg som går att bocka av eller inte",
+      "En lista över bolagets konkurrenter i storleksordning"
+     ],
+     "ratt": [1],
+     "forklaring": "Trappan gör berättelsen prövbar: varje steg är en händelse som antingen har inträffat eller inte, oberoende av vad kursen gör."
+    },
+    {
+     "typ": "single",
+     "fraga": "Ett bolag skickar ut ett pressmeddelande om ett nytt samarbete. Vad är casetrappans fråga?",
+     "alternativ": [
+      "Hur mycket kursen steg på beskedet",
+      "Om rubriken innehåller ordet genombrott",
+      "Om beskedet flyttar bolaget ett steg uppåt eller lämnar det på samma steg"
+     ],
+     "ratt": [2],
+     "forklaring": "Nyheter som inte flyttar bolaget på trappan kan vara trevliga, men de bevisar ingenting nytt om caset."
+    },
+    {
+     "typ": "single",
+     "fraga": "Varför ska trappan ritas innan du köper, inte efteråt?",
+     "alternativ": [
+      "För att du i efterhand omtolkar stegen så att de passar det som redan hänt",
+      "För att bolaget kräver det",
+      "För att trappan annars blir för lång"
+     ],
+     "ratt": [0],
+     "forklaring": "En trappa ritad i efterhand blir ett bekräftelseverktyg. Ritad i förväg är den en måttstock du inte kan förhandla med."
+    },
+    {
+     "typ": "single",
+     "fraga": "Ett bolag har stått på samma trappsteg i två år trots många nyheter. Vad betyder det?",
+     "alternativ": [
+      "Att marknaden är tålmodig och caset moget",
+      "Att berättelsen producerar besked men inte framsteg, en varningssignal i sig",
+      "Ingenting, nyhetsflödet väger tyngre än trappan"
+     ],
+     "ratt": [1],
+     "forklaring": "Tid på samma steg kostar pengar i ett bolag som förlorar pengar. Många besked utan stegförflyttning är mönstret hos bolag som lever på berättelsen."
+    }
+   ]
+  }
+ ]
+}

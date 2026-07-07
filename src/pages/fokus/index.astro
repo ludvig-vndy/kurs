@@ -54,6 +54,7 @@ const delar: Del[] = [
   { n: 2, titel: 'Förstå bolaget', sub: 'Läsa rapporten och bedöma kvalitet', kapitel: [3, 4, 5, 6, 7] },
   { n: 3, titel: 'Värdering', sub: 'Sätta en siffra och en felmarginal', kapitel: [8, 9, 10] },
   { n: 4, titel: 'I praktiken', sub: 'Psykologi, case och egen process', kapitel: [11, 12, 13, 14, 15, 16] },
+  { n: 5, titel: 'Fördjupning', sub: 'Att äga bolagen utan vinst', kapitel: [17] },
 ];
 
 const kapitelByNr = new Map(kurs.kapitel.map((k) => [k.nummer, k]));
@@ -73,7 +74,7 @@ const totalLessons = kurs.kapitel.reduce((sum, k) => sum + k.lektioner.length, 0
   <main class="wrap" style="flex:1; padding-top:8px">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap">
       <h1 class="h-title" style="max-width:16ch">Fundamental aktieanalys</h1>
-      <div class="link-mono" style="color:var(--ink-soft)">16 kapitel · 51 lektioner</div>
+      <div class="link-mono" style="color:var(--ink-soft)">{kurs.kapitel.length} kapitel · {totalLessons} lektioner</div>
     </div>
 
     <p class="standfirst">{kurs.beskrivning}</p>

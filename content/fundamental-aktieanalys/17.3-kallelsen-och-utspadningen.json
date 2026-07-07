@@ -1,0 +1,101 @@
+{
+ "kapitel": 17,
+ "lektion": "17.3",
+ "titel": "Kallelsen och utspädningen",
+ "niva": "Avancerad",
+ "tid_min": 12,
+ "mal": "Efter lektionen kan eleven läsa en stämmokallelse, hitta bemyndiganden, konvertibler och optionsprogram, och räkna fram taket för sin egen utspädning.",
+ "steg": [
+  {
+   "typ": "intro",
+   "kicker": "LEKTION 17.3",
+   "titel": "Kallelsen och utspädningen",
+   "ingress": "Din andel av ett bolag är inte huggen i sten. Besluten som kan minska den fattas på stämman, annonserade i förväg i ett dokument nästan ingen läser: kallelsen. Det är ditt övertag."
+  },
+  {
+   "typ": "reading",
+   "kicker": "UTSPÄDNING ÄR AFFÄRSMODELLEN",
+   "lead": "För ett förhoppningsbolag är utspädning inte en randanmärkning utan en del av affärsmodellen. Bolaget förlorar pengar, och pengarna måste komma någonstans ifrån: nyemissioner, konvertibellån, optionsprogram.",
+   "highlight": "utspädning inte en randanmärkning utan en del av affärsmodellen",
+   "brodtext": [
+    "Varje väg skapar nya aktier, och varje ny aktie gör din bit av den framtida vinsten mindre. Du kan ha rätt om tekniken och marknaden och ändå få medioker avkastning, för att bolaget du ägde en procent av hann bli ett bolag du äger en halv procent av innan framgången kom.",
+    "Tre poster i kallelser och årshandlingar skapar framtida aktier. Bemyndigandet: styrelsen ber stämman om rätt att ge ut nya aktier fram till nästa stämma, upp till ett angivet antal. Konvertiblerna: lån som kan bytas mot aktier till en bestämd kurs, där lånebeloppet delat med konverteringskursen ger maximala antalet nya aktier. Optionsprogrammen: teckningsoptioner till ledning och anställda. Läs särskilt om emission får ske med avvikelse från företrädesrätten, för då kan aktierna säljas till någon annan utan att du får köpa först."
+   ],
+   "takeaway": "Tre poster skapar framtida aktier: bemyndiganden, konvertibler och optioner. Alla står i handlingarna, i förväg."
+  },
+  {
+   "typ": "concept",
+   "kicker": "FYRRADERSRÄKNINGEN",
+   "titel": "Summera taket för din utspädning",
+   "visual": {
+    "typ": "andel",
+    "delar": [
+     {"etikett": "Dagens aktier", "varde": 85.4},
+     {"etikett": "Bemyndigandet, max", "varde": 17.1},
+     {"etikett": "Konvertibeln, max", "varde": 6.5},
+     {"etikett": "Optionsprogrammet", "varde": 2.5}
+    ],
+    "figurtext": "Voltcell, påhittat bolag, miljoner aktier. De tre posterna summerar till ett tak på ungefär 30 procent nya aktier."
+   },
+   "forklaring": "Räkningen är fyra rader: summera maximalt antal nya aktier från de tre posterna, dela med dagens antal, och du har taket. Taket är ett scenario, inte en prognos, det nås sällan. Men det är ditt värsta fall, känt före stämman i stället för upptäckt i en nyemissions pressmeddelande. Notera också konvertibelns förfallodag: står aktien över konverteringskursen blir lånet aktier och du späds ut, står den under ska bolaget betala tillbaka kontant, och då är frågan om kassan klarar det."
+  },
+  {
+   "typ": "concept",
+   "kicker": "STYRKA ELLER SVAGHET",
+   "titel": "Samma mekanism, motsatt betydelse för ägaren",
+   "brodtext": [
+    "En emission till bra kurs, för att finansiera ett kontrakt bolaget redan vunnit, kan vara utmärkt för ägarna trots utspädningen. En emission framtvingad av en tom kassa, till rabatt, på motpartens villkor, är förödande. Skillnaden avgörs av när pengarna tas in: med tid och alternativ kvar, eller i panik. Kallelsens tak säger hur mycket, kassans räckvidd säger hur bråttom, och de två ska alltid läsas ihop.",
+    "Rutinmässiga bemyndiganden på tio procent i lönsamma bolag är vardag och sällan värda oro. Samma siffra i ett bolag som bränner kassa är laddad, för där är sannolikheten hög att den används. Varningarna att känna igen: bemyndiganden nära de övre gränserna i bolag med kort kassa, återkommande riktade emissioner till rabatt till samma finansiärer, konvertibelförfall inom ett år som kassan inte täcker, och optionsprogram som görs om med lägre teckningskurs varje gång kursen fallit."
+   ]
+  },
+  {
+   "typ": "quiz",
+   "fragor": [
+    {
+     "typ": "single",
+     "fraga": "Vad är ett emissionsbemyndigande?",
+     "alternativ": [
+      "Ett beslut om en nyemission som genomförs direkt efter stämman",
+      "En rätt som stämman ger styrelsen att fram till nästa stämma besluta om nyemission upp till en viss mängd, om styrelsen vill",
+      "Ett förbud mot nyemissioner under året"
+     ],
+     "ratt": [1],
+     "forklaring": "Bemyndigandet är en möjlighet i förväg, inte en genomförd emission. Men taket det sätter är verkligt: så mycket kan din andel spädas ut utan att du tillfrågas igen."
+    },
+    {
+     "typ": "single",
+     "fraga": "Vad betyder emission med avvikelse från aktieägarnas företrädesrätt?",
+     "alternativ": [
+      "Att befintliga ägare alltid får köpa först",
+      "Att emissionen måste godkännas av Finansinspektionen",
+      "Att bolaget kan sälja nya aktier till utvalda investerare utan att du får möjlighet att försvara din andel"
+     ],
+     "ratt": [2],
+     "forklaring": "Utan företrädesrätt kan din andel minska utan att du erbjuds delta. Det kan vara motiverat, men det flyttar makt från dig till styrelsen."
+    },
+    {
+     "typ": "single",
+     "fraga": "Hur räknar du fram hur många aktier en konvertibel som mest kan bli?",
+     "alternativ": [
+      "Lånets nominella belopp delat med konverteringskursen",
+      "Lånets belopp gånger konverteringskursen",
+      "Antalet aktier i bolaget delat med lånets belopp"
+     ],
+     "ratt": [0],
+     "forklaring": "Mekanismen är alltid belopp delat med kurs. Ett lån på 120 miljoner med kurs 18,50 kan som mest bli ungefär 6,5 miljoner nya aktier, illustrativa tal."
+    },
+    {
+     "typ": "single",
+     "fraga": "Varför summeras alla utspädningskällor till ett tak?",
+     "alternativ": [
+      "För att taket alltid blir verklighet",
+      "För att var och en för sig kan se ofarlig ut medan summan kan vara en tredjedel av bolaget",
+      "För att lagen kräver att bolaget publicerar summan"
+     ],
+     "ratt": [1],
+     "forklaring": "Taket är ett scenario, inte en prognos. Men det är ditt värsta fall, och det ska du känna till före stämman, inte efter emissionen."
+    }
+   ]
+  }
+ ]
+}

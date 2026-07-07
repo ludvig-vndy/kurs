@@ -1,0 +1,115 @@
+{
+ "kapitel": 17,
+ "lektion": "17.2",
+ "titel": "Avtalsspråket",
+ "niva": "Avancerad",
+ "tid_min": 12,
+ "mal": "Efter lektionen kan eleven klassa ett avtalsbesked som bindande order, ramavtal eller avsiktsförklaring utifrån avtalstexten, och ställa marknadsförda potentiella värden mot bolagets bindande affärer.",
+ "steg": [
+  {
+   "typ": "intro",
+   "kicker": "LEKTION 17.2",
+   "titel": "Avtalsspråket",
+   "ingress": "Strategiskt samarbete, genombrottsorder, avtal med global aktör. Bolaget väljer själv orden i sina pressmeddelanden, och kursen reagerar på rubriken samma morgon. Din tes ska reagera på avtalstexten. Tre ord som ofta blandas ihop betyder helt olika saker för ditt case."
+  },
+  {
+   "typ": "concept",
+   "kicker": "TRE KLASSER",
+   "titel": "Vad beskedet faktiskt binder",
+   "visual": {
+    "typ": "jamforelse",
+    "element": [
+     {
+      "rubrik": "Bindande order",
+      "text": "Ett bestämt belopp, en leverans som ska ske, en kund som ska betala. Känns igen på formuleringar som ordervärdet uppgår till och ett leveransdatum. Den enda klassen som är pengar."
+     },
+     {
+      "rubrik": "Ramavtal",
+      "text": "Villkor för framtida beställningar, men inga garanterade volymer. Affären kommer först om och när avrop görs. En öppnad dörr, inte en affär."
+     },
+     {
+      "rubrik": "Avsiktsförklaring (LOI)",
+      "text": "En icke-bindande viljeyttring: parterna avser att förhandla. Värdet i dag är noll. Informationsvärdet ligger i vad som händer sedan: följs den av ett riktigt avtal, eller tystnar det?"
+     }
+    ],
+    "figurtext": "Läsmetoden: hoppa över rubriken och VD-citaten, läs meningarna om vad som avtalats, klassa beskedet."
+   },
+   "forklaring": "Ett friskt förhoppningsbolag rör sig över tid nedåt i klasserna: avsiktsförklaringar blir ramavtal, ramavtal får sina första avrop, avropen blir återkommande order. Det är casetrappan i avtalsform. Varningarna är spegelbilden: avsiktsförklaringar som tyst försvinner ur kommunikationen, ramavtal som år efter år står utan avrop, och rubriker som klassar upp beskedet, till exempel ordet order i rubriken när brödtexten beskriver ett ramavtal."
+  },
+  {
+   "typ": "dataviz",
+   "titel": "Löftet mot affären",
+   "underrubrik": "Voltcell, påhittat bolag: ramavtalets marknadsförda tak mot den enda bindande ordern",
+   "visual": {
+    "typ": "stapeldiagram",
+    "data": [
+     {"kategori": "Bindande order (pilotkontrakt)", "varde": 4.2},
+     {"kategori": "Potentiellt värde enligt ramavtalet", "varde": 300}
+    ],
+    "figurtext": "Miljoner kronor, illustrativa tal. Det potentiella värdet är drygt 70 gånger den bindande affären."
+   },
+   "slutsats": "Räkna proportionen: när löftena är tiotals gånger större än de riktiga affärerna vet du var i berättelsen bolaget befinner sig, oavsett tonläget i rubrikerna. Ett bolag med riktiga affärer skryter med riktiga belopp."
+  },
+  {
+   "typ": "reading",
+   "kicker": "GARDERINGARNA ÄR HUVUDTEXTEN",
+   "lead": "Orden potentiellt, upp till, förutsatt och kan komma att är avtalets verkliga innehåll, för de talar om vad som inte är bundet. Läs garderingarna som huvudtext, inte som finstilt.",
+   "highlight": "Läs garderingarna som huvudtext, inte som finstilt.",
+   "brodtext": [
+    "En mening som potentiellt ordervärde om upp till 300 miljoner över fem år, förutsatt fullt utnyttjande, innehåller tre garderingar och noll åtaganden. Upp till anger ett tak under antagandet att allting faller ut maximalt. Golvet i samma mening är noll.",
+    "Gapet mellan rubrik och avtalstext är störst i småbolagens pressmeddelanden av ett enkelt skäl: förhoppningsbolag lever på berättelsen och behöver marknadens förtroende och kapital. Rubriken är säljtext, brödtexten är fakta, och när de säger olika saker är det avtalstexten som gäller."
+   ],
+   "takeaway": "Klassa varje besked på avtalstexten, räkna garderingarna, och ställ potentiella belopp mot bindande affärer."
+  },
+  {
+   "typ": "quiz",
+   "fragor": [
+    {
+     "typ": "single",
+     "fraga": "Vad skiljer en bindande order från ett ramavtal?",
+     "alternativ": [
+      "Ordern har belopp och leverans som ska ske; ramavtalet sätter villkor för framtida beställningar utan garanterade volymer",
+      "Ramavtalet är alltid större och därför viktigare",
+      "Ingenting, det är två ord för samma sak"
+     ],
+     "ratt": [0],
+     "forklaring": "En order är pengar som ska betalas. Ett ramavtal är en öppnad dörr: värdet kommer först om och när avrop faktiskt görs."
+    },
+    {
+     "typ": "single",
+     "fraga": "Ett pressmeddelande anger ett potentiellt ordervärde om upp till 300 miljoner. Hur läses det?",
+     "alternativ": [
+      "Som en försiktig prognos bolaget förbundit sig till",
+      "Som marknadsföring: potentiellt och upp till betyder att inget av beloppet är garanterat",
+      "Som ett bindande belopp med rabatt"
+     ],
+     "ratt": [1],
+     "forklaring": "Upp till anger taket om allt faller ut maximalt. Golvet i samma mening är noll."
+    },
+    {
+     "typ": "single",
+     "fraga": "Vad är en avsiktsförklaring (Letter of Intent)?",
+     "alternativ": [
+      "Ett bindande köpeavtal med senare betalning",
+      "Ett myndighetsgodkännande",
+      "En icke-bindande viljeyttring om att parterna avser att förhandla om ett riktigt avtal"
+     ],
+     "ratt": [2],
+     "forklaring": "Den binder i regel ingen till affär. Intressant blir den när den följs av ett riktigt avtal, och en varningssignal när den inte gör det."
+    },
+    {
+     "typ": "multi",
+     "fraga": "Vilka av följande är varningssignaler i avtalsflödet? Välj alla som stämmer.",
+     "alternativ": [
+      "Avsiktsförklaringar som tyst försvinner ur kommunikationen",
+      "Ramavtal som år efter år står utan avrop men fortsätter nämnas",
+      "Ett litet men bindande pilotkontrakt",
+      "Rubriker som låter en klass högre än brödtexten"
+     ],
+     "ratt": [0, 1, 3],
+     "forklaring": "Det lilla bindande kontraktet är motsatsen till en varning: det är den enda klassen som är pengar, och första beviset på att någon betalar."
+    }
+   ]
+  }
+ ]
+}

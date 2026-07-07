@@ -1,0 +1,105 @@
+{
+ "kapitel": 17,
+ "lektion": "17.5",
+ "titel": "Att hålla och att släppa",
+ "niva": "Avancerad",
+ "tid_min": 13,
+ "mal": "Efter lektionen kan eleven skriva håll- och säljvillkor i trappans termer före köpet, och agera på villkoren i stället för på kursen, åt båda hållen.",
+ "steg": [
+  {
+   "typ": "intro",
+   "kicker": "LEKTION 17.5",
+   "titel": "Att hålla och att släppa",
+   "ingress": "Den svåraste delen av multibagger-jakten är inte att hitta bolaget. Det är att äga det i flera år utan att skaka av sig det på vägen, och att känna igen dagen då det faktiskt är dags att gå. Kapitlets fyra register finns till för den här lektionen."
+  },
+  {
+   "typ": "reading",
+   "kicker": "NÄSTAN INGEN FICK HELA RESAN",
+   "lead": "De stora kursresorna innehåller regelmässigt flera fall på tiotals procent, och varje fall skakar av sig ägare som hade rätt om bolaget men fel nerver. Motsatt gäller också: bolag som misslyckas gör det sällan med en smäll, utan genom små besvikelser som var och en känns för liten att sälja på.",
+   "highlight": "rätt om bolaget men fel nerver",
+   "brodtext": [
+    "Utan yttre måttstock gör du därför systematiskt fel åt båda hållen: säljer vinnaren på oro och behåller förloraren på hopp. Kursen är en usel domare, för den mäter humör lika mycket som fakta, och just när du behöver den som mest, mitt i en rörelse, är den som mest humör.",
+    "Lösningen är att skriva villkoren när du är lugn, före köpet, och läsa varje händelse mot dem i stället för mot magkänslan. Villkor skrivna i lugn är en måttstock. Bedömningar gjorda i panik eller eufori följer humöret."
+   ],
+   "takeaway": "Skriv villkoren före köpet. Sedan läser du händelser mot listan, inte mot humöret."
+  },
+  {
+   "typ": "concept",
+   "kicker": "TVÅ LISTOR",
+   "titel": "Hållvillkor och säljvillkor, i trappans termer",
+   "brodtext": [
+    "Hållvillkoren är det som ska vara sant för att du ska sitta kvar: trappan bockas av i rimlig takt mot ledningens plan, kassan räcker förbi nästa steg med marginal, löftesliggaren visar att ledningen levererar om än sent, och utspädningen sker i den takt du räknat med. Så länge listan stämmer är kursen inte en del av beslutet. Röda dagar, gröna dagar, stiltje: irrelevant.",
+    "Säljvillkoren är händelserna som betyder att caset är brutet: ett avgörande trappsteg uteblir och ersätts av omformuleringar. Kassan tvingar fram finansiering på motpartens villkor före nästa steg. Löftesliggaren tippar från sen men levererar till levererar inte. Och det positiva säljskälet: trappan är färdigklättrad och caset du köpte är fullbordat, då äger du ett annat bolag och analysen börjar om. Lägg märke till vad som inte står i någon av listorna: priset. Om aktien faller 30 procent är inget villkor. Om certifieringen uteblir och bolaget samtidigt tar in pengar till stor rabatt, det är ett villkor."
+   ]
+  },
+  {
+   "typ": "concept",
+   "kicker": "TVÅ STORMAR",
+   "titel": "Kursen mätte fel båda gångerna",
+   "brodtext": [
+    "Voltcell, påhittat som alltid. Första stormen: aktien halveras i en marknadsbred nedgång, utan bolagsnyheter. Registerkontrollen: pilotkontraktet levererar, certifieringsprocessen löper, kassan räcker arton månader, inga nya löftesbrott. Inget säljvillkor utlöst. Ägaren sitter kvar, hur långsamt tiden än går.",
+    "Andra stormen, ett år senare: certifieringsbeskedet skjuts upp en andra gång, samtidigt som bolaget annonserar en riktad emission med stor rabatt, den tredje anskaffningen på två år. Kursen faller mindre än förra gången. Men nu utlöses två säljvillkor samma dag: det avgörande steget uteblir igen, och finansieringen sker från svaghet. Ägaren säljer, trots det mildare kursfallet. Ett prisfall är en anledning att kontrollera registren, aldrig ett faktum i sig, och samma disciplin gäller uppåt: en rusning på ett ramavtal utan volymer flyttar ingen trappa. En sista proportion: rätten att sitta still genom svängarna köper du med positionens storlek. Är positionen för stor blir varje fall en nervfråga, och då hjälper inga register i världen."
+   ]
+  },
+  {
+   "typ": "quiz",
+   "fragor": [
+    {
+     "typ": "single",
+     "fraga": "Vad är den bärande principen för att hålla en potentiell multibagger?",
+     "alternativ": [
+      "Sälj alltid efter en dubblering för att säkra vinsten",
+      "Så länge trappan bockas av och registren är rena är kursens svängningar inget säljskäl; det som säljer är brutna steg",
+      "Håll alltid minst tio år oavsett vad som händer"
+     ],
+     "ratt": [1],
+     "forklaring": "De stora vinnarna faller kraftigt flera gånger på vägen. Den som säljer på kursrörelser äger dem aldrig hela vägen; den som säljer på brutna trappsteg kliver av när caset säger till, inte humöret."
+    },
+    {
+     "typ": "single",
+     "fraga": "Vilket av följande är ett trappformulerat säljvillkor?",
+     "alternativ": [
+      "Om aktien faller 30 procent säljer jag",
+      "Om aktien står stilla i tre månader säljer jag",
+      "Om certifieringen uteblir och bolaget samtidigt tar in pengar till stor rabatt är caset brutet och jag säljer"
+     ],
+     "ratt": [2],
+     "forklaring": "Villkoret pekar på händelser i verksamheten och finansieringen, inte på priset, och går att pröva mot fakta den dag det utlöses."
+    },
+    {
+     "typ": "single",
+     "fraga": "Trappan är intakt men kursen har fallit kraftigt utan nyheter. Vad gör du?",
+     "alternativ": [
+      "Säljer, för marknaden vet alltid något",
+      "Kontrollerar registren en extra gång, och står allt som förut har priset rört sig men inte caset",
+      "Dubblar positionen omedelbart eftersom det blivit billigare"
+     ],
+     "ratt": [1],
+     "forklaring": "Prisfallet är avtryckaren att göra kontrollen, inte ett faktum i sig. Att automatiskt köpa mer är samma misstag åt andra hållet."
+    },
+    {
+     "typ": "single",
+     "fraga": "Varför skrivs villkoren före köpet och inte när det stormar?",
+     "alternativ": [
+      "För att villkor skrivna i lugn är en måttstock, medan bedömningar i panik eller eufori följer humöret",
+      "För att mäklaren kräver det",
+      "För att villkoren aldrig får ändras"
+     ],
+     "ratt": [0],
+     "forklaring": "Poängen med förhandsvillkor är att flytta beslutet från den sämsta stunden, mitt i rörelsen, till den bästa: innan den."
+    },
+    {
+     "typ": "single",
+     "fraga": "Vad skyddar ditt kapital om registren skyddar din bedömning?",
+     "alternativ": [
+      "Stop loss-ordrar",
+      "Positionens storlek: äg så att du tål en halvering utan att tvingas agera",
+      "Daglig bevakning av kursen"
+     ],
+     "ratt": [1],
+     "forklaring": "Temperamentet bor i procenten av portföljen. Är positionen rätt dimensionerad ger registren dig chansen att ha rätt hela vägen."
+    }
+   ]
+  }
+ ]
+}

@@ -1,663 +1,718 @@
 {
-  "kurs": "fundamental-aktieanalys",
-  "titel": "Fundamental aktieanalys",
-  "beskrivning": "Lär dig att värdera bolag och tänka som en ägare, från grunderna till värdering, risk och praktik.",
-  "kapitel": [
+ "kurs": "fundamental-aktieanalys",
+ "titel": "Fundamental aktieanalys",
+ "beskrivning": "Lär dig att värdera bolag och tänka som en ägare, från grunderna till värdering, risk och praktik.",
+ "kapitel": [
+  {
+   "nummer": 1,
+   "titel": "Investeringsfilosofi",
+   "niva": "Nybörjare",
+   "tid_min": 37,
+   "blurb": "Allt annat i kursen vilar på hur du ser på en aktie. Här lägger vi grunden: en aktie är en ägarandel i ett företag, värd nuvärdet av de pengar verksamheten ger sina ägare, och din uppgift är att agera på gapet mellan pris och värde.",
+   "outcomes": [
+    "Formulera vad du faktiskt äger när du köper en aktie",
+    "Skilja på vad en aktie kostar och vad den är värd",
+    "Välja en investeringsfilosofi som passar dig och hålla dig inom din kompetenscirkel"
+   ],
+   "sebastian": "Allt jag lärt mig på börsen bygger på en sak: jag äger bitar av riktiga företag, inte rader som blinkar på en skärm. Den dagen det klickade slutade jag spela och började investera. Fattar du det här kapitlet blir resten mycket lättare.",
+   "lektioner": [
     {
-      "nummer": 1,
-      "titel": "Investeringsfilosofi",
-      "niva": "Nybörjare",
-      "tid_min": 37,
-      "blurb": "Allt annat i kursen vilar på hur du ser på en aktie. Här lägger vi grunden: en aktie är en ägarandel i ett företag, värd nuvärdet av de pengar verksamheten ger sina ägare, och din uppgift är att agera på gapet mellan pris och värde.",
-      "outcomes": [
-        "Formulera vad du faktiskt äger när du köper en aktie",
-        "Skilja på vad en aktie kostar och vad den är värd",
-        "Välja en investeringsfilosofi som passar dig och hålla dig inom din kompetenscirkel"
-      ],
-      "sebastian": "Allt jag lärt mig på börsen bygger på en sak: jag äger bitar av riktiga företag, inte rader som blinkar på en skärm. Den dagen det klickade slutade jag spela och började investera. Fattar du det här kapitlet blir resten mycket lättare.",
-      "lektioner": [
-        {
-          "lektion": "1.1",
-          "titel": "Vad det innebär att äga en aktie",
-          "niva": "Nybörjare",
-          "tid_min": 11,
-          "status": "klar",
-          "fil": "1.1-aga-en-aktie.json"
-        },
-        {
-          "lektion": "1.2",
-          "titel": "Pris mot värde",
-          "niva": "Nybörjare",
-          "tid_min": 8,
-          "status": "klar",
-          "fil": "1.2-pris-mot-varde.json"
-        },
-        {
-          "lektion": "1.3",
-          "titel": "Tidshorisont och avkastningens källor",
-          "niva": "Nybörjare",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "1.3-tidshorisont-och-avkastningskallor.json"
-        },
-        {
-          "lektion": "1.4",
-          "titel": "Filosofi och kompetenscirkel",
-          "niva": "Nybörjare",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "1.4-filosofi-och-kompetenscirkel.json"
-        }
-      ]
+     "lektion": "1.1",
+     "titel": "Vad det innebär att äga en aktie",
+     "niva": "Nybörjare",
+     "tid_min": 11,
+     "status": "klar",
+     "fil": "1.1-aga-en-aktie.json"
     },
     {
-      "nummer": 2,
-      "titel": "Affärsmodeller",
-      "niva": "Nybörjare",
-      "tid_min": 33,
-      "blurb": "Innan du läser siffrorna måste du förstå motorn som skapar dem. Här lär du dig hur olika bolag tjänar pengar, varför intäktens karaktär avgör hur värdefull den är, och hur enhetsekonomi avslöjar om tillväxt skapar eller förstör värde.",
-      "outcomes": [
-        "Beskriva hur ett bolag tjänar pengar i några meningar",
-        "Skilja återkommande intäkt från cyklisk och engångsartad",
-        "Bedöma om tillväxten är ekonomiskt sund via enhetsekonomin"
-      ],
-      "sebastian": "Innan jag tittar på en enda siffra vill jag förstå motorn: hur tjänar bolaget faktiskt pengar, och kommer intäkten tillbaka eller är det en engångsgrej? Förstår du inte modellen spelar siffrorna ingen roll.",
-      "lektioner": [
-        {
-          "lektion": "2.1",
-          "titel": "Hur ett bolag tjänar pengar",
-          "niva": "Nybörjare",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "2.1-hur-ett-bolag-tjanar-pengar.json"
-        },
-        {
-          "lektion": "2.2",
-          "titel": "Affärsmodeller och intäktstyper",
-          "niva": "Nybörjare",
-          "tid_min": 12,
-          "status": "klar",
-          "fil": "2.2-affarsmodeller-och-intaktstyper.json"
-        },
-        {
-          "lektion": "2.3",
-          "titel": "Enhetsekonomi och tillväxt",
-          "niva": "Mellan",
-          "tid_min": 12,
-          "status": "klar",
-          "fil": "2.3-enhetsekonomi-och-tillvaxt.json"
-        }
-      ]
+     "lektion": "1.2",
+     "titel": "Pris mot värde",
+     "niva": "Nybörjare",
+     "tid_min": 8,
+     "status": "klar",
+     "fil": "1.2-pris-mot-varde.json"
     },
     {
-      "nummer": 3,
-      "titel": "Årsredovisningen",
-      "niva": "Mellan",
-      "tid_min": 22,
-      "blurb": "Årsredovisningen är ditt primärkällmaterial. Här lär du dig var olika information bor, och hur du läser mellan raderna i VD-ord, noter och revisionsberättelse, där sanningen ofta göms.",
-      "outcomes": [
-        "Hitta rätt information i en årsredovisnings olika delar",
-        "Skilja vad ledningen säger från vad siffrorna visar",
-        "Veta var i noterna och revisionsberättelsen risker avslöjar sig"
-      ],
-      "sebastian": "Årsredovisningen är ingen broschyr, det är bevis du ska förhöra. Jag läser den för att hitta det de helst inte vill att jag ska se: noten som ändrar allt, nyckeltalet som tyst försvann.",
-      "lektioner": [
-        {
-          "lektion": "3.1",
-          "titel": "Årsredovisningens delar",
-          "niva": "Nybörjare",
-          "tid_min": 8,
-          "status": "klar",
-          "fil": "3.1-arsredovisningens-delar.json"
-        },
-        {
-          "lektion": "3.2",
-          "titel": "Läsa mellan raderna",
-          "niva": "Mellan",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "3.2-lasa-mellan-raderna.json"
-        }
-      ]
+     "lektion": "1.3",
+     "titel": "Tidshorisont och avkastningens källor",
+     "niva": "Nybörjare",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "1.3-tidshorisont-och-avkastningskallor.json"
     },
     {
-      "nummer": 4,
-      "titel": "Räkenskaperna",
-      "niva": "Mellan",
-      "tid_min": 79,
-      "blurb": "De tre rapporterna är bolagets språk. Här lär du dig läsa resultaträkning, balansräkning och kassaflöde, se hur de hänger ihop, och känna igen när en redovisad vinst inte är riktiga pengar.",
-      "outcomes": [
-        "Läsa de tre rapporterna och vad varje rad betyder",
-        "Se hur en händelse syns i alla tre rapporterna",
-        "Genomskåda svag vinstkvalitet och varningssignaler"
-      ],
-      "sebastian": "De tre rapporterna är bolagets språk, och de flesta läser bara sista raden. Lär dig läsa alla tre ihop, så ser du skillnaden mellan en vinst som finns på riktigt och en som bara finns på pappret.",
-      "lektioner": [
-        {
-          "lektion": "4.1",
-          "titel": "Resultaträkningen",
-          "niva": "Nybörjare",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "4.1-resultatrakningen.json"
-        },
-        {
-          "lektion": "4.2",
-          "titel": "Balansräkningen",
-          "niva": "Nybörjare",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "4.2-balansrakningen.json"
-        },
-        {
-          "lektion": "4.3",
-          "titel": "Kassaflödet",
-          "niva": "Nybörjare",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "4.3-kassaflodet.json"
-        },
-        {
-          "lektion": "4.4",
-          "titel": "Vinstkvalitet och varningslampor",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "4.4-vinstkvalitet-och-varningslampor.json"
-        },
-        {
-          "lektion": "4.5",
-          "titel": "Goodwill och eget kapital",
-          "niva": "Mellan",
-          "tid_min": 12,
-          "status": "klar",
-          "fil": "4.5-goodwill-och-eget-kapital.json"
-        },
-        {
-          "lektion": "4.6",
-          "titel": "De tre rapporterna ihop",
-          "niva": "Mellan",
-          "tid_min": 12,
-          "status": "klar",
-          "fil": "4.6-de-tre-rapporterna-ihop.json"
-        }
-      ]
-    },
-    {
-      "nummer": 5,
-      "titel": "Nyckeltal och kapitalavkastning",
-      "niva": "Mellan",
-      "tid_min": 42,
-      "blurb": "Nyckeltal förvandlar rapporterna till en diagnos, om du läser dem rätt. Här lär du dig marginaler, tillväxt- och effektivitetstal, och ROIC, måttet som avslöjar om ett bolag verkligen skapar värde på sitt kapital.",
-      "outcomes": [
-        "Läsa marginalkedjan och vad gapen avslöjar",
-        "Använda nyckeltal i kontext i stället för som ensamma tal",
-        "Bedöma värdeskapande på ROIC mot kapitalkostnaden"
-      ],
-      "sebastian": "Jag läser nyckeltal som ledtrådar. Det jag jagar mest är avkastningen på kapitalet: ett bolag som tjänar mycket på lite bundet kapital är en maskin, och de gömmer sig ofta bland de tråkigaste namnen.",
-      "lektioner": [
-        {
-          "lektion": "5.1",
-          "titel": "Marginaler och ROIC",
-          "niva": "Mellan",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "5.1-nyckeltal.json"
-        },
-        {
-          "lektion": "5.2",
-          "titel": "Tillväxt, effektivitet och rätt användning",
-          "niva": "Mellan",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "5.2-tillvaxt-effektivitet-anvandning.json"
-        },
-        {
-          "lektion": "5.3",
-          "titel": "ROIC i djupet",
-          "niva": "Avancerad",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "5.3-roic-i-djupet.json"
-        }
-      ]
-    },
-    {
-      "nummer": 6,
-      "titel": "Konkurrensfördelar (moats)",
-      "niva": "Mellan",
-      "tid_min": 26,
-      "blurb": "Hög lönsamhet konkurreras bort om inget skyddar den. Här lär du dig vad en konkurrensfördel är, de fem former den tar, och hur du ser i siffrorna om vallgraven är verklig och hållbar.",
-      "outcomes": [
-        "Känna igen de fem typerna av konkurrensfördel",
-        "Skilja en verklig vallgrav från ett tillfälligt försprång",
-        "Se en moats styrka i uthålligt hög avkastning över tid"
-      ],
-      "sebastian": "Hög lönsamhet utan skydd lockar bara in konkurrenter. Jag frågar alltid vad som hindrar någon med pengar från att ta det här, och hur länge det håller. Får jag inget svar är det nog ingen riktig vallgrav, bara tur.",
-      "lektioner": [
-        {
-          "lektion": "6.1",
-          "titel": "Vad en moat är och typerna",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "6.1-vad-en-moat-ar.json"
-        },
-        {
-          "lektion": "6.2",
-          "titel": "Bedöma och se moaten i siffrorna",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "6.2-moat-i-siffrorna.json"
-        }
-      ]
-    },
-    {
-      "nummer": 7,
-      "titel": "Ledning och kapitalallokering",
-      "niva": "Mellan",
-      "tid_min": 23,
-      "blurb": "Det är människor som förvaltar ditt kapital. Här lär du dig bedöma en ledning, och granska deras viktigaste jobb: hur de allokerar varje krona mellan återinvestering, förvärv, återköp och utdelning.",
-      "outcomes": [
-        "Bedöma en lednings kompetens, integritet och incitament",
-        "Avgöra om kapitalallokeringen skapar eller förstör värde",
-        "Se när förvärv och återköp lönar sig, och när de inte gör det"
-      ],
-      "sebastian": "Till slut är det människor som förvaltar dina pengar. Den viktigaste frågan är vad de gör med varje krona som blir över, för där har fler förmögenheter byggts och förstörts än i själva verksamheten.",
-      "lektioner": [
-        {
-          "lektion": "7.1",
-          "titel": "Att bedöma en ledning",
-          "niva": "Mellan",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "7.1-bedoma-en-ledning.json"
-        },
-        {
-          "lektion": "7.2",
-          "titel": "Kapitalallokering",
-          "niva": "Mellan",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "7.2-kapitalallokering.json"
-        }
-      ]
-    },
-    {
-      "nummer": 8,
-      "titel": "Värderingsgrunder",
-      "niva": "Mellan",
-      "tid_min": 23,
-      "blurb": "Värde är inte en siffra på en skärm, det är nuvärdet av framtida kassaflöden. Här lägger vi den teoretiska grunden för all värdering: vad värde är, och varför en krona idag är värd mer än en krona imorgon.",
-      "outcomes": [
-        "Förklara varför värde är nuvärdet av framtida kassaflöden",
-        "Förstå hur diskontering översätter framtid till nutid",
-        "Behandla en värdering som ett intervall, inte ett facit"
-      ],
-      "sebastian": "Värde är inte priset på skärmen, det är nuvärdet av de pengar bolaget ger dig över tid. Den som säger sig veta det på kronan ljuger. Sikta på ett intervall och en rejäl marginal.",
-      "lektioner": [
-        {
-          "lektion": "8.1",
-          "titel": "Vad är värde?",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "8.1-vad-ar-varde.json"
-        },
-        {
-          "lektion": "8.2",
-          "titel": "Pengars tidsvärde och diskontering",
-          "niva": "Mellan",
-          "tid_min": 10,
-          "status": "klar",
-          "fil": "8.2-pengars-tidsvarde-och-diskontering.json"
-        }
-      ]
-    },
-    {
-      "nummer": 9,
-      "titel": "Värdering i praktiken",
-      "niva": "Avancerad",
-      "tid_min": 62,
-      "blurb": "Nu omsätter vi värdeteorin i verktyg. Här lär du dig multiplar och deras fällor, hur en DCF byggs och vad som driver den, och hur du sätter ett riktprisintervall du faktiskt kan lita på.",
-      "outcomes": [
-        "Använda multiplar på rätt bolag och känna igen fällorna",
-        "Bygga en DCF och se var värdet kommer ifrån",
-        "Sätta ett riktpris som ett intervall via scenarier"
-      ],
-      "sebastian": "Här blir teorin verktyg, men låt dig inte luras av exaktheten. En modell är bara så bra som antagandena du matar in. Jag använder dem för att se vad priset redan kräver, inte för att jaga en exakt siffra.",
-      "lektioner": [
-        {
-          "lektion": "9.1",
-          "titel": "Multiplar och deras fällor",
-          "niva": "Mellan",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "9.1-multiplar.json"
-        },
-        {
-          "lektion": "9.2",
-          "titel": "Relativvärdering och jämförelser",
-          "niva": "Mellan",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "9.2-relativvardering.json"
-        },
-        {
-          "lektion": "9.3",
-          "titel": "Diskonterat kassaflöde",
-          "niva": "Avancerad",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "9.3-dcf.json"
-        },
-        {
-          "lektion": "9.4",
-          "titel": "Att bygga prognosen",
-          "niva": "Avancerad",
-          "tid_min": 11,
-          "status": "klar",
-          "fil": "9.4-bygga-prognosen.json"
-        },
-        {
-          "lektion": "9.5",
-          "titel": "Att sätta ett riktpris",
-          "niva": "Avancerad",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "9.5-riktpris.json"
-        }
-      ]
-    },
-    {
-      "nummer": 10,
-      "titel": "Risk och felmarginal",
-      "niva": "Mellan",
-      "tid_min": 30,
-      "blurb": "Risk är inte att kursen svänger, det är att förlora kapital permanent. Här lär du dig vad risk faktiskt är, hur du kartlägger vad som kan gå fel, och hur en felmarginal skyddar dig när du har fel.",
-      "outcomes": [
-        "Skilja volatilitet från permanent kapitalförlust",
-        "Köpa med en felmarginal som tål misstag och otur",
-        "Kartlägga risker och tänka i sannolikheter"
-      ],
-      "sebastian": "Risk är inte att det svänger, det är att pengarna inte kommer tillbaka. Hela mitt jobb är att förbättra oddsen och köpa med marginal, så att jag överlever att ha fel, för det kommer jag att ha ibland.",
-      "lektioner": [
-        {
-          "lektion": "10.1",
-          "titel": "Vad risk faktiskt är",
-          "niva": "Mellan",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "10.1-vad-risk-ar.json"
-        },
-        {
-          "lektion": "10.2",
-          "titel": "Säkerhetsmarginal",
-          "niva": "Mellan",
-          "tid_min": 8,
-          "status": "klar",
-          "fil": "10.2-sakerhetsmarginal.json"
-        },
-        {
-          "lektion": "10.3",
-          "titel": "Kartlägga fel och tänka i sannolikheter",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "10.3-kartlagga-fel-och-sannolikheter.json"
-        }
-      ]
-    },
-    {
-      "nummer": 11,
-      "titel": "Investeringspsykologi",
-      "niva": "Mellan",
-      "tid_min": 60,
-      "blurb": "Den största risken sitter ofta mellan dina öron. Här lär du dig känna igen flockbeteende, rädsla och de tankefällor som får skickliga analytiker att fatta dåliga beslut, och bygga ett system som skyddar dig från dig själv.",
-      "outcomes": [
-        "Känna igen och motstå flock, rädsla och girighet",
-        "Genomskåda bekräftelsebias, ankring och sunk cost",
-        "Bygga ett system med position sizing och regler"
-      ],
-      "sebastian": "Den största risken sitter mellan dina öron, inte i bolaget. Jag har förlorat mer på mitt eget temperament än på dålig analys. Det här kapitlet, och min egen lektion på slutet, handlar om att skydda dig från dig själv.",
-      "lektioner": [
-        {
-          "lektion": "11.1",
-          "titel": "Flock, rädsla och girighet",
-          "niva": "Mellan",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "11.1-flock-radsla-girighet.json"
-        },
-        {
-          "lektion": "11.2",
-          "titel": "Tankefällor",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "11.2-tankefallor.json"
-        },
-        {
-          "lektion": "11.3",
-          "titel": "Story vs analys",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "11.3-story-vs-analys.json"
-        },
-        {
-          "lektion": "11.4",
-          "titel": "Bygga ett system: position sizing och ödmjukhet",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "11.4-position-sizing-och-odmjukhet.json"
-        },
-        {
-          "lektion": "11.5",
-          "titel": "Ur Sebastians huvud: hjärnan och tre dyrköpta läxor",
-          "niva": "Mellan",
-          "tid_min": 12,
-          "status": "klar",
-          "fil": "11.5-ur-sebastians-huvud.json"
-        }
-      ]
-    },
-    {
-      "nummer": 12,
-      "titel": "Tillväxtbolag",
-      "niva": "Avancerad",
-      "tid_min": 97,
-      "blurb": "Olönsamma tillväxtbolag bryter de vanliga verktygen. Här lär du dig en egen verktygslåda: enhetsekonomi, marknad och TAM, kassa och burn, scenariovärdering, och temperamentet att överleva resan mot en multibagger.",
-      "outcomes": [
-        "Värdera tillväxtbolag där vanliga multiplar inte fungerar",
-        "Bedöma marknad, enhetsekonomi och finansieringsrisk",
-        "Dimensionera positioner och överleva djupa kursfall"
-      ],
-      "sebastian": "Tillväxtbolag är där både de största vinsterna och de värsta smällarna finns. Var tidig men kräv bevis, dimensionera så att ett misslyckande inte sänker dig, och ge fan i rena förhoppningsbolag utan intäkter.",
-      "lektioner": [
-        {
-          "lektion": "12.1",
-          "titel": "Multibagger-linsen",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "12.1-multibagger-linsen.json"
-        },
-        {
-          "lektion": "12.2",
-          "titel": "Marknad, problem och TAM",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "12.2-marknad-och-tam.json"
-        },
-        {
-          "lektion": "12.3",
-          "titel": "Enhetsekonomi och tillväxtkvalitet",
-          "niva": "Avancerad",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "12.3-enhetsekonomi-och-tillvaxtkvalitet.json"
-        },
-        {
-          "lektion": "12.4",
-          "titel": "Skalbarhet och operating leverage",
-          "niva": "Avancerad",
-          "tid_min": 10,
-          "status": "klar",
-          "fil": "12.4-skalbarhet-och-operating-leverage.json"
-        },
-        {
-          "lektion": "12.5",
-          "titel": "Kassa, burn och finansieringsrisk",
-          "niva": "Avancerad",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "12.5-kassa-burn-och-finansieringsrisk.json"
-        },
-        {
-          "lektion": "12.6",
-          "titel": "Grundare, ägande och försprång",
-          "niva": "Mellan",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "12.6-grundare-och-agande.json"
-        },
-        {
-          "lektion": "12.7",
-          "titel": "Att värdera i scenarier",
-          "niva": "Avancerad",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "12.7-vardera-i-scenarier.json"
-        },
-        {
-          "lektion": "12.8",
-          "titel": "Att överleva resan",
-          "niva": "Avancerad",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "12.8-overleva-resan.json"
-        }
-      ]
-    },
-    {
-      "nummer": 13,
-      "titel": "Din investeringsprocess",
-      "niva": "Mellan",
-      "tid_min": 22,
-      "blurb": "Kunskap blir resultat först som en process. Här lär du dig ta dig från idé till ett skrivet, falsifierbart investeringscase, och hur du sedan förvaltar innehavet: bevaka det som spelar roll, ompröva, och sälja av rätt skäl.",
-      "outcomes": [
-        "Skriva ett falsifierbart investeringscase",
-        "Bevaka caset i stället för kursen",
-        "Sälja av rätt skäl, inte av panik eller tristess"
-      ],
-      "sebastian": "Kunskap blir pengar först när den blir en vana. Skriv ned caset innan du köper, och skriv vad som skulle få dig att sälja. Kör samma process varje gång, för i lugnt väder tänker du bättre än mitt i en storm.",
-      "lektioner": [
-        {
-          "lektion": "13.1",
-          "titel": "Från idé till case",
-          "niva": "Mellan",
-          "tid_min": 13,
-          "status": "klar",
-          "fil": "13.1-fran-ide-till-case.json"
-        },
-        {
-          "lektion": "13.2",
-          "titel": "Bevaka, ompröva, sälja",
-          "niva": "Mellan",
-          "tid_min": 9,
-          "status": "klar",
-          "fil": "13.2-bevaka-omprova-salja.json"
-        }
-      ]
-    },
-    {
-      "nummer": 14,
-      "titel": "Fallstudie: Lifco",
-      "niva": "Avancerad",
-      "tid_min": 18,
-      "blurb": "Här körs hela analyskedjan en gång, från början till slut, på ett verkligt bolags räkenskapsår. Med Lifcos rapporterade tal för 2025 ser du hur stegen talar med varandra i praktiken, från kvalitet till felmarginal.",
-      "outcomes": [
-        "Tillämpa hela analyskedjan på ett riktigt bolag",
-        "Skilja rapporterade tal från härledda",
-        "Landa i rätt fråga: vad är inbakat i priset"
-      ],
-      "sebastian": "Här kör vi hela kedjan på ett riktigt bolag, en gång, från början till slut. Det är tråkigt och metodiskt, och det är hela poängen. De flesta orkar inte, och därför lönar det sig.",
-      "lektioner": [
-        {
-          "lektion": "14.1",
-          "titel": "Lifco, räkenskapsåret 2025",
-          "niva": "Avancerad",
-          "tid_min": 18,
-          "status": "klar",
-          "fil": "14.1-lifco-2025.json"
-        }
-      ]
-    },
-    {
-      "nummer": 15,
-      "titel": "Sektoranalys",
-      "niva": "Avancerad",
-      "tid_min": 28,
-      "blurb": "Vissa sektorer kräver egna mätstickor. Här lär du dig varför banker, försäkringsbolag, fastighetsbolag och cykliska bolag inte går att läsa med standardramverket, och vilka nyckeltal som faktiskt gäller.",
-      "outcomes": [
-        "Läsa banker och försäkringsbolag på deras egna mått",
-        "Värdera fastighetsbolag på substans och belåning",
-        "Värdera cykliska bolag på normaliserad vinst"
-      ],
-      "sebastian": "Vissa sektorer går inte att läsa med vanliga mått, och just därför luras folk. Banker, försäkring, fastighet och cykliska bolag ser billiga ut med fel lins. Kan du inte deras egna måttstickor, håll dig utanför.",
-      "lektioner": [
-        {
-          "lektion": "15.1",
-          "titel": "Banker och försäkring",
-          "niva": "Avancerad",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "15.1-banker-och-forsakring.json"
-        },
-        {
-          "lektion": "15.2",
-          "titel": "Fastighet och cykliskt",
-          "niva": "Avancerad",
-          "tid_min": 14,
-          "status": "klar",
-          "fil": "15.2-fastighet-och-cykliskt.json"
-        }
-      ]
-    },
-    {
-      "nummer": 16,
-      "titel": "Praktik och avslut",
-      "niva": "Nybörjare",
-      "tid_min": 19,
-      "blurb": "Sista steget är att göra kunskapen praktisk. Här samlar vi verktygslådan: var du hittar data, hur svenska konton och skatt fungerar, och hur du fortsätter på egen hand efter kursen.",
-      "outcomes": [
-        "Hitta data och rapporter i rätt källa",
-        "Förstå ISK, kapitalförsäkring och skatt som mekanism",
-        "Lägga en plan för att fortsätta lära på egen hand"
-      ],
-      "sebastian": "Nu blir allt praktiskt. Det viktigaste rådet jag kan ge: börja smått och bygg vanan. Disciplin slår begåvning på börsen, år efter år, och det är den som håller när det blåser.",
-      "lektioner": [
-        {
-          "lektion": "16.1",
-          "titel": "Källor, verktyg och svensk praktik",
-          "niva": "Nybörjare",
-          "tid_min": 12,
-          "status": "klar",
-          "fil": "16.1-kallor-verktyg-praktik.json"
-        },
-        {
-          "lektion": "16.2",
-          "titel": "Din resa härifrån",
-          "niva": "Nybörjare",
-          "tid_min": 7,
-          "status": "klar",
-          "fil": "16.2-din-resa-harifran.json"
-        }
-      ]
+     "lektion": "1.4",
+     "titel": "Filosofi och kompetenscirkel",
+     "niva": "Nybörjare",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "1.4-filosofi-och-kompetenscirkel.json"
     }
-  ]
+   ]
+  },
+  {
+   "nummer": 2,
+   "titel": "Affärsmodeller",
+   "niva": "Nybörjare",
+   "tid_min": 33,
+   "blurb": "Innan du läser siffrorna måste du förstå motorn som skapar dem. Här lär du dig hur olika bolag tjänar pengar, varför intäktens karaktär avgör hur värdefull den är, och hur enhetsekonomi avslöjar om tillväxt skapar eller förstör värde.",
+   "outcomes": [
+    "Beskriva hur ett bolag tjänar pengar i några meningar",
+    "Skilja återkommande intäkt från cyklisk och engångsartad",
+    "Bedöma om tillväxten är ekonomiskt sund via enhetsekonomin"
+   ],
+   "sebastian": "Innan jag tittar på en enda siffra vill jag förstå motorn: hur tjänar bolaget faktiskt pengar, och kommer intäkten tillbaka eller är det en engångsgrej? Förstår du inte modellen spelar siffrorna ingen roll.",
+   "lektioner": [
+    {
+     "lektion": "2.1",
+     "titel": "Hur ett bolag tjänar pengar",
+     "niva": "Nybörjare",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "2.1-hur-ett-bolag-tjanar-pengar.json"
+    },
+    {
+     "lektion": "2.2",
+     "titel": "Affärsmodeller och intäktstyper",
+     "niva": "Nybörjare",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "2.2-affarsmodeller-och-intaktstyper.json"
+    },
+    {
+     "lektion": "2.3",
+     "titel": "Enhetsekonomi och tillväxt",
+     "niva": "Mellan",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "2.3-enhetsekonomi-och-tillvaxt.json"
+    }
+   ]
+  },
+  {
+   "nummer": 3,
+   "titel": "Årsredovisningen",
+   "niva": "Mellan",
+   "tid_min": 22,
+   "blurb": "Årsredovisningen är ditt primärkällmaterial. Här lär du dig var olika information bor, och hur du läser mellan raderna i VD-ord, noter och revisionsberättelse, där sanningen ofta göms.",
+   "outcomes": [
+    "Hitta rätt information i en årsredovisnings olika delar",
+    "Skilja vad ledningen säger från vad siffrorna visar",
+    "Veta var i noterna och revisionsberättelsen risker avslöjar sig"
+   ],
+   "sebastian": "Årsredovisningen är ingen broschyr, det är bevis du ska förhöra. Jag läser den för att hitta det de helst inte vill att jag ska se: noten som ändrar allt, nyckeltalet som tyst försvann.",
+   "lektioner": [
+    {
+     "lektion": "3.1",
+     "titel": "Årsredovisningens delar",
+     "niva": "Nybörjare",
+     "tid_min": 8,
+     "status": "klar",
+     "fil": "3.1-arsredovisningens-delar.json"
+    },
+    {
+     "lektion": "3.2",
+     "titel": "Läsa mellan raderna",
+     "niva": "Mellan",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "3.2-lasa-mellan-raderna.json"
+    }
+   ]
+  },
+  {
+   "nummer": 4,
+   "titel": "Räkenskaperna",
+   "niva": "Mellan",
+   "tid_min": 79,
+   "blurb": "De tre rapporterna är bolagets språk. Här lär du dig läsa resultaträkning, balansräkning och kassaflöde, se hur de hänger ihop, och känna igen när en redovisad vinst inte är riktiga pengar.",
+   "outcomes": [
+    "Läsa de tre rapporterna och vad varje rad betyder",
+    "Se hur en händelse syns i alla tre rapporterna",
+    "Genomskåda svag vinstkvalitet och varningssignaler"
+   ],
+   "sebastian": "De tre rapporterna är bolagets språk, och de flesta läser bara sista raden. Lär dig läsa alla tre ihop, så ser du skillnaden mellan en vinst som finns på riktigt och en som bara finns på pappret.",
+   "lektioner": [
+    {
+     "lektion": "4.1",
+     "titel": "Resultaträkningen",
+     "niva": "Nybörjare",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "4.1-resultatrakningen.json"
+    },
+    {
+     "lektion": "4.2",
+     "titel": "Balansräkningen",
+     "niva": "Nybörjare",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "4.2-balansrakningen.json"
+    },
+    {
+     "lektion": "4.3",
+     "titel": "Kassaflödet",
+     "niva": "Nybörjare",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "4.3-kassaflodet.json"
+    },
+    {
+     "lektion": "4.4",
+     "titel": "Vinstkvalitet och varningslampor",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "4.4-vinstkvalitet-och-varningslampor.json"
+    },
+    {
+     "lektion": "4.5",
+     "titel": "Goodwill och eget kapital",
+     "niva": "Mellan",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "4.5-goodwill-och-eget-kapital.json"
+    },
+    {
+     "lektion": "4.6",
+     "titel": "De tre rapporterna ihop",
+     "niva": "Mellan",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "4.6-de-tre-rapporterna-ihop.json"
+    }
+   ]
+  },
+  {
+   "nummer": 5,
+   "titel": "Nyckeltal och kapitalavkastning",
+   "niva": "Mellan",
+   "tid_min": 42,
+   "blurb": "Nyckeltal förvandlar rapporterna till en diagnos, om du läser dem rätt. Här lär du dig marginaler, tillväxt- och effektivitetstal, och ROIC, måttet som avslöjar om ett bolag verkligen skapar värde på sitt kapital.",
+   "outcomes": [
+    "Läsa marginalkedjan och vad gapen avslöjar",
+    "Använda nyckeltal i kontext i stället för som ensamma tal",
+    "Bedöma värdeskapande på ROIC mot kapitalkostnaden"
+   ],
+   "sebastian": "Jag läser nyckeltal som ledtrådar. Det jag jagar mest är avkastningen på kapitalet: ett bolag som tjänar mycket på lite bundet kapital är en maskin, och de gömmer sig ofta bland de tråkigaste namnen.",
+   "lektioner": [
+    {
+     "lektion": "5.1",
+     "titel": "Marginaler och ROIC",
+     "niva": "Mellan",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "5.1-nyckeltal.json"
+    },
+    {
+     "lektion": "5.2",
+     "titel": "Tillväxt, effektivitet och rätt användning",
+     "niva": "Mellan",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "5.2-tillvaxt-effektivitet-anvandning.json"
+    },
+    {
+     "lektion": "5.3",
+     "titel": "ROIC i djupet",
+     "niva": "Avancerad",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "5.3-roic-i-djupet.json"
+    }
+   ]
+  },
+  {
+   "nummer": 6,
+   "titel": "Konkurrensfördelar (moats)",
+   "niva": "Mellan",
+   "tid_min": 26,
+   "blurb": "Hög lönsamhet konkurreras bort om inget skyddar den. Här lär du dig vad en konkurrensfördel är, de fem former den tar, och hur du ser i siffrorna om vallgraven är verklig och hållbar.",
+   "outcomes": [
+    "Känna igen de fem typerna av konkurrensfördel",
+    "Skilja en verklig vallgrav från ett tillfälligt försprång",
+    "Se en moats styrka i uthålligt hög avkastning över tid"
+   ],
+   "sebastian": "Hög lönsamhet utan skydd lockar bara in konkurrenter. Jag frågar alltid vad som hindrar någon med pengar från att ta det här, och hur länge det håller. Får jag inget svar är det nog ingen riktig vallgrav, bara tur.",
+   "lektioner": [
+    {
+     "lektion": "6.1",
+     "titel": "Vad en moat är och typerna",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "6.1-vad-en-moat-ar.json"
+    },
+    {
+     "lektion": "6.2",
+     "titel": "Bedöma och se moaten i siffrorna",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "6.2-moat-i-siffrorna.json"
+    }
+   ]
+  },
+  {
+   "nummer": 7,
+   "titel": "Ledning och kapitalallokering",
+   "niva": "Mellan",
+   "tid_min": 23,
+   "blurb": "Det är människor som förvaltar ditt kapital. Här lär du dig bedöma en ledning, och granska deras viktigaste jobb: hur de allokerar varje krona mellan återinvestering, förvärv, återköp och utdelning.",
+   "outcomes": [
+    "Bedöma en lednings kompetens, integritet och incitament",
+    "Avgöra om kapitalallokeringen skapar eller förstör värde",
+    "Se när förvärv och återköp lönar sig, och när de inte gör det"
+   ],
+   "sebastian": "Till slut är det människor som förvaltar dina pengar. Den viktigaste frågan är vad de gör med varje krona som blir över, för där har fler förmögenheter byggts och förstörts än i själva verksamheten.",
+   "lektioner": [
+    {
+     "lektion": "7.1",
+     "titel": "Att bedöma en ledning",
+     "niva": "Mellan",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "7.1-bedoma-en-ledning.json"
+    },
+    {
+     "lektion": "7.2",
+     "titel": "Kapitalallokering",
+     "niva": "Mellan",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "7.2-kapitalallokering.json"
+    }
+   ]
+  },
+  {
+   "nummer": 8,
+   "titel": "Värderingsgrunder",
+   "niva": "Mellan",
+   "tid_min": 23,
+   "blurb": "Värde är inte en siffra på en skärm, det är nuvärdet av framtida kassaflöden. Här lägger vi den teoretiska grunden för all värdering: vad värde är, och varför en krona idag är värd mer än en krona imorgon.",
+   "outcomes": [
+    "Förklara varför värde är nuvärdet av framtida kassaflöden",
+    "Förstå hur diskontering översätter framtid till nutid",
+    "Behandla en värdering som ett intervall, inte ett facit"
+   ],
+   "sebastian": "Värde är inte priset på skärmen, det är nuvärdet av de pengar bolaget ger dig över tid. Den som säger sig veta det på kronan ljuger. Sikta på ett intervall och en rejäl marginal.",
+   "lektioner": [
+    {
+     "lektion": "8.1",
+     "titel": "Vad är värde?",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "8.1-vad-ar-varde.json"
+    },
+    {
+     "lektion": "8.2",
+     "titel": "Pengars tidsvärde och diskontering",
+     "niva": "Mellan",
+     "tid_min": 10,
+     "status": "klar",
+     "fil": "8.2-pengars-tidsvarde-och-diskontering.json"
+    }
+   ]
+  },
+  {
+   "nummer": 9,
+   "titel": "Värdering i praktiken",
+   "niva": "Avancerad",
+   "tid_min": 62,
+   "blurb": "Nu omsätter vi värdeteorin i verktyg. Här lär du dig multiplar och deras fällor, hur en DCF byggs och vad som driver den, och hur du sätter ett riktprisintervall du faktiskt kan lita på.",
+   "outcomes": [
+    "Använda multiplar på rätt bolag och känna igen fällorna",
+    "Bygga en DCF och se var värdet kommer ifrån",
+    "Sätta ett riktpris som ett intervall via scenarier"
+   ],
+   "sebastian": "Här blir teorin verktyg, men låt dig inte luras av exaktheten. En modell är bara så bra som antagandena du matar in. Jag använder dem för att se vad priset redan kräver, inte för att jaga en exakt siffra.",
+   "lektioner": [
+    {
+     "lektion": "9.1",
+     "titel": "Multiplar och deras fällor",
+     "niva": "Mellan",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "9.1-multiplar.json"
+    },
+    {
+     "lektion": "9.2",
+     "titel": "Relativvärdering och jämförelser",
+     "niva": "Mellan",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "9.2-relativvardering.json"
+    },
+    {
+     "lektion": "9.3",
+     "titel": "Diskonterat kassaflöde",
+     "niva": "Avancerad",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "9.3-dcf.json"
+    },
+    {
+     "lektion": "9.4",
+     "titel": "Att bygga prognosen",
+     "niva": "Avancerad",
+     "tid_min": 11,
+     "status": "klar",
+     "fil": "9.4-bygga-prognosen.json"
+    },
+    {
+     "lektion": "9.5",
+     "titel": "Att sätta ett riktpris",
+     "niva": "Avancerad",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "9.5-riktpris.json"
+    }
+   ]
+  },
+  {
+   "nummer": 10,
+   "titel": "Risk och felmarginal",
+   "niva": "Mellan",
+   "tid_min": 30,
+   "blurb": "Risk är inte att kursen svänger, det är att förlora kapital permanent. Här lär du dig vad risk faktiskt är, hur du kartlägger vad som kan gå fel, och hur en felmarginal skyddar dig när du har fel.",
+   "outcomes": [
+    "Skilja volatilitet från permanent kapitalförlust",
+    "Köpa med en felmarginal som tål misstag och otur",
+    "Kartlägga risker och tänka i sannolikheter"
+   ],
+   "sebastian": "Risk är inte att det svänger, det är att pengarna inte kommer tillbaka. Hela mitt jobb är att förbättra oddsen och köpa med marginal, så att jag överlever att ha fel, för det kommer jag att ha ibland.",
+   "lektioner": [
+    {
+     "lektion": "10.1",
+     "titel": "Vad risk faktiskt är",
+     "niva": "Mellan",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "10.1-vad-risk-ar.json"
+    },
+    {
+     "lektion": "10.2",
+     "titel": "Säkerhetsmarginal",
+     "niva": "Mellan",
+     "tid_min": 8,
+     "status": "klar",
+     "fil": "10.2-sakerhetsmarginal.json"
+    },
+    {
+     "lektion": "10.3",
+     "titel": "Kartlägga fel och tänka i sannolikheter",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "10.3-kartlagga-fel-och-sannolikheter.json"
+    }
+   ]
+  },
+  {
+   "nummer": 11,
+   "titel": "Investeringspsykologi",
+   "niva": "Mellan",
+   "tid_min": 60,
+   "blurb": "Den största risken sitter ofta mellan dina öron. Här lär du dig känna igen flockbeteende, rädsla och de tankefällor som får skickliga analytiker att fatta dåliga beslut, och bygga ett system som skyddar dig från dig själv.",
+   "outcomes": [
+    "Känna igen och motstå flock, rädsla och girighet",
+    "Genomskåda bekräftelsebias, ankring och sunk cost",
+    "Bygga ett system med position sizing och regler"
+   ],
+   "sebastian": "Den största risken sitter mellan dina öron, inte i bolaget. Jag har förlorat mer på mitt eget temperament än på dålig analys. Det här kapitlet, och min egen lektion på slutet, handlar om att skydda dig från dig själv.",
+   "lektioner": [
+    {
+     "lektion": "11.1",
+     "titel": "Flock, rädsla och girighet",
+     "niva": "Mellan",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "11.1-flock-radsla-girighet.json"
+    },
+    {
+     "lektion": "11.2",
+     "titel": "Tankefällor",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "11.2-tankefallor.json"
+    },
+    {
+     "lektion": "11.3",
+     "titel": "Story vs analys",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "11.3-story-vs-analys.json"
+    },
+    {
+     "lektion": "11.4",
+     "titel": "Bygga ett system: position sizing och ödmjukhet",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "11.4-position-sizing-och-odmjukhet.json"
+    },
+    {
+     "lektion": "11.5",
+     "titel": "Ur Sebastians huvud: hjärnan och tre dyrköpta läxor",
+     "niva": "Mellan",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "11.5-ur-sebastians-huvud.json"
+    }
+   ]
+  },
+  {
+   "nummer": 12,
+   "titel": "Tillväxtbolag",
+   "niva": "Avancerad",
+   "tid_min": 97,
+   "blurb": "Olönsamma tillväxtbolag bryter de vanliga verktygen. Här lär du dig en egen verktygslåda: enhetsekonomi, marknad och TAM, kassa och burn, scenariovärdering, och temperamentet att överleva resan mot en multibagger.",
+   "outcomes": [
+    "Värdera tillväxtbolag där vanliga multiplar inte fungerar",
+    "Bedöma marknad, enhetsekonomi och finansieringsrisk",
+    "Dimensionera positioner och överleva djupa kursfall"
+   ],
+   "sebastian": "Tillväxtbolag är där både de största vinsterna och de värsta smällarna finns. Var tidig men kräv bevis, dimensionera så att ett misslyckande inte sänker dig, och ge fan i rena förhoppningsbolag utan intäkter.",
+   "lektioner": [
+    {
+     "lektion": "12.1",
+     "titel": "Multibagger-linsen",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "12.1-multibagger-linsen.json"
+    },
+    {
+     "lektion": "12.2",
+     "titel": "Marknad, problem och TAM",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "12.2-marknad-och-tam.json"
+    },
+    {
+     "lektion": "12.3",
+     "titel": "Enhetsekonomi och tillväxtkvalitet",
+     "niva": "Avancerad",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "12.3-enhetsekonomi-och-tillvaxtkvalitet.json"
+    },
+    {
+     "lektion": "12.4",
+     "titel": "Skalbarhet och operating leverage",
+     "niva": "Avancerad",
+     "tid_min": 10,
+     "status": "klar",
+     "fil": "12.4-skalbarhet-och-operating-leverage.json"
+    },
+    {
+     "lektion": "12.5",
+     "titel": "Kassa, burn och finansieringsrisk",
+     "niva": "Avancerad",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "12.5-kassa-burn-och-finansieringsrisk.json"
+    },
+    {
+     "lektion": "12.6",
+     "titel": "Grundare, ägande och försprång",
+     "niva": "Mellan",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "12.6-grundare-och-agande.json"
+    },
+    {
+     "lektion": "12.7",
+     "titel": "Att värdera i scenarier",
+     "niva": "Avancerad",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "12.7-vardera-i-scenarier.json"
+    },
+    {
+     "lektion": "12.8",
+     "titel": "Att överleva resan",
+     "niva": "Avancerad",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "12.8-overleva-resan.json"
+    }
+   ]
+  },
+  {
+   "nummer": 13,
+   "titel": "Din investeringsprocess",
+   "niva": "Mellan",
+   "tid_min": 22,
+   "blurb": "Kunskap blir resultat först som en process. Här lär du dig ta dig från idé till ett skrivet, falsifierbart investeringscase, och hur du sedan förvaltar innehavet: bevaka det som spelar roll, ompröva, och sälja av rätt skäl.",
+   "outcomes": [
+    "Skriva ett falsifierbart investeringscase",
+    "Bevaka caset i stället för kursen",
+    "Sälja av rätt skäl, inte av panik eller tristess"
+   ],
+   "sebastian": "Kunskap blir pengar först när den blir en vana. Skriv ned caset innan du köper, och skriv vad som skulle få dig att sälja. Kör samma process varje gång, för i lugnt väder tänker du bättre än mitt i en storm.",
+   "lektioner": [
+    {
+     "lektion": "13.1",
+     "titel": "Från idé till case",
+     "niva": "Mellan",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "13.1-fran-ide-till-case.json"
+    },
+    {
+     "lektion": "13.2",
+     "titel": "Bevaka, ompröva, sälja",
+     "niva": "Mellan",
+     "tid_min": 9,
+     "status": "klar",
+     "fil": "13.2-bevaka-omprova-salja.json"
+    }
+   ]
+  },
+  {
+   "nummer": 14,
+   "titel": "Fallstudie: Lifco",
+   "niva": "Avancerad",
+   "tid_min": 18,
+   "blurb": "Här körs hela analyskedjan en gång, från början till slut, på ett verkligt bolags räkenskapsår. Med Lifcos rapporterade tal för 2025 ser du hur stegen talar med varandra i praktiken, från kvalitet till felmarginal.",
+   "outcomes": [
+    "Tillämpa hela analyskedjan på ett riktigt bolag",
+    "Skilja rapporterade tal från härledda",
+    "Landa i rätt fråga: vad är inbakat i priset"
+   ],
+   "sebastian": "Här kör vi hela kedjan på ett riktigt bolag, en gång, från början till slut. Det är tråkigt och metodiskt, och det är hela poängen. De flesta orkar inte, och därför lönar det sig.",
+   "lektioner": [
+    {
+     "lektion": "14.1",
+     "titel": "Lifco, räkenskapsåret 2025",
+     "niva": "Avancerad",
+     "tid_min": 18,
+     "status": "klar",
+     "fil": "14.1-lifco-2025.json"
+    }
+   ]
+  },
+  {
+   "nummer": 15,
+   "titel": "Sektoranalys",
+   "niva": "Avancerad",
+   "tid_min": 28,
+   "blurb": "Vissa sektorer kräver egna mätstickor. Här lär du dig varför banker, försäkringsbolag, fastighetsbolag och cykliska bolag inte går att läsa med standardramverket, och vilka nyckeltal som faktiskt gäller.",
+   "outcomes": [
+    "Läsa banker och försäkringsbolag på deras egna mått",
+    "Värdera fastighetsbolag på substans och belåning",
+    "Värdera cykliska bolag på normaliserad vinst"
+   ],
+   "sebastian": "Vissa sektorer går inte att läsa med vanliga mått, och just därför luras folk. Banker, försäkring, fastighet och cykliska bolag ser billiga ut med fel lins. Kan du inte deras egna måttstickor, håll dig utanför.",
+   "lektioner": [
+    {
+     "lektion": "15.1",
+     "titel": "Banker och försäkring",
+     "niva": "Avancerad",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "15.1-banker-och-forsakring.json"
+    },
+    {
+     "lektion": "15.2",
+     "titel": "Fastighet och cykliskt",
+     "niva": "Avancerad",
+     "tid_min": 14,
+     "status": "klar",
+     "fil": "15.2-fastighet-och-cykliskt.json"
+    }
+   ]
+  },
+  {
+   "nummer": 16,
+   "titel": "Praktik och avslut",
+   "niva": "Nybörjare",
+   "tid_min": 19,
+   "blurb": "Sista steget är att göra kunskapen praktisk. Här samlar vi verktygslådan: var du hittar data, hur svenska konton och skatt fungerar, och hur du fortsätter på egen hand efter kursen.",
+   "outcomes": [
+    "Hitta data och rapporter i rätt källa",
+    "Förstå ISK, kapitalförsäkring och skatt som mekanism",
+    "Lägga en plan för att fortsätta lära på egen hand"
+   ],
+   "sebastian": "Nu blir allt praktiskt. Det viktigaste rådet jag kan ge: börja smått och bygg vanan. Disciplin slår begåvning på börsen, år efter år, och det är den som håller när det blåser.",
+   "lektioner": [
+    {
+     "lektion": "16.1",
+     "titel": "Källor, verktyg och svensk praktik",
+     "niva": "Nybörjare",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "16.1-kallor-verktyg-praktik.json"
+    },
+    {
+     "lektion": "16.2",
+     "titel": "Din resa härifrån",
+     "niva": "Nybörjare",
+     "tid_min": 7,
+     "status": "klar",
+     "fil": "16.2-din-resa-harifran.json"
+    }
+   ]
+  },
+  {
+   "nummer": 17,
+   "titel": "Att äga ett förhoppningsbolag",
+   "niva": "Avancerad",
+   "tid_min": 60,
+   "blurb": "Kapitlen 12 och 13 lärde dig hitta och analysera bolagen utan vinst. Det här kapitlet handlar om åren som ägare, där avkastningen avgörs: att läsa bolagets egna dokument noggrannare än marknaden gör, och att hålla genom svängarna tills trappan, inte kursen, säger något annat.",
+   "outcomes": [
+    "Rita casetrappan och placera varje nyhet på den",
+    "Klassa avtal och räkna fram utspädningens tak ur kallelsen",
+    "Föra löftesliggaren och skriva sälj- och hållvillkor i trappans termer"
+   ],
+   "sebastian": "Det här är kapitlet jag önskar att jag haft när jag började med förhoppningsbolag. Alla tittar på kursen. Nästan ingen läser kallelserna, pressmeddelandenas brödtext eller ledningens gamla löften. Gör du det jobbet har du ett övertag som inte kostar en krona, bara disciplin.",
+   "lektioner": [
+    {
+     "lektion": "17.1",
+     "titel": "Casetrappan",
+     "niva": "Avancerad",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "17.1-casetrappan.json"
+    },
+    {
+     "lektion": "17.2",
+     "titel": "Avtalsspråket",
+     "niva": "Avancerad",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "17.2-avtalsspraket.json"
+    },
+    {
+     "lektion": "17.3",
+     "titel": "Kallelsen och utspädningen",
+     "niva": "Avancerad",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "17.3-kallelsen-och-utspadningen.json"
+    },
+    {
+     "lektion": "17.4",
+     "titel": "Löftesliggaren",
+     "niva": "Avancerad",
+     "tid_min": 11,
+     "status": "klar",
+     "fil": "17.4-loftesliggaren.json"
+    },
+    {
+     "lektion": "17.5",
+     "titel": "Att hålla och att släppa",
+     "niva": "Avancerad",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "17.5-halla-och-slappa.json"
+    }
+   ]
+  }
+ ]
 }
