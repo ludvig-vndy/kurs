@@ -80,3 +80,13 @@ Alla fyra modeller extraherar felfritt på alla fyra dokumenttyperna. Skillnader
 ## Alpha: riktiga dokument (2026-07-07)
 
 `hamta.mjs` (URL till ren text, motor/in/ är gitignorerad) och `kor-dokument.mjs` (riktigt dokument genom LLM-extraktionen med generisk fältlista per typ: rapport, kallelse, emission, avtal; utan facit är utdata fakta med citat för mänsklig granskning). Första skarpa körningen: fyra färska Unibap-dokument från MFN. Emissions-PM:et och extra-stämmokallelsen extraherades felfritt med citat (och korsbekräftar varandra: samma aktieantal, kurs och belopp i två oberoende dokument). Q1-rapportens PM gav 4 av 7 fält, resten står bara i PDF:en (nästa byggsteg). Första verkliga klassificerarfyndet: ett engelskt samarbets-PM utan ordervärde klassades som bindande order på frasen "signed an agreement"; klassningsprompten behöver skärpas med beloppskrav och engelska mönster. Kostnad: cirka 1 cent per dokument.
+
+## Nattjobbet (2026-07-07)
+
+`node motor/natt.mjs` är alphans dagliga körning: läser bevakningslistan (`bolag.json`), upptäcker nya pressmeddelanden i varje bolags MFN-flöde (arkivet i motor/in/arkiv.json minns sedda länkar), hämtar, typbestämmer (`faltlistor.mjs`), extraherar/klassificerar med citatkrav, sparar data per bolag (motor/out/data/) och renderar bolagssidor (motor/out/bolag-<id>.html) med korskontroller räknade i kod (t.ex. PM:ets utspädningssiffra mot aktieantalen). Första skarpa körningen: 8 Unibap-dokument, $0,04. Andra körningen: 0 nya, ingen kostnad, idempotent.
+
+Schemaläggning på Windows: sätt först nyckeln som användarvariabel (kör själv: `setx ANTHROPIC_API_KEY "sk-ant-..."`), sedan:
+```
+schtasks /create /tn "AgarkollenNatt" /sc daily /st 06:30 /tr "cmd /c cd /d C:\dev\kurs && node motor\natt.mjs >> motor\out\natt.log 2>&1"
+```
+Nya bolag: lägg till en rad i bolag.json med id, namn och MFN-flödets URL. Kvar till beta: mejlutskicket av brevet, PDF-till-text för fullständiga rapporter, och per-bolags-facit för kontinuerlig eval.
