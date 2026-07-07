@@ -7,45 +7,46 @@
 <style>
   @page{size:A4;margin:16mm 15mm 18mm}
   :root{
-    --ink:#23252B; --mut:#5C6470; --faint:#8B929B;
-    --gold:#9C6B10; --gold-b:#E0A43B; --gold-soft:#F6ECD8; --gold-d:#C9A45C;
-    --line:#E2DFD6; --pos:#1E7A5C;
+    --ink:#211C17; --mut:#5C544A; --faint:#8A8172;
+    --ox:#8A2E26; --ox-soft:#F3E3DD;
+    --gold:#9A6E1C; --gold-d:#C4A867; --gold-soft:#F1E8D1;
+    --line:#E4DDCC; --pos:#2E6B4C;
     --disp:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:var(--sans);color:var(--ink);font-size:10.5pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:6px;font-family:var(--mono);font-size:7.5pt;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  body{margin:0;font-family:var(--sans);color:var(--ink);font-size:10pt;line-height:1.48;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ox);padding-bottom:6px;font-family:var(--mono);font-size:7.5pt;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
   h1{font-family:var(--disp);font-weight:700;font-size:21pt;letter-spacing:-.3px;margin:14px 0 2px;line-height:1.1}
   .meta{font-family:var(--mono);font-size:7.5pt;color:var(--faint);letter-spacing:.05em;margin-bottom:14px}
-  .lofte{background:var(--gold-soft);border-left:3px solid var(--gold-b);padding:10px 14px;margin:0 0 16px;border-radius:0 8px 8px 0}
+  .lofte{background:var(--ox-soft);border-left:3px solid var(--ox);padding:10px 14px;margin:0 0 16px;border-radius:0 8px 8px 0}
   .lofte .l1{font-family:var(--disp);font-weight:600;font-size:12.5pt;font-style:italic}
   .lofte .l2{color:var(--mut);font-size:9.5pt;margin-top:3px}
   h2{font-family:var(--disp);font-weight:600;font-size:12pt;margin:16px 0 6px;letter-spacing:-.2px;display:flex;align-items:baseline;gap:8px}
-  h2 .st{font-family:var(--mono);font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-d);border-radius:4px;padding:1px 6px;position:relative;top:-1px}
+  h2 .st{font-family:var(--mono);font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:var(--ox);border:1px solid var(--ox);border-radius:4px;padding:1px 6px;position:relative;top:-1px}
   h3{font-family:var(--sans);font-weight:600;font-size:9.5pt;margin:10px 0 3px;color:var(--ink)}
   h3 .st{font-family:var(--mono);font-weight:400;font-size:6.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-left:6px}
   ul{margin:2px 0 8px;padding-left:15px}
   li{margin-bottom:2.5px;color:var(--mut)}
   li b{color:var(--ink);font-weight:600}
   .roll{font-size:9pt;color:var(--faint);font-style:italic;margin:2px 0 0}
-  .rule{border:none;border-top:1px solid var(--line);margin:12px 0}
-  .vall{border:1.5px solid var(--gold-d);border-radius:8px;padding:10px 14px;margin:14px 0 0;background:#FDFBF6}
+  .vall{border:1.5px solid var(--ox);border-radius:8px;padding:10px 14px;margin:14px 0 0;background:#FBF6F1}
   .vall b{font-family:var(--disp)}
+  .motor{border:1.5px solid var(--line);border-left:3px solid var(--ox);border-radius:0 8px 8px 0;padding:9px 13px;margin:8px 0 0;background:#FCFAF4}
+  .motor h2{margin-top:0}
   .foot{margin-top:14px;font-family:var(--mono);font-size:7pt;color:var(--faint);letter-spacing:.03em;border-top:1px solid var(--line);padding-top:7px}
   .cols{columns:2;column-gap:26px}
   .keep{break-inside:avoid}
-  .pb{break-before:page}
 </style>
 </head>
 <body>
 
 <div class="mast"><span>Ägarkollen · av Marginalen</span><span>Arbetsnamn · konfidentiellt utkast</span></div>
 <h1>Value proposition och paketets innehåll</h1>
-<div class="meta">2026-07-06 · status per rad: LIVE (byggt och ute) · MOCK (klickbar prototyp) · FAS 2/3 (planerat)</div>
+<div class="meta">2026-07-06 · rev 2026-07-07 · status per rad: LIVE (byggt och ute) · KOD (körbart i repot) · MOCK (klickbar prototyp) · FAS 2/3 (planerat)</div>
 
 <div class="lofte">
   <div class="l1">Spara maximalt med tid utan att missa någonting om dina investeringar.</div>
-  <div class="l2">Du berättar varför du äger dina aktier. Vi läser allt, varje dag, och säger till när något du bryr dig om ändras.</div>
+  <div class="l2">Allt som händer i dina bolag: läst, sorterat och sammanfattat åt dig varje morgon. Säger du dessutom varför du äger, vaktar vi det också.</div>
 </div>
 
 <div class="cols">
@@ -56,8 +57,9 @@
 <li><b>Kursen:</b> 115 lektioner + 51 interaktiva Fokus-lektioner, från "vad är en aktie" till multibagger-analys. Kapitel 1 gratis som smakprov.</li>
 <li><b>Quiz, repetition och ordlista</b>, inbyggt.</li>
 <li><b>Analysverktyget:</b> checklistor för den som vill göra jobbet själv.</li>
+<li><b>Multibagger-modulen</b> <i>(planerad, utbildningens drivare)</i>: att analysera bolag utan vinst, hur man fångar och håller en multibagger. Värdebolagsanalys finns i tusen böcker; det här finns inte på svenska. Modulen är samtidigt tjänstens manual.</li>
 </ul>
-<p class="roll">Rollen: lär kunden tänka som ägare, blir AI:ns svarskorpus, och kursens övningar blir färdiga skäl i tjänsten.</p>
+<p class="roll">Rollen: utbildningen är det man betalar för; verktygen nedan ingår och är skälet att stanna.</p>
 </div>
 
 <div class="keep">
@@ -65,8 +67,9 @@
 
 <h3>Dagliga pulsen</h3>
 <ul>
-<li><b>Ägarbrevet 07:30</b> <i>(mock)</i>: morgonens utgåva sida för sida. Dina bolag, det allmänna översatt till "för dig", lärobit på tysta dagar, Upptäckten från Spaningen sist och valbar. Beviset varje dag: "i natt läste vi 51 saker, tre rörde dig."</li>
-<li><b>Vakter & larm</b> <i>(mock, hjärtat)</i>: du sätter gränserna, vi ritar kurvan mot dem. Vi hör av oss bara när en gräns passeras.</li>
+<li><b>Ägarbrevet 07:30</b> <i>(mock)</i>: morgonens utgåva sida för sida. Dina bolag, det allmänna översatt till "för dig", lärobit på tysta dagar, Upptäckten från Spaningen sist och valbar. Beviset varje dag: "i natt läste vi 51 saker, tre var värda din tid."</li>
+<li><b>Ljudutgåvan</b> <i>(mock)</i>: samma brev som personlig tvåminuterspodd med svensk AI-röst, i mejlet, i appen och som privat poddfeed. Rösten läser den redan verifierade texten.</li>
+<li><b>Allt bevakas utan att du fyller i något.</b> Sammanfattningar och väsentlighetsgradering från dag ett. <b>Tesen är ett tillval</b>, inte porten: vill du, föreslår AI:n varför du äger och vad som ska vaktas, färdigt att godkänna.</li>
 <li><b>Nyhetsbevakning med deduplicering</b> <i>(fas 2)</i>: "17 artiklar i dag, 16 är samma TT-telegram, 1 innehåller ny information."</li>
 <li><b>Rapportförberedelsen</b> <i>(fas 2)</i>: två dagar före rapport: vad ledningen lovade sist, dina gränsers läge, blankningen.</li>
 </ul>
@@ -83,9 +86,11 @@
 <h3>Tillväxtläget <span class="st">mock · spjutspetsen</span></h3>
 <ul>
 <li>För bolagen utan vinst: de svåraste att analysera och de sämst betjänade. Kassa/runway-vakt, utspädningstak, scenariovärdering med asymmetrin utskriven, milstolpsbevakning.</li>
-<li><b>Löftesliggaren:</b> ledningens löften ur gamla pressmeddelanden följda mot facit ("två av fyra höll tidplanen").</li>
-<li><b>Emissionshistoriken:</b> alla kapitalanskaffningar med kurs och rabatt.</li>
-<li><b>Utspädningsvakten</b> <i>(fas 2)</i>: läser kallelser och prospekt, varnar för bemyndiganden och konvertibelförfall i förväg.</li>
+<li><b>Casetrappan</b> <i>(mock)</i>: bolagets resa i steg (teknik, pilot, certifiering, volym, lönsamhet); varje nyhet placeras på trappan så du ser om ett besked flyttar caset eller bara låter bra.</li>
+<li><b>Avtalsliggaren</b> <i>(mock + kod)</i>: varje avtal klassat efter vad det binder: bindande order, ramavtal eller avsiktsförklaring, med bevismeningen ur avtalstexten citerad.</li>
+<li><b>Löftesliggaren</b> <i>(mock)</i>: ledningens löften ur gamla pressmeddelanden följda mot facit ("två av fyra höll tidplanen").</li>
+<li><b>Emissionshistoriken</b> <i>(mock)</i>: alla kapitalanskaffningar med kurs och rabatt.</li>
+<li><b>Utspädningsvakten</b> <i>(kod)</i>: läser kallelser och prospekt, varnar för bemyndiganden och konvertibelförfall i förväg, med maxutspädningen räknad i kod.</li>
 </ul>
 </div>
 
@@ -105,7 +110,17 @@
 <li><b>Förklara-läget:</b> klicka på vilken term som helst, få vardagsförklaringen + lektionen.</li>
 <li><b>Fråga bolaget:</b> fritextfrågor mot bolagets hela dokumentstack ("hur ser skuldförfallen ut 2027?"), svar på sekunder med sidhänvisning.</li>
 <li><b>Coachen</b> <i>(fas 1 till 2)</i>: fritextfrågor mot kursen + kurerade svar från Sebastian och coacherna, med eskalering till människa.</li>
-<li><b>Onboardingen</b> <i>(mock)</i>: "Varför äger du bolaget?" i klartext, tre saker att hålla koll på, gränser du sätter själv.</li>
+<li><b>Onboardingen</b> <i>(mock)</i>: lägg in bolag, klart, bevakningen startar direkt. Steg två är valfritt och förifyllt: AI:ns förslag på varför du äger, med "hoppa över, bevaka allt" som fullvärdig väg.</li>
+</ul>
+</div>
+
+<div class="motor keep">
+<h2>Motorn <span class="st">kod · körbar i repot</span></h2>
+<ul>
+<li><b>Noll-hallucinationsgrinden:</b> varje tal i AI:ns text måste matcha ett extraherat faktum eller en beräkning i kod, annars blockeras texten. Sabotagetest ingår, och grinden hittade och täppte sitt eget hål på verklig data.</li>
+<li><b>Verklig data:</b> Lifcos räkenskapsår 2025 (verifierad källa) genom hela pipelinen, 30 av 30 värden korrekt, plus korskontroll av rapportens egen matematik.</li>
+<li><b>Utspädningsvakten:</b> stämmokallelse in, bemyndigande + konvertibel + optioner ut med källcitat, maxutspädning räknad i kod.</li>
+<li><b>Avtalsklassificeraren:</b> pressmeddelanden in, avtalsklass ut med bevismening ("det marknadsförda potentiella värdet är 71 gånger den enda bindande ordern").</li>
 </ul>
 </div>
 
@@ -122,16 +137,16 @@
 <ul>
 <li>Siffror kommer ur källdokument, aldrig ur AI:ns minne. Allt har källhänvisning. "Vet ej" är ett tillåtet svar.</li>
 <li>Aldrig köp- eller säljråd. Vi visar vad som ändrats, du bestämmer.</li>
-<li>Klarspråk: vardagssvenska först, facktermen i parentes tills du kan den, tabellerna på rapporternas riktiga språk.</li>
+<li>Klarspråk: vardagssvenska först, facktermen i parentes tills du kan den. Orden "skäl", "gräns" och "tes" är interna, aldrig inmatningsfält.</li>
 </ul>
 </div>
 
 <div class="keep">
 <h2>Affären</h2>
 <ul>
+<li><b>Modellen: vi tar betalt för utbildningen, verktygen ingår.</b> Ett köpbeslut, en prislapp; verktygen säljs aldrig styckvis, de är skälet att förnya.</li>
 <li><b>Gratis:</b> kursens kapitel 1, generella Ägarbrevet i Sebastians röst, ordlistan, warrantverktyget.</li>
-<li><b>Kursen:</b> engångsköp (995 till 1 995 kr testas), ingår i årsprenumerationen.</li>
-<li><b>Premium ~199 kr/mån:</b> personliga brevet, bevakningen, rapportanalyserna, fråga & förklara.</li>
+<li><b>Medlemskapet, riktpris 1 995 till 2 495 kr/år:</b> hela utbildningen + personliga Ägarbrevet, bevakningen, rapportanalyserna, Tillväxtläget, fråga & förklara.</li>
 <li><b>Pro ~995 kr/mån:</b> konsensusdata, korsrisk, ansvarsliggaren, Sebastians krets.</li>
 </ul>
 </div>
@@ -139,7 +154,7 @@
 <div class="keep">
 <h2>Byggs härnäst</h2>
 <ul>
-<li>Konton och betalning · extraktionsmotorn med noll-hallucinationskrav · gratis registerdata (FI, MFN) · mejlutskicket.</li>
+<li>LLM-extraktion bakom motorns schema (godtyckliga format och riktiga PDF:er, samma facit-eval) · konton och betalning · gratis registerdata (FI, MFN) · mejlutskicket.</li>
 <li>Fas 1 är rapportanalysen, 4 till 6 veckor.</li>
 </ul>
 </div>
@@ -147,10 +162,10 @@
 </div>
 
 <div class="vall keep">
-<b>Vallgraven.</b> Sammanfattningar och bevakning blir commodity inom några år. Beteendedatan, skäl, gränser, beslut och avvikelser över tid, blir bara mer värdefull ju längre användaren stannar, och den kan ingen konkurrent replikera. <b>Bevakningen är inträdesbiljetten. Beteendedatan är vallgraven.</b>
+<b>Vallgraven.</b> Sammanfattningar och bevakning blir commodity inom några år. Beteendedatan, skäl, gränser, beslut och avvikelser över tid, blir bara mer värdefull ju längre användaren stannar, och den kan ingen konkurrent replikera. Tesen är frivillig och AI-föreslagen, aldrig porten in; vallgravsdatat byggs ändå från dag ett. <b>Bevakningen är inträdesbiljetten. Beteendedatan är vallgraven.</b>
 </div>
 
-<div class="foot">Klickbart: /labs/agar-ai-v2.html (produkten) · /labs/agar-ai-resan.html (90-dagarsdemon) · /labs/agarkollen-karta.html (funktionskartan) · allt fiktiv exempeldata</div>
+<div class="foot">Klickbart: /labs/agar-ai-v2.html (produkten) · /labs/agar-ai-resan.html (90-dagarsdemon) · /labs/agarkollen-karta.html (funktionskartan) · motorn: motor/README.md i repot · allt fiktiv exempeldata utom Lifco-källan</div>
 
 </body>
 </html>
