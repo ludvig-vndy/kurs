@@ -31,9 +31,11 @@ V1 var för kommunikativ. Allt löstes upp i meningar; siffror fanns bara inuti 
 - JetBrains Mono med tabulära siffror: **all numerik, utan undantag.** Tal högerställs i kolumner. Enheter och etiketter i 10 till 11 px versal mono med spärrning.
 
 **Färg och tema**
-- Två teman, **ljust som standard** (Sebastians beslut 2026-07-03), växlare i UI, valet sparas. Ljust: varmt off-white #F7F6F3, vita kort, mörk guld #9C6B10 (text-kontrast), dova grönt/rött. Mörkt: grafit #0E0F11, kort #16181C, guld #E0A43B, salvie #5FB89A, korall #E0726F. Grafer följer temat via palettobjekt, aldrig hårdkodade färger.
+- **Konsolidering till huset (2026-07-07):** tre estetiker (Spaningens kalla terminal, Marginalens varma redaktion, Ägarkollens grafit) blev en. Marginalens oxblod-redaktion är huset; Spaningens datainstrument är funktionslagret ovanpå. Papper #F7F4EC, kort #FCFAF4, oxblod #8A2E26 som varumärkes- och interaktionsaccent (knappar, aktiva lägen, logotyp). Mörkt tema finns kvar som sekundärt val, i varm mörkbrun bas, inte blågrafit.
+- Två teman, **ljust som standard** (Sebastians beslut 2026-07-03), växlare i UI, valet sparas. Grafer följer temat via palettobjekt, aldrig hårdkodade färger.
 - Färg är betydelse, aldrig dekor: grönt/rött endast för avvikelse mot förväntan eller mot användarens larmvillkor. Neutral data är grå/vit.
-- Guld är uppmärksamhet och AI-röst (etiketter, citatmarkörer, tröskellinjer i fokus), inte utfyllnad.
+- **Guld degraderades från andra brand-färg till en enda betydelse: bevaka/guldläge** (bevaka-status, larmlinjer, tillväxtcasets markör, hävstångens toppval). Aldrig som utfyllnad eller generell accent.
+- **Data som mening, inte brus:** råa multiplar som text (P/E 11,2 · Dir 5,8%) läser som fattigt. Varje siffra ska bära kontext: position i eget värderingsspann som band med markör, tesens punkter som chips med status, larmnivån synlig i sifferkortet. Rikedom kommer från betydelse, inte mängd.
 
 **Linjer och ytor**
 - Hårlinjer (1 px, #262A30) i stället för lådor. Inga piller, inga färgade kantlister, ingen zebra i tabeller.

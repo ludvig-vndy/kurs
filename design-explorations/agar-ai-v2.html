@@ -9,33 +9,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0E0F11; --bg2:#131417; --card:#16181C; --card2:#1C1F24;
-    --line:#262A30; --line2:#333842;
-    --ink:#ECEEF1; --mut:#9AA1AC; --faint:#646B76;
-    --gold:#E0A43B; --gold-soft:#1F232C; --gold-d:#7E5E22;
-    --pos:#5FB89A; --pos-soft:#16241F;
-    --neg:#E0726F; --neg-soft:#261A1D; --neg-d:#6E3A33;
-    --bgt:rgba(14,15,17,.92);
+    --bg:#F7F4EC; --bg2:#F1ECE0; --card:#FCFAF4; --card2:#F3EEE2;
+    --line:#E4DDCC; --line2:#CFC6B0;
+    --ink:#211C17; --mut:#5C544A; --faint:#8A8172;
+    --ox:#8A2E26; --ox-soft:#F3E3DD; --ox-ink:#FBF7EE;
+    --gold:#9A6E1C; --gold-soft:#F1E8D1; --gold-d:#C4A867;
+    --pos:#2E6B4C; --pos-soft:#E3EEE5;
+    --neg:#A8382E; --neg-soft:#F6E4E0; --neg-d:#D8A89E;
+    --bgt:rgba(247,244,236,.92);
     --disp:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
   }
-  html[data-theme="light"]{
-    --bg:#F7F6F3; --bg2:#F1EFEA; --card:#FFFFFF; --card2:#F3F1EB;
-    --line:#E6E3DB; --line2:#D2CEC3;
-    --ink:#23252B; --mut:#5C6470; --faint:#8B929B;
-    --gold:#9C6B10; --gold-soft:#F6ECD8; --gold-d:#C9A45C;
-    --pos:#1E7A5C; --pos-soft:#E4F0EA;
-    --neg:#BA4A42; --neg-soft:#F7E6E4; --neg-d:#DCA69F;
-    --bgt:rgba(247,246,243,.92);
+  html[data-theme="dark"]{
+    --bg:#17130F; --bg2:#1C1712; --card:#211B15; --card2:#282017;
+    --line:#33291F; --line2:#463A2B;
+    --ink:#EDE7DB; --mut:#A69C8B; --faint:#6E6454;
+    --ox:#C96B5E; --ox-soft:#342019; --ox-ink:#1C0F0B;
+    --gold:#D9A84E; --gold-soft:#2E2617; --gold-d:#8A6E33;
+    --pos:#6FB893; --pos-soft:#1B2721;
+    --neg:#DD7A6C; --neg-soft:#2E1D18; --neg-d:#6E3A30;
+    --bgt:rgba(23,19,15,.92);
   }
-  html[data-theme="light"] .askbar button{background:#E5B04A;color:#241C09}
-  html[data-theme="light"] .bub.u{background:#E5B04A;color:#241C09}
-  html[data-theme="light"] .logo .mark, html[data-theme="light"] .top .mark{background:linear-gradient(150deg,#E5B04A,#c98a28)}
   *{box-sizing:border-box}
   html,body{margin:0;min-height:100%}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.55}
   .mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
   button{font-family:inherit;cursor:pointer}
-  ::selection{background:var(--gold-soft)}
+  ::selection{background:var(--ox-soft)}
   .ico{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
   .ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
   .ico.sm svg{width:14px;height:14px}
@@ -45,12 +44,12 @@
   .app{display:grid;grid-template-columns:224px 1fr;min-height:100vh}
   .side{background:var(--bg2);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:3px;position:sticky;top:0;height:100vh}
   .logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:18px;padding:4px 10px 20px}
-  .logo .mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(150deg,var(--gold),#c98a28);display:grid;place-items:center;flex:0 0 auto}
-  .logo .mark svg{width:15px;height:15px;stroke:#15171a;stroke-width:2.2;fill:none}
+  .logo .mark{width:24px;height:24px;border-radius:7px;background:var(--ox);display:grid;place-items:center;flex:0 0 auto}
+  .logo .mark svg{width:15px;height:15px;stroke:var(--ox-ink);stroke-width:2.2;fill:none}
   .nav{background:none;border:none;color:var(--mut);text-align:left;padding:10px 11px;border-radius:9px;font-size:14px;display:flex;align-items:center;gap:11px;transition:background .16s,color .16s}
   .nav:hover{background:var(--card);color:var(--ink)}
   .nav.on{background:var(--card2);color:var(--ink)}
-  .nav.on .ico{color:var(--gold)}
+  .nav.on .ico{color:var(--ox)}
   .sidefoot{margin-top:auto;font-size:11px;color:var(--faint);padding:6px 10px;line-height:1.55}
   .mocktag{font-family:var(--mono);font-size:9.5px;color:var(--faint);border:1px solid var(--line2);border-radius:7px;padding:5px 8px;letter-spacing:.04em;text-align:center;margin-bottom:9px}
   .main{padding:28px 42px 90px;max-width:980px}
@@ -58,7 +57,7 @@
 
   .masthead{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:20px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
   .masthead .r{margin-left:auto;color:var(--mut)}
-  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
   h1.big{font-family:var(--disp);font-weight:600;font-size:34px;margin:8px 0 3px;letter-spacing:-.5px;line-height:1.05}
   .sub{color:var(--mut);font-size:14px;margin-bottom:20px}
   .slab{display:flex;align-items:center;gap:12px;margin:28px 2px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
@@ -89,8 +88,36 @@
   .endrow .ev b{color:var(--mut);font-weight:500}
   .endrow .ev i{font-style:normal;color:var(--mut)}
 
+  /* ===== tes-chips, kurskort, värderingsband ===== */
+  .fr-tes{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px}
+  .fr-tes .tl2{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+  .tchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);border-radius:99px;background:var(--card);padding:3px 10px 3px 8px;font-size:11px;color:var(--ink);white-space:nowrap}
+  .tchip i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+  .tchip.g i{color:var(--pos)}.tchip.r i{color:var(--neg)}.tchip.y i{color:var(--gold)}
+  .dstack{display:flex;flex-direction:column;gap:8px;width:250px}
+  .fr-price{font-family:var(--mono);font-size:16px;text-align:right}
+  .kcard{border:1px solid var(--line);border-radius:9px;background:var(--card);padding:9px 12px 7px}
+  .kcard .kh{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+  .kcard svg{display:block}
+  .band .brow{display:flex;align-items:baseline;gap:10px;margin:6px 0 2px}
+  .band .bl{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+  .band .bv{font-family:var(--mono);font-size:11.5px;margin-left:auto}
+  .band .btrack{position:relative;height:12px;margin-bottom:6px}
+  .band .btrack i{position:absolute;display:block}
+  .band .btrack .l0{left:0;right:0;top:5px;height:1.5px;background:var(--ink);opacity:.7}
+  .band .btrack .e{top:2px;width:1.5px;height:8px;background:var(--ink);opacity:.7}
+  .band .btrack .m{top:1.5px;width:9px;height:9px;border-radius:50%;background:var(--ink);border:2px solid var(--card)}
+  .frow.alert{background:linear-gradient(90deg,var(--neg-soft),rgba(0,0,0,0) 55%)}
+  .frow.alert:hover{background:linear-gradient(90deg,var(--neg-soft),var(--bg2) 55%)}
+  .blad{display:block;width:100%;background:var(--ox);color:var(--ox-ink);border:none;border-radius:10px;padding:14px;font-size:14.5px;font-weight:600;transition:.14s}
+  .blad:hover{filter:brightness(1.1)}
+  .ulink{font-size:12.5px;color:var(--mut);cursor:pointer;margin-top:12px}
+  .ulink:hover{color:var(--ink)}
+  .ukbd{text-align:center;font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:9px;letter-spacing:.04em}
+  .ukbd kbd{border:1px solid var(--line2);border-radius:4px;padding:1px 5px;font-family:inherit}
+
   /* ===== stock page ===== */
-  .back{background:none;border:none;color:var(--mut);font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:7px;padding:0}
+  .back{background:none;border:none;color:var(--mut);font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:7px;padding:0}
   .back:hover{color:var(--ink)}
   .shead{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:10px}
   .shead h1{font-family:var(--disp);font-weight:600;font-size:29px;margin:0;letter-spacing:-.4px}
@@ -99,15 +126,15 @@
   .factbar .k{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
   .factbar .v{color:var(--ink)}
   .factbar .sep{margin:0 14px;color:var(--line2)}
-  .whyline{color:var(--mut);font-size:13.5px;margin:0 0 16px;border-left:2px solid var(--gold-d);padding-left:12px;line-height:1.5}
+  .whyline{color:var(--ink);font-size:14px;margin:0 0 16px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:12px 16px;line-height:1.55}
   .whyline b{color:var(--faint);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px}
   /* single-page: sticky anchor bar + sections */
   .anchbar{position:sticky;top:0;z-index:20;background:var(--bgt);backdrop-filter:blur(8px);display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);margin:0 0 4px;padding:6px 0}
   .thbtn{width:100%;background:none;border:1px solid var(--line2);border-radius:9px;color:var(--mut);padding:8px;font-size:12px;margin-bottom:9px;transition:.14s}
-  .thbtn:hover{border-color:var(--gold);color:var(--ink)}
-  .anch{background:none;border:none;color:var(--mut);padding:8px 12px;font-size:12.5px;border-radius:8px;white-space:nowrap;transition:.14s}
+  .thbtn:hover{border-color:var(--ox);color:var(--ink)}
+  .anch{background:none;border:1px solid transparent;color:var(--mut);padding:8px 12px;font-size:12.5px;border-radius:8px;white-space:nowrap;transition:.14s}
   .anch:hover{color:var(--ink)}
-  .anch.on{color:var(--ink);background:var(--card2)}
+  .anch.on{color:var(--ink);background:var(--card);border-color:var(--line2)}
   section.sec{scroll-margin-top:58px;padding:24px 0 10px;border-top:1px solid var(--line);margin-top:16px}
   section.sec:first-of-type{border-top:none;margin-top:0;padding-top:10px}
   .sech{display:flex;align-items:baseline;gap:11px;margin:0 0 14px}
@@ -122,17 +149,17 @@
   /* two-lane: prose + data rail */
   .lane{display:grid;grid-template-columns:1fr 264px;gap:24px;align-items:start}
   @media(max-width:820px){.lane{grid-template-columns:1fr}}
-  .prose .lab{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+  .prose .lab{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:11px}
   .prose p{margin:0 0 11px;font-size:14.5px;line-height:1.62}
   .tag{display:inline-block;font-size:10px;font-family:var(--mono);letter-spacing:.05em;border-radius:5px;padding:2px 7px;margin-right:7px;text-transform:uppercase}
-  .tag.fakta{background:var(--pos-soft);color:var(--pos)}.tag.slutsats{background:var(--gold-soft);color:var(--gold)}
-  .cit{font-family:var(--mono);font-size:9.5px;color:var(--gold);background:var(--gold-soft);border-radius:4px;padding:1px 5px;vertical-align:super;cursor:pointer;margin-left:2px}
+  .tag.fakta{border:1px solid var(--line2);background:var(--card);color:var(--mut)}.tag.slutsats{border:1px solid var(--line2);background:var(--card);color:var(--ox)}
+  .cit{font-family:var(--mono);font-size:9.5px;color:var(--ox);background:var(--ox-soft);border-radius:4px;padding:1px 5px;vertical-align:super;cursor:pointer;margin-left:2px}
   .rail{display:flex;flex-direction:column;gap:9px}
   .rail .rlab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:-2px}
-  .chip{border:1px solid var(--line);border-radius:10px;padding:10px 13px;background:var(--card)}
+  .chip{border:1px solid var(--line);border-radius:9px;padding:12px 15px;background:var(--card)}
   .chip .ck{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
   .chip .cv{display:flex;align-items:baseline;gap:9px;margin-top:3px}
-  .chip .cv .v{font-family:var(--mono);font-size:17px}
+  .chip .cv .v{font-family:var(--mono);font-size:21px}
   .chip .cv .dd{font-family:var(--mono);font-size:11.5px}
   .chip .cc{font-size:11px;color:var(--mut);margin-top:2px}
 
@@ -150,7 +177,7 @@
 
   /* verdict + minis + quotes */
   .verdict{font-family:var(--disp);font-size:17.5px;line-height:1.45;margin:0 0 4px}
-  .vlab{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+  .vlab{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
   .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
   @media(max-width:640px){.cols{grid-template-columns:1fr}}
   .mini h4{margin:0 0 9px;font-size:10.5px;font-family:var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
@@ -172,27 +199,27 @@
   .pchart svg{display:block;width:100%;height:58px}
   .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.03em}
   .pev{font-size:12px;color:var(--mut);margin-top:7px;line-height:1.5}
-  .tnote{background:var(--neg-soft);border:1px solid var(--neg-d);border-radius:11px;padding:13px 15px;font-size:13px;color:#f3c8c2;margin-bottom:15px;line-height:1.55}
-  .tnote b{color:#fff}
+  .tnote{background:var(--neg-soft);border:1px solid var(--neg-d);border-radius:11px;padding:13px 15px;font-size:13px;color:var(--ink);margin-bottom:15px;line-height:1.55}
+  .tnote b{color:var(--neg)}
 
   /* chat */
   .chat{display:flex;flex-direction:column;gap:13px;margin-bottom:16px}
   .bub{max-width:92%;padding:13px 16px;border-radius:14px;font-size:14px;line-height:1.6}
-  .bub.u{align-self:flex-end;background:var(--gold);color:#15171a;font-weight:500}
+  .bub.u{align-self:flex-end;background:var(--ox);color:var(--ox-ink);font-weight:500}
   .bub.a{align-self:flex-start;background:var(--card);border:1px solid var(--line)}
   .bub.a table.dt{margin-top:10px;font-size:11.5px}
   .bub.a table.dt td{padding:6px 0 6px 12px}
   .seed{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
   .seedb{background:var(--card);border:1px solid var(--line2);border-radius:99px;padding:8px 13px;font-size:12.5px;color:var(--mut);transition:.14s}
-  .seedb:hover{border-color:var(--gold);color:var(--ink)}
+  .seedb:hover{border-color:var(--ox);color:var(--ink)}
   .askbar{display:flex;gap:9px;position:sticky;bottom:14px}
   .askbar input{flex:1;background:var(--card2);border:1px solid var(--line2);border-radius:12px;color:var(--ink);padding:12px 15px;font-size:14px;outline:none;font-family:var(--sans)}
-  .askbar input:focus{border-color:var(--gold)}
-  .askbar button{background:var(--gold);border:none;color:#15171a;border-radius:12px;padding:0 18px;font-weight:600}
+  .askbar input:focus{border-color:var(--ox)}
+  .askbar button{background:var(--ox);border:none;color:var(--ox-ink);border-radius:12px;padding:0 18px;font-weight:600}
 
   /* ===== sidofält: lägg till + från Marginalen ===== */
   .addbtn{background:none;border:1px dashed var(--line2);border-radius:9px;color:var(--mut);text-align:left;padding:10px 11px;font-size:13.5px;display:flex;align-items:center;gap:10px;margin-top:6px;transition:.14s}
-  .addbtn:hover{border-color:var(--gold);color:var(--ink)}
+  .addbtn:hover{border-color:var(--ox);color:var(--ink)}
   .fm{border-top:1px solid var(--line);margin:12px 6px 0;padding:11px 4px 2px}
   .fm .fmt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
   .fm a{display:block;color:var(--mut);text-decoration:none;font-size:12.5px;padding:4px 2px;border-radius:6px}
@@ -203,7 +230,7 @@
   .brev .bh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
   .brev .bh .bt{font-family:var(--disp);font-weight:600;font-size:18px}
   .brev .bh .bd{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
-  .bsec{padding:15px 20px 6px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+  .bsec{padding:15px 20px 6px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ox)}
   .bitem{padding:9px 20px 12px}
   .bitem+.bitem{border-top:1px solid var(--line)}
   .bitem.click{cursor:pointer;transition:background .14s}
@@ -212,7 +239,7 @@
   .bitem h4 .st{font-family:var(--sans);font-size:11.5px;font-weight:400;margin-left:8px}
   .bitem p{font-size:12.5px;color:var(--mut);margin:0;line-height:1.55}
   .bitem .fd{font-size:11.5px;color:var(--mut);margin-top:5px}
-  .bitem .fd b{color:var(--gold);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-right:6px}
+  .bitem .fd b{color:var(--ox);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-right:6px}
   .pw{padding:12px 20px;background:var(--bg2);font-family:var(--mono);font-size:11px;color:var(--faint);border-top:1px solid var(--line);line-height:1.6}
   .pw b{color:var(--mut);font-weight:500}
 
@@ -234,17 +261,17 @@
   .obwrap{max-width:600px}
   .prog{display:flex;gap:6px;margin:2px 0 26px}
   .prog i{height:3px;flex:1;border-radius:2px;background:var(--line2);transition:background .3s}
-  .prog i.on{background:var(--gold)}
+  .prog i.on{background:var(--ox)}
   .chips2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
   .chip2{background:var(--card);border:1px solid var(--line2);border-radius:99px;padding:9px 15px;font-size:13.5px;color:var(--mut);transition:.14s;cursor:pointer}
   .chip2:hover{color:var(--ink)}
-  .chip2.sel{border-color:var(--gold);color:var(--ink);background:var(--gold-soft)}
+  .chip2.sel{border-color:var(--ox);color:var(--ink);background:var(--ox-soft)}
   .sent{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;font-family:var(--disp);font-size:18px;line-height:1.75;margin-bottom:14px}
-  .sent .co{color:var(--gold);font-weight:600}
-  .sent input{background:none;border:none;border-bottom:1.5px solid var(--gold-d);color:var(--ink);font-family:var(--disp);font-size:18px;outline:none;min-width:120px;padding:0 2px 2px}
-  .sent input:focus{border-bottom-color:var(--gold)}
+  .sent .co{color:var(--ox);font-weight:600}
+  .sent input{background:none;border:none;border-bottom:1.5px solid var(--ox);color:var(--ink);font-family:var(--disp);font-size:18px;outline:none;min-width:120px;padding:0 2px 2px}
+  .sent input:focus{border-bottom-color:var(--ox)}
   .course{display:flex;align-items:center;gap:13px;background:var(--gold-soft);border:1px solid var(--gold-d);border-radius:13px;padding:13px 15px;text-decoration:none;color:inherit;margin-bottom:10px;transition:.15s}
-  .course:hover{border-color:var(--gold)}
+  .course:hover{border-color:var(--gold-d)}
   .course .ct b{font-size:13.5px;font-weight:600;display:block;color:var(--ink)}
   .course .ct span{font-size:12px;color:var(--mut)}
   .course .arr{margin-left:auto;color:var(--gold)}
@@ -253,18 +280,17 @@
   .vrow .vg{display:flex;align-items:center;gap:9px}
   .vrow .vg .gl{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);flex:0 0 auto}
   .vrow .vg input{flex:1;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;color:var(--mut);font-size:12.5px;padding:7px 10px;outline:none;font-family:var(--sans)}
-  .vrow .vg input:focus{border-color:var(--gold);color:var(--ink)}
+  .vrow .vg input:focus{border-color:var(--ox);color:var(--ink)}
   .obnav{display:flex;gap:10px;margin-top:24px}
   .btn{border-radius:12px;padding:13px 20px;font-size:14px;border:1px solid var(--line2);background:var(--card2);color:var(--ink);transition:.15s;display:inline-flex;align-items:center;gap:8px;justify-content:center;cursor:pointer;text-decoration:none}
-  .btn:hover{border-color:var(--gold)}
-  .btn.prim{background:var(--gold);border-color:var(--gold);color:#15171a;font-weight:600;flex:1}
-  html[data-theme="light"] .btn.prim{background:#E5B04A;border-color:#E5B04A;color:#241C09}
+  .btn:hover{border-color:var(--ox)}
+  .btn.prim{background:var(--ox);border-color:var(--ox);color:var(--ox-ink);font-weight:600;flex:1}
   .btn.ghost{color:var(--mut)}
 
   /* ===== morgonutgåvan (brevet som sidor) ===== */
   .utgwrap{max-width:660px}
   .utg{border:1px solid var(--line);border-radius:16px;background:var(--card);min-height:440px;padding:26px 28px 22px;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(35,37,43,.05)}
-  .utg .uk{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;justify-content:space-between;gap:10px}
+  .utg .uk{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ox);margin-bottom:12px;display:flex;justify-content:space-between;gap:10px}
   .utg .uk .r2{color:var(--faint)}
   .utg h2.uh{font-family:var(--disp);font-weight:600;font-size:24px;line-height:1.18;margin:0 0 10px;letter-spacing:-.3px}
   .utg p.ul{font-size:14px;color:var(--mut);line-height:1.62;margin:0 0 12px}
@@ -280,9 +306,9 @@
   .unav{display:flex;align-items:center;gap:12px;margin-top:14px;max-width:660px}
   .udots{display:flex;gap:6px;flex:1;justify-content:center}
   .udots i{width:6px;height:6px;border-radius:50%;background:var(--line2);cursor:pointer;transition:.15s}
-  .udots i.on{background:var(--gold-b);width:18px;border-radius:4px}
-  .uarr{width:40px;height:40px;border-radius:11px;border:1px solid var(--line2);background:var(--card);color:var(--mut);display:grid;place-items:center;cursor:pointer;transition:.14s}
-  .uarr:hover{border-color:var(--gold);color:var(--ink)}
+  .udots i.on{background:var(--ox);width:18px;border-radius:4px}
+  .uarr{width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);background:var(--card);color:var(--mut);display:grid;place-items:center;cursor:pointer;transition:.14s}
+  .uarr:hover{border-color:var(--ox);color:var(--ink)}
   .uarr.off{opacity:.3;pointer-events:none}
   .uarr svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .spx{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:10px;background:var(--bg2)}
@@ -292,7 +318,7 @@
   .spx p{font-size:12.5px;color:var(--mut);margin:5px 0 0;line-height:1.55}
   .spx .btnrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
   .sbtn{font-size:11.5px;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:6px 11px;cursor:pointer;color:var(--mut);transition:.14s}
-  .sbtn:hover{border-color:var(--gold);color:var(--ink)}
+  .sbtn:hover{border-color:var(--ox);color:var(--ink)}
   .sbtn:disabled{opacity:.6;pointer-events:none}
 
   /* ===== impulsbromsen ===== */
@@ -301,13 +327,13 @@
   .ibov{position:fixed;inset:0;background:rgba(20,20,22,.45);backdrop-filter:blur(4px);display:none;place-items:center;z-index:90;padding:18px}
   .ibov.show{display:grid}
   .ibcard{width:min(560px,94vw);background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:24px 26px;max-height:90vh;overflow:auto;box-shadow:0 22px 60px rgba(20,20,22,.25)}
-  .ibcard .ik{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .ibcard .ik{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ox);margin-bottom:8px}
   .ibcard h2{font-family:var(--disp);font-weight:600;font-size:21px;margin:0 0 12px;letter-spacing:-.3px}
-  .ibskal{border-left:2px solid var(--gold-d);padding:2px 0 2px 13px;margin:0 0 14px;font-family:var(--disp);font-size:15.5px;line-height:1.5}
+  .ibskal{border-left:2px solid var(--ox);padding:2px 0 2px 13px;margin:0 0 14px;font-family:var(--disp);font-size:15.5px;line-height:1.5}
   .ibskal .d8{font-family:var(--mono);font-size:10px;color:var(--faint);display:block;margin-top:5px;letter-spacing:.05em;font-style:normal}
   .ibq{font-size:14px;font-weight:600;margin:14px 0 8px}
   .ibcard textarea{width:100%;min-height:74px;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;color:var(--ink);font-family:var(--sans);font-size:13.5px;padding:11px 13px;outline:none;resize:vertical}
-  .ibcard textarea:focus{border-color:var(--gold)}
+  .ibcard textarea:focus{border-color:var(--ox)}
   .ibrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
   .ibres{font-size:13.5px;line-height:1.6;background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:13px 15px;margin-top:14px}
   .ibnote{font-size:11px;color:var(--faint);margin-top:10px;font-family:var(--mono)}
@@ -350,7 +376,7 @@
   .isinbox h3{font-family:var(--disp);font-weight:600;font-size:14.5px;margin:0 0 3px}
   .isinbox p{color:var(--mut);font-size:12px;margin:0 0 11px}
   .isinbox input{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:9px;color:var(--ink);padding:10px 12px;font-family:var(--mono);font-size:12.5px;outline:none}
-  .isinbox input:focus{border-color:var(--gold)}
+  .isinbox input:focus{border-color:var(--ox)}
   .isinres{margin-top:10px;font-size:12.5px;line-height:1.5;display:none}
 
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -374,11 +400,12 @@
       <div class="fmt">Vid sidan om</div>
       <a href="#" onclick="view='havstang';setNav();render();window.scrollTo(0,0);return false">Hitta bästa hävstångsprodukten →</a>
       <a href="agar-ai-resan.html">Se 90-dagarsdemon →</a>
+      <a href="agarkollen-karta.html">Om Ägarkollen: funktionskartan →</a>
     </div>
     <div class="sidefoot">
       <button class="thbtn" id="thbtn"></button>
       <div class="mocktag">PROTOTYP · EXEMPELDATA</div>
-      Ägarkollen är arbetsnamn. Fiktiva bolag och illustrativa siffror.
+      Ägarkollen · av Marginalen. Arbetsnamn, fiktiva bolag, påhittade siffror.
     </div>
   </aside>
   <main class="main" id="main"></main>
@@ -404,11 +431,11 @@ const SVG={
 };
 function svgi(n,w){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w||1.6}" stroke-linecap="round" stroke-linejoin="round">${SVG[n]||''}</svg>`;}
 function ic(n,c){return `<span class="ico ${c||''}">${svgi(n)}</span>`;}
-document.getElementById('mk').innerHTML=svgi('pulse',2.2);
+SVG.diamond='<path d="M12 5.5 18.5 12 12 18.5 5.5 12Z"/>';document.getElementById('mk').innerHTML=svgi('diamond',2);
 
 /* ============ theme ============ */
-const PAL={dark:{pos:'#5FB89A',neg:'#E0726F',gold:'#E0A43B',neu:'#646B76',larm:'#7E5E22'},
-           light:{pos:'#1E7A5C',neg:'#C04A42',gold:'#B07A1E',neu:'#9AA0A8',larm:'#C9A45C'}};
+const PAL={dark:{pos:'#6FB893',neg:'#DD7A6C',gold:'#D9A84E',neu:'#6E6455',larm:'#8A6E33'},
+           light:{pos:'#2E6B4C',neg:'#A8382E',gold:'#9A6E1C',neu:'#8A8172',larm:'#C4A867'}};
 let curTheme=localStorage.getItem('agarai-theme')||'light';
 function C(){return PAL[curTheme];}
 function applyTheme(){document.documentElement.dataset.theme=curTheme;
@@ -444,6 +471,8 @@ const STOCKS={
  NORL:{tk:'NORL',namn:'Norlux Industri',status:'ok',statusLab:'Ser bra ut',
   pris:284.50,idag:1.8,spark12:[205,212,220,232,228,241,248,255,251,262,271,284],
   micro:['P/E 24,3','EV/EBIT 18,9','NS/EBITDA 1,4x'],
+  tes:[['Tillväxt stärkt','g'],['Kassa håller','g'],['Prognos stärkt','g']],
+  band:[['P/E','24,3',72,48],['EV/EBIT','18,9',66,48]],
   fact:{v52:'198,20 till 291,00',mcap:'42,2 mdkr',pe:'24,3',dir:'1,4%'},
   why:'Lönsam förvärvsmaskin: organisk tillväxt över 8%, stigande marginal, ingen utspädning.',
   event:'Q3: växte 11,0% av egen kraft, mer än egna prognosen 7 till 9. 388 miljoner kvar i kassan, upp 18%. Höjd prognos för året. Allt du bad oss vakta håller.',src:'Q3-rapport · imorse 07:30',
@@ -506,6 +535,8 @@ const STOCKS={
  TELV:{tk:'TELV',namn:'Telvio',status:'bad',statusLab:'Något har ändrats',
   pris:84.20,idag:-0.6,spark12:[102,99,101,97,95,93,90,92,88,87,85,84],
   micro:['P/E 11,2','Dir 5,8%','NS/EBITDA 2,1x'],
+  tes:[['Försäljning håller','g'],['Marginal bruten','r'],['Utdelning bevaka','y']],
+  band:[['P/E','11,2',26,45],['Dir.avk','5,8%',82,50]],
   fact:{v52:'82,10 till 104,80',mcap:'18,6 mdkr',pe:'11,2',dir:'5,8%'},
   why:'Stabil kassako med stigande marginal och trygg utdelning.',
   event:'Q3: lönsamheten föll till 38,0%, ned 3,5 procentenheter i priskriget på mobilsidan. Den gick därmed under din gräns på 40%.',src:'Q3-rapport · igår 08:00',
@@ -560,6 +591,8 @@ const STOCKS={
  KAVX:{tk:'KAVX',namn:'Kavex Medical',status:'up',statusLab:'Insiderköp',
   pris:156.00,idag:0.4,spark12:[138,141,140,144,147,146,150,152,151,154,155,156],
   micro:['P/E 31,4','Brutto 72%','Återk. 63%'],
+  tes:[['Återkommande intäkter håller','g'],['Marginal håller','g']],
+  band:[['P/E','31,4',58,50],['Brutto','72%',88,60]],
   fact:{v52:'128,00 till 158,40',mcap:'9,4 mdkr',pe:'31,4',dir:'0,8%'},
   why:'Nischmedtech med återkommande intäkter och hög marginal.',
   event:'VD köpte aktier för 2,1 miljoner i går, första köpet på 14 månader. Inget i ditt skäl ändras.',src:'FI insynsregister · igår 17:42',
@@ -577,6 +610,7 @@ const STOCKS={
  BRUN:{tk:'BRUN',namn:'Brunna Hydro',status:'calm',statusLab:'Lugnt',
   pris:112.40,idag:0.1,spark12:[108,109,110,109,111,110,112,111,112,113,112,112],
   micro:['P/E 14,8','Dir 4,6%','Täckn. 1,3x'],
+  tes:[['Utdelning täckt','g']],
   fact:{v52:'104,20 till 115,60',mcap:'27,1 mdkr',pe:'14,8',dir:'4,6%'},
   why:'Reglerad kassaflödesmaskin, låg risk, stabil utdelning.',
   event:'Inget kräver din uppmärksamhet.',src:'6 nyheter bortsorterade som brus',
@@ -589,6 +623,7 @@ const STOCKS={
  ALMI:{tk:'ALMI',namn:'Almi Foods',status:'calm',statusLab:'Lugnt',
   pris:68.90,idag:-0.2,spark12:[70,71,70,69,70,69,70,69,69,70,69,69],
   micro:['P/E 16,2','Dir 3,1%','NS/EBITDA 1,1x'],
+  tes:[['Efterfrågan stabil','g']],
   fact:{v52:'64,50 till 73,80',mcap:'6,2 mdkr',pe:'16,2',dir:'3,1%'},
   why:'Defensiv stapelvara med långsam men säker tillväxt.',
   event:'En analytiker sänkte sin riktkurs. Vi bedömde det som brus.',src:'1 nyhet nedprioriterad',
@@ -601,6 +636,7 @@ const STOCKS={
 STOCKS.VOLT={tk:'VOLT',namn:'Voltcell',status:'up',statusLab:'Milstolpe i september',growth:true,
   pris:24.60,idag:1.2,spark12:[14,17,15,19,22,18,21,26,23,27,25,24.6],
   micro:['Kassa 410 Mkr','Runway ~21 mån','Tillväxt +64%'],
+  tes:[['Kassa håller','g'],['Tillväxt håller','g'],['Utspädning låg','g']],
   factArr:[['52 v','11,80 till 31,40'],['Börsvärde','2,1 mdkr'],['Kassa','410 Mkr'],['Runway','~21 mån'],['Tillväxt','+64%']],
   fact:{v52:'11,80 till 31,40',mcap:'2,1 mdkr',pe:'saknas',dir:'0%'},
   why:'Tillväxtcase: batteriteknik före genombrottet. Kan mångdubblas om certifieringen och volymkontrakten landar, kan också misslyckas. Därför: ett litet innehav och tydliga gränser.',
@@ -658,49 +694,41 @@ function goStock(tk){cur=tk;curTab='oversikt';view='stock';setNav();render();win
 function priceHTML(s){return `<div class="price num">${s.pris.toFixed(2).replace('.',',')} <span class="chg">${fmtChg(s.idag)}</span></div>`;}
 
 /* ============ Idag ============ */
+function bandHTML(rows){
+  if(!rows||!rows.length)return '';
+  return `<div class="kcard band"><div class="kh"><span>Värdering · position i eget spann</span></div>
+    ${rows.map(r=>`<div class="brow"><span class="bl">${r[0]}</span><span class="bv">${r[1]}</span></div>
+    <div class="btrack"><i class="l0"></i><i class="e" style="left:0"></i><i class="e" style="right:0"></i><i class="e" style="left:${r[3]}%;opacity:.45"></i><i class="m" style="left:calc(${r[2]}% - 4px)"></i></div>`).join('')}
+  </div>`;
+}
+function kursCard(s,color){
+  return `<div class="kcard"><div class="kh"><span>Kurs · 90 d</span><span>${s.fact.v52.replace(' till ','-')}</span></div>${spark(s.spark12,224,34,color)}</div>`;
+}
+function frowHTML(tk,small){
+  const s=S(tk);
+  const col=s.growth?C().gold:(s.spark12[s.spark12.length-1]>=s.spark12[0]?C().pos:C().neg);
+  return `<div class="frow ${s.status==='bad'?'alert':''} ${small?'smallr':''}" onclick="goStock('${tk}')">
+    <div>
+      <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">${tk}</span>${stw(s)}</div>
+      <p>${s.event}</p>
+      ${s.tes&&!small?`<div class="fr-tes"><span class="tl2">Din tes</span>${s.tes.map(t=>`<span class="tchip ${t[1]}"><i></i>${t[0]}</span>`).join('')}</div>`:''}
+      <div class="fr-src">${s.src}</div>
+    </div>
+    <div class="dstack">
+      <div class="fr-price num">${s.pris.toFixed(2).replace('.',',')} <span style="font-size:12px">${fmtChg(s.idag)}</span></div>
+      ${kursCard(s,col)}
+      ${small?'':bandHTML(s.band)}
+    </div>
+  </div>`;
+}
 function renderIdag(){
   main.innerHTML=`<div class="masthead">Ägarkollen · av Marginalen<span class="r">Onsdag 2 juli 2026 · 15:42 · fördröjt 15 min</span></div>
   <div class="eyebrow">Din portfölj</div><h1 class="big">Dina bolag</h1>
-  <div class="sub">Tre saker har hänt i dina bolag. Resten var brus.</div>
+  <div class="sub">Tre saker har hänt i dina bolag. Resten var brus, och det säger vi rakt ut.</div>
   <div class="front">
-    ${ACTIVE.map(tk=>{const s=S(tk);return `
-      <div class="frow" onclick="goStock('${tk}')">
-        <div>
-          <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">${tk}</span>${stw(s)}</div>
-          <p>${s.event}</p>
-          <div class="fr-src">${s.src}</div>
-        </div>
-        <div class="dblock">
-          ${priceHTML(s)}
-          <div class="sp">${spark(s.spark12,110,24,s.idag>=0?C().pos:C().neg)}</div>
-          <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
-        </div>
-      </div>`;}).join('')}
-    ${(()=>{const s=S('VOLT');return `
-      <div class="frow" onclick="goStock('VOLT')">
-        <div>
-          <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">VOLT</span>${stw(s)}</div>
-          <p>${s.event}</p>
-          <div class="fr-src">${s.src}</div>
-        </div>
-        <div class="dblock">
-          ${priceHTML(s)}
-          <div class="sp">${spark(s.spark12,110,24,C().gold)}</div>
-          <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
-        </div>
-      </div>`;})()}
-    ${['BRUN','ALMI'].map(tk=>{const s=S(tk);return `
-      <div class="frow smallr" onclick="goStock('${tk}')">
-        <div>
-          <div class="fr-head"><span class="fr-name">${s.namn}</span><span class="fr-tk">${tk}</span>${stw(s)}</div>
-          <p>${s.event}</p>
-        </div>
-        <div class="dblock">
-          ${priceHTML(s)}
-          <div class="sp">${spark(s.spark12,110,20,C().neu)}</div>
-          <div class="micro">${s.micro.map(m=>{const i=m.indexOf(' ');return `${m.slice(0,i)} <b>${m.slice(i+1)}</b>`;}).join(' · ')}</div>
-        </div>
-      </div>`;}).join('')}
+    ${ACTIVE.map(tk=>frowHTML(tk)).join('')}
+    ${frowHTML('VOLT')}
+    ${['BRUN','ALMI'].map(tk=>frowHTML(tk,true)).join('')}
     <div class="endrow"><span class="el">Bortsorterat</span><span class="ev"><b>47 saker</b> bedömdes som brus: kurskommentarer, marknadssvep, en upprepad behåll-rekommendation.</span></div>
     <div class="endrow"><span class="el">Kommande</span><span class="ev"><i>2 jul</i> Kavex Q3 · <i>9 jul</i> Norlux kapitalmarknadsdag · <i>14 jul</i> Brunna utdelning · <i>22 jul</i> Almi Q3</span></div>
     <div class="endrow"><span class="el">Portfölj</span><span class="ev"><b>1 284 300 kr</b> · +0,4% idag. Visas litet med flit, dagsrörelsen är spekulantens mått.</span></div>
@@ -720,7 +748,7 @@ function renderStock(){
     <button class="back" onclick="view='idag';setNav();render()"><span class="ico sm" style="transform:scaleX(-1)">${svgi('arrow')}</span>Idag</button>
     <div class="shead"><h1>${s.namn}</h1><span class="fr-tk">${s.tk}</span>${stw(s)}<button class="sellbtn" onclick="openIB()">Funderar du på att sälja?</button></div>
     <div class="factbar num">
-      <span class="f"><span class="v">${s.pris.toFixed(2).replace('.',',')}</span> ${fmtChg(s.idag)}</span>
+      <span class="f"><span class="k">Kurs</span><span class="v">${s.pris.toFixed(2).replace('.',',')}</span> ${fmtChg(s.idag)}</span>
       ${(s.factArr||[['52 v',s.fact.v52],['Börsvärde',s.fact.mcap],['P/E',s.fact.pe],['Dir.avk',s.fact.dir]]).map(f=>`<span class="sep">·</span><span class="f"><span class="k">${f[0]}</span><span class="v">${f[1]}</span></span>`).join('')}
     </div>
     <div class="whyline"><b>Varför du äger det</b>${s.why}</div>
@@ -893,46 +921,43 @@ function askGIn(){const i=document.getElementById('gin');if(i&&i.value.trim()){a
 /* ============ Ägarbrevet (ytan) ============ */
 let bIdx=0;const BPN=8;
 function goBP(i){bIdx=Math.max(0,Math.min(BPN-1,i));renderBrevet();termify(main);window.scrollTo(0,0);}
+function ulink(txt,tk){return `<div class="ulink" onclick="event.stopPropagation();goStock('${tk}')">${txt} →</div>`;}
 function bpage(i){
-  const arrow=(txt,tk)=>`<button class="btn" onclick="goStock('${tk}')">${txt}</button>`;
-  if(i===0)return{k:'Ägarbrevet · onsdag 2 juli',r:'07:30 · sida 1 av 8',h:`
+  if(i===0)return`
     <h2 class="uh">God morgon. Tre saker har hänt i dina bolag.</h2>
     <p class="ul">Resten av portföljen är lugn. Hela utgåvan tar ungefär 90 sekunder.</p>
     <div class="uitem"><span class="ud" style="background:var(--neg)"></span><div><b>Telvio</b> <span>· lönsamheten gick under din gräns</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Norlux Industri</b> <span>· stark rapport, höjd prognos</span></div></div>
-    <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>Kavex Medical</b> <span>· insiderköp, och Q3 släpps i dag</span></div></div>
-    <div class="ufoot"><button class="btn prim" onclick="goBP(1)">Bläddra ${ic('arrow','sm')}</button></div>`};
-  if(i===1)return{k:'Sida 2 · Något har ändrats',r:'TELV',h:`
-    <h2 class="uh">Telvio: lönsamheten gick under din gräns</h2>
-    <p class="ul">Av varje hundralapp bolaget säljer för blev 38 kronor kvar efter direkta kostnader (bruttomarginal 38,0%). Din gräns går vid 40. Utdelningen står kvar, men marginalen som ska betala den krymper.</p>
+    <div class="uitem"><span class="ud" style="background:var(--gold)"></span><div><b>Kavex Medical</b> <span>· insiderköp, och Q3 släpps i dag</span></div></div>`;
+  if(i===1)return`
+    <h2 class="uh">Telvio · det du bad oss vakta</h2>
+    <p class="ul">Lönsamheten föll till 38,0% i Q3, ned 3,5 procentenheter i priskriget på mobilsidan. Det tog kurvan under gränsen på 40% som du satte själv.</p>
     <div class="uchart">${pillChart([41.5,41.0,40.6,40.1,39.2,38.0],40,'r')}</div>
     <div class="pmeta"><span>6 kvartal</span><span class="gold">larm 40,0%</span><span>nu</span></div>
-    <p class="unote">Något du räknade med stämmer inte längre. Titta på just den delen i lugn och ro och bestäm själv.</p>
-    <div class="ufoot">${arrow('Öppna Telvio','TELV')}</div>`};
-  if(i===2)return{k:'Sida 3 · Stark rapport',r:'NORL',h:`
+    <p class="ul" style="margin-top:12px">Utdelningen står kvar och täcks fortfarande, 1,15 kronor in per utdelad krona, men marginalen krymper sjätte kvartalet i rad. Riktningen är fel, inte nivån. Ta ställning i lugn och ro.</p>
+    ${ulink('Öppna Telvio · hela bilden','TELV')}`;
+  if(i===2)return`
     <h2 class="uh">Norlux växte 11 procent av egen kraft</h2>
     <p class="ul">Mer än bolagets egen prognos, som låg på 7 till 9. Dessutom höjdes prognosen för resten av året. Allt vi bevakar åt dig ser bra ut.</p>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Tillväxt 11,0%</b> <span>· väntat var 8,5</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>388 miljoner kvar i kassan</b> <span>· fritt kassaflöde, upp 18%</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--pos)"></span><div><b>Höjd prognos</b> <span>· ovanligt mitt under året</span></div></div>
-    <div class="ufoot">${arrow('Läs hela analysen','NORL')}</div>`};
-  if(i===3)return{k:'Sida 4 · Insiderköp',r:'KAVX',h:`
+    ${ulink('Läs hela analysen','NORL')}`;
+  if(i===3)return`
     <h2 class="uh">VD i Kavex köpte aktier för 2,1 miljoner</h2>
     <p class="ul">Första köpet på 14 månader. En trevlig signal, inte mer än så. Och klockan 08:00 i dag släpper Kavex sin Q3-rapport: analysen ligger i appen några minuter senare. Du behöver inte göra något.</p>
-    <div class="ufoot">${arrow('Öppna Kavex','KAVX')}</div>`};
-  if(i===4)return{k:'Sida 5 · Lugnt',r:'3 bolag',h:`
+    ${ulink('Öppna Kavex','KAVX')}`;
+  if(i===4)return`
     <h2 class="uh">I de här tre är det lugnt</h2>
-    <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>Voltcell</b> <span>· tillväxtcase. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader. Vi säger till när beskedet kommer.</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--gold)"></span><div><b>Voltcell</b> <span>· tillväxtcase. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader. Vi säger till när beskedet kommer.</span></div></div>
     <div class="uitem"><span class="ud" style="background:var(--line2)"></span><div><b>Brunna Hydro · Almi Foods</b> <span>· inget nytt av betydelse för dig.</span></div></div>
-    <p class="unote"><b style="color:var(--mut)">I natt:</b> vi läste 51 nyheter, registerposter och flöden om dina sex bolag. Tre saker var viktiga för dig, och dem har du just läst.</p>
-    <div class="ufoot"><button class="btn" onclick="goBP(5)">Vidare ${ic('arrow','sm')}</button></div>`};
-  if(i===5)return{k:'Sida 6 · Att hålla koll på i dag',r:'allmänt',h:`
+    <p class="unote"><b style="color:var(--mut)">I natt:</b> vi läste 51 nyheter, registerposter och flöden om dina sex bolag. Tre saker var viktiga för dig, och dem har du just läst.</p>`;
+  if(i===5)return`
     <h2 class="uh">Riksbanken lämnar räntebesked 09:30</h2>
     <p class="ul">De flesta räknar med oförändrad ränta. Blir det en överraskning påverkar det hela börsen.</p>
-    <div class="uitem"><span class="ud" style="background:var(--gold-b)"></span><div><b>För dig</b> <span>· Telvio har högst skuld av dina bolag och är mest känsligt. Norlux och Almi påverkas knappt.</span></div></div>
-    <div class="uitem"><span class="ud" style="background:var(--line2)"></span><div><b>Kavex Q3 kl 08:00</b> <span>· vi läser den åt dig.</span></div></div>
-    <div class="ufoot"><button class="btn" onclick="goBP(6)">Vidare ${ic('arrow','sm')}</button></div>`};
-  if(i===6)return{k:'Sida 7 · Upptäckten · från Spaningen',r:'valbar · på/av',h:`
+    <div class="uitem"><span class="ud" style="background:var(--gold)"></span><div><b>För dig</b> <span>· Telvio har högst skuld av dina bolag och är mest känsligt. Norlux och Almi påverkas knappt.</span></div></div>
+    <div class="uitem"><span class="ud" style="background:var(--line2)"></span><div><b>Kavex Q3 kl 08:00</b> <span>· vi läser den åt dig.</span></div></div>`;
+  if(i===6)return`
     <h2 class="uh">Två aktier utanför din portfölj rör på sig</h2>
     <p class="ul">Spaningen bevakar hela marknaden och fångar aktier som rör sig. Se dem som uppslag att granska. Börja alltid med att låta oss leta motargument, och köp i så fall lite, med tydliga gränser.</p>
     <div class="spx"><div class="sh"><b>Nordfiber</b><span class="tk3">NFIB · industri · fiktivt exempel</span></div>
@@ -941,27 +966,28 @@ function bpage(i){
     <div class="spx"><div class="sh"><b>Selora</b><span class="tk3">SELO · programvara · fiktivt exempel</span></div>
       <p>Tre insynsköp på två veckor efter ett kursfall. Rapporten kommer om tolv dagar.</p>
       <div class="btnrow"><button class="sbtn" onclick="this.textContent='Vi letar motargument ✓';this.disabled=true">Leta motargument åt mig</button><button class="sbtn" onclick="this.textContent='På bevakningslistan ✓';this.disabled=true">Lägg på bevakningslistan</button></div></div>
-    <p class="unote">Visas ett par gånger i veckan. Kan stängas av i inställningarna.</p>
-    <div class="ufoot"><button class="btn" onclick="goBP(7)">Vidare ${ic('arrow','sm')}</button></div>`};
-  return{k:'Sida 8 · Klart',r:'',h:`
+    <p class="unote">Visas ett par gånger i veckan. Kan stängas av i inställningarna.</p>`;
+  return`
     <h2 class="uh">Du är uppdaterad.</h2>
     <p class="ul">Tre händelser, ett räntebesked och två aktier att titta närmare på om du vill. Ungefär 90 sekunder. Vi läser vidare: nästa brev kommer i morgon 07:30, och passeras en gräns säger vi till direkt.</p>
-    <div class="ufoot"><button class="btn ghost" onclick="view='idag';setNav();render();window.scrollTo(0,0)">Till Dina bolag</button><button class="btn prim" onclick="goBP(0)">Läs om utgåvan</button></div>`};
+    <div class="ufoot"><button class="btn ghost" onclick="view='idag';setNav();render();window.scrollTo(0,0)">Till Dina bolag</button><button class="btn prim" onclick="goBP(0)">Läs om utgåvan</button></div>`;
 }
 function renderBrevet(){
-  const p=bpage(bIdx);
   main.innerHTML=`<div class="masthead">Ägarkollen · av Marginalen<span class="r">Onsdag 2 juli 2026 · 07:30</span></div>
   <div class="eyebrow">God morgon</div><h1 class="big">Ägarbrevet</h1>
   <div class="sub">Morgonens utgåva, sida för sida. Kommer även som mejl. Piltangenterna funkar.</div>
   <div class="utgwrap">
-    <div class="utg"><div class="uk"><span>${p.k}</span><span class="r2">${p.r}</span></div>${p.h}</div>
+    <div class="utg"><div class="uk"><span>Ägarbrevet · onsdag 2 juli</span><span class="r2">07:30 · sida ${bIdx+1} av ${BPN}</span></div>${bpage(bIdx)}
+      ${bIdx<BPN-1?`<div style="margin-top:auto;padding-top:18px"><button class="blad" onclick="goBP(${bIdx+1})">Bläddra →</button></div>`:''}</div>
     <div class="unav">
-      <button class="uarr ${bIdx===0?'off':''}" onclick="goBP(bIdx-1)"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      <button class="uarr ${bIdx===0?'off':''}" onclick="goBP(${bIdx-1})"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
       <div class="udots">${Array.from({length:BPN},(_,i)=>`<i class="${i===bIdx?'on':''}" onclick="goBP(${i})"></i>`).join('')}</div>
-      <button class="uarr ${bIdx===BPN-1?'off':''}" onclick="goBP(bIdx+1)"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      <button class="uarr ${bIdx===BPN-1?'off':''}" onclick="goBP(${bIdx+1})"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
     </div>
+    <div class="ukbd"><kbd>←</kbd> <kbd>→</kbd> för att bläddra</div>
   </div>`;
 }
+
 document.addEventListener('keydown',e=>{if(view!=='brevet')return;if(e.key==='ArrowRight')goBP(bIdx+1);if(e.key==='ArrowLeft')goBP(bIdx-1);});
 
 /* ============ Lägg till bolag (onboarding) ============ */
@@ -1176,6 +1202,10 @@ function ibAnswer(changed){
 }
 document.getElementById('ibov').addEventListener('click',e=>{if(e.target.id==='ibov')document.getElementById('ibov').classList.remove('show');});
 
+const HV=(location.hash||'').slice(1);
+if(['brevet','idag','fraga','havstang','start'].includes(HV))view=HV;
+else if(HV.indexOf('bolag-')===0&&STOCKS[HV.slice(6)]){cur=HV.slice(6);view='stock';}
+setNav();
 applyTheme();render();
 </script>
 </body>
