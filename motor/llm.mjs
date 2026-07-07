@@ -19,7 +19,7 @@ export function nyckelFinns(modellnamn) {
   return m.leverantor === 'openai' ? !!process.env.OPENAI_API_KEY : !!process.env.ANTHROPIC_API_KEY;
 }
 
-export async function anropa(modellnamn, { system, prompt, maxTokens = 4000, temperatur = 0 }) {
+export async function anropa(modellnamn, { system, prompt, maxTokens = 4000, temperatur = 0, json = true }) {
   const m = MODELLER[modellnamn];
   if (!m) throw new Error(`Okänd modell "${modellnamn}". Kända: ${Object.keys(MODELLER).join(', ')}`);
 
@@ -32,8 +32,8 @@ export async function anropa(modellnamn, { system, prompt, maxTokens = 4000, tem
       method: 'POST',
       headers: { 'content-type': 'application/json', authorization: `Bearer ${nyckel}` },
       body: JSON.stringify({
-        model: m.id, temperature: temperatur, max_tokens: maxTokens,
-        response_format: { type: 'json_object' },
+        model: m.id, max_completion_tokens: maxTokens,
+        ...(json ? { response_format: { type: 'json_object' } } : {}),
         messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }]
       })
     });

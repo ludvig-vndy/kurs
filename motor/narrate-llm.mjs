@@ -22,7 +22,7 @@ export async function narreraLLM(ex, c, modellnamn) {
     fakta: ex.fakta, beraknat: c, guidning: ex.guidning || undefined
   };
   const prompt = `Skriv analysen. Underlag (enda tillåtna källan till tal):\n${JSON.stringify(underlag, null, 1)}`;
-  const svar = await anropa(modellnamn, { system: SYSTEM, prompt, maxTokens: 1200 });
+  const svar = await anropa(modellnamn, { system: SYSTEM, prompt, maxTokens: 1200, json: false });
 
   // Grinden: LLM-text släpps aldrig vidare ogranskad.
   const v = verifiera(svar.text, ex, c);

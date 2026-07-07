@@ -66,13 +66,13 @@ Hela logiken är färdig; nycklarna är två miljövariabler (`OPENAI_API_KEY`, 
 
 Nyckeldagen: `$env:OPENAI_API_KEY="sk-..."` och sedan `node motor/eval-llm.mjs --modell gpt-5.4-mini --modell claude-haiku`. Tabellen som kommer ut väljer modell per steg.
 
-### Första skarpa eval-resultatet (2026-07-07, Anthropic-nyckel)
+### Modellvalet: fyra modeller mot samma facit (2026-07-07)
 
-| Modell | Norlux | Lifco | Kallelse | Avtal | Kostnad hela evalen |
-|---|---|---|---|---|---|
-| claude-haiku | 8/8 | 18/18 | 8/8 | 3/3 | $0,024 |
-| claude-sonnet | 8/8 | 18/18 | 8/8 | 3/3 | $0,063 |
+| Modell | Norlux | Lifco | Kallelse | Avtal | Hela evalen | Narration genom grinden |
+|---|---|---|---|---|---|---|
+| gpt-5.4-mini | 8/8 | 18/18 (1 citat-miss) | 8/8 | 3/3 | /usr/bin/bash,015 | PASS 21/21, /usr/bin/bash,002 |
+| claude-haiku | 8/8 | 18/18 | 8/8 | 3/3 | /usr/bin/bash,024 | PASS 21/21, /usr/bin/bash,003 |
+| claude-sonnet | 8/8 | 18/18 | 8/8 | 3/3 | /usr/bin/bash,063 | ej testad |
+| gpt-5.5 | 8/8 | 18/18 | 8/8 | 3/3 | /usr/bin/bash,117 | ej testad |
 
-Haikus enda miss i första körningen var en teckenkonvention (valutaeffekt -3,5 mot facits 3,5), åtgärdad genom skarpare fältbeskrivning, inte en hallucination. Slutsats: billigaste Claude-modellen klarar extraktionen perfekt på alla fyra dokumenttyperna.
-
-`run-llm.mjs`: hela pipelinen med LLM som narratör. Första körningen: Haiku skrev klarspråksanalysen, grinden spårade alla 21 tal till källa, kostnad $0,0034 per analys. Modellen skriver, koden räknar, grinden granskar: arkitekturen håller även med riktig LLM.
+Alla fyra modeller extraherar felfritt på alla fyra dokumenttyperna. Skillnaderna: gpt-5.4-mini är billigast och snabbast men tappade ett källcitat på Lifco (värdet rätt, citatet saknades; i produktion blockerande). claude-haiku levererade samtliga citat. Toppmodellerna ger ingen mätbar kvalitetsvinst för extraktion, bara 3 till 8 gånger högre pris. Arbetshypotes tills fler dokument testats: claude-haiku för extraktion (citatdisciplinen), gpt-5.4-mini eller haiku för narration, nano-klass för klassificering. Två tidiga fynd på vägen: Haikus enda första-miss var en tvetydig fältbeskrivning (teckenkonvention, skärpt), och OpenAI:s nya modeller kräver max_completion_tokens i stället för max_tokens.
