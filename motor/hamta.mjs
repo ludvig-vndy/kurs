@@ -27,12 +27,22 @@ export async function hamta(url, namn) {
   const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha; dokumenthamtning for intern analys)' } });
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
   const typ = res.headers.get('content-type') || '';
-  if (typ.includes('pdf')) throw new Error(`${url} är PDF. PDF-till-text är nästa byggsteg; hämta HTML-versionen om den finns.`);
-  const text = stadaHtml(await res.text());
   mkdirSync(p('./in'), { recursive: true });
+
+  if (typ.includes('pdf') || url.toLowerCase().endsWith('.pdf')) {
+    const buf = Buffer.from(await res.arrayBuffer());
+    const fil = p(`./in/${namn}.pdf`);
+    writeFileSync(fil, buf);
+    return { fil, typ: 'pdf', byte: buf.length };
+  }
+
+  const html = await res.text();
+  // PDF-bilagor i pressmeddelandet (rapporter ligger ofta som storage.mfn.se-länkar).
+  const pdfLankar = [...new Set([...html.matchAll(/https:\/\/storage\.mfn\.se\/[^"'\s)]+\.pdf/gi)].map(m => m[0]))];
+  const text = stadaHtml(html);
   const fil = p(`./in/${namn}.txt`);
   writeFileSync(fil, text, 'utf8');
-  return { fil, tecken: text.length };
+  return { fil, typ: 'text', tecken: text.length, pdfLankar };
 }
 
 // CLI

@@ -59,7 +59,18 @@ for (const bolag of konf.bolag) {
         const k = r.klassningar[0] || {};
         post.klass = k.klass; post.bevis = k.bevis; totKostnad += r.kostnad_usd;
       } else if (FALT[typ]) {
-        const r = await extraheraLLM(text, FALT[typ], MODELL);
+        // Rapporter: PM-sammanfattningen saknar ofta fält som bara står i rapport-
+        // PDF:en. Finns en PDF-bilaga läses den i stället (Claude läser PDF direkt).
+        let pdfBase64 = null;
+        if (typ === 'rapport' && h.pdfLankar && h.pdfLankar.length) {
+          try {
+            const hp = await hamta(h.pdfLankar[0], namn + '-bilaga');
+            pdfBase64 = readFileSync(hp.fil).toString('base64');
+            post.pdf_url = h.pdfLankar[0];
+            console.log(`    (läser rapport-PDF: ${h.pdfLankar[0].split('/').pop()})`);
+          } catch (e) { console.log(`    (PDF-bilagan kunde inte hämtas: ${e.message.slice(0, 60)})`); }
+        }
+        const r = await extraheraLLM(pdfBase64 ? null : text, FALT[typ], MODELL, { pdfBase64 });
         post.fakta = r.fakta; post.kallor = r.kallor; post.anmarkningar = r.fel; totKostnad += r.kostnad_usd;
       }
       console.log(`  + ${typ.padEnd(9)} ${post.rubrik.slice(0, 70)}`);

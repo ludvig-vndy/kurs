@@ -19,9 +19,10 @@ export function nyckelFinns(modellnamn) {
   return m.leverantor === 'openai' ? !!process.env.OPENAI_API_KEY : !!process.env.ANTHROPIC_API_KEY;
 }
 
-export async function anropa(modellnamn, { system, prompt, maxTokens = 4000, temperatur = 0, json = true }) {
+export async function anropa(modellnamn, { system, prompt, maxTokens = 4000, temperatur = 0, json = true, pdfBase64 = null }) {
   const m = MODELLER[modellnamn];
   if (!m) throw new Error(`Okänd modell "${modellnamn}". Kända: ${Object.keys(MODELLER).join(', ')}`);
+  if (pdfBase64 && m.leverantor !== 'anthropic') throw new Error('PDF-läsning är kopplad via Anthropic-dokumentblock i v0. Använd en claude-modell.');
 
   let text, tokIn, tokUt;
 
@@ -49,7 +50,12 @@ export async function anropa(modellnamn, { system, prompt, maxTokens = 4000, tem
       headers: { 'content-type': 'application/json', 'x-api-key': nyckel, 'anthropic-version': '2023-06-01' },
       body: JSON.stringify({
         model: m.id, max_tokens: maxTokens, temperature: temperatur,
-        system, messages: [{ role: 'user', content: prompt }]
+        system, messages: [{
+          role: 'user',
+          content: pdfBase64
+            ? [{ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } }, { type: 'text', text: prompt }]
+            : prompt
+        }]
       })
     });
     if (!res.ok) throw new Error(`Anthropic ${res.status}: ${(await res.text()).slice(0, 300)}`);

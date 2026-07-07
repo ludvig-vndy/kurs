@@ -16,11 +16,13 @@ Regler, absoluta:
 6. Svara med ENDAST ett JSON-objekt, inget annat, på formen:
 {"fakta": {"<falt_id>": {"nu": <tal>, "fjol": <tal eller utelämnat>, "enhet": "<enhet>"}}, "kallor": {"<falt_id>": {"citat": "<ordagrann rad>", "sida": <tal eller utelämnat>}}}`;
 
-export async function extraheraLLM(text, faltlista, modellnamn) {
+export async function extraheraLLM(text, faltlista, modellnamn, { pdfBase64 = null } = {}) {
   const falt = faltlista.map(f => `- ${f.id}: ${f.beskrivning}${f.enhet ? ` (enhet: ${f.enhet})` : ''}`).join('\n');
-  const prompt = `Fält att extrahera:\n${falt}\n\nDokument:\n"""\n${text}\n"""`;
+  const prompt = pdfBase64
+    ? `Fält att extrahera ur den bifogade PDF:en:\n${falt}`
+    : `Fält att extrahera:\n${falt}\n\nDokument:\n"""\n${text}\n"""`;
 
-  const svar = await anropa(modellnamn, { system: SYSTEM, prompt, maxTokens: 4000 });
+  const svar = await anropa(modellnamn, { system: SYSTEM, prompt, maxTokens: 4000, pdfBase64 });
   const rå = tolkaJson(svar.text);
 
   // Validera och normalisera mot fältlistan: okända fält kastas, fel typ ger fel.

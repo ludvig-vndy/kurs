@@ -90,3 +90,7 @@ Schemaläggning på Windows: sätt först nyckeln som användarvariabel (kör sj
 schtasks /create /tn "AgarkollenNatt" /sc daily /st 06:30 /tr "cmd /c cd /d C:\dev\kurs && node motor\natt.mjs >> motor\out\natt.log 2>&1"
 ```
 Nya bolag: lägg till en rad i bolag.json med id, namn och MFN-flödets URL. Kvar till beta: mejlutskicket av brevet, PDF-till-text för fullständiga rapporter, och per-bolags-facit för kontinuerlig eval.
+
+## PDF-läsningen (2026-07-08)
+
+Claude läser PDF:er direkt via dokumentblock i API-anropet, ingen pdftotext och inga nya beroenden. `hamta.mjs` sparar PDF:er binärt och plockar dessutom ut PDF-bilagelänkar (storage.mfn.se) ur pressmeddelanden; nattjobbet läser automatiskt rapport-PDF:en i stället för PM-sammanfattningen när en bilaga finns. Skarpt bevis: Lifcos riktiga bokslutsrapport 2025 (engelsk PDF, 674 kB) genom extraktionen gav 13 av 13 fält rätt mot den användarverifierade fallkällan, med ordagranna citat, för $0,057. `kor-dokument.mjs --facit <fil>` rättar automatiskt mot facit.

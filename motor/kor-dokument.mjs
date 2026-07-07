@@ -7,7 +7,7 @@
 
 import { readFileSync } from 'fs';
 import { extraheraLLM, klassificeraAvtalLLM } from './extract-llm.mjs';
-import { FALT } from './faltlistor.mjs';
+import { FALT, FALT_LIFCO } from './faltlistor.mjs';
 
 // Fältlistorna delas med nattjobbet.
 
@@ -18,7 +18,9 @@ const mi = args.indexOf('--modell');
 const modell = mi > -1 ? args[mi + 1] : 'claude-haiku';
 if (!typ || !fil) { console.error('Användning: node motor/kor-dokument.mjs --typ <rapport|kallelse|emission|avtal> --fil <sökväg>'); process.exit(1); }
 
-const text = readFileSync(fil, 'utf8');
+const arPdf = fil.toLowerCase().endsWith('.pdf');
+const text = arPdf ? null : readFileSync(fil, 'utf8');
+const pdfBase64 = arPdf ? readFileSync(fil).toString('base64') : null;
 console.log(`\n=== RIKTIGT DOKUMENT · ${fil.split(/[\\/]/).pop()} · typ: ${typ} · modell: ${modell} ===`);
 
 if (typ === 'avtal') {
@@ -29,14 +31,29 @@ if (typ === 'avtal') {
   }
   console.log(`  kostnad: $${r.kostnad_usd.toFixed(4)}`);
 } else {
-  const r = await extraheraLLM(text, FALT[typ], modell);
+  const falt = typ === 'lifco' ? FALT_LIFCO : FALT[typ];
+  const r = await extraheraLLM(text, falt, modell, { pdfBase64 });
   const n = Object.keys(r.fakta).length;
-  console.log(`  ${n} av ${FALT[typ].length} fält funna (frånvaro = fältet står inte i dokumentet):\n`);
+  console.log(`  ${n} av ${falt.length} fält funna (frånvaro = fältet står inte i dokumentet):\n`);
   for (const [id, f] of Object.entries(r.fakta)) {
     const k = r.kallor[id];
     console.log(`  ${id.padEnd(28)} ${String(f.nu).padStart(12)}${f.fjol != null ? ` (jmf ${f.fjol})` : ''} ${f.enhet}`);
     console.log(`      citat: "${(k ? k.citat : 'SAKNAS').slice(0, 110)}"`);
   }
   if (r.fel.length) { console.log(`\n  ANMÄRKNINGAR:`); r.fel.forEach(f => console.log(`   - ${f}`)); }
+  const fi = args.indexOf('--facit');
+  if (fi > -1) {
+    const facit = JSON.parse(readFileSync(args[fi + 1], 'utf8')).fakta;
+    let ok = 0, tot = 0;
+    for (const [id, v] of Object.entries(facit)) {
+      if (!falt.some(x => x.id === id)) continue;
+      tot++;
+      const e = r.fakta[id];
+      if (e && e.nu === v.nu && (v.fjol == null || e.fjol === v.fjol)) ok++;
+      else console.log(`  FACIT-FEL ${id}: fick ${e ? e.nu + '/' + e.fjol : 'inget'}, väntade ${v.nu}/${v.fjol}`);
+    }
+    console.log(`\n  MOT FACIT (verifierad källa): ${ok}/${tot} rätt`);
+    if (ok !== tot) process.exitCode = 1;
+  }
   console.log(`\n  kostnad: $${r.kostnad_usd.toFixed(4)} · ${r.tokens} tokens`);
 }

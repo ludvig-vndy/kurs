@@ -31,6 +31,22 @@ export const FALT = {
   ]
 };
 
+export const FALT_LIFCO = [
+  { id: 'omsattning', beskrivning: 'Omsättning helåret i miljoner SEK, fjolåret i parentesen', enhet: 'Mkr' },
+  { id: 'omsattning_rapporterad_yoy', beskrivning: 'Omsättningens rapporterade tillväxt i procent', enhet: '%' },
+  { id: 'organisk_tillvaxt', beskrivning: 'Organisk tillväxt i procent', enhet: '%' },
+  { id: 'ebita', beskrivning: 'EBITA i miljoner SEK, fjolåret i parentesen', enhet: 'Mkr' },
+  { id: 'ebita_marginal', beskrivning: 'EBITA-marginal i procent, fjolåret i parentesen', enhet: '%' },
+  { id: 'resultat_fore_skatt', beskrivning: 'Resultat före skatt i miljoner SEK', enhet: 'Mkr' },
+  { id: 'nettoresultat', beskrivning: 'Nettoresultat i miljoner SEK', enhet: 'Mkr' },
+  { id: 'vpa', beskrivning: 'Vinst per aktie i SEK', enhet: 'kr' },
+  { id: 'kassaflode_lopande', beskrivning: 'Kassaflöde från löpande verksamhet i miljoner SEK, fjolåret i parentesen', enhet: 'Mkr' },
+  { id: 'nettoskuld', beskrivning: 'Räntebärande nettoskuld i miljoner SEK', enhet: 'Mkr' },
+  { id: 'rantebarande_ns_ebitda', beskrivning: 'Räntebärande nettoskuld genom EBITDA, gånger, fjolåret i parentesen', enhet: 'x' },
+  { id: 'antal_forvarv', beskrivning: 'Antal konsoliderade förvärv under året', enhet: 'st' },
+  { id: 'utdelning', beskrivning: 'Föreslagen utdelning per aktie i SEK', enhet: 'kr' }
+];
+
 // Typbestämning ur MFN-slug/rubrik. 'ovrigt' lagras utan LLM-extraktion.
 export function bestamTyp(slugEllerRubrik) {
   const s = slugEllerRubrik.toLowerCase();
