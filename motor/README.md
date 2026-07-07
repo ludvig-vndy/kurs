@@ -49,3 +49,7 @@ Två saker som v0.1 bevisade:
 ## Kopplingen till planen
 
 Detta är "extraktionsmotorn med noll-hallucinationskrav" ur final boss §5 fas 1 och value proposition-dokumentets "byggs härnäst". Rapportanalysen, Fråga bolaget, löftesliggaren och utspädningsvakten är alla samma motor med olika dokument in.
+
+## Ljudutgåvan v0 (2026-07-07)
+
+`node motor/ljud.mjs` gör Ägarbrevet hörbart: narrationen går genom noll-hallucinationsgrinden (ogranskad text läses aldrig upp), sedan genom uttalsnormaliseraren (`tts-normalize.mjs`: tal blir ord, "1,15 kronor" blir "en krona och femton öre", procenttecken blir ordet procent, kvoter och parenteser blir talspråk; egen facit-svit i `test-normalize.mjs`), och syntetiseras till `motor/out/agarbrevet-norlux.wav` med Windows inbyggda svenska röst (Microsoft Bengt, WinRT). Bengt är en demo-röst; i produktion byts syntessteget mot neural TTS med exakt samma manus, det är därför normaliseringen ligger i vår kod och inte hos rösten. Manuset landar på cirka 90 sekunder, brevets format.
