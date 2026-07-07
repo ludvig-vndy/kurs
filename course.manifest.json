@@ -1,7 +1,7 @@
 {
   "seededFrom": "_MANIFEST.txt (verifierad filuppsättning)",
   "crosscheckedAgainst": "Fundamental_analys_kursstruktur.md",
-  "count": 115,
+  "count": 121,
   "lessons": [
     {
       "lektion": "1.0",
@@ -201,15 +201,15 @@
     },
     {
       "lektion": "10.2",
-      "titel": "De olika typerna av moats"
+      "titel": "De olika typerna av konkurrensfördelar"
     },
     {
       "lektion": "10.3",
-      "titel": "Att bedöma en moats styrka och hållbarhet"
+      "titel": "Att bedöma en vallgravs styrka och hållbarhet"
     },
     {
       "lektion": "10.4",
-      "titel": "Moats i siffrorna"
+      "titel": "Vallgraven i siffrorna"
     },
     {
       "lektion": "10.5",
@@ -462,6 +462,30 @@
     {
       "lektion": "22.2",
       "titel": "Svensk praktik: konton, listor och skatt"
+    },
+    {
+      "lektion": "23.1",
+      "titel": "Casetrappan: var på resan står bolaget?"
+    },
+    {
+      "lektion": "23.2",
+      "titel": "Avtalsspråket: order, ramavtal och avsiktsförklaringar"
+    },
+    {
+      "lektion": "23.3",
+      "titel": "Kallelsen: bemyndiganden, konvertibler och din andel"
+    },
+    {
+      "lektion": "23.4",
+      "titel": "Löftesliggaren: ledningens historik som kvalitetsmått"
+    },
+    {
+      "lektion": "23.5",
+      "titel": "Att hålla och att släppa: trappan avgör, inte kursen"
+    },
+    {
+      "lektion": "23.6",
+      "titel": "Syntes: så äger du ett förhoppningsbolag"
     }
   ]
 }

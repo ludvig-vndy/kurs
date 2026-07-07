@@ -10,10 +10,10 @@ Allt som händer i dina bolag: läst, sorterat och sammanfattat åt dig varje mo
 ---
 
 ## Skolan: Marginalen · live
-- **Kursen:** 115 lektioner + 51 interaktiva Fokus-lektioner, från "vad är en aktie" till multibagger-analys. Kapitel 1 gratis som smakprov.
+- **Kursen:** 121 lektioner + 51 interaktiva Fokus-lektioner, från "vad är en aktie" till multibagger-analys. Kapitel 1 gratis som smakprov.
 - **Quiz, repetition och ordlista**, inbyggt.
 - **Analysverktyget:** checklistor för den som vill göra jobbet själv.
-- **Multibagger-modulen** *(planerad, utbildningens drivare)*: att analysera bolag utan vinst, hur man fångar och håller en multibagger. Värdebolagsanalys finns i tusen böcker; det här finns inte på svenska. Modulen är samtidigt tjänstens manual: casetrappan och avtalsliggaren är samma begrepp som verktyg.
+- **Multibagger-modulen** *(live i textkursen, modul 23)*: att äga bolag utan vinst, hur man fångar och håller en multibagger. Casetrappan, avtalsspråket, kallelseläsningen, löftesliggaren och hålla/släppa-disciplinen. Värdebolagsanalys finns i tusen böcker; det här finns inte på svenska. Modulen är samtidigt tjänstens manual: samma begrepp som verktygen.
 - *Roll i paketet:* utbildningen är det man betalar för; verktygen nedan ingår och är skälet att stanna.
 
 ## Tjänsten: Ägarkollen · mock på /labs

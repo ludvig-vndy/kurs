@@ -27,7 +27,7 @@ Plattform för en svenskspråkig kurs i fundamental aktieanalys. Astro-byggd sta
 
 ```
 src/
-  content/kurs/            115 lektioner i 22 moduler (NN-modulnamn/N.N-lektion.md)
+  content/kurs/            121 lektioner i 23 moduler (NN-modulnamn/N.N-lektion.md)
   content.config.ts        Zod-schema för lektioner (frontmatter + quiz)
   lib/course.ts            ordning, träd, grannar, lästid, modul-gating
   pages/kurs/[...slug].astro  deck-spelaren (en lektion -> steg/slides)
@@ -61,7 +61,7 @@ Deck-UI med stegnavigering, lösenordsgrind, quiz med %-resultat, localStorage-p
 
 ### Innehållet (klar) — B+ till A+
 Hela omskrivningsplanen (`docs/superpowers/plans/2026-06-18-kurs-bplus-till-aplus.md`) körd: 103 lektioner omskrivna och granskade (varje modul godkänd), capstone ombyggd, ny content (index, WACC, sektor, praktik, Lifco-case), quiz på alla 95 standardlektioner (~379 frågor totalt). Em-dashes och en-dashes borttagna ur allt kursmaterial. Alla grindar gröna.
-- **115 lektioner, 22 moduler.** Flaggskeppscase: `src/content/kurs/20-fallstudie-lifco/` (källa: `docs/case-sources/fall-lifco-2025.md`).
+- **121 lektioner, 23 moduler** (modul 23, Att äga ett förhoppningsbolag, tillagd 2026-07-07: casetrappan, avtalsspråket, kallelsen/utspädningen, löftesliggaren, hålla/släppa). Flaggskeppscase: `src/content/kurs/20-fallstudie-lifco/` (källa: `docs/case-sources/fall-lifco-2025.md`).
 - Kanoniska formler: `src/content/kurs/00-referens/formelbilaga.md` (format: referens).
 
 ### Design (live): "Marginalen" broadsheet
@@ -70,7 +70,7 @@ Sajten heter **Marginalen** och kör en broadsheet-look (Fraunces/Spectral/IBM P
 ### Fokus-spelaren / JSON-stegformat (innehåll klart — 51 lektioner, hela kursen)
 Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-fokus-full-course.md`. Mål: transformera verifierade lektioner till ett stegbaserat JSON-format för en "Fokus"-lektionsspelare (steg: intro, reading, concept, dataviz, quiz; inline-datadriven grafik).
 
-**Arkitektur (beslutad):** källan (de 115 .md) förblir sanningen; spelaren är en härledd leverans i `content/fundamental-aktieanalys/`, en JSON-fil per lektion + `course.json` (kapitelträd). Spelaren laddar JSON och renderar steg utifrån `typ`-fältet. Numreringen är spelarens egen (skiljer sig från huvudkursens); de ursprungliga 11 omnumrerades in i kursordningen.
+**Arkitektur (beslutad):** källan (de 121 .md) förblir sanningen; spelaren är en härledd leverans i `content/fundamental-aktieanalys/`, en JSON-fil per lektion + `course.json` (kapitelträd). Spelaren laddar JSON och renderar steg utifrån `typ`-fältet. Numreringen är spelarens egen (skiljer sig från huvudkursens); de ursprungliga 11 omnumrerades in i kursordningen.
 
 **Designmål / facit för renderaren:** `design_handoff_aktieanalys/` (Claude design-agentens high-fidelity-handoff). `Aktieanalys - Lektion (Fokus).dc.html` + `README.md` är spec för utseende och beteende (DC-format, läs som spec, inte kod). Hjältevisualer: `rutnat` (ägar-grid) och `linjediagram` (pris/värde). Quiz-tröskel 80%. Dubbla teman (mörkt "fokus" + ljust "ed") via `localStorage['agarboken-theme']`.
 
@@ -88,6 +88,6 @@ Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-
 ---
 
 ## Att notera (ej åtgärdas om inte ombedd)
-- Ingen konsolideringspass kördes; kursen växte till ~115 lektioner / 22 moduler.
+- Ingen konsolideringspass kördes; kursen växte till ~121 lektioner / 23 moduler.
 - Användarens egen `Ägarboken - Startsida (standalone).html` innehåller fortfarande några em-dashes (lämnat till användaren).
 - `KURS-EXPORT.md` och `src/content/kurs.zip` är artefakter, inte källa.

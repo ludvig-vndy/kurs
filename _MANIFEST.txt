@@ -49,9 +49,9 @@
 9.4	ROE och ROA och deras fallgropar	src/content/kurs/09-roic-och-kapitalavkastning/9.4-roe-och-roa-och-deras-fallgropar.md
 9.5	Syntes: så hänger Modul 9 ihop	src/content/kurs/09-roic-och-kapitalavkastning/9.5-syntes-sa-hanger-modul-9-ihop.md
 10.1	Vad en moat är	src/content/kurs/10-konkurrensfordelar-moats/10.1-vad-en-moat-ar.md
-10.2	De olika typerna av moats	src/content/kurs/10-konkurrensfordelar-moats/10.2-de-olika-typerna-av-moats.md
-10.3	Att bedöma en moats styrka och hållbarhet	src/content/kurs/10-konkurrensfordelar-moats/10.3-att-bedoma-en-moats-styrka-och-hallbarhet.md
-10.4	Moats i siffrorna	src/content/kurs/10-konkurrensfordelar-moats/10.4-moats-i-siffrorna.md
+10.2	De olika typerna av konkurrensfördelar	src/content/kurs/10-konkurrensfordelar-moats/10.2-de-olika-typerna-av-moats.md
+10.3	Att bedöma en vallgravs styrka och hållbarhet	src/content/kurs/10-konkurrensfordelar-moats/10.3-att-bedoma-en-moats-styrka-och-hallbarhet.md
+10.4	Vallgraven i siffrorna	src/content/kurs/10-konkurrensfordelar-moats/10.4-moats-i-siffrorna.md
 10.5	Syntes: så hänger Modul 10 ihop	src/content/kurs/10-konkurrensfordelar-moats/10.5-syntes-sa-hanger-modul-10-ihop.md
 11.1	Att bedöma en ledning	src/content/kurs/11-ledning-och-kapitalallokering/11.1-att-bedoma-en-ledning.md
 11.2	Kapitalallokering som disciplin	src/content/kurs/11-ledning-och-kapitalallokering/11.2-kapitalallokering-som-disciplin.md
@@ -115,3 +115,9 @@
 21.4	Råvaru- och cykliska bolag	src/content/kurs/21-sektoranalys/21.4-ravaru-och-cykliska-bolag.md
 22.1	Källor och verktyg	src/content/kurs/22-praktik/22.1-kallor-och-verktyg.md
 22.2	Svensk praktik: konton, listor och skatt	src/content/kurs/22-praktik/22.2-svensk-praktik-konton-listor-skatt.md
+23.1	Casetrappan: var på resan står bolaget?	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.1-casetrappan.md
+23.2	Avtalsspråket: order, ramavtal och avsiktsförklaringar	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.2-avtalsspraket.md
+23.3	Kallelsen: bemyndiganden, konvertibler och din andel	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.3-kallelsen-och-utspadningen.md
+23.4	Löftesliggaren: ledningens historik som kvalitetsmått	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.4-loftesliggaren.md
+23.5	Att hålla och att släppa: trappan avgör, inte kursen	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.5-halla-och-slappa.md
+23.6	Syntes: så äger du ett förhoppningsbolag	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.6-syntes-sa-ager-du-ett-forhoppningsbolag.md
