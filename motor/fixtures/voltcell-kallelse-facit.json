@@ -1,0 +1,17 @@
+{
+  "kommentar": "Facit för den fiktiva Voltcell-kallelsen. Manuellt avläst ur voltcell-kallelse-2026.txt.",
+  "fakta": {
+    "antal_aktier": {"nu": 85400000},
+    "bemyndigande_aktier": {"nu": 17080000},
+    "bemyndigande_andel_uppgiven": {"nu": 20},
+    "konvertibel_nominellt": {"nu": 120000000},
+    "konverteringskurs": {"nu": 18.5},
+    "konvertibel_aktier_uppgivna": {"nu": 6486486},
+    "optioner_antal": {"nu": 2500000},
+    "teckningskurs": {"nu": 21},
+    "stamma_dag": {"nu": 28},
+    "stamma_ar": {"nu": 2026},
+    "forfall_dag": {"nu": 31},
+    "forfall_ar": {"nu": 2027}
+  }
+}

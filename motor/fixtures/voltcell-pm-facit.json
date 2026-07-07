@@ -1,0 +1,16 @@
+{
+  "kommentar": "Facit för de fiktiva Voltcell-pressmeddelandena. Klasser och tal manuellt avlästa ur voltcell-pm-2026.txt.",
+  "fakta": {
+    "pm1_ar": {"nu": 2025},
+    "pm2_ar": {"nu": 2026},
+    "pm2_order_varde": {"nu": 4.2},
+    "pm3_ar": {"nu": 2026},
+    "pm3_potential": {"nu": 300},
+    "pm3_potential_ar": {"nu": 5}
+  },
+  "klasser": {
+    "pm1": "avsiktsförklaring",
+    "pm2": "bindande order",
+    "pm3": "ramavtal"
+  }
+}

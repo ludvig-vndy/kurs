@@ -46,10 +46,12 @@ function hittaTal(text) {
   return ut;
 }
 
+// Exakt likhet, med flyttalsepsilon. Ingen avrundningstolerans: v0 släppte igenom
+// ett påhittat "23%" för att verkliga 22,6 avrundade dit. Vill narrationen avrunda
+// ett tal ska avrundningen ske i compute-steget och bli ett eget tillåtet värde.
 function matcha(varde, decimaler, tillatna) {
-  const k = Math.pow(10, decimaler);
   for (const t of tillatna) {
-    if (Math.round(t.v * k) / k === varde) return t;
+    if (Math.abs(t.v - varde) < 1e-9) return t;
   }
   return null;
 }
