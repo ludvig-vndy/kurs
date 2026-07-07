@@ -39,12 +39,16 @@ export async function extraheraLLM(text, faltlista, modellnamn, { pdfBase64 = nu
   return { fakta, kallor, fel, kostnad_usd: svar.kostnad_usd, tokens: svar.tokens_in + svar.tokens_ut };
 }
 
-const SYSTEM_KLASS = `Du klassificerar avtalsbesked i svenska pressmeddelanden. Tre klasser finns, inga andra:
-- "bindande order": bestämt belopp och leverans som ska ske
-- "ramavtal": villkor för framtida beställningar, inga garanterade volymer
-- "avsiktsförklaring": icke-bindande viljeyttring om att förhandla
+const SYSTEM_KLASS = `Du klassificerar avtalsbesked i pressmeddelanden (svenska eller engelska). Tre klasser finns, inga andra:
+- "bindande order": ett köpeåtagande med angivet ordervärde ELLER tydlig beställning med leverans (order, purchase, call-off order/avrop under ramavtal räknas hit)
+- "ramavtal": villkor för framtida beställningar utan garanterade volymer (framework agreement)
+- "avsiktsförklaring": icke-bindande viljeyttring (LOI, MoU, avsikt att förhandla, samarbete utan köpeåtagande)
 
-Regler: klassa på AVTALSTEXTEN, aldrig på rubriken. Ange som "bevis" den ordagranna mening som avgör klassningen.
+Hårda regler:
+1. Klassa på AVTALSTEXTEN, aldrig på rubriken eller tonläget.
+2. "Bindande order" kräver att någon förbinder sig att KÖPA något: ordervärde, beställning eller avrop. Ett undertecknat avtal om att samarbeta, utveckla tillsammans eller demonstrera teknik ("signed an agreement to collaborate", "partnership", "strategiskt samarbete") är INTE en order, det är en avsiktsförklaring om inget köpeåtagande anges.
+3. Saknas både belopp och köpeåtagande: välj den svagare klassen.
+4. Ange som "bevis" den ordagranna mening som avgör klassningen.
 Svara med ENDAST JSON: {"klassningar": [{"id": "<pm_id>", "klass": "<en av de tre>", "bevis": "<ordagrann mening>"}]}`;
 
 export async function klassificeraAvtalLLM(pmLista, modellnamn) {

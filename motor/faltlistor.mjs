@@ -48,11 +48,16 @@ export const FALT_LIFCO = [
 ];
 
 // Typbestämning ur MFN-slug/rubrik. 'ovrigt' lagras utan LLM-extraktion.
+// Ordningen är viktig: brus-mönstren prövas före rapport, annars blir en
+// "inbjudan till presentation av bokslutskommuniké" en rapport.
 export function bestamTyp(slugEllerRubrik) {
   const s = slugEllerRubrik.toLowerCase();
   if (/(kallelse)/.test(s)) return 'kallelse';
+  if (/(inbjudan|invitation|presentation|webcast|videomaterial|kommunike|general-meeting|bolagsstamma|valberedning|nomination|analys|flaggning)/.test(s)) return 'ovrigt';
+  if (/(aterkop|own-shares|buy-back|klimat|sustainability|hallbarhet|utsedd|appointed|head-of|rekryter|tilltrader|lamnar-sin)/.test(s)) return 'ovrigt';
+  if (/(publishes-its-report|publicerar-rapporten|publicerar-arsredovisning|publishes-annual)/.test(s)) return 'ovrigt';
   if (/(emission|foretradesemission|riktad)/.test(s)) return 'emission';
-  if (/(delarsrapport|bokslutskommunike|kvartalsrapport|arsredovisning|interim|year-end|quarterly)/.test(s)) return 'rapport';
-  if (/(kommunike|videomaterial|inbjudan|presentation|valberedning|analys)/.test(s)) return 'ovrigt';
+  if (/(forvarvar|acquires|acquisition)/.test(s)) return 'forvarv';
+  if (/(delarsrapport|bokslutskommunike|kvartalsrapport|arsredovisning|interim|year-end|quarterly|halvarsrapport)/.test(s)) return 'rapport';
   return 'avtal';
 }

@@ -24,17 +24,19 @@ mkdirSync(p('./out/data'), { recursive: true });
 let totKostnad = 0, totNya = 0;
 
 for (const bolag of konf.bolag) {
+  try {
   console.log(`\n=== ${bolag.namn} ===`);
   arkiv[bolag.id] = arkiv[bolag.id] || {};
 
-  // 1. Upptäck: läs flödet, plocka länkar + rubriker.
+  // 1. Upptäck: läs flödet, plocka artikellänkar. Mönstret kräver ett slug-segment
+  // efter entiteten och täcker både /a/<bolag>/<slug> och /<wire>/a/<bolag>/<slug>.
   const feedHtml = await (await fetch(bolag.feed, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } })).text();
   const lankar = [];
-  const re = /href="(\/[a-z]+\/a\/[^"]+|https:\/\/mfn\.se\/[a-z]+\/a\/[^"]+)"/g;
+  const re = /href="((?:https:\/\/mfn\.se)?\/(?:[a-z]+\/)?a\/[a-z0-9-]+\/[^"/]+)"/g;
   let m;
   while ((m = re.exec(feedHtml)) !== null) {
     const url = m[1].startsWith('http') ? m[1] : 'https://mfn.se' + m[1];
-    if (!lankar.includes(url) && !url.endsWith('/a/' + bolag.id)) lankar.push(url);
+    if (!lankar.includes(url)) lankar.push(url);
   }
   const nya = lankar.filter(u => !arkiv[bolag.id][u]).slice(0, bolag.maxNya || 8);
   console.log(`  flödet: ${lankar.length} länkar, ${nya.length} nya att hämta`);
@@ -54,7 +56,7 @@ for (const bolag of konf.bolag) {
       const rubrikRad = text.split('\n').find(r => r.trim().length > 25);
       if (rubrikRad) post.rubrik = rubrikRad.split('>').pop().trim().slice(0, 140);
 
-      if (typ === 'avtal') {
+      if (typ === 'avtal' || typ === 'forvarv') {
         const r = await klassificeraAvtalLLM([{ id: 'pm1', text }], MODELL);
         const k = r.klassningar[0] || {};
         post.klass = k.klass; post.bevis = k.bevis; totKostnad += r.kostnad_usd;
@@ -88,7 +90,19 @@ for (const bolag of konf.bolag) {
   writeFileSync(dataFil, JSON.stringify(data, null, 1));
   writeFileSync(p(`./out/bolag-${bolag.id}.html`), renderBolag(data), 'utf8');
   console.log(`  sida: motor/out/bolag-${bolag.id}.html (${data.dokument.length} dokument totalt)`);
+  } catch (e) {
+    console.log(`  BOLAGSFEL (${bolag.id}): ${e.message.slice(0, 120)} · hoppar vidare`);
+  }
 }
+
+// Indexsidan: en rad per bolag.
+const index = `<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Ägarkollen alpha</title>
+<style>body{font-family:Georgia,serif;background:#F7F4EC;color:#211C17;max-width:560px;margin:40px auto;padding:0 20px}
+a{color:#8A2E26} .m{font-family:monospace;font-size:11px;color:#8A8172}</style></head><body>
+<h1>Ägarkollen · alpha</h1><p class="m">bevakade bolag · genererat ${new Date().toISOString().slice(0, 16).replace('T', ' ')}</p>
+<ul>${konf.bolag.map(b => `<li><a href="bolag-${b.id}.html">${b.namn}</a></li>`).join('')}</ul>
+<p class="m">Maskinläst, mänskligt ogranskad. Aldrig råd.</p></body></html>`;
+writeFileSync(p('./out/index.html'), index, 'utf8');
 
 writeFileSync(arkivFil, JSON.stringify(arkiv, null, 1));
 console.log(`\nKLART: ${totNya} nya dokument · kostnad $${totKostnad.toFixed(4)} · modell ${MODELL}`);

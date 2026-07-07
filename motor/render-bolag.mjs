@@ -1,7 +1,7 @@
 // Renderar en bolagssida ur nattjobbets data-JSON: husets formspråk, varje
 // faktum med sitt citat, korskontroller räknade i kod, tydlig alpha-märkning.
 
-const RUBRIK = { rapport: 'Rapport', kallelse: 'Kallelse till stämma', emission: 'Emission', avtal: 'Avtal & besked', ovrigt: 'Övrigt' };
+const RUBRIK = { rapport: 'Rapport', kallelse: 'Kallelse till stämma', emission: 'Emission', avtal: 'Avtal & besked', forvarv: 'Förvärv', ovrigt: 'Övrigt' };
 
 function fmt(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace('.', ','); }
 

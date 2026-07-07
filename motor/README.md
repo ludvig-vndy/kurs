@@ -94,3 +94,7 @@ Nya bolag: lägg till en rad i bolag.json med id, namn och MFN-flödets URL. Kva
 ## PDF-läsningen (2026-07-08)
 
 Claude läser PDF:er direkt via dokumentblock i API-anropet, ingen pdftotext och inga nya beroenden. `hamta.mjs` sparar PDF:er binärt och plockar dessutom ut PDF-bilagelänkar (storage.mfn.se) ur pressmeddelanden; nattjobbet läser automatiskt rapport-PDF:en i stället för PM-sammanfattningen när en bilaga finns. Skarpt bevis: Lifcos riktiga bokslutsrapport 2025 (engelsk PDF, 674 kB) genom extraktionen gav 13 av 13 fält rätt mot den användarverifierade fallkällan, med ordagranna citat, för $0,057. `kor-dokument.mjs --facit <fil>` rättar automatiskt mot facit.
+
+## Sex bolag i drift (2026-07-08)
+
+Bevakningslistan täcker nu sex arketyper: Unibap (förhoppningsbolag), Lifco (förvärvare, egen artikel-URL-form på MFN vilket generaliserade länkmönstret), Evolution (högt flöde), Telia (kassako), Sectra (nischbolag med kundavtal), Axfood (defensivt). Verklighetsfynd från första helkörningen, båda åtgärdade: typbestämningen var för generös (återköp, personnyheter och inbjudningar nådde avtalsklassificeraren; brus-mönster prövas nu före rapport, och förvärv fick egen typ) och varje bolag publicerar språkdubbletter (SV+EN), vilket är fas 2-dedupens existensberättigande i förväg. Klassificeraren själv dömde rätt på riktiga avtal: Sectras kundavtal blev bindande order, Telias partnerskap avsiktsförklaring.
