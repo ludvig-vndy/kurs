@@ -20,6 +20,10 @@ function radFakta(post) {
 }
 
 export function renderDagsbrev({ datum, poster, lugna }) {
+  const d = new Date(datum + 'T12:00:00');
+  const veckodag = d.toLocaleDateString('sv-SE', { weekday: 'long' });
+  const datumtext = d.toLocaleDateString('sv-SE', { day: 'numeric', month: 'long' });
+  const nr = Math.max(1, Math.round((d - new Date('2026-07-07T12:00:00')) / 864e5) + 1);
   const s = {
     sek: 'background:#FCFAF4;border:1px solid #E4DDCC;border-radius:10px;padding:16px 18px;margin-bottom:12px',
     et: 'font-family:monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8A2E26;margin:0 0 4px',
@@ -40,7 +44,7 @@ export function renderDagsbrev({ datum, poster, lugna }) {
     <p style="font-family:monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8A8172;border-bottom:2px solid #8A2E26;padding-bottom:6px">Ägarkollen · av Marginalen · alpha</p>
     <div style="height:52px;background:#8A2E26 url('${BILD_BORSHUS}') center 40%/cover;margin:12px 0 0"></div>
     <h1 style="font-weight:700;font-size:26px;color:#211C17;margin:14px 0 4px">Ägarbrevet</h1>
-    <p style="font-size:13px;color:#5C544A;margin:0 0 18px">${datum} · ${poster.length} ${poster.length === 1 ? 'sak' : 'saker'} i dina bolag i natt. Varje siffra bär citat ur källdokumentet.</p>
+    <p style="font-size:13px;color:#5C544A;margin:0 0 18px">№ ${nr} · ${veckodag} ${datumtext} · ${poster.length} ${poster.length === 1 ? 'sak' : 'saker'} i dina bolag i natt. Varje siffra bär citat ur källdokumentet.</p>
     ${sektioner || `<div style="${s.sek}"><p style="${s.p}">Inget nytt i något bevakat bolag. Det är ett besked, inte ett fel.</p></div>`}
     ${lugna.length ? `<div style="${s.sek};border-top:2px solid #2E6B4C"><p style="${s.et}">Lugnt</p><p style="${s.p}">Inget nytt i: ${lugna.join(', ')}.</p></div>` : ''}
     <p style="font-family:monospace;font-size:10px;color:#8A8172;text-align:center;margin-top:20px;line-height:1.7">Maskinläst, mänskligt ogranskad · aldrig råd · Ägarkollen är arbetsnamn</p>

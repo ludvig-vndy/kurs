@@ -56,6 +56,7 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
     <section class="hero">
       <div>
         <div class="kicker" data-greeting>God dag</div>
+        <div class="datumrad" data-datumrad></div>
         <h1 class="greeting">Marknaden rör sig.<br />Lär dig läsa den <em>som en ägare.</em></h1>
         <p class="lede">Från din första aktie till ett färdigt investeringscase, ett steg i taget, på riktig data.</p>
         <div class="stats">
@@ -179,6 +180,7 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
   .feature:hover .cta { background: var(--oxblood); border-color: var(--oxblood); color: var(--paper); transform: translateX(4px); }
 
   /* Repetition card: surfaces the SRS miss-queue, only when non-empty. */
+  .datumrad { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: -8px 0 14px; }
   .agarkollen-teaser { display: block; margin-top: 26px; padding: 16px 2px 18px; border-top: 2px solid var(--rule-strong); border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; }
   .agarkollen-teaser:hover .at-text { color: var(--oxblood); }
   .at-kicker { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 6px; }
@@ -322,4 +324,13 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
   window.addEventListener(META_EVENT, paint);
   window.addEventListener(FOKUS_EVENT, paint);
   window.addEventListener(SRS_EVENT, paint);
+</script>
+
+<script data-datumrad-script>
+  document.addEventListener('astro:page-load', () => {
+    const el = document.querySelector('[data-datumrad]');
+    if (!el) return;
+    const t = new Date().toLocaleDateString('sv-SE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    el.textContent = t.charAt(0).toUpperCase() + t.slice(1);
+  });
 </script>

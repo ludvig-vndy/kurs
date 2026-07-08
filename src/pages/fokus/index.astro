@@ -57,6 +57,7 @@ const delar: Del[] = [
   { n: 5, titel: 'Fördjupning', sub: 'Att äga bolagen utan vinst', kapitel: [17] },
 ];
 
+const ROM = ['', 'I', 'II', 'III', 'IV', 'V'];
 const kapitelByNr = new Map(kurs.kapitel.map((k) => [k.nummer, k]));
 
 // Per-chapter derived data.
@@ -88,7 +89,7 @@ const totalLessons = kurs.kapitel.reduce((sum, k) => sum + k.lektioner.length, 0
       {delar.map((del) => (
         <Fragment>
           <div class="part">
-            <span class="n">Del {del.n}</span>
+            <span class="n">Del {ROM[del.n] || del.n}</span>
             <span class="t">{del.titel}</span>
             <span class="line"></span>
             <span class="sub">{del.sub}</span>

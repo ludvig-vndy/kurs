@@ -46,6 +46,11 @@ const lessons = course.kapitel.flatMap((k) =>
       />
     </div>
 
+    <div class="azrad">
+      <nav class="azreg" data-azreg aria-label="Hoppa till bokstav"></nav>
+      <button class="slumpa" data-slumpa type="button">Slumpa ett begrepp →</button>
+    </div>
+
     <!-- Begrepp -->
     <section data-section="begrepp">
       <div class="part"><span class="n">Begrepp</span><span class="line"></span><span class="sub" data-count-terms>{terms.length} ord</span></div>
@@ -104,6 +109,13 @@ const lessons = course.kapitel.flatMap((k) =>
   .lek:hover .lek__title { color: var(--oxblood); }
   .lek__chap { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); text-align: right; }
 
+  .azrad { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin: 14px 0 4px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .azreg { display: flex; flex-wrap: wrap; gap: 2px; }
+  .azreg button { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; background: none; border: none; color: var(--muted); padding: 6px 7px; cursor: pointer; min-width: 28px; min-height: 32px; }
+  .azreg button:hover { color: var(--oxblood); }
+  .slumpa { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; background: none; border: none; color: var(--oxblood); cursor: pointer; padding: 8px 0; }
+  .slumpa:hover { text-decoration: underline; }
+  .term.blink { outline: 2px solid var(--oxblood); outline-offset: 6px; }
   .noresult { margin: 30px 0 60px; font-family: var(--serif); font-style: italic; color: var(--ink-soft); }
   [data-section][hidden], .term[hidden], .lek[hidden], .noresult[hidden] { display: none; }
 
@@ -129,6 +141,16 @@ const lessons = course.kapitel.flatMap((k) =>
     const noResult = document.querySelector<HTMLElement>('[data-noresult]');
     const noResultQ = document.querySelector<HTMLElement>('[data-noresult-q]');
 
+    function markera(el: HTMLElement, sel: string) {
+      const t = el.querySelector<HTMLElement>(sel);
+      if (!t) return;
+      if (t.dataset.orig == null) t.dataset.orig = t.innerHTML;
+      const q = input!.value.trim();
+      if (!q) { if (t.innerHTML !== t.dataset.orig) t.innerHTML = t.dataset.orig; return; }
+      const re = new RegExp('(' + q.replace(/[.*+?^${}()|[]\]/g, '\$&') + ')', 'ig');
+      t.innerHTML = t.dataset.orig.replace(re, '<mark class="hl">$1</mark>');
+    }
+
     function apply() {
       const q = input!.value.trim().toLowerCase();
 
@@ -136,7 +158,7 @@ const lessons = course.kapitel.flatMap((k) =>
       termEls.forEach((el) => {
         const hit = !q || (el.dataset.term || '').includes(q) || (el.dataset.def || '').includes(q);
         el.hidden = !hit;
-        if (hit) tShown++;
+        if (hit) { tShown++; markera(el, '.term__name'); markera(el, '.term__def'); }
       });
       let lShown = 0;
       lekEls.forEach((el) => {
@@ -155,6 +177,34 @@ const lessons = course.kapitel.flatMap((k) =>
 
     input.addEventListener('input', apply);
     apply();
+
+    const mjuk = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    const az = document.querySelector<HTMLElement>('[data-azreg]');
+    if (az && !az.dataset.byggd) {
+      az.dataset.byggd = '1';
+      const bokstaver = [...new Set(termEls.map((el) => ((el.dataset.term || '')[0] || '').toUpperCase()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'sv'));
+      for (const b of bokstaver) {
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.textContent = b;
+        btn.addEventListener('click', () => {
+          const mal = termEls.find((el) => !el.hidden && (el.dataset.term || '').toUpperCase().startsWith(b));
+          if (mal) mal.scrollIntoView({ behavior: mjuk as ScrollBehavior, block: 'center' });
+        });
+        az.appendChild(btn);
+      }
+    }
+    const slump = document.querySelector<HTMLElement>('[data-slumpa]');
+    if (slump && !slump.dataset.wired) {
+      slump.dataset.wired = '1';
+      slump.addEventListener('click', () => {
+        const synliga = termEls.filter((el) => !el.hidden);
+        const val = synliga[Math.floor(Math.random() * synliga.length)];
+        if (!val) return;
+        val.scrollIntoView({ behavior: mjuk as ScrollBehavior, block: 'center' });
+        val.classList.add('blink');
+        setTimeout(() => val.classList.remove('blink'), 1600);
+      });
+    }
   }
   document.addEventListener('astro:page-load', setupOrdlista);
 </script>

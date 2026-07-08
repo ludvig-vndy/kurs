@@ -78,13 +78,14 @@ table{width:100%;border-collapse:collapse}
 .cit{display:block;color:var(--mut);font-size:11.5px;font-style:italic;padding:1px 0 7px;border-bottom:1px solid var(--line)}
 .grind{font-family:var(--mono);font-size:10.5px;padding:10px 0;border-top:2px solid;margin-bottom:6px}
 .grind.ok{color:var(--pos);border-color:var(--pos)}.grind.fel{color:var(--neg);border-color:var(--neg)}
+.verdiktp::first-line{font-family:var(--disp);font-weight:600;font-size:16.5px;color:var(--ink)}
 .foot{font-family:var(--mono);font-size:10px;color:var(--faint);text-align:center;margin-top:20px;line-height:1.8}</style></head>
 <body><div class="wrap">
 ${masthead('rapportkollen · alpha')}<div class="mast" style="border:none;padding-top:6px"><span>Rapportkollen</span><span>${new Date().toISOString().slice(0, 10)}</span></div>
 <h1>Rapporten, läst och grindad</h1>
 <p class="sub">Källa: ${kallaBeskrivning}</p>
 <div class="grind ${v.ok ? 'ok' : 'fel'}">${v.ok ? `✓ GRINDEN: alla ${v.resultat.length} tal i analysen spårade till extraherad fakta eller beräkning` : `✗ GRINDEN: ${v.omatchade.length} tal utan källa, analysen är blockerad`}</div>
-${v.ok ? `<div class="sek"><div class="et">Analys · AI-skriven, grindad</div><p>${n.text}</p></div>` : `<div class="sek"><div class="et">Blockerad</div><p>Analysen innehöll tal utan källa och visas inte. Siffrorna nedan är extraherade med citat och kan läsas direkt.</p></div>`}
+${v.ok ? `<div class="sek"><div class="et">Analys · AI-skriven, grindad</div><p class="verdiktp">${n.text}</p></div>` : `<div class="sek"><div class="et">Blockerad</div><p>Analysen innehöll tal utan källa och visas inte. Siffrorna nedan är extraherade med citat och kan läsas direkt.</p></div>`}
 <div class="sek"><div class="et">Siffrorna, med citat ur källan</div><table>${rader}</table>
 ${ex.fel.length ? `<p style="margin-top:10px;font-size:11px">Anmärkningar: ${ex.fel.join(' · ')}</p>` : ''}</div>
 <p style="font-size:11.5px"><a style="color:var(--ox)" href="${LEKTIONSLANK.rapport.url}">${LEKTIONSLANK.rapport.text} →</a></p>

@@ -60,18 +60,20 @@ export async function getStaticPaths() {
         nextHref: next ? `/fokus/${next.lektion}` : null,
         nextLektion: next ? next.lektion : null,
         chapterIds: chapterIdsMap[lesson.kapitel] ?? [],
+        kapitelTitel: (course.kapitel.find((k) => k.nummer === lesson.kapitel) || { titel: '' }).titel,
         courseIds,
       },
     };
   });
 }
 
-const { lesson, prevHref, nextHref, nextLektion, chapterIds, courseIds } = Astro.props as {
+const { lesson, prevHref, nextHref, nextLektion, chapterIds, courseIds, kapitelTitel } = Astro.props as {
   lesson: LessonJson;
   prevHref: string | null;
   nextHref: string | null;
   nextLektion: string | null;
   chapterIds: string[];
+  kapitelTitel: string;
   courseIds: string[];
 };
 
@@ -162,7 +164,7 @@ function visualEl(v: VisualObj) {
           <nav class="crumb" aria-label="Brodsmulor">
             <span class="mk" aria-hidden="true"></span>
             <a href="/hem">Hem</a><span class="sep">›</span>
-            <a href={`/fokus/kapitel/${lesson.kapitel}`}>Kapitel {lesson.kapitel}</a><span class="sep">›</span>
+            <a href={`/fokus/kapitel/${lesson.kapitel}`}>Kapitel {lesson.kapitel} · {kapitelTitel}</a><span class="sep">›</span>
             <span class="here">Lektion {lesson.lektion}</span>
           </nav>
           <div class="folio"><b data-fnow>01</b> / <span data-ftot>{String(total).padStart(2, '0')}</span></div>
@@ -193,7 +195,7 @@ function visualEl(v: VisualObj) {
                     {s.kicker && <div class="kicker kicker--intro">{s.kicker}</div>}
                     {s.titel && <h1 class="s-title">{s.titel}</h1>}
                     {s.ingress && <p class="s-ingress">{s.ingress}</p>}
-                    <div class="s-meta">Kapitel {lesson.kapitel} · {total} steg · {lesson.niva}</div>
+                    <div class="s-meta">{kapitelTitel} · {total} steg · {lesson.niva}</div>
                   </div>
                 )}
 
@@ -309,6 +311,7 @@ function visualEl(v: VisualObj) {
         <div class="done-kick">Lektion klar</div>
         <h1 class="done-title">{lesson.titel}</h1>
         <p class="done-sub">Ett steg till i kursen. Bra jobbat.</p>
+        <p class="done-datum" data-done-datum></p>
         <div class="done-stat">
           <div class="c"><div class="v"><span data-done-chap>0</span><span class="su">/{chapterIds.length}</span></div><div class="l">i Kapitel {lesson.kapitel}</div></div>
           <div class="c"><div class="v" style="color:var(--oxblood)" data-done-total>0</div><div class="l">av {courseIds.length} totalt</div></div>
@@ -401,6 +404,7 @@ function visualEl(v: VisualObj) {
   .s-slutsats::before { content: "\27F6  "; color: var(--oxblood); }
   .s-prose { max-width: 60ch; margin: 22px auto 0; }
   .s-prose p { color: var(--ink-soft); margin: 0; }
+  .s-prose > p:first-child::first-letter { font-family: var(--serif); font-weight: 500; font-size: 3.1em; float: left; line-height: .8; padding: 5px 9px 0 0; color: var(--oxblood); }
   .s-prose p + p { margin-top: 1.05em; }
 
   /* ── Quiz gate ── */
@@ -429,6 +433,7 @@ function visualEl(v: VisualObj) {
   .done-in { max-width: 560px; }
   .seal { width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid var(--oxblood); display: grid; place-items: center; margin: 0 auto 26px; }
   .seal::before { content: ""; width: 26px; height: 26px; background: var(--oxblood); -webkit-mask: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); mask: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); }
+  .done-datum { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
   .done-kick { font-family: var(--mono); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 16px; }
   .done-title { font-family: var(--display); font-weight: 300; font-size: clamp(34px,5vw,56px); line-height: 1.04; letter-spacing: -.02em; margin-bottom: 18px; }
   .done-sub { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--ink-soft); margin-bottom: 30px; }
@@ -453,4 +458,11 @@ function visualEl(v: VisualObj) {
 <script>
   import { setupFokus } from '../../scripts/fokus';
   document.addEventListener('astro:page-load', setupFokus);
+</script>
+
+<script data-done-datum-script>
+  document.addEventListener('astro:page-load', () => {
+    const el = document.querySelector('[data-done-datum]');
+    if (el) el.textContent = 'Läst ' + new Date().toLocaleDateString('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' });
+  });
 </script>
