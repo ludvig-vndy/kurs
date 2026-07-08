@@ -44,7 +44,14 @@
   /* shell */
   .app{display:grid;grid-template-columns:224px 1fr;min-height:100vh}
   .side{background:var(--bg2);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:3px;position:sticky;top:0;height:100vh}
-  .logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:18px;padding:4px 10px 20px}
+  /* Parent-brand nameplate: the Marginalen wordmark in the broadsheet's own
+     treatment (Outfit, uppercase, tracked, oxblood hairline), so Agarkollen
+     visibly reads as a Marginalen property and mirrors the masthead grammar
+     across both houses. Links home. */
+  .housemark{display:block;font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;margin:0 10px 12px;padding-bottom:11px;border-bottom:2px solid var(--ox)}
+  .housemark span{color:inherit}
+  .housemark:hover{color:var(--ox)}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:18px;padding:0 10px 20px}
   .logo .mark{width:24px;height:24px;border-radius:7px;background:var(--ox);display:grid;place-items:center;flex:0 0 auto}
   .logo .mark svg{width:15px;height:15px;stroke:var(--ox-ink);stroke-width:2.2;fill:none}
   .nav{background:none;border:none;color:var(--mut);text-align:left;padding:10px 11px;border-radius:9px;font-size:14px;display:flex;align-items:center;gap:11px;transition:background .16s,color .16s}
@@ -259,7 +266,7 @@
   .tpop .tx:hover{color:var(--ink)}
 
   /* ===== onboarding (Lägg till bolag) ===== */
-  .obwrap{max-width:600px}
+  .obwrap{max-width:600px;margin-inline:auto}
   .prog{display:flex;gap:6px;margin:2px 0 26px}
   .prog i{height:3px;flex:1;border-radius:2px;background:var(--line2);transition:background .3s}
   .prog i.on{background:var(--ox)}
@@ -289,7 +296,7 @@
   .btn.ghost{color:var(--mut)}
 
   /* ===== morgonutgåvan (brevet som sidor) ===== */
-  .utgwrap{max-width:660px}
+  .utgwrap{max-width:660px;margin-inline:auto}
   .utg{border:1px solid var(--line);border-radius:16px;background:var(--card);min-height:440px;padding:26px 28px 22px;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(35,37,43,.05)}
   .utg .uk{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ox);margin-bottom:12px;display:flex;justify-content:space-between;gap:10px}
   .utg .uk .r2{color:var(--faint)}
@@ -383,7 +390,7 @@
   /* ===== brevet som ljud ===== */
   .brevband{height:44px;border-radius:12px 12px 0 0;background:linear-gradient(rgba(122,38,30,.85),rgba(96,28,22,.9)),url('/bilder/borshuset-1600.jpg') center 40%/cover;max-width:660px}
   .brevband+.utg{border-top-left-radius:0;border-top-right-radius:0}
-  .pod{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;max-width:660px;margin:-6px 0 16px}
+  .pod{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;max-width:660px;margin:-6px auto 16px}
   .podbtn{width:34px;height:34px;border-radius:50%;border:none;background:var(--ox);color:var(--ox-ink);display:grid;place-items:center;flex:0 0 auto;padding:0}
   .podmid{flex:1;min-width:0}
   .podl{font-size:12px;color:var(--mut);margin-bottom:6px}
@@ -397,6 +404,7 @@
 <body>
 <div class="app">
   <aside class="side">
+    <a class="housemark" href="/hem">Margin<span>alen</span></a>
     <div class="logo"><span class="mark" id="mk"></span> Ägarkollen</div>
     <button class="nav on" data-view="brevet"></button>
     <button class="nav" data-view="idag"></button>

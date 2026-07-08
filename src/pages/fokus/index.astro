@@ -73,16 +73,18 @@ const totalLessons = kurs.kapitel.reduce((sum, k) => sum + k.lektioner.length, 0
 
 <Broadsheet title="Fundamental aktieanalys" active="kurs" nav="app">
   <main class="wrap" style="flex:1; padding-top:8px">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap">
-      <h1 class="h-title" style="max-width:16ch">Fundamental aktieanalys</h1>
-      <div class="link-mono" style="color:var(--ink-soft)">{kurs.kapitel.length} kapitel · {totalLessons} lektioner</div>
-    </div>
+    <div class="fokus-cover leadprint">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap">
+        <h1 class="h-title" style="max-width:16ch">Fundamental aktieanalys</h1>
+        <div class="link-mono" style="color:var(--ink-soft)">{kurs.kapitel.length} kapitel · {totalLessons} lektioner</div>
+      </div>
 
-    <p class="standfirst">{kurs.beskrivning}</p>
+      <p class="standfirst">{kurs.beskrivning}</p>
 
-    <div class="prog">
-      <div class="tk"><i data-fokus-fill style="width:0%"></i></div>
-      <div class="lab"><span data-fokus-total-label>0 / {totalLessons} lektioner klara</span></div>
+      <div class="prog">
+        <div class="tk"><i data-fokus-fill style="width:0%"></i></div>
+        <div class="lab"><span data-fokus-total-label>0 / {totalLessons} lektioner klara</span></div>
+      </div>
     </div>
 
     <div style="margin-top:18px">
@@ -138,6 +140,12 @@ const totalLessons = kurs.kapitel.reduce((sum, k) => sum + k.lektioner.length, 0
     </div>
   </main>
 </Broadsheet>
+
+<style>
+  /* Room for the leadprint facade to sit behind the opening block and fade out
+     before the first part header. */
+  .fokus-cover { padding-top: 6px; padding-bottom: 26px; }
+</style>
 
 <script>
   import { getFokusDone, FOKUS_EVENT } from '../../scripts/fokus-progress';
