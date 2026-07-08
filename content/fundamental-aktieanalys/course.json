@@ -713,6 +713,61 @@
      "fil": "17.5-halla-och-slappa.json"
     }
    ]
+  },
+  {
+   "nummer": 18,
+   "titel": "Girighet och att säkra avkastning",
+   "niva": "Avancerad",
+   "tid_min": 62,
+   "blurb": "Kapitel 11 lärde dig systemet mot rädslan. Det här kapitlet tar dess tvilling, girigheten, känslan som kostar tyst när ett innehav har sprungit. Du lär dig känna igen önsketänkandet, läsa den paraboliska uppgångens varningsklockor, och ställa ångern över förlorad uppsida mot tryggheten i säkrad avkastning, så att säljbeslutet blir en regel du bestämt i förväg.",
+   "outcomes": [
+    "Känna igen girigheten och önsketänkandet i dig själv",
+    "Läsa den paraboliska uppgångens mönster och varningsklockor",
+    "Ställa de två ångrarna mot varandra och välja att säkra, stretcha eller dela"
+   ],
+   "sebastian": "Jag har tjänat mindre än jag borde på fler bra case än jag vill erkänna, och nästan alltid av samma skäl: jag ville ha sista kronan. Girigheten känns aldrig som girighet i stunden, den känns som att man ser något andra inte ser. Det här kapitlet är regeln jag önskar att jag haft: säkra på ett förbestämt sätt, och sluta gissa toppen.",
+   "lektioner": [
+    {
+     "lektion": "18.1",
+     "titel": "Girigheten och varför den kostar",
+     "niva": "Avancerad",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "18.1-girigheten-kostar.json"
+    },
+    {
+     "lektion": "18.2",
+     "titel": "Önsketänkande: när tesen blir luft",
+     "niva": "Avancerad",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "18.2-onsketankande.json"
+    },
+    {
+     "lektion": "18.3",
+     "titel": "Den paraboliska uppgången",
+     "niva": "Avancerad",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "18.3-den-paraboliska-uppgangen.json"
+    },
+    {
+     "lektion": "18.4",
+     "titel": "Scenariojämförelsen",
+     "niva": "Avancerad",
+     "tid_min": 12,
+     "status": "klar",
+     "fil": "18.4-scenariojamforelsen.json"
+    },
+    {
+     "lektion": "18.5",
+     "titel": "Att säkra eller stretcha",
+     "niva": "Avancerad",
+     "tid_min": 13,
+     "status": "klar",
+     "fil": "18.5-sakra-eller-stretcha.json"
+    }
+   ]
   }
  ]
 }

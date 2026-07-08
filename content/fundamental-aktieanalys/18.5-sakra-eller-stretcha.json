@@ -1,0 +1,119 @@
+{
+  "kapitel": 18,
+  "lektion": "18.5",
+  "titel": "Att säkra eller stretcha",
+  "niva": "Avancerad",
+  "tid_min": 13,
+  "mal": "Efter lektionen kan eleven följa en förutbestämd regel för när ett innehav ska säkras och när det ska stretchas, styrd av pris mot värde, och verkställa den utan att förhandla med sig själv.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 18.5",
+      "titel": "Att säkra eller stretcha",
+      "ingress": "Scenariojämförelsen gav dig vägningen: ångern över såld uppsida bredvid ångern över hållen kollaps. Men en vägning är inte en handling. I stunden, med kursen som blinkar och girigheten som viskar, gör du lätt om vägningen till en förhandling med dig själv. Det du behöver nu är en regel du kan följa utan att förhandla."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PRIS MOT VÄRDE",
+      "lead": "Regeln har ett enda styrande förhållande: pris mot värde. Är priset vid eller under ditt beräknade värde och håller tesen, stretcha och sitt still. Har priset sprungit klart förbi värdet är felmarginalen förbrukad, då säkrar du.",
+      "highlight": "ett enda styrande förhållande: pris mot värde",
+      "brodtext": [
+        "Att säkra behöver sällan betyda att sälja allt på en gång. Det bästa handtaget är trim-trappan: du bestämmer i förväg ett par nivåer där du säljer en bit var. En tredjedel vid nivå A, en tredjedel till vid nivå B, och så vidare. Du säkrar stegvis medan priset stiger, utan att någonsin behöva veta var toppen ligger. Vänder kursen har du redan bärgat en del, fortsätter den äger du fortfarande en del. Du köper bort behovet av att pricka toppen.",
+        "Här lurar ett mentalt trick. Girigheten kallar gärna en orealiserad vinst för gratis, eller säger att du spelar med husets pengar, som om vinsten redan låg på fickan och kunde riskeras vårdslöst. Det är house-money-villan. En orealiserad vinst är lika verklig som det kapital du satte in, kursen kan ta tillbaka den lika fort som den gav den. Att kalla den husets pengar är bara ett sätt att motivera att hålla för länge."
+      ],
+      "takeaway": "Under värdet med intakt tes: stretcha. Klart över värdet: säkra, oftast genom att trimma stegvis. Allt annat är brus."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DISPOSITIONSEFFEKTEN",
+      "titel": "Regeln med en forskningsnyans",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Regeln generellt", "text": "Dispositionseffekten (Shefrin och Statman 1985, bekräftad av Odean 1998 i verklig handelsdata) är mönstret att investerare säljer vinnare för tidigt och håller förlorare för länge. Den varnar dig för att säkra en vinnare för snabbt: du kapar ofta uppsida du borde behållit." },
+          { "rubrik": "Undantaget", "text": "En parabolisk uppgång utan vinstunderlag (18.3) är just där disciplinen säger säkra ändå. Tesen bär inte priset, bara kursen stiger, på luft. Då är det inte disposition att säkra, det är omdöme." }
+        ],
+        "figurtext": "Att låta en vinnare löpa förutsätter att något löper med den."
+      },
+      "forklaring": "Effekten är en varning mot instinkten att säkra en vinnare för tidigt, och den håller nästan alltid. Men den gäller inte fullt ut i ett fall: när priset lösgjort sig från verksamheten och stiger på ren förhoppning. Då bär tesen inte längre priset, och att säkra är då inte det misstag effekten beskriver, utan disciplinen som skyddar dig."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Trim-trappan vinner ingen rad, förlorar ingen rad",
+      "underrubrik": "Ett innehav står i 24 mot ett värde kring 16. Priset är klart över värdet. Jämför tre drag i det scenario där aktien sedan faller mot värdet.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Håll allt", "varde": 16 },
+          { "kategori": "Sälj allt vid 24", "varde": 24 },
+          { "kategori": "Trim-trappa", "varde": 18.7, "accent": true }
+        ],
+        "etiketter": "Utfall per aktie om aktien faller, kronor",
+        "figurtext": "Illustrativ. Siffrorna är konstruerade för att visa logiken, inte hämtade ur ett verkligt bolag."
+      },
+      "slutsats": "Trappan vinner aldrig en enskild rad: sälj allt är bäst om den faller, håll allt är bäst om den stiger. Men trappan är aldrig sämst heller. Den är robust över alla framtider för den kräver inte att du gissar vilken som inträffar."
+    },
+    {
+      "typ": "reading",
+      "kicker": "SÅ HÅLLER DU GIRIGHETEN I SCHACK",
+      "lead": "Girigheten är rädslans tvilling: samma mekanism åt andra hållet. Skillnaden är att rädslan gör ont medan girigheten känns som medvind, och just därför kostar den tyst. Hela modulen ersatte viljestyrkan med ett system, och här är den konkreta rutinen när ett innehav har sprungit klart förbi ditt värde.",
+      "highlight": "Girigheten är rädslans tvilling",
+      "brodtext": [
+        "Ett: pröva tesen och falsifieringsvillkoret. Säg högt i en mening vad som skulle få dig att sälja (18.2). Kommer det snabbt och konkret lever tesen. Famlar du, eller pekar svaret bara på trenden, har hoppet krupit in och du åker med i en rörelse i stället för att äga ett värde.",
+        "Två: väg mot värdet, inte mot toppen. Ställ den framåtblickande frågan: skulle jag köpa till dagens pris nu? Ankaret är ditt beräknade värde, aldrig den högsta kurs du sett eller vad du en gång betalade. Är svaret nej är felmarginalen förbrukad.",
+        "Tre: kör de två ångrarna. Rita de tre utfallen från dagens pris med ärliga grovtal, och skriv ångern åt båda håll: den över såld uppsida om den fortsätter, och den över hållen kollaps om den vänder. Välj det drag du kan leva med oavsett vilket utfall som faller ut.",
+        "Fyra: verkställ trim-trappan. Säkra stegvis enligt de nivåer du skrev ned i förväg. En bit nu, en bit vid nästa nivå, en kärna kvar så länge tesen bär. Behandla den orealiserade vinsten som verkligt kapital, aldrig som husets pengar."
+      ],
+      "takeaway": "Fatta beslutet en gång, i förväg, och verkställ sedan bara."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad styr valet mellan att säkra och att stretcha?",
+          "alternativ": [
+            "Förhållandet mellan pris och ditt beräknade värde, plus om tesen håller",
+            "Hur mycket kursen rört sig den senaste veckan",
+            "Om du ligger på plus eller minus mot inköpspriset"
+          ],
+          "ratt": [0],
+          "forklaring": "Så länge priset är under värdet och tesen håller kan du stretcha och låta löpa. När priset sprungit förbi värdet lutar det mot att säkra. Kursens korta rörelse och ditt inköpspris ska inte styra."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är house-money-villan?",
+          "alternativ": [
+            "Tanken att en orealiserad vinst är gratis pengar man kan riskera vårdslöst",
+            "Att man alltid ska återinvestera utdelningar",
+            "Att kasinon ger bättre odds än börsen"
+          ],
+          "ratt": [0],
+          "forklaring": "En orealiserad vinst är lika verklig som insatt kapital. Att kalla den husets pengar är ett mentalt trick girigheten använder för att motivera att hålla för länge."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad säger dispositionseffekten, och var gäller den inte fullt ut?",
+          "alternativ": [
+            "Investerare tenderar att sälja vinnare för tidigt och hålla förlorare för länge, parabeln på luft är undantaget där det ändå är rätt att säkra",
+            "Investerare säljer alltid för sent",
+            "Effekten gäller bara professionella förvaltare"
+          ],
+          "ratt": [0],
+          "forklaring": "Dispositionseffekten varnar generellt för att sälja vinnare för tidigt. Men en parabolisk uppgång utan vinstunderlag är just det fall där disciplinen säger säkra ändå, för tesen bär inte priset."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är en trim-trappa ofta ett bra svar?",
+          "alternativ": [
+            "Den låter dig säkra stegvis medan priset stiger, utan att behöva pricka toppen",
+            "Den garanterar att du säljer på högsta kursen",
+            "Den eliminerar all risk i positionen"
+          ],
+          "ratt": [0],
+          "forklaring": "Att trimma i steg vid förutbestämda nivåer tar bort behovet av att träffa toppen och håller girigheten borta från beslutet. Du följer en regel i stället för en känsla."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "kapitel": 18,
+  "lektion": "18.4",
+  "titel": "Scenariojämförelsen: ånger vs säkrad avkastning",
+  "niva": "Avancerad",
+  "tid_min": 12,
+  "mal": "Efter lektionen kan eleven ställa ångern över missad uppsida mot tryggheten i säkrad avkastning och fatta beslutet på vägningen i stället för på känslan.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 18.4",
+      "titel": "Scenariojämförelsen: ånger vs säkrad avkastning",
+      "ingress": "Girigheten är stark av ett enda skäl: den visar dig bara en sorts ånger. Scenariojämförelsen tar den känslomässiga stormen och gör den till en vägning du kan se på papper."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TVÅ SORTERS ÅNGER",
+      "lead": "Girigheten visar dig bara ångern över såld uppsida, känslan av att sälja och sedan se kursen fortsätta upp utan dig. Ramen tvingar fram den andra ångern bredvid den, ångern över en hållen kollaps, så att beslutet blir en vägning i stället för en enkelriktad känsla.",
+      "highlight": "ångern över en hållen kollaps",
+      "brodtext": [
+        "Ett: rita de tre utfallen från dagens pris. Utgå från kursen just nu, inte från toppen eller ditt inköp. Skissa att den fortsätter upp, planar ut eller faller tillbaka, och sätt ärliga grovtal på hur troligt vart och ett är. Det är storleksordningar, inte decimaler.",
+        "Två: prissätt ångern åt båda håll. Skriv ned hur det känns i uppscenariot om du redan säkrat, och hur det känns i fallscenariot om du hållit allt. Girigheten räknar bara den första; här ställer du dem sida vid sida.",
+        "Tre: väg mot värdet, inte mot toppen. Ankaret är ditt beräknade värde, inte den högsta kurs du sett. Ställ den framåtblickande frågan: skulle jag köpa till dagens pris nu? Är svaret nej, säger det något om hur mycket felmarginal som är kvar.",
+        "Fyra: välj ett handtag. Tre svar finns, säkra (ta hem, priset är klart över värdet), stretcha (håll, tesen bär och värdet finns kvar) eller dela (trimma en del, behåll en kärna). Valet följer av stegen ett till tre, inte av känslan i stunden."
+      ],
+      "takeaway": "När båda ångrarna ligger bredvid varandra är beslutet inte längre gisslan hos den mest livfulla rädslan. Det blir ett val du fattar med öppna ögon."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VÄGNINGEN",
+      "titel": "De två ångrarna sida vid sida",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Ånger: såld uppsida", "text": "Om du säljer och den fortsätter upp. Denna ånger visar girigheten dig tydligt, men den kostar dig bara en missad krona." },
+          { "rubrik": "Ånger: hållen kollaps", "text": "Om du håller och innehavet vänder tillbaka mot värdet. Denna ånger håller girigheten utanför bild, och det är den som gör verklig skada." }
+        ],
+        "figurtext": "Girigheten visar den ena. Ramen tvingar fram den andra."
+      },
+      "forklaring": "Ankaret är ditt beräknade värde, inte den högsta kurs du sett. När båda ångrarna är stora är kompromissen ofta bäst: en delförsäljning säkrar en del av vinsten och behåller en del av uppsidan, så att inget av de två scenarierna blir outhärdligt."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Tre handlingar, vägda mot varandra",
+      "underrubrik": "Ett innehav står i 24 kronor mot ett värde kring 16. På rent förväntat värde ligger de tre dragen tätt.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Håll allt", "varde": 23.2 },
+          { "kategori": "Säkra allt", "varde": 24 },
+          { "kategori": "Dela", "varde": 23.6, "accent": true }
+        ],
+        "etiketter": "Förväntat värde per aktie, kronor",
+        "figurtext": "Siffrorna är illustrativa, byggda för att visa mönstret och inte hämtade ur ett verkligt bolag."
+      },
+      "slutsats": "På ren förväntan är säkra allt marginellt högst; dela är inte den högsta förväntningen här. Delningens styrka är robustheten: den gör dig immun mot bådas värsta utfall, du har bärgat halva vinsten om den faller och äger halva uppsidan om den stiger, och därför dominerar den ofta när priset sprungit förbi värdet."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilka två sorters ånger tvingar scenariojämförelsen fram?",
+          "alternativ": [
+            "Ångern om du säljer och den fortsätter upp, och ångern om du håller och den kollapsar",
+            "Ångern över att ha köpt, och ångern över att inte ha köpt mer",
+            "Ångern över skatt, och ångern över courtage"
+          ],
+          "ratt": [0],
+          "forklaring": "Girigheten ser bara den första ångern, den över såld uppsida. Ramen ställer den bredvid den andra, ångern över hållen kollaps, så att beslutet blir en vägning i stället för en enkelriktad känsla."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad ska beslutet vägas mot, enligt ramen?",
+          "alternativ": [
+            "Ditt beräknade värde, inte den högsta kurs du sett",
+            "Ditt inköpspris",
+            "Den senaste toppkursen"
+          ],
+          "ratt": [0],
+          "forklaring": "Ankaret är värdet. Att väga mot toppen är ankring; att väga mot inköpspriset är sunk cost. Frågan är: skulle jag köpa till dagens pris nu?"
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför dominerar ofta en delförsäljning när priset sprungit förbi värdet?",
+          "alternativ": [
+            "Den gör dig immun mot bådas värsta utfall: du har säkrat något om den faller och äger något om den stiger",
+            "Den ger alltid högst förväntad avkastning",
+            "Den undviker skatt helt"
+          ],
+          "ratt": [0],
+          "forklaring": "När båda ångrarna är stora är kompromissen ofta bäst: en trim säkrar en del av vinsten och behåller en del av uppsidan, så att inget av de två scenarierna blir outhärdligt. Det är robustheten, inte den högsta förväntningen, som gör draget starkt."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är rätt sätt att uppskatta de tre utfallen (upp, platå, tillbaka)?",
+          "alternativ": [
+            "Ärliga grovtal och en storleksordning, utan att låtsas om exakt precision",
+            "Exakta sannolikheter till två decimaler",
+            "Enbart det mest optimistiska utfallet"
+          ],
+          "ratt": [0],
+          "forklaring": "Poängen är inte falsk precision utan att tvinga fram alla tre utfallen och deras ungefärliga vikt, så att nedsidan får plats bredvid uppsidan i beslutet."
+        }
+      ]
+    }
+  ]
+}

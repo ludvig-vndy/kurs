@@ -1,0 +1,104 @@
+{
+  "kapitel": 18,
+  "lektion": "18.1",
+  "titel": "Girigheten och varför den kostar",
+  "niva": "Avancerad",
+  "tid_min": 12,
+  "mal": "Efter lektionen känner eleven igen girigheten i sig själv och förstår varför den, obehandlad, äter avkastning tyst.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 18.1",
+      "titel": "Girigheten och varför den kostar",
+      "ingress": "Girigheten är rädslans tvilling: en känsla i stunden som kapar din plan. Den känns som medvind och framgång, och just därför kostar den tyst."
+    },
+    {
+      "typ": "reading",
+      "kicker": "RÄDSLANS TVILLING",
+      "lead": "Girighet är, precis som rädsla, en känsla i stunden som kapar ett beslut du bestämt i förväg. Rädslan gör ont och lämnar spår du minns, men girigheten känns som medvind, så du märker sällan att den styr dig. Den kostar därför tyst.",
+      "highlight": "en känsla i stunden som kapar ett beslut du bestämt i förväg",
+      "brodtext": [
+        "Kostnaden syns inte i kraschen, där de flesta letar efter sina misstag, utan i beslut du inte lägger märke till att du fattar. Girigheten tar tre vanliga uttryck i förvaltningen. Det första är att hålla för toppen: priset har passerat ditt värde, men du vägrar säkra något eftersom det fortfarande går uppåt, så du håller inte längre för tesen utan för att fånga en punkt ingen ser förrän den passerat.",
+        "Det andra är att fylla på en vinnare förbi tesen: positionen har stigit, den känns rätt, och du ökar en gång till enbart för att kursen stigit, tills positionen väger mer än tesen klarar av att bära. Det tredje är att jaga tillbaka en missad rörelse: något sprang iväg utan dig, och du köper efter uppgången till ett pris du aldrig hade accepterat om du räknat på det lugnt.",
+        "Under alla tre ligger samma drift: girigheten vill alltid ha sista kronan. Den nöjer sig aldrig med ett gott utfall, den jagar det maximala, och just den jakten är vad som gör besluten sämre."
+      ],
+      "takeaway": "Girigheten känns inte som en känsla, den känns som insikt. Det är därför den är farligast just när den borde ifrågasättas."
+    },
+    {
+      "typ": "concept",
+      "kicker": "REGEL MOT KÄNSLA",
+      "titel": "Ett system slår viljestyrka",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Disciplin: en förbestämd regel", "text": "Du bestämde innan känslan kom vad som skulle få dig att säkra, och låter det beslutet styra jaget i stunden. En måttstock som håller även när det stormar." },
+          { "rubrik": "Girighet: en känsla i stunden", "text": "Den fortsätter ju, det ser jag. Rösten låter som omdöme men är girigheten förklädd. Viljestyrka sviker i just det ögonblick den behövs." }
+        ],
+        "figurtext": "Den erfarne möter känslan med ett system, inte med viljestyrka."
+      },
+      "forklaring": "Den erfarna investeraren respekterar girigheten precis som han respekterar rädslan: med ett system, inte med viljestyrka. Han vet att viljestyrka sviker i just det ögonblick den behövs, för då känns känslan inte som en känsla, den känns som insikt. Han litar inte på den rösten mer än han litar på paniken i en krasch, utan lutar sig mot något förbestämt. För honom finns inget gott i girigheten: den lovar mer men levererar sämre beslut."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EXEMPEL: REGEL MOT KÄNSLA",
+      "lead": "Två investerare äger samma innehav, köpt vid 10 kr mot ett värde kring 16, och priset klättrar vidare till 24, klart över det värde de båda räknade fram (siffrorna är illustrativa). Skillnaden mellan dem är inte analysen, den är densamma.",
+      "highlight": "Skillnaden mellan dem är inte analysen, den är densamma",
+      "brodtext": [
+        "Den första har en förbestämd regel: när priset springer långt förbi värdet utan att tesen förändrats, trimmar hon och tar hem en del. Vid 24 säkrar hon en tredjedel och låter kärnan löpa. Hon vet inte om toppen ligger vid 24 eller 30, och det är just poängen, hon behöver inte veta det.",
+        "Den andra håller allt. Hans skäl är inte tesen, den säger inget om 24, utan riktningen: den fortsätter ju. Det låter som en lugn iakttagelse, men det är girigheten. När kursen sedan faller tillbaka mot 17 har han inte säkrat någonting. Han fattade aldrig ett aktivt beslut att hålla, han lät bara den tysta rösten avgöra. Skillnaden är att den ena hade en regel och den andra hade en känsla."
+      ],
+      "takeaway": "Samma analys, motsatt utfall, helt och hållet på grund av vem som lät en förbestämd regel styra i stunden och vem som lät känslan göra det."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad menas med att girigheten är rädslans tvilling?",
+          "alternativ": [
+            "Båda är känslor som kapar ett förbestämt beslut i stunden, den ena driver att jaga mer, den andra att fly",
+            "Båda får dig att sälja för tidigt i en nedgång",
+            "De uppträder aldrig hos samma investerare"
+          ],
+          "ratt": [0],
+          "forklaring": "Rädsla och girighet är samma mekanism åt två håll: en känsla i stunden som tränger undan den plan du bestämt i förväg. Rädslan får dig att fly, girigheten att jaga mer."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket av följande är ett uttryck for girighet i förvaltningen?",
+          "alternativ": [
+            "Att fylla på en vinnare långt förbi den tes som en gång motiverade köpet",
+            "Att sälja hela positionen när ett falsifieringsvillkor utlösts",
+            "Att trimma en position som sprungit långt förbi ditt värde"
+          ],
+          "ratt": [0],
+          "forklaring": "Att öka i en vinnare enbart för att den stigit, utan att tesen bär den nya vikten, är girighet. Att sälja på brusten tes eller trimma på övervärdering är disciplin."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad betyder tesen there is no good in greed i lektionen?",
+          "alternativ": [
+            "Girigheten lovar mer avkastning men levererar sämre beslut, den vill alltid ha sista kronan",
+            "Att man aldrig bör äga aktier som stigit kraftigt",
+            "Att all vinst är moraliskt tvivelaktig"
+          ],
+          "ratt": [0],
+          "forklaring": "Poängen är beslutskvalitet, inte moral. Girigheten som jagar sista kronan försämrar systematiskt dina beslut, den ger dig sämre utfall, inte bättre."
+        },
+        {
+          "typ": "multi",
+          "fraga": "Vilka av dessa är tecken på att girigheten styr ett beslut?",
+          "underrubrik": "Välj alla som stämmer",
+          "alternativ": [
+            "Ditt skäl att hålla är att kursen stiger, inte tesen eller värdet",
+            "Du kan inte formulera vad som skulle få dig att säkra",
+            "Du har en förbestämd regel för när du säkrar, skriven innan känslan kom",
+            "Du behandlar orealiserad vinst som något som kan försvinna igen tills den är säkrad"
+          ],
+          "ratt": [0, 1],
+          "forklaring": "Att luta sig mot kursriktningen och sakna en förbestämd säkringspunkt är girighetens signatur. En skriven regel och respekten för att orealiserad vinst kan försvinna är tvärtom tecken på ett sunt förhållande till den."
+        }
+      ]
+    }
+  ]
+}

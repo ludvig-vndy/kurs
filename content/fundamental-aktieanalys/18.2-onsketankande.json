@@ -1,0 +1,101 @@
+{
+  "kapitel": 18,
+  "lektion": "18.2",
+  "titel": "Önsketänkande: när tesen blir luft",
+  "niva": "Avancerad",
+  "tid_min": 12,
+  "mal": "Efter lektionen kan eleven upptäcka när en tes tyst har bytts ut mot ett hopp, och pröva sina innehav mot frågan vad som skulle få dem att sälja.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 18.2",
+      "titel": "Önsketänkande: när tesen blir luft",
+      "ingress": "Girigheten säger sällan håll för toppen med rena ord. Den arbetar genom önsketänkandet, och byter tyst ut din tes mot ett hopp så gradvis att du aldrig märker bytet. Du tror att du äger samma välgrundade case du en gång skrev, men det du äger är en förhoppning i casets kläder."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TESEN BLIR LUFT",
+      "lead": "Det farliga är inte hoppet i sig, utan att det slår av dina varningssystem samtidigt som det smyger sig in. En riktig tes har inbyggda larm: bestämda villkor som säger dig när du har fel. Ett hopp har inga larm, för hoppet vill inte ha fel, det vill bara fortsätta.",
+      "highlight": "det slår av dina varningssystem samtidigt som det smyger sig in",
+      "brodtext": [
+        "En tes och ett hopp kan låta likadant utåt, båda säger det här blir bra. Skillnaden är vad de vilar på, och den syns i tre tecken. Det första: du kan inte längre formulera falsifieringsvillkoret. När du skrev caset satte du ord på vad som skulle bevisa dig fel. Fråga dig nu vad som skulle få dig att sälja. Om svaret krympt till ett vagt om det verkligen skulle gå illa, eller försvunnit helt, har tesen blivit luft.",
+        "Det andra: värdet motiveras bara av priset. Om det bästa skälet du kan ge för att äga är att kursen stiger, har analysen bytts mot momentum. Värdet ska komma från verksamheten och vad den tjänar, inte från kursens riktning. Det tredje: du hänvisar till trenden, inte till siffrorna. I stället för att peka på räkenskaperna pekar du på berättelsen: marknaden är enorm, bolaget är tidigt, alla ser potentialen. Det är att förväxla potential med sannolikhet."
+      ],
+      "takeaway": "När tesen blivit luft slutar dina egna skydd att fungera, precis när du behöver dem som mest. Att upptäcka bytet innan det kostar dig är hela poängen."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TVÅ SOM LÅTER LIKADANT",
+      "titel": "Övertygelse och hopp vilar på olika saker",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          { "rubrik": "Övertygelse", "text": "Vilar på en falsifierbar tes förankrad i siffror. Du kan säga vad som skulle bevisa dig fel, och du pekar på tal när du motiverar den. Den tål prövning." },
+          { "rubrik": "Hopp", "text": "Vilar på ett narrativ förankrat i priset. Det har inget villkor som kan utlösas, och det pekar på trenden. Det tål ingen prövning." }
+        ],
+        "figurtext": "Den mest övertygade rösten i rummet är ofta hoppet, inte omdömet."
+      },
+      "forklaring": "Skillnaden är inte hur säker du känner dig, utan vad tron vilar på. Känslan av övertygelse är just det önsketänkandet producerar, så lita inte på den. Ställ i stället med jämna mellanrum en enda enkel fråga till varje innehav: vad skulle få mig att sälja det här? En sund tes svarar snabbt och konkret, för villkoren står skrivna. Ett hopp famlar, för det har inga."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EXEMPEL: NÄR VILLKORET TYST FÖLL BORT",
+      "lead": "Ett bolag köps på ett välgrundat case: en växande andel återkommande intäkter och en tes som säger att när den delen passerar en viss andel av omsättningen blir hela verksamheten stabilare och värd mer. Falsifieringsvillkoret är tydligt skrivet: om den återkommande andelen slutar växa två kvartal i rad brister tesen. Siffrorna är illustrativa.",
+      "highlight": "om den återkommande andelen slutar växa två kvartal i rad brister tesen",
+      "brodtext": [
+        "Så börjar kursen springa. Marknaden gillar berättelsen, och priset klättrar långt förbi det värde caset räknade fram. De första kvartalen håller tesen, den återkommande andelen växer. Men sedan planar den ut. Här skulle falsifieringsvillkoret ha talat. I stället gör önsketänkandet sitt arbete: skälet att äga glider omärkligt från den återkommande andelen växer till marknaden är enorm och vi är tidiga. Det låter större och mer lockande, och just därför märks bytet inte.",
+        "Fråga honom nu vad som skulle få honom att sälja, och svaret är inte längre om den återkommande andelen slutar växa, det villkoret har han tyst släppt, eftersom det redan är på väg att utlösas. Svaret har blivit om storyn inte håller, vilket inte är något villkor alls, för en story som lever på priset håller så länge priset håller. Tesen har blivit luft. Han äger fortfarande aktien, men han äger den på hopp."
+      ],
+      "takeaway": "Villkoret krymper tills det inte kan utlösas, motiveringen glider från siffra till story. Samma rot i båda: du har börjat äga det utfall du önskar i stället för det case du skrev."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilket är det tydligaste tecknet på att en tes blivit önsketänkande?",
+          "alternativ": [
+            "Du kan inte längre formulera vad som skulle få dig att sälja",
+            "Kursen har stigit sedan du köpte",
+            "Andra investerare är också positiva"
+          ],
+          "ratt": [0],
+          "forklaring": "En tes har ett falsifieringsvillkor. När du inte längre kan säga vad som skulle få dig att ändra dig äger du hopp, inte en tes. Kursuppgång och andras åsikter avgör inget."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad menas med att värdet motiveras bara av priset?",
+          "alternativ": [
+            "Din motivering för att hålla har blivit att kursen stiger, inte att verksamheten är värd mer",
+            "Du har räknat ett värde med DCF",
+            "Marknaden är effektiv och priset är alltid rätt"
+          ],
+          "ratt": [0],
+          "forklaring": "När enda skälet du kan ge för att äga är att priset går upp har analysen ersatts av momentum. Värdet ska komma från verksamheten, inte från kursens riktning."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur skiljer lektionen övertygelse från hopp?",
+          "alternativ": [
+            "Övertygelse vilar på en falsifierbar tes med siffror, hopp vilar på ett narrativ som lever på priset",
+            "Övertygelse betyder att man är säker, hopp att man tvekar",
+            "Det finns ingen skillnad i praktiken"
+          ],
+          "ratt": [0],
+          "forklaring": "Skillnaden är inte hur säker du känner dig, utan vad tron vilar på. Övertygelse kan falsifieras och pekar på siffror, hopp pekar på trenden och tål ingen prövning."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken fråga ställer den erfarna investeraren återkommande till varje innehav?",
+          "alternativ": [
+            "Hur långt över mitt inköpspris ligger kursen nu?",
+            "Vad skulle få mig att sälja det här, och har svaret krympt sedan sist?",
+            "Vad tror de flesta andra om bolaget just nu?"
+          ],
+          "ratt": [1],
+          "forklaring": "Han litar inte på känslan av övertygelse, för den är just det önsketänkandet producerar. Ett krympande eller vagare svar avslöjar att hoppet krupit in."
+        }
+      ]
+    }
+  ]
+}

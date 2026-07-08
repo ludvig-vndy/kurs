@@ -1,0 +1,112 @@
+{
+  "kapitel": 18,
+  "lektion": "18.3",
+  "titel": "Den paraboliska uppgången: mönstret och varningsklockorna",
+  "niva": "Avancerad",
+  "tid_min": 13,
+  "mal": "Efter lektionen känner du igen den paraboliska rörelsens mönster och dess varningsklockor, så att du kan säkra i tid i stället för att åka med hela vägen ner.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LEKTION 18.3",
+      "titel": "Den paraboliska uppgången: mönstret och varningsklockorna",
+      "ingress": "Girigheten trivs som allra bäst i en parabolisk uppgång. Att läsa mönstret och dess varningsklockor är skillnaden mellan att säkra i tid och att åka med hela vägen ner."
+    },
+    {
+      "typ": "reading",
+      "kicker": "MÖNSTRET",
+      "lead": "Det paraboliska är inte att kursen stiger, det är hur den stiger: priset drivs av en obevisad trend medan börsvärdet lösgör sig från verksamheten.",
+      "highlight": "priset drivs av en obevisad trend medan börsvärdet lösgör sig från verksamheten",
+      "brodtext": [
+        "Runt en sådan rörelse brukar samma varningsklockor dyka upp. En framflyttad rapport som öppnar ett insynssäljfönster: insynspersoner får inte handla under de trettio dagarna före en rapport, så skjuts rapporten fram tills en lock-up hunnit löpa ut, öppnas ett fönster där de som vet mest kan sälja innan siffrorna blir offentliga. En riktad nyemission och utspädning: ett bolag som behöver pengar mitt i uppgången ger ut nya aktier, ofta med rabatt, och din andel späds ut. Tunn kassa och förbränning: en liten kassa och ett negativt löpande kassaflöde betyder att verksamheten förbränner pengar, runwayen är kort och en emission blir svår att undvika.",
+        "Forskningen ger mekanismen bakom varför en parabol är sårbar. Daniel och Moskowitz visar i \"Momentum Crashes\" (2016) att momentum, det som stigit mest, i genomsnitt lönar sig men sällan och kraftigt drabbas av bakslag: de tidigare vinnarna faller då mest, särskilt efter stora rörelser och i lägen med hög volatilitet. Extrem uppgång är inte gratis. Utan ett fundamentalt underlag är den bara mer utsatt. Det är mekanismen, inte en procentsats du får applicera på ett enskilt bolag."
+      ],
+      "takeaway": "Ingen signal räcker ensam, men när flera samlas, obevisad trend, framflyttad rapport, utspädning och tunn kassa, ritar de tillsammans en riskbild du inte ska blunda för."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TVÅ UPPGÅNGAR SOM SER LIKA UT",
+      "titel": "Varaktig uppvärdering eller parabol på luft",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Varaktig uppvärdering",
+            "text": "En uppgång som följs av stigande, bevisade räkenskaper. Vinsten och kassaflödet kommer i takt med kursen, inte i stället för den. Rapportdatum ligger fast, kassan räcker utan att bolaget måste ta in pengar mitt i rusningen. Priset stiger för att verksamheten blivit mer värd."
+          },
+          {
+            "rubrik": "Parabol på luft",
+            "text": "Priset lösgör sig från verksamheten. Värderingen slutar handla om vad bolaget tjänar och börjar handla om vad marknaden hoppas att det ska tjäna. Räkenskaperna står stilla medan kursen rusar, så hela uppgången är ett löfte, inte ett resultat."
+          }
+        ],
+        "figurtext": "Samma form på grafen, motsatt innehåll. Skillnaden syns i räkenskaperna, inte i kursen."
+      },
+      "forklaring": "Den erfarna investeraren imponeras inte av priset. En kurs som fyrdubblats säger honom ingenting om värde, bara att någon betalat mer i går än i förrgår. Han ställer i stället en enda fråga: vad har faktiskt bevisats? \"Den här gången är det annorlunda\" är girighetens favoritmening. Den sägs i varje parabol, och den är nästan aldrig sann."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Räkenskaperna bakom parabolen",
+      "underrubrik": "Sivers Semiconductors, helår 2025. Läs den svaga verksamheten mot en kursresa som sprang hundratals procent: plus 804 procent på sex månader och plus 304 procent på tre månader, sedan minus 50,51 procent på en månad, till 39,00 kronor den 8 juli 2026.",
+      "visual": {
+        "typ": "stapeldiagram",
+        "data": [
+          { "kategori": "Kassa", "varde": 45 },
+          { "kategori": "Nettoförlust", "varde": -186, "accent": true },
+          { "kategori": "Kassaflöde löpande verksamhet", "varde": -57 }
+        ],
+        "etiketter": "Miljoner kronor, helår 2025",
+        "figurtext": "Helår 2025. Källa: Dagens PS, 2026-03-24. Daterad genomgång, inte ett omdöme om bolagets framtid."
+      },
+      "slutsats": "En liten kassa, en tydlig förlust och en förbränning som gör en emission svår att undvika. Priset sprang långt före räkenskaperna, som visade en verksamhet som förlorade pengar. Det är hela lärdomen: parabolen och klockorna."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad kännetecknar en parabolisk uppgång i lektionens mening?",
+          "alternativ": [
+            "Kursen stiger kraftigt på en obevisad trend medan börsvärdet lösgör sig från verksamheten",
+            "Kursen stiger stadigt i takt med stigande vinster",
+            "Kursen faller snabbt efter en vinstvarning"
+          ],
+          "ratt": [0],
+          "forklaring": "Det paraboliska är att priset drivs av en berättelse om framtiden bolaget ännu inte bevisat att det kan kapitalisera på, så att värderingen tappar kontakt med de faktiska räkenskaperna."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är en framflyttad rapport som öppnar ett insynssäljfönster en varningsklocka?",
+          "alternativ": [
+            "Den kan låta insynspersoner sälja innan marknaden får se siffrorna",
+            "Den betyder alltid att bolaget begått ett brott",
+            "Den påverkar aldrig aktiekursen"
+          ],
+          "ratt": [0],
+          "forklaring": "När rapporten skjuts fram så att en lock-up löper ut först kan de som vet mest sälja innan de sämre siffrorna blir offentliga. Det är en signal om informationsövertag, inte ett bevis, men värt att väga tungt."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad säger forskningen om avkastning efter extrema paraboliska rörelser?",
+          "alternativ": [
+            "Extrema momentumrörelser tenderar att följas av bakslag (mean reversion), särskilt utan vinstunderlag",
+            "De fortsätter i genomsnitt uppåt i flera år",
+            "Det finns ingen forskning om detta"
+          ],
+          "ratt": [0],
+          "forklaring": "Momentum kan bära länge, men de mest extrema rörelserna utan fundamentalt stöd är också de mest utsatta för kraftiga bakslag (Daniel och Moskowitz, Momentum Crashes, 2016). Mekanismen gäller, inte en exakt procentsats för ett enskilt bolag."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken kombination av signaler ska få varningsklockorna att ringa samtidigt?",
+          "alternativ": [
+            "Kraftig uppgång på obevisad trend, framflyttad rapport, utspädande emission och kassabrist",
+            "Stabil vinsttillväxt, stark kassa och oförändrat rapportdatum",
+            "Sjunkande kurs och stigande utdelning"
+          ],
+          "ratt": [0],
+          "forklaring": "Ingen signal räcker ensam, men när flera samlas, obevisad trend, försenad rapport, utspädning, tunn kassa, ritar de tillsammans en tydlig riskbild."
+        }
+      ]
+    }
+  ]
+}
