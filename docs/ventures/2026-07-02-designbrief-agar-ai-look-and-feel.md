@@ -25,10 +25,10 @@ V1 var för kommunikativ. Allt löstes upp i meningar; siffror fanns bara inuti 
 
 ## 4. Visuellt språk
 
-**Typografi**
-- Fraunces (serif display): rubriker, bolagsnamn, verdikt, citat. Ger rösten.
-- Inter: UI, brödtext, etiketter.
-- JetBrains Mono med tabulära siffror: **all numerik, utan undantag.** Tal högerställs i kolumner. Enheter och etiketter i 10 till 11 px versal mono med spärrning.
+**Typografi** (typspår A, 2026-07-08: husets levande stack vann över dokumentens gamla)
+- Outfit (display): rubriker, bolagsnamn, verdikt. Spectral (serif) för kursens brödtext och citat.
+- Inter: UI, brödtext i produkten, etiketter.
+- JetBrains Mono med tabulära siffror: **all numerik i produktens datalager, utan undantag.** Tal högerställs i kolumner. Enheter och etiketter i 10 till 11 px versal mono med spärrning.
 
 **Färg och tema**
 - **Konsolidering till huset (2026-07-07):** tre estetiker (Spaningens kalla terminal, Marginalens varma redaktion, Ägarkollens grafit) blev en. Marginalens oxblod-redaktion är huset; Spaningens datainstrument är funktionslagret ovanpå. Papper #F7F4EC, kort #FCFAF4, oxblod #8A2E26 som varumärkes- och interaktionsaccent (knappar, aktiva lägen, logotyp). Mörkt tema finns kvar som sekundärt val, i varm mörkbrun bas, inte blågrafit.

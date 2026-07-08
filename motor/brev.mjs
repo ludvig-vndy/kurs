@@ -64,11 +64,11 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ägarbrevet</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#F7F4EC;--card:#FCFAF4;--line:#E4DDCC;--ink:#211C17;--mut:#5C544A;--faint:#8A8172;
+  :root{--bg:#F6F4EF;--card:#FCFAF4;--line:#E4DDCC;--ink:#211C17;--mut:#5C544A;--faint:#8A8172;
     --ox:#8A2E26;--ox-ink:#FBF7EE;--pos:#2E6B4C;
-    --disp:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+    --disp:'Outfit',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
   .wrap{max-width:680px;margin:0 auto;padding:28px 20px 60px}
   .mast{display:flex;justify-content:space-between;border-bottom:2px solid var(--ox);padding-bottom:8px;

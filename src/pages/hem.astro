@@ -141,6 +141,11 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
     </div>
 
     <a class="txtkurs" href="/oversikt">Visa hela textkursen ({manifest.count} lektioner)</a>
+
+    <a class="agarkollen-teaser" href="/labs/agar-ai-v2.html">
+      <span class="at-kicker">Från huset · alpha</span>
+      <span class="at-text">Ägarkollen: dina bolag lästa varje natt, varje siffra med källa. Se prototypen →</span>
+    </a>
   </main>
 </Broadsheet>
 
@@ -174,6 +179,11 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
   .feature:hover .cta { background: var(--oxblood); border-color: var(--oxblood); color: var(--paper); transform: translateX(4px); }
 
   /* Repetition card: surfaces the SRS miss-queue, only when non-empty. */
+  .agarkollen-teaser { display: block; margin-top: 26px; padding: 16px 2px 18px; border-top: 2px solid var(--rule-strong); border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; }
+  .agarkollen-teaser:hover .at-text { color: var(--oxblood); }
+  .at-kicker { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 6px; }
+  .at-text { font-family: var(--display); font-weight: 400; font-size: clamp(17px, 2vw, 21px); line-height: 1.35; transition: color .2s; }
+
   .repcard { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 16px 0 0; padding: 18px 22px; background: var(--card); border: 1px solid var(--rule); border-top: 2px solid var(--oxblood); text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
   .repcard[hidden] { display: none; }
   .repcard:hover { transform: translateX(3px); text-decoration: none; }
