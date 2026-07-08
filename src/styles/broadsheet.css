@@ -50,10 +50,10 @@ a{color:inherit}
 /* Börjar vid blockets överkant (precis under länkraden), aldrig uppe i
    mastheaden. Tonar bort nedåt. */
 .leadprint::before{content:""; position:absolute; z-index:-1; inset:0 -10px -6px;
-  background-image:url('/bilder/borshuset-1600.jpg'); background-size:cover; background-position:center 30%;
-  filter:grayscale(1) contrast(1.03); opacity:.13;
-  -webkit-mask:linear-gradient(179deg,#000 0%,#000 46%,transparent 92%);
-  mask:linear-gradient(179deg,#000 0%,#000 46%,transparent 92%)}
+  background-image:url('/bilder/borshuset-1600.jpg'); background-size:cover; background-position:center 28%;
+  filter:grayscale(1) contrast(1.04); opacity:.24;
+  -webkit-mask:linear-gradient(179deg,#000 0%,#000 50%,transparent 94%);
+  mask:linear-gradient(179deg,#000 0%,#000 50%,transparent 94%)}
 
 /* ── breadcrumb ─────────────────────────────────────────────────────── */
 .crumb{display:flex; align-items:center; gap:9px; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--muted); flex-wrap:wrap; margin:26px 0 28px}
