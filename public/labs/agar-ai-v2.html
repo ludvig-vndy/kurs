@@ -35,6 +35,7 @@
   .mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
   button{font-family:inherit;cursor:pointer}
   ::selection{background:var(--ox-soft)}
+  :focus-visible{outline:2px solid var(--ox);outline-offset:2px;border-radius:3px}
   .ico{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
   .ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
   .ico.sm svg{width:14px;height:14px}
@@ -305,8 +306,8 @@
   .ufoot{margin-top:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:16px}
   .unav{display:flex;align-items:center;gap:12px;margin-top:14px;max-width:660px}
   .udots{display:flex;gap:6px;flex:1;justify-content:center}
-  .udots i{width:6px;height:6px;border-radius:50%;background:var(--line2);cursor:pointer;transition:.15s}
-  .udots i.on{background:var(--ox);width:18px;border-radius:4px}
+  .udots button{width:10px;height:10px;padding:0;border:none;border-radius:50%;background:var(--line2);cursor:pointer;transition:.15s}
+  .udots button.on{background:var(--ox);width:20px;border-radius:5px}
   .uarr{width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);background:var(--card);color:var(--mut);display:grid;place-items:center;cursor:pointer;transition:.14s}
   .uarr:hover{border-color:var(--ox);color:var(--ink)}
   .uarr.off{opacity:.3;pointer-events:none}
@@ -380,6 +381,8 @@
   .isinres{margin-top:10px;font-size:12.5px;line-height:1.5;display:none}
 
   /* ===== brevet som ljud ===== */
+  .brevband{height:44px;border-radius:12px 12px 0 0;background:linear-gradient(rgba(122,38,30,.85),rgba(96,28,22,.9)),url('/bilder/borshuset-1600.jpg') center 40%/cover;max-width:660px}
+  .brevband+.utg{border-top-left-radius:0;border-top-right-radius:0}
   .pod{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;max-width:660px;margin:-6px 0 16px}
   .podbtn{width:34px;height:34px;border-radius:50%;border:none;background:var(--ox);color:var(--ox-ink);display:grid;place-items:center;flex:0 0 auto;padding:0}
   .podmid{flex:1;min-width:0}
@@ -947,8 +950,8 @@ function askG(q){const chat=document.getElementById('gchat');chat.insertAdjacent
 function askGIn(){const i=document.getElementById('gin');if(i&&i.value.trim()){askG(i.value.trim());i.value='';}}
 
 /* ============ Ägarbrevet (ytan) ============ */
-let bIdx=0;const BPN=8;
-function goBP(i){bIdx=Math.max(0,Math.min(BPN-1,i));renderBrevet();termify(main);window.scrollTo(0,0);}
+let bIdx=Math.min(7,parseInt(localStorage.getItem('agarai-bIdx')||'0'));const BPN=8;
+function goBP(i){bIdx=Math.max(0,Math.min(BPN-1,i));localStorage.setItem('agarai-bIdx',String(bIdx));renderBrevet();termify(main);window.scrollTo(0,0);}
 function ulink(txt,tk){return `<div class="ulink" onclick="event.stopPropagation();goStock('${tk}')">${txt} →</div>`;}
 function bpage(i){
   if(i===0)return`
@@ -1006,12 +1009,13 @@ function renderBrevet(){
   <div class="sub">Morgonens utgåva, sida för sida. Kommer även som mejl. Piltangenterna funkar.</div>
   <div class="pod"><button class="podbtn" id="podbtn" onclick="podToggle()"></button><div class="podmid"><div class="podl">Lyssna på utgåvan · morgonens brev som AI-röst, samma granskade text <span class="faintc">· prototyp, ingen ljudfil</span></div><div class="podbar"><i id="podprog"></i></div></div><div class="podt num" id="podt">2:10</div></div>
   <div class="utgwrap">
+    <div class="brevband" aria-hidden="true"></div>
     <div class="utg"><div class="uk"><span>Ägarbrevet · onsdag 2 juli</span><span class="r2">07:30 · sida ${bIdx+1} av ${BPN}</span></div>${bpage(bIdx)}
       ${bIdx<BPN-1?`<div style="margin-top:auto;padding-top:18px"><button class="blad" onclick="goBP(${bIdx+1})">Bläddra →</button></div>`:''}</div>
     <div class="unav">
-      <button class="uarr ${bIdx===0?'off':''}" onclick="goBP(${bIdx-1})"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
-      <div class="udots">${Array.from({length:BPN},(_,i)=>`<i class="${i===bIdx?'on':''}" onclick="goBP(${i})"></i>`).join('')}</div>
-      <button class="uarr ${bIdx===BPN-1?'off':''}" onclick="goBP(${bIdx+1})"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      <button class="uarr ${bIdx===0?'off':''}" aria-label="Föregående sida" onclick="goBP(${bIdx-1})"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      <div class="udots">${Array.from({length:BPN},(_,i)=>`<button type="button" class="${i===bIdx?'on':''}" aria-label="Sida ${i+1} av ${BPN}" onclick="goBP(${i})"></button>`).join('')}</div>
+      <button class="uarr ${bIdx===BPN-1?'off':''}" aria-label="Nästa sida" onclick="goBP(${bIdx+1})"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
     </div>
     <div class="ukbd"><kbd>←</kbd> <kbd>→</kbd> för att bläddra</div>
   </div>`;
@@ -1027,6 +1031,7 @@ function podPaint(){
   const b=document.getElementById('podbtn'),p=document.getElementById('podprog'),t=document.getElementById('podt');
   if(!b)return;
   b.innerHTML=podIco();
+  b.setAttribute('aria-label', podOn?'Pausa uppläsningen':'Spela upp utgåvan');
   if(p)p.style.width=(podS/PODLEN*100)+'%';
   const r=PODLEN-podS;
   if(t)t.textContent=Math.floor(r/60)+':'+String(r%60).padStart(2,'0');

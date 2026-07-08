@@ -20,6 +20,7 @@ import { extraheraAvtal } from './extract-avtal.mjs';
 import { beraknaAvtal } from './compute-avtal.mjs';
 import { narreraAvtal } from './narrate-avtal.mjs';
 import { verifiera } from './verify.mjs';
+import { TOKENS_CSS, FONT_LANK, MASTHEAD_CSS, masthead, BILD_BORSHUS } from './tokens.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const läs = f => readFileSync(p(f), 'utf8');
@@ -64,31 +65,31 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ägarbrevet</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="${FONT_LANK}" rel="stylesheet">
 <style>
-  :root{--bg:#F6F4EF;--card:#FCFAF4;--line:#E4DDCC;--ink:#211C17;--mut:#5C544A;--faint:#8A8172;
-    --ox:#8A2E26;--ox-ink:#FBF7EE;--pos:#2E6B4C;
-    --disp:'Outfit',system-ui,sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+  ${TOKENS_CSS}
+  ${MASTHEAD_CSS}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
   .wrap{max-width:680px;margin:0 auto;padding:28px 20px 60px}
   .mast{display:flex;justify-content:space-between;border-bottom:2px solid var(--ox);padding-bottom:8px;
     font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
   h1{font-family:var(--disp);font-weight:700;font-size:30px;margin:16px 0 4px;letter-spacing:-.4px}
   .sub{color:var(--mut);margin:0 0 22px}
-  .sek{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:14px}
+  .sek{border-top:1px solid var(--line);padding:18px 0 20px}
   .et{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ox);margin-bottom:8px}
   h2{font-family:var(--disp);font-weight:600;font-size:19px;margin:0 0 10px;letter-spacing:-.2px;line-height:1.25}
   .verdikt{font-family:var(--disp);font-size:15.5px;line-height:1.5;margin:0 0 10px}
   p{color:var(--mut);font-size:13.5px;margin:0 0 10px}
   .grind{font-family:var(--mono);font-size:10px;color:var(--faint);border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
   .grind b{color:var(--pos);font-weight:500}
-  .fel{border-color:var(--ox);background:#F6E4E0}
+  .fel{background:#F6E4E0;padding:18px 14px}
   .foot{font-family:var(--mono);font-size:10px;color:var(--faint);text-align:center;margin-top:24px;line-height:1.8}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="mast"><span>Ägarkollen · av Marginalen</span><span>Genererat av motorn · alpha</span></div>
+  ${masthead('genererat av motorn · alpha')}
+  <div style="height:52px;background:linear-gradient(rgba(122,38,30,.85),rgba(96,28,22,.9)),url('${BILD_BORSHUS}') center 40%/cover;margin-top:14px"></div>
   <h1>Ägarbrevet</h1>
   <p class="sub">${sektioner.length} saker i dag. Varje siffra nedan är spårad till sin källa innan brevet byggdes: ${talTotalt} tal, ${allaOk ? 'alla godkända' : 'FEL, se nedan'}.</p>
   ${sektioner.map(s => s.ok ? `
