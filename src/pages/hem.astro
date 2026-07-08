@@ -91,17 +91,46 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
       </div>
     </section>
 
-    <!-- ===== Continue ===== -->
-    <a class="feature" data-continue-card href={firstHref}>
-      <div class="row">
-        <div>
-          <div class="eyebrow" data-continue-eyebrow>Fortsätt där du slutade</div>
-          <h2 data-continue-title>Börja kursen</h2>
-          <div class="meta" data-continue-meta>Lektion 1.1 · Investeringsfilosofi</div>
+    <!-- ===== Hub band: portföljen (förhandsvisning) + fortsätt kursen ===== -->
+    <section class="hubband">
+      <div class="hpanel">
+        <div class="hph"><h2>Dina bolag</h2><span class="prevtag">Förhandsvisning</span></div>
+        <a class="brow" href="/labs/dina-bolag-i-marginalen.html">
+          <span class="bdot neg"></span>
+          <span class="bmid"><span class="bnm">Telvio</span><span class="bln">Marginalen gick under din gräns på 40 procent</span></span>
+          <span class="brt">84,20<span class="bchg dn">-0,6%</span></span>
+        </a>
+        <a class="brow" href="/labs/dina-bolag-i-marginalen.html">
+          <span class="bdot pos"></span>
+          <span class="bmid"><span class="bnm">Norlux Industri</span><span class="bln">Stark rapport, höjd prognos</span></span>
+          <span class="brt">284,50<span class="bchg up">+1,8%</span></span>
+        </a>
+        <a class="brow" href="/labs/dina-bolag-i-marginalen.html">
+          <span class="bdot gold"></span>
+          <span class="bmid"><span class="bnm">Kavex Medical</span><span class="bln">Insiderköp 2,1 Mkr, Q3 i dag</span></span>
+          <span class="brt">156,00<span class="bchg up">+0,4%</span></span>
+        </a>
+        <div class="calmrow"><b>Lugnt i tre:</b> Voltcell, Brunna Hydro, Almi Foods.</div>
+        <div class="hacts">
+          <a class="hbtn" href="/labs/dina-bolag-i-marginalen.html">Se Dina bolag →</a>
+          <a class="hbtn" href="/labs/agarbrevet-i-marginalen.html">Öppna Ägarbrevet →</a>
         </div>
-        <span class="cta" aria-hidden="true">→</span>
+        <p class="prevnote">Exempel med fiktiva bolag. Snart: dina egna innehav, lästa varje natt med källa till varje siffra.</p>
       </div>
-    </a>
+
+      <div class="hpanel">
+        <div class="hph"><h2>Fortsätt kursen</h2><a class="hph-link" href="/fokus">Kursöversikt →</a></div>
+        <a class="hcont" data-continue-card href={firstHref}>
+          <div>
+            <div class="hcont-e" data-continue-eyebrow>Börja här, första lektionen</div>
+            <div class="hcont-t" data-continue-title>Vad det innebär att äga en aktie</div>
+            <div class="hcont-m" data-continue-meta>Lektion 1.1 · Investeringsfilosofi</div>
+          </div>
+          <span class="hcont-arr" aria-hidden="true">→</span>
+        </a>
+        <p class="hnote">Dina framsteg sparas i den här webbläsaren. Hela din väg genom kursen ligger nedanför.</p>
+      </div>
+    </section>
 
     <!-- ===== Repetition (shown when there are missed questions) ===== -->
     <a class="repcard" data-rep-card href="/repetera" hidden>
@@ -142,11 +171,6 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
     </div>
 
     <a class="txtkurs" href="/oversikt">Visa hela textkursen ({manifest.count} lektioner)</a>
-
-    <a class="agarkollen-teaser" href="/labs/agar-ai-v2.html">
-      <span class="at-kicker">Från huset · alpha</span>
-      <span class="at-text">Ägarkollen: dina bolag lästa varje natt, varje siffra med källa. Se prototypen →</span>
-    </a>
   </main>
 </Broadsheet>
 
@@ -181,10 +205,45 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
 
   /* Repetition card: surfaces the SRS miss-queue, only when non-empty. */
   .datumrad { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: -8px 0 14px; }
-  .agarkollen-teaser { display: block; margin-top: 26px; padding: 16px 2px 18px; border-top: 2px solid var(--rule-strong); border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; }
-  .agarkollen-teaser:hover .at-text { color: var(--oxblood); }
-  .at-kicker { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 6px; }
-  .at-text { font-family: var(--display); font-weight: 400; font-size: clamp(17px, 2vw, 21px); line-height: 1.35; transition: color .2s; }
+
+  /* Hub-bandet: portföljen (förhandsvisning) bredvid fortsätt-kursen. Samma
+     mönster som labs-mocken, in i den riktiga sidan. Portföljdelen är märkt
+     exempel tills motorn matar riktig data; kurs-delen är skarp. */
+  .hubband { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin: 30px 0 0; }
+  @media (max-width: 760px) { .hubband { grid-template-columns: 1fr; } }
+  .hpanel { padding: 24px 0 10px; }
+  @media (min-width: 761px) { .hubband .hpanel:last-child { border-left: 1px solid var(--rule); padding-left: 48px; } }
+  @media (max-width: 760px) { .hubband .hpanel:last-child { border-top: 1px solid var(--rule); padding-top: 20px; } }
+  .hph { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .hph h2 { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .prevtag { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--rule-strong); padding: 3px 8px; }
+  .hph-link { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--oxblood); text-decoration: none; }
+  .hph-link:hover { color: var(--ink); text-decoration: none; }
+
+  .brow { display: grid; grid-template-columns: 12px 1fr auto; gap: 12px; align-items: baseline; padding: 12px 2px; border-top: 1px solid var(--rule); text-decoration: none; color: inherit; transition: background .14s; }
+  .brow:hover { background: var(--card); text-decoration: none; }
+  .bdot { width: 8px; height: 8px; border-radius: 50%; position: relative; top: 4px; }
+  .bdot.neg { background: var(--bad); } .bdot.pos { background: var(--good); } .bdot.gold { background: var(--gold); }
+  .bmid { min-width: 0; }
+  .bnm { display: block; font-family: var(--display); font-weight: 500; font-size: 16px; }
+  .bln { display: block; color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+  .brt { text-align: right; font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+  .bchg { font-size: 11px; margin-left: 6px; } .bchg.up { color: var(--good); } .bchg.dn { color: var(--bad); }
+  .calmrow { padding: 12px 2px; border-top: 1px solid var(--rule); font-size: 13.5px; color: var(--muted); }
+  .calmrow b { color: var(--ink-soft); font-weight: 500; }
+  .hacts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .hbtn { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--rule-strong); padding: 11px 16px; border-radius: 99px; text-decoration: none; transition: border-color .2s, color .2s; }
+  .hbtn:hover { border-color: var(--oxblood); color: var(--oxblood); text-decoration: none; }
+  .prevnote { font-family: var(--mono); font-size: 10.5px; line-height: 1.6; color: var(--faint); margin-top: 14px; max-width: 46ch; }
+
+  .hcont { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 20px; background: var(--card); border: 1px solid var(--rule); text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+  .hcont:hover { transform: translateX(3px); text-decoration: none; }
+  .hcont-e { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 5px; }
+  .hcont-t { font-family: var(--display); font-weight: 500; font-size: 18px; line-height: 1.2; }
+  .hcont-m { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); margin-top: 6px; }
+  .hcont-arr { font-family: var(--display); font-size: 22px; color: var(--ink); flex: none; }
+  .hcont:hover .hcont-arr { color: var(--oxblood); }
+  .hnote { font-size: 13px; color: var(--muted); margin-top: 14px; max-width: 42ch; }
 
   .repcard { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 16px 0 0; padding: 18px 22px; background: var(--card); border: 1px solid var(--rule); border-top: 2px solid var(--oxblood); text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
   .repcard[hidden] { display: none; }
