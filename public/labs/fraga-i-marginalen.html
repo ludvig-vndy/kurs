@@ -33,7 +33,7 @@
   .nav a:hover,.nav a.here{color:var(--ink)}
   .nav a.here{color:var(--oxblood)}
 
-  main{flex:1;padding-bottom:104px}
+  main{flex:1;padding-bottom:60px}
   .sheet{max-width:706px;margin:0 auto}
   .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin:26px 0 12px}
   .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5vw,52px);line-height:1.02;letter-spacing:-.02em}
@@ -71,16 +71,16 @@
   .a.decline p{color:var(--muted)}
   .a.decline .lab{color:var(--gold);border-color:var(--gold)}
 
-  /* dockad Fråga-rad */
-  .askdock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(transparent,var(--paper) 26%)}
-  .askbar{max-width:706px;margin:0 auto;padding:0 clamp(20px,5vw,52px) 18px;display:flex}
-  .askbar form{flex:1;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:11px 12px 11px 18px;box-shadow:0 6px 24px rgba(33,28,23,.10)}
-  .askctx{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);white-space:nowrap;border-right:1px solid var(--rule);padding-right:12px}
-  .askbar input{flex:1;border:none;background:none;font-family:var(--serif);font-size:15px;color:var(--ink);outline:none;min-width:0}
-  .askbar input::placeholder{color:var(--muted)}
-  .kbd{font-family:var(--mono);font-size:10px;color:var(--faint);border:1px solid var(--rule-strong);border-radius:6px;padding:3px 7px;white-space:nowrap}
-  .asksend{border:none;background:var(--oxblood);color:var(--paper);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
-  .asksend svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  /* Frågerutan: prominent och centralt placerad, inte en dockad footer-rad.
+     Det här är sidan där man frågar, så inmatningen är sidans primära handling. */
+  .askhero{display:flex;align-items:center;gap:12px;margin-top:24px;background:var(--card);border:1.5px solid var(--rule-strong);border-radius:99px;padding:6px 6px 6px 22px;transition:border-color .2s,box-shadow .2s}
+  .askhero:focus-within{border-color:var(--oxblood);box-shadow:0 8px 28px rgba(33,28,23,.10)}
+  .askhero input{flex:1;border:none;background:none;font-family:var(--serif);font-size:18px;color:var(--ink);outline:none;min-width:0;padding:10px 0}
+  .askhero input::placeholder{color:var(--muted)}
+  .kbd{font-family:var(--mono);font-size:10px;color:var(--faint);border:1px solid var(--rule-strong);border-radius:6px;padding:4px 8px;white-space:nowrap}
+  .askhero button{border:none;background:var(--oxblood);color:var(--paper);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;transition:transform .2s}
+  .askhero button:hover{transform:scale(1.06)}
+  .askhero button svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
   .site-foot{border-top:2px solid var(--rule-strong)}
   .site-foot .wrap{padding-top:26px;padding-bottom:40px}
@@ -124,6 +124,12 @@
       <p class="standfirst">Svar med källa och siffrorna synliga, aldrig påhittade tal. Fråga om dina egna bolag eller om något ur kursen. Ligger frågan utanför det säger den ifrån hellre än gissar.</p>
     </div>
 
+    <form class="askhero" id="askform" data-reveal>
+      <input id="askinput" type="text" placeholder="Fråga om dina bolag eller kursen..." autocomplete="off" aria-label="Fråga AI">
+      <span class="kbd">⌘K</span>
+      <button type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </form>
+
     <div class="seedh" data-reveal>Föreslagna frågor</div>
     <div class="seed" data-reveal id="seed"></div>
 
@@ -132,17 +138,6 @@
     </div>
   </div>
 </main>
-
-<div class="askdock">
-  <div class="askbar">
-    <form id="askform">
-      <span class="askctx">Portföljen och kursen</span>
-      <input id="askinput" type="text" placeholder="Fråga om dina bolag eller kursen..." autocomplete="off" aria-label="Fråga AI">
-      <span class="kbd">⌘K</span>
-      <button class="asksend" type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
-    </form>
-  </div>
-</div>
 
 <footer class="site-foot">
   <div class="wrap">
@@ -182,11 +177,6 @@ const QA = {
     html:'<p><span class="lab">fakta</span>En moat, eller konkurrensfördel, är det som hindrar andra bolag från att konkurrera bort din vinst. Vanliga former: kunder som sitter fast, en stark varumärkespremie, lägst kostnad, eller nätverk som blir bättre ju fler som är med.</p>'+
       '<p>Det syns i siffrorna som hög avkastning på kapitalet som håller i sig år efter år, i stället för att pressas ned av konkurrens. Det är kapitel 6 i kursen, med exempel.</p>',
     foot:'<a class="kurs" href="/fokus/kapitel/6">Läs: Konkurrensfördelar (moats) →</a>'},
-  'Hur skriver jag en for-loop i Python?':{
-    decline:true,
-    html:'<p><span class="lab">utanför mitt område</span>Den kan jag inte hjälpa med. Jag håller mig till dina bolag och till kursen i aktieanalys, så att varje svar går att spåra till en källa i stället för att gissa.</p>'+
-      '<p>Vill du så kan jag i stället förklara ett nyckeltal, gå igenom en av dina rapporter, eller ta en fråga ur kursen.</p>',
-    foot:'<a href="/labs/dina-bolag-i-marginalen.html">Till dina bolag →</a><a class="kurs" href="/fokus">Till kursen →</a>'},
 };
 const SEEDS = Object.keys(QA);
 const seed=document.getElementById('seed'), thread=document.getElementById('thread'), inp=document.getElementById('askinput');
