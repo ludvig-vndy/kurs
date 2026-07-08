@@ -27,7 +27,7 @@ Plattform för en svenskspråkig kurs i fundamental aktieanalys. Astro-byggd sta
 
 ```
 src/
-  content/kurs/            121 lektioner i 23 moduler (NN-modulnamn/N.N-lektion.md)
+  content/kurs/            127 lektioner i 24 moduler (NN-modulnamn/N.N-lektion.md)
   content.config.ts        Zod-schema för lektioner (frontmatter + quiz)
   lib/course.ts            ordning, träd, grannar, lästid, modul-gating
   pages/kurs/[...slug].astro  deck-spelaren (en lektion -> steg/slides)
@@ -61,7 +61,8 @@ Deck-UI med stegnavigering, lösenordsgrind, quiz med %-resultat, localStorage-p
 
 ### Innehållet (klar) — B+ till A+
 Hela omskrivningsplanen (`docs/superpowers/plans/2026-06-18-kurs-bplus-till-aplus.md`) körd: 103 lektioner omskrivna och granskade (varje modul godkänd), capstone ombyggd, ny content (index, WACC, sektor, praktik, Lifco-case), quiz på alla 95 standardlektioner (~379 frågor totalt). Em-dashes och en-dashes borttagna ur allt kursmaterial. Alla grindar gröna.
-- **121 lektioner, 23 moduler** (modul 23, Att äga ett förhoppningsbolag, tillagd 2026-07-07: casetrappan, avtalsspråket, kallelsen/utspädningen, löftesliggaren, hålla/släppa). Flaggskeppscase: `src/content/kurs/20-fallstudie-lifco/` (källa: `docs/case-sources/fall-lifco-2025.md`).
+- **127 lektioner, 24 moduler** (modul 23, Att äga ett förhoppningsbolag, tillagd 2026-07-07: casetrappan, avtalsspråket, kallelsen/utspädningen, löftesliggaren, hålla/släppa). Flaggskeppscase: `src/content/kurs/20-fallstudie-lifco/` (källa: `docs/case-sources/fall-lifco-2025.md`).
+- **Modul 24, Girighet och att säkra avkastning, tillagd 2026-07-08** (6 lektioner: girigheten kostar, önsketänkande, den paraboliska uppgången, scenariojämförelsen, säkra eller stretcha, syntes). Spec/plan: `docs/superpowers/specs/2026-07-08-modul-24-girighet-design.md`, `docs/superpowers/plans/2026-07-08-modul-24-girighet.md`. Namngivet Sivers-case i 24.3 (daterade tal, källa: `docs/case-sources/sivers-2026.md`). Verktygsskiss (ej byggd): `docs/specs/verktyg-sakra-eller-stretcha.md`.
 - Kanoniska formler: `src/content/kurs/00-referens/formelbilaga.md` (format: referens).
 
 ### Design (live): "Marginalen" broadsheet
@@ -88,6 +89,8 @@ Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-
 ---
 
 ## Att notera (ej åtgärdas om inte ombedd)
-- Ingen konsolideringspass kördes; kursen växte till ~121 lektioner / 23 moduler.
+- Ingen konsolideringspass kördes; kursen växte till 127 lektioner / 24 moduler.
+- Modul 24 är ännu inte transformerad till Fokus-JSON (`content/fundamental-aktieanalys/`). En framtida transform-session får ta den dit.
+- Verktyget "Säkra eller stretcha" (`docs/specs/verktyg-sakra-eller-stretcha.md`) är bara spec, inte byggt i `/verktyg`.
 - Användarens egen `Ägarboken - Startsida (standalone).html` innehåller fortfarande några em-dashes (lämnat till användaren).
 - `KURS-EXPORT.md` och `src/content/kurs.zip` är artefakter, inte källa.

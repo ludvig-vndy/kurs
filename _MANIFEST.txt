@@ -121,3 +121,9 @@
 23.4	Löftesliggaren: ledningens historik som kvalitetsmått	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.4-loftesliggaren.md
 23.5	Att hålla och att släppa: trappan avgör, inte kursen	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.5-halla-och-slappa.md
 23.6	Syntes: så äger du ett förhoppningsbolag	src/content/kurs/23-att-aga-ett-forhoppningsbolag/23.6-syntes-sa-ager-du-ett-forhoppningsbolag.md
+24.1	Girigheten och varför den kostar	src/content/kurs/24-girighet-och-att-sakra-avkastning/24.1-girigheten-och-varfor-den-kostar.md
+24.2	Önsketänkande: när tesen blir luft	src/content/kurs/24-girighet-och-att-sakra-avkastning/24.2-onsketankande-nar-tesen-blir-luft.md
+24.3	Den paraboliska uppgången: mönstret och varningsklockorna	src/content/kurs/24-girighet-och-att-sakra-avkastning/24.3-den-paraboliska-uppgangen.md
+24.4	Scenariojämförelsen: ånger vs säkrad avkastning	src/content/kurs/24-girighet-och-att-sakra-avkastning/24.4-scenariojamforelsen-anger-vs-sakrad-avkastning.md
+24.5	Att säkra eller stretcha: beslutsregeln	src/content/kurs/24-girighet-och-att-sakra-avkastning/24.5-att-sakra-eller-stretcha.md
+24.6	Syntes: så håller du girigheten i schack	src/content/kurs/24-girighet-och-att-sakra-avkastning/24.6-syntes-sa-haller-du-girigheten-i-schack.md

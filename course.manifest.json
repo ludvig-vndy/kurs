@@ -1,7 +1,7 @@
 {
   "seededFrom": "_MANIFEST.txt (verifierad filuppsättning)",
   "crosscheckedAgainst": "Fundamental_analys_kursstruktur.md",
-  "count": 121,
+  "count": 127,
   "lessons": [
     {
       "lektion": "1.0",
@@ -486,6 +486,30 @@
     {
       "lektion": "23.6",
       "titel": "Syntes: så äger du ett förhoppningsbolag"
+    },
+    {
+      "lektion": "24.1",
+      "titel": "Girigheten och varför den kostar"
+    },
+    {
+      "lektion": "24.2",
+      "titel": "Önsketänkande: när tesen blir luft"
+    },
+    {
+      "lektion": "24.3",
+      "titel": "Den paraboliska uppgången: mönstret och varningsklockorna"
+    },
+    {
+      "lektion": "24.4",
+      "titel": "Scenariojämförelsen: ånger vs säkrad avkastning"
+    },
+    {
+      "lektion": "24.5",
+      "titel": "Att säkra eller stretcha: beslutsregeln"
+    },
+    {
+      "lektion": "24.6",
+      "titel": "Syntes: så håller du girigheten i schack"
     }
   ]
 }
