@@ -15,6 +15,7 @@ import { renderBolag } from './render-bolag.mjs';
 import { renderDagsbrev } from './render-brev.mjs';
 import { hittaTal } from './verify.mjs';
 import { hamtaInsyn } from './hamta-insyn.mjs';
+import { hamtaBlankning } from './hamta-blankning.mjs';
 import { skicka } from './skicka.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
@@ -27,6 +28,11 @@ mkdirSync(p('./out/data'), { recursive: true });
 
 let totKostnad = 0, totNya = 0;
 const dagensPoster = [], lugna = [];
+
+// Blankningsregistret hämtas en gång per körning (aggregat per emittent).
+let blankning = null;
+try { blankning = await hamtaBlankning(); console.log(`Blankningsregistret: ${blankning.rader.length} emittenter i aggregatet.`); }
+catch (e) { console.log(`Blankningsregistret kunde inte hämtas: ${e.message.slice(0, 80)}`); }
 
 for (const bolag of konf.bolag) {
   try {
@@ -134,6 +140,45 @@ for (const bolag of konf.bolag) {
     }
     console.log(`  insyn: ${insyn.transaktioner.length} transaktioner 12 mån${senastSedd ? '' : ' (baslinje satt, nya flaggas från nästa körning)'}`);
   } catch (e) { console.log(`  insyn: kunde inte hämtas (${e.message.slice(0, 70)})`); }
+
+  // 3c. Blankning: nivå + diff mot förra körningen = avvikelsen (fas 3 v0).
+  if (blankning) {
+    const träffar = blankning.rader.filter(r => r.emittent.toLowerCase().startsWith(bolag.namn.toLowerCase().split(' ')[0]));
+    const rad = träffar.sort((a, b) => b.procent - a.procent)[0];
+    const nu = rad ? rad.procent : 0;
+    const forra = arkiv[bolag.id].__blank;
+    data.blankning = { procent: nu, datum: rad ? rad.datum : null, kalla: blankning.kalla };
+    arkiv[bolag.id].__blank = nu;
+    if (forra != null && Math.abs(nu - forra) >= 0.15) {
+      dagensPoster.push({ bolag: bolag.namn, post: { typ: 'avvikelse', datum: blankning.hamtad, url: 'https://www.fi.se/sv/vara-register/blankningsregistret/', rubrik: `Blankningen ${nu > forra ? 'byggs upp' : 'minskar'}: ${String(forra).replace('.', ',')}% till ${String(nu).replace('.', ',')}%`, bevis: `FI:s aggregat per ${rad ? rad.datum : blankning.hamtad}. Förändring sedan förra körningen: ${String(Math.round((nu - forra) * 100) / 100).replace('.', ',')} procentenheter.` } });
+    }
+    console.log(`  blankning: ${String(nu).replace('.', ',')}%${forra != null ? ` (förra körningen ${String(forra).replace('.', ',')}%)` : ' (baslinje)'}`);
+  }
+
+  // 3d. Omvärlden: konkurrenters flöden, bara rubriker, ingen LLM. Rapporter och
+  // emissioner hos en konkurrent är relevanta även när ditt bolag inte nämns.
+  for (const k of bolag.konkurrenter || []) {
+    try {
+      const kHtml = await (await fetch(k.feed, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } })).text();
+      const kLankar = [];
+      let km; const kre = /href="((?:https:\/\/mfn\.se)?\/(?:[a-z]+\/)?a\/[a-z0-9-]+\/[^"/]+)"/g;
+      while ((km = kre.exec(kHtml)) !== null) { const u = km[1].startsWith('http') ? km[1] : 'https://mfn.se' + km[1]; if (!kLankar.includes(u)) kLankar.push(u); }
+      const nyckel = `__omv_${k.id}`;
+      const sedda = arkiv[bolag.id][nyckel] || [];
+      const nyaK = kLankar.filter(u => !sedda.includes(u));
+      arkiv[bolag.id][nyckel] = kLankar.slice(0, 60);
+      if (sedda.length) {
+        for (const u of nyaK.slice(0, 2)) {
+          const kslug = u.split('/').pop();
+          const ktyp = bestamTyp(kslug);
+          if (['rapport', 'emission', 'forvarv'].includes(ktyp) || /vinstvarning|profit-warning/.test(kslug)) {
+            dagensPoster.push({ bolag: bolag.namn, post: { typ: 'omvarld', datum: new Date().toISOString().slice(0, 10), url: u, rubrik: `Omvärld, ${k.namn}: ${kslug.replace(/-[a-f0-9]+$/, '').replace(/-/g, ' ')}`, bevis: `Konkurrent till ${bolag.namn}. Typ: ${ktyp}.` } });
+          }
+        }
+        if (nyaK.length) console.log(`  omvärld (${k.namn}): ${nyaK.length} nya besked i flödet`);
+      } else console.log(`  omvärld (${k.namn}): baslinje satt`);
+    } catch (e) { console.log(`  omvärld (${k.namn}): fel (${e.message.slice(0, 60)})`); }
+  }
 
   // 3. Spara + rendera.
   data.uppdaterad = new Date().toISOString().slice(0, 16).replace('T', ' ');

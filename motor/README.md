@@ -114,3 +114,8 @@ Alphans hela loop är därmed komplett: MFN-flöden → nya dokument upptäcks �
 - **Fråga AI v0** (`fraga.mjs`): frågor mot dokumentarkivet med produktkedjan i miniatyr: scope-vakt, hämtning, svar enbart ur utdragen, och KÄLLGRINDEN: varje tal i svaret måste finnas i utdragen modellen fick. Bevisat skarpt: modellen försökte själv räkna fram tranche-storlekar (72 292 013 minus 62 304 860), grinden blockerade; efter skärpt instruktion svarar den ur källan och passerar.
 - **NBSP-fixen**: MFN-texter använder hårda mellanslag i tal; normaliseras nu i både hamta och hittaTal. Utan den missar talmatchning tyst, viktigaste buggfixen i natt.
 - **Täckningslistan**: bolagssidan redovisar vilka källor som bevakas, löftet "du missar inget" i verifierbar form.
+
+## Fas 3 i förtid: blankning och omvärld (2026-07-08)
+
+- **Blankningsregistret** (`hamta-blankning.mjs`): FI:s aggregat per emittent (ODS, packas upp med PowerShell, ingen ny dependency). Nivån visas på bolagssidan, och diffen mot förra körningen är "veckans avvikelser" i sin första form: förändring över 0,15 procentenheter flaggas i dagsbrevet ("blankningen byggs upp: 2,3% till 2,6%"). Skarp data: Evolution 5,92%, Lifco 3,29%, Telia 2,34%.
+- **Omvärldsbevakningen v0**: konkurrentflöden per bolag i bolag.json (Tele2 för Telia, AAC Clyde Space för Unibap, Betsson för Evolution). Bara rubriker, ingen LLM-kostnad; rapporter, emissioner, förvärv och vinstvarningar hos konkurrenten flaggas i dagsbrevet som "Omvärld". Bransch- och konkurrentkartor i full skala är fortfarande fas 3; detta är den konfigdrivna föregångaren.

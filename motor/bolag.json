@@ -1,15 +1,68 @@
 {
   "kommentar": "Alphans bevakningslista. feed = MFN-sida som nattjobbet läser nya länkar ur. Testurval per arketyp (förvärvare, förhoppningsbolag, kassako, nischmedtech, högt flöde, defensivt), inte investeringsuppslag.",
   "utskick": {
-    "till": ["ludvig@bytekin.se"],
+    "till": [
+      "ludvig@bytekin.se"
+    ],
     "fran": "Ägarkollen <onboarding@resend.dev>"
   },
   "bolag": [
-    { "id": "unibap", "namn": "Unibap Space Solutions", "feed": "https://mfn.se/all/a/unibap-space-solutions", "maxNya": 6 },
-    { "id": "lifco", "namn": "Lifco", "feed": "https://mfn.se/a/lifco", "maxNya": 6 },
-    { "id": "evolution", "namn": "Evolution", "feed": "https://mfn.se/all/a/evolution", "maxNya": 6 },
-    { "id": "telia-company", "namn": "Telia Company", "feed": "https://mfn.se/all/a/telia-company", "maxNya": 6 },
-    { "id": "sectra", "namn": "Sectra", "feed": "https://mfn.se/all/a/sectra", "maxNya": 6 },
-    { "id": "axfood", "namn": "Axfood", "feed": "https://mfn.se/all/a/axfood", "maxNya": 6 }
+    {
+      "id": "unibap",
+      "namn": "Unibap Space Solutions",
+      "feed": "https://mfn.se/all/a/unibap-space-solutions",
+      "maxNya": 6,
+      "konkurrenter": [
+        {
+          "id": "aac-clyde-space",
+          "namn": "AAC Clyde Space",
+          "feed": "https://mfn.se/all/a/aac-clyde-space"
+        }
+      ]
+    },
+    {
+      "id": "lifco",
+      "namn": "Lifco",
+      "feed": "https://mfn.se/a/lifco",
+      "maxNya": 6
+    },
+    {
+      "id": "evolution",
+      "namn": "Evolution",
+      "feed": "https://mfn.se/all/a/evolution",
+      "maxNya": 6,
+      "konkurrenter": [
+        {
+          "id": "betsson",
+          "namn": "Betsson",
+          "feed": "https://mfn.se/all/a/betsson"
+        }
+      ]
+    },
+    {
+      "id": "telia-company",
+      "namn": "Telia Company",
+      "feed": "https://mfn.se/all/a/telia-company",
+      "maxNya": 6,
+      "konkurrenter": [
+        {
+          "id": "tele2",
+          "namn": "Tele2",
+          "feed": "https://mfn.se/all/a/tele2"
+        }
+      ]
+    },
+    {
+      "id": "sectra",
+      "namn": "Sectra",
+      "feed": "https://mfn.se/all/a/sectra",
+      "maxNya": 6
+    },
+    {
+      "id": "axfood",
+      "namn": "Axfood",
+      "feed": "https://mfn.se/all/a/axfood",
+      "maxNya": 6
+    }
   ]
 }

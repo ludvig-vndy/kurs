@@ -2,7 +2,7 @@
 // fixturer. Mejlvänlig HTML (inline-stil, en kolumn). Lugna bolag redovisas
 // uttryckligen, tystnad är ett besked.
 
-const TYPNAMN = { rapport: 'Rapport', kallelse: 'Kallelse', emission: 'Emission', avtal: 'Avtal', forvarv: 'Förvärv', insyn: 'Insynshandel', ovrigt: 'Övrigt' };
+const TYPNAMN = { rapport: 'Rapport', kallelse: 'Kallelse', emission: 'Emission', avtal: 'Avtal', forvarv: 'Förvärv', insyn: 'Insynshandel', avvikelse: 'Avvikelse', omvarld: 'Omvärld', ovrigt: 'Övrigt' };
 
 function fmt(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ').replace('.', ','); }
 

@@ -75,6 +75,12 @@ export function renderBolag(data) {
   <h1>${data.namn}</h1>
   <p class="sub">${data.dokument.length} dokument bevakade · varje siffra med ordagrant citat ur källan · korskontroller räknade i kod</p>
   <div class="varn">ALPHA · RIKTIG DATA · MASKINLÄST, MÄNSKLIGT OGRANSKAD · ALDRIG RÅD</div>
+  ${data.blankning ? `
+  <div class="sek">
+    <div class="et">Blankning · FI:s aggregat${data.blankning.datum ? ' · per ' + data.blankning.datum : ''}</div>
+    <p style="font-family:var(--mono);font-size:16px;margin:0">${String(data.blankning.procent).replace('.', ',')}% av aktierna${data.blankning.procent === 0 ? ' (under registrets 0,5-procentströskel)' : ''}</p>
+    <p class="len"><a href="${data.blankning.kalla}">Registret hos FI →</a></p>
+  </div>` : ''}
   ${data.insyn ? `
   <div class="sek">
     <div class="et">Insynshandel · FI:s register · 12 månader</div>
