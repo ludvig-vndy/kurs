@@ -9,8 +9,8 @@ import Broadsheet from '../layouts/Broadsheet.astro';
   description="Onlinekurs i fundamental aktieanalys. Sexton kapitel, ett steg i taget: från vad en aktie är till att sätta ett eget riktpris med felmarginal."
   nav="landing"
 >
-  <main class="wrap" style="flex:1">
-    <section class="hero">
+  <main class="wrap" style="flex:1; display:flex; flex-direction:column">
+    <section class="hero hero--bild">
       <div>
         <div class="kicker">Onlinekurs i fundamental analys</div>
         <h1 class="h-title">Lär dig analysera aktier som en <em>ägare</em>, inte en spekulant.</h1>
@@ -55,18 +55,61 @@ import Broadsheet from '../layouts/Broadsheet.astro';
       </div>
     </section>
 
-    <div class="foot" style="border-top:2px solid var(--rule-strong)">
-      <div>
-        <div class="kicker" style="margin-bottom:8px">Börja idag</div>
-        <div style="font-family:var(--display);font-weight:400;font-size:clamp(22px,2.6vw,30px)">Första lektionen tar åtta minuter.</div>
+    <section class="cta-band">
+      <div class="cta-inner">
+        <div>
+          <div class="cta-kicker">Börja idag</div>
+          <div class="cta-rubrik">Första lektionen tar åtta minuter.</div>
+        </div>
+        <a class="btn-ink" href="/fokus">Kom igång →</a>
       </div>
-      <a class="btn-ink" href="/fokus">Kom igång →</a>
-    </div>
+      <div class="bildkredit">Börshuset, Stockholm · foto: Jorge Láscar (CC BY 2.0)</div>
+    </section>
   </main>
 </Broadsheet>
 
 <style>
-  .hero { display:grid; grid-template-columns:1.2fr .8fr; gap:clamp(32px,5vw,60px); align-items:center; padding:56px 0 44px; border-bottom:1px solid var(--rule); }
+  .hero { flex-shrink:0; display:grid; grid-template-columns:1.2fr .8fr; gap:clamp(32px,5vw,60px); align-items:center; padding:56px 0 44px; border-bottom:1px solid var(--rule); }
+
+  /* Börshusets fasad som dämpat tryck bakom heron: gråskala i låg opacitet över
+     papperet ger gravyrkänsla, och en paperskyddande gradient håller textspalten
+     på säker kontrast. Full utfallsbredd via viewport-breakout. */
+  .hero--bild { position:relative; }
+  .hero--bild::before {
+    content:""; position:absolute; top:0; bottom:0; left:50%; width:100vw; margin-left:-50vw;
+    background-image:url('/bilder/borshuset-1600.jpg');
+    background-size:cover; background-position:center 32%;
+    filter:grayscale(1) contrast(.92);
+    opacity:.11; pointer-events:none; z-index:-1;
+  }
+  .hero--bild::after {
+    content:""; position:absolute; top:0; bottom:0; left:50%; width:100vw; margin-left:-50vw;
+    background:linear-gradient(90deg, var(--paper) 0%, rgba(246,244,239,.55) 42%, rgba(246,244,239,.2) 70%, var(--paper) 100%),
+               linear-gradient(180deg, var(--paper) 0%, rgba(246,244,239,0) 22%, rgba(246,244,239,0) 72%, var(--paper) 100%);
+    pointer-events:none; z-index:-1;
+  }
+  .hero h1 { text-wrap:balance; }
+  .hero .standfirst { text-wrap:pretty; }
+
+  /* CTA-bandet: samma fotografi, dränkt i oxblod. En bild, två behandlingar. */
+  .cta-band {
+    position:relative; left:50%; width:100vw; margin-left:-50vw;
+    margin-top:auto; padding:clamp(40px,6vw,72px) 0 18px;
+    background:
+      linear-gradient(rgba(122,38,30,.90), rgba(96,28,22,.93)),
+      url('/bilder/borshuset-1600.jpg') center 40% / cover;
+    color:var(--paper);
+  }
+  .cta-inner {
+    max-width:var(--maxw, 1080px); margin:0 auto; padding:0 clamp(20px,5vw,52px);
+    display:flex; align-items:center; justify-content:space-between; gap:28px; flex-wrap:wrap;
+  }
+  .cta-kicker { font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:rgba(246,244,239,.75); margin-bottom:8px; }
+  .cta-rubrik { font-family:var(--display); font-weight:400; font-size:clamp(22px,2.6vw,30px); text-wrap:balance; }
+  .cta-band .btn-ink { background:var(--paper); color:var(--ink); }
+  .cta-band .btn-ink:hover { background:var(--paper-2); color:var(--oxblood); transform:translateX(3px); }
+  .cta-band .btn-ink:focus-visible { outline-color:var(--paper); }
+  .bildkredit { max-width:var(--maxw, 1080px); margin:26px auto 0; padding:10px clamp(20px,5vw,52px) 0; border-top:1px solid rgba(246,244,239,.22); font-family:var(--mono); font-size:10px; letter-spacing:.05em; color:rgba(246,244,239,.6); }
   .hero .cta-row { display:flex; gap:14px; align-items:center; margin-top:30px; flex-wrap:wrap; }
   .vps { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:50px 0; border-top:1px solid var(--rule); }
   .vp { padding:28px 26px 28px 0; }
