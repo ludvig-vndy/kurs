@@ -285,7 +285,7 @@ function visualEl(v: VisualObj) {
     </main>
 
     <!-- ── Quiz gate (shown if you try to finish below 80%) ── -->
-    <div class="qgate" data-quiz-gate hidden role="alertdialog" aria-label="Quizet är inte klart">
+    <div class="qgate" data-quiz-gate hidden role="alert" aria-label="Quizet är inte klart">
       <p class="qgate__msg" data-quiz-gate-msg></p>
       <div class="qgate__btns">
         <button type="button" class="qgate__redo" data-quiz-gate-redo>Öva om de du missade</button>
@@ -389,7 +389,7 @@ function visualEl(v: VisualObj) {
   /* Byline, not a shouty label: mixed case, light tracking, reads as a signature. */
   /* Sebastian tänker: a signed card with a monogram, distinct from the plain
      (unlabelled) takeaway above. Only steps with rost:"sebastian" get this. */
-  .s-take--sebastian { border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
+  .s-take--sebastian { border: 1px solid var(--rule); border-top: 2px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
   .s-take__by { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-style: normal; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 10px; }
   .s-take__mono { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--oxblood); color: var(--paper); font-family: var(--display); font-style: normal; font-size: 14px; font-weight: 500; letter-spacing: 0; flex: none; }
 
@@ -404,7 +404,7 @@ function visualEl(v: VisualObj) {
   .s-prose p + p { margin-top: 1.05em; }
 
   /* ── Quiz gate ── */
-  .qgate { max-width: 560px; margin: 0 auto; background: var(--card); border: 1px solid var(--oxblood); border-left: 3px solid var(--oxblood); padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+  .qgate { max-width: 560px; margin: 0 auto; background: var(--card); border: 1px solid var(--oxblood); padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
   .qgate[hidden] { display: none; }
   .qgate__msg { font-family: var(--serif); font-size: 15.5px; line-height: 1.5; color: var(--ink); margin: 0; }
   .qgate__btns { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -414,11 +414,11 @@ function visualEl(v: VisualObj) {
   .qgate__skip:hover { border-color: var(--oxblood); color: var(--oxblood); }
 
   /* ── Bottom nav ── */
-  .lnav { position: sticky; bottom: 0; background: linear-gradient(rgba(246,242,234,0), var(--paper) 40%); padding: 14px clamp(18px,5vw,52px) 22px; }
+  .lnav { position: sticky; bottom: 0; background: linear-gradient(rgba(246,244,239,0), var(--paper) 40%); padding: 14px clamp(18px,5vw,52px) 22px; }
   .lnav-in { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--rule); padding-top: 16px; }
   .lback { background: none; border: none; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); cursor: pointer; padding: 8px 4px; }
   .lback:hover { color: var(--ink); }
-  .lhint { font-family: var(--mono); font-size: 10.5px; color: var(--faint); letter-spacing: .04em; }
+  .lhint { font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft); letter-spacing: .04em; }
   .lnext { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; background: var(--ink); color: var(--paper); border: none; padding: 15px 30px; border-radius: 99px; cursor: pointer; transition: background .25s, transform .25s; }
   .lnext:hover { background: var(--oxblood); transform: translateX(3px); }
 

@@ -1,4 +1,5 @@
 ---
+import manifest from '../../course.manifest.json';
 import fs from 'node:fs';
 import path from 'node:path';
 import Broadsheet from '../layouts/Broadsheet.astro';
@@ -139,7 +140,7 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
       <a class="go" href="/verktyg">Öppna verktyget →</a>
     </div>
 
-    <a class="txtkurs" href="/oversikt">Visa hela textkursen (116 lektioner)</a>
+    <a class="txtkurs" href="/oversikt">Visa hela textkursen ({manifest.count} lektioner)</a>
   </main>
 </Broadsheet>
 
@@ -173,7 +174,7 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
   .feature:hover .cta { background: var(--oxblood); border-color: var(--oxblood); color: var(--paper); transform: translateX(4px); }
 
   /* Repetition card: surfaces the SRS miss-queue, only when non-empty. */
-  .repcard { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 16px 0 0; padding: 18px 22px; background: var(--card); border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+  .repcard { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 16px 0 0; padding: 18px 22px; background: var(--card); border: 1px solid var(--rule); border-top: 2px solid var(--oxblood); text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
   .repcard[hidden] { display: none; }
   .repcard:hover { transform: translateX(3px); text-decoration: none; }
   .repcard__eyebrow { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 6px; }

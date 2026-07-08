@@ -99,7 +99,7 @@ const totalLessons = kurs.kapitel.reduce((sum, k) => sum + k.lektioner.length, 0
               const { ids, klarAvail } = chapterData(kap);
               const locked = klarAvail === 0;
               return locked ? (
-                <a class="ch lock" href="#">
+                <div class="ch lock" aria-disabled="true">
                   <div class="ch-n">{String(kap.nummer).padStart(2, '0')}</div>
                   <div>
                     <div class="ch-t">{kap.titel}</div>
@@ -110,7 +110,7 @@ const totalLessons = kurs.kapitel.reduce((sum, k) => sum + k.lektioner.length, 0
                     </div>
                   </div>
                   <span class="pill lock" data-pill>Kommande</span>
-                </a>
+                </div>
               ) : (
                 <a
                   class="ch"

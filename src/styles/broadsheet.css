@@ -76,9 +76,9 @@ a{color:inherit}
 
 /* ── chapter index ──────────────────────────────────────────────────── */
 .index{display:grid; grid-template-columns:1fr 1fr; gap:0 56px}
-.ch{position:relative; display:grid; grid-template-columns:46px 1fr auto; gap:16px; align-items:baseline; padding:16px 6px 16px 0; border-top:1px solid var(--rule); text-decoration:none; color:inherit; transition:padding-left .25s}
+.ch{position:relative; display:grid; grid-template-columns:46px 1fr auto; gap:16px; align-items:baseline; padding:16px 6px 16px 0; border-top:1px solid var(--rule); text-decoration:none; color:inherit; transition:transform .25s cubic-bezier(.22,.61,.36,1)}
 .ch::before{content:""; position:absolute; left:-12px; top:18px; bottom:18px; width:2px; background:var(--oxblood); transform:scaleY(0); transition:transform .25s}
-.ch:hover{padding-left:8px}
+.ch:hover{transform:translateX(8px)}
 .ch:hover::before{transform:scaleY(1)}
 .ch:hover .ch-t{color:var(--oxblood)}
 .ch-n{font-family:var(--display); font-weight:300; font-size:30px; color:var(--faint); line-height:1; font-variant-numeric:lining-nums; transition:color .2s}
@@ -138,9 +138,7 @@ a{color:inherit}
 /* Solid fallback by default; the gradient-clip only applies where supported, and
    forced-colors (high contrast) restores a system colour so the number can't vanish. */
 .stat .v{font-family:var(--display); font-weight:400; font-size:42px; line-height:1; color:var(--oxblood); font-variant-numeric:lining-nums tabular-nums}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){
-  .stat .v{background:linear-gradient(120deg,var(--oxblood),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent}
-}
+
 @media (forced-colors: active){
   .stat .v{background:none; color:CanvasText; -webkit-text-fill-color:CanvasText}
 }
@@ -161,7 +159,7 @@ a{color:inherit}
    pulse. The value line draws in; the gold gleam traces it a single time; the
    price line is a static dashed line; the marker pops once. */
 .vline{fill:none; stroke:var(--ink); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; pathLength:1; stroke-dasharray:1; stroke-dashoffset:1; animation:bs-draw 2.2s cubic-bezier(.4,0,.2,1) .4s forwards}
-.vglow{fill:none; stroke:var(--gold); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; pathLength:1; stroke-dasharray:.08 .92; stroke-dashoffset:1; opacity:0; filter:drop-shadow(0 0 4px rgba(154,110,28,.7)); animation:bs-trail 3.4s linear 2.6s 1 both}
+.vglow{fill:none; stroke:var(--oxblood); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; pathLength:1; stroke-dasharray:.08 .92; stroke-dashoffset:1; opacity:0; filter:drop-shadow(0 0 4px rgba(138,46,38,.55)); animation:bs-trail 3.4s linear 2.6s 1 both}
 .pline{fill:none; stroke:var(--oxblood); stroke-width:1.8; stroke-linejoin:round; stroke-dasharray:5 6}
 .dot{fill:var(--oxblood); opacity:0; animation:bs-pop .5s cubic-bezier(.22,.61,.36,1) 2.2s both}
 .dot-h{stroke:var(--oxblood); stroke-width:1; opacity:0; animation:bs-fade .6s 2.5s both}
