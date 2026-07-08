@@ -68,7 +68,7 @@ Hela omskrivningsplanen (`docs/superpowers/plans/2026-06-18-kurs-bplus-till-aplu
 ### Design (live): "Marginalen" broadsheet
 Sajten heter **Marginalen** och kör en broadsheet-look (Outfit display/Spectral/Inter, JetBrains Mono endast för tabellsiffror; papper + oxblod/guld; typspår A beslutat 2026-07-08), som ersatte den tidigare mint/petrol-redesignen. Ytor: `/` (startsida), `/hem` (dashboard), `/fokus` + `/fokus/kapitel/[nr]` + `/fokus/[lektion]` (Fokus-spelaren), `/verktyg` (Marginalen analysverktyg). Delat stilark `src/styles/broadsheet.css` + layout `src/layouts/Broadsheet.astro` (masthead) och den ljusa enda temat. Textkursen (`/oversikt`, `/kurs/*`) ligger kvar på `tokens.css`/AppShell (mint, mörkt/ljust-toggle). Tidigare namn: Ägarboken.
 
-### Fokus-spelaren / JSON-stegformat (innehåll klart — 51 lektioner, hela kursen)
+### Fokus-spelaren / JSON-stegformat (innehåll klart — 62 lektioner i 18 kapitel)
 Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-fokus-full-course.md`. Mål: transformera verifierade lektioner till ett stegbaserat JSON-format för en "Fokus"-lektionsspelare (steg: intro, reading, concept, dataviz, quiz; inline-datadriven grafik).
 
 **Arkitektur (beslutad):** källan (de 121 .md) förblir sanningen; spelaren är en härledd leverans i `content/fundamental-aktieanalys/`, en JSON-fil per lektion + `course.json` (kapitelträd). Spelaren laddar JSON och renderar steg utifrån `typ`-fältet. Numreringen är spelarens egen (skiljer sig från huvudkursens); de ursprungliga 11 omnumrerades in i kursordningen.
@@ -76,7 +76,7 @@ Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-
 **Designmål / facit för renderaren:** `design_handoff_aktieanalys/` (Claude design-agentens high-fidelity-handoff). `Aktieanalys - Lektion (Fokus).dc.html` + `README.md` är spec för utseende och beteende (DC-format, läs som spec, inte kod). Hjältevisualer: `rutnat` (ägar-grid) och `linjediagram` (pris/värde). Quiz-tröskel 80%. Dubbla teman (mörkt "fokus" + ljust "ed") via `localStorage['agarboken-theme']`.
 
 **Gjort:**
-- **Alla 51 lektioner i 16 kapitel producerade**, status `klar` i `course.json`. Sex visual-typer (`rutnat`, `linjediagram`, `jamforelse`, `stapeldiagram`, `flode`, `andel`). Flaggskeppscase 14.1 Lifco på riktiga daterade FY2025-tal (enda lektionen med verkliga bolagstal, ej illustrativ).
+- **Alla 62 lektioner i 18 kapitel producerade**, status `klar` i `course.json`. Sex visual-typer (`rutnat`, `linjediagram`, `jamforelse`, `stapeldiagram`, `flode`, `andel`). Flaggskeppscase 14.1 Lifco på riktiga daterade FY2025-tal. Kapitel 17 (modul 23) och kapitel 18 (modul 24, girighet) tillagda 2026-07; 18.3 använder Sivers FY2025-tal (källa: `docs/case-sources/sivers-2026.md`).
 - **Slutpass kört:** helhets-kontroll (variation, icke-redundans, symmetrisk pacing); jamforelse-frekvensen granskad (mestadels befogade skarpa kontraster, behållna), 6.1 gjord till text-concept (sträckt 5-element-form), 5.3 trimmad (dubbel stapel borttagen), diakriter återställda i 6.1/15.2/11.3.
 - `RENDERER-BRIEF.md` — kontrakt för renderar-agenten. `tools/check-fokus.mjs` — grind (ingår i `npm run check`); alla 51 gröna, dashfria.
 
@@ -90,7 +90,7 @@ Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-
 
 ## Att notera (ej åtgärdas om inte ombedd)
 - Ingen konsolideringspass kördes; kursen växte till 127 lektioner / 24 moduler.
-- Modul 24 är ännu inte transformerad till Fokus-JSON (`content/fundamental-aktieanalys/`). En framtida transform-session får ta den dit.
+- Modul 24 är transformerad till Fokus-JSON som kapitel 18 (`content/fundamental-aktieanalys/18.1` till `18.5`, 24.6-syntesen invävd i 18.5).
 - Verktyget "Säkra eller stretcha" (`docs/specs/verktyg-sakra-eller-stretcha.md`) är bara spec, inte byggt i `/verktyg`.
 - Användarens egen `Ägarboken - Startsida (standalone).html` innehåller fortfarande några em-dashes (lämnat till användaren).
 - `KURS-EXPORT.md` och `src/content/kurs.zip` är artefakter, inte källa.
