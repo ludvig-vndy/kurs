@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lägg till bolag · Marginalen</title>
+<meta name="description" content="Lägg till ett bolag i din bevakning. Ett steg räcker, resten är valfritt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#8A2E26; --gold:#9A6E1C; --good:#3E7A4F;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;text-decoration:none;color:var(--ink)}
+  .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;gap:26px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1;padding-bottom:60px}
+  .flow{max-width:600px;margin:0 auto}
+
+  /* stegmätare */
+  .pips{display:flex;gap:6px;margin:28px 0 24px}
+  .pips i{height:3px;flex:1;background:var(--paper-2);transition:background .3s}
+  .pips i.on{background:var(--oxblood)}
+
+  .kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--oxblood);margin-bottom:10px}
+  h1{font-family:var(--display);font-weight:300;font-size:clamp(28px,4vw,42px);line-height:1.06;letter-spacing:-.02em}
+  .sub{font-family:var(--serif);font-size:17px;color:var(--ink-soft);margin-top:12px;max-width:54ch}
+
+  /* val av bolag */
+  .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+  .chip{font-family:var(--display);font-weight:500;font-size:15.5px;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:10px 18px;color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .chip.sel{border-color:var(--oxblood);color:var(--paper);background:var(--oxblood)}
+
+  /* skäl-mening (förslag, valfritt) */
+  .sent{background:var(--card);border:1px solid var(--rule);padding:22px 24px;font-family:var(--serif);font-size:19px;line-height:1.8;margin-top:22px}
+  .sent .co{color:var(--oxblood);font-weight:500;font-family:var(--display)}
+  .sent input{background:none;border:none;border-bottom:1.5px solid var(--oxblood);color:var(--ink);font-family:var(--serif);font-size:18px;outline:none;min-width:120px;max-width:100%;padding:0 2px 2px}
+  .hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:12px;line-height:1.6}
+
+  /* kurs-korsvägar */
+  .cross{display:flex;align-items:center;gap:14px;background:var(--paper-2);border:1px solid var(--rule);padding:14px 16px;text-decoration:none;color:inherit;margin-top:12px;transition:.15s}
+  .cross:hover{border-color:var(--oxblood)}
+  .cross .ic{font-family:var(--display);font-size:20px;color:var(--gold);flex:0 0 auto;width:24px;text-align:center}
+  .cross b{font-family:var(--display);font-weight:600;font-size:14.5px;display:block}
+  .cross span{font-size:13.5px;color:var(--muted)}
+  .cross .arr{margin-left:auto;color:var(--oxblood);font-family:var(--display);font-size:20px}
+
+  /* vakter */
+  .vrow{background:var(--card);border:1px solid var(--rule);padding:15px 17px;margin-top:12px}
+  .vrow .vn{font-family:var(--display);font-weight:500;font-size:16px;margin-bottom:9px}
+  .vrow .vg{display:flex;align-items:center;gap:10px}
+  .vrow .vg .gl{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);flex:0 0 auto}
+  .vrow .vg input{flex:1;background:var(--paper);border:1px solid var(--rule-strong);color:var(--ink-soft);font-size:14px;padding:8px 11px;outline:none;font-family:var(--serif)}
+  .vrow .vg input:focus{border-color:var(--oxblood);color:var(--ink)}
+
+  /* klart */
+  .done-card{border:1px solid var(--rule);background:var(--card);padding:18px 20px;margin-top:18px}
+  .done-card .dh{font-family:var(--display);font-weight:600;font-size:15px;margin-bottom:8px}
+  .done-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.7}
+
+  /* knappar */
+  .nav-btns{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:14px 22px;border-radius:99px;border:1px solid var(--rule-strong);background:none;color:var(--ink-soft);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s}
+  .btn:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .btn.prim{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .btn.prim:hover{background:var(--oxblood);border-color:var(--oxblood);color:var(--paper);transform:translateX(3px)}
+  .btn.prim[disabled]{opacity:.4;pointer-events:none}
+  .btn.ghost{border-color:transparent;color:var(--muted)}
+  .btn.ghost:hover{color:var(--oxblood)}
+  .spacer{flex:1}
+
+  .site-foot{border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:24px;padding-bottom:40px}
+  .site-foot__fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .step{animation:fade .4s cubic-bezier(.2,.7,.2,1)}
+  @media(prefers-reduced-motion:reduce){.step{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <a class="wordmark" href="/hem">Marginalen</a>
+      <div class="edition">Fundamental aktieanalys<br>Lägg till bolag</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/hem">Hem</a>
+      <a href="/fokus">Kursöversikt</a>
+      <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html" class="here" aria-current="page">Dina bolag</a>
+      <a href="/verktyg">Verktyg</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="flow">
+    <div class="pips" id="pips"></div>
+    <div id="step"></div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap"><p class="site-foot__fine">Prototyp · exempeldata · fiktiva bolag. Information i utbildningssyfte, aldrig köp- eller säljråd.</p></div>
+</footer>
+
+<script>
+const BOLAG = ['Norlux Industri','Telvio','Kavex Medical','Voltcell','Brunna Hydro'];
+const OB = {
+  a:'köpa upp lönsamma småbolag och driva dem bättre',
+  b:'marknaden är fragmenterad och kassaflödet betalar nästa förvärv',
+  vakter:[
+    ['Växer minst 8 procent per år av egen kraft','säg till om det faller under 8 procent två kvartal i rad'],
+    ['Stigande lönsamhet (rörelsemarginal)','säg till om den faller under fjolårets nivå'],
+    ['Inga nya aktier trycks','säg till om antalet aktier ökar'],
+  ]
+};
+let step=0, sel=null, skip=false;
+const NSTEP=4;
+const pipsEl=document.getElementById('pips'), stepEl=document.getElementById('step');
+
+function pips(){ pipsEl.innerHTML = Array.from({length:NSTEP},(_,i)=>'<i class="'+(i<=step?'on':'')+'"></i>').join(''); }
+
+function render(){
+  pips();
+  let h='';
+  if(step===0){
+    h='<div class="kicker">Lägg till bolag · steg 1 av 4</div>'+
+      '<h1>Vilket bolag äger du?</h1>'+
+      '<div class="sub">Mer än så behövs inte: bevakning och sammanfattningar startar direkt. Resten är valfritt.</div>'+
+      '<div class="chips">'+BOLAG.map(b=>'<button class="chip'+(sel===b?' sel':'')+'" data-b="'+b+'">'+b+'</button>').join('')+
+        '<button class="chip" data-b="__annat">Annat bolag...</button></div>'+
+      '<div class="nav-btns"><a class="btn ghost" href="/labs/dina-bolag-i-marginalen.html">Avbryt</a><span class="spacer"></span>'+
+        '<button class="btn prim" id="next" '+(sel?'':'disabled')+'>Fortsätt →</button></div>';
+  } else if(step===1){
+    const cn = sel||'bolaget';
+    h='<div class="kicker">Steg 2 av 4 · valfritt</div>'+
+      '<h1>Vill du att vi vaktar något särskilt i '+cn+'?</h1>'+
+      '<div class="sub">Vi har skrivit ett förslag på varför du äger det, utifrån bolagets profil. Ändra orden, eller hoppa över. Vi läser och sammanfattar allt oavsett, tesen är ditt eget verktyg, inte ett krav.</div>'+
+      '<div class="sent">Jag äger en andel av <span class="co">'+cn+'</span> som tjänar pengar genom att '+
+        '<input value="'+OB.a+'" size="34" aria-label="hur bolaget tjänar pengar">, och kommer tjäna mer för att '+
+        '<input value="'+OB.b+'" size="34" aria-label="varför det tjänar mer framover">.</div>'+
+      '<a class="cross" href="/fokus/kapitel/1"><span class="ic">✎</span><span><b>Vill du kunna skriva det själv?</b><span>Kapitel 1 i kursen är gratis: vad det innebär att äga en aktie</span></span><span class="arr">→</span></a>'+
+      '<a class="cross" href="/fokus"><span class="ic">✓</span><span><b>Har du gått kursen?</b><span>Då har du redan skrivit den här meningen i övningarna. Vi hämtar ditt svar.</span></span><span class="arr">→</span></a>'+
+      '<div class="nav-btns"><button class="btn" data-go="0">← Tillbaka</button><span class="spacer"></span>'+
+        '<button class="btn ghost" id="skip">Hoppa över, bevaka allt</button>'+
+        '<button class="btn prim" id="use">Använd förslaget →</button></div>';
+  } else if(step===2){
+    h='<div class="kicker">Steg 3 av 4</div>'+
+      '<h1>Tre saker vi håller koll på åt dig</h1>'+
+      '<div class="sub">Byggda på varför du äger det. Nivån för när vi säger till kommer från kursens tumregler, ändra den om du vill.</div>'+
+      OB.vakter.map(v=>'<div class="vrow"><div class="vn">'+v[0]+'</div><div class="vg"><span class="gl">Säg till när</span><input value="'+v[1]+'"></div></div>').join('')+
+      '<div class="nav-btns"><button class="btn" data-go="1">← Tillbaka</button><span class="spacer"></span>'+
+        '<button class="btn prim" data-go="3">Fortsätt →</button></div>';
+  } else {
+    const cn = sel||'bolaget';
+    h='<div class="kicker">Klart</div>'+
+      '<h1>Vi håller koll på '+cn+' åt dig.</h1>'+
+      '<div class="sub">'+(skip
+        ? 'Vi läser allt om bolaget, sorterar bort bruset och sammanfattar varje morgon. Vill du senare vakta något särskilt finns förslaget kvar under Ditt skäl.'
+        : 'Vi läser allt om bolaget och sammanfattar varje morgon. Dina tre vakter är igång: passeras en gräns säger vi till direkt.')+'</div>'+
+      '<div class="done-card"><div class="dh">Det här händer nu</div>'+
+        '<p>I morgon 07:30: ditt första Ägarbrev med '+cn+' i.<br>Vid rapport: analysen klar inom minuter, varje siffra med källa.<br>'+
+        (skip?'Alla väsentliga händelser: sammanfattade och graderade.':'Om en gräns passeras: vi säger till samma morgon.')+'</p></div>'+
+      '<div class="nav-btns"><button class="btn ghost" data-go="0">Lägg till ett bolag till</button><span class="spacer"></span>'+
+        '<a class="btn prim" href="/labs/agarbrevet-i-marginalen.html">Öppna Ägarbrevet →</a></div>';
+  }
+  stepEl.innerHTML = '<div class="step">'+h+'</div>';
+  wire();
+}
+
+function wire(){
+  stepEl.querySelectorAll('.chip[data-b]').forEach(c=>c.addEventListener('click',()=>{
+    sel = c.dataset.b==='__annat' ? 'ditt bolag' : c.dataset.b; render();
+  }));
+  const next=stepEl.querySelector('#next'); if(next) next.addEventListener('click',()=>{step=1;render();});
+  const use=stepEl.querySelector('#use'); if(use) use.addEventListener('click',()=>{skip=false;step=2;render();});
+  const sk=stepEl.querySelector('#skip'); if(sk) sk.addEventListener('click',()=>{skip=true;step=3;render();});
+  stepEl.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{
+    const g=+b.dataset.go; if(g===0){sel=step===3?null:sel;} step=g; render();
+  }));
+}
+render();
+</script>
+</body>
+</html>

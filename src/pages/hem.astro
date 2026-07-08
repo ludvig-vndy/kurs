@@ -206,6 +206,18 @@ const dashChapters: DashChapter[] = course.kapitel.map((kap) => ({
   /* Repetition card: surfaces the SRS miss-queue, only when non-empty. */
   .datumrad { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: -8px 0 14px; }
 
+  /* Börshusets fasad som dämpat tryck bakom heron, samma motiv som startsidan
+     och /fokus. Ligger bakom hälsningen; figurplåten till höger är opak och
+     står kvar ovanpå. */
+  .hero { position: relative; isolation: isolate; }
+  .hero::before {
+    content: ""; position: absolute; z-index: -1; inset: -34px -14px 0;
+    background-image: url('/bilder/borshuset-1600.jpg'); background-size: cover; background-position: center 22%;
+    filter: grayscale(1) contrast(1.03); opacity: .12;
+    -webkit-mask: linear-gradient(178deg, #000 0%, #000 42%, transparent 90%);
+    mask: linear-gradient(178deg, #000 0%, #000 42%, transparent 90%);
+  }
+
   /* Hub-bandet: portföljen (förhandsvisning) bredvid fortsätt-kursen. Samma
      mönster som labs-mocken, in i den riktiga sidan. Portföljdelen är märkt
      exempel tills motorn matar riktig data; kurs-delen är skarp. */
