@@ -13,7 +13,7 @@
     --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
     --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
     --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
-    --oxblood:#8A2E26; --gold:#9A6E1C; --good:#3E7A4F; --bad:#8A2E26;
+    --oxblood:#2C5646; --gold:#B07C1E; --good:#2F7A55; --bad:#9B3A2E;
     --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif;
   }
   *{box-sizing:border-box;margin:0}
@@ -25,7 +25,12 @@
 
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
-  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;text-decoration:none;color:var(--ink)}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.01em;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
   .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
   .mast-rule{height:2px;background:var(--rule-strong)}
   .nav{display:flex;gap:26px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
@@ -102,16 +107,17 @@
 <header class="masthead">
   <div class="wrap">
     <div class="mast-top">
-      <a class="wordmark" href="/hem">Marginalen</a>
-      <div class="edition">Fundamental aktieanalys<br>Fråga · dina bolag och kursen</div>
+      <div class="wordmark-wrap"><span class="wordmark">Ägarkollen</span><a class="byline" href="/hem">by Marginalen</a></div>
+      <div class="edition">Morgonbrevet och dina bolag<br>Fråga · dina bolag och kursen</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
-      <a href="/hem">Hem</a>
-      <a href="/fokus">Kursöversikt</a>
       <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
-      <a href="/verktyg">Verktyg</a>
+      <a href="#" class="here" aria-current="page">Fråga</a>
+      <a href="/labs/lagg-till-bolag-i-marginalen.html">Lägg till bolag</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
     </nav>
   </div>
 </header>

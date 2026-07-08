@@ -15,8 +15,11 @@
     --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
     --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
     --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
-    --oxblood:#8A2E26; --gold:#9A6E1C;
-    --good:#3E7A4F; --bad:#8A2E26;
+    /* Ägarkollen-världen: skogsgrönt som primär accent, amber som värme,
+       i stället för kursens oxblod. Samma papper, samma typografi, egen färgton.
+       (--oxblood-namnet behålls för att slippa byta alla referenser.) */
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --bad:#9B3A2E;
     --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif;
   }
   *{box-sizing:border-box;margin:0}
@@ -29,8 +32,15 @@
   /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
-  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;text-decoration:none;color:var(--ink)}
+  /* Egen wordmark för brevdelen: Ägarkollen, med en liten "by Marginalen" som
+     länkar tillbaka till kurshuset. Grönt i stället för oxblod. */
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.01em;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
   .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
   .mast-rule{height:2px;background:var(--rule-strong)}
   .nav{display:flex;gap:26px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
   .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
@@ -52,6 +62,13 @@
   .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:14px}
   .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5vw,54px);line-height:1.03;letter-spacing:-.02em;text-wrap:balance}
   .standfirst{font-family:var(--serif);font-size:clamp(17px,1.8vw,20px);line-height:1.55;color:var(--ink-soft);max-width:56ch;margin-top:16px;text-wrap:pretty}
+
+  /* Grönt Börshus-band: brevdelens egen färgton och bild, dränkt i skogsgrönt
+     med amber-eyebrow. Kursens motsvarighet är oxblodsbandet. */
+  .hero-band{background:linear-gradient(rgba(30,58,46,.86), rgba(19,43,33,.93)), url('/bilder/borshuset-1600.jpg') center 40%/cover; color:#EFF3EC; padding:40px clamp(22px,5vw,40px); margin-top:6px}
+  .hb-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#D6A44A;margin-bottom:14px}
+  .hb-title{font-family:var(--display);font-weight:300;font-size:clamp(30px,5vw,50px);line-height:1.04;letter-spacing:-.02em;color:#F4F7F0;text-wrap:balance}
+  .hb-sub{font-family:var(--serif);font-size:clamp(16px,1.7vw,19px);line-height:1.5;color:rgba(239,243,236,.86);max-width:54ch;margin-top:14px;text-wrap:pretty}
 
   /* ── pod (lyssna på utgåvan) ───────────────────────────────────────── */
   .pod{display:flex;align-items:center;gap:14px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:14px 2px;margin-top:26px}
@@ -142,16 +159,20 @@
 <header class="masthead">
   <div class="wrap">
     <div class="mast-top">
-      <a class="wordmark" href="/hem">Marginalen</a>
-      <div class="edition">Fundamental aktieanalys<br>Ägarbrevet · onsdag 2 juli 2026</div>
+      <div class="wordmark-wrap">
+        <span class="wordmark">Ägarkollen</span>
+        <a class="byline" href="/hem">by Marginalen</a>
+      </div>
+      <div class="edition">Morgonbrevet och dina bolag<br>Onsdag 2 juli 2026 · 07:30</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
-      <a href="/hem">Hem</a>
-      <a href="/fokus">Kursöversikt</a>
       <a href="#" class="here" aria-current="page">Ägarbrevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
-      <a href="/verktyg">Verktyg</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/lagg-till-bolag-i-marginalen.html">Lägg till bolag</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
     </nav>
   </div>
 </header>
@@ -159,20 +180,20 @@
 <main class="wrap" style="flex:1">
   <div class="sheet">
 
-    <!-- Lead -->
-    <div class="leadprint" style="padding-bottom:24px" data-reveal>
-      <div class="kicker">Ägarbrevet · onsdag 2 juli 2026 · 07:30</div>
-      <h1 class="h-title">God morgon.<br>Tre saker har hänt i dina bolag.</h1>
-      <p class="standfirst">Resten av portföljen är lugn. Vi läste 51 nyheter, registerposter och flöden om dina sex bolag i natt, sorterade bort bruset och behöll det som rör dig. Hela brevet tar ungefär 90 sekunder.</p>
+    <!-- Lead: grönt Börshus-band, egen färgton för brevvärlden -->
+    <div class="hero-band" data-reveal>
+      <div class="hb-eyebrow">№ 12 · Ägarbrevet · onsdag 2 juli 2026 · 07:30</div>
+      <h1 class="hb-title">God morgon.<br>Tre saker har hänt i dina bolag.</h1>
+      <p class="hb-sub">Resten av portföljen är lugn. Vi läste 51 poster om dina sex bolag i natt och behöll det som rör dig. Hela brevet tar 90 sekunder.</p>
+    </div>
 
-      <div class="pod">
-        <button class="podbtn" id="podbtn" aria-label="Spela upp utgåvan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
-        <div class="podmid">
-          <div class="podl">Lyssna på utgåvan · morgonens brev som röst, samma granskade text</div>
-          <div class="podbar"><i id="podprog"></i></div>
-        </div>
-        <div class="podt" id="podt">2:10</div>
+    <div class="pod" data-reveal>
+      <button class="podbtn" id="podbtn" aria-label="Spela upp utgåvan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+      <div class="podmid">
+        <div class="podl">Lyssna på utgåvan · morgonens brev som röst, samma granskade text</div>
+        <div class="podbar"><i id="podprog"></i></div>
       </div>
+      <div class="podt" id="podt">2:10</div>
     </div>
 
     <!-- Summering -->
