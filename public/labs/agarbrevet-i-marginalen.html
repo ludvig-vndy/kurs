@@ -35,7 +35,7 @@
   /* Egen wordmark för brevdelen: Ägarkollen, med en liten "by Marginalen" som
      länkar tillbaka till kurshuset. Grönt i stället för oxblod. */
   .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
   .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
@@ -48,7 +48,9 @@
   .nav a.here{color:var(--oxblood)}
 
   /* ── centrerad brevkolumn ──────────────────────────────────────────── */
-  .sheet{max-width:764px;margin:0 auto;padding:6px 0 8px}
+  /* Samma bredd som Dina bolag: fyller wrappen (1080). Brödtexten hålls läsbar
+     av egna max-widths per block; rader och band spänner hela bredden. */
+  .sheet{max-width:none;margin:0 auto;padding:6px 0 8px}
 
   /* leadprint: Börshuset som dämpat tryck bakom öppningen (samma motiv som
      startsidan och /fokus). */
@@ -160,14 +162,14 @@
   <div class="wrap">
     <div class="mast-top">
       <div class="wordmark-wrap">
-        <span class="wordmark">Ägarkollen</span>
+        <span class="wordmark">Ägarbrevet</span>
         <a class="byline" href="/hem">by Marginalen</a>
       </div>
       <div class="edition">Onsdag 2 juli 2026 · 07:30</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
-      <a href="#" class="here" aria-current="page">Ägarbrevet</a>
+      <a href="#" class="here" aria-current="page">Brevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
       <span class="nav-div" aria-hidden="true"></span>

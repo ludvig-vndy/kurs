@@ -63,35 +63,21 @@ const metaText = `${formatTime(kap.tid_min)} · ${kap.niva} · ${lessonCount} le
 // Order of lesson-ids in this chapter (for client-side "nästa" computation)
 const chapterOrder = kap.lektioner.map((l) => l.lektion);
 
-// Per-chapter engraving motif: a deterministic "ledger + trend line" plate,
-// unique to each chapter number (no two alike), in the broadsheet's own line
-// language. Seeded by the chapter number so it's stable across builds.
-function motif(n: number): string {
-  const W = 240, H = 168;
-  const rnd = (i: number) => {
-    const x = Math.sin(n * 12.9898 + i * 78.233) * 43758.5453;
-    return x - Math.floor(x);
-  };
-  const cols = 22;
-  let bars = '';
-  for (let i = 0; i < cols; i++) {
-    const x = 10 + (i + 0.5) / cols * (W - 20);
-    const h = 12 + rnd(i) * (H - 34);
-    bars += `<line x1="${x.toFixed(1)}" y1="${H - 10}" x2="${x.toFixed(1)}" y2="${(H - 10 - h).toFixed(1)}"/>`;
-  }
-  const pts: string[] = [];
-  for (let i = 0; i <= 6; i++) {
-    const x = 10 + i / 6 * (W - 20);
-    const y = 18 + rnd(i + 50) * (H - 52);
-    pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
-  }
-  const [lx, ly] = pts[6].split(',');
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">`
-    + `<g stroke="var(--rule-strong)" stroke-width="1.2">${bars}</g>`
-    + `<polyline points="${pts.join(' ')}" fill="none" stroke="var(--oxblood)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`
-    + `<circle cx="${lx}" cy="${ly}" r="3.4" fill="var(--oxblood)"/></svg>`;
-}
-const chMotif = motif(kap.nummer);
+// Per-chapter plate: a quiet, paper-washed photograph framed as a letterpress
+// plate (same leadprint treatment as /hem and /fokus). One image PER DEL, not
+// Borshuset on everything, so the four parts of the course read distinct; the
+// crop shifts per chapter number so no two frames are alike within a part.
+// Fill in the other three once the images land in /bilder; a null part hides
+// the plate (clean header) rather than falling back to a single reused photo.
+const partImg: Record<number, string | null> = {
+  1: '/bilder/borshuset-1600.jpg', // Grunderna
+  2: null, // Förstå bolaget      (väntar på bild)
+  3: null, // Värdering           (väntar på bild)
+  4: null, // I praktiken         (väntar på bild)
+};
+const plateImg = partImg[del.nr] ?? null;
+const plateX = 12 + ((kap.nummer * 37) % 64);
+const plateY = 18 + ((kap.nummer * 53) % 46);
 ---
 
 <Broadsheet title={`Kapitel ${kap.nummer}: ${kap.titel}`} active="kurs" nav="app">
@@ -121,10 +107,12 @@ const chMotif = motif(kap.nummer);
           </span>
         </div>
       </div>
-      <figure class="chead__fig" aria-hidden="true">
-        <div class="chfig" set:html={chMotif} />
-        <figcaption>Kapitel {String(kap.nummer).padStart(2, '0')}</figcaption>
-      </figure>
+      {plateImg && (
+        <figure class="chead__fig" aria-hidden="true">
+          <div class="chplate" style={`--plate:url('${plateImg}'); background-position:${plateX}% ${plateY}%`}></div>
+          <figcaption>Kapitel {String(kap.nummer).padStart(2, '0')}</figcaption>
+        </figure>
+      )}
     </header>
 
     <!-- Outcomes -->
@@ -191,12 +179,14 @@ const chMotif = motif(kap.nummer);
      name only; the meta + progress collapse to one calm line. */
   .chead { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(18px, 4vw, 46px); align-items: start; margin-top: 6px; }
   .chead__num { font-family: var(--display); font-weight: 300; font-size: clamp(72px, 13vw, 150px); line-height: .8; letter-spacing: -.03em; color: var(--oxblood); font-variant-numeric: lining-nums; }
-  /* Per-kapitel gravyr: unik "ledger + trendlinje"-plåt, olika för varje
-     kapitel, i samma inramade figurspråk som resten av huset. */
+  /* Per-kapitel plåt: Börshusets fasad, gråskala och pappersdämpad (samma
+     leadprint-behandling som /hem och /fokus), inramad som ett stilla tryck.
+     Beskärningen skiftar per kapitel så ingen ram är den andra lik. */
   .chead__fig { margin: 0; width: 240px; border: 1px solid var(--rule); background: var(--card); padding: 14px 14px 8px; position: relative; align-self: start; }
-  .chead__fig::before { content: ""; position: absolute; inset: 5px; border: 1px solid var(--rule); pointer-events: none; }
-  .chfig { position: relative; }
-  .chfig svg { display: block; width: 100%; height: auto; }
+  .chead__fig::before { content: ""; position: absolute; inset: 5px; border: 1px solid var(--rule); pointer-events: none; z-index: 1; }
+  .chplate { position: relative; width: 100%; aspect-ratio: 5 / 4;
+    background-image: linear-gradient(rgba(246,244,239,.34), rgba(246,244,239,.60)), var(--plate);
+    background-size: cover; background-repeat: no-repeat; filter: grayscale(1) contrast(1.04); }
   .chead__fig figcaption { position: relative; font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: right; margin-top: 8px; }
   @media (max-width: 900px) { .chead { grid-template-columns: auto 1fr; } .chead__fig { display: none; } }
   .chead__body { min-width: 0; padding-top: clamp(4px, 1.2vw, 12px); }

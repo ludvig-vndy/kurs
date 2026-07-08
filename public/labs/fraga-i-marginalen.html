@@ -26,7 +26,7 @@
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
   .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
   .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
@@ -39,7 +39,8 @@
   .nav a.here{color:var(--oxblood)}
 
   main{flex:1;padding-bottom:60px}
-  .sheet{max-width:764px;margin:0 auto}
+  /* Samma bredd som Dina bolag: fyller wrappen (1080). */
+  .sheet{max-width:none;margin:0 auto}
   .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin:26px 0 12px}
   .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5vw,52px);line-height:1.02;letter-spacing:-.02em}
   .standfirst{font-family:var(--serif);font-size:clamp(16px,1.7vw,19px);line-height:1.55;color:var(--ink-soft);max-width:60ch;margin-top:14px}
@@ -107,12 +108,12 @@
 <header class="masthead">
   <div class="wrap">
     <div class="mast-top">
-      <div class="wordmark-wrap"><span class="wordmark">Ägarkollen</span><a class="byline" href="/hem">by Marginalen</a></div>
+      <div class="wordmark-wrap"><span class="wordmark">Ägarbrevet</span><a class="byline" href="/hem">by Marginalen</a></div>
       <div class="edition">Fråga · dina bolag och kursen</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
-      <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
       <a href="#" class="here" aria-current="page">Fråga</a>
       <span class="nav-div" aria-hidden="true"></span>
