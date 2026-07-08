@@ -57,6 +57,14 @@ Ankarpunkter i kronor som går att pinna mot en primärkälla:
 - Teckningskursen i den riktade emissionen: 57 kronor per aktie, 2026-07-01 (Sivers pressmeddelande, URL ovan). Det härledda stängningsvärdet den 30 juni: cirka 63 kronor.
 - Detta gör att storleksordningen "runt 39 kronor vid en skärmdump i juli 2026" är förenlig med en aktie som fallit kraftigt från sin topp och sedan från emissionsnivån. Skriv priset som "runt 39 kronor" endast om lektionen har en egen daterad skärmdump som stöd, annars använd de daterade eurotalen ovan eller emissionskursen 57 kronor som ankare.
 
+Skärmdump (användarlevererad, daterad källa). Denna är en verifierad källa enligt sifferpolicyn (levererad av användaren). Skärmdump från Stockholmsbörsen, avläst omkring 2026-07-08, tidsaxeln löper till 8 juli 2026:
+
+- Aktuellt pris: 39,00 kronor, dagsförändring minus 5,43 procent (minus 2,24 kronor).
+- Dagshögsta 42,38 kronor, dagslägsta 38,70 kronor.
+- Avkastningsserie: 1 dag minus 5,43 procent, 1 vecka minus 38,24 procent, 1 månad minus 50,51 procent, 3 månader plus 304,35 procent, 6 månader plus 804,03 procent.
+
+Detta är det säkraste ankaret för själva parabolen: plus 804 procent på sex månader och plus 304 procent på tre månader, följt av minus 50,51 procent på den senaste månaden och minus 38,24 procent på den senaste veckan. Använd dessa tal när lektionen ska visa uppgångens storlek och det efterföljande fallet. De är förenliga med de daterade eurotalen från boerse.de (topp 17 juni, fall därefter) och med emissionskursen 57 kronor.
+
 Uteslutet som osäkert (skriv inte in dessa tal):
 
 - Toppnivå 110 kronor den 3 juni 2026: förekom bara i en aggregerad söksammanfattning, gick inte att pinna mot en daterad primärkälla, och motsäger boerse.des daterade toppdatum (17 juni) och toppnivå (9,45 euro, grovt 95 till 105 kronor). Utesluten.
@@ -64,7 +72,7 @@ Uteslutet som osäkert (skriv inte in dessa tal):
 - Ettårsavkastning "+985 procent" och månadsavkastning "-32,8 procent": förekom i aggregerade sammanfattningar, ej pinnade mot en daterad primärsida. Utelämnade som storleksordning, inte som exakta tal. Använd hellre den belagda nedgången på cirka 60 procent från toppen (boerse.de, 2026-07-08).
 - Exakt börsvärde: en aggregerad sammanfattning angav 13,8 miljarder kronor (juli 2026), men det gick inte att belägga mot en daterad primärsida och emissionen ändrade aktieantalet. Utelämnat.
 
-Sammanfattning av det säkra prisbudskapet för lektionen: aktien nådde sin högsta notering någonsin den 17 juni 2026 (9,45 euro), föll sedan kraftigt (cirka 60 procent till den 8 juli 2026), och bolaget gjorde en riktad emission till 57 kronor den 1 juli. Det räcker för att undervisa parabolförloppet utan att luta sig mot ett obelagt toppris.
+Sammanfattning av det säkra prisbudskapet för lektionen: aktien steg omkring plus 804 procent på sex månader och plus 304 procent på tre månader (skärmdump, omkring 2026-07-08), nådde sin högsta notering någonsin den 17 juni 2026 (9,45 euro), och föll sedan kraftigt (minus 50,51 procent på en månad, minus 38,24 procent på en vecka, till 39,00 kronor den 8 juli). Bolaget gjorde en riktad emission till 57 kronor den 1 juli. Det räcker rikligt för att undervisa parabolförloppet, och priset 39,00 kronor är nu belagt via den användarlevererade skärmdumpen.
 
 ### Den svaga underliggande verksamheten (helår 2025)
 
@@ -107,6 +115,7 @@ För 24.5. Där bevisen är kvalitativa ska påståendet formuleras som mekanism
 - Sivers Semiconductors, pressmeddelande om riktad nyemission om cirka 700 miljoner kronor, 2026-07-01: https://www.sivers-semiconductors.com/press/sivers-semiconductors-has-resolved-on-a-directed-share-issue-of-shares-amounting-to-approximately-sek-700-million/
 - boerse.de, aktiedata Sivers Semiconductors (topp, aktuellt pris), avläst 2026-07-08: https://www.boerse.de/aktien/Sivers-Semiconductors-AB-Aktie/SE0003917798
 - Dagens PS, "Sivers Semiconductors: Kassan avslöjar verkligheten", 2026-03-24: https://www.dagensps.se/bors-finans/sivers-semiconductors-kassan-avslojar-verkligheten/
+- Användarlevererad skärmdump från Stockholmsbörsen (pris 39,00 kronor och avkastningsserie), avläst omkring 2026-07-08.
 - Daniel & Moskowitz (2016), "Momentum Crashes", Journal of Financial Economics 122(2): 221 till 247: https://www.kentdaniel.net/papers/published/jfe_16.pdf
 - Shefrin & Statman (1985), "The Disposition to Sell Winners Too Early and Ride Losers Too Long", Journal of Finance 40(3): 777 till 790: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-6261.1985.tb05002.x
 - Odean (1998), "Are Investors Reluctant to Realize Their Losses?", Journal of Finance 53(5): 1775 till 1798: https://faculty.haas.berkeley.edu/odean/papers%20current%20versions/areinvestorsreluctant.pdf
