@@ -35,14 +35,14 @@
   /* Egen wordmark för brevdelen: Ägarkollen, med en liten "by Marginalen" som
      länkar tillbaka till kurshuset. Grönt i stället för oxblod. */
   .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.01em;line-height:.9;color:var(--oxblood)}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
   .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
   .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
   .nav-back{color:var(--muted)!important}
   .mast-rule{height:2px;background:var(--rule-strong)}
-  .nav{display:flex;gap:26px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
   .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
   .nav a:hover,.nav a.here{color:var(--ink)}
   .nav a.here{color:var(--oxblood)}
@@ -138,7 +138,7 @@
   .site-foot .wrap{padding-top:26px;padding-bottom:60px}
   .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
   .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
-  .site-foot__nav{display:flex;gap:22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
   .site-foot__nav a{color:var(--muted);text-decoration:none}
   .site-foot__nav a:hover{color:var(--oxblood)}
   .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
@@ -163,14 +163,13 @@
         <span class="wordmark">Ägarkollen</span>
         <a class="byline" href="/hem">by Marginalen</a>
       </div>
-      <div class="edition">Morgonbrevet och dina bolag<br>Onsdag 2 juli 2026 · 07:30</div>
+      <div class="edition">Onsdag 2 juli 2026 · 07:30</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
       <a href="#" class="here" aria-current="page">Ägarbrevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
-      <a href="/labs/lagg-till-bolag-i-marginalen.html">Lägg till bolag</a>
       <span class="nav-div" aria-hidden="true"></span>
       <a href="/fokus" class="nav-back">Till kursen ↗</a>
     </nav>

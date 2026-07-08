@@ -41,6 +41,10 @@ a{color:inherit}
 .nav a{display:inline-flex; align-items:center; min-height:40px; color:var(--muted); text-decoration:none}
 .nav a:hover,.nav a.here{color:var(--ink)}
 .nav a.here{color:var(--oxblood)}
+/* Världsväxel: symmetrisk med grön sida ("Till kursen ↗"). Divider + länk in i
+   Ägarkollen-huset. */
+.nav-div{width:1px; height:14px; background:var(--rule-strong); align-self:center}
+.nav a.nav-cross:hover{color:var(--oxblood)}
 
 /* ── lead print: the Borshuset facade as a quiet letterpress behind a page's
    opening block. Same photograph the front page hero and the Agarbrevet band

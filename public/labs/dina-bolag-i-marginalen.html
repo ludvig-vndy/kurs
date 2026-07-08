@@ -32,14 +32,14 @@
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
   .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.01em;line-height:.9;color:var(--oxblood)}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
   .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
   .nav-back{color:var(--muted)!important}
   .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
   .mast-rule{height:2px;background:var(--rule-strong)}
-  .nav{display:flex;gap:26px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
   .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
   .nav a:hover,.nav a.here{color:var(--ink)}
   .nav a.here{color:var(--oxblood)}
@@ -61,14 +61,18 @@
   .hold{display:grid;grid-template-columns:14px 1fr auto;gap:16px;align-items:baseline;padding:16px 4px;border-top:1px solid var(--rule);text-decoration:none;color:inherit;cursor:pointer;transition:background .14s,transform .2s}
   .hold:hover{background:var(--card);transform:translateX(4px)}
   .hold:first-of-type{border-top:none}
+  /* Låt textkolumnen krympa i stället för att tvinga bredd (mobil-overflow). */
+  .hold>div{min-width:0}
   .dot{width:9px;height:9px;border-radius:50%;position:relative;top:4px}
   .dot.neg{background:var(--bad)} .dot.pos{background:var(--good)} .dot.gold{background:var(--gold)} .dot.calm{background:var(--faint)}
   .hold .nm{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.01em}
   .hold .tk{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--faint);margin-left:8px}
   .hold .ln{color:var(--muted);font-size:15px;margin-top:4px;max-width:60ch}
-  .hold .rt{text-align:right;white-space:nowrap}
-  .hold .pr{font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums}
-  .hold .chg{font-family:var(--mono);font-size:12px;margin-left:8px}
+  .hold .rt{text-align:right}
+  /* Bara priset hålls ihop; vaktstexten (.watch) måste få radbrytas, annars
+     tvingar nowrap bredd och sidan blir dragbar på mobil. */
+  .hold .pr{font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .hold .chg{font-family:var(--mono);font-size:12px;margin-left:8px;white-space:nowrap}
   .hold .chg.up{color:var(--good)} .hold .chg.dn{color:var(--bad)}
   .hold .watch{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.02em}
   .hold .watch b{color:var(--good);font-weight:500}
@@ -182,7 +186,7 @@
   .site-foot .wrap{padding-top:26px;padding-bottom:40px}
   .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
   .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
-  .site-foot__nav{display:flex;gap:22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
   .site-foot__nav a{color:var(--muted);text-decoration:none}
   .site-foot__nav a:hover{color:var(--oxblood)}
   .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
@@ -210,14 +214,13 @@
   <div class="wrap">
     <div class="mast-top">
       <div class="wordmark-wrap"><span class="wordmark">Ägarkollen</span><a class="byline" href="/hem">by Marginalen</a></div>
-      <div class="edition">Morgonbrevet och dina bolag<br>Dina bolag · onsdag 2 juli 2026</div>
+      <div class="edition">Dina bolag · onsdag 2 juli 2026</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
       <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
       <a href="#" class="here" aria-current="page">Dina bolag</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
-      <a href="/labs/lagg-till-bolag-i-marginalen.html">Lägg till bolag</a>
       <span class="nav-div" aria-hidden="true"></span>
       <a href="/fokus" class="nav-back">Till kursen ↗</a>
     </nav>
@@ -364,7 +367,7 @@ function renderList(){
   const calm = LIST.filter(h=>h.dot==='calm');
   view.innerHTML =
     '<div class="page-h" data-reveal><h1 class="h-title">Dina bolag</h1>'+
-      '<a class="ghost" href="#">+ Lägg till bolag</a></div>'+
+      '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a></div>'+
     '<p class="lede" data-reveal><b>Ett bolag kräver din uppmärksamhet</b> i dag, två rör på sig, tre är lugna. '+
       'Vi läste 51 nyheter och registerposter om dina sex bolag i natt.</p>'+
     '<div class="flag" data-reveal><span class="cnt">Kräver uppmärksamhet</span></div>'+ attn.map(holdRow).join('')+

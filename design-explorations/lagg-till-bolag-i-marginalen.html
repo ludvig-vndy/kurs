@@ -26,14 +26,14 @@
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
   .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.01em;line-height:.9;color:var(--oxblood)}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
   .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
   .nav-back{color:var(--muted)!important}
   .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
   .mast-rule{height:2px;background:var(--rule-strong)}
-  .nav{display:flex;gap:26px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
   .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
   .nav a:hover,.nav a.here{color:var(--ink)}
   .nav a.here{color:var(--oxblood)}
@@ -109,14 +109,13 @@
   <div class="wrap">
     <div class="mast-top">
       <div class="wordmark-wrap"><span class="wordmark">Ägarkollen</span><a class="byline" href="/hem">by Marginalen</a></div>
-      <div class="edition">Morgonbrevet och dina bolag<br>Lägg till bolag</div>
+      <div class="edition">Lägg till bolag</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
       <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
-      <a href="#" class="here" aria-current="page">Lägg till bolag</a>
       <span class="nav-div" aria-hidden="true"></span>
       <a href="/fokus" class="nav-back">Till kursen ↗</a>
     </nav>

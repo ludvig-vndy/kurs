@@ -61,9 +61,9 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
             <nav class="nav">
               <a href="/hem" class:list={[{ here: active === 'hem' }]} aria-current={active === 'hem' ? 'page' : undefined}>Hem</a>
               <a href="/fokus" class:list={[{ here: active === 'kurs' }]} aria-current={active === 'kurs' ? 'page' : undefined}>Kursöversikt</a>
-              <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
-              <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
               <a href="/verktyg" class:list={[{ here: active === 'verktyg' }]} aria-current={active === 'verktyg' ? 'page' : undefined}>Verktyg</a>
+              <span class="nav-div" aria-hidden="true"></span>
+              <a href="/labs/agarbrevet-i-marginalen.html" class="nav-cross">Till Ägarbrevet ↗</a>
             </nav>
           )}
           {nav === 'landing' && (
@@ -91,7 +91,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
               <a href="/fokus">Kursöversikt</a>
               <a href="/verktyg">Analysverktyg</a>
               <a href="/ordlista">Ordlista</a>
-              <a href="/labs/agar-ai-v2.html">Ägarkollen (alpha)</a>
+              <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
             </nav>
           </div>
           <p class="site-foot__fine">Marginalen, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
@@ -105,7 +105,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
       .site-foot__top { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
       .site-foot__mark { font-family: var(--display); font-weight: 500; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; color: var(--ink); }
       .site-foot__mark span { color: inherit; }
-      .site-foot__nav { display: flex; gap: 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+      .site-foot__nav { display: flex; flex-wrap: wrap; gap: 10px 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
       .site-foot__nav a { color: var(--muted); text-decoration: none; }
       .site-foot__nav a:hover { color: var(--oxblood); }
       .site-foot__fine { margin-top: 16px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: var(--faint); }
