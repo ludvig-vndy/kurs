@@ -108,9 +108,13 @@
   .fmetric small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400;margin-top:2px}
   .ffact{grid-column:1 / -1;font-family:var(--serif);font-size:15.5px;line-height:1.55;color:var(--ink-soft);max-width:66ch}
   .ffact .fnum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink)}
-  .faddwrap{grid-column:1 / -1;margin-top:2px}
+  .faddwrap{grid-column:1 / -1;margin-top:2px;display:flex;gap:10px 20px;flex-wrap:wrap;align-items:baseline}
   .fadd{font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--oxblood);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px;display:inline-block;transition:.14s}
   .fadd:hover{border-color:var(--oxblood)}
+  .fadd.follow{color:var(--good);border-bottom-color:var(--good);font-weight:600}
+  .fadd.follow:hover{border-bottom-color:var(--good)}
+  .fadd.sub{color:var(--muted);font-size:11px}
+  .fadd.sub:hover{color:var(--oxblood);border-color:var(--oxblood)}
   .feed-empty{font-family:var(--serif);font-size:15px;color:var(--muted);padding:24px 0;font-style:italic}
 
   /* ── SCREENER: frågeruta + chips ───────────────────────────────────── */
@@ -242,6 +246,7 @@
         <span class="badge">fakta, aldrig signal</span>
       </div>
       <p class="mode-desc">Spaningen: bolag som rör sig just nu, var rad strikt formulerad som <span class="cite">fakta om en rörelse</span>, aldrig ett köpråd. Vi konstaterar vad vi ser i flödet, varför något rör sig avgör du.</p>
+      <p class="lens-sub">Följ = vi analyserar bolagets rapporter och väsentliga händelser åt dig, utan att du äger. Vill du äga det, lägg till i Dina bolag.</p>
 
       <div class="fchips" id="mfilters">
         <button class="fchip on" data-kind="alla"><span class="cdot"></span>Alla rörelser</button>
@@ -264,6 +269,7 @@
         <span class="badge">objektiv filtrering</span>
       </div>
       <p class="mode-desc">Skriv vad du letar efter i klartext, få en lista ut. Varje träff kommer med en rad om <span class="cite">varför den matchar och var den haltar</span>. Objektiv filtrering mot dina kriterier, aldrig en rekommendation.</p>
+      <p class="lens-sub">Följ = vi analyserar bolagets rapporter och väsentliga händelser åt dig, utan att du äger. Vill du äga det, lägg till i Dina bolag.</p>
 
       <div class="qform">
         <div class="qlab">Fråga i klartext</div>
@@ -390,7 +396,7 @@ function renderFeed(){
       <div class="frow-co">${m.co} <span class="fticker">${m.tk}</span> <span class="fkind">${m.kindLab}</span></div>
       <div class="fmetric">${m.metric}<small>${m.unit}</small></div>
       <div class="ffact">${m.fact}</div>
-      <div class="faddwrap"><a class="fadd" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
+      <div class="faddwrap"><a class="fadd follow" href="/labs/bolagshubb-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
     </li>`).join('');
 }
 document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('click', () => {
@@ -447,7 +453,7 @@ function renderScreener(){
       <div class="mrow-co">${m.co} <span class="fticker">${m.tk}</span></div>
       <div class="mrow-mc num">${m.mc}</div>
       <div class="mrow-why">${m.why} <span class="halt">${m.halt}</span></div>
-      <div class="maddwrap"><a class="fadd" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
+      <div class="maddwrap faddwrap"><a class="fadd follow" href="/labs/bolagshubb-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
     </li>`).join('');
 }
 renderScreener();
