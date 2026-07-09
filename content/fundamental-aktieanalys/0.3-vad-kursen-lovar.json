@@ -1,0 +1,71 @@
+{
+  "kapitel": 0,
+  "lektion": "0.3",
+  "titel": "Vad kursen lovar, och inte",
+  "niva": "Nybörjare",
+  "tid_min": 6,
+  "mal": "Efter lektionen vet eleven vad kursen realistiskt utlovar: förståelse och disciplin, inte en garanti att slå index, och hur kursen är upplagd.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "INNAN DU BÖRJAR",
+      "titel": "Vad kursen lovar, och inte",
+      "ingress": "Med oddsen på bordet vore det oärligt att lova dig rikedom. Här är vad den här kursen faktiskt gör för dig, och vad den inte gör."
+    },
+    {
+      "typ": "reading",
+      "kicker": "ÄRLIGHETEN",
+      "lead": "Den här kursen lovar dig inte att du slår index. Ingen seriös kan lova det. Vad den gör är att göra dig till en påläst ägare: någon som förstår vad hen äger, undviker de dyraste misstagen och bestämmer med öppna ögon.",
+      "highlight": "göra dig till en påläst ägare",
+      "brodtext": [
+        "För många är breda indexfonder en fullt rimlig utgångspunkt, och det säger vi rakt ut. Ska du ändå äga enskilda bolag, gör det som ägare, inte som spelare: för att du förstår affären och har tålamodet att låta den utvecklas.",
+        "Det är en högre och ärligare ambition än ett kursrykte: inte att gissa rätt oftare, utan att fatta färre dåliga beslut och alltid veta varför du äger det du äger."
+      ],
+      "takeaway": "Målet är inte att slå index till varje pris. Målet är att bli en ägare som förstår, och som inte saboterar sig själv."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SÅ FUNKAR DEN",
+      "titel": "Steg, quiz och din egen takt",
+      "forklaring": "Kursen är byggd i korta steg per lektion: du läser lite, ser det viktiga visualiserat och testar dig själv med ett kort quiz på slutet, sikta på minst 80 procent rätt. Dina framsteg sparas automatiskt i webbläsaren. Du börjar här, med grunderna, och bygger uppåt mot att läsa en rapport och forma ett eget case. Ta det i din egen takt, det är ingen tävling."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad lovar kursen?",
+          "alternativ": [
+            "Att du garanterat slår index",
+            "Att göra dig till en påläst ägare som förstår vad du äger och undviker de dyraste misstagen",
+            "Snabb rikedom"
+          ],
+          "ratt": [1],
+          "forklaring": "Ingen seriös lovar att du slår index. Kursen ger förståelse och disciplin."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad säger kursen om breda indexfonder?",
+          "alternativ": [
+            "Att de alltid är ett dåligt val",
+            "Att de för många är en fullt rimlig utgångspunkt",
+            "Att de är förbjudna för den som gått kursen"
+          ],
+          "ratt": [1],
+          "forklaring": "Ärligheten kostar inget. Äger du enskilda bolag ska du göra det som ägare, inte som spelare."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är riktmärket att sikta på i lektionernas quiz?",
+          "alternativ": [
+            "Minst 50 procent rätt",
+            "Minst 80 procent rätt",
+            "100 procent, annars låses lektionen"
+          ],
+          "ratt": [1],
+          "forklaring": "Sikta på minst 80 procent. Framstegen sparas automatiskt och du tar det i din egen takt."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "kapitel": 0,
+  "lektion": "0.1",
+  "titel": "Oddsen",
+  "niva": "Nybörjare",
+  "tid_min": 6,
+  "mal": "Efter lektionen känner eleven till hur få som slår index över tid, och varför det gör kursens fokus på temperament och förståelse relevant.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "INNAN DU BÖRJAR",
+      "titel": "Oddsen, utan sminkning",
+      "ingress": "Innan vi lär dig hantverket, en ärlig titt på hur det faktiskt går för dem som försöker slå börsen. Det är obekvämt, och det är själva anledningen till att den här kursen finns."
+    },
+    {
+      "typ": "dataviz",
+      "titel": "Av 100 slår ungefär 11",
+      "underrubrik": "Andelen aktivt förvaltade fonder som slår sitt jämförelseindex över 15 år, enligt S&P:s SPIVA-mätning.",
+      "visual": {
+        "typ": "rutnat",
+        "kolumner": 10,
+        "celler": 100,
+        "markerad": 11,
+        "etikett": "Av 100 aktiva fonder slår ungefär 11 sitt index över 15 år",
+        "figurtext": "Illustrativ ruta. Andelen bygger på SPIVA US, cirka 89 procent av fonderna underpresterade över 15 år."
+      },
+      "slutsats": "Och det gäller proffs med hela team och all data. För privatspararen som handlar aktivt är siffrorna sämre, inte bättre."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TRE SIFFROR",
+      "lead": "Tre studier tecknar samma bild: de flesta slår inte index över tid. Proffsen klarar det knappt, aktiva småsparare gör det sämre, och även den som äger indexfonder saboterar ofta sig själv.",
+      "highlight": "de flesta slår inte index över tid",
+      "brodtext": [
+        "Proffsen: enligt SPIVA underpresterade omkring 89 procent av aktivt förvaltade storbolagsfonder mot sitt index över 15 år. Ungefär 1 av 10 slog index. Ju längre tidsperiod, desto svårare blir det.",
+        "Aktiva småsparare: i Barber och Odeans klassiska studie av daytraders förlorade fler än 8 av 10 pengar, och bara omkring 1 procent var förutsägbart lönsamma efter kostnader. De mest aktiva privatspararna underpresterade marknaden rejält.",
+        "Även indexspararen: Morningstars mätning Mind the Gap visar att spararen i snitt får någon procentenhet mindre per år än de fonder hen själv äger, för att hen köper på topp och säljer i botten. Det kallas beteendegapet."
+      ],
+      "takeaway": "Det är inte bara vad du äger, utan hur du beter dig. Och det pekar rakt mot det som den här kursen handlar om."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Ungefär hur stor andel av aktivt förvaltade storbolagsfonder slog sitt index över 15 år, enligt SPIVA?",
+          "alternativ": ["Ungefär 1 av 10", "Ungefär 5 av 10", "Ungefär 9 av 10"],
+          "ratt": [0],
+          "forklaring": "Cirka 89 procent underpresterade, alltså slog ungefär 1 av 10 sitt index. Och det gäller proffs, inte privatsparare."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad visar Barber och Odeans studie av daytraders?",
+          "alternativ": [
+            "De flesta slår marknaden",
+            "Fler än 8 av 10 förlorar pengar, och bara omkring 1 procent är förutsägbart lönsamma",
+            "Erfarna traders tjänar alltid pengar"
+          ],
+          "ratt": [1],
+          "forklaring": "Aktiv handel gör det sämre, inte bättre. De mest aktiva privatspararna underpresterade marknaden rejält."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är beteendegapet som Morningstar mäter?",
+          "alternativ": [
+            "Skillnaden mellan två fonders avgifter",
+            "Att spararen får mindre än fonden hen äger, för att hen köper på topp och säljer i botten",
+            "Skillnaden mellan börsens öppning och stängning"
+          ],
+          "ratt": [1],
+          "forklaring": "Även den som väljer rätt fond förlorar avkastning genom dålig tajming. Hur du beter dig avgör."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skattehjälpen · Ägarbrevet · Marginalen</title>
+<meta name="description" content="Skattehjälpen: kvittning och K4-underlag räknat på dina egna affärer inför årsskiftet. Skatteregler ges som mekanism, aldrig som fryst belopp, aldrig som råd att sälja.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- impeccable-disable overused-font -- Inter is the locked Marginalen label font (broadsheet.css house token: --mono), shared across the whole suite; changing it here would break house consistency. -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens och typografi lånade rakt ur broadsheet.css / Ägarbrevet-världen,
+     så Skattehjälpen bor i samma hus som brevet och resten av Marginalen. Gröna
+     världen: skogsgrönt som primär accent, amber som värme. JetBrains Mono
+     används ENBART för tabellsiffror (--num); UI-etiketter och nav kör Inter (--mono). */
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --bad:#9B3A2E;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --mono:"Inter",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  .num{font-family:var(--num);font-variant-numeric:tabular-nums}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1}
+  .sheet{max-width:none;margin:0 auto;padding:6px 0 8px}
+
+  /* ── intro ─────────────────────────────────────────────────────────── */
+  #intro{padding:16px 0 8px}
+  .intro-tag{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--rule-strong);border-radius:99px;padding:4px 12px;letter-spacing:.09em;text-transform:uppercase;display:inline-block;margin-bottom:22px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:14px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5.4vw,56px);line-height:1.03;letter-spacing:-.02em;text-wrap:balance;max-width:14ch}
+  .badge-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap;align-self:center}
+  .badge.pro{color:var(--gold);border-color:rgba(176,124,30,.5)}
+  .standfirst{font-family:var(--serif);font-size:clamp(17px,1.8vw,20px);line-height:1.55;color:var(--ink-soft);max-width:60ch;margin-top:16px;text-wrap:pretty}
+  .standfirst .quiet{color:var(--muted)}
+  .intro-rule{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);border-top:1px solid var(--rule);margin-top:26px;padding-top:18px;line-height:1.6;display:flex;gap:9px;align-items:baseline;max-width:66ch}
+  .intro-rule::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:5px}
+  .intro-rule b{color:var(--ink-soft);font-weight:600}
+
+  /* ── redaktionell sektion (rule-separerad, INTE kortrutnät) ────────── */
+  .sec{padding:40px 0 34px;border-top:2px solid var(--rule-strong)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .sec-name{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.2vw,32px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+  .sec-desc{font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink-soft);max-width:64ch;margin-top:8px;text-wrap:pretty}
+  .sec-desc .cite{color:var(--oxblood);font-style:italic}
+  .sec-body{margin-top:22px}
+
+  /* preview-panel (kort, distinkt per block) */
+  .prev{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:20px 22px;max-width:780px}
+  .prev-lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+
+  /* ── tabeller (delade: .dt ur Ägarbrevet-världen, siffror i --num) ─── */
+  .tscroll{overflow-x:auto;margin-top:2px}
+  table.dt{width:100%;border-collapse:collapse;font-size:13.5px;min-width:360px}
+  table.dt th{text-align:right;color:var(--faint);font-weight:500;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 10px 16px;white-space:nowrap}
+  table.dt th:first-child{text-align:left;padding-left:0}
+  table.dt td{padding:11px 0 11px 16px;border-top:1px solid var(--rule);font-family:var(--num);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;color:var(--ink)}
+  table.dt td:first-child{text-align:left;font-family:var(--serif);font-size:15px;color:var(--ink-soft);padding-left:0}
+  table.dt td .d{font-size:11px;margin-left:4px}
+  table.dt tfoot td{border-top:2px solid var(--rule-strong);color:var(--ink)}
+  table.dt tfoot td:first-child{font-family:var(--display);font-weight:600;font-size:14px;color:var(--ink)}
+  .neg{color:var(--bad)} .pos{color:var(--good)} .mutc{color:var(--muted)}
+
+  /* kvittnings-rad (mekanik i klartext, siffror i --num) */
+  .kvit{display:flex;gap:13px;align-items:baseline;font-family:var(--serif);font-size:17px;line-height:1.5;color:var(--ink)}
+  .kvit .knum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--oxblood);font-weight:500}
+  .arith{list-style:none;margin:16px 0 0;padding:0}
+  .arith li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--rule);font-family:var(--serif);font-size:15px;color:var(--ink-soft)}
+  .arith li:first-child{border-top:none}
+  .arith li.sum{border-top:2px solid var(--rule-strong);font-family:var(--display);font-weight:600;font-size:15px;color:var(--ink);margin-top:4px}
+  .arith .av{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+  .arith .av.neg{color:var(--bad)} .arith .av.pos{color:var(--good)}
+  .mech-note{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule);line-height:1.6;max-width:64ch}
+  .mech-note b{color:var(--ink-soft);font-weight:600}
+
+  /* frame-etikett över ett kort */
+  .frame{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);border:1px solid var(--rule-strong);border-radius:99px;padding:3px 9px;display:inline-block;margin-bottom:14px}
+
+  /* före-årsskiftet: fakta-feed, mekanik aldrig uppmaning */
+  .feed{list-style:none;margin:0;padding:0;max-width:64ch}
+  .feed li{padding:14px 0;border-top:1px solid var(--rule);font-family:var(--serif);font-size:16px;line-height:1.55;color:var(--ink-soft);display:flex;gap:12px;align-items:baseline}
+  .feed li:first-child{border-top:none;padding-top:0}
+  .feed .fdot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:8px}
+  .feed li b{color:var(--ink);font-weight:600}
+
+  /* ── stängningsremsa: vad Skattehjälpen aldrig gör ─────────────────── */
+  .never{padding:40px 0 34px;border-top:2px solid var(--rule-strong)}
+  .never-head{font-family:var(--display);font-weight:300;font-size:clamp(24px,3.2vw,32px);line-height:1.1;letter-spacing:-.015em;text-wrap:balance;max-width:24ch}
+  .never-lede{font-family:var(--serif);font-size:16.5px;color:var(--ink-soft);margin-top:12px;max-width:60ch;text-wrap:pretty}
+  .never-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;margin-top:8px}
+  .nv{padding:20px 0;border-top:1px solid var(--rule)}
+  .nv b{display:block;font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:-.01em;color:var(--oxblood);margin-bottom:6px}
+  .nv span{color:var(--ink-soft);font-size:15px;line-height:1.5;display:block;max-width:44ch}
+  @media(max-width:620px){.never-grid{grid-template-columns:1fr}}
+
+  .fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:34px;line-height:1.7;max-width:74ch}
+  .fine .tag{display:inline-block;border:1px solid var(--rule-strong);padding:3px 8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--muted)}
+
+  /* ── footer (delad) ────────────────────────────────────────────────── */
+  .site-foot{margin-top:8px;border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:60px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  /* motion */
+  [data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  [data-reveal].on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap">
+        <span class="wordmark">Ägarbrevet</span>
+        <a class="byline" href="/hem">by Marginalen</a>
+      </div>
+      <div class="edition">Skattehjälpen · inför årsskiftet</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/rapportkollen-i-marginalen.html">Rapportkollen</a>
+      <a href="/labs/dagboken-i-marginalen.html">Dagboken</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="sheet">
+
+    <!-- ── INTRO ───────────────────────────────────────────────────── -->
+    <section id="intro" data-reveal>
+      <span class="intro-tag">Skiss · exempeldata</span>
+      <div class="kicker">Ägarbrevet · säsong</div>
+      <h1 class="h-title">Skattehjälpen</h1>
+      <p class="standfirst">Inför årsskiftet räknar vi kvittning och K4-underlag på dina egna affärer, och förklarar hur reglerna funkar. <span class="quiet">Det är hjälp att se din situation, aldrig ett skatteråd och aldrig en uppmaning att sälja.</span></p>
+      <div class="badge-row">
+        <span class="badge pro">säsong (nov) · kräver transaktionshistorik</span>
+      </div>
+      <p class="intro-rule"><span><b>Skatteregler ges som mekanism, aldrig som fryst belopp.</b> Vi räknar på dina egna affärer och förklarar hur reglerna funkar, du fattar besluten.</span></p>
+    </section>
+
+    <!-- ── 1. ÅRETS REALISERADE RESULTAT ───────────────────────────── -->
+    <section class="sec" data-reveal>
+      <div class="sec-head">
+        <h2 class="sec-name">Årets realiserade resultat</h2>
+      </div>
+      <p class="sec-desc">De affärer du faktiskt stängt i år, vinst eller förlust per innehav. Det här är fakta ur din transaktionshistorik, inte en bedömning av vad du bör göra härnäst.</p>
+      <div class="sec-body">
+        <div class="prev">
+          <div class="prev-lab">Realiserat 2026 · per innehav</div>
+          <div class="tscroll">
+            <table class="dt">
+              <thead><tr><th>Innehav</th><th>Antal</th><th>Realiserat resultat</th></tr></thead>
+              <tbody>
+                <tr><td>Norlux Industri</td><td>120</td><td class="pos">+41 200 kr</td></tr>
+                <tr><td>Telvio</td><td>200</td><td class="neg">-18 400 kr</td></tr>
+                <tr><td>Voltcell</td><td>150</td><td class="neg">-9 700 kr</td></tr>
+                <tr><td>Kavex Medical</td><td>80</td><td class="neg">-6 300 kr</td></tr>
+              </tbody>
+              <tfoot>
+                <tr><td>Netto realiserat</td><td class="mutc">550</td><td class="pos">+6 800 kr</td></tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. KVITTNINGSMÖJLIGHETER ────────────────────────────────── -->
+    <section class="sec" data-reveal>
+      <div class="sec-head">
+        <h2 class="sec-name">Kvittningsmöjligheter</h2>
+      </div>
+      <p class="sec-desc">Så här funkar mekaniken: <span class="cite">realiserade förluster kan kvittas mot realiserade vinster</span>, och så här ser din situation ut när vi räknar på dina egna affärer.</p>
+      <div class="sec-body">
+        <div class="prev">
+          <div class="prev-lab">Din kvittning inför årsskiftet</div>
+          <p class="kvit"><span>Du har <span class="knum">3 realiserade förluster</span> som tillsammans kan kvittas mot din vinst i Norlux inför årsskiftet.</span></p>
+          <ul class="arith">
+            <li><span>Vinst, Norlux</span><span class="av pos">+41 200 kr</span></li>
+            <li><span>Förlust, Telvio</span><span class="av neg">-18 400 kr</span></li>
+            <li><span>Förlust, Voltcell</span><span class="av neg">-9 700 kr</span></li>
+            <li><span>Förlust, Kavex</span><span class="av neg">-6 300 kr</span></li>
+            <li class="sum"><span>Kvar efter kvittning</span><span class="av pos">+6 800 kr</span></li>
+          </ul>
+          <p class="mech-note"><b>Så funkar regeln:</b> förluster kvittas fullt mot vinster i samma kategori, överskjutande förlust får kvotas innan den möter annan inkomst. Kvoten och nivåerna ändras över tid, så kontrollera aktuell regel för det år du deklarerar. Vi visar mekaniken på dina siffror, vi fryser ingen sats som lag.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. K4-UNDERLAGET ────────────────────────────────────────── -->
+    <section class="sec" data-reveal>
+      <div class="sec-head">
+        <h2 class="sec-name">K4-underlaget</h2>
+      </div>
+      <p class="sec-desc">En förhandsvy av K4-raderna genererade ur dina affärer. Det är <span class="cite">ett underlag att kontrollera</span> mot dina egna noteringar, inte en färdig deklaration och inte ett råd om vad du ska fylla i.</p>
+      <div class="sec-body">
+        <div class="prev">
+          <span class="frame">Underlag att kontrollera · ej inlämnat</span>
+          <div class="prev-lab">K4 · avsnitt A, marknadsnoterade aktier</div>
+          <div class="tscroll">
+            <table class="dt">
+              <thead><tr><th>Beteckning</th><th>Antal</th><th>Försäljningspris</th><th>Omkostnadsbelopp</th><th>Vinst/förlust</th></tr></thead>
+              <tbody>
+                <tr><td>Norlux Industri</td><td>120</td><td>341 400 kr</td><td>300 200 kr</td><td class="pos">+41 200 kr</td></tr>
+                <tr><td>Telvio</td><td>200</td><td>168 400 kr</td><td>186 800 kr</td><td class="neg">-18 400 kr</td></tr>
+                <tr><td>Voltcell</td><td>150</td><td>52 300 kr</td><td>62 000 kr</td><td class="neg">-9 700 kr</td></tr>
+                <tr><td>Kavex Medical</td><td>80</td><td>124 500 kr</td><td>130 800 kr</td><td class="neg">-6 300 kr</td></tr>
+              </tbody>
+              <tfoot>
+                <tr><td>Summa</td><td class="mutc">550</td><td>686 600 kr</td><td>679 800 kr</td><td class="pos">+6 800 kr</td></tr>
+              </tfoot>
+            </table>
+          </div>
+          <p class="mech-note">Raderna kommer ur dina transaktioner. Stäm av beteckning, antal och omkostnadsbelopp mot din egen historik innan något förs över till deklarationen. Underlaget är hjälp, beslutet och inlämningen är dina.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. FÖRE ÅRSSKIFTET ──────────────────────────────────────── -->
+    <section class="sec" data-reveal>
+      <div class="sec-head">
+        <h2 class="sec-name">Vad du kan tänka på före årsskiftet</h2>
+      </div>
+      <p class="sec-desc">Det här är mekanik och kalender, inte en uppmaning. Vi pekar på hur reglerna funkar i tid, aldrig på vad du ska köpa eller sälja.</p>
+      <div class="sec-body">
+        <div class="prev">
+          <div class="prev-lab">Mekanik och tidslinje</div>
+          <ul class="feed">
+            <li><span class="fdot"></span><span>Kvittning sker på affärer gjorda <b>före årsskiftet</b>, det är därför november är läge att se över läget. Vad du gör är ditt beslut.</span></li>
+            <li><span class="fdot"></span><span>En realiserad förlust räknas det år affären är stängd, inte det år du köpte. Vi visar vad som redan är realiserat, resten är upp till dig.</span></li>
+            <li><span class="fdot"></span><span>Kvoten och nivåerna för överskjutande förlust <b>ändras över tid</b>. Kontrollera aktuell regel innan du räknar på en effekt, vi fryser den inte åt dig.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VAD SKATTEHJÄLPEN ALDRIG GÖR ────────────────────────────── -->
+    <section class="never" data-reveal>
+      <h2 class="never-head">Vad Skattehjälpen inte gör</h2>
+      <p class="never-lede">Gränserna är inte finstilt, de är själva poängen. Det är dem som gör att du kan lita på raderna ovanför.</p>
+      <div class="never-grid">
+        <div class="nv"><b>Aldrig ett skatteråd</b><span>Vi förklarar mekaniken och räknar på dina siffror. Vad du deklarerar och beslutar är ditt, alltid.</span></div>
+        <div class="nv"><b>Aldrig ett fryst belopp som lag</b><span>Satserna och kvoterna ändras. Tjänsten låtsas inte veta framtidens, den ber dig kontrollera aktuell regel.</span></div>
+        <div class="nv"><b>Aldrig en uppmaning att sälja</b><span>Vi säger var kvittning är möjlig, inte att du ska realisera något. Köp och sälj bestämmer du.</span></div>
+        <div class="nv"><b>Bara dina egna siffror plus reglerna</b><span>Underlaget kommer ur din historik och mekaniken ur regelverket. Ingen del av det lämnar huset.</span></div>
+      </div>
+      <p class="fine">
+        <span class="tag">Skiss · exempeldata</span><br>
+        Skattehjälpen · av Marginalen. Prototyp i utbildningssyfte, arbetsnamn, fiktiva bolag och illustrativa siffror. Aldrig skatte- eller placeringsråd, aldrig en uppmaning att sälja. Skatteregler ges som mekanism, aldrig som fryst belopp; kontrollera alltid aktuell regel för det år du deklarerar.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/hem">Hem</a>
+        <a href="/fokus">Kursöversikt</a>
+        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/verktyg">Verktyg</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Skiss · exempeldata · illustrativa siffror. Fiktiva bolag, i utbildningssyfte, aldrig skatte- eller placeringsråd. Skatteregler som mekanism, aldrig fryst belopp.</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal
+  (function(){
+    var els = document.querySelectorAll('[data-reveal]');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      els.forEach(function(el){ el.classList.add('on'); }); return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+</body>
+</html>

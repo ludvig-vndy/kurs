@@ -4,6 +4,45 @@
  "beskrivning": "Lär dig att värdera bolag och tänka som en ägare, från grunderna till värdering, risk och praktik.",
  "kapitel": [
   {
+   "nummer": 0,
+   "titel": "Innan du börjar: oddsen",
+   "niva": "Nybörjare",
+   "tid_min": 18,
+   "blurb": "En ärlig start: hur få som faktiskt slår index över tid, varför de flesta misslyckas, och vad den här kursen realistiskt lovar. Kort, obekvämt, och själva anledningen till att resten av kursen finns.",
+   "outcomes": [
+    "Känna till hur få sparare och fonder som slår index över tid",
+    "Namnge de vanligaste orsakerna: avgifter, överhandel, övertro och beteendegapet",
+    "Veta vad kursen lovar, förståelse och disciplin, och vad den inte lovar, en garanti att slå index"
+   ],
+   "sebastian": "Jag önskar att någon visat mig de här siffrorna innan jag började. Det hade inte skrämt bort mig, men det hade gjort mig ödmjuk från dag ett, och ödmjukhet är halva jobbet på börsen.",
+   "lektioner": [
+    {
+     "lektion": "0.1",
+     "titel": "Oddsen",
+     "niva": "Nybörjare",
+     "tid_min": 6,
+     "status": "klar",
+     "fil": "0.1-oddsen.json"
+    },
+    {
+     "lektion": "0.2",
+     "titel": "Varför de flesta misslyckas",
+     "niva": "Nybörjare",
+     "tid_min": 6,
+     "status": "klar",
+     "fil": "0.2-varfor-de-flesta-misslyckas.json"
+    },
+    {
+     "lektion": "0.3",
+     "titel": "Vad kursen lovar, och inte",
+     "niva": "Nybörjare",
+     "tid_min": 6,
+     "status": "klar",
+     "fil": "0.3-vad-kursen-lovar.json"
+    }
+   ]
+  },
+  {
    "nummer": 1,
    "titel": "Investeringsfilosofi",
    "niva": "Nybörjare",

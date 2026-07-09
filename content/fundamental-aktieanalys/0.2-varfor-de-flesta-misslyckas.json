@@ -1,0 +1,85 @@
+{
+  "kapitel": 0,
+  "lektion": "0.2",
+  "titel": "Varför de flesta misslyckas",
+  "niva": "Nybörjare",
+  "tid_min": 6,
+  "mal": "Efter lektionen kan eleven namnge de vanligaste orsakerna till att sparare underpresterar: avgifter, överhandel, övertro och beteendegapet.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "INNAN DU BÖRJAR",
+      "titel": "Varför de flesta misslyckas",
+      "ingress": "Om oddsen är så dåliga, vad är det egentligen som går fel? Nästan aldrig brist på information. Nästan alltid något av en handfull mänskliga mönster."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA MÖNSTER",
+      "titel": "Det är sällan analysen som fäller dig",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Överhandel",
+            "text": "Ju mer du köper och säljer, desto mer betalar du i courtage och spread, och desto fler chanser ger du dig själv att tajma fel. De mest aktiva underpresterar mest."
+          },
+          {
+            "rubrik": "Övertro",
+            "text": "De flesta tror sig ligga över snittet. Det leder till för stora positioner, för lite ödmjukhet och för sena omprövningar."
+          }
+        ],
+        "figurtext": "Två av de vanligaste sätten att förlora."
+      },
+      "forklaring": "Lägg till två till: avgifter som äter avkastningen tyst år efter år, och beteendegapet, att köpa när allt känns tryggt och därför dyrt, och sälja när allt känns läskigt och därför billigt. Ingen av dem kräver att du hade fel om bolaget. De handlar om hur du bär dig åt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KÄRNAN",
+      "lead": "Det gemensamma för mönstren är att de är beteende, inte kunskap. Du kan kunna allt om ett bolag och ändå förlora pengar på att sälja det i panik en måndag.",
+      "highlight": "de är beteende, inte kunskap",
+      "brodtext": [
+        "Därför är temperament minst lika viktigt som analys. Att sitta still när det svänger, att inte handla för att det kliar, att ompröva när fakta ändras men inte när humöret gör det, det är färdigheter, och de går att träna.",
+        "Och därför lär den här kursen ut båda delarna: hur du läser siffrorna, alltså hantverket, och hur du bär dig åt när det blåser, alltså omdömet. Det senare är det som oftast skiljer utfallen åt."
+      ],
+      "takeaway": "De flesta misslyckas inte för att de vet för lite, utan för att de beter sig som människor. Det går att bli bättre på."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är den vanligaste orsaken till att sparare underpresterar?",
+          "alternativ": [
+            "Brist på information om bolagen",
+            "Beteende: överhandel, övertro, dålig tajming och avgifter",
+            "Ren otur"
+          ],
+          "ratt": [1],
+          "forklaring": "Nästan aldrig brist på information. Nästan alltid mänskliga mönster."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför straffar överhandel avkastningen?",
+          "alternativ": [
+            "Fler affärer betyder mer courtage och spread, och fler chanser att tajma fel",
+            "Fler affärer sänker alltid skatten",
+            "Fler affärer garanterar högre avkastning"
+          ],
+          "ratt": [0],
+          "forklaring": "De mest aktiva underpresterar mest. Varje affär kostar, och varje affär kan tajmas fel."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför lägger kursen så stor vikt vid temperament?",
+          "alternativ": [
+            "För att analys är oviktigt",
+            "För att de flesta misstag är beteende, inte kunskap, och beteende går att träna",
+            "För att temperament ersätter behovet av att förstå bolaget"
+          ],
+          "ratt": [1],
+          "forklaring": "Du kan kunna allt om ett bolag och ändå sälja i panik. Omdömet avgör utfallet."
+        }
+      ]
+    }
+  ]
+}

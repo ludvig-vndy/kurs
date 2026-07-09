@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portföljröntgen · Ägarbrevet · Pro</title>
+<meta name="description" content="Portföljröntgen: en kvalitativ överlappskarta av innehaven. Vi visar var bolagen lutar åt samma håll, inte kvantifierade fallscenarier.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- impeccable-disable overused-font -- Inter is the locked Marginalen label font (broadsheet.css house token: --mono), shared across the whole suite; changing it here would break house consistency. -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens och typografi lånade rakt ur broadsheet.css / Ägarbrevet-världen,
+     så Portföljröntgen bor i samma hus som brevet och resten av Marginalen.
+     Gröna världen: skogsgrönt som primär accent, amber som värme. JetBrains
+     Mono används ENBART för tabellsiffror (--num), vikter och procent;
+     UI-etiketter och nav kör Inter (--mono). */
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --bad:#9B3A2E;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --mono:"Inter",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  .num{font-family:var(--num);font-variant-numeric:tabular-nums}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1}
+  .sheet{max-width:none;margin:0 auto;padding:6px 0 8px}
+
+  /* ── intro ─────────────────────────────────────────────────────────── */
+  #intro{padding:16px 0 8px}
+  .intro-tag{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--rule-strong);border-radius:99px;padding:4px 12px;letter-spacing:.09em;text-transform:uppercase;display:inline-block;margin-bottom:22px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:14px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5.4vw,56px);line-height:1.03;letter-spacing:-.02em;text-wrap:balance;max-width:16ch}
+  .h-title .badge{vertical-align:middle;margin-left:12px}
+  .standfirst{font-family:var(--serif);font-size:clamp(17px,1.8vw,20px);line-height:1.55;color:var(--ink-soft);max-width:60ch;margin-top:16px;text-wrap:pretty}
+  .standfirst .quiet{color:var(--muted)}
+  .intro-rule{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);border-top:1px solid var(--rule);margin-top:26px;padding-top:18px;line-height:1.6;display:flex;gap:9px;align-items:baseline;max-width:66ch}
+  .intro-rule::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:5px}
+  .intro-rule b{color:var(--ink-soft);font-weight:600}
+
+  /* ── badge (delad med Fördjupning) ─────────────────────────────────── */
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap;align-self:center;display:inline-block}
+  .badge.pro{color:var(--gold);border-color:rgba(176,124,30,.5)}
+
+  /* ── redaktionell sektion (rule-separerad, INTE kortrutnät) ────────── */
+  .tool{padding:40px 0 34px;border-top:2px solid var(--rule-strong)}
+  .tool-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .tool-name{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.2vw,32px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+  .tool-desc{font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink-soft);max-width:64ch;margin-top:8px;text-wrap:pretty}
+  .tool-desc .cite{color:var(--oxblood);font-style:italic}
+
+  /* ── överlappskartan: grupperade linser, inte en falsk matris ──────── */
+  .lenses{margin-top:24px;display:grid;grid-template-columns:1fr;gap:0}
+  .lens{padding:22px 0;border-top:1px solid var(--rule)}
+  .lens:first-child{border-top:none;padding-top:4px}
+  .lens-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;justify-content:space-between}
+  .lens-name{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:baseline;gap:11px}
+  .lens-name .ldot{width:9px;height:9px;border-radius:50%;background:var(--oxblood);flex:0 0 auto;position:relative;top:1px}
+  .lens.solo .lens-name .ldot{background:var(--gold)}
+  .lens-wt{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:15px;color:var(--oxblood);white-space:nowrap}
+  .lens.solo .lens-wt{color:var(--gold)}
+  .lens-holds{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+  .chip{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink-soft);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:6px 13px;text-decoration:none;white-space:nowrap;transition:border-color .15s,color .15s}
+  a.chip:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .chip .cw{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--muted);margin-left:7px;padding-left:8px;border-left:1px solid var(--rule)}
+  .lens-ev{font-family:var(--serif);font-size:15.5px;line-height:1.5;color:var(--ink-soft);margin-top:12px;max-width:62ch}
+  .lens-ev .plus{font-family:var(--mono);color:var(--muted);margin:0 5px}
+
+  /* ── koncentration: staplade rader (fakta, inte scenario) ──────────── */
+  .prev{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:22px 24px;max-width:760px;margin-top:20px}
+  .prev-lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .bars{list-style:none;margin:0;padding:0}
+  .bar{padding:13px 0;border-top:1px solid var(--rule)}
+  .bar:first-child{border-top:none;padding-top:0}
+  .bar-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+  .bar-name{font-family:var(--serif);font-size:15.5px;color:var(--ink)}
+  .bar-pct{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink);white-space:nowrap}
+  .bar-track{height:8px;background:var(--paper-2);border-radius:99px;margin-top:9px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--oxblood);border-radius:99px}
+  .bar.warm .bar-fill{background:var(--gold)}
+  .bar-cap{font-family:var(--mono);font-size:11.5px;letter-spacing:.01em;color:var(--muted);margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);line-height:1.55}
+
+  .tscroll{overflow-x:auto}
+
+  /* ── vad röntgen inte gör (delad "never"-remsa) ────────────────────── */
+  .never{padding:40px 0 34px;border-top:2px solid var(--rule-strong)}
+  .never-head{font-family:var(--display);font-weight:300;font-size:clamp(24px,3.2vw,32px);line-height:1.1;letter-spacing:-.015em;text-wrap:balance;max-width:24ch}
+  .never-lede{font-family:var(--serif);font-size:16.5px;color:var(--ink-soft);margin-top:12px;max-width:60ch;text-wrap:pretty}
+  .never-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;margin-top:8px}
+  .nv{padding:20px 0;border-top:1px solid var(--rule)}
+  .nv b{display:block;font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:-.01em;color:var(--oxblood);margin-bottom:6px}
+  .nv span{color:var(--ink-soft);font-size:15px;line-height:1.5;display:block;max-width:44ch}
+  @media(max-width:620px){.never-grid{grid-template-columns:1fr}}
+
+  /* ── korslänkar ────────────────────────────────────────────────────── */
+  .links{padding:36px 0 30px;border-top:2px solid var(--rule-strong)}
+  .links-lab{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .links-row{display:flex;flex-wrap:wrap;gap:10px}
+  .links-row a{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink-soft);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 15px;text-decoration:none;transition:border-color .15s,color .15s}
+  .links-row a:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .links-row a .arr{color:var(--faint);margin-left:6px}
+  .links-row a:hover .arr{color:var(--oxblood)}
+
+  .fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:34px;line-height:1.7;max-width:72ch}
+  .fine .tag{display:inline-block;border:1px solid var(--rule-strong);padding:3px 8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--muted)}
+
+  /* ── footer (delad) ────────────────────────────────────────────────── */
+  .site-foot{margin-top:8px;border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:60px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  /* motion */
+  [data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  [data-reveal].on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap">
+        <span class="wordmark">Ägarbrevet</span>
+        <a class="byline" href="/hem">by Marginalen</a>
+      </div>
+      <div class="edition">Portföljröntgen · korsrisk</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/rapportkollen-i-marginalen.html">Rapportkollen</a>
+      <a href="/labs/dagboken-i-marginalen.html">Dagboken</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="sheet">
+
+    <!-- ── INTRO ───────────────────────────────────────────────────── -->
+    <section id="intro" data-reveal>
+      <span class="intro-tag">Skiss · exempeldata</span>
+      <div class="kicker">Fördjupning · Pro-lagret</div>
+      <h1 class="h-title">Portföljröntgen <span class="badge pro">kvalitativ · Pro</span></h1>
+      <p class="standfirst">Var lutar dina bolag åt samma håll utan att du tänkt på det? Röntgen lägger innehaven mot varandra och visar de gemensamma riskfaktorerna. <span class="quiet">Sex innehav, tre eller fyra linser, ingen falsk exakthet.</span></p>
+      <p class="intro-rule"><span><b>Vi visar kvalitativa samband, inte kvantifierade fallscenarier.</b> "Portföljen faller 62 procent om ..." vore falsk precision, det bygger vi inte. Vi säger var risken samlas, inte hur mycket den kostar.</span></p>
+    </section>
+
+    <!-- ── ÖVERLAPPSKARTAN ─────────────────────────────────────────── -->
+    <section class="tool" data-reveal>
+      <div class="tool-head">
+        <h2 class="tool-name">Överlappskartan</h2>
+        <span class="badge">kvalitativ · Pro</span>
+      </div>
+      <p class="tool-desc">Vi grupperar innehaven efter vad de delar: samma konjunktur, samma slutkund, samma räntekänslighet, samma valuta. Varje lins säger <span class="cite">vilka bolag som lutar likadant</span> och hur stor del av portföljen de utgör tillsammans. Ingen korrelationsmatris med påhittade tal, bara sambandet.</p>
+
+      <div class="lenses">
+
+        <div class="lens">
+          <div class="lens-top">
+            <div class="lens-name"><span class="ldot"></span>Europeisk industrikonjunktur</div>
+            <div class="lens-wt">tillsammans 46 %</div>
+          </div>
+          <div class="lens-holds">
+            <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Norlux Industri <span class="cw">28 %</span></a>
+            <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="cw">18 %</span></a>
+          </div>
+          <p class="lens-ev">Bägge säljer in i europeisk verkstad och bygg. En avmattning i den konjunkturen träffar dem samtidigt, oavsett hur olika bolagen ser ut på ytan.</p>
+        </div>
+
+        <div class="lens">
+          <div class="lens-top">
+            <div class="lens-name"><span class="ldot"></span>Samma slutkund: fordonssektorn</div>
+            <div class="lens-wt">tillsammans 30 %</div>
+          </div>
+          <div class="lens-holds">
+            <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="cw">18 %</span></a>
+            <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Sundby <span class="cw">12 %</span></a>
+          </div>
+          <p class="lens-ev">Olika produkter, men båda hänger på biltillverkarnas produktionsvolym. Telvio dyker upp här igen: det är samma krona som bär två risker på en gång.</p>
+        </div>
+
+        <div class="lens">
+          <div class="lens-top">
+            <div class="lens-name"><span class="ldot"></span>Valuta: intäkter i USD</div>
+            <div class="lens-wt">tillsammans 26 %</div>
+          </div>
+          <div class="lens-holds">
+            <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Kavex Medical <span class="cw">15 %</span></a>
+            <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Voltcell <span class="cw">11 %</span></a>
+          </div>
+          <p class="lens-ev">En stor del av försäljningen faktureras i dollar medan kostnaderna ligger i kronor. En svagare dollar drar åt samma håll i båda, samtidigt.</p>
+        </div>
+
+        <div class="lens solo">
+          <div class="lens-top">
+            <div class="lens-name"><span class="ldot"></span>Räntekänslighet: skuldsatt balansräkning</div>
+            <div class="lens-wt">18 %</div>
+          </div>
+          <div class="lens-holds">
+            <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="cw">18 %</span></a>
+          </div>
+          <p class="lens-ev">Bara ett innehav bär den här risken i dag, så det är ingen överlappning. Men det är samma Telvio som redan ligger i två andra linser: den positionen är portföljens mest laddade, inte för att den är störst utan för att flera trådar löper genom den.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── KONCENTRATION ───────────────────────────────────────────── -->
+    <section class="tool" data-reveal>
+      <div class="tool-head">
+        <h2 class="tool-name">Koncentration</h2>
+        <span class="badge">fakta</span>
+      </div>
+      <p class="tool-desc">Så här fördelar sig portföljvikten per tema. Det här är ingen bedömning, bara en <span class="cite">uppställning av vad du faktiskt äger</span>, sorterad så att tyngdpunkten syns.</p>
+      <div class="prev">
+        <div class="prev-lab">Vikt per tema</div>
+        <ul class="bars">
+          <li class="bar">
+            <div class="bar-top"><span class="bar-name">Industri och verkstad</span><span class="bar-pct num">46 %</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:46%"></div></div>
+          </li>
+          <li class="bar">
+            <div class="bar-top"><span class="bar-name">Fordonsexponering</span><span class="bar-pct num">30 %</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:30%"></div></div>
+          </li>
+          <li class="bar">
+            <div class="bar-top"><span class="bar-name">USD-intäkter</span><span class="bar-pct num">26 %</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:26%"></div></div>
+          </li>
+          <li class="bar warm">
+            <div class="bar-top"><span class="bar-name">Defensivt (livsmedel, infrastruktur)</span><span class="bar-pct num">24 %</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:24%"></div></div>
+          </li>
+        </ul>
+        <p class="bar-cap">Temana överlappar, så procenten summerar inte till 100. Ett bolag kan höra hemma i flera teman på en gång: det är just det överlappet röntgen finns för att synliggöra.</p>
+      </div>
+    </section>
+
+    <!-- ── VAD RÖNTGEN INTE GÖR ────────────────────────────────────── -->
+    <section class="never" data-reveal>
+      <h2 class="never-head">Vad röntgen inte gör</h2>
+      <p class="never-lede">Gränserna är inte finstilt, de är själva poängen. Det är dem som gör att en kvalitativ karta är mer ärlig än ett exakt tal hade varit.</p>
+      <div class="never-grid">
+        <div class="nv"><b>Ingen kvantifierad korsrisk-procent</b><span>Vi sätter aldrig en siffra på hur mycket portföljen faller. Ett exakt utfallstal skulle låta säkrare än det är, och det är pseudoprecision.</span></div>
+        <div class="nv"><b>Aldrig en rekommendation att omfördela</b><span>Röntgen säger var risken samlas, inte vad du ska göra åt den. Att sälja, behålla eller köpa mer bestämmer du, alltid.</span></div>
+        <div class="nv"><b>Bara att synliggöra samband</b><span>Målet är att visa kopplingar du kanske inte sett, inte att övertala. Beskrivning, aldrig råd.</span></div>
+        <div class="nv"><b>Ingen falsk korrelationsmatris</b><span>Vi ritar inga korrelationssiffror mellan bolag som vi inte kan belägga. Där sambandet är kvalitativt håller vi det kvalitativt.</span></div>
+      </div>
+    </section>
+
+    <!-- ── KORSLÄNKAR ──────────────────────────────────────────────── -->
+    <section class="links" data-reveal>
+      <div class="links-lab">Öppna ett innehav</div>
+      <div class="links-row">
+        <a href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Norlux Industri <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Kavex Medical <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Voltcell <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Brunna Hydro <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Almi Foods <span class="arr">→</span></a>
+      </div>
+      <p class="fine">
+        <span class="tag">Skiss · exempeldata</span><br>
+        Portföljröntgen · av Marginalen. Prototyp i utbildningssyfte, arbetsnamn, fiktiva bolag och illustrativa siffror. Vikterna är påhittade och sambanden illustrativa. Aldrig köp- eller säljråd. Korsrisk visas kvalitativt, aldrig som ett kvantifierat fallscenario. Det här är en skiss av formen, inte en levande produkt.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/hem">Hem</a>
+        <a href="/fokus">Kursöversikt</a>
+        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/verktyg">Verktyg</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Skiss · exempeldata · illustrativa siffror. Fiktiva bolag, i utbildningssyfte, aldrig köp- eller säljråd.</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal
+  (function(){
+    var els = document.querySelectorAll('[data-reveal]');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      els.forEach(function(el){ el.classList.add('on'); }); return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+</body>
+</html>
