@@ -131,6 +131,13 @@
 
   .grid-legend{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6;letter-spacing:.01em}
 
+  /* konsensus (Pro, fas 3) */
+  .slab-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .slab-row .slab{margin-bottom:0}
+  .pro-pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);background:var(--gold-soft);border:1px solid rgba(176,124,30,.32);border-radius:99px;padding:4px 11px;line-height:1;white-space:nowrap}
+  table.dt td.subc{color:var(--muted);font-family:var(--serif);text-align:left}
+  .cons-note{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6;letter-spacing:.01em}
+
   /* quotes */
   .quote{font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px;margin-bottom:12px;font-style:italic}
   .quote .who{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:10px;font-style:normal}
@@ -270,6 +277,46 @@
           </table>
         </div>
         <p class="grid-legend" id="r-legend"></p>
+      </section>
+
+      <!-- mot konsensus (Pro, fas 3) -->
+      <section class="rsec" data-reveal>
+        <div class="slab-row">
+          <div class="slab">Mot marknadens förväntan</div>
+          <span class="pro-pill">Pro · kräver datalicens</span>
+        </div>
+        <div class="tscroll">
+          <table class="dt">
+            <thead><tr>
+              <th>Utfall mot konsensus</th><th>Telvio Q3</th>
+              <th>Värdering nu</th><th>Nu</th><th>Snitt 3 år</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td class="nm">Omsättning</td>
+                <td class="neg">2 procent under</td>
+                <td class="subc">P/E</td>
+                <td>13,5x</td>
+                <td class="mutc">15,2x</td>
+              </tr>
+              <tr>
+                <td class="nm">EBIT-marginal</td>
+                <td class="mutc">i linje</td>
+                <td class="subc">EV/EBIT</td>
+                <td>9,8x</td>
+                <td class="mutc">10,6x</td>
+              </tr>
+              <tr>
+                <td class="nm">Vinst per aktie</td>
+                <td class="neg">4 procent under</td>
+                <td class="subc">Direktavkastning</td>
+                <td>5,1 procent</td>
+                <td class="mutc">4,3 procent</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="cons-note">Illustrativa, fiktiva siffror. Vänster: Telvio Q3 mot analytikernas konsensus. Höger: dagens värdering mot bolagets egen treårshistorik. Detta kräver estimatdata (Pro). I fas 1 jämför vi mot bolagets egen historik och prognos.</p>
       </section>
 
       <!-- citat -->

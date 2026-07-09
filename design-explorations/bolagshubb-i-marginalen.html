@@ -55,6 +55,7 @@
   .back:hover{color:var(--oxblood)}
 
   .mock{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:3px 9px;margin:4px 0 0}
+  .probadge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:3px 9px;margin-left:10px;vertical-align:middle}
 
   .shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-top:8px}
   .shead h1{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.6vw,50px);letter-spacing:-.02em;line-height:1}
@@ -92,6 +93,10 @@
   .prose .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;margin-right:8px;padding:2px 7px;border:1px solid var(--rule-strong);color:var(--muted)}
   .prose .lab.slut{color:var(--oxblood);border-color:var(--oxblood)}
   .cit{font-family:var(--mono);font-size:10px;color:var(--oxblood);vertical-align:super;margin-left:2px;cursor:help;text-decoration:none}
+  /* Förklara-läget: klickbara termer i prosan */
+  .term{text-decoration:underline dotted;text-underline-offset:3px;text-decoration-color:var(--rule-strong);color:inherit;cursor:help}
+  .term:hover{color:var(--oxblood)}
+  .termleg{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
   .rail{align-self:start}
   .rlab{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
   .chip{border-top:1px solid var(--rule);padding:10px 0}
@@ -287,7 +292,8 @@
       <div class="sech"><h2>Vad har hänt</h2><span class="sm">AI · grundat · citerat</span></div>
       <div class="lane">
         <div class="prose">
-          <p><span class="lab">fakta</span>Lönsamheten viker. Av varje hundralapp bolaget säljer för blir nu 38 kronor kvar efter direkta kostnader, det som kallas bruttomarginal. För ett år sedan var det 41,50. Boven är priskriget på mobilsidan. Kassaflödet föll 12 procent till 910 miljoner. Utdelningen står kvar.<a class="cit" title="Q3-rapport, sid 4">1</a></p>
+          <div class="termleg">Stryk under: klicka för förklaring.</div>
+          <p><span class="lab">fakta</span>Lönsamheten viker. Av varje hundralapp bolaget säljer för blir nu 38 kronor kvar efter direkta kostnader, det som kallas <a class="term" href="/ordlista" title="Vad som blir kvar av varje hundralapp i försäljning efter de direkta kostnaderna för det som säljs.">bruttomarginal</a>. För ett år sedan var det 41,50. Boven är priskriget på mobilsidan. Kassaflödet föll 12 procent till 910 miljoner. Utdelningen står kvar.<a class="cit" title="Q3-rapport, sid 4">1</a></p>
           <p><span class="lab slut">slutsats</span>Det här är precis det du bad oss vakta: kurvan gick under din gräns på 40,0 procent i kvartalet. Utdelningen klarar sig än så länge, det kommer in 1,15 kronor för varje krona som delas ut, men riktningen är fel. Ta ställning till den delen i lugn och ro. Resten av ditt skäl står som det stod.</p>
           <div class="quote">Konkurrensen i mobil har intensifierats och pressat priserna mer än väntat.<span class="who">VD · kvartalsrapporten s. 3</span></div>
         </div>
@@ -321,6 +327,18 @@
         <tbody id="reportGrid"></tbody>
       </table></div>
 
+      <div class="slab">Mot konsensus<span class="probadge">Pro · kräver datalicens</span></div>
+      <div class="tscroll"><table class="dt" style="max-width:520px">
+        <thead><tr><th>Nyckeltal</th><th>Utfall mot konsensus</th></tr></thead>
+        <tbody>
+          <tr><td>Omsättning</td><td class="neg">2 procent under</td></tr>
+          <tr><td>EBIT-marginal</td><td class="mutc">i linje</td></tr>
+          <tr><td>Vinst per aktie</td><td class="neg">4 procent under</td></tr>
+          <tr><td>Utdelning</td><td class="mutc">i linje, bekräftad</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">Detta kräver estimatdata (Pro). I fas 1 jämförs mot bolagets egen historik.</div>
+
       <div class="slab">Segment</div>
       <div class="tscroll"><table class="dt">
         <thead><tr><th>Segment</th><th>Omsättning, Mkr</th><th>Tillväxt</th><th>EBIT-marginal</th><th>Förändring</th></tr></thead>
@@ -334,7 +352,7 @@
         </ul></div>
         <div class="mini bad"><h4>Dåligt</h4><ul>
           <li>Lönsamheten föll brant, 3,5 procentenheter på ett år</li>
-          <li>Rörelsemarginalen klart under förväntan</li>
+          <li><a class="term" href="/ordlista" title="Rörelseresultatet delat med omsättningen, hur många kronor per hundra som blir kvar efter rörelsens kostnader.">Rörelsemarginalen</a> klart under förväntan</li>
           <li>Kassaflödet ned 12 procent, utdelningens täckning tunnas ut</li>
         </ul></div>
       </div>
@@ -353,7 +371,7 @@
     <!-- ── 4. Fundamenta ────────────────────────────────────────────── -->
     <section class="sec" id="sec-fund" data-reveal>
       <div class="sech"><h2>Fundamenta</h2><span class="sm">ur rapporterna · exempeldata</span></div>
-      <div class="airead"><div class="k">Vad siffrorna säger</div>Aktien ser billig ut om du tittar på vinsten: P/E 11,2 mot 13,4 som den brukar ligga på. Men mot kassaflödet är den dyr, P/FCF 20,4 mot 15,9. Översatt: kassaflödet försämras snabbare än kursen hunnit falla. Ha respekt för det mönstret.</div>
+      <div class="airead"><div class="k">Vad siffrorna säger</div>Aktien ser billig ut om du tittar på vinsten: <a class="term" href="/ordlista" title="Priset delat med vinsten per aktie, hur många årsvinster du betalar för aktien.">P/E</a> 11,2 mot 13,4 som den brukar ligga på. Men mot kassaflödet är den dyr, P/FCF 20,4 mot 15,9. Översatt: kassaflödet försämras snabbare än kursen hunnit falla. Ha respekt för det mönstret.</div>
 
       <div class="slab">Kvartalen · sex i rad</div>
       <div class="tscroll"><table class="dt">
@@ -397,7 +415,7 @@
         <div>
           <div class="subh">Utdelning per aktie, kr · hållbarhet</div>
           <table class="dt"><tbody id="utdRows"></tbody></table>
-          <div class="ownnote"><b>Hållbarhetsflagga: bevaka.</b> Utdelningen är bekräftad, men täckningen är 1,15x och sjunker (larm vid 1,0x). Nästa x-dag 14 apr 2027, direktavkastning 5,8 procent.</div>
+          <div class="ownnote"><b>Hållbarhetsflagga: bevaka.</b> Utdelningen är bekräftad, men täckningen är 1,15x och sjunker (larm vid 1,0x). Nästa x-dag 14 apr 2027, <a class="term" href="/ordlista" title="Utdelningen delad med aktiekursen, hur många procent utdelning du får på priset.">direktavkastning</a> 5,8 procent.</div>
         </div>
       </div>
     </section>
@@ -423,8 +441,8 @@
       <ul class="cover">
         <li><span class="ck">◦</span><span>De tre vakterna du satte: <b>stabil försäljning</b>, <b>stigande bruttomarginal</b> och <b>utdelning täckt av kassaflödet</b>, med larm när en kurva korsar din gräns.</span></li>
         <li><span class="ck">◦</span><span>Varje <b>kvartalsrapport</b>, samma morgon den släpps: utfall mot väntat, mot i fjol, mot bolagets egen prognos.</span></li>
-        <li><span class="ck">◦</span><span><b>Insynshandel</b> ur FI:s register, satt i sammanhang (större än vanligt, första på länge, största sedan ett visst år).</span></li>
-        <li><span class="ck">◦</span><span><b>Blankning</b> över 0,5 procent och tydliga förändringar i den samlade blankade andelen.</span></li>
+        <li><span class="ck">◦</span><span><b><a class="term" href="/ordlista" title="När personer med insyn i bolaget, ledning och styrelse, handlar egna aktier.">Insynshandel</a></b> ur FI:s register, satt i sammanhang (större än vanligt, första på länge, största sedan ett visst år).</span></li>
+        <li><span class="ck">◦</span><span><b><a class="term" href="/ordlista" title="När någon lånar och säljer en aktie i tron att den ska falla, för att köpa tillbaka den billigare.">Blankning</a></b> över 0,5 procent och tydliga förändringar i den samlade blankade andelen.</span></li>
         <li><span class="ck">◦</span><span><b>Utdelningsbesked</b> och täckningen bakom dem, med hållbarhetsflagga när marginalen tunnas ut.</span></li>
         <li><span class="ck">◦</span><span>Kommande <b>datum</b> i bolagets kalender: rapporter, bokslut, x-dag.</span></li>
         <li><span class="ck">◦</span><span>Allt annat som kommer in läser vi och <b>sorterar bort som brus</b> om det inte rör ditt skäl. Vi säger till varför.</span></li>

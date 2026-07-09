@@ -104,6 +104,11 @@
   .story p:last-of-type{margin-bottom:0}
   .cit{font-family:var(--mono);font-size:10px;color:var(--oxblood);vertical-align:super;margin-left:2px;cursor:help;text-decoration:none}
 
+  /* Förklara-läget: ordlisteord i brödtexten, prickad understrykning */
+  .term{text-decoration:underline dotted;text-underline-offset:3px;text-decoration-color:var(--rule-strong);color:inherit;cursor:help}
+  .term:hover{color:var(--oxblood)}
+  .term-legend{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--muted);margin-top:12px}
+
   /* fakta-lista i brevet */
   .facts{list-style:none;margin:18px 0;padding:0}
   .facts li{display:flex;gap:12px;align-items:baseline;padding:10px 0;border-top:1px solid var(--rule)}
@@ -206,6 +211,7 @@
       <div class="srow"><span class="dot neg"></span><div><b>Telvio</b> <span>· lönsamheten gick under din gräns</span></div></div>
       <div class="srow"><span class="dot pos"></span><div><b>Norlux Industri</b> <span>· stark rapport, höjd prognos</span></div></div>
       <div class="srow"><span class="dot gold"></span><div><b>Kavex Medical</b> <span>· insiderköp, och Q3 släpps i dag</span></div></div>
+      <p class="term-legend">Stryk under: klicka för förklaring.</p>
     </section>
 
     <article>
@@ -214,7 +220,7 @@
       <section class="story" data-reveal>
         <div class="slug"><span class="dot neg"></span><span class="co">Telvio</span><span class="sep">/</span><span>Det du bad oss vakta</span></div>
         <h2>Lönsamheten föll under 40 procent, gränsen du satte själv</h2>
-        <p>Rörelsemarginalen sjönk till 38,0 procent i tredje kvartalet<a class="cit" title="Källa: Telvio delårsrapport Q3, sid 4">1</a>, ned 3,5 procentenheter i priskriget på mobilsidan. Det tog kurvan under de 40 procent du bad oss säga till vid. Riktningen är fel, inte nivån: bolaget tjänar fortfarande pengar.</p>
+        <p><a class="term" href="/ordlista" title="Rörelseresultatet delat med omsättningen, hur många kronor per hundra som blir kvar efter rörelsens kostnader.">Rörelsemarginalen</a> sjönk till 38,0 procent i tredje kvartalet<a class="cit" title="Källa: Telvio delårsrapport Q3, sid 4">1</a>, ned 3,5 procentenheter i priskriget på mobilsidan. Det tog kurvan under de 40 procent du bad oss säga till vid. Riktningen är fel, inte nivån: bolaget tjänar fortfarande pengar.</p>
 
         <div class="fig">
           <div class="cap"><span>Rörelsemarginal · sex kvartal</span><span>procent</span></div>
@@ -226,7 +232,7 @@
           <div class="gmeta"><span>för ett år sedan · 41,5</span><span class="gth">larm 40,0</span><span>nu · 38,0</span></div>
         </div>
 
-        <p>Utdelningen står kvar och täcks fortfarande, 1,15 kronor in per utdelad krona<a class="cit" title="Beräknat ur rapportens kassaflöde">2</a>, men marginalen krymper sjätte kvartalet i rad. Ta ställning i lugn och ro, det är därför vi säger till tidigt.</p>
+        <p><a class="term" href="/ordlista" title="Den del av vinsten som bolaget betalar ut till aktieägarna.">Utdelningen</a> står kvar och täcks fortfarande, 1,15 kronor in per utdelad krona<a class="cit" title="Beräknat ur rapportens kassaflöde">2</a>, men marginalen krymper sjätte kvartalet i rad. Ta ställning i lugn och ro, det är därför vi säger till tidigt.</p>
         <div class="srcs">
           <a href="#">Källdokumentet: Q3-rapporten →</a>
           <a class="kurs" href="/fokus/kapitel/5">Fördjupning: nyckeltal och marginaler →</a>
@@ -239,8 +245,8 @@
         <h2>Norlux växte 11 procent av egen kraft</h2>
         <p>Mer än bolagets egen prognos, som låg på 7 till 9 procent. Dessutom höjdes prognosen för resten av året, ovanligt mitt i ett år. Allt du bad oss bevaka håller.</p>
         <ul class="facts">
-          <li><span class="fv up">+11,0 %</span><span class="fx">organisk tillväxt, mot väntade 8,5<a class="cit" title="Källa: Norlux Q3, sid 2">3</a></span></li>
-          <li><span class="fv">388 mkr</span><span class="fx">kvar i kassan, fritt kassaflöde upp 18 procent<a class="cit" title="Källa: Norlux Q3, kassaflödesanalys">4</a></span></li>
+          <li><span class="fv up">+11,0 %</span><span class="fx"><a class="term" href="/ordlista" title="Tillväxt av egen kraft, exklusive förvärv och valuta.">organisk tillväxt</a>, mot väntade 8,5<a class="cit" title="Källa: Norlux Q3, sid 2">3</a></span></li>
+          <li><span class="fv">388 mkr</span><span class="fx">kvar i kassan, <a class="term" href="/ordlista" title="Pengarna verksamheten genererar efter nödvändiga investeringar, det som faktiskt kan delas ut eller återinvesteras.">fritt kassaflöde</a> upp 18 procent<a class="cit" title="Källa: Norlux Q3, kassaflödesanalys">4</a></span></li>
           <li><span class="fv up">Höjd</span><span class="fx">helårsprognos, andra höjningen i år</span></li>
         </ul>
         <div class="srcs">
@@ -253,7 +259,7 @@
       <section class="story" data-reveal>
         <div class="slug"><span class="dot gold"></span><span class="co">Kavex Medical</span><span class="sep">/</span><span>Insynshandel</span></div>
         <h2>VD i Kavex köpte aktier för 2,1 miljoner</h2>
-        <p>Första insiderköpet på 14 månader<a class="cit" title="Källa: Finansinspektionens insynsregister">5</a>. En trevlig signal om att ledningen tror på bolaget, inte mer än så. Klockan 08:00 i dag släpper Kavex sin Q3-rapport, och analysen ligger här några minuter senare. Du behöver inte göra något.</p>
+        <p>Första <a class="term" href="/ordlista" title="När personer med insyn i bolaget, ledning och styrelse, köper eller säljer egna aktier.">insiderköpet</a> på 14 månader<a class="cit" title="Källa: Finansinspektionens insynsregister">5</a>. En trevlig signal om att ledningen tror på bolaget, inte mer än så. Klockan 08:00 i dag släpper Kavex sin Q3-rapport, och analysen ligger här några minuter senare. Du behöver inte göra något.</p>
         <div class="srcs">
           <a href="#">Källa: insynsregistret →</a>
           <a class="kurs" href="/fokus/kapitel/7">Fördjupning: vad insiderköp betyder →</a>
