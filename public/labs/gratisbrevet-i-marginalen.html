@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gratisbrevet · Marginalen</title>
+<meta name="description" content="Gratisbrevet, Sebastians fria morgonbrev om marknaden i klarspråk, plus veckans lärdom. En sida i Marginalen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Tokens och typografi lånade rakt ur broadsheet.css, så brevet bor i samma
+     hus som resten av Marginalen. Delar exakt DNA med Ägarbrevet, men detta är
+     det fria, allmänna morgonbrevet: ingen portfölj, ingen bevakning. */
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    /* Ägarkollen-världen: skogsgrönt som primär accent, amber som värme,
+       i stället för kursens oxblod. Samma papper, samma typografi, egen färgton.
+       (--oxblood-namnet behålls för att slippa byta alla referenser.) */
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --bad:#9B3A2E;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  /* ── centrerad brevkolumn ──────────────────────────────────────────── */
+  .sheet{max-width:none;margin:0 auto;padding:6px 0 8px}
+
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:14px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5vw,54px);line-height:1.03;letter-spacing:-.02em;text-wrap:balance}
+  .standfirst{font-family:var(--serif);font-size:clamp(17px,1.8vw,20px);line-height:1.55;color:var(--ink-soft);max-width:56ch;margin-top:16px;text-wrap:pretty}
+
+  /* Grönt Börshus-band: brevdelens egen färgton och bild, dränkt i skogsgrönt
+     med amber-eyebrow. Kursens motsvarighet är oxblodsbandet. */
+  .hero-band{background:linear-gradient(rgba(30,58,46,.86), rgba(19,43,33,.93)), url('/bilder/borshuset-1600.jpg') center 40%/cover; color:#EFF3EC; padding:40px clamp(22px,5vw,40px); margin-top:6px}
+  .hb-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#D6A44A;margin-bottom:14px}
+  .hb-title{font-family:var(--display);font-weight:300;font-size:clamp(30px,5vw,50px);line-height:1.04;letter-spacing:-.02em;color:#F4F7F0;text-wrap:balance}
+  .hb-sub{font-family:var(--serif);font-size:clamp(16px,1.7vw,19px);line-height:1.5;color:rgba(239,243,236,.86);max-width:54ch;margin-top:14px;text-wrap:pretty}
+  .hb-tag{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#D6A44A;border:1px solid rgba(214,164,74,.6);padding:4px 10px}
+
+  /* ── pod (lyssna på utgåvan) ───────────────────────────────────────── */
+  .pod{display:flex;align-items:center;gap:14px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:14px 2px;margin-top:26px}
+  .podbtn{width:40px;height:40px;border-radius:50%;border:none;background:var(--oxblood);color:var(--paper);display:grid;place-items:center;flex:0 0 auto;cursor:pointer;transition:transform .2s}
+  .podbtn:hover{transform:scale(1.06)}
+  .podbtn svg{width:15px;height:15px;fill:currentColor}
+  .podmid{flex:1;min-width:0}
+  .podl{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .podbar{height:2px;background:var(--paper-2);overflow:hidden}
+  .podbar i{display:block;height:100%;width:0;background:var(--oxblood);transition:width .3s linear}
+  .podt{font-family:var(--mono);font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums}
+
+  /* ── artikelsektioner ──────────────────────────────────────────────── */
+  article{margin-top:8px}
+  .story{padding:34px 0 30px;border-top:1px solid var(--rule)}
+  .slug{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:13px}
+  .slug .co{color:var(--ink);font-weight:600}
+  .slug .sep{color:var(--faint)}
+  .story h2{font-family:var(--display);font-weight:500;font-size:clamp(23px,3vw,29px);line-height:1.12;letter-spacing:-.015em;margin-bottom:14px;text-wrap:balance}
+  .story p{color:var(--ink-soft);margin-bottom:14px;max-width:64ch}
+  .story p:last-of-type{margin-bottom:0}
+
+  /* länkfot per sektion */
+  .srcs{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;white-space:nowrap}
+  .srcs a:hover{text-decoration:underline}
+  .srcs a.kurs{color:var(--muted)}
+  .srcs a.kurs:hover{color:var(--oxblood)}
+
+  /* Sebastian tänker: signerad reflektion */
+  .signed{border-left:2px solid var(--rule-strong);padding:6px 0 6px 18px;margin:20px 0}
+  .signed p{font-family:var(--serif);font-style:italic;color:var(--ink-soft);max-width:60ch}
+  .sign-off{display:flex;align-items:center;gap:12px;margin-top:16px}
+  .sign-avatar{width:38px;height:38px;border-radius:50%;background:var(--oxblood);color:#EFF3EC;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:15px;flex:0 0 auto}
+  .sign-name{font-family:var(--display);font-weight:500;font-size:15px;color:var(--ink);line-height:1.2}
+  .sign-role{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+  /* CTA-block: mjuk inbjudan till det personliga brevet */
+  .invite{background:var(--card);border:1px solid var(--rule);padding:clamp(22px,4vw,34px);margin-top:8px}
+  .invite .il{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .invite h2{font-family:var(--display);font-weight:500;font-size:clamp(22px,3vw,28px);line-height:1.12;letter-spacing:-.015em;margin-bottom:14px;text-wrap:balance}
+  .invite p{color:var(--ink-soft);margin-bottom:14px;max-width:60ch}
+  .invite p:last-of-type{margin-bottom:0}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:12px 20px;min-height:44px;transition:background .2s,color .2s,border-color .2s}
+  .btn.primary{background:var(--oxblood);color:#EFF3EC}
+  .btn.primary:hover{background:#234437}
+  .btn.ghost{background:transparent;color:var(--oxblood);border:1px solid var(--rule-strong)}
+  .btn.ghost:hover{border-color:var(--oxblood);background:rgba(44,86,70,.06)}
+
+  /* lugnt + omvärld */
+  .grind{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--muted);border-top:1px solid var(--rule);padding-top:16px;margin-top:6px;line-height:1.7}
+  .grind b{color:var(--ink-soft);font-weight:500}
+  .end{border-top:2px solid var(--rule-strong);margin-top:34px;padding-top:20px}
+  .end h2{font-family:var(--display);font-weight:300;font-size:26px;letter-spacing:-.01em;margin-bottom:8px}
+  .end p{color:var(--muted);font-size:16px;max-width:56ch}
+  .fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:22px;line-height:1.7}
+  .fine .tag{display:inline-block;border:1px solid var(--rule-strong);padding:3px 8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+
+  /* ── footer (delad) ────────────────────────────────────────────────── */
+  .site-foot{margin-top:56px;border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:60px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  /* motion */
+  [data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  [data-reveal].on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+
+  @media(max-width:560px){
+    .cta-row .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap">
+        <span class="wordmark">Ägarbrevet</span>
+        <a class="byline" href="/hem">by Marginalen</a>
+      </div>
+      <div class="edition">Gratisbrevet · nr 1</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/rapportkollen-i-marginalen.html">Rapportkollen</a>
+      <a href="/labs/dagboken-i-marginalen.html">Dagboken</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" style="flex:1">
+  <div class="sheet">
+
+    <!-- Lead: grönt Börshus-band, det fria brevets öppning -->
+    <div class="hero-band" data-reveal>
+      <div class="hb-eyebrow">Gratisbrevet · nr 1 · morgonens marknad i klarspråk</div>
+      <h1 class="hb-title">God morgon.</h1>
+      <p class="hb-sub">Det här är det fria brevet: marknaden i vanlig svenska, en lärdom från kursen, och ingen brådska. Inga bolag, ingen bevakning, bara sammanhanget du behöver för att läsa dagen lugnare.</p>
+      <span class="hb-tag">Gratis · exempeldata</span>
+    </div>
+
+    <div class="pod" data-reveal>
+      <button class="podbtn" id="podbtn" aria-label="Spela upp utgåvan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+      <div class="podmid">
+        <div class="podl">Lyssna på brevet · morgonens genomgång som röst, samma text</div>
+        <div class="podbar"><i id="podprog"></i></div>
+      </div>
+      <div class="podt" id="podt">1:40</div>
+    </div>
+
+    <article>
+
+      <!-- Marknaden i korthet -->
+      <section class="story" data-reveal>
+        <div class="slug"><span class="co">Marknaden i korthet</span><span class="sep">/</span><span>Så ser läget ut</span></div>
+        <h2>Skakigt kring räntan, men inget att jaga</h2>
+        <p>Börsen har varit ryckig den senaste veckan, mest kring oron för hur länge räntorna ska ligga kvar där de ligger. När besked om inflation och räntor närmar sig blir handeln nervös: kurser rör sig mycket på små nyheter, och rubrikerna låter dramatiska. Det är normalt, och det säger sällan något om bolagen bakom kurserna.</p>
+        <p>Den här sortens dagar frestar dig att göra något. Sälja i oro, köpa i iver. Sanningen är att för den som äger bra bolag är en skakig vecka mest brus. Ett bolag som tjänade pengar i förra veckan tjänar ungefär lika mycket den här, oavsett vad kursen gjorde på tisdagen.</p>
+        <p>Så läs marknaden som väder, inte som order. Det blåser i dag. Det säger inget om vart du ska.</p>
+      </section>
+
+      <!-- Veckans lärdom (funnel hook) -->
+      <section class="story" data-reveal>
+        <div class="slug"><span class="co">Veckans lärdom</span><span class="sep">/</span><span>En sak från kursen</span></div>
+        <h2>Dagsavkastningen är inte din status</h2>
+        <p>Det första de flesta gör på morgonen är att titta på om portföljen står i grönt eller rött. Grönt känns som att man gjorde rätt, rött som att man gjorde fel. Men en enskild dag är ren slump, och att låta den avgöra hur du mår är att låta tärningen bestämma ditt humör.</p>
+        <p>Din status som ägare är inte dagens kurs. Den är om bolagen du äger fortfarande gör det du köpte dem för: växer, tjänar pengar, håller sina löften. Det ändras inte på en dag. Det tar kvartal, ibland år. Den som lär sig titta på bolaget i stället för kursen slutar bli slängd fram och tillbaka av bruset.</p>
+        <p>Det är hela idén med att äga i stället för att spela. Kursen börjar med just den skillnaden, och det första kapitlet är fritt.</p>
+        <div class="srcs">
+          <a href="/fokus">Läs kapitel 1, gratis →</a>
+          <a class="kurs" href="/fokus">Se hela kursöversikten →</a>
+        </div>
+      </section>
+
+      <!-- Sebastian tänker -->
+      <section class="story" data-reveal>
+        <div class="slug"><span class="co">Sebastian tänker</span><span class="sep">/</span><span>En reflektion</span></div>
+        <div class="signed">
+          <p>Jag har skrivit det här brevet på morgnar då jag själv velat sälja allt, och på morgnar då allt kändes enkelt. Det jag lärt mig är att de känns exakt likadana i stunden, och att ingen av dem ska styra vad jag gör. Lugnet är inte att man slutar bry sig. Det är att man har bestämt i förväg vad som faktiskt betyder något, så att en skakig vecka inte får bestämma åt en.</p>
+          <p>Om du bara tar med dig en sak från dagens brev: du behöver inte göra något i dag. Det är också ett beslut, och oftast det klokaste.</p>
+          <div class="sign-off">
+            <span class="sign-avatar" aria-hidden="true">S</span>
+            <div>
+              <div class="sign-name">Sebastian</div>
+              <div class="sign-role">skriver Gratisbrevet</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vill du ha det personligt? (CTA) -->
+      <section data-reveal style="padding-top:8px">
+        <div class="invite">
+          <div class="il">Vill du ha det personligt?</div>
+          <h2>Samma lugn, fast om dina egna bolag</h2>
+          <p>Det här brevet handlar om marknaden i stort. Det personliga Ägarbrevet gör samma sak, men för just din portfölj: det läser dina innehav varje morgon, minns skälen du köpte för, och säger till när något faktiskt rör dig, inte när rubrikerna skriker.</p>
+          <p>Ingen daglig kursångest, ingen bevakning du måste sköta själv. Bara ett kort brev som redan har läst natten åt dig och behållit det som betyder något. Vill du se hur det känns innan du bestämmer dig, gå den guidade demon.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="/labs/agarbrevet-landning.html">Läs om det personliga brevet →</a>
+            <a class="btn ghost" href="/labs/demo-i-marginalen.html">Se den guidade demon</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slut -->
+      <section class="end" data-reveal>
+        <h2>Vi hörs i morgon.</h2>
+        <p>Gratisbrevet kommer varje börsmorgon: marknaden i klarspråk och en lärdom att bära med dig. Under tiden, om något känns brådskande i dag, känns det förmodligen så för hela marknaden. Det är sällan ett skäl att agera.</p>
+        <p class="fine">
+          <span class="tag">Prototyp · exempeldata</span><br>
+          Gratisbrevet · av Marginalen. Arbetsnamn, illustrativt innehåll, inga påhittade exakta tal för namngivna bolag eller index. Information i utbildningssyfte, aldrig köp- eller säljråd.
+        </p>
+      </section>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/hem">Hem</a>
+        <a href="/fokus">Kursöversikt</a>
+        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/verktyg">Verktyg</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Marginalen, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal
+  (function(){
+    var els = document.querySelectorAll('[data-reveal]');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      els.forEach(function(el){ el.classList.add('on'); }); return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Pod (prototyp, ingen ljudfil)
+  (function(){
+    var on=false, s=0, len=100, timer=null;
+    var btn=document.getElementById('podbtn'), prog=document.getElementById('podprog'), t=document.getElementById('podt');
+    var PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    var PAUSE='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7z"/><path d="M13 5h4v14h-4z"/></svg>';
+    function paint(){
+      btn.innerHTML = on?PAUSE:PLAY;
+      btn.setAttribute('aria-label', on?'Pausa uppläsningen':'Spela upp utgåvan');
+      prog.style.width = (s/len*100)+'%';
+      var r=len-s; t.textContent = Math.floor(r/60)+':'+String(r%60).padStart(2,'0');
+    }
+    btn.addEventListener('click', function(){
+      on=!on;
+      if(on){ timer=setInterval(function(){ s++; if(s>=len){ s=len; on=false; clearInterval(timer); } paint(); }, 1000); }
+      else clearInterval(timer);
+      paint();
+    });
+    paint();
+  })();
+</script>
+</body>
+</html>
