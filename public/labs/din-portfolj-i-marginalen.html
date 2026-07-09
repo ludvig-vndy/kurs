@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Din portfölj · Ägarbrevet · Marginalen</title>
+<meta name="description" content="Din portfölj: allt som gäller portföljen som helhet. Beteende över tid, korsrisk mellan innehaven och skatt inför årsskiftet. Beskrivning, aldrig råd.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- impeccable-disable overused-font -- Inter is the locked Marginalen label font (broadsheet.css house token: --mono), shared across the whole suite; changing it here would break house consistency. -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens och typografi lånade rakt ur broadsheet.css / Ägarbrevet-världen,
+     så Din portfölj bor i samma hus som brevet och resten av Marginalen. Gröna
+     världen: skogsgrönt som primär accent, amber som värme. JetBrains Mono
+     används ENBART för tabellsiffror (--num); UI-etiketter och nav kör Inter
+     (--mono). Den här ytan slår ihop tre portföljnivå-ytor under ett tak:
+     Beteende (Dagboken), Korsrisk (Portföljröntgen), Skatt (Skattehjälpen). */
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --good-soft:#E7EFE6; --bad:#9B3A2E; --bad-soft:#F3E3DD; --gold-soft:#F1E8D1;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --mono:"Inter",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  .num{font-family:var(--num);font-variant-numeric:tabular-nums}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1}
+  .sheet{max-width:none;margin:0 auto;padding:6px 0 8px}
+
+  /* ── intro ─────────────────────────────────────────────────────────── */
+  #intro{padding:16px 0 8px}
+  .intro-tag{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--rule-strong);border-radius:99px;padding:4px 12px;letter-spacing:.09em;text-transform:uppercase;display:inline-block;margin-bottom:22px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:14px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5.4vw,56px);line-height:1.03;letter-spacing:-.02em;text-wrap:balance;max-width:14ch}
+  .standfirst{font-family:var(--serif);font-size:clamp(17px,1.8vw,20px);line-height:1.55;color:var(--ink-soft);max-width:62ch;margin-top:16px;text-wrap:pretty}
+  .standfirst .quiet{color:var(--muted)}
+  .intro-rule{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);border-top:1px solid var(--rule);margin-top:26px;padding-top:18px;line-height:1.6;display:flex;gap:9px;align-items:baseline;max-width:66ch}
+  .intro-rule::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:5px}
+  .intro-rule b{color:var(--ink-soft);font-weight:600}
+
+  /* ── in-page-flikar (ankarnavigering mellan de tre spåren) ─────────── */
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;padding-top:20px;border-top:1px solid var(--rule)}
+  .tabs a{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:9px 17px;text-decoration:none;transition:border-color .15s,color .15s,background .15s}
+  .tabs a:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .tabs a.on{border-color:var(--oxblood);background:var(--good-soft);color:var(--oxblood)}
+  .tabs a .tsub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:9px;padding-left:9px;border-left:1px solid var(--rule);text-transform:none;letter-spacing:.01em}
+  .tabs a.on .tsub{color:var(--oxblood)}
+
+  /* ── badge ─────────────────────────────────────────────────────────── */
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap;align-self:center;display:inline-block}
+  .badge.pro{color:var(--gold);border-color:rgba(176,124,30,.5)}
+
+  /* ── områdesrubrik (ett per hopslagen yta) ─────────────────────────── */
+  .area{padding:16px 0 0;scroll-margin-top:16px}
+  .area-head{border-top:2px solid var(--rule-strong);padding-top:34px;margin-top:24px}
+  .area-kick{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:10px}
+  .area-title{font-family:var(--display);font-weight:300;font-size:clamp(27px,4vw,40px);line-height:1.06;letter-spacing:-.02em;text-wrap:balance;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .area-lede{font-family:var(--serif);font-size:clamp(16px,1.6vw,18px);line-height:1.55;color:var(--ink-soft);max-width:66ch;margin-top:12px;text-wrap:pretty}
+  .area-lede b{color:var(--ink);font-weight:500}
+  .mifid{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);margin-top:12px;max-width:64ch;line-height:1.6}
+  .mifid b{color:var(--ink-soft);font-weight:600}
+
+  /* ── redaktionell sektion (rule-separerad, INTE kortrutnät) ────────── */
+  .tool{padding:34px 0 10px}
+  .tool-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .tool-name{font-family:var(--display);font-weight:400;font-size:clamp(21px,2.8vw,28px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+  .tool-desc{font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink-soft);max-width:64ch;margin-top:8px;text-wrap:pretty}
+  .tool-desc .cite{color:var(--oxblood);font-style:italic}
+
+  /* läskolumn: arbetsytan är bred (1080), varje spår håller läsbar bredd */
+  .col{max-width:900px}
+
+  /* ══════════════════════════════════════════════════════════════════
+     BETEENDE (Dagboken)
+     ══════════════════════════════════════════════════════════════════ */
+  .flag{display:flex;align-items:center;gap:12px;margin:34px 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .flag::after{content:"";flex:1;height:1px;background:var(--rule)}
+  .flag .cnt{color:var(--oxblood)}
+  .flag .n{font-family:var(--num);color:var(--faint);letter-spacing:.06em}
+  .seclede{font-family:var(--serif);color:var(--ink-soft);font-size:16px;max-width:66ch;margin:2px 0 18px;line-height:1.55}
+  .seclede b{color:var(--ink);font-weight:500}
+
+  /* bias-profil (callout) */
+  .bias{border-top:2px solid var(--oxblood);background:var(--card);border-bottom:1px solid var(--rule);padding:18px 20px;margin:6px 0 22px}
+  .bias .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--oxblood);margin-bottom:8px}
+  .bias .t{font-family:var(--display);font-weight:300;font-size:clamp(19px,2.4vw,24px);line-height:1.32;letter-spacing:-.01em;color:var(--ink)}
+  .bias .t b{font-weight:600}
+  .bias .sub{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.6}
+  .bias .sub .num{color:var(--ink-soft)}
+
+  /* beslutsdagbok, tabell */
+  .tscroll{overflow-x:auto;margin-top:2px;max-width:100%}
+  @media(max-width:560px){ .tscroll{max-width:calc(100vw - 40px)} }
+  table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.dt th{text-align:left;color:var(--faint);font-weight:500;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 10px 16px;white-space:nowrap;font-family:var(--mono)}
+  table.dt th:first-child{padding-left:0}
+  table.dt th.r{text-align:right}
+  table.dt td{padding:13px 0 13px 16px;border-top:1px solid var(--rule);vertical-align:top;font-family:var(--serif);font-size:14.5px;color:var(--ink-soft)}
+  table.dt td:first-child{padding-left:0}
+  table.dt td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+  table.dt td.r{text-align:right}
+  .co{font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--ink);white-space:nowrap}
+  .co .tk{font-family:var(--num);font-size:9.5px;letter-spacing:.06em;color:var(--faint);display:block;margin-top:2px;font-weight:400}
+  .side{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--rule-strong);border-radius:99px;white-space:nowrap;color:var(--muted)}
+  .side.buy{color:var(--oxblood);border-color:var(--oxblood)}
+  .side.sell{color:var(--bad);border-color:var(--bad)}
+  .reason{max-width:34ch;color:var(--ink-soft)}
+  .facit{max-width:38ch}
+  .facit .v{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-bottom:4px;padding:2px 7px;border:1px solid var(--rule-strong);border-radius:3px}
+  .facit .v.miss{color:var(--bad);border-color:var(--bad)}
+  .facit .v.right{color:var(--good);border-color:var(--good)}
+  .facit .v.open{color:var(--gold);border-color:var(--gold)}
+  .facit .body{color:var(--muted);font-size:13.5px;line-height:1.5}
+  .facit .body .num{color:var(--ink-soft)}
+
+  /* disciplinerade tvillingen */
+  .twin{border:1px solid var(--rule);background:var(--card);padding:22px 24px;margin-top:6px}
+  .twincost{font-family:var(--display);font-weight:300;font-size:clamp(21px,3vw,30px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);max-width:30ch}
+  .twincost b{font-weight:600}
+  .twincost .kr{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--bad);font-weight:500}
+  .twinsub{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.6;max-width:60ch}
+  .twinfig{margin:22px 0 8px}
+  .twinfig svg{width:100%;max-width:620px;height:auto;display:block;overflow:visible}
+  .twinlegend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .twinlegend .li{display:inline-flex;align-items:center;gap:8px}
+  .twinlegend .sw{width:16px;height:3px;border-radius:2px;flex:0 0 auto}
+  .twinlegend .val{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink);margin-left:2px}
+  .twintab{margin-top:20px}
+  .twintab table.dt th.r,.twintab table.dt td.r{text-align:right}
+  .twinnote{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:16px;line-height:1.6;border-top:1px solid var(--rule);padding-top:14px;max-width:64ch}
+
+  /* impulsbromsen (interaktiv) */
+  .ib{border:1px solid var(--rule);background:var(--card);padding:22px 24px;margin-top:6px}
+  .ib .pickh{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .picks{display:flex;flex-wrap:wrap;gap:8px}
+  .pick{font-family:var(--display);font-weight:500;font-size:14px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 15px;color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .pick .tk{font-family:var(--num);font-size:9px;letter-spacing:.06em;color:var(--faint);margin-left:7px}
+  .pick:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .pick.on{border-color:var(--oxblood);background:var(--good-soft);color:var(--oxblood)}
+  .ibbody{margin-top:20px;border-top:1px solid var(--rule);padding-top:18px}
+  .ibskal{border-top:2px solid var(--oxblood);border-bottom:1px solid var(--rule);padding:12px 2px 12px 0;margin:0 0 16px;font-family:var(--display);font-weight:300;font-size:16.5px;line-height:1.5;color:var(--ink)}
+  .ibskal .d8{font-family:var(--num);font-size:10px;color:var(--faint);display:block;margin-top:6px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .ibq{font-family:var(--display);font-weight:500;font-size:15px;margin:16px 0 9px;color:var(--ink)}
+  .ib textarea{width:100%;min-height:78px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:8px;color:var(--ink);font-family:var(--serif);font-size:15px;padding:11px 13px;outline:none;resize:vertical;line-height:1.5}
+  .ib textarea:focus{border-color:var(--oxblood)}
+  .ibrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .ibbtn{font-family:var(--mono);font-size:12px;letter-spacing:.02em;border:1px solid var(--rule-strong);background:none;border-radius:99px;padding:10px 16px;color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .ibbtn:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .ibbtn.solid{background:var(--oxblood);border-color:var(--oxblood);color:var(--paper)}
+  .ibbtn.solid:hover{color:var(--paper);opacity:.92}
+  .ibres{font-family:var(--serif);font-size:15px;line-height:1.6;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;margin-top:16px;color:var(--ink-soft);display:none}
+  .ibres.show{display:block}
+  .ibres b{color:var(--ink);font-weight:600;font-family:var(--display)}
+  .ibres .quote{color:var(--muted);font-style:italic}
+  .ibnote{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:12px}
+
+  /* teskrossaren */
+  .crush{border:1px solid var(--rule);background:var(--card);padding:22px 24px;margin-top:6px}
+  .crush .ch{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .crush .ck{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bad)}
+  .crush h3{font-family:var(--display);font-weight:400;font-size:clamp(20px,2.6vw,25px);letter-spacing:-.01em;line-height:1.2;color:var(--ink);margin:6px 0 4px}
+  .crush .csub{font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.6;max-width:62ch;margin-bottom:6px}
+  .args{list-style:none;margin:16px 0 0;padding:0}
+  .args li{border-top:1px solid var(--rule);padding:15px 0}
+  .args li:first-child{border-top:none}
+  .args .at{font-family:var(--display);font-weight:500;font-size:15.5px;color:var(--ink);margin-bottom:5px}
+  .args .ab{color:var(--ink-soft);font-size:14.5px;line-height:1.55;max-width:64ch}
+  .args .ab .num{color:var(--ink)}
+  .args .asrc{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--oxblood);margin-top:8px;display:inline-block;text-decoration:none}
+  .args .asrc:hover{text-decoration:underline}
+  .crushfoot{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:18px;border-top:1px solid var(--rule);padding-top:14px;line-height:1.6;max-width:64ch}
+
+  /* källfötter / fördjupningslänkar */
+  .deep{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
+  .deep a{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;white-space:nowrap}
+  .deep a:hover{text-decoration:underline}
+  .deep a.kurs{color:var(--muted)}
+  .deep a.kurs:hover{color:var(--oxblood)}
+
+  /* ══════════════════════════════════════════════════════════════════
+     KORSRISK (Portföljröntgen)
+     ══════════════════════════════════════════════════════════════════ */
+  .lenses{margin-top:24px;display:grid;grid-template-columns:1fr;gap:0}
+  .lens{padding:22px 0;border-top:1px solid var(--rule)}
+  .lens:first-child{border-top:none;padding-top:4px}
+  .lens-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;justify-content:space-between}
+  .lens-name{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:baseline;gap:11px}
+  .lens-name .ldot{width:9px;height:9px;border-radius:50%;background:var(--oxblood);flex:0 0 auto;position:relative;top:1px}
+  .lens.solo .lens-name .ldot{background:var(--gold)}
+  .lens-wt{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:15px;color:var(--oxblood);white-space:nowrap}
+  .lens.solo .lens-wt{color:var(--gold)}
+  .lens-holds{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+  .chip{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink-soft);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:6px 13px;text-decoration:none;white-space:nowrap;transition:border-color .15s,color .15s}
+  a.chip:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .chip .cw{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--muted);margin-left:7px;padding-left:8px;border-left:1px solid var(--rule)}
+  .lens-ev{font-family:var(--serif);font-size:15.5px;line-height:1.5;color:var(--ink-soft);margin-top:12px;max-width:62ch}
+  .lens-ev .plus{font-family:var(--mono);color:var(--muted);margin:0 5px}
+
+  /* koncentration: staplade rader (fakta, inte scenario) */
+  .prev{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:22px 24px;max-width:780px;margin-top:20px}
+  .prev-lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .bars{list-style:none;margin:0;padding:0}
+  .bar{padding:13px 0;border-top:1px solid var(--rule)}
+  .bar:first-child{border-top:none;padding-top:0}
+  .bar-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+  .bar-name{font-family:var(--serif);font-size:15.5px;color:var(--ink)}
+  .bar-pct{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink);white-space:nowrap}
+  .bar-track{height:8px;background:var(--paper-2);border-radius:99px;margin-top:9px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--oxblood);border-radius:99px}
+  .bar.warm .bar-fill{background:var(--gold)}
+  .bar-cap{font-family:var(--mono);font-size:11.5px;letter-spacing:.01em;color:var(--muted);margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);line-height:1.55}
+
+  /* ══════════════════════════════════════════════════════════════════
+     SKATT (Skattehjälpen)
+     ══════════════════════════════════════════════════════════════════ */
+  .sec{padding:34px 0 10px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .sec-name{font-family:var(--display);font-weight:400;font-size:clamp(21px,2.8vw,28px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+  .sec-desc{font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink-soft);max-width:64ch;margin-top:8px;text-wrap:pretty}
+  .sec-desc .cite{color:var(--oxblood);font-style:italic}
+  .sec-body{margin-top:22px}
+
+  /* skatt-tabeller: siffror högerställda i --num */
+  table.st{width:100%;border-collapse:collapse;font-size:13.5px;min-width:360px}
+  table.st th{text-align:right;color:var(--faint);font-weight:500;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 10px 16px;white-space:nowrap;font-family:var(--mono)}
+  table.st th:first-child{text-align:left;padding-left:0}
+  table.st td{padding:11px 0 11px 16px;border-top:1px solid var(--rule);font-family:var(--num);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;color:var(--ink)}
+  table.st td:first-child{text-align:left;font-family:var(--serif);font-size:15px;color:var(--ink-soft);padding-left:0}
+  table.st tfoot td{border-top:2px solid var(--rule-strong);color:var(--ink)}
+  table.st tfoot td:first-child{font-family:var(--display);font-weight:600;font-size:14px;color:var(--ink)}
+  .neg{color:var(--bad)} .pos{color:var(--good)} .mutc{color:var(--muted)}
+
+  /* kvittnings-rad (mekanik i klartext) */
+  .kvit{display:flex;gap:13px;align-items:baseline;font-family:var(--serif);font-size:17px;line-height:1.5;color:var(--ink)}
+  .kvit .knum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--oxblood);font-weight:500}
+  .arith{list-style:none;margin:16px 0 0;padding:0}
+  .arith li{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--rule);font-family:var(--serif);font-size:15px;color:var(--ink-soft)}
+  .arith li:first-child{border-top:none}
+  .arith li.sum{border-top:2px solid var(--rule-strong);font-family:var(--display);font-weight:600;font-size:15px;color:var(--ink);margin-top:4px}
+  .arith .av{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+  .arith .av.neg{color:var(--bad)} .arith .av.pos{color:var(--good)}
+  .mech-note{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);margin-top:16px;padding-top:12px;border-top:1px solid var(--rule);line-height:1.6;max-width:64ch}
+  .mech-note b{color:var(--ink-soft);font-weight:600}
+
+  /* frame-etikett över ett kort */
+  .frame{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);border:1px solid var(--rule-strong);border-radius:99px;padding:3px 9px;display:inline-block;margin-bottom:14px}
+
+  /* före-årsskiftet: fakta-feed */
+  .feed{list-style:none;margin:0;padding:0;max-width:64ch}
+  .feed li{padding:14px 0;border-top:1px solid var(--rule);font-family:var(--serif);font-size:16px;line-height:1.55;color:var(--ink-soft);display:flex;gap:12px;align-items:baseline}
+  .feed li:first-child{border-top:none;padding-top:0}
+  .feed .fdot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:8px}
+  .feed li b{color:var(--ink);font-weight:600}
+
+  /* ── stängningsremsor: vad varje spår aldrig gör ───────────────────── */
+  .never{padding:34px 0 10px}
+  .never-head{font-family:var(--display);font-weight:300;font-size:clamp(22px,3vw,29px);line-height:1.1;letter-spacing:-.015em;text-wrap:balance;max-width:24ch}
+  .never-lede{font-family:var(--serif);font-size:16.5px;color:var(--ink-soft);margin-top:12px;max-width:60ch;text-wrap:pretty}
+  .never-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;margin-top:8px}
+  .nv{padding:20px 0;border-top:1px solid var(--rule)}
+  .nv b{display:block;font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:-.01em;color:var(--oxblood);margin-bottom:6px}
+  .nv span{color:var(--ink-soft);font-size:15px;line-height:1.5;display:block;max-width:44ch}
+  @media(max-width:620px){.never-grid{grid-template-columns:1fr}}
+
+  /* ── korslänkar ────────────────────────────────────────────────────── */
+  .links{padding:34px 0 30px;border-top:2px solid var(--rule-strong);margin-top:24px}
+  .links-lab{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .links-row{display:flex;flex-wrap:wrap;gap:10px}
+  .links-row a{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink-soft);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 15px;text-decoration:none;transition:border-color .15s,color .15s}
+  .links-row a:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .links-row a .arr{color:var(--faint);margin-left:6px}
+  .links-row a:hover .arr{color:var(--oxblood)}
+
+  .fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:34px;line-height:1.7;max-width:74ch}
+  .fine .tag{display:inline-block;border:1px solid var(--rule-strong);padding:3px 8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--muted)}
+
+  /* ── footer (delad) ────────────────────────────────────────────────── */
+  .site-foot{margin-top:8px;border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:60px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  /* motion */
+  [data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  [data-reveal].on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+  @media(max-width:560px){
+    .reason,.facit{max-width:none}
+    .twin,.ib,.crush{padding:18px 16px}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap">
+        <span class="wordmark">Ägarbrevet</span>
+        <a class="byline" href="/hem">by Marginalen</a>
+      </div>
+      <div class="edition">Din portfölj</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/upptack-i-marginalen.html">Upptäck</a>
+      <a href="#" class="here" aria-current="page">Din portfölj</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="sheet">
+
+    <!-- ── INTRO ───────────────────────────────────────────────────── -->
+    <section id="intro" data-reveal>
+      <span class="intro-tag">Skiss · exempeldata</span>
+      <div class="kicker">Ägarbrevet · portföljnivå</div>
+      <h1 class="h-title">Din portfölj</h1>
+      <p class="standfirst">Allt som gäller portföljen som helhet, inte ett enskilt bolag. Ditt beteende över tid, korsrisken mellan innehaven, och skatten inför årsskiftet, samlat under ett tak. <span class="quiet">Tre spår, en yta, all beskrivning och aldrig råd.</span></p>
+      <p class="intro-rule"><span><b>Här bor det som handlar om helheten.</b> Ett enskilt bolag öppnar du under Dina bolag. Den här ytan tittar tvärs över allt du äger: mönstret i besluten, sambanden mellan innehaven, och hur skatten faller ut på året som gått.</span></p>
+      <nav class="tabs" aria-label="Spår i din portfölj">
+        <a href="#beteende" class="ptab on" data-tab="beteende">Beteende<span class="tsub">din dagbok</span></a>
+        <a href="#korsrisk" class="ptab" data-tab="korsrisk">Korsrisk<span class="tsub">överlapp</span></a>
+        <a href="#skatt" class="ptab" data-tab="skatt">Skatt<span class="tsub">årsskiftet</span></a>
+      </nav>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SPÅR 1 · BETEENDE (Dagboken)
+         ══════════════════════════════════════════════════════════════ -->
+    <section id="beteende" class="area" data-reveal>
+      <div class="area-head">
+        <div class="area-kick">Beteendespåret · vallgraven</div>
+        <h2 class="area-title">Beteende<span class="badge">din dagbok</span></h2>
+        <p class="area-lede"><b>Det här är din egen historik.</b> Varje köp och sälj du gjort, loggat med skälet du hade i stunden, sedan följt mot facit i backspegeln. Över tid tecknar det ett mönster i hur du beter dig, och vad mönstret har kostat.</p>
+        <p class="mifid"><b>Allt här är beskrivning, inte råd.</b> Vi berättar vad som hände och vad ditt beteende har gjort. Vi säger aldrig åt dig att köpa eller sälja. Beslutet är alltid ditt.</p>
+      </div>
+
+      <!-- ── Beslutsdagboken ─────────────────────────────────────────── -->
+      <div class="col">
+        <div class="flag"><span class="cnt">Beslutsdagboken</span><span class="n">14 poster · 18 mån</span></div>
+        <p class="seclede">Varje affär, med skälet du skrev då, ställd mot vad som sedan hände. Nog med poster och ett <b>mönster</b> träder fram.</p>
+
+        <div class="bias">
+          <div class="k">Ditt mönster · bias-profil</div>
+          <div class="t">Du <b>säljer vinnare för tidigt</b>, i snitt <span class="num">3 månader</span> före toppen. De fem vinnare du sålt hade i snitt <span class="num">+22 %</span> kvar att ge.</div>
+          <div class="sub">Byggt ur dina <span class="num">14</span> loggade affärer sedan januari 2025. Två mönster till håller på att ta form: du köper mer i det som redan stigit, och du säljer sällan förlorare. Profilen blir vassare för varje affär du loggar. Det här är en observation om dig, inte ett omdöme.</div>
+        </div>
+
+        <div class="tscroll">
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Bolag</th>
+                <th>Köp/sälj</th>
+                <th>Skälet i stunden</th>
+                <th>Facit i backspegeln</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="n">12 mar 2025</td>
+                <td><span class="co">Norlux Industri<span class="tk">NORL</span></span></td>
+                <td><span class="side buy">Köp</span></td>
+                <td class="reason">Organisk tillväxt över egen prognos två kvartal i rad, kassan stark.</td>
+                <td class="facit"><span class="v right">Höll</span><div class="body">Skälet står kvar. Bolaget har höjt prognosen två gånger sedan dess. Aktien <span class="num">+34 %</span>, du äger kvar.</div></td>
+              </tr>
+              <tr>
+                <td class="n">2 jun 2025</td>
+                <td><span class="co">Kavex Medical<span class="tk">KAVX</span></span></td>
+                <td><span class="side sell">Sälj</span></td>
+                <td class="reason">Kursen hade stigit snabbt, kändes för dyrt, ville säkra vinsten.</td>
+                <td class="facit"><span class="v miss">Sålde för tidigt</span><div class="body">Inget i verksamheten hade ändrats. Aktien steg ytterligare <span class="num">+28 %</span> de följande fem månaderna innan den toppade.</div></td>
+              </tr>
+              <tr>
+                <td class="n">19 aug 2025</td>
+                <td><span class="co">Voltcell<span class="tk">VOLT</span></span></td>
+                <td><span class="side buy">Köp</span></td>
+                <td class="reason">Såg andra köpa och kursen springa, ville inte missa tåget.</td>
+                <td class="facit"><span class="v miss">Jagade rörelse</span><div class="body">Köpte nära en lokal topp. Låg <span class="num">-19 %</span> tre veckor senare. Ingen förändring i saken låg bakom köpet.</div></td>
+              </tr>
+              <tr>
+                <td class="n">14 nov 2025</td>
+                <td><span class="co">Brunna Hydro<span class="tk">BRUN</span></span></td>
+                <td><span class="side sell">Sälj</span></td>
+                <td class="reason">Tröttnade, det hände inget, ville flytta pengarna till något som rörde sig.</td>
+                <td class="facit"><span class="v miss">Sålde för tidigt</span><div class="body">Utdelningen var intakt och täckt. Aktien plus utdelning gav <span class="num">+16 %</span> under de sex månaderna efter du gick ur.</div></td>
+              </tr>
+              <tr>
+                <td class="n">28 jan 2026</td>
+                <td><span class="co">Telvio<span class="tk">TELV</span></span></td>
+                <td><span class="side buy">Köp</span></td>
+                <td class="reason">Stabil kassako, stigande marginal, trygg utdelning på 5,8 procent.</td>
+                <td class="facit"><span class="v open">Följs upp</span><div class="body">Marginalen har sedan dess vänt ned under din egen gräns. En av dina tre vakter är bruten. Öppen post, facit dröjer.</div></td>
+              </tr>
+              <tr>
+                <td class="n">9 apr 2026</td>
+                <td><span class="co">Almi Foods<span class="tk">ALMI</span></span></td>
+                <td><span class="side sell">Sälj</span></td>
+                <td class="reason">Ville realisera en liten vinst inför sommaren, kändes lagom.</td>
+                <td class="facit"><span class="v miss">Sålde för tidigt</span><div class="body">Defensiv och oförändrad. Ligger <span class="num">+9 %</span> över din säljkurs i dag. Femte gången du säljer en vinnare i otid.</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="deep">
+          <a href="#">Hela dagboken: 14 poster →</a>
+          <a class="kurs" href="/fokus/kapitel/18">Fördjupning: girighet och att säkra avkastning →</a>
+        </div>
+      </div>
+
+      <!-- ── Den disciplinerade tvillingen ───────────────────────────── -->
+      <div class="col">
+        <div class="flag"><span class="cnt">Den disciplinerade tvillingen</span></div>
+        <p class="seclede">En kopia av dig som följde sin egen ursprungsplan i varje läge, ställd mot vad du faktiskt gjorde, och mot index. Skillnaden sätter en <b>krona</b> på beteendet.</p>
+
+        <div class="twin">
+          <div class="twincost">Din avvikelse från din egen plan har kostat <span class="kr">42 000 kr</span> hittills i år.</div>
+          <p class="twinsub">Tvillingen behöll det du sålde i otid och lät bli det du köpte på rörelse. Den handlade aldrig annorlunda än din ursprungliga plan sa. Det här är en beskrivning av det förflutna, inte en förutsägelse och inte ett råd.</p>
+
+          <div class="twinfig">
+            <svg viewBox="0 0 620 210" role="img" aria-label="Tre linjer sedan januari 2026: den disciplinerade tvillingen slutar på plus 18,4 procent, index på plus 11,0 procent, dina faktiska affärer på plus 9,7 procent.">
+              <line x1="46" y1="12" x2="46" y2="172" stroke="var(--rule)" stroke-width="1"></line>
+              <line x1="46" y1="172" x2="606" y2="172" stroke="var(--rule-strong)" stroke-width="1"></line>
+              <line x1="46" y1="92" x2="606" y2="92" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 5"></line>
+              <text x="40" y="16" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">+20 %</text>
+              <text x="40" y="96" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">+10 %</text>
+              <text x="40" y="176" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">0 %</text>
+              <polyline points="46,172 158,150 270,126 382,96 494,64 606,25" fill="none" stroke="var(--oxblood)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <circle cx="606" cy="25" r="4" fill="var(--oxblood)"></circle>
+              <polyline points="46,172 158,158 270,150 382,132 494,110 606,84" fill="none" stroke="var(--faint)" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <polyline points="46,172 158,152 270,160 382,140 494,116 606,94" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <circle cx="606" cy="94" r="4" fill="var(--ink)"></circle>
+              <text x="46" y="190" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">jan</text>
+              <text x="606" y="190" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">jul 2026</text>
+            </svg>
+          </div>
+          <div class="twinlegend">
+            <span class="li"><span class="sw" style="background:var(--oxblood)"></span>Den disciplinerade tvillingen<span class="val">+18,4 %</span></span>
+            <span class="li"><span class="sw" style="background:var(--ink)"></span>Du, faktiskt<span class="val">+9,7 %</span></span>
+            <span class="li"><span class="sw" style="background:var(--faint)"></span>Index<span class="val">+11,0 %</span></span>
+          </div>
+
+          <div class="twintab">
+            <div class="tscroll">
+              <table class="dt">
+                <thead>
+                  <tr>
+                    <th>Sedan januari 2026</th>
+                    <th class="r">Avkastning</th>
+                    <th class="r">Värde av 480 000 kr</th>
+                    <th class="r">Mot din plan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Den disciplinerade tvillingen</td>
+                    <td class="n r">+18,4 %</td>
+                    <td class="n r">568 320 kr</td>
+                    <td class="n r" style="color:var(--muted)">din plan</td>
+                  </tr>
+                  <tr>
+                    <td>Du, faktiskt</td>
+                    <td class="n r">+9,7 %</td>
+                    <td class="n r">526 560 kr</td>
+                    <td class="n r" style="color:var(--bad)">-42 000 kr</td>
+                  </tr>
+                  <tr>
+                    <td>Index (jämförelse)</td>
+                    <td class="n r">+11,0 %</td>
+                    <td class="n r">532 800 kr</td>
+                    <td class="n r" style="color:var(--muted)">-35 760 kr</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="twinnote">Tvillingen är ingen prognos och lovar inget om framtiden. Den räknar bakåt: den tar dina egna ursprungliga skäl och gränser och visar utfallet om varje affär följt dem. Skillnaden mot ditt faktiska utfall är priset på avvikelsen, inte en uppmaning att göra något visst nu.</p>
+        </div>
+        <div class="deep">
+          <a class="kurs" href="/fokus/kapitel/18">Fördjupning: att säkra eller stretcha →</a>
+          <a class="kurs" href="/fokus/kapitel/16">Fördjupning: temperament och tålamod →</a>
+        </div>
+      </div>
+
+      <!-- ── Impulsbromsen (interaktiv) ──────────────────────────────── -->
+      <div class="col">
+        <div class="flag"><span class="cnt">Impulsbromsen</span></div>
+        <p class="seclede">Innan du säljer: ditt eget ursprungsskäl visas tillbaka, och en enda fråga ställs. Kan du inte svara på den vet du själv vad affären är.</p>
+
+        <div class="ib">
+          <div class="pickh">Välj innehav</div>
+          <div class="picks" id="ibpicks"></div>
+          <div class="ibbody" id="ibbody"></div>
+          <p class="ibnote">Vi säger aldrig åt dig att sälja eller behålla. Bromsen visar bara ditt eget skäl och frågar vad som ändrats. Beslutet är alltid ditt.</p>
+        </div>
+      </div>
+
+      <!-- ── Teskrossaren ────────────────────────────────────────────── -->
+      <div class="col">
+        <div class="flag"><span class="cnt">Teskrossaren</span></div>
+        <p class="seclede">Det starkaste <b>motargumentet</b>, framletat innan du köper, ur källor du kan kontrollera själv: blankningsdata, bolagets egna nyckeltalstrender och riskavsnittet i årsredovisningen.</p>
+
+        <div class="crush">
+          <div class="ch">
+            <span class="ck">Starkaste argumentet mot</span>
+          </div>
+          <h3>Starkaste argumentet MOT Telvio just nu</h3>
+          <p class="csub">Så här ser fallet emot ut, byggt av verifierbara punkter, inte av åsikt. Läs det innan du bestämmer dig, medan du fortfarande kan ändra dig utan att det kostar.</p>
+          <ul class="args">
+            <li>
+              <div class="at">Marginalen faller sjätte kvartalet i rad</div>
+              <div class="ab">Rörelsemarginalen har gått från <span class="num">41,5</span> till <span class="num">38,0 procent</span> på ett år och passerat bolagets egen historiska botten. Trenden är entydigt nedåt, inte ett enskilt svagt kvartal.</div>
+              <a class="asrc" href="#">Källa: bolagets kvartalsrapporter, marginal per kvartal →</a>
+            </li>
+            <li>
+              <div class="at">Blankningen stiger</div>
+              <div class="ab">Andelen blankade aktier är <span class="num">3,4 procent</span>, upp <span class="num">1,1 procentenheter</span> på 30 dagar. Två fonder ligger var för sig över <span class="num">0,5 procent</span>. Någon med resurser satsar aktivt på nedgång.</div>
+              <a class="asrc" href="#">Källa: Finansinspektionens blankningsregister →</a>
+            </li>
+            <li>
+              <div class="at">Bolaget flaggar själv för prispress</div>
+              <div class="ab">I riskavsnittet i senaste årsredovisningen skriver Telvio att priskonkurrensen på mobilsidan väntas bestå och kan pressa lönsamheten ytterligare. Det är bolagets egen formulering, inte vår.</div>
+              <a class="asrc" href="#">Källa: årsredovisning, avsnitt Risker och osäkerhetsfaktorer →</a>
+            </li>
+          </ul>
+          <p class="crushfoot">Teskrossaren argumenterar aldrig för din sida, bara emot, och alltid ur källor du själv kan öppna. Om du köper ändå har du gjort det med det starkaste motargumentet framför dig. Det här är en genomlysning, inte ett säljråd och inte ett avrådande.</p>
+        </div>
+        <div class="deep">
+          <a class="kurs" href="/fokus/kapitel/8">Fördjupning: att leta efter varför du har fel →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SPÅR 2 · KORSRISK (Portföljröntgen)
+         ══════════════════════════════════════════════════════════════ -->
+    <section id="korsrisk" class="area" data-reveal>
+      <div class="area-head">
+        <div class="area-kick">Portföljröntgen · korsrisk</div>
+        <h2 class="area-title">Korsrisk<span class="badge pro">kvalitativ · Pro</span></h2>
+        <p class="area-lede">Var lutar dina bolag åt samma håll utan att du tänkt på det? Röntgen lägger innehaven mot varandra och visar de gemensamma riskfaktorerna. <span class="quiet" style="color:var(--muted)">Sex innehav, tre eller fyra linser, ingen falsk exakthet.</span></p>
+        <p class="mifid"><b>Vi visar kvalitativa samband, inte kvantifierade fallscenarier.</b> "Portföljen faller 62 procent om ..." vore falsk precision, det bygger vi inte. Vi säger var risken samlas, inte hur mycket den kostar.</p>
+      </div>
+
+      <!-- ── Överlappskartan ─────────────────────────────────────────── -->
+      <section class="tool">
+        <div class="tool-head">
+          <h3 class="tool-name">Överlappskartan</h3>
+          <span class="badge">kvalitativ · Pro</span>
+        </div>
+        <p class="tool-desc">Vi grupperar innehaven efter vad de delar: samma konjunktur, samma slutkund, samma räntekänslighet, samma valuta. Varje lins säger <span class="cite">vilka bolag som lutar likadant</span> och hur stor del av portföljen de utgör tillsammans. Ingen korrelationsmatris med påhittade tal, bara sambandet.</p>
+
+        <div class="lenses">
+
+          <div class="lens">
+            <div class="lens-top">
+              <div class="lens-name"><span class="ldot"></span>Europeisk industrikonjunktur</div>
+              <div class="lens-wt">tillsammans 46 %</div>
+            </div>
+            <div class="lens-holds">
+              <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Norlux Industri <span class="cw">28 %</span></a>
+              <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="cw">18 %</span></a>
+            </div>
+            <p class="lens-ev">Bägge säljer in i europeisk verkstad och bygg. En avmattning i den konjunkturen träffar dem samtidigt, oavsett hur olika bolagen ser ut på ytan.</p>
+          </div>
+
+          <div class="lens">
+            <div class="lens-top">
+              <div class="lens-name"><span class="ldot"></span>Samma slutkund: fordonssektorn</div>
+              <div class="lens-wt">tillsammans 30 %</div>
+            </div>
+            <div class="lens-holds">
+              <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="cw">18 %</span></a>
+              <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Sundby <span class="cw">12 %</span></a>
+            </div>
+            <p class="lens-ev">Olika produkter, men båda hänger på biltillverkarnas produktionsvolym. Telvio dyker upp här igen: det är samma krona som bär två risker på en gång.</p>
+          </div>
+
+          <div class="lens">
+            <div class="lens-top">
+              <div class="lens-name"><span class="ldot"></span>Valuta: intäkter i USD</div>
+              <div class="lens-wt">tillsammans 26 %</div>
+            </div>
+            <div class="lens-holds">
+              <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Kavex Medical <span class="cw">15 %</span></a>
+              <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Voltcell <span class="cw">11 %</span></a>
+            </div>
+            <p class="lens-ev">En stor del av försäljningen faktureras i dollar medan kostnaderna ligger i kronor. En svagare dollar drar åt samma håll i båda, samtidigt.</p>
+          </div>
+
+          <div class="lens solo">
+            <div class="lens-top">
+              <div class="lens-name"><span class="ldot"></span>Räntekänslighet: skuldsatt balansräkning</div>
+              <div class="lens-wt">18 %</div>
+            </div>
+            <div class="lens-holds">
+              <a class="chip" href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="cw">18 %</span></a>
+            </div>
+            <p class="lens-ev">Bara ett innehav bär den här risken i dag, så det är ingen överlappning. Men det är samma Telvio som redan ligger i två andra linser: den positionen är portföljens mest laddade, inte för att den är störst utan för att flera trådar löper genom den.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── Koncentration ───────────────────────────────────────────── -->
+      <section class="tool">
+        <div class="tool-head">
+          <h3 class="tool-name">Koncentration</h3>
+          <span class="badge">fakta</span>
+        </div>
+        <p class="tool-desc">Så här fördelar sig portföljvikten per tema. Det här är ingen bedömning, bara en <span class="cite">uppställning av vad du faktiskt äger</span>, sorterad så att tyngdpunkten syns.</p>
+        <div class="prev">
+          <div class="prev-lab">Vikt per tema</div>
+          <ul class="bars">
+            <li class="bar">
+              <div class="bar-top"><span class="bar-name">Industri och verkstad</span><span class="bar-pct num">46 %</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:46%"></div></div>
+            </li>
+            <li class="bar">
+              <div class="bar-top"><span class="bar-name">Fordonsexponering</span><span class="bar-pct num">30 %</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:30%"></div></div>
+            </li>
+            <li class="bar">
+              <div class="bar-top"><span class="bar-name">USD-intäkter</span><span class="bar-pct num">26 %</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:26%"></div></div>
+            </li>
+            <li class="bar warm">
+              <div class="bar-top"><span class="bar-name">Defensivt (livsmedel, infrastruktur)</span><span class="bar-pct num">24 %</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:24%"></div></div>
+            </li>
+          </ul>
+          <p class="bar-cap">Temana överlappar, så procenten summerar inte till 100. Ett bolag kan höra hemma i flera teman på en gång: det är just det överlappet röntgen finns för att synliggöra.</p>
+        </div>
+      </section>
+
+      <!-- ── Vad röntgen inte gör ────────────────────────────────────── -->
+      <section class="never">
+        <h3 class="never-head">Vad röntgen inte gör</h3>
+        <p class="never-lede">Gränserna är inte finstilt, de är själva poängen. Det är dem som gör att en kvalitativ karta är mer ärlig än ett exakt tal hade varit.</p>
+        <div class="never-grid">
+          <div class="nv"><b>Ingen kvantifierad korsrisk-procent</b><span>Vi sätter aldrig en siffra på hur mycket portföljen faller. Ett exakt utfallstal skulle låta säkrare än det är, och det är pseudoprecision.</span></div>
+          <div class="nv"><b>Aldrig en rekommendation att omfördela</b><span>Röntgen säger var risken samlas, inte vad du ska göra åt den. Att sälja, behålla eller köpa mer bestämmer du, alltid.</span></div>
+          <div class="nv"><b>Bara att synliggöra samband</b><span>Målet är att visa kopplingar du kanske inte sett, inte att övertala. Beskrivning, aldrig råd.</span></div>
+          <div class="nv"><b>Ingen falsk korrelationsmatris</b><span>Vi ritar inga korrelationssiffror mellan bolag som vi inte kan belägga. Där sambandet är kvalitativt håller vi det kvalitativt.</span></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SPÅR 3 · SKATT (Skattehjälpen)
+         ══════════════════════════════════════════════════════════════ -->
+    <section id="skatt" class="area" data-reveal>
+      <div class="area-head">
+        <div class="area-kick">Skattehjälpen · inför årsskiftet</div>
+        <h2 class="area-title">Skatt<span class="badge pro">säsong (nov)</span></h2>
+        <p class="area-lede">Inför årsskiftet räknar vi kvittning och K4-underlag på dina egna affärer, och förklarar hur reglerna funkar. <span class="quiet" style="color:var(--muted)">Det är hjälp att se din situation, aldrig ett skatteråd och aldrig en uppmaning att sälja.</span></p>
+        <p class="mifid"><b>Skatteregler ges som mekanism, aldrig som fryst belopp.</b> Vi räknar på dina egna affärer och förklarar hur reglerna funkar, du fattar besluten. Kräver transaktionshistorik.</p>
+      </div>
+
+      <!-- ── Årets realiserade resultat ──────────────────────────────── -->
+      <section class="sec">
+        <div class="sec-head">
+          <h3 class="sec-name">Årets realiserade resultat</h3>
+        </div>
+        <p class="sec-desc">De affärer du faktiskt stängt i år, vinst eller förlust per innehav. Det här är fakta ur din transaktionshistorik, inte en bedömning av vad du bör göra härnäst.</p>
+        <div class="sec-body">
+          <div class="prev">
+            <div class="prev-lab">Realiserat 2026 · per innehav</div>
+            <div class="tscroll">
+              <table class="st">
+                <thead><tr><th>Innehav</th><th>Antal</th><th>Realiserat resultat</th></tr></thead>
+                <tbody>
+                  <tr><td>Norlux Industri</td><td>120</td><td class="pos">+41 200 kr</td></tr>
+                  <tr><td>Telvio</td><td>200</td><td class="neg">-18 400 kr</td></tr>
+                  <tr><td>Voltcell</td><td>150</td><td class="neg">-9 700 kr</td></tr>
+                  <tr><td>Kavex Medical</td><td>80</td><td class="neg">-6 300 kr</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><td>Netto realiserat</td><td class="mutc">550</td><td class="pos">+6 800 kr</td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Kvittningsmöjligheter ───────────────────────────────────── -->
+      <section class="sec">
+        <div class="sec-head">
+          <h3 class="sec-name">Kvittningsmöjligheter</h3>
+        </div>
+        <p class="sec-desc">Så här funkar mekaniken: <span class="cite">realiserade förluster kan kvittas mot realiserade vinster</span>, och så här ser din situation ut när vi räknar på dina egna affärer.</p>
+        <div class="sec-body">
+          <div class="prev">
+            <div class="prev-lab">Din kvittning inför årsskiftet</div>
+            <p class="kvit"><span>Du har <span class="knum">3 realiserade förluster</span> som tillsammans kan kvittas mot din vinst i Norlux inför årsskiftet.</span></p>
+            <ul class="arith">
+              <li><span>Vinst, Norlux</span><span class="av pos">+41 200 kr</span></li>
+              <li><span>Förlust, Telvio</span><span class="av neg">-18 400 kr</span></li>
+              <li><span>Förlust, Voltcell</span><span class="av neg">-9 700 kr</span></li>
+              <li><span>Förlust, Kavex</span><span class="av neg">-6 300 kr</span></li>
+              <li class="sum"><span>Kvar efter kvittning</span><span class="av pos">+6 800 kr</span></li>
+            </ul>
+            <p class="mech-note"><b>Så funkar regeln:</b> förluster kvittas fullt mot vinster i samma kategori, överskjutande förlust får kvotas innan den möter annan inkomst. Kvoten och nivåerna ändras över tid, så kontrollera aktuell regel för det år du deklarerar. Vi visar mekaniken på dina siffror, vi fryser ingen sats som lag.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── K4-underlaget ───────────────────────────────────────────── -->
+      <section class="sec">
+        <div class="sec-head">
+          <h3 class="sec-name">K4-underlaget</h3>
+        </div>
+        <p class="sec-desc">En förhandsvy av K4-raderna genererade ur dina affärer. Det är <span class="cite">ett underlag att kontrollera</span> mot dina egna noteringar, inte en färdig deklaration och inte ett råd om vad du ska fylla i.</p>
+        <div class="sec-body">
+          <div class="prev">
+            <span class="frame">Underlag att kontrollera · ej inlämnat</span>
+            <div class="prev-lab">K4 · avsnitt A, marknadsnoterade aktier</div>
+            <div class="tscroll">
+              <table class="st">
+                <thead><tr><th>Beteckning</th><th>Antal</th><th>Försäljningspris</th><th>Omkostnadsbelopp</th><th>Vinst/förlust</th></tr></thead>
+                <tbody>
+                  <tr><td>Norlux Industri</td><td>120</td><td>341 400 kr</td><td>300 200 kr</td><td class="pos">+41 200 kr</td></tr>
+                  <tr><td>Telvio</td><td>200</td><td>168 400 kr</td><td>186 800 kr</td><td class="neg">-18 400 kr</td></tr>
+                  <tr><td>Voltcell</td><td>150</td><td>52 300 kr</td><td>62 000 kr</td><td class="neg">-9 700 kr</td></tr>
+                  <tr><td>Kavex Medical</td><td>80</td><td>124 500 kr</td><td>130 800 kr</td><td class="neg">-6 300 kr</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><td>Summa</td><td class="mutc">550</td><td>686 600 kr</td><td>679 800 kr</td><td class="pos">+6 800 kr</td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <p class="mech-note">Raderna kommer ur dina transaktioner. Stäm av beteckning, antal och omkostnadsbelopp mot din egen historik innan något förs över till deklarationen. Underlaget är hjälp, beslutet och inlämningen är dina.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Före årsskiftet ─────────────────────────────────────────── -->
+      <section class="sec">
+        <div class="sec-head">
+          <h3 class="sec-name">Vad du kan tänka på före årsskiftet</h3>
+        </div>
+        <p class="sec-desc">Det här är mekanik och kalender, inte en uppmaning. Vi pekar på hur reglerna funkar i tid, aldrig på vad du ska köpa eller sälja.</p>
+        <div class="sec-body">
+          <div class="prev">
+            <div class="prev-lab">Mekanik och tidslinje</div>
+            <ul class="feed">
+              <li><span class="fdot"></span><span>Kvittning sker på affärer gjorda <b>före årsskiftet</b>, det är därför november är läge att se över läget. Vad du gör är ditt beslut.</span></li>
+              <li><span class="fdot"></span><span>En realiserad förlust räknas det år affären är stängd, inte det år du köpte. Vi visar vad som redan är realiserat, resten är upp till dig.</span></li>
+              <li><span class="fdot"></span><span>Kvoten och nivåerna för överskjutande förlust <b>ändras över tid</b>. Kontrollera aktuell regel innan du räknar på en effekt, vi fryser den inte åt dig.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Vad Skattehjälpen inte gör ──────────────────────────────── -->
+      <section class="never">
+        <h3 class="never-head">Vad Skattehjälpen inte gör</h3>
+        <p class="never-lede">Gränserna är inte finstilt, de är själva poängen. Det är dem som gör att du kan lita på raderna ovanför.</p>
+        <div class="never-grid">
+          <div class="nv"><b>Aldrig ett skatteråd</b><span>Vi förklarar mekaniken och räknar på dina siffror. Vad du deklarerar och beslutar är ditt, alltid.</span></div>
+          <div class="nv"><b>Aldrig ett fryst belopp som lag</b><span>Satserna och kvoterna ändras. Tjänsten låtsas inte veta framtidens, den ber dig kontrollera aktuell regel.</span></div>
+          <div class="nv"><b>Aldrig en uppmaning att sälja</b><span>Vi säger var kvittning är möjlig, inte att du ska realisera något. Köp och sälj bestämmer du.</span></div>
+          <div class="nv"><b>Bara dina egna siffror plus reglerna</b><span>Underlaget kommer ur din historik och mekaniken ur regelverket. Ingen del av det lämnar huset.</span></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ── KORSLÄNKAR ──────────────────────────────────────────────── -->
+    <section class="links" data-reveal>
+      <div class="links-lab">Öppna ett innehav</div>
+      <div class="links-row">
+        <a href="/labs/dina-bolag-i-marginalen.html">Telvio <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Norlux Industri <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Kavex Medical <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Voltcell <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Brunna Hydro <span class="arr">→</span></a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Almi Foods <span class="arr">→</span></a>
+      </div>
+      <p class="fine">
+        <span class="tag">Mockup · exempeldata</span><br>
+        Din portfölj · av Marginalen. Prototyp i utbildningssyfte, arbetsnamn, fiktiva bolag och illustrativa siffror. Ytan slår ihop tre portföljnivå-spår: beteende över tid (Dagboken), korsrisk mellan innehaven (Portföljröntgen) och skatt inför årsskiftet (Skattehjälpen). Allt är beskrivning och reflektion, aldrig köp-, sälj- eller skatteråd, aldrig en uppmaning att sälja. Korsrisk visas kvalitativt, aldrig som ett kvantifierat fallscenario. Skatteregler ges som mekanism, aldrig som fryst belopp: kontrollera alltid aktuell regel för det år du deklarerar. Det här är en skiss av formen, inte en levande produkt.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/hem">Hem</a>
+        <a href="/fokus">Kursöversikt</a>
+        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/verktyg">Verktyg</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Mockup · exempeldata · illustrativa siffror. Fiktiva bolag, i utbildningssyfte, aldrig köp-, sälj- eller skatteråd. Korsrisk kvalitativt, skatt som mekanism, aldrig fryst belopp.</p>
+  </div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════
+// In-page-flikar: markera aktivt spår vid scroll, mjukt hopp vid klick
+// ══════════════════════════════════════════════════════════════════════
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.ptab'));
+  if(!tabs.length) return;
+  var areas = tabs.map(function(t){ return document.getElementById(t.getAttribute('data-tab')); }).filter(Boolean);
+
+  function setActive(id){
+    tabs.forEach(function(t){ t.classList.toggle('on', t.getAttribute('data-tab')===id); });
+  }
+
+  // Klick: mjukt hopp (respekterar reduced-motion via CSS scroll-behavior fallback)
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(e){
+      var id = t.getAttribute('data-tab');
+      var el = document.getElementById(id);
+      if(el){
+        e.preventDefault();
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        history.replaceState(null, '', '#'+id);
+        setActive(id);
+      }
+    });
+  });
+
+  // Scroll: markera det spår som är närmast toppen
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting) setActive(en.target.id);
+      });
+    }, { rootMargin:'-20% 0px -70% 0px', threshold:0 });
+    areas.forEach(function(a){ io.observe(a); });
+  }
+})();
+
+// ══════════════════════════════════════════════════════════════════════
+// Impulsbromsen: innehav + ursprungsskäl, datum då det skrevs
+// ══════════════════════════════════════════════════════════════════════
+const IB = {
+  TELV:{ namn:'Telvio', tk:'TELV',
+    why:'Stabil kassako med stigande marginal och trygg utdelning på 5,8 procent.',
+    date:'28 januari 2026',
+    note:'Just nu: marginalen har fallit under din egen gräns på 40,0 procent. En av dina tre vakter är bruten.' },
+  NORL:{ namn:'Norlux Industri', tk:'NORL',
+    why:'Växer organiskt över egen prognos, stark kassa, höjer prognosen mitt i året.',
+    date:'12 mars 2025',
+    note:'Just nu: skälet står kvar, prognosen höjd två gånger sedan köpet.' },
+  KAVX:{ namn:'Kavex Medical', tk:'KAVX',
+    why:'Ledningen köper eget, lönsam nisch, tydlig ägarfamilj som styr långsiktigt.',
+    date:'19 november 2025',
+    note:'Just nu: inget i saken har ändrats sedan du skrev det här.' },
+  VOLT:{ namn:'Voltcell', tk:'VOLT',
+    why:'Tillväxtcase inför certifieringen, kassan räcker tills beskedet kommer.',
+    date:'22 april 2026',
+    note:'Just nu: certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader.' },
+};
+const ORDER = ['TELV','NORL','KAVX','VOLT'];
+let ibCur = 'TELV';
+
+const picks = document.getElementById('ibpicks');
+const body = document.getElementById('ibbody');
+
+function renderPicks(){
+  picks.innerHTML = ORDER.map(tk=>
+    '<button class="pick'+(tk===ibCur?' on':'')+'" data-tk="'+tk+'" type="button">'+
+    IB[tk].namn+'<span class="tk">'+tk+'</span></button>').join('');
+  picks.querySelectorAll('.pick').forEach(b=>{
+    b.addEventListener('click', ()=>{ ibCur=b.getAttribute('data-tk'); renderPicks(); renderBody(); });
+  });
+}
+
+function renderBody(){
+  const s = IB[ibCur];
+  body.innerHTML =
+    '<div class="ibskal">"'+s.why+'"<span class="d8">Ditt skäl, som du skrev det '+s.date+'</span></div>'+
+    '<div class="ibq">Vad har ändrats i sak sedan du skrev det här?</div>'+
+    '<textarea id="ibtxt" placeholder="Skriv vad som ändrats i verksamheten, inte i kursen ..."></textarea>'+
+    '<div class="ibrow">'+
+      '<button class="ibbtn" type="button" id="ibnone">Inget har egentligen ändrats</button>'+
+      '<button class="ibbtn solid" type="button" id="ibchanged">Så här har det ändrats</button>'+
+    '</div>'+
+    '<div class="ibres" id="ibres"></div>';
+  document.getElementById('ibnone').addEventListener('click', ()=>ibAnswer(false));
+  document.getElementById('ibchanged').addEventListener('click', ()=>ibAnswer(true));
+}
+
+function ibAnswer(changed){
+  const t = (document.getElementById('ibtxt').value||'').trim();
+  const el = document.getElementById('ibres');
+  if(changed && !t){
+    el.innerHTML = 'Skriv först vad som ändrats, det är hela poängen med bromsen.';
+    el.classList.add('show'); return;
+  }
+  if(changed){
+    el.innerHTML = '<b>Sparat i din beslutsdagbok.</b> Du skrev: <span class="quote">"'+
+      t.replace(/</g,'&lt;')+'"</span>. Stämmer det har ditt skäl faktiskt ändrats, och då är det här ett genomtänkt beslut. Vi följer upp mot facit i backspegeln.';
+  } else {
+    el.innerHTML = '<b>Då vet du vad det här är.</b> Ditt skäl står kvar som du skrev det, och kursen ingår inte i det. '+
+      'Säljer du ändå är det ett känslobeslut, och nu gör du det i så fall med öppna ögon. Det här ögonblicket sparas i din beslutsdagbok.';
+  }
+  el.classList.add('show');
+}
+
+renderPicks();
+renderBody();
+
+// ══════════════════════════════════════════════════════════════════════
+// Reveal
+// ══════════════════════════════════════════════════════════════════════
+(function(){
+  var els = document.querySelectorAll('[data-reveal]');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(el){ el.classList.add('on'); }); return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>

@@ -206,8 +206,8 @@
     <nav class="nav">
       <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
-      <a href="/labs/rapportkollen-i-marginalen.html">Rapportkollen</a>
-      <a href="/labs/dagboken-i-marginalen.html">Dagboken</a>
+      <a href="#" class="here" aria-current="page">Upptäck</a>
+      <a href="/labs/din-portfolj-i-marginalen.html">Din portfölj</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
       <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
       <span class="nav-div" aria-hidden="true"></span>
@@ -396,7 +396,7 @@ function renderFeed(){
       <div class="frow-co">${m.co} <span class="fticker">${m.tk}</span> <span class="fkind">${m.kindLab}</span></div>
       <div class="fmetric">${m.metric}<small>${m.unit}</small></div>
       <div class="ffact">${m.fact}</div>
-      <div class="faddwrap"><a class="fadd follow" href="/labs/bolagshubb-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
+      <div class="faddwrap"><a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
     </li>`).join('');
 }
 document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('click', () => {
@@ -453,7 +453,7 @@ function renderScreener(){
       <div class="mrow-co">${m.co} <span class="fticker">${m.tk}</span></div>
       <div class="mrow-mc num">${m.mc}</div>
       <div class="mrow-why">${m.why} <span class="halt">${m.halt}</span></div>
-      <div class="maddwrap faddwrap"><a class="fadd follow" href="/labs/bolagshubb-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
+      <div class="maddwrap faddwrap"><a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
     </li>`).join('');
 }
 renderScreener();
