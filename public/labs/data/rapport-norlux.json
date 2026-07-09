@@ -1,0 +1,114 @@
+{
+ "bolag": "NORLUX INDUSTRI",
+ "period": "juli-september 2026",
+ "verklig": false,
+ "kalla": "fixtures/norlux-q3-2026.txt (fiktiv, realistiskt formaterad)",
+ "genererad": "2026-07-09",
+ "grind": {
+  "ok": true,
+  "antal": 19
+ },
+ "eval": {
+  "ok": true,
+  "antal": 8
+ },
+ "verdikt": "En stark rapport. Försäljningen växte 11% av egen kraft (organisk tillväxt), mer än bolagets egen prognos, och prognosen för året höjdes.",
+ "stycken": [
+  "Försäljningen blev 2410 miljoner, upp 9,4% mot samma kvartal i fjol (2203 miljoner). Av egen kraft, utan förvärv, växte bolaget 11%, mot 8% i fjol.",
+  "Lönsamheten förbättrades: rörelsemarginalen (EBIT) blev 19,2%, upp 1,2 procentenheter från 18%. När allt var betalt blev 388 miljoner kvar i kassan (fritt kassaflöde), upp 18% mot fjolårets 329 miljoner.",
+  "Skulden motsvarar nu 1,4 årsvinster (nettoskuld/EBITDA), ner från 1,7. Antalet aktier är oförändrat, 148,2 miljoner, inga nya aktier har getts ut.",
+  "Bolaget höjde sin egen prognos för årets organiska tillväxt till 9 till 11%, från tidigare 7 till 9%."
+ ],
+ "siffror": [
+  {
+   "id": "omsattning",
+   "etikett": "omsattning",
+   "nu": 2410,
+   "fjol": 2203,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "Nettoomsättning, Mkr: 2 410 (2 203)",
+   "kalla": "sida 1"
+  },
+  {
+   "id": "organisk_tillvaxt",
+   "etikett": "organisk tillvaxt",
+   "nu": 11,
+   "fjol": 8,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "Organisk tillväxt, %: 11,0 (8,0)",
+   "kalla": "sida 1"
+  },
+  {
+   "id": "bruttomarginal",
+   "etikett": "bruttomarginal",
+   "nu": 41.2,
+   "fjol": 40.8,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "Bruttomarginal, %: 41,2 (40,8)",
+   "kalla": "sida 1"
+  },
+  {
+   "id": "ebit",
+   "etikett": "ebit",
+   "nu": 463,
+   "fjol": 397,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "Rörelseresultat EBIT, Mkr: 463 (397)",
+   "kalla": "sida 1"
+  },
+  {
+   "id": "ebit_marginal",
+   "etikett": "ebit marginal",
+   "nu": 19.2,
+   "fjol": 18,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "EBIT-marginal, %: 19,2 (18,0)",
+   "kalla": "sida 1"
+  },
+  {
+   "id": "fritt_kassaflode",
+   "etikett": "fritt kassaflode",
+   "nu": 388,
+   "fjol": 329,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "Fritt kassaflöde, Mkr: 388 (329)",
+   "kalla": "sida 1"
+  },
+  {
+   "id": "nettoskuld_ebitda",
+   "etikett": "nettoskuld ebitda",
+   "nu": 1.4,
+   "fjol": 1.7,
+   "enhet": "x",
+   "forandring_pct": null,
+   "citat": "Nettoskuld/EBITDA, ggr: 1,4 (1,7)",
+   "kalla": "sida 1"
+  },
+  {
+   "id": "antal_aktier",
+   "etikett": "antal aktier",
+   "nu": 148.2,
+   "fjol": 148.2,
+   "enhet": "M",
+   "forandring_pct": null,
+   "citat": "Antal aktier, miljoner: 148,2 (148,2)",
+   "kalla": "sida 1"
+  }
+ ],
+ "beraknat": {
+  "omsattning_yoy": 9.4,
+  "fkf_yoy": 18,
+  "ebit_marginal_diff": 1.2,
+  "brutto_diff": 0.4,
+  "skuld_diff": -0.3,
+  "utspadning": 0,
+  "over_gammal_guidning": true,
+  "guidning_hojd": true
+ }
+}

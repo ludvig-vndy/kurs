@@ -1,0 +1,336 @@
+{
+ "bolag": "Lifco",
+ "period": "räkenskapsåret 2025",
+ "verklig": true,
+ "kalla": "docs/case-sources/fall-lifco-2025.md (verklig, anvandarverifierad kalla)",
+ "genererad": "2026-07-09",
+ "grind": {
+  "ok": true,
+  "antal": 36
+ },
+ "eval": {
+  "ok": true,
+  "antal": 30
+ },
+ "verdikt": "Lifcos räkenskapsår 2025, rapporterat 30 januari 2026: omsättningen växte 8,1% till 28 251 miljoner, varav 4,2% av egen kraft, och vinsten per aktie steg 10% till 8,00 kronor. Det här är en daterad genomgång av ett avslutat år, ingen aktuell värdering.",
+ "stycken": [
+  "Tillväxtens sammansättning: av årets 8,1% kom 4,2% av egen kraft (organisk tillväxt), resten från förvärv, medan valutan drog ned med 3,5%. Under året konsoliderades 16 förvärv.",
+  "Lönsamheten: EBITA blev 6 318 miljoner (5 917), upp 6,8%, med en marginal på 22,4% mot 22,6% året innan, ned 0,2 procentenheter.",
+  "Kassaflödet från den löpande verksamheten steg 10,7% till 5 124 miljoner (4 630). Avkastningen på sysselsatt kapital var 132% exklusive goodwill och kring 20% inklusive: skillnaden är vad Lifco betalat för förvärven.",
+  "Skulden: räntebärande nettoskuld 7 801 miljoner, motsvarande 1,1 gånger EBITDA (1,2), mot bolagets eget tak på 3 gånger. Marginalen till taket är 1,9 gånger, uträknat härifrån.",
+  "Utdelningen föreslås till 2,70 kronor per aktie. Mot vinsten 8,00 är det 34% (uträknat), inom policyn 30 till 50%.",
+  "Daterad värderingspunkt: aktien handlades runt 305 kronor på rapportdagen. Det ger P/E cirka 38 och direktavkastning cirka 0,9%, båda uträknade ur rapportens tal, inte rapporterade. Fallets fråga är vad som är inbakat i det priset, inte om bolaget är bra."
+ ],
+ "siffror": [
+  {
+   "id": "rapport_dag",
+   "etikett": "rapport dag",
+   "nu": 30,
+   "fjol": null,
+   "enhet": "dag",
+   "forandring_pct": null,
+   "citat": "Datablad och fryst fallkälla för kursens flaggskeppsfall. Alla rapporterade tal är hämtade från Lifcos bokslutsrapport för 2025 och bekräftande källor (se Källor sist). Rapporterat 30 januari 2026.",
+   "kalla": "(inledning)"
+  },
+  {
+   "id": "rapport_ar",
+   "etikett": "rapport ar",
+   "nu": 2026,
+   "fjol": null,
+   "enhet": "år",
+   "forandring_pct": null,
+   "citat": "Datablad och fryst fallkälla för kursens flaggskeppsfall. Alla rapporterade tal är hämtade från Lifcos bokslutsrapport för 2025 och bekräftande källor (se Källor sist). Rapporterat 30 januari 2026.",
+   "kalla": "(inledning)"
+  },
+  {
+   "id": "omsattning",
+   "etikett": "omsattning",
+   "nu": 28251,
+   "fjol": 26137,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "- Omsättning: SEK 28 251 miljoner (26 137), upp 8,1 procent, varav organiskt 4,2 procent. Valutaeffekter drog ned omsättningen med 3,5 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "omsattning_rapporterad_yoy",
+   "etikett": "omsattning rapporterad yoy",
+   "nu": 8.1,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Omsättning: SEK 28 251 miljoner (26 137), upp 8,1 procent, varav organiskt 4,2 procent. Valutaeffekter drog ned omsättningen med 3,5 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "organisk_tillvaxt",
+   "etikett": "organisk tillvaxt",
+   "nu": 4.2,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Omsättning: SEK 28 251 miljoner (26 137), upp 8,1 procent, varav organiskt 4,2 procent. Valutaeffekter drog ned omsättningen med 3,5 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "valutaeffekt",
+   "etikett": "valutaeffekt",
+   "nu": 3.5,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Omsättning: SEK 28 251 miljoner (26 137), upp 8,1 procent, varav organiskt 4,2 procent. Valutaeffekter drog ned omsättningen med 3,5 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "ebita",
+   "etikett": "ebita",
+   "nu": 6318,
+   "fjol": 5917,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "- EBITA: SEK 6 318 miljoner (5 917), upp 6,8 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "ebita_rapporterad_yoy",
+   "etikett": "ebita rapporterad yoy",
+   "nu": 6.8,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- EBITA: SEK 6 318 miljoner (5 917), upp 6,8 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "ebita_marginal",
+   "etikett": "ebita marginal",
+   "nu": 22.4,
+   "fjol": 22.6,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- EBITA-marginal: 22,4 procent (22,6).",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "resultat_fore_skatt",
+   "etikett": "resultat fore skatt",
+   "nu": 4756,
+   "fjol": null,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "- Resultat före skatt: SEK 4 756 miljoner.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "nettoresultat",
+   "etikett": "nettoresultat",
+   "nu": 3669,
+   "fjol": null,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "- Nettoresultat: SEK 3 669 miljoner, upp 9,6 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "nettoresultat_rapporterad_yoy",
+   "etikett": "nettoresultat rapporterad yoy",
+   "nu": 9.6,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Nettoresultat: SEK 3 669 miljoner, upp 9,6 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "vpa",
+   "etikett": "vpa",
+   "nu": 8,
+   "fjol": null,
+   "enhet": "kr",
+   "forandring_pct": null,
+   "citat": "- Vinst per aktie: SEK 8,00, upp 10,0 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "vpa_rapporterad_yoy",
+   "etikett": "vpa rapporterad yoy",
+   "nu": 10,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Vinst per aktie: SEK 8,00, upp 10,0 procent.",
+   "kalla": "Resultat och tillväxt (helår 2025, jämförelse med 2024 inom parentes)"
+  },
+  {
+   "id": "kassaflode_lopande",
+   "etikett": "kassaflode lopande",
+   "nu": 5124,
+   "fjol": 4630,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "- Kassaflöde från löpande verksamhet: SEK 5 124 miljoner (4 630), upp 10,7 procent.",
+   "kalla": "Kassaflöde och avkastning"
+  },
+  {
+   "id": "kassaflode_rapporterad_yoy",
+   "etikett": "kassaflode rapporterad yoy",
+   "nu": 10.7,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Kassaflöde från löpande verksamhet: SEK 5 124 miljoner (4 630), upp 10,7 procent.",
+   "kalla": "Kassaflöde och avkastning"
+  },
+  {
+   "id": "fkf_per_aktie",
+   "etikett": "fkf per aktie",
+   "nu": 9.8,
+   "fjol": null,
+   "enhet": "kr",
+   "forandring_pct": null,
+   "citat": "- Fritt kassaflöde per aktie: SEK 9,8 för 2025, med 22 procents årlig tillväxt sedan börsnoteringen 2014.",
+   "kalla": "Kassaflöde och avkastning"
+  },
+  {
+   "id": "roce_ex_goodwill",
+   "etikett": "roce ex goodwill",
+   "nu": 132,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Avkastning på sysselsatt kapital exklusive goodwill: 132 procent vid årsskiftet (EBITA i förhållande till genomsnittligt sysselsatt kapital exklusive goodwill).",
+   "kalla": "Kassaflöde och avkastning"
+  },
+  {
+   "id": "roce_inkl_goodwill",
+   "etikett": "roce inkl goodwill",
+   "nu": 20,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Avkastning på sysselsatt kapital inklusive goodwill: kring 20 procent.",
+   "kalla": "Kassaflöde och avkastning"
+  },
+  {
+   "id": "nettoskuld",
+   "etikett": "nettoskuld",
+   "nu": 7801,
+   "fjol": null,
+   "enhet": "Mkr",
+   "forandring_pct": null,
+   "citat": "- Räntebärande nettoskuld: SEK 7 801 miljoner.",
+   "kalla": "Balansräkning och skuldsättning"
+  },
+  {
+   "id": "nettoskuld_ebitda",
+   "etikett": "nettoskuld ebitda",
+   "nu": 1.7,
+   "fjol": 1.8,
+   "enhet": "x",
+   "forandring_pct": null,
+   "citat": "- Nettoskuld i förhållande till EBITDA: 1,7 gånger (1,8).",
+   "kalla": "Balansräkning och skuldsättning"
+  },
+  {
+   "id": "rantebarande_ns_ebitda",
+   "etikett": "rantebarande ns ebitda",
+   "nu": 1.1,
+   "fjol": 1.2,
+   "enhet": "x",
+   "forandring_pct": null,
+   "citat": "- Räntebärande nettoskuld i förhållande till EBITDA: 1,1 gånger (1,2).",
+   "kalla": "Balansräkning och skuldsättning"
+  },
+  {
+   "id": "ns_eget_kapital",
+   "etikett": "ns eget kapital",
+   "nu": 0.6,
+   "fjol": null,
+   "enhet": "x",
+   "forandring_pct": null,
+   "citat": "- Nettoskuld i förhållande till eget kapital: 0,6.",
+   "kalla": "Balansräkning och skuldsättning"
+  },
+  {
+   "id": "skuldtak",
+   "etikett": "skuldtak",
+   "nu": 3,
+   "fjol": null,
+   "enhet": "x",
+   "forandring_pct": null,
+   "citat": "- Mål: räntebärande nettoskuld på högst tre gånger EBITDA. Lifco ligger alltså väl under sitt eget tak.",
+   "kalla": "Balansräkning och skuldsättning"
+  },
+  {
+   "id": "antal_forvarv",
+   "etikett": "antal forvarv",
+   "nu": 16,
+   "fjol": null,
+   "enhet": "st",
+   "forandring_pct": null,
+   "citat": "- Under 2025 konsoliderades 16 förvärv, sex i Dental och tio i Systems Solutions, i flera europeiska länder.",
+   "kalla": "Kapitalallokering"
+  },
+  {
+   "id": "utdelning",
+   "etikett": "utdelning",
+   "nu": 2.7,
+   "fjol": null,
+   "enhet": "kr",
+   "forandring_pct": null,
+   "citat": "- Föreslagen utdelning: SEK 2,70 per aktie.",
+   "kalla": "Kapitalallokering"
+  },
+  {
+   "id": "utdelningspolicy_lag",
+   "etikett": "utdelningspolicy lag",
+   "nu": 30,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Utdelningspolicy: dela ut 30 till 50 procent av nettovinsten. Resten återinvesteras, främst i förvärv.",
+   "kalla": "Kapitalallokering"
+  },
+  {
+   "id": "utdelningspolicy_hog",
+   "etikett": "utdelningspolicy hog",
+   "nu": 50,
+   "fjol": null,
+   "enhet": "%",
+   "forandring_pct": null,
+   "citat": "- Utdelningspolicy: dela ut 30 till 50 procent av nettovinsten. Resten återinvesteras, främst i förvärv.",
+   "kalla": "Kapitalallokering"
+  },
+  {
+   "id": "pris_rapportdag",
+   "etikett": "pris rapportdag",
+   "nu": 305,
+   "fjol": null,
+   "enhet": "kr",
+   "forandring_pct": null,
+   "citat": "- Aktien handlades runt 305 SEK på rapportdagen 30 januari 2026.",
+   "kalla": "Prispunkt för värderingsdelen (daterad)"
+  },
+  {
+   "id": "riktkurs",
+   "etikett": "riktkurs",
+   "nu": 326,
+   "fjol": null,
+   "enhet": "kr",
+   "forandring_pct": null,
+   "citat": "- Senaste analytikerrekommendation vid den tidpunkten: Behåll, med riktkurs 326 SEK.",
+   "kalla": "Prispunkt för värderingsdelen (daterad)"
+  }
+ ],
+ "beraknat": {
+  "omsattning_yoy": 8.1,
+  "ebita_yoy": 6.8,
+  "kassaflode_yoy": 10.7,
+  "ebita_marginal_diff": -0.2,
+  "pe": 38,
+  "direktavkastning": 0.9,
+  "payout": 34,
+  "skuldmarginal": 1.9
+ }
+}

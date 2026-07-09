@@ -160,6 +160,23 @@
   .fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:28px;line-height:1.7}
   .fine .tag{display:inline-block;border:1px solid var(--rule-strong);padding:3px 8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
 
+  /* ── REAL-DATA (motorgenererad, grindad) ──────────────────────────── */
+  #realresult{display:none;padding:6px 0 8px}
+  .motor-banner{border:1px solid var(--good);border-radius:6px;background:var(--good-soft);padding:18px 20px;margin-bottom:8px}
+  .mb-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .mb-title{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--good);font-weight:600}
+  .mb-badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;border-radius:99px;padding:4px 11px;line-height:1;white-space:nowrap}
+  .mb-badge.real{color:var(--good);background:#fff;border:1px solid var(--good)}
+  .mb-badge.mock{color:var(--gold);background:var(--gold-soft);border:1px solid rgba(176,124,30,.32)}
+  .mb-lines{display:flex;flex-direction:column;gap:6px}
+  .mb-line{font-family:var(--mono);font-size:12px;letter-spacing:.01em;color:var(--ink-soft);line-height:1.5;display:flex;gap:9px;align-items:baseline}
+  .mb-line::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good);flex:0 0 auto;position:relative;top:5px}
+  .mb-line .mbk{font-family:var(--num);color:var(--ink);font-weight:500}
+  .mb-src{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.5}
+  .rv-verdict{font-family:var(--display);font-weight:300;font-size:clamp(23px,3.4vw,34px);line-height:1.16;letter-spacing:-.015em;color:var(--ink);text-wrap:balance;max-width:34ch;margin:24px 0 4px}
+  .rv-body p{font-family:var(--serif);font-size:16.5px;line-height:1.6;color:var(--ink-soft);max-width:66ch;margin-top:14px}
+  table.dt td.citc{font-family:var(--serif);font-style:italic;color:var(--muted);text-align:left;white-space:normal;min-width:280px;font-size:12.5px;line-height:1.5}
+
   /* ── footer (delad) ────────────────────────────────────────────────── */
   .site-foot{margin-top:56px;border-top:2px solid var(--rule-strong)}
   .site-foot .wrap{padding-top:26px;padding-bottom:60px}
@@ -231,6 +248,12 @@
         <button class="chip" data-co="TELV"><span class="cdot neg"></span>Telvio <span class="cq">Q3, svag</span></button>
         <button class="chip" data-co="NORL"><span class="cdot pos"></span>Norlux <span class="cq">Q3, stark</span></button>
         <button class="chip" data-co="KAVX"><span class="cdot gold"></span>Kavex <span class="cq">Q3, blandad</span></button>
+      </div>
+
+      <div class="chips-lab">Eller: se en riktig, grindad analys genererad av motorn</div>
+      <div class="chips">
+        <button class="chip real" data-real="lifco"><span class="cdot pos"></span>Lifco <span class="cq">verklig data</span></button>
+        <button class="chip real" data-real="norlux"><span class="cdot gold"></span>Norlux <span class="cq">körd genom motorn</span></button>
       </div>
 
       <div class="promise">
@@ -336,6 +359,49 @@
         <p class="fine">
           <span class="tag">Mockup · exempeldata</span><br>
           Rapportkollen · av Marginalen. Arbetsnamn, fiktiva bolag, illustrativa siffror. Vi jämför mot bolagets egen historik och prognos, inte mot konsensus (det kommer senare). Information i utbildningssyfte, aldrig köp- eller säljråd.
+        </p>
+      </section>
+    </section>
+
+    <!-- ── REAL-DATA RESULT (motorgenererad) ───────────────────────── -->
+    <section id="realresult">
+      <button class="rback" id="realbackbtn">← Ny analys</button>
+
+      <div class="rslug"><span class="dot" id="rv-dot" style="background:var(--good)"></span><span class="co" id="rv-co"></span><span class="sep">/</span><span id="rv-period"></span></div>
+
+      <div class="motor-banner" data-reveal>
+        <div class="mb-top">
+          <span class="mb-title">Motorgenererad, grindad</span>
+          <span class="mb-badge" id="rv-badge"></span>
+        </div>
+        <div class="mb-lines">
+          <div class="mb-line" id="rv-grind"></div>
+          <div class="mb-line" id="rv-eval"></div>
+        </div>
+        <p class="mb-src" id="rv-src" style="margin-top:12px"></p>
+      </div>
+
+      <p class="honesty"><span><b>Det här är riktig data genom motorns pipeline: extraktion med citat, beräkning i kod, narration, och noll-hallucinationsgrinden, inte exempeldata.</b> Information i utbildningssyfte, aldrig köp- eller säljråd.</span></p>
+
+      <section class="rsec" data-reveal>
+        <p class="rv-verdict" id="rv-verdict"></p>
+        <div class="rv-body" id="rv-stycken"></div>
+      </section>
+
+      <section class="rsec" data-reveal>
+        <div class="slab">Varje siffra bär sitt citat ur källan</div>
+        <div class="tscroll">
+          <table class="dt">
+            <thead><tr>
+              <th>Nyckeltal</th><th id="rv-th-utfall">Utfall</th><th>Citat ur källan</th>
+            </tr></thead>
+            <tbody id="rv-grid"></tbody>
+          </table>
+        </div>
+        <p class="grid-legend" id="rv-legend"></p>
+        <p class="fine">
+          <span class="tag" id="rv-finetag">Motorgenererad · grindad</span><br>
+          Rapportkollen · av Marginalen. Talen är extraherade ur källan med citat, beräknade i kod och grindade mot hallucination. Information i utbildningssyfte, aldrig köp- eller säljråd.
         </p>
       </section>
     </section>
@@ -512,12 +578,89 @@ function showResult(key){
 }
 function showLanding(){
   document.getElementById('result').style.display='none';
+  var rr=document.getElementById('realresult');
+  if(rr) rr.style.display='none';
   document.getElementById('landing').style.display='block';
   window.scrollTo(0,0);
 }
 
-document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>showResult(c.dataset.co)));
+document.querySelectorAll('.chip:not(.real)').forEach(c=>c.addEventListener('click',()=>showResult(c.dataset.co)));
 document.getElementById('backbtn').addEventListener('click',showLanding);
+
+/* ---------- REAL-DATA: motorgenererad, grindad (fetch JSON) ---------- */
+function fmtNum(n){
+  if(n===null||n===undefined) return '';
+  var s=(typeof n==='number')?String(n):n;
+  // svensk decimal (komma), tusentalsavstand med tunt mellanslag
+  var parts=s.split('.');
+  parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  return parts.join(',');
+}
+function renderReal(d){
+  document.getElementById('rv-co').textContent=d.bolag;
+  document.getElementById('rv-period').textContent=d.period;
+
+  var badge=document.getElementById('rv-badge');
+  if(d.verklig){badge.textContent='Verklig data';badge.className='mb-badge real';}
+  else{badge.textContent='Fiktiv, körd genom motorn';badge.className='mb-badge mock';}
+
+  document.getElementById('rv-grind').innerHTML=
+    'Grinden: alla <span class="mbk">'+d.grind.antal+'</span> tal i analysen spårade till källa';
+  document.getElementById('rv-eval').innerHTML=
+    'Eval: <span class="mbk">'+d.eval.antal+'</span> av <span class="mbk">'+d.eval.antal+'</span> värden korrekt extraherade';
+  document.getElementById('rv-src').textContent=
+    'Källa: '+d.kalla+', genererad '+d.genererad+'.';
+
+  document.getElementById('rv-verdict').textContent=d.verdikt;
+  document.getElementById('rv-stycken').innerHTML=(d.stycken||[]).map(function(s){
+    return '<p>'+s+'</p>';
+  }).join('');
+
+  document.getElementById('rv-grid').innerHTML=(d.siffror||[]).map(function(r){
+    var utfall='<span class="num">'+fmtNum(r.nu)+'</span>';
+    if(r.fjol!==null&&r.fjol!==undefined){
+      utfall+=' <span class="mutc">(jmf <span class="num">'+fmtNum(r.fjol)+'</span>)</span>';
+    }
+    if(r.enhet){utfall+=' '+r.enhet;}
+    return '<tr>'+
+      '<td class="nm">'+r.etikett+'</td>'+
+      '<td>'+utfall+'</td>'+
+      '<td class="citc">'+(r.citat||'')+'</td>'+
+    '</tr>';
+  }).join('');
+
+  document.getElementById('rv-legend').textContent=
+    'Varje rad bär det citat ur källan som talet är extraherat från. Utfallet visas mot fjolåret där källan angav det. Ingen jämförelse mot analytikernas konsensus.';
+}
+function showReal(d){
+  renderReal(d);
+  document.getElementById('landing').style.display='none';
+  document.getElementById('result').style.display='none';
+  document.getElementById('realresult').style.display='block';
+  window.scrollTo(0,0);
+  revealScan();
+}
+var REAL_URLS={lifco:'/labs/data/rapport-lifco.json',norlux:'/labs/data/rapport-norlux.json'};
+document.querySelectorAll('.chip.real').forEach(function(c){
+  c.addEventListener('click',function(){
+    var url=REAL_URLS[c.dataset.real];
+    if(!url) return;
+    var orig=c.innerHTML;
+    c.style.opacity='.6';
+    fetch(url).then(function(res){
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      return res.json();
+    }).then(function(d){
+      c.style.opacity='';
+      showReal(d);
+    }).catch(function(){
+      c.style.opacity='';
+      c.innerHTML='<span class="cdot"></span>Kunde inte ladda';
+      setTimeout(function(){c.innerHTML=orig;},2600);
+    });
+  });
+});
+document.getElementById('realbackbtn').addEventListener('click',showLanding);
 document.getElementById('readbtn').addEventListener('click',()=>{
   // Prototyp: pasta-rutan levererar den förberedda Telvio-analysen.
   showResult('TELV');
