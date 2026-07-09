@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upptäck · Ägarbrevet · Pro</title>
+<meta name="description" content="Upptäck: två sätt att hitta nytt. Momentum visar vad som rör sig som fakta, aldrig signal. Screenern filtrerar objektivt mot dina kriterier. En sida i Marginalen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- impeccable-disable overused-font -- Inter is the locked Marginalen label font (broadsheet.css house token: --mono), shared across the whole suite; changing it here would break house consistency. -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Tokens och typografi lånade rakt ur broadsheet.css / Ägarbrevet-världen,
+     så Upptäck bor i samma hus som brevet och resten av Marginalen. Gröna
+     världen: skogsgrönt som primär accent, amber som värme. JetBrains Mono
+     används ENBART för tabellsiffror och metrics (--num); UI-etiketter och
+     nav kör Inter (--mono). */
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --bad:#9B3A2E;
+    --good-soft:#E7EFE6; --bad-soft:#F3E3DD; --gold-soft:#F1E8D1;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --mono:"Inter",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  .num{font-family:var(--num);font-variant-numeric:tabular-nums}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1}
+  .sheet{max-width:none;margin:0 auto;padding:6px 0 8px}
+
+  /* ── intro ─────────────────────────────────────────────────────────── */
+  #intro{padding:16px 0 8px}
+  .intro-tags{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
+  .intro-tag{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--rule-strong);border-radius:99px;padding:4px 12px;letter-spacing:.09em;text-transform:uppercase;display:inline-block}
+  .intro-tag.pro{color:var(--gold);border-color:rgba(176,124,30,.5)}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:14px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(34px,5.4vw,56px);line-height:1.03;letter-spacing:-.02em;text-wrap:balance;max-width:14ch}
+  .standfirst{font-family:var(--serif);font-size:clamp(17px,1.8vw,20px);line-height:1.55;color:var(--ink-soft);max-width:62ch;margin-top:16px;text-wrap:pretty}
+
+  /* ── läges-växlare (segmented, som hävstångens .seg) ──────────────── */
+  .lens{margin-top:28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .lens-lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .seg{display:flex;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;overflow:hidden}
+  .seg button{background:none;border:none;color:var(--muted);padding:11px 22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;cursor:pointer;white-space:nowrap;transition:.12s;display:flex;align-items:center;gap:8px}
+  .seg button:hover{color:var(--ink)}
+  .seg button.on{background:var(--paper-2);color:var(--oxblood);font-weight:600}
+  .seg .sdot{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:0 0 auto;transition:.12s}
+  .seg button.on .sdot{background:var(--oxblood)}
+  .lens-sub{font-family:var(--serif);font-size:14.5px;color:var(--muted);line-height:1.5;max-width:52ch;margin-top:4px}
+
+  /* generisk sektionsetikett */
+  .slab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+
+  /* ── läge (mode) container ─────────────────────────────────────────── */
+  .mode{display:none;padding:34px 0 8px;border-top:2px solid var(--rule-strong);margin-top:26px}
+  .mode.on{display:block}
+  .mode-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .mode-name{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.2vw,32px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap;align-self:center}
+  .mode-desc{font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink-soft);max-width:62ch;margin-top:8px;text-wrap:pretty}
+  .mode-desc .cite{color:var(--oxblood);font-style:italic}
+
+  /* honesty-rad (delad ton med rapportkollen) */
+  .honesty{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:14px 2px;margin:22px 0 4px;line-height:1.6;display:flex;gap:9px;align-items:baseline}
+  .honesty::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:5px}
+  .honesty b{color:var(--ink-soft);font-weight:600}
+
+  /* ── MOMENTUM: filterchips ─────────────────────────────────────────── */
+  .fchips{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 8px}
+  .fchip{background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 15px;font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--muted);cursor:pointer;transition:.14s;display:inline-flex;align-items:center;gap:8px}
+  .fchip:hover{color:var(--oxblood);border-color:var(--oxblood)}
+  .fchip.on{color:var(--oxblood);border-color:var(--oxblood);background:var(--good-soft);font-weight:600}
+  .fchip .cdot{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:0 0 auto}
+  .fchip.on .cdot{background:var(--oxblood)}
+
+  /* ── MOMENTUM: faktafeed ───────────────────────────────────────────── */
+  .feed{list-style:none;margin:14px 0 0;padding:0}
+  .feed li{padding:20px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 20px;align-items:baseline}
+  .feed li:first-child{border-top:none}
+  .frow-co{font-family:var(--display);font-weight:600;font-size:15.5px;color:var(--ink);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .fticker{font-family:var(--num);font-size:11.5px;letter-spacing:.03em;color:var(--muted);background:var(--paper-2);border-radius:4px;padding:2px 7px;font-weight:400}
+  .fkind{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);border:1px solid var(--rule);border-radius:99px;padding:3px 9px}
+  .fmetric{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:18px;font-weight:500;color:var(--ink);text-align:right;white-space:nowrap;align-self:center}
+  .fmetric small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400;margin-top:2px}
+  .ffact{grid-column:1 / -1;font-family:var(--serif);font-size:15.5px;line-height:1.55;color:var(--ink-soft);max-width:66ch}
+  .ffact .fnum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink)}
+  .faddwrap{grid-column:1 / -1;margin-top:2px}
+  .fadd{font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--oxblood);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px;display:inline-block;transition:.14s}
+  .fadd:hover{border-color:var(--oxblood)}
+  .feed-empty{font-family:var(--serif);font-size:15px;color:var(--muted);padding:24px 0;font-style:italic}
+
+  /* ── SCREENER: frågeruta + chips ───────────────────────────────────── */
+  .qform{max-width:760px}
+  .qlab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .qbox{background:var(--card);border:1px solid var(--rule-strong);border-radius:14px;padding:16px 18px;position:relative;display:flex;align-items:flex-start;gap:10px}
+  .qbox::before{content:"›";font-family:var(--mono);color:var(--oxblood);font-weight:700;font-size:18px;line-height:1.4}
+  .qbox textarea{flex:1;border:none;background:none;resize:vertical;min-height:52px;font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink);outline:none;padding:0}
+  .qbox textarea::placeholder{color:var(--faint)}
+  .qrow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:14px}
+  .btn{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;border-radius:99px;padding:12px 22px;cursor:pointer;border:1px solid var(--rule-strong);background:var(--card);color:var(--ink);transition:.14s}
+  .btn:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .btn.prim{background:var(--oxblood);border-color:var(--oxblood);color:#F6F4EF;font-weight:600}
+  .btn.prim:hover{background:#234436;color:#F6F4EF}
+  .qhint{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.02em}
+
+  .parsed-lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px}
+  .parsed{display:flex;gap:9px;flex-wrap:wrap}
+  .pchip{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:9px 13px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);display:inline-flex;align-items:baseline;gap:8px;cursor:default}
+  .pchip .pk{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .pchip .pv{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink)}
+
+  /* ── SCREENER: resultattabell ──────────────────────────────────────── */
+  .tscroll{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--card);margin-top:22px}
+  table.st{width:100%;border-collapse:collapse;font-size:13.5px;min-width:660px}
+  table.st th{text-align:right;color:var(--faint);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:14px 16px 11px;border-bottom:1px solid var(--rule);white-space:nowrap}
+  table.st th:first-child,table.st td:first-child{text-align:left}
+  table.st td{padding:13px 16px;border-bottom:1px solid var(--rule);font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;white-space:nowrap}
+  table.st td.nm{font-family:var(--serif);color:var(--ink-soft);text-align:left;white-space:normal;min-width:150px}
+  table.st td.nm b{font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--ink);display:block}
+  table.st td.nm .tk{font-family:var(--num);font-size:11px;color:var(--muted);letter-spacing:.03em}
+  .krit{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.01em}
+  .krit .kdot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .krit.yes{color:var(--good)} .krit.yes .kdot{background:var(--good)}
+  .krit.part{color:var(--gold)} .krit.part .kdot{background:var(--gold)}
+  .krit.no{color:var(--muted)} .krit.no .kdot{background:var(--faint)}
+
+  .matchlist{list-style:none;margin:22px 0 0;padding:0}
+  .matchlist li{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 18px;align-items:baseline}
+  .matchlist li:first-child{border-top:none}
+  .mrow-co{font-family:var(--display);font-weight:600;font-size:15px;color:var(--ink);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .mrow-mc{font-family:var(--num);font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap;align-self:center}
+  .mrow-why{grid-column:1 / -1;font-family:var(--serif);font-size:14.5px;line-height:1.5;color:var(--ink-soft);max-width:66ch}
+  .mrow-why .halt{color:var(--muted)}
+  .maddwrap{grid-column:1 / -1;margin-top:2px}
+
+  /* ── kedjan / hand-off ─────────────────────────────────────────────── */
+  .chain{padding:40px 0 34px;border-top:2px solid var(--rule-strong);margin-top:32px}
+  .chain-head{font-family:var(--display);font-weight:300;font-size:clamp(24px,3.2vw,32px);line-height:1.1;letter-spacing:-.015em;text-wrap:balance;max-width:24ch}
+  .chain-lede{font-family:var(--serif);font-size:16.5px;color:var(--ink-soft);margin-top:12px;max-width:60ch;text-wrap:pretty}
+  .chain-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0 30px;margin-top:22px}
+  .cstep{padding:20px 0;border-top:1px solid var(--rule);position:relative}
+  .cstep .cverb{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .cstep b{display:block;font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:-.01em;color:var(--oxblood);margin:6px 0 4px}
+  .cstep span{color:var(--ink-soft);font-size:14.5px;line-height:1.5;display:block;max-width:34ch}
+  @media(max-width:660px){.chain-steps{grid-template-columns:1fr}}
+
+  .fine{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:34px;line-height:1.7;max-width:74ch}
+  .fine .tag{display:inline-block;border:1px solid var(--rule-strong);padding:3px 8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;color:var(--muted)}
+
+  /* ── footer (delad) ────────────────────────────────────────────────── */
+  .site-foot{margin-top:8px;border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:60px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  /* motion */
+  [data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  [data-reveal].on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap">
+        <span class="wordmark">Ägarbrevet</span>
+        <a class="byline" href="/hem">by Marginalen</a>
+      </div>
+      <div class="edition">Upptäck · momentum och screener</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/rapportkollen-i-marginalen.html">Rapportkollen</a>
+      <a href="/labs/dagboken-i-marginalen.html">Dagboken</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="sheet">
+
+    <!-- ── INTRO ───────────────────────────────────────────────────── -->
+    <section id="intro" data-reveal>
+      <div class="intro-tags">
+        <span class="intro-tag pro">Pro · kräver fundamenta-licens</span>
+        <span class="intro-tag">Skiss · exempeldata</span>
+      </div>
+      <div class="kicker">Upptäck · hitta nytt</div>
+      <h1 class="h-title">Upptäck</h1>
+      <p class="standfirst">Två sätt att hitta nytt: vad som rör sig, och vad som matchar dina kriterier. Hittar du något, lägg till det, så granskar och vaktar Dina bolag resten.</p>
+
+      <div class="lens">
+        <span class="lens-lab">Lins</span>
+        <div class="seg" id="lens-seg" role="tablist" aria-label="Välj lins">
+          <button data-mode="momentum" class="on" role="tab" aria-selected="true"><span class="sdot"></span>Momentum</button>
+          <button data-mode="screener" role="tab" aria-selected="false"><span class="sdot"></span>Screener</button>
+        </div>
+      </div>
+      <p class="lens-sub" id="lens-sub">Aktier som rör sig. Spaningens DNA: rena fakta om rörelser, aldrig en tolkning.</p>
+    </section>
+
+    <!-- ── MODE 1: MOMENTUM ────────────────────────────────────────── -->
+    <section class="mode on" id="mode-momentum" data-reveal>
+      <div class="mode-head">
+        <h2 class="mode-name">Momentum</h2>
+        <span class="badge">fakta, aldrig signal</span>
+      </div>
+      <p class="mode-desc">Spaningen: bolag som rör sig just nu, var rad strikt formulerad som <span class="cite">fakta om en rörelse</span>, aldrig ett köpråd. Vi konstaterar vad vi ser i flödet, varför något rör sig avgör du.</p>
+
+      <div class="fchips" id="mfilters">
+        <button class="fchip on" data-kind="alla"><span class="cdot"></span>Alla rörelser</button>
+        <button class="fchip" data-kind="kursavvikelse"><span class="cdot"></span>Kursavvikelse</button>
+        <button class="fchip" data-kind="volym"><span class="cdot"></span>Ovanlig volym</button>
+        <button class="fchip" data-kind="blankning"><span class="cdot"></span>Blankning</button>
+        <button class="fchip" data-kind="insyn"><span class="cdot"></span>Insyn</button>
+        <button class="fchip" data-kind="niva"><span class="cdot"></span>Teknisk nivå</button>
+      </div>
+
+      <ul class="feed" id="mfeed"></ul>
+
+      <p class="honesty"><span><b>Det här är fakta om rörelser, inte köpsignaler.</b> Varför något rör sig avgör du, inte vi. Exempeldata, fördröjt 15 minuter.</span></p>
+    </section>
+
+    <!-- ── MODE 2: SCREENER ────────────────────────────────────────── -->
+    <section class="mode" id="mode-screener" data-reveal>
+      <div class="mode-head">
+        <h2 class="mode-name">Screener</h2>
+        <span class="badge">objektiv filtrering</span>
+      </div>
+      <p class="mode-desc">Skriv vad du letar efter i klartext, få en lista ut. Varje träff kommer med en rad om <span class="cite">varför den matchar och var den haltar</span>. Objektiv filtrering mot dina kriterier, aldrig en rekommendation.</p>
+
+      <div class="qform">
+        <div class="qlab">Fråga i klartext</div>
+        <div class="qbox">
+          <textarea id="qbox" rows="2" spellcheck="false">bolag under 5 mdkr som växer över 15 procent, har nettokassa och insynsköp senaste kvartalet</textarea>
+        </div>
+        <div class="qrow">
+          <button class="btn prim" id="qrun">Filtrera →</button>
+          <span class="qhint">Objektiv filtrering. Formeln är synlig, aldrig en tolkning.</span>
+        </div>
+      </div>
+
+      <div class="parsed-lab">Så här läste vi frågan (filtret)</div>
+      <div class="parsed" id="parsed">
+        <span class="pchip"><span class="pk">Börsvärde</span><span class="pv">under 5 mdkr</span></span>
+        <span class="pchip"><span class="pk">Tillväxt</span><span class="pv">över 15 %</span></span>
+        <span class="pchip"><span class="pk">Nettokassa</span><span class="pv">ja</span></span>
+        <span class="pchip"><span class="pk">Insynsköp</span><span class="pv">senaste kvartalet</span></span>
+        <span class="pchip"><span class="pk">P/E</span><span class="pv">valfritt</span></span>
+        <span class="pchip"><span class="pk">Direktavkastning</span><span class="pv">valfritt</span></span>
+      </div>
+
+      <div class="slab" style="margin-top:26px">Träffar mot ditt filter</div>
+      <div class="tscroll">
+        <table class="st">
+          <thead><tr>
+            <th>Bolag</th><th>Börsvärde</th><th>P/E</th><th>Tillväxt</th>
+            <th>Nettokassa</th><th>Insynsköp</th><th>Dir.avk.</th>
+          </tr></thead>
+          <tbody id="stbody"></tbody>
+        </table>
+      </div>
+
+      <div class="slab" style="margin-top:26px">Varför den matchar, var den haltar</div>
+      <ul class="matchlist" id="matchlist"></ul>
+
+      <p class="honesty"><span><b>Objektiv filtrering mot dina kriterier, inte en lista med tips.</b> P/E och tal är fakta, formeln är synlig. Aldrig en rekommendation. Exempeldata.</span></p>
+    </section>
+
+    <!-- ── KEDJAN / HAND-OFF ───────────────────────────────────────── -->
+    <section class="chain" data-reveal>
+      <h2 class="chain-head">Kedjan efter Upptäck</h2>
+      <p class="chain-lede">Upptäck hittar. Du lägger till. Dina bolag och Tillväxtläget granskar och vaktar resten. Upptäckten är en början, inte ett omdöme.</p>
+      <div class="chain-steps">
+        <div class="cstep">
+          <span class="cverb">Först</span>
+          <b>Upptäck hittar</b>
+          <span>Momentum visar vad som rör sig, screenern vad som matchar. Fakta, aldrig en signal.</span>
+        </div>
+        <div class="cstep">
+          <span class="cverb">Sedan</span>
+          <b>Du lägger till</b>
+          <span>Ett klick lägger bolaget i <a href="/labs/dina-bolag-i-marginalen.html" style="color:var(--oxblood)">Dina bolag</a>. Där skriver du ditt eget skäl.</span>
+        </div>
+        <div class="cstep">
+          <span class="cverb">Därefter</span>
+          <b>Granskas och vaktas</b>
+          <span>Dina bolag och Tillväxtläget läser rapporter, vaktar dina larmnivåer och drar tråden vidare.</span>
+        </div>
+      </div>
+      <p class="fine">
+        <span class="tag">Skiss · exempeldata</span><br>
+        Upptäck · av Marginalen. Prototyp i utbildningssyfte, arbetsnamn, fiktiva bolag och illustrativa siffror. Aldrig köp- eller säljråd. P/E, tillväxt och tal visas som fakta med synlig formel, aldrig som en signal eller ranking. Momentum konstaterar rörelser, den tolkar dem aldrig åt dig. Fundamenta-lager kräver datalicens som ännu inte är på plats; det här är en skiss av formen, inte en levande produkt.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/hem">Hem</a>
+        <a href="/fokus">Kursöversikt</a>
+        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/verktyg">Verktyg</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Skiss · exempeldata · illustrativa siffror. Fiktiva bolag, i utbildningssyfte, aldrig köp- eller säljråd. P/E och tal är fakta, aldrig en signal.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- MOMENTUM: faktafeed (illustrativ, fiktiva bolag) ----------
+   Var rad är strikt fakta om en rörelse. kind styr filterchipen.
+   metric/unit renderas i JetBrains Mono (--num). */
+const MOVES = [
+  { co:'Norlux Industri', tk:'NORL', kind:'kursavvikelse', kindLab:'Kursavvikelse',
+    metric:'+6,2', unit:'% mot sektor',
+    fact:'Rörde sig <span class="fnum">+6,2 procent</span> mot en sektor som stod still. Vi hittade ingen förklaring i flödet.' },
+  { co:'Kavex Medical', tk:'KAVX', kind:'volym', kindLab:'Ovanlig volym',
+    metric:'3,0', unit:'× snittvolym',
+    fact:'Ovanligt hög handel i går, <span class="fnum">tre gånger</span> snittvolymen, ingen nyhet ute.' },
+  { co:'Telvio', tk:'TELV', kind:'blankning', kindLab:'Blankning',
+    metric:'+1,1', unit:'pp på 30 dgr',
+    fact:'Blankningen steg <span class="fnum">1,1 procentenheter</span> på 30 dagar, nu <span class="fnum">4,3 procent</span> av aktierna.' },
+  { co:'Voltcell', tk:'VOLT', kind:'niva', kindLab:'Teknisk nivå',
+    metric:'52v', unit:'högsta',
+    fact:'Noterade en ny <span class="fnum">52-veckors högsta</span> i går. Vad det betyder för värdet avgör du.' },
+  { co:'Brunna Hydro', tk:'BRHY', kind:'insyn', kindLab:'Insyn',
+    metric:'4', unit:'insynsköp',
+    fact:'Kluster av insynsköp: <span class="fnum">fyra befattningshavare</span> köpte inom en vecka, totalt <span class="fnum">3,4 Mkr</span>.' },
+  { co:'Almi Foods', tk:'ALMF', kind:'niva', kindLab:'Teknisk nivå',
+    metric:'MA200', unit:'brott',
+    fact:'Bröt sitt <span class="fnum">200-dagars</span> glidande medelvärde nedåt för första gången på ett år.' },
+  { co:'Sundby Verktyg', tk:'SUND', kind:'volym', kindLab:'Ovanlig volym',
+    metric:'2,4', unit:'× snittvolym',
+    fact:'Handeln var <span class="fnum">2,4 gånger</span> snittet under eftermiddagen, kursen slutade i stort oförändrad.' },
+  { co:'Lärka Digital', tk:'LARK', kind:'kursavvikelse', kindLab:'Kursavvikelse',
+    metric:'-4,8', unit:'% mot index',
+    fact:'Föll <span class="fnum">4,8 procent</span> medan indexet steg. Vi såg ingen bolagsspecifik nyhet i flödet.' }
+];
+
+let activeFilter = 'alla';
+function renderFeed(){
+  const rows = MOVES.filter(m => activeFilter==='alla' || m.kind===activeFilter);
+  const feed = document.getElementById('mfeed');
+  if(!rows.length){ feed.innerHTML = '<li class="feed-empty">Inga rörelser av den typen just nu. Byt filter, eller vänta på nästa avläsning.</li>'; return; }
+  feed.innerHTML = rows.map(m => `
+    <li>
+      <div class="frow-co">${m.co} <span class="fticker">${m.tk}</span> <span class="fkind">${m.kindLab}</span></div>
+      <div class="fmetric">${m.metric}<small>${m.unit}</small></div>
+      <div class="ffact">${m.fact}</div>
+      <div class="faddwrap"><a class="fadd" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
+    </li>`).join('');
+}
+document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('click', () => {
+  document.querySelectorAll('#mfilters .fchip').forEach(x => x.classList.remove('on'));
+  c.classList.add('on');
+  activeFilter = c.dataset.kind;
+  renderFeed();
+}));
+renderFeed();
+
+/* ---------- SCREENER: träffar (illustrativ, fiktiva bolag) ----------
+   krit-flaggor: 'yes' matchar, 'part' matchar delvis, 'no' matchar ej.
+   Alla tal är fakta; formeln (filtret) är synlig i chipsen ovanför. */
+const MATCHES = [
+  { co:'Voltcell', tk:'VOLT', mc:'1,2 mdkr', pe:'28,4', vaxt:'+22,0 %',
+    kassa:['yes','Nettokassa'], insyn:['part','1 köp'], da:'0,0 %',
+    why:'Matchar tillväxt <span class="halt"></span> och insynsköp i februari.',
+    halt:'Haltar på att nettokassan räcker under 18 månader, förhoppningsbolag.' },
+  { co:'Norlux Industri', tk:'NORL', mc:'3,8 mdkr', pe:'16,1', vaxt:'+17,0 %',
+    kassa:['yes','Nettokassa'], insyn:['yes','VD i mars'], da:'2,1 %',
+    why:'Matchar tillväxt, nettokassa och insynsköp.',
+    halt:'Haltar på att tillväxten delvis är förvärvad, inte helt organisk.' },
+  { co:'Kavex Medical', tk:'KAVX', mc:'4,4 mdkr', pe:'24,7', vaxt:'+16,0 %',
+    kassa:['yes','Nettokassa'], insyn:['yes','2 köp'], da:'0,8 %',
+    why:'Matchar tillväxt, nettokassa och två insynsköp i kvartalet.',
+    halt:'Haltar på att marginalen vänt ned två kvartal i rad.' },
+  { co:'Brunna Hydro', tk:'BRHY', mc:'2,6 mdkr', pe:'19,3', vaxt:'+15,4 %',
+    kassa:['yes','Nettokassa'], insyn:['part','litet köp'], da:'1,4 %',
+    why:'Matchar tillväxt och nettokassa.',
+    halt:'Haltar på att insynsköpet var litet, en enskild styrelseledamot.' },
+  { co:'Sundby Verktyg', tk:'SUND', mc:'0,9 mdkr', pe:'13,8', vaxt:'+18,7 %',
+    kassa:['part','tunn kassa'], insyn:['yes','3 köp'], da:'0,0 %',
+    why:'Matchar tillväxt och insynsköp, tre köp i kvartalet.',
+    halt:'Haltar på nettokassan, den är tunn och kan vändas av ett förvärv.' }
+];
+
+function kritCell(flag){
+  const cls = flag[0]==='yes' ? 'yes' : flag[0]==='part' ? 'part' : 'no';
+  return `<span class="krit ${cls}"><span class="kdot"></span>${flag[1]}</span>`;
+}
+function renderScreener(){
+  document.getElementById('stbody').innerHTML = MATCHES.map(m => `
+    <tr>
+      <td class="nm"><b>${m.co}</b><span class="tk">${m.tk}</span></td>
+      <td>${m.mc}</td>
+      <td>${m.pe}</td>
+      <td>${m.vaxt}</td>
+      <td>${kritCell(m.kassa)}</td>
+      <td>${kritCell(m.insyn)}</td>
+      <td>${m.da}</td>
+    </tr>`).join('');
+  document.getElementById('matchlist').innerHTML = MATCHES.map(m => `
+    <li>
+      <div class="mrow-co">${m.co} <span class="fticker">${m.tk}</span></div>
+      <div class="mrow-mc num">${m.mc}</div>
+      <div class="mrow-why">${m.why} <span class="halt">${m.halt}</span></div>
+      <div class="maddwrap"><a class="fadd" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
+    </li>`).join('');
+}
+renderScreener();
+
+// "Filtrera" kör om samma filter (prototyp: filtret är redan tolkat i chipsen).
+document.getElementById('qrun').addEventListener('click', () => {
+  renderScreener();
+  document.querySelector('#mode-screener .st').scrollIntoView({behavior:'smooth', block:'nearest'});
+});
+
+/* ---------- LÄGES-VÄXLARE (segmented toggle) ---------- */
+const LENS_SUB = {
+  momentum:'Aktier som rör sig. Spaningens DNA: rena fakta om rörelser, aldrig en tolkning.',
+  screener:'Fundamental filtrering: P/E, tillväxt, nettokassa, insynsköp. Objektiv, mot dina kriterier.'
+};
+function setMode(mode){
+  document.querySelectorAll('#lens-seg button').forEach(b => {
+    const on = b.dataset.mode === mode;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  document.getElementById('mode-momentum').classList.toggle('on', mode==='momentum');
+  document.getElementById('mode-screener').classList.toggle('on', mode==='screener');
+  document.getElementById('lens-sub').textContent = LENS_SUB[mode];
+}
+document.querySelectorAll('#lens-seg button').forEach(b =>
+  b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+/* ---------- reveal ---------- */
+(function(){
+  var els = document.querySelectorAll('[data-reveal]');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(el){ el.classList.add('on'); }); return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
