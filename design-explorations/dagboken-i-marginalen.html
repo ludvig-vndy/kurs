@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dagboken · Marginalen</title>
+<meta name="description" content="Din beslutsdagbok och bias-profil, som en arbetsyta i Marginalen. Beteende över tid, aldrig köp- eller säljråd.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens och masthead lånade ur broadsheet.css: samma hus som brevet, Dina
+     bolag och kursen. Det här är Beteendespåret, vallgraven: en arbetsyta för
+     att se sitt eget mönster över tid. Register: reflekterande, beskrivande,
+     aldrig råd. Samma hud, egen ton. JetBrains Mono används enbart på
+     tabellsiffror, allt annat i Inter/Outfit/Spectral. */
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --good-soft:#E7EFE6; --bad:#9B3A2E; --bad-soft:#F3E3DD; --gold-soft:#F1E8D1;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  /* Dubbel garanti mot horisontell dragning på mobil (äldre Safari ignorerar
+     clip på html); sidan har ingen sticky så clip på body är säkert. */
+  body{overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  /* Siffror i tabeller och nyckeltal: JetBrains Mono, tabular. Etiketter och
+     löptext i Inter, inte mono. */
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  /* ── masthead (delad) ──────────────────────────────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .edition{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--sans);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1;padding-bottom:96px}
+  .page-h{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:22px 0 6px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(30px,4.4vw,46px);line-height:1.04;letter-spacing:-.02em}
+  .h-side{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .lede{font-family:var(--serif);font-size:18px;color:var(--ink-soft);max-width:64ch;margin-top:10px}
+  .lede b{font-weight:500;color:var(--ink)}
+  .mifid{font-family:var(--sans);font-size:11.5px;letter-spacing:.02em;color:var(--muted);margin-top:12px;max-width:64ch;line-height:1.6}
+  .mifid b{color:var(--ink-soft);font-weight:600}
+
+  /* Läskolumn: arbetsytan är bred (1080), men varje sektion håller sin egen
+     läsbara max-width. */
+  .col{max-width:900px}
+
+  /* sektionsflaggor: samma register som Dina bolag */
+  .flag{display:flex;align-items:center;gap:12px;margin:44px 0 6px;font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .flag::after{content:"";flex:1;height:1px;background:var(--rule)}
+  .flag .cnt{color:var(--oxblood)}
+  .flag .n{font-family:var(--mono);color:var(--faint);letter-spacing:.06em}
+  .seclede{color:var(--ink-soft);font-size:16px;max-width:66ch;margin:2px 0 18px}
+  .seclede b{color:var(--ink);font-weight:500}
+
+  /* ── 1 · Bias-profil (callout) ─────────────────────────────────────── */
+  .bias{border-top:2px solid var(--oxblood);background:var(--card);border-bottom:1px solid var(--rule);padding:18px 20px;margin:6px 0 22px}
+  .bias .k{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--oxblood);margin-bottom:8px}
+  .bias .t{font-family:var(--display);font-weight:300;font-size:clamp(19px,2.4vw,24px);line-height:1.32;letter-spacing:-.01em;color:var(--ink)}
+  .bias .t b{font-weight:600}
+  .bias .sub{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.6}
+  .bias .sub .num{color:var(--ink-soft)}
+
+  /* ── 1 · Beslutsdagbok, tabell ─────────────────────────────────────── */
+  .tscroll{overflow-x:auto;margin-top:2px;max-width:100%}
+  /* Binder scroll-boxen till skärmen oavsett förälder, så breda tabeller
+     scrollar internt i stället för att dra hela sidan på mobil. */
+  @media(max-width:560px){ .tscroll{max-width:calc(100vw - 40px)} }
+  table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.dt th{text-align:left;color:var(--faint);font-weight:500;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 10px 16px;white-space:nowrap;font-family:var(--sans)}
+  table.dt th:first-child{padding-left:0}
+  table.dt th.r{text-align:right}
+  table.dt td{padding:13px 0 13px 16px;border-top:1px solid var(--rule);vertical-align:top;font-family:var(--serif);font-size:14.5px;color:var(--ink-soft)}
+  table.dt td:first-child{padding-left:0}
+  table.dt td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
+  table.dt td.r{text-align:right}
+  .co{font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--ink);white-space:nowrap}
+  .co .tk{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--faint);display:block;margin-top:2px;font-weight:400}
+  .side{font-family:var(--sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--rule-strong);border-radius:99px;white-space:nowrap;color:var(--muted)}
+  .side.buy{color:var(--oxblood);border-color:var(--oxblood)}
+  .side.sell{color:var(--bad);border-color:var(--bad)}
+  .reason{max-width:34ch;color:var(--ink-soft)}
+  .facit{max-width:38ch}
+  .facit .v{font-family:var(--sans);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-bottom:4px;padding:2px 7px;border:1px solid var(--rule-strong);border-radius:3px}
+  .facit .v.miss{color:var(--bad);border-color:var(--bad)}
+  .facit .v.right{color:var(--good);border-color:var(--good)}
+  .facit .v.open{color:var(--gold);border-color:var(--gold)}
+  .facit .body{color:var(--muted);font-size:13.5px;line-height:1.5}
+  .facit .body .num{color:var(--ink-soft)}
+
+  /* ── 2 · Disciplinerade tvillingen ─────────────────────────────────── */
+  .twin{border:1px solid var(--rule);background:var(--card);padding:22px 24px;margin-top:6px}
+  .twincost{font-family:var(--display);font-weight:300;font-size:clamp(21px,3vw,30px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);max-width:30ch}
+  .twincost b{font-weight:600}
+  .twincost .kr{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--bad);font-weight:500}
+  .twinsub{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.6;max-width:60ch}
+  .twinfig{margin:22px 0 8px}
+  .twinfig svg{width:100%;max-width:620px;height:auto;display:block;overflow:visible}
+  .twinlegend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-family:var(--sans);font-size:12px;color:var(--muted)}
+  .twinlegend .li{display:inline-flex;align-items:center;gap:8px}
+  .twinlegend .sw{width:16px;height:3px;border-radius:2px;flex:0 0 auto}
+  .twinlegend .val{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink);margin-left:2px}
+  .twintab{margin-top:20px}
+  .twintab table.dt th.r,.twintab table.dt td.r{text-align:right}
+  .twinnote{font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:16px;line-height:1.6;border-top:1px solid var(--rule);padding-top:14px;max-width:64ch}
+
+  /* ── 3 · Impulsbromsen (interaktiv) ────────────────────────────────── */
+  .ib{border:1px solid var(--rule);background:var(--card);padding:22px 24px;margin-top:6px}
+  .ib .pickh{font-family:var(--sans);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .picks{display:flex;flex-wrap:wrap;gap:8px}
+  .pick{font-family:var(--display);font-weight:500;font-size:14px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 15px;color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .pick .tk{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--faint);margin-left:7px}
+  .pick:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .pick.on{border-color:var(--oxblood);background:var(--good-soft);color:var(--oxblood)}
+  .ibbody{margin-top:20px;border-top:1px solid var(--rule);padding-top:18px}
+  .ibskal{border-top:2px solid var(--oxblood);border-bottom:1px solid var(--rule);padding:12px 2px 12px 0;margin:0 0 16px;font-family:var(--display);font-weight:300;font-size:16.5px;line-height:1.5;color:var(--ink)}
+  .ibskal .d8{font-family:var(--mono);font-size:10px;color:var(--faint);display:block;margin-top:6px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .ibq{font-family:var(--display);font-weight:500;font-size:15px;margin:16px 0 9px;color:var(--ink)}
+  .ib textarea{width:100%;min-height:78px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:8px;color:var(--ink);font-family:var(--serif);font-size:15px;padding:11px 13px;outline:none;resize:vertical;line-height:1.5}
+  .ib textarea:focus{border-color:var(--oxblood)}
+  .ibrow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .ibbtn{font-family:var(--sans);font-size:12px;letter-spacing:.02em;border:1px solid var(--rule-strong);background:none;border-radius:99px;padding:10px 16px;color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .ibbtn:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .ibbtn.solid{background:var(--oxblood);border-color:var(--oxblood);color:var(--paper)}
+  .ibbtn.solid:hover{color:var(--paper);opacity:.92}
+  .ibres{font-family:var(--serif);font-size:15px;line-height:1.6;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;margin-top:16px;color:var(--ink-soft);display:none}
+  .ibres.show{display:block}
+  .ibres b{color:var(--ink);font-weight:600;font-family:var(--display)}
+  .ibres .quote{color:var(--muted);font-style:italic}
+  .ibnote{font-family:var(--sans);font-size:11px;color:var(--muted);margin-top:12px}
+
+  /* ── 4 · Teskrossaren ──────────────────────────────────────────────── */
+  .crush{border:1px solid var(--rule);background:var(--card);padding:22px 24px;margin-top:6px}
+  .crush .ch{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .crush .ck{font-family:var(--sans);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bad)}
+  .crush h3{font-family:var(--display);font-weight:400;font-size:clamp(20px,2.6vw,25px);letter-spacing:-.01em;line-height:1.2;color:var(--ink);margin:6px 0 4px}
+  .crush .csub{font-family:var(--sans);font-size:12.5px;color:var(--muted);line-height:1.6;max-width:62ch;margin-bottom:6px}
+  .args{list-style:none;margin:16px 0 0;padding:0}
+  .args li{border-top:1px solid var(--rule);padding:15px 0}
+  .args li:first-child{border-top:none}
+  .args .at{font-family:var(--display);font-weight:500;font-size:15.5px;color:var(--ink);margin-bottom:5px}
+  .args .ab{color:var(--ink-soft);font-size:14.5px;line-height:1.55;max-width:64ch}
+  .args .ab .num{color:var(--ink)}
+  .args .asrc{font-family:var(--sans);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--oxblood);margin-top:8px;display:inline-block;text-decoration:none}
+  .args .asrc:hover{text-decoration:underline}
+  .crushfoot{font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:18px;border-top:1px solid var(--rule);padding-top:14px;line-height:1.6;max-width:64ch}
+
+  /* källfötter / fördjupningslänkar */
+  .deep{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px}
+  .deep a{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;white-space:nowrap}
+  .deep a:hover{text-decoration:underline}
+  .deep a.kurs{color:var(--muted)}
+  .deep a.kurs:hover{color:var(--oxblood)}
+
+  .cit{font-family:var(--mono);font-size:10px;color:var(--oxblood);vertical-align:super;margin-left:2px;cursor:help;text-decoration:none}
+
+  /* slutfot */
+  .fine{font-family:var(--sans);font-size:11px;letter-spacing:.02em;color:var(--muted);margin-top:40px;line-height:1.7;max-width:70ch;border-top:1px solid var(--rule);padding-top:20px}
+  .fine .tag{display:inline-block;font-family:var(--mono);border:1px solid var(--rule-strong);padding:3px 8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;color:var(--ink-soft);font-size:10px}
+
+  /* ── footer (delad) ────────────────────────────────────────────────── */
+  .site-foot{border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:40px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--sans);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  [data-reveal]{opacity:0;transform:translateY(8px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+  [data-reveal].on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+  @media(max-width:560px){
+    .reason,.facit{max-width:none}
+    .twin,.ib,.crush{padding:18px 16px}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap"><span class="wordmark">Ägarbrevet</span><a class="byline" href="/hem">by Marginalen</a></div>
+      <div class="edition">Beteendespåret · din dagbok</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/rapportkollen-i-marginalen.html">Rapportkollen</a>
+      <a href="#" class="here" aria-current="page">Dagboken</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="page-h" data-reveal>
+    <h1 class="h-title">Dagboken</h1>
+    <div class="h-side">Beteendespåret · vallgraven</div>
+  </div>
+  <div class="col">
+    <p class="lede" data-reveal><b>Det här är din egen historik.</b> Varje köp och sälj du gjort, loggat med skälet du hade i stunden, sedan följt mot facit i backspegeln. Över tid tecknar det ett mönster i hur du beter dig, och vad mönstret har kostat.</p>
+    <p class="mifid" data-reveal><b>Allt här är beskrivning, inte råd.</b> Vi berättar vad som hände och vad ditt beteende har gjort. Vi säger aldrig åt dig att köpa eller sälja. Beslutet är alltid ditt.</p>
+  </div>
+
+  <!-- ── 1 · Beslutsdagboken ──────────────────────────────────────────── -->
+  <div class="col">
+    <div class="flag" data-reveal><span class="cnt">Beslutsdagboken</span><span class="n">14 poster · 18 mån</span></div>
+    <p class="seclede" data-reveal>Varje affär, med skälet du skrev då, ställd mot vad som sedan hände. Nog med poster och ett <b>mönster</b> träder fram.</p>
+
+    <div class="bias" data-reveal>
+      <div class="k">Ditt mönster · bias-profil</div>
+      <div class="t">Du <b>säljer vinnare för tidigt</b>, i snitt <span class="num">3 månader</span> före toppen. De fem vinnare du sålt hade i snitt <span class="num">+22 %</span> kvar att ge.</div>
+      <div class="sub">Byggt ur dina <span class="num">14</span> loggade affärer sedan januari 2025. Två mönster till håller på att ta form: du köper mer i det som redan stigit, och du säljer sällan förlorare. Profilen blir vassare för varje affär du loggar. Det här är en observation om dig, inte ett omdöme.</div>
+    </div>
+
+    <div class="tscroll" data-reveal>
+      <table class="dt">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Bolag</th>
+            <th>Köp/sälj</th>
+            <th>Skälet i stunden</th>
+            <th>Facit i backspegeln</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="n">12 mar 2025</td>
+            <td><span class="co">Norlux Industri<span class="tk">NORL</span></span></td>
+            <td><span class="side buy">Köp</span></td>
+            <td class="reason">Organisk tillväxt över egen prognos två kvartal i rad, kassan stark.</td>
+            <td class="facit"><span class="v right">Höll</span><div class="body">Skälet står kvar. Bolaget har höjt prognosen två gånger sedan dess. Aktien <span class="num">+34 %</span>, du äger kvar.</div></td>
+          </tr>
+          <tr>
+            <td class="n">2 jun 2025</td>
+            <td><span class="co">Kavex Medical<span class="tk">KAVX</span></span></td>
+            <td><span class="side sell">Sälj</span></td>
+            <td class="reason">Kursen hade stigit snabbt, kändes för dyrt, ville säkra vinsten.</td>
+            <td class="facit"><span class="v miss">Sålde för tidigt</span><div class="body">Inget i verksamheten hade ändrats. Aktien steg ytterligare <span class="num">+28 %</span> de följande fem månaderna innan den toppade.</div></td>
+          </tr>
+          <tr>
+            <td class="n">19 aug 2025</td>
+            <td><span class="co">Voltcell<span class="tk">VOLT</span></span></td>
+            <td><span class="side buy">Köp</span></td>
+            <td class="reason">Såg andra köpa och kursen springa, ville inte missa tåget.</td>
+            <td class="facit"><span class="v miss">Jagade rörelse</span><div class="body">Köpte nära en lokal topp. Låg <span class="num">-19 %</span> tre veckor senare. Ingen förändring i saken låg bakom köpet.</div></td>
+          </tr>
+          <tr>
+            <td class="n">14 nov 2025</td>
+            <td><span class="co">Brunna Hydro<span class="tk">BRUN</span></span></td>
+            <td><span class="side sell">Sälj</span></td>
+            <td class="reason">Tröttnade, det hände inget, ville flytta pengarna till något som rörde sig.</td>
+            <td class="facit"><span class="v miss">Sålde för tidigt</span><div class="body">Utdelningen var intakt och täckt. Aktien plus utdelning gav <span class="num">+16 %</span> under de sex månaderna efter du gick ur.</div></td>
+          </tr>
+          <tr>
+            <td class="n">28 jan 2026</td>
+            <td><span class="co">Telvio<span class="tk">TELV</span></span></td>
+            <td><span class="side buy">Köp</span></td>
+            <td class="reason">Stabil kassako, stigande marginal, trygg utdelning på 5,8 procent.</td>
+            <td class="facit"><span class="v open">Följs upp</span><div class="body">Marginalen har sedan dess vänt ned under din egen gräns. En av dina tre vakter är bruten. Öppen post, facit dröjer.</div></td>
+          </tr>
+          <tr>
+            <td class="n">9 apr 2026</td>
+            <td><span class="co">Almi Foods<span class="tk">ALMI</span></span></td>
+            <td><span class="side sell">Sälj</span></td>
+            <td class="reason">Ville realisera en liten vinst inför sommaren, kändes lagom.</td>
+            <td class="facit"><span class="v miss">Sålde för tidigt</span><div class="body">Defensiv och oförändrad. Ligger <span class="num">+9 %</span> över din säljkurs i dag. Femte gången du säljer en vinnare i otid.</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deep" data-reveal>
+      <a href="#">Hela dagboken: 14 poster →</a>
+      <a class="kurs" href="/fokus/kapitel/18">Fördjupning: girighet och att säkra avkastning →</a>
+    </div>
+  </div>
+
+  <!-- ── 2 · Den disciplinerade tvillingen ────────────────────────────── -->
+  <div class="col">
+    <div class="flag" data-reveal><span class="cnt">Den disciplinerade tvillingen</span></div>
+    <p class="seclede" data-reveal>En kopia av dig som följde sin egen ursprungsplan i varje läge, ställd mot vad du faktiskt gjorde, och mot index. Skillnaden sätter en <b>krona</b> på beteendet.</p>
+
+    <div class="twin" data-reveal>
+      <div class="twincost">Din avvikelse från din egen plan har kostat <span class="kr">42 000 kr</span> hittills i år.</div>
+      <p class="twinsub">Tvillingen behöll det du sålde i otid och lät bli det du köpte på rörelse. Den handlade aldrig annorlunda än din ursprungliga plan sa. Det här är en beskrivning av det förflutna, inte en förutsägelse och inte ett råd.</p>
+
+      <div class="twinfig">
+        <svg viewBox="0 0 620 210" role="img" aria-label="Tre linjer sedan januari 2026: den disciplinerade tvillingen slutar på plus 18,4 procent, index på plus 11,0 procent, dina faktiska affärer på plus 9,7 procent.">
+          <!-- baslinje / rutnät -->
+          <line x1="46" y1="12" x2="46" y2="172" stroke="var(--rule)" stroke-width="1"></line>
+          <line x1="46" y1="172" x2="606" y2="172" stroke="var(--rule-strong)" stroke-width="1"></line>
+          <line x1="46" y1="92" x2="606" y2="92" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 5"></line>
+          <!-- y-etiketter -->
+          <text x="40" y="16" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">+20 %</text>
+          <text x="40" y="96" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">+10 %</text>
+          <text x="40" y="176" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">0 %</text>
+          <!-- tvillingen (oxblod/grön) -->
+          <polyline points="46,172 158,150 270,126 382,96 494,64 606,25" fill="none" stroke="var(--oxblood)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <circle cx="606" cy="25" r="4" fill="var(--oxblood)"></circle>
+          <!-- index (grå) -->
+          <polyline points="46,172 158,158 270,150 382,132 494,110 606,84" fill="none" stroke="var(--faint)" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <!-- faktisk (mörk ink) -->
+          <polyline points="46,172 158,152 270,160 382,140 494,116 606,94" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <circle cx="606" cy="94" r="4" fill="var(--ink)"></circle>
+          <!-- x-etiketter -->
+          <text x="46" y="190" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">jan</text>
+          <text x="606" y="190" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--faint)">jul 2026</text>
+        </svg>
+      </div>
+      <div class="twinlegend">
+        <span class="li"><span class="sw" style="background:var(--oxblood)"></span>Den disciplinerade tvillingen<span class="val">+18,4 %</span></span>
+        <span class="li"><span class="sw" style="background:var(--ink)"></span>Du, faktiskt<span class="val">+9,7 %</span></span>
+        <span class="li"><span class="sw" style="background:var(--faint)"></span>Index<span class="val">+11,0 %</span></span>
+      </div>
+
+      <div class="twintab">
+        <div class="tscroll">
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>Sedan januari 2026</th>
+                <th class="r">Avkastning</th>
+                <th class="r">Värde av 480 000 kr</th>
+                <th class="r">Mot din plan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Den disciplinerade tvillingen</td>
+                <td class="n r">+18,4 %</td>
+                <td class="n r">568 320 kr</td>
+                <td class="n r" style="color:var(--muted)">din plan</td>
+              </tr>
+              <tr>
+                <td>Du, faktiskt</td>
+                <td class="n r">+9,7 %</td>
+                <td class="n r">526 560 kr</td>
+                <td class="n r" style="color:var(--bad)">-42 000 kr</td>
+              </tr>
+              <tr>
+                <td>Index (jämförelse)</td>
+                <td class="n r">+11,0 %</td>
+                <td class="n r">532 800 kr</td>
+                <td class="n r" style="color:var(--muted)">-35 760 kr</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="twinnote">Tvillingen är ingen prognos och lovar inget om framtiden. Den räknar bakåt: den tar dina egna ursprungliga skäl och gränser och visar utfallet om varje affär följt dem. Skillnaden mot ditt faktiska utfall är priset på avvikelsen, inte en uppmaning att göra något visst nu.</p>
+    </div>
+    <div class="deep" data-reveal>
+      <a class="kurs" href="/fokus/kapitel/18">Fördjupning: att säkra eller stretcha →</a>
+      <a class="kurs" href="/fokus/kapitel/16">Fördjupning: temperament och tålamod →</a>
+    </div>
+  </div>
+
+  <!-- ── 3 · Impulsbromsen ────────────────────────────────────────────── -->
+  <div class="col">
+    <div class="flag" data-reveal><span class="cnt">Impulsbromsen</span></div>
+    <p class="seclede" data-reveal>Innan du säljer: ditt eget ursprungsskäl visas tillbaka, och en enda fråga ställs. Kan du inte svara på den vet du själv vad affären är.</p>
+
+    <div class="ib" data-reveal>
+      <div class="pickh">Välj innehav</div>
+      <div class="picks" id="ibpicks"></div>
+      <div class="ibbody" id="ibbody"></div>
+      <p class="ibnote">Vi säger aldrig åt dig att sälja eller behålla. Bromsen visar bara ditt eget skäl och frågar vad som ändrats. Beslutet är alltid ditt.</p>
+    </div>
+  </div>
+
+  <!-- ── 4 · Teskrossaren ─────────────────────────────────────────────── -->
+  <div class="col">
+    <div class="flag" data-reveal><span class="cnt">Teskrossaren</span></div>
+    <p class="seclede" data-reveal>Det starkaste <b>motargumentet</b>, framletat innan du köper, ur källor du kan kontrollera själv: blankningsdata, bolagets egna nyckeltalstrender och riskavsnittet i årsredovisningen.</p>
+
+    <div class="crush" data-reveal>
+      <div class="ch">
+        <span class="ck">Starkaste argumentet mot</span>
+      </div>
+      <h3>Starkaste argumentet MOT Telvio just nu</h3>
+      <p class="csub">Så här ser fallet emot ut, byggt av verifierbara punkter, inte av åsikt. Läs det innan du bestämmer dig, medan du fortfarande kan ändra dig utan att det kostar.</p>
+      <ul class="args">
+        <li>
+          <div class="at">Marginalen faller sjätte kvartalet i rad</div>
+          <div class="ab">Rörelsemarginalen har gått från <span class="num">41,5</span> till <span class="num">38,0 procent</span> på ett år och passerat bolagets egen historiska botten. Trenden är entydigt nedåt, inte ett enskilt svagt kvartal.</div>
+          <a class="asrc" href="#">Källa: bolagets kvartalsrapporter, marginal per kvartal →</a>
+        </li>
+        <li>
+          <div class="at">Blankningen stiger</div>
+          <div class="ab">Andelen blankade aktier är <span class="num">3,4 procent</span>, upp <span class="num">1,1 procentenheter</span> på 30 dagar. Två fonder ligger var för sig över <span class="num">0,5 procent</span>. Någon med resurser satsar aktivt på nedgång.</div>
+          <a class="asrc" href="#">Källa: Finansinspektionens blankningsregister →</a>
+        </li>
+        <li>
+          <div class="at">Bolaget flaggar själv för prispress</div>
+          <div class="ab">I riskavsnittet i senaste årsredovisningen skriver Telvio att priskonkurrensen på mobilsidan väntas bestå och kan pressa lönsamheten ytterligare. Det är bolagets egen formulering, inte vår.</div>
+          <a class="asrc" href="#">Källa: årsredovisning, avsnitt Risker och osäkerhetsfaktorer →</a>
+        </li>
+      </ul>
+      <p class="crushfoot">Teskrossaren argumenterar aldrig för din sida, bara emot, och alltid ur källor du själv kan öppna. Om du köper ändå har du gjort det med det starkaste motargumentet framför dig. Det här är en genomlysning, inte ett säljråd och inte ett avrådande.</p>
+    </div>
+    <div class="deep" data-reveal>
+      <a class="kurs" href="/fokus/kapitel/8">Fördjupning: att leta efter varför du har fel →</a>
+    </div>
+  </div>
+
+  <div class="col">
+    <p class="fine" data-reveal>
+      <span class="tag">Mockup · exempeldata</span><br>
+      Dagboken · Beteendespåret, av Marginalen. Arbetsnamn, fiktiva bolag, illustrativa siffror, inget av det här är verkliga affärer eller verkliga bolag. Allt på sidan är beskrivning och reflektion i utbildningssyfte, aldrig köp- eller säljråd. Vallgraven i produkten är din egen beteendedata: skäl, gränser, beslut och avvikelser över tid. Den blir bara mer värdefull ju längre du stannar, och kan ingen konkurrent kopiera.
+    </p>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/hem">Hem</a>
+        <a href="/fokus">Kursöversikt</a>
+        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/verktyg">Verktyg</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Mockup · exempeldata · fiktiva bolag, illustrativa siffror. Beteendedata över tid är produktens vallgrav. Information i utbildningssyfte, aldrig köp- eller säljråd.</p>
+  </div>
+</footer>
+
+<script>
+// ── Impulsbromsen: innehav + ursprungsskäl, datum då det skrevs ────────
+// Reproducerar agar-ai-v2:s ibov-beteende som en inbäddad sektion.
+const IB = {
+  TELV:{ namn:'Telvio', tk:'TELV',
+    why:'Stabil kassako med stigande marginal och trygg utdelning på 5,8 procent.',
+    date:'28 januari 2026',
+    note:'Just nu: marginalen har fallit under din egen gräns på 40,0 procent. En av dina tre vakter är bruten.' },
+  NORL:{ namn:'Norlux Industri', tk:'NORL',
+    why:'Växer organiskt över egen prognos, stark kassa, höjer prognosen mitt i året.',
+    date:'12 mars 2025',
+    note:'Just nu: skälet står kvar, prognosen höjd två gånger sedan köpet.' },
+  KAVX:{ namn:'Kavex Medical', tk:'KAVX',
+    why:'Ledningen köper eget, lönsam nisch, tydlig ägarfamilj som styr långsiktigt.',
+    date:'19 november 2025',
+    note:'Just nu: inget i saken har ändrats sedan du skrev det här.' },
+  VOLT:{ namn:'Voltcell', tk:'VOLT',
+    why:'Tillväxtcase inför certifieringen, kassan räcker tills beskedet kommer.',
+    date:'22 april 2026',
+    note:'Just nu: certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader.' },
+};
+const ORDER = ['TELV','NORL','KAVX','VOLT'];
+let ibCur = 'TELV';
+
+const picks = document.getElementById('ibpicks');
+const body = document.getElementById('ibbody');
+
+function renderPicks(){
+  picks.innerHTML = ORDER.map(tk=>
+    '<button class="pick'+(tk===ibCur?' on':'')+'" data-tk="'+tk+'" type="button">'+
+    IB[tk].namn+'<span class="tk">'+tk+'</span></button>').join('');
+  picks.querySelectorAll('.pick').forEach(b=>{
+    b.addEventListener('click', ()=>{ ibCur=b.getAttribute('data-tk'); renderPicks(); renderBody(); });
+  });
+}
+
+function renderBody(){
+  const s = IB[ibCur];
+  body.innerHTML =
+    '<div class="ibskal">"'+s.why+'"<span class="d8">Ditt skäl, som du skrev det '+s.date+'</span></div>'+
+    '<div class="ibq">Vad har ändrats i sak sedan du skrev det här?</div>'+
+    '<textarea id="ibtxt" placeholder="Skriv vad som ändrats i verksamheten, inte i kursen ..."></textarea>'+
+    '<div class="ibrow">'+
+      '<button class="ibbtn" type="button" id="ibnone">Inget har egentligen ändrats</button>'+
+      '<button class="ibbtn solid" type="button" id="ibchanged">Så här har det ändrats</button>'+
+    '</div>'+
+    '<div class="ibres" id="ibres"></div>';
+  document.getElementById('ibnone').addEventListener('click', ()=>ibAnswer(false));
+  document.getElementById('ibchanged').addEventListener('click', ()=>ibAnswer(true));
+}
+
+function ibAnswer(changed){
+  const t = (document.getElementById('ibtxt').value||'').trim();
+  const el = document.getElementById('ibres');
+  if(changed && !t){
+    el.innerHTML = 'Skriv först vad som ändrats, det är hela poängen med bromsen.';
+    el.classList.add('show'); return;
+  }
+  if(changed){
+    el.innerHTML = '<b>Sparat i din beslutsdagbok.</b> Du skrev: <span class="quote">"'+
+      t.replace(/</g,'&lt;')+'"</span>. Stämmer det har ditt skäl faktiskt ändrats, och då är det här ett genomtänkt beslut. Vi följer upp mot facit i backspegeln.';
+  } else {
+    el.innerHTML = '<b>Då vet du vad det här är.</b> Ditt skäl står kvar som du skrev det, och kursen ingår inte i det. '+
+      'Säljer du ändå är det ett känslobeslut, och nu gör du det i så fall med öppna ögon. Det här ögonblicket sparas i din beslutsdagbok.';
+  }
+  el.classList.add('show');
+}
+
+renderPicks();
+renderBody();
+
+// ── Reveal ─────────────────────────────────────────────────────────────
+(function(){
+  var els = document.querySelectorAll('[data-reveal]');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(el){ el.classList.add('on'); }); return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { rootMargin:'0px 0px -6% 0px', threshold:.05 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>

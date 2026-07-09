@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tillväxtläget · Voltcell · Ägarbrevet · Marginalen</title>
+<meta name="description" content="Tillväxtläget: mätpanelen för ett bolag utan vinst. Kassa, burn och runway i stället för P/E, med casetrappa, avtalsliggare, löftesliggare, emissionshistorik, utspädningsvakt och scenariovärdering.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens och masthead lånade ur broadsheet.css: samma hus som brevet, kursen
+     och Dina bolag. Tillväxtläget är samma hud, annan mätpanel: kassa, burn och
+     runway i stället för P/E och utdelning. JetBrains Mono bara på siffror. */
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E;
+    --good:#2F7A55; --good-soft:#E7EFE6; --bad:#9B3A2E; --bad-soft:#F3E3DD; --gold-soft:#F1E8D1;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --sans:"Inter",system-ui,sans-serif;
+    --num:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  /* JetBrains Mono uteslutande på tabellsiffror och tal. */
+  .num{font-family:var(--num);font-variant-numeric:tabular-nums}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+
+  /* ── masthead (delad) ──────────────────────────────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .edition{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--sans);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1;padding-bottom:112px}
+
+  /* ── briefing-kolumn (samma register som Dina bolag-detaljvyn) ──────── */
+  .brief{max-width:880px;margin:0 auto}
+  .back{background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:8px;padding:22px 0 6px;text-decoration:none}
+  .back:hover{color:var(--oxblood)}
+
+  .mock-tag{display:inline-block;font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:3px 9px;border-radius:99px;margin:14px 0 8px}
+  .shead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-top:2px}
+  .shead h1{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.6vw,50px);letter-spacing:-.02em;line-height:1}
+  .shead .tk{font-family:var(--sans);font-size:12px;letter-spacing:.1em;color:var(--faint)}
+  .shead .status{font-family:var(--sans);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--rule-strong);color:var(--oxblood)}
+  .shead .pr{margin-left:auto;font-family:var(--num);font-size:16px;font-variant-numeric:tabular-nums;text-align:right}
+  .shead .pr .chg{font-size:12px;margin-left:6px;color:var(--good)}
+
+  .factbar{display:flex;flex-wrap:wrap;gap:2px 0;align-items:baseline;font-family:var(--num);font-size:13px;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:12px 2px;margin:16px 0 20px;font-variant-numeric:tabular-nums}
+  .factbar .f{display:inline-flex;gap:7px;align-items:baseline}
+  .factbar .k{font-family:var(--sans);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+  .factbar .v{color:var(--ink)}
+  .factbar .sep{margin:0 16px;color:var(--rule-strong)}
+
+  .why{background:var(--card);border:1px solid var(--rule);padding:16px 18px;margin-bottom:8px}
+  .why .k{font-family:var(--sans);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;gap:10px}
+  .why .k .edit{color:var(--oxblood);cursor:pointer}
+  .why .t{font-family:var(--serif);font-size:17px;color:var(--ink);line-height:1.5}
+  .frame{font-family:var(--sans);font-size:12px;letter-spacing:.02em;color:var(--muted);margin:12px 0 4px;line-height:1.6}
+  .frame b{color:var(--oxblood);font-weight:600}
+
+  section.sec{border-top:2px solid var(--rule-strong);padding:28px 0 24px;margin-top:8px}
+  .sech{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .sech .sm{color:var(--faint);font-size:10px}
+  .lead{color:var(--ink-soft);max-width:66ch;margin:4px 0 18px}
+  .prose{max-width:66ch}
+  .prose p{color:var(--ink-soft);margin-bottom:13px}
+  .lab{font-family:var(--sans);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;margin-right:8px;padding:2px 7px;border:1px solid var(--rule-strong);color:var(--muted)}
+  .lab.slut{color:var(--oxblood);border-color:var(--oxblood)}
+  .cit{font-family:var(--num);font-size:10px;color:var(--oxblood);vertical-align:super;margin-left:2px;cursor:help;text-decoration:none}
+  .slabel{font-family:var(--sans);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:20px 0 8px}
+  .note{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.5;max-width:66ch}
+  .ownnote{font-family:var(--serif);font-size:14px;color:var(--ink-soft);margin-top:10px;line-height:1.5;max-width:66ch}
+  .ownnote b{font-weight:500;color:var(--ink)}
+
+  /* ── läget just nu: runway som hjälte + burn/kassa ──────────────────── */
+  .hero{display:grid;grid-template-columns:1.15fr 1fr;gap:28px;align-items:start;margin-bottom:6px}
+  @media(max-width:680px){.hero{grid-template-columns:1fr;gap:22px}}
+  .runway-k{font-family:var(--sans);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .runway-n{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(40px,7vw,62px);line-height:.9;letter-spacing:-.02em;color:var(--good)}
+  .runway-n small{font-family:var(--display);font-size:.3em;letter-spacing:0;color:var(--muted);margin-left:8px;font-weight:400}
+  .runway-sub{font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6}
+  .runway-sub b{color:var(--ink-soft);font-weight:500}
+  .gauge{margin-top:4px}
+  .gauge svg{width:100%;max-width:360px;height:auto;display:block;overflow:visible}
+  .gauge-cap{display:flex;justify-content:space-between;font-family:var(--num);font-size:10px;letter-spacing:.03em;color:var(--faint);margin-top:6px}
+  .gauge-cap .larm{color:var(--oxblood)}
+  .metrics{list-style:none}
+  .metrics li{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:11px 0;border-top:1px solid var(--rule)}
+  .metrics li:first-child{border-top:none}
+  .metrics .mk{color:var(--ink-soft);font-size:15px}
+  .metrics .mk small{display:block;color:var(--muted);font-size:12px;font-family:var(--sans);margin-top:2px}
+  .metrics .mv{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;text-align:right}
+  .metrics .mv small{display:block;font-size:11px;margin-top:2px}
+  .metrics .mv.pos{color:var(--good)} .metrics .mv.mut small{color:var(--muted)}
+
+  /* vakter (pelare, gauges): identiska med Dina bolag-detaljvyn */
+  .pil{padding:16px 0 18px;border-top:1px solid var(--rule)}
+  .pil:first-child{border-top:none;padding-top:2px}
+  .pil .ph{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .pil .pstate{width:9px;height:9px;border-radius:50%;flex:0 0 auto;position:relative;top:1px}
+  .pil.g .pstate{background:var(--good)} .pil.r .pstate{background:var(--bad)} .pil.y .pstate{background:var(--gold)}
+  .pil .pn{font-family:var(--display);font-weight:500;font-size:16px}
+  .pil .pnow{margin-left:auto;font-family:var(--num);font-size:13px;font-variant-numeric:tabular-nums}
+  .pil.r .pnow{color:var(--bad)} .pil.g .pnow{color:var(--good)} .pil.y .pnow{color:var(--gold)}
+  .pil svg{width:100%;max-width:440px;height:auto;display:block;margin:8px 0 4px;overflow:visible}
+  .pil .pm{display:flex;justify-content:space-between;font-family:var(--num);font-size:10px;letter-spacing:.03em;color:var(--faint)}
+  .pil .pm .larm{color:var(--oxblood)}
+  .pil .pev{color:var(--muted);font-size:14px;margin-top:9px;max-width:64ch;line-height:1.5}
+
+  /* casetrappan: vertikal, stegad visual */
+  .stair{list-style:none;position:relative;margin-top:8px}
+  .stair::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--rule)}
+  .stair li{position:relative;padding:0 0 22px 40px}
+  .stair li:last-child{padding-bottom:2px}
+  .stair .node{position:absolute;left:2px;top:1px;width:20px;height:20px;border-radius:50%;background:var(--card);border:2px solid var(--faint);display:grid;place-items:center;font-family:var(--num);font-size:10px;color:var(--muted);z-index:1}
+  .stair li.done .node{border-color:var(--good);background:var(--good);color:var(--paper)}
+  .stair li.now .node{border-color:var(--gold);background:var(--gold);color:var(--paper);box-shadow:0 0 0 4px var(--gold-soft)}
+  .stair li.next .node{border-color:var(--rule-strong)}
+  .stair .st-t{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:-.01em}
+  .stair .st-s{font-family:var(--sans);font-size:12px;letter-spacing:.02em;margin-top:2px}
+  .stair li.done .st-s{color:var(--good)}
+  .stair li.now .st-s{color:var(--gold)}
+  .stair li.next .st-s{color:var(--muted)}
+  .stair .st-news{margin-top:8px;border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+  .stair .st-news .n{display:block;font-size:13.5px;color:var(--ink-soft);line-height:1.45;margin-top:6px}
+  .stair .st-news .n:first-child{margin-top:0}
+  .stair .st-news .nd{font-family:var(--num);font-size:10px;letter-spacing:.03em;color:var(--faint);margin-right:6px}
+  .stair .st-news .nv{font-family:var(--sans);font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin-left:6px}
+  .stair .st-news .nv.pos{color:var(--good)} .stair .st-news .nv.gold{color:var(--gold)} .stair .st-news .nv.mut{color:var(--muted)}
+
+  /* tabeller */
+  .tscroll{overflow-x:auto;margin-top:2px}
+  table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.dt th{text-align:right;color:var(--faint);font-weight:500;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:0 0 10px 16px;white-space:nowrap;font-family:var(--sans)}
+  table.dt th:first-child{text-align:left;padding-left:0}
+  table.dt td{padding:11px 0 11px 16px;border-top:1px solid var(--rule);font-family:var(--num);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;color:var(--ink);vertical-align:top}
+  table.dt td:first-child{text-align:left;font-family:var(--serif);font-size:15px;color:var(--ink-soft);padding-left:0}
+  table.dt td.txt{text-align:left;font-family:var(--sans);white-space:normal;line-height:1.5;color:var(--ink-soft);font-size:13.5px}
+  table.dt td .q{display:block;font-family:var(--serif);font-style:italic;color:var(--ink);font-size:14px;margin-top:4px;line-height:1.45}
+  table.dt td .who{display:block;font-family:var(--num);font-size:10px;letter-spacing:.04em;color:var(--faint);margin-top:4px}
+  .neg{color:var(--bad)} .pos{color:var(--good)} .mutc{color:var(--muted)} .goldc{color:var(--gold)}
+  .cls-bind{color:var(--good);font-weight:500} .cls-ram{color:var(--gold);font-weight:500} .cls-loi{color:var(--muted);font-weight:500}
+  .st-pill{display:inline-block;font-family:var(--sans);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid currentColor}
+  .st-pill.holl{color:var(--good)} .st-pill.sen{color:var(--bad)} .st-pill.oppet{color:var(--gold)}
+
+  /* utspädningsvakten: callout-kort med räknad procent */
+  .warn{background:var(--gold-soft);border:1px solid var(--gold);padding:20px 22px;margin-top:4px}
+  .warn .wk{font-family:var(--sans);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:9px}
+  .warn .wk svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .warn-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:baseline}
+  .warn-big{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(34px,6vw,50px);line-height:.95;letter-spacing:-.02em;color:var(--ink)}
+  .warn-big small{font-family:var(--display);font-size:.34em;letter-spacing:0;color:var(--muted);margin-left:6px;font-weight:400}
+  .warn-what{font-family:var(--serif);font-size:15px;color:var(--ink-soft);line-height:1.5;align-self:center}
+  .warn-what b{color:var(--ink);font-weight:500}
+  .warn-list{list-style:none;margin-top:16px;border-top:1px solid var(--gold);padding-top:12px}
+  .warn-list li{display:flex;justify-content:space-between;gap:14px;padding:7px 0;font-size:14px;color:var(--ink-soft)}
+  .warn-list .wv{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+  .warn-src{font-family:var(--num);font-size:10.5px;letter-spacing:.03em;color:var(--muted);margin-top:12px}
+
+  /* scenariovärdering */
+  .asym{background:var(--card);border:1px solid var(--rule);padding:15px 18px;margin-top:16px;font-family:var(--serif);font-size:15px;color:var(--ink-soft);line-height:1.55;max-width:70ch}
+  .asym .k{font-family:var(--sans);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--oxblood);margin-bottom:6px}
+
+  /* källfot per sektion */
+  .srcs{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px}
+  .srcs a{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;white-space:nowrap}
+  .srcs a:hover{text-decoration:underline}
+  .srcs a.kurs{color:var(--muted)}
+  .srcs a.kurs:hover{color:var(--oxblood)}
+
+  .fine{font-family:var(--num);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:8px;line-height:1.7;max-width:70ch}
+
+  /* ── ambient Fråga ─────────────────────────────────────────────────── */
+  .askdock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(transparent,var(--paper) 26%)}
+  .askbar{max-width:820px;margin:0 auto;padding:0 clamp(20px,5vw,52px) 18px;display:flex;align-items:center;gap:12px}
+  .askbar form{flex:1;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:11px 12px 11px 18px;box-shadow:0 6px 24px rgba(33,28,23,.10)}
+  .askctx{font-family:var(--sans);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);white-space:nowrap;border-right:1px solid var(--rule);padding-right:12px}
+  .askbar input{flex:1;border:none;background:none;font-family:var(--serif);font-size:15px;color:var(--ink);outline:none;min-width:0}
+  .askbar input::placeholder{color:var(--muted)}
+  .kbd{font-family:var(--num);font-size:10px;letter-spacing:.04em;color:var(--faint);border:1px solid var(--rule-strong);border-radius:6px;padding:3px 7px;white-space:nowrap}
+  .asksend{border:none;background:var(--oxblood);color:var(--paper);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+  .asksend svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  .askpanel{position:fixed;left:0;right:0;bottom:74px;z-index:41;display:none}
+  .askpanel.show{display:block}
+  .askpanel .inner{max-width:820px;margin:0 auto;padding:0 clamp(20px,5vw,52px);position:relative}
+  .askcard{background:var(--card);border:1px solid var(--rule-strong);border-radius:16px;padding:16px 18px;box-shadow:0 18px 50px rgba(33,28,23,.22)}
+  .askcard .seedh{font-family:var(--sans);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .seed{display:flex;gap:8px;flex-wrap:wrap}
+  .seedb{font-family:var(--serif);font-size:14px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 14px;color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .seedb:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .ans{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);display:none}
+  .ans.show{display:block}
+  .ans .q{font-family:var(--display);font-weight:500;font-size:15px;margin-bottom:8px}
+  .ans p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:10px}
+  .ans .lab{font-size:9px;padding:2px 6px}
+  .ans table.dt{margin-top:6px;font-size:12.5px}
+  .ans table.dt td{padding:7px 0 7px 12px}
+  .ans .foot{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-family:var(--sans);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+  .ans .foot a{color:var(--oxblood);text-decoration:none} .ans .foot a.kurs{color:var(--muted)}
+  .ans .foot a:hover{text-decoration:underline}
+  .askx{position:absolute;top:-40px;right:clamp(20px,5vw,52px);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;font-family:var(--sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 12px;cursor:pointer}
+
+  /* ── footer (delad) ────────────────────────────────────────────────── */
+  .site-foot{border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:40px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--num);font-size:10.5px;letter-spacing:.04em;color:var(--faint);line-height:1.7}
+
+  [data-reveal]{opacity:0;transform:translateY(8px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+  [data-reveal].on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+  @media(max-width:560px){
+    .factbar .sep{margin:0 10px}
+    .shead .pr{margin-left:0;width:100%;text-align:left}
+    .askctx{display:none}
+    .warn-grid{grid-template-columns:1fr;gap:10px}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap"><span class="wordmark">Ägarbrevet</span><a class="byline" href="/hem">by Marginalen</a></div>
+      <div class="edition">Dina bolag · Voltcell · tillväxtläge</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html" class="here" aria-current="page">Dina bolag</a>
+      <a href="/labs/rapportkollen-i-marginalen.html">Rapportkollen</a>
+      <a href="/labs/dagboken-i-marginalen.html">Dagboken</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" style="flex:1">
+  <div class="brief">
+
+    <a class="back" href="/labs/dina-bolag-i-marginalen.html">← Dina bolag</a>
+
+    <div data-reveal>
+      <span class="mock-tag">Mockup · exempeldata</span>
+      <div class="shead">
+        <h1>Voltcell</h1><span class="tk">VOLT</span>
+        <span class="status">Tillväxtläge</span>
+        <span class="pr num">24,60 kr<span class="chg">+1,2%</span></span>
+      </div>
+      <div class="factbar num">
+        <span class="f"><span class="k">52 v</span><span class="v">11,80 till 31,40</span></span><span class="sep">·</span>
+        <span class="f"><span class="k">Börsvärde</span><span class="v">2,1 mdkr</span></span><span class="sep">·</span>
+        <span class="f"><span class="k">Kassa</span><span class="v">410 Mkr</span></span><span class="sep">·</span>
+        <span class="f"><span class="k">Runway</span><span class="v">~21 mån</span></span><span class="sep">·</span>
+        <span class="f"><span class="k">Tillväxt</span><span class="v">+64%</span></span>
+      </div>
+
+      <div class="why">
+        <div class="k"><span>Varför du äger det · förslag från oss</span><span class="edit">Ändra →</span></div>
+        <div class="t">Tillväxtcase: batteriteknik före genombrottet. Kan mångdubblas om certifieringen och volymkontrakten landar, kan också misslyckas. Därför: ett litet innehav och tydliga gränser.</div>
+      </div>
+      <p class="frame"><b>Överlev jakten.</b> Ett bolag utan vinst mäts inte på P/E och utdelning, det finns ingen vinst att sätta i nämnaren. Det mäts på hur länge kassan räcker, hur mycket din andel späds ut och om caset faktiskt rör sig framåt. Disciplinen är produkten, drömmen är motivationen.</p>
+    </div>
+
+    <!-- 1 · Läget just nu -->
+    <section class="sec" data-reveal>
+      <div class="sech"><span>Läget just nu · kassa, burn och runway</span><span class="sm">Q2-rapport · milstolpsbevakning</span></div>
+      <p class="lead">Ett förhoppningsbolag har ingen vinst att värdera. Den viktigaste siffran är i stället <b>runway</b>: hur många månader kassan räcker i nuvarande förbrukningstakt. Så länge runwayen ligger över 18 månader förhandlar bolaget från styrka. Under det tvingas det ofta ta in pengar på motpartens villkor.</p>
+      <div class="hero">
+        <div>
+          <div class="runway-k">Runway · månader kvar</div>
+          <div class="runway-n num">~21<small>månader</small></div>
+          <p class="runway-sub">Räknat på kassan <b>410 Mkr</b> delat med förbrukningstakten <b>19 Mkr i månaden</b>. Din gräns: larm under 18 månader. Varje försening av certifieringen äter av den här siffran.</p>
+        </div>
+        <div class="gauge">
+          <svg viewBox="0 0 300 120" role="img" aria-label="Runway 21 månader av en skala 0 till 36, larmnivån går vid 18 månader, nålen står i det gröna fältet.">
+            <!-- bakgrundsbåge -->
+            <path d="M30 108 A90 90 0 0 1 270 108" fill="none" stroke="var(--rule)" stroke-width="12" stroke-linecap="round"/>
+            <!-- rött fält 0 till 18 mån (vänster halva) -->
+            <path d="M30 108 A90 90 0 0 1 150 18" fill="none" stroke="var(--bad-soft)" stroke-width="12" stroke-linecap="round"/>
+            <!-- grönt fält 18 till 36 mån -->
+            <path d="M150 18 A90 90 0 0 1 270 108" fill="none" stroke="var(--good-soft)" stroke-width="12" stroke-linecap="round"/>
+            <!-- larmstreck vid 18 mån = mitten (topp) -->
+            <line x1="150" y1="6" x2="150" y2="30" stroke="var(--oxblood)" stroke-width="1.6" stroke-dasharray="3 4"/>
+            <!-- nål: 21/36 av 180 grader. 21/36=0.583 -> vinkel 180*(1-0.583)=75 grader från horisontell vänster -->
+            <g transform="rotate(15 150 108)">
+              <line x1="150" y1="108" x2="150" y2="26" stroke="var(--good)" stroke-width="3" stroke-linecap="round"/>
+            </g>
+            <circle cx="150" cy="108" r="6" fill="var(--good)"/>
+          </svg>
+          <div class="gauge-cap"><span>0 mån</span><span class="larm">larm 18 mån</span><span>36 mån</span></div>
+        </div>
+      </div>
+      <ul class="metrics">
+        <li><span class="mk">Kassa<small>likvida medel, Q2-rapporten</small></span><span class="mv pos num">410 Mkr</span></li>
+        <li><span class="mk">Förbrukningstakt (burn)<small>förlust 58 Mkr i kvartalet, cirka 19 Mkr per månad</small></span><span class="mv mut num">19 Mkr<small>per månad</small></span></li>
+        <li><span class="mk">Tillväxt<small>omsättning +64% till 96 Mkr, från låg nivå</small></span><span class="mv pos num">+64%</span></li>
+        <li><span class="mk">Bruttomarginal<small>31 kr kvar per hundralapp, upp från 24 · bolagets mål 45%</small></span><span class="mv pos num">31%</span></li>
+        <li><span class="mk">Utspädning i år<small>bara optionsprogram hittills · din gräns 5% per år</small></span><span class="mv mut num">+2,1%</span></li>
+      </ul>
+
+      <div class="slabel">Dina vakter · tillväxtcasets egna gränser</div>
+      <div id="vakter"></div>
+
+      <div class="srcs">
+        <a href="#">Källdokumentet: Q2-rapporten →</a>
+        <a class="kurs" href="/fokus/kapitel/17">Fördjupning: kassa, burn och runway →</a>
+      </div>
+    </section>
+
+    <!-- 2 · Casetrappan -->
+    <section class="sec" data-reveal>
+      <div class="sech"><span>Casetrappan · var bolaget står på sin egen resa</span><span class="sm">slutsats · ur bolagets besked</span></div>
+      <p class="lead">Ett förhoppningsbolag lovar en resa: teknik bevisad, betald pilot, certifiering, volymkontrakt, lönsamhet. Varje nyhet placeras på trappan, så du ser om ett besked <b>flyttar caset ett steg</b> eller bara låter bra. Voltcell står på steg tre: certifieringen pågår.</p>
+      <ul class="stair" id="stair"></ul>
+      <p class="note">Så läser vi trappan: ett steg är avklarat först när det är bevisat i sak, inte när det annonseras. Rubriker rör sig snabbare än trappan. Fiktivt exempel.</p>
+    </section>
+
+    <!-- 3 · Avtalsliggaren -->
+    <section class="sec" data-reveal>
+      <div class="sech"><span>Avtalsliggaren · vad varje avtal faktiskt binder</span><span class="sm">slutsats ur citerad avtalstext</span></div>
+      <p class="lead">Ett småbolags-pressmeddelande kallar allt "strategiskt samarbete". Skillnaden mellan en <b>bindande order</b>, ett <b>ramavtal</b> och en <b>avsiktsförklaring</b> är hela caset. Vi klassar varje avtal efter vad avtalstexten binder, och citerar meningen som avgör.</p>
+      <div class="tscroll">
+        <table class="dt">
+          <thead><tr><th>När</th><th>Klass</th><th>Motpart och bevismening</th><th>Vad det binder</th></tr></thead>
+          <tbody id="avtal"></tbody>
+        </table>
+      </div>
+      <div class="asym" style="margin-top:18px">
+        <div class="k">Proportionen · slutsats</div>
+        Bolaget marknadsför ramavtalet med ett potentiellt värde på <span class="num">500 Mkr</span> över sju år. Den enda faktiskt bindande ordern är piloten på <span class="num">7 Mkr</span>. <b>Det marknadsförda potentiella värdet är alltså 71 gånger den enda bindande ordern.</b> Talet är inte en lögn, men det är ett tak ingen har lovat att nå.
+      </div>
+      <div class="srcs">
+        <a href="#">Källa: pressmeddelandena →</a>
+        <a class="kurs" href="/fokus/kapitel/17">Fördjupning: avtalsspråket →</a>
+      </div>
+    </section>
+
+    <!-- 4 · Löftesliggaren -->
+    <section class="sec" data-reveal>
+      <div class="sech"><span>Löftesliggaren · ledningens ord mot facit</span><span class="sm">fakta ur egna pressmeddelanden</span></div>
+      <p class="lead">Ledningen bygger sitt förtroende med löften i pressmeddelanden. Vi sparar dem och följer dem mot utfallet. Ett bolag som håller sina tidplaner är ett annat bolag än ett som ständigt skjuter fram dem, även om berättelsen låter likadan. <b>Två av fyra avgjorda löften höll tidplanen.</b></p>
+      <div class="tscroll">
+        <table class="dt">
+          <thead><tr><th>När</th><th>Vad ledningen lovade</th><th>Hur det gick</th><th>Status</th></tr></thead>
+          <tbody id="loften"></tbody>
+        </table>
+      </div>
+      <p class="ownnote">Sena besked har hittills inneburit ungefär ett halvårs försening. Räkna med det när du läser nästa löfte. Fiktivt exempel.</p>
+    </section>
+
+    <!-- 5 · Emissionshistoriken -->
+    <section class="sec" data-reveal>
+      <div class="sech"><span>Emissionshistoriken · varje kapitalanskaffning med rabatt</span><span class="sm">fakta ur pressmeddelanden</span></div>
+      <p class="lead">Rabatten mot rådande kurs vid en emission är den mest avslöjande siffran för ett förhoppningsbolag: den mäter hur svårt bolaget hade att få in pengar, och hur mycket äldre ägare fick tåla. Nästan ingen visar dem samlat.</p>
+      <div class="tscroll">
+        <table class="dt">
+          <thead><tr><th>När</th><th>Typ</th><th>Kurs</th><th>Rabatt</th><th>Belopp</th></tr></thead>
+          <tbody id="emis"></tbody>
+        </table>
+      </div>
+      <p class="ownnote"><b>Total utspädning sedan starten: cirka 24%.</b> Två emissioner sedan 2022, den senaste från styrka med tid och pengar kvar. En emission är inte i sig ett dåligt tecken i ett tillväxtcase: det farliga är den som görs i panik, med kort runway och stor rabatt. Fiktivt exempel.</p>
+      <div class="srcs">
+        <a href="#">Källa: emissionsprospekten →</a>
+        <a class="kurs" href="/fokus/kapitel/17">Fördjupning: emissioner och utspädning →</a>
+      </div>
+    </section>
+
+    <!-- 6 · Utspädningsvakten -->
+    <section class="sec" data-reveal>
+      <div class="sech"><span>Utspädningsvakten · vi läser kallelsen åt dig</span><span class="sm">kod · räknad maxutspädning</span></div>
+      <p class="lead">Småbolagsägare bränner sig ständigt på utspädning de kunde ha sett komma. Nästan ingen läser stämmokallelsen. Vi gör det: bemyndiganden, konvertibler och optionsprogram plockas ut, och maxutspädningen räknas i förväg, i kod, med källcitat och sidnummer.</p>
+      <div class="warn">
+        <div class="wk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5"/><path d="M12 18h.01"/></svg>Förvarning · kallelse till årsstämma 14 maj 2026</div>
+        <div class="warn-grid">
+          <div class="warn-big num">upp till 27%<small>maxutspädning</small></div>
+          <div class="warn-what">Om <b>alla</b> föreslagna bemyndiganden och konvertibler utnyttjas fullt ut späds din nuvarande andel ut med upp till 27%. Det är ett tak, inte en prognos, men det är taket styrelsen ber om mandat att kunna nå utan att fråga dig igen.</div>
+        </div>
+        <ul class="warn-list">
+          <li><span>Bemyndigande om nyemission, upp till 15% av aktierna<span class="num"> · punkt 12</span></span><span class="wv num">+15,0%</span></li>
+          <li><span>Utestående konvertibel, förfaller mars 2027<span class="num"> · not 9</span></span><span class="wv num">+8,5%</span></li>
+          <li><span>Teckningsoptioner, personalprogram 2025/2028<span class="num"> · punkt 14</span></span><span class="wv num">+3,5%</span></li>
+        </ul>
+        <p class="warn-src">Källa: Kallelse till årsstämma i Voltcell AB, sid 3 (punkt 12, 14) och sid 7 (not 9). Maxutspädning beräknad i kod: 15,0% + 8,5% + 3,5%, avrundat. Fiktivt exempel.</p>
+      </div>
+    </section>
+
+    <!-- 7 · Scenariovärdering -->
+    <section class="sec" data-reveal>
+      <div class="sech"><span>Scenariovärdering · asymmetrin utskriven</span><span class="sm">bygger på kursens 12.7 · illustrativt</span></div>
+      <p class="lead">Ett bolag utan vinst går inte att värdera på en multipel. Det värderas på vad framtiden kräver. Vi skriver ut tre utfall och vad vart och ett förutsätter, så du ser <b>asymmetrin</b>: nedsidan är begränsad till insatsen, uppsidan är flera gånger den.</p>
+      <div class="tscroll">
+        <table class="dt">
+          <thead><tr><th>Scenario</th><th>Vad det förutsätter</th><th>Värde per aktie</th><th>Mot kurs i dag</th></tr></thead>
+          <tbody id="scen"></tbody>
+        </table>
+      </div>
+      <div class="asym">
+        <div class="k">Asymmetrin · slutsats</div>
+        Kurs i dag <span class="num">24,60 kr</span>. Nedsidan är begränsad till insatsen, uppsidan är flera gånger den. Men asymmetrin i kalkylen räddar dig bara om asymmetrin finns i din portfölj: skyddet ligger i storleken. Köp så lite att det pessimistiska utfallet inte skadar dig (lektion 11.4 i Marginalen). Värdena är illustrativa räkneexempel.
+      </div>
+      <div class="slabel">Milstolpar vi bevakar</div>
+      <div class="tscroll">
+        <table class="dt" style="max-width:600px">
+          <tbody id="mil"></tbody>
+        </table>
+      </div>
+      <div class="srcs">
+        <a class="kurs" href="/fokus/kapitel/12">Fördjupning: scenarier och asymmetri (12.7) →</a>
+        <a class="kurs" href="/fokus/kapitel/11">Fördjupning: positionsstorlek (11.4) →</a>
+      </div>
+    </section>
+
+    <p class="fine">
+      Mockup · exempeldata. Voltcell är ett fiktivt bolag och alla siffror är påhittade, illustrativa räkneexempel. Varje påstående är märkt fakta (källa) eller slutsats; en avtalsklassificering är alltid en slutsats dragen ur citerade fakta. Information i utbildningssyfte, aldrig köp- eller säljråd. Vi visar vad som ändrats, du bestämmer.
+    </p>
+
+  </div>
+</main>
+
+<!-- Ambient Fråga: dockad rad + panel, kontextsatt på Voltcell -->
+<div class="askpanel" id="askpanel" aria-hidden="true">
+  <div class="inner">
+    <button class="askx" id="askx">Stäng · Esc</button>
+    <div class="askcard">
+      <div class="seedh" id="seedh">Fråga om Voltcell</div>
+      <div class="seed" id="seed"></div>
+      <div class="ans" id="ans"></div>
+    </div>
+  </div>
+</div>
+<div class="askdock">
+  <div class="askbar">
+    <form id="askform">
+      <span class="askctx" id="askctx">Voltcell · tillväxtläge</span>
+      <input id="askinput" type="text" placeholder="Fråga om Voltcell..." autocomplete="off" aria-label="Fråga AI">
+      <span class="kbd">⌘K</span>
+      <button class="asksend" type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </form>
+  </div>
+</div>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/hem">Hem</a>
+        <a href="/fokus">Kursöversikt</a>
+        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/verktyg">Verktyg</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Prototyp · exempeldata · fiktiva bolag, påhittade siffror. Information i utbildningssyfte, aldrig köp- eller säljråd.</p>
+  </div>
+</footer>
+
+<script>
+// ── Data (troget Voltcell-mockens siffror, fiktivt bolag, illustrativt) ──
+const VAKTER = [
+  { n:'Kassan räcker mer än 18 månader', s:'g', now:'~21 mån', pts:[30,28,26,25,23,21], larm:18, larmLab:'larm 18 mån',
+    ev:'Räknat på nuvarande förbrukningstakt. Att den tickar ner är normalt, men under 18 månader tvingas bolag ofta ta in pengar på motpartens villkor.' },
+  { n:'Tillväxt över 40% per år', s:'g', now:'+64%', pts:[45,52,48,58,61,64], larm:40, larmLab:'larm 40%',
+    ev:'Från låg nivå, men accelererande sex kvartal i rad. Tillväxten är hela caset.' },
+  { n:'Bruttomarginalen rör sig mot bolagets mål 45%', s:'g', now:'31%', pts:[24,25,27,28,30,31], larm:null, larmLab:'larm: faller två kvartal i rad',
+    ev:'Visar att affären bär sig bättre för varje såld enhet. Målet 45% är bolagets eget, inte vårt.' },
+  { n:'Utspädning under 5% per år', s:'g', now:'+2,1%', pts:[0.5,1.0,1.3,1.6,1.9,2.1], larm:5, larmLab:'larm 5%',
+    ev:'Bara optionsprogram hittills. En nyemission kan vara helt rimlig i ett tillväxtcase, så länge den görs från styrka, med tid och pengar kvar att förhandla med.' }
+];
+
+// steg: klass done/now/next, titel, status-text, nyheter [datum, text, verdikt-klass, verdikt-ord]
+const STAIR = [
+  { cls:'done', t:'Tekniken bevisad i pilotmiljö', s:'Klart 2023', news:[] },
+  { cls:'done', t:'Första betalda piloten i drift', s:'Klart, februari 2026', news:[
+      ['feb 26','Tysk systemintegratör betalar för tekniken i skarp drift. Första gången någon betalar. Steg 2 avklarat i sak.','pos','flyttar caset'] ] },
+  { cls:'now', t:'EU-certifiering', s:'Pågår, besked väntas i september', news:[
+      ['maj 26','Ramavtal med europeisk fordonstillverkare. Binder inga volymer och inga priser: flyttar inte caset förrän första avropet kommer.','mut','låter bra'],
+      ['okt 25','Avsiktsförklaring (LOI) med asiatisk batteritillverkare. Inte bindande, ingen uppföljning på åtta månader.','mut','bevaka'] ] },
+  { cls:'next', t:'Första volymkontraktet', s:'Nästa steg · bolagets egen plan Q4 2026', news:[] },
+  { cls:'next', t:'Positivt kassaflöde', s:'Bolagets mål 2028', news:[] }
+];
+
+// avtal: [datum, klass-label, klass-css, motpart, bevismening, vad det binder]
+const AVTAL = [
+  ['feb 26','Bindande order','cls-bind','Tysk systemintegratör',
+    '”...en fast order om leverans till ett värde av 7 Mkr, med leverans under 2026.”',
+    'Binder volym och pris. Den enda faktiskt bindande ordern i liggaren.'],
+  ['maj 26','Ramavtal','cls-ram','Europeisk fordonstillverkare',
+    '”...ett ramavtal som möjliggör avrop upp till 500 Mkr över sju år.”',
+    'Möjliggör avrop, binder inga volymer och inga priser. Flyttar inte caset förrän första avropet kommer.'],
+  ['okt 25','Avsiktsförklaring','cls-loi','Asiatisk batteritillverkare',
+    '”...en avsiktsförklaring (LOI) om att utvärdera ett framtida samarbete.”',
+    'Inte bindande. Har inte följts av avtal på åtta månader. Bevaka, agera inte.']
+];
+
+// löften: [datum, löfte, utfall, status]  status: höll / sen / öppet
+const LOFTEN = [
+  ['Q1 2024','CE-certifiering "under första halvåret 2025"','Kom i november 2025','sen'],
+  ['Q3 2024','Pilotkontrakt med europeisk tillverkare "innan årsskiftet"','Tecknades i februari 2026','sen'],
+  ['Q4 2024','Bruttomarginal över 25% under 2025','Nåddes i Q3 2025','höll'],
+  ['Q2 2025','Ingen nyemission "under överskådlig tid"','Håller hittills','höll'],
+  ['Q1 2026','EU-certifiering klar september 2026','Väntar på besked','öppet']
+];
+
+// emissioner: [datum, typ, kurs, rabatt, belopp]
+const EMIS = [
+  ['mar 2024','Företrädesemission','15,50 kr','18% rabatt','120 Mkr'],
+  ['sep 2022','Riktad nyemission','9,20 kr','9% rabatt','75 Mkr']
+];
+
+// scenarier: [namn, antagande, värde, mot kurs, klass]
+const SCEN = [
+  ['Pessimistiskt','Certifieringen misslyckas eller försenas kraftigt, nyemission på svaga villkor','~8 kr','-67%','neg'],
+  ['Bas','Certifiering i höst, gradvisa kontrakt under 2027','~35 kr','+42%','mutc'],
+  ['Optimistiskt','Certifiering plus volymkontrakt med två tillverkare','~90 kr','+266%','pos']
+];
+
+const MIL = [
+  ['Sep 2026','Certifieringsbesked, EU-marknaden'],
+  ['Q4 2026','Första volymkontraktet enligt bolagets egen plan'],
+  ['Feb 2027','Bokslut: bruttomarginalen mot målet 45%']
+];
+
+// ── Pelargraf: linje + larmnivå + färgad slutmarkör (från Dina bolag) ──
+function spark(pts, larm, state){
+  const w=320,h=40,pad=6;
+  const vals = larm!=null ? pts.concat([larm]) : pts;
+  const min=Math.min(...vals), max=Math.max(...vals), rng=(max-min)||1;
+  const x=i=> pad + i/(pts.length-1)*(w-2*pad);
+  const y=v=> pad + (1-(v-min)/rng)*(h-2*pad);
+  const pl = pts.map((v,i)=> x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ');
+  const col = state==='r'?'var(--bad)':state==='y'?'var(--gold)':'var(--good)';
+  const lx = pts.length-1;
+  let out = '<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-hidden="true">';
+  if(larm!=null){ const ly=y(larm).toFixed(1); out+='<line x1="'+pad+'" y1="'+ly+'" x2="'+(w-pad)+'" y2="'+ly+'" stroke="var(--oxblood)" stroke-width="1.3" stroke-dasharray="4 5" opacity=".75"/>'; }
+  out+='<polyline points="'+pl+'" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
+  out+='<circle cx="'+x(lx).toFixed(1)+'" cy="'+y(pts[lx]).toFixed(1)+'" r="3.8" fill="'+col+'"/>';
+  return out+'</svg>';
+}
+
+// ── Rendera sektioner ──────────────────────────────────────────────────
+document.getElementById('vakter').innerHTML = VAKTER.map(p=>
+  '<div class="pil '+p.s+'">'+
+    '<div class="ph"><span class="pstate"></span><span class="pn">'+p.n+'</span><span class="pnow num">'+p.now+'</span></div>'+
+    spark(p.pts,p.larm,p.s)+
+    '<div class="pm"><span>sex kvartal</span><span class="larm">'+p.larmLab+'</span><span>nu</span></div>'+
+    '<p class="pev">'+p.ev+'</p></div>').join('');
+
+document.getElementById('stair').innerHTML = STAIR.map((st,i)=>{
+  const mark = st.cls==='done' ? '✓' : (i+1);
+  const news = st.news.length ? '<div class="st-news">'+st.news.map(n=>
+    '<span class="n"><span class="nd num">'+n[0]+'</span>'+n[1]+'<span class="nv '+n[2]+'">'+n[3]+'</span></span>').join('')+'</div>' : '';
+  return '<li class="'+st.cls+'"><span class="node num">'+mark+'</span>'+
+    '<div class="st-t">'+st.t+'</div><div class="st-s">'+st.s+'</div>'+news+'</li>';
+}).join('');
+
+document.getElementById('avtal').innerHTML = AVTAL.map(a=>
+  '<tr><td class="num" style="color:var(--faint);font-size:11px">'+a[0]+'</td>'+
+  '<td class="'+a[2]+'" style="text-align:left;font-family:var(--sans)">'+a[1]+'</td>'+
+  '<td class="txt"><b style="color:var(--ink)">'+a[3]+'</b><span class="q">'+a[4]+'</span></td>'+
+  '<td class="txt" style="color:var(--muted)">'+a[5]+'</td></tr>').join('');
+
+document.getElementById('loften').innerHTML = LOFTEN.map(r=>{
+  const cls = r[3]==='höll'?'holl':r[3]==='sen'?'sen':'oppet';
+  const word = r[3]==='höll'?'höll tidplanen':r[3]==='sen'?'blev sent':'öppet';
+  return '<tr><td class="num" style="color:var(--faint);font-size:11px">'+r[0]+'</td>'+
+    '<td class="txt" style="color:var(--ink)">'+r[1]+'</td>'+
+    '<td class="txt">'+r[2]+'</td>'+
+    '<td style="text-align:left"><span class="st-pill '+cls+'">'+word+'</span></td></tr>';
+}).join('');
+
+document.getElementById('emis').innerHTML = EMIS.map(e=>
+  '<tr><td class="num" style="color:var(--faint);font-size:11px">'+e[0]+'</td>'+
+  '<td style="text-align:left;font-family:var(--sans)">'+e[1]+'</td>'+
+  '<td>'+e[2]+'</td><td class="goldc">'+e[3]+'</td><td>'+e[4]+'</td></tr>').join('');
+
+document.getElementById('scen').innerHTML = SCEN.map(r=>
+  '<tr><td>'+r[0]+'</td>'+
+  '<td class="txt" style="color:var(--muted)">'+r[1]+'</td>'+
+  '<td>'+r[2]+'</td><td class="'+r[4]+'">'+r[3]+'</td></tr>').join('');
+
+document.getElementById('mil').innerHTML = MIL.map(m=>
+  '<tr><td class="num" style="color:var(--gold);font-size:11px;text-align:left;font-family:var(--num)">'+m[0]+'</td>'+
+  '<td class="txt" style="color:var(--ink)">'+m[1]+'</td></tr>').join('');
+
+// ── Ambient Fråga ─────────────────────────────────────────────────────
+const panel=document.getElementById('askpanel'), seed=document.getElementById('seed'),
+  ansEl=document.getElementById('ans'), inp=document.getElementById('askinput');
+const SEEDS = ['Hur stor är risken?','Vad binder avtalen egentligen?','När tar kassan slut?'];
+const ANSWERS = {
+  'Hur stor är risken?':
+    '<p><span class="lab">fakta</span> Det här är ditt mest riskfyllda innehav: bolaget förlorar pengar och caset hänger på certifieringen i september<a class="cit" title="Q2-rapport, sid 4">1</a>.</p>'+
+    '<p><span class="lab slut">slutsats</span> Det som begränsar risken är storleken. I det pessimistiska scenariot (~8 kr) förlorar du merparten av insatsen. Håll innehavet så litet att det utfallet inte skadar dig.</p>'+
+    '<div class="tscroll"><table class="dt"><thead><tr><th>Scenario</th><th>Värde per aktie</th><th>Mot kurs 24,60</th></tr></thead><tbody>'+
+    '<tr><td>Pessimistiskt</td><td>~8 kr</td><td class="neg">-67%</td></tr>'+
+    '<tr><td>Bas</td><td>~35 kr</td><td class="mutc">+42%</td></tr>'+
+    '<tr><td>Optimistiskt</td><td>~90 kr</td><td class="pos">+266%</td></tr>'+
+    '</tbody></table></div>',
+  'Vad binder avtalen egentligen?':
+    '<p><span class="lab">fakta</span> Tre besked det senaste året: en bindande order på 7 Mkr (feb 26), ett ramavtal på upp till 500 Mkr (maj 26) och en avsiktsförklaring (okt 25)<a class="cit" title="Pressmeddelanden feb, maj, okt">2</a>.</p>'+
+    '<p><span class="lab slut">slutsats</span> Bara ordern binder volym och pris. Ramavtalet möjliggör avrop men lovar inga, avsiktsförklaringen binder ingenting. Det marknadsförda potentiella värdet är 71 gånger den enda bindande ordern.</p>',
+  'När tar kassan slut?':
+    '<p><span class="lab">fakta</span> Kassan är 410 Mkr och förbrukningstakten cirka 19 Mkr i månaden, vilket ger en runway på ungefär 21 månader<a class="cit" title="Q2-rapport, kassaflöde">3</a>.</p>'+
+    '<p><span class="lab slut">slutsats</span> Din gräns är 18 månader. Så länge runwayen ligger över den förhandlar bolaget från styrka. Varje försening av certifieringen äter av siffran, så det är tiden, inte tekniken, som är den närmaste risken.</p>'
+};
+const FOOT = '<a href="#">Källa: Q2-rapporten →</a><a class="kurs" href="/fokus/kapitel/12">Fördjupning: scenarier och asymmetri →</a>';
+
+seed.innerHTML = SEEDS.map(q=>'<button class="seedb" type="button">'+q+'</button>').join('');
+seed.querySelectorAll('.seedb').forEach((b,i)=> b.addEventListener('click', ()=> answer(SEEDS[i])));
+
+function answer(q){
+  const a = ANSWERS[q];
+  if(a){
+    ansEl.innerHTML = '<div class="q">'+q+'</div>'+a+'<div class="foot">'+FOOT+'</div>';
+  } else {
+    ansEl.innerHTML = '<div class="q">'+q+'</div><p>I den här prototypen är exempelsvar inkopplade på de tre förslagen ovan. '+
+      'I skarpt läge svarar modellen på din fråga om Voltcell, med varje siffra spårad till sin källa och en länk till rätt lektion.</p>'+
+      '<div class="foot"><a href="#">Så fungerar källgrinden →</a></div>';
+  }
+  ansEl.classList.add('show');
+  openPanel();
+}
+function openPanel(){ panel.classList.add('show'); panel.setAttribute('aria-hidden','false'); }
+function closePanel(){ panel.classList.remove('show'); panel.setAttribute('aria-hidden','true'); }
+document.getElementById('askx').addEventListener('click', closePanel);
+document.getElementById('askform').addEventListener('submit', e=>{ e.preventDefault(); answer(inp.value.trim()||SEEDS[0]); });
+inp.addEventListener('focus', openPanel);
+document.addEventListener('keydown', e=>{
+  if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); inp.focus(); openPanel(); }
+  if(e.key==='Escape') closePanel();
+});
+
+// ── Reveal ────────────────────────────────────────────────────────────
+(function(){
+  var els=document.querySelectorAll('[data-reveal]');
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ els.forEach(function(el){el.classList.add('on');}); return; }
+  var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target);}});},{rootMargin:'0px 0px -6% 0px',threshold:.05});
+  els.forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>
