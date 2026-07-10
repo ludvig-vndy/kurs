@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Helheten · Ägarbrevet · Marginalen</title>
-<meta name="description" content="Helheten: allt som gäller portföljen som helhet. Beteende över tid, korsrisk mellan innehaven och skatt inför årsskiftet. Beskrivning, aldrig råd.">
+<title>Analysen · Ägarbrevet · Marginalen</title>
+<meta name="description" content="Analysen: allt som gäller portföljen som helhet. Beteende över tid, korsrisk mellan innehaven och skatt inför årsskiftet. Beskrivning, aldrig råd.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- impeccable-disable overused-font -- Inter is the locked Marginalen label font (broadsheet.css house token: --mono), shared across the whole suite; changing it here would break house consistency. -->
@@ -63,13 +63,15 @@
   .intro-rule::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:5px}
   .intro-rule b{color:var(--ink-soft);font-weight:600}
 
-  /* ── in-page-flikar (ankarnavigering mellan de tre spåren) ─────────── */
-  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;padding-top:20px;border-top:1px solid var(--rule)}
-  .tabs a{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:9px 17px;text-decoration:none;transition:border-color .15s,color .15s,background .15s}
-  .tabs a:hover{border-color:var(--oxblood);color:var(--oxblood)}
-  .tabs a.on{border-color:var(--oxblood);background:var(--good-soft);color:var(--oxblood)}
-  .tabs a .tsub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:9px;padding-left:9px;border-left:1px solid var(--rule);text-transform:none;letter-spacing:.01em}
-  .tabs a.on .tsub{color:var(--oxblood)}
+  /* ── in-page-flikar (riktiga flikar: en yta, tre spår) ─────────────── */
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);position:relative}
+  .ptab{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:9px 17px;text-decoration:none;cursor:pointer;transition:border-color .15s,color .15s,background .15s;display:inline-flex;align-items:baseline}
+  .ptab:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .ptab[aria-selected="true"]{border-color:var(--oxblood);background:var(--oxblood);color:var(--paper)}
+  .ptab .tsub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:9px;padding-left:9px;border-left:1px solid var(--rule);text-transform:none;letter-spacing:.01em}
+  .ptab:hover .tsub{color:var(--oxblood)}
+  .ptab[aria-selected="true"] .tsub{color:var(--paper);border-left-color:rgba(246,244,239,.4)}
+  .area[hidden]{display:none}
 
   /* ── badge ─────────────────────────────────────────────────────────── */
   .badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap;align-self:center;display:inline-block}
@@ -98,6 +100,23 @@
   /* ══════════════════════════════════════════════════════════════════
      BETEENDE (Dagboken)
      ══════════════════════════════════════════════════════════════════ */
+  /* 2D-layout: dagboken som huvudkolumn, tvillingen/bromsen/krossaren i
+     ett medföljande rutnät. Faller till en kolumn på smala skärmar. */
+  .beteende-grid{display:grid;grid-template-columns:1fr;gap:0 44px;align-items:start;margin-top:6px}
+  .bt-main{min-width:0}
+  .bt-rail{min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-top:8px}
+  .bt-rail .col{max-width:none}
+  .bt-rail .bt-wide{grid-column:1 / -1}
+  @media(min-width:1000px){
+    .beteende-grid{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+    .bt-rail{grid-template-columns:1fr;margin-top:0}
+    .bt-rail .bt-wide{grid-column:auto}
+  }
+  @media(max-width:640px){
+    .bt-rail{grid-template-columns:1fr}
+    .bt-rail .bt-wide{grid-column:auto}
+  }
+  .beteende-grid .bt-main .col{max-width:none}
   .flag{display:flex;align-items:center;gap:12px;margin:34px 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .flag::after{content:"";flex:1;height:1px;background:var(--rule)}
   .flag .cnt{color:var(--oxblood)}
@@ -328,14 +347,14 @@
         <span class="wordmark">Ägarbrevet</span>
         <a class="byline" href="/hem">by Marginalen</a>
       </div>
-      <div class="edition">Helheten</div>
+      <div class="edition">Analysen</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
       <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
       <a href="/labs/upptack-i-marginalen.html">Upptäck</a>
-      <a href="#" class="here" aria-current="page">Helheten</a>
+      <a href="#" class="here" aria-current="page">Analysen</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
       <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
       <span class="nav-div" aria-hidden="true"></span>
@@ -351,20 +370,20 @@
     <section id="intro" data-reveal>
       <span class="intro-tag">Skiss · exempeldata</span>
       <div class="kicker">Ägarbrevet · portföljnivå</div>
-      <h1 class="h-title">Helheten</h1>
+      <h1 class="h-title">Analysen</h1>
       <p class="standfirst">Allt som gäller portföljen som helhet, inte ett enskilt bolag. Ditt beteende över tid, korsrisken mellan innehaven, och skatten inför årsskiftet, samlat under ett tak. <span class="quiet">Tre spår, en yta, all beskrivning och aldrig råd.</span></p>
       <p class="intro-rule"><span><b>Här bor det som handlar om helheten.</b> Ett enskilt bolag öppnar du under Dina bolag. Den här ytan tittar tvärs över allt du äger: mönstret i besluten, sambanden mellan innehaven, och hur skatten faller ut på året som gått.</span></p>
-      <nav class="tabs" aria-label="Spår i din portfölj">
-        <a href="#beteende" class="ptab on" data-tab="beteende">Beteende<span class="tsub">din dagbok</span></a>
-        <a href="#korsrisk" class="ptab" data-tab="korsrisk">Korsrisk<span class="tsub">överlapp</span></a>
-        <a href="#skatt" class="ptab" data-tab="skatt">Skatt<span class="tsub">årsskiftet</span></a>
-      </nav>
+      <div class="tabs" role="tablist" aria-label="Spår i din portfölj">
+        <button type="button" role="tab" id="tab-beteende" class="ptab" data-tab="beteende" aria-controls="beteende" aria-selected="true">Beteende<span class="tsub">din dagbok</span></button>
+        <button type="button" role="tab" id="tab-korsrisk" class="ptab" data-tab="korsrisk" aria-controls="korsrisk" aria-selected="false" tabindex="-1">Korsrisk<span class="tsub">överlapp</span></button>
+        <button type="button" role="tab" id="tab-skatt" class="ptab" data-tab="skatt" aria-controls="skatt" aria-selected="false" tabindex="-1">Skatt<span class="tsub">årsskiftet</span></button>
+      </div>
     </section>
 
     <!-- ══════════════════════════════════════════════════════════════
          SPÅR 1 · BETEENDE (Dagboken)
          ══════════════════════════════════════════════════════════════ -->
-    <section id="beteende" class="area" data-reveal>
+    <section id="beteende" class="area" role="tabpanel" aria-labelledby="tab-beteende" tabindex="0">
       <div class="area-head">
         <div class="area-kick">Beteendespåret · vallgraven</div>
         <h2 class="area-title">Beteende<span class="badge">din dagbok</span></h2>
@@ -372,7 +391,9 @@
         <p class="mifid"><b>Allt här är beskrivning, inte råd.</b> Vi berättar vad som hände och vad ditt beteende har gjort. Vi säger aldrig åt dig att köpa eller sälja. Beslutet är alltid ditt.</p>
       </div>
 
-      <!-- ── Beslutsdagboken ─────────────────────────────────────────── -->
+      <div class="beteende-grid">
+      <div class="bt-main">
+      <!-- ── Beslutsdagboken (huvudkolumn) ───────────────────────────── -->
       <div class="col">
         <div class="flag"><span class="cnt">Beslutsdagboken</span><span class="n">14 poster · 18 mån</span></div>
         <p class="seclede">Varje affär, med skälet du skrev då, ställd mot vad som sedan hände. Nog med poster och ett <b>mönster</b> träder fram.</p>
@@ -445,9 +466,11 @@
           <a class="kurs" href="/fokus/kapitel/18">Fördjupning: girighet och att säkra avkastning →</a>
         </div>
       </div>
+      </div><!-- /bt-main -->
 
-      <!-- ── Den disciplinerade tvillingen ───────────────────────────── -->
-      <div class="col">
+      <div class="bt-rail">
+      <!-- ── Den disciplinerade tvillingen (medföljande rutnät) ──────── -->
+      <div class="col bt-wide">
         <div class="flag"><span class="cnt">Den disciplinerade tvillingen</span></div>
         <p class="seclede">En kopia av dig som följde sin egen ursprungsplan i varje läge, ställd mot vad du faktiskt gjorde, och mot index. Skillnaden sätter en <b>krona</b> på beteendet.</p>
 
@@ -567,12 +590,14 @@
           <a class="kurs" href="/fokus/kapitel/8">Fördjupning: att leta efter varför du har fel →</a>
         </div>
       </div>
+      </div><!-- /bt-rail -->
+      </div><!-- /beteende-grid -->
     </section>
 
     <!-- ══════════════════════════════════════════════════════════════
          SPÅR 2 · KORSRISK (Portföljröntgen)
          ══════════════════════════════════════════════════════════════ -->
-    <section id="korsrisk" class="area" data-reveal>
+    <section id="korsrisk" class="area" role="tabpanel" aria-labelledby="tab-korsrisk" tabindex="0" hidden>
       <div class="area-head">
         <div class="area-kick">Portföljröntgen · korsrisk</div>
         <h2 class="area-title">Korsrisk<span class="badge pro">kvalitativ · Pro</span></h2>
@@ -687,7 +712,7 @@
     <!-- ══════════════════════════════════════════════════════════════
          SPÅR 3 · SKATT (Skattehjälpen)
          ══════════════════════════════════════════════════════════════ -->
-    <section id="skatt" class="area" data-reveal>
+    <section id="skatt" class="area" role="tabpanel" aria-labelledby="tab-skatt" tabindex="0" hidden>
       <div class="area-head">
         <div class="area-kick">Skattehjälpen · inför årsskiftet</div>
         <h2 class="area-title">Skatt<span class="badge pro">säsong (nov)</span></h2>
@@ -817,7 +842,7 @@
       </div>
       <p class="fine">
         <span class="tag">Mockup · exempeldata</span><br>
-        Helheten · av Marginalen. Prototyp i utbildningssyfte, arbetsnamn, fiktiva bolag och illustrativa siffror. Ytan slår ihop tre portföljnivå-spår: beteende över tid (Dagboken), korsrisk mellan innehaven (Portföljröntgen) och skatt inför årsskiftet (Skattehjälpen). Allt är beskrivning och reflektion, aldrig köp-, sälj- eller skatteråd, aldrig en uppmaning att sälja. Korsrisk visas kvalitativt, aldrig som ett kvantifierat fallscenario. Skatteregler ges som mekanism, aldrig som fryst belopp: kontrollera alltid aktuell regel för det år du deklarerar. Det här är en skiss av formen, inte en levande produkt.
+        Analysen · av Marginalen. Prototyp i utbildningssyfte, arbetsnamn, fiktiva bolag och illustrativa siffror. Ytan slår ihop tre portföljnivå-spår: beteende över tid (Dagboken), korsrisk mellan innehaven (Portföljröntgen) och skatt inför årsskiftet (Skattehjälpen). Allt är beskrivning och reflektion, aldrig köp-, sälj- eller skatteråd, aldrig en uppmaning att sälja. Korsrisk visas kvalitativt, aldrig som ett kvantifierat fallscenario. Skatteregler ges som mekanism, aldrig som fryst belopp: kontrollera alltid aktuell regel för det år du deklarerar. Det här är en skiss av formen, inte en levande produkt.
       </p>
     </section>
 
@@ -842,41 +867,44 @@
 
 <script>
 // ══════════════════════════════════════════════════════════════════════
-// In-page-flikar: markera aktivt spår vid scroll, mjukt hopp vid klick
+// Riktiga flikar: en yta, tre spår. Klick och pil-navigering visar ENDAST
+// den valda ytan och döljer de andra. aria-selected + tabindex-roving.
 // ══════════════════════════════════════════════════════════════════════
 (function(){
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.ptab'));
   if(!tabs.length) return;
-  var areas = tabs.map(function(t){ return document.getElementById(t.getAttribute('data-tab')); }).filter(Boolean);
+  var panels = tabs.map(function(t){ return document.getElementById(t.getAttribute('data-tab')); });
 
-  function setActive(id){
-    tabs.forEach(function(t){ t.classList.toggle('on', t.getAttribute('data-tab')===id); });
+  function select(idx, focusTab){
+    tabs.forEach(function(t, i){
+      var on = i===idx;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      if(panels[i]){ panels[i].hidden = !on; }
+    });
+    if(focusTab){ tabs[idx].focus(); }
+    history.replaceState(null, '', '#'+tabs[idx].getAttribute('data-tab'));
   }
 
-  // Klick: mjukt hopp (respekterar reduced-motion via CSS scroll-behavior fallback)
-  tabs.forEach(function(t){
-    t.addEventListener('click', function(e){
-      var id = t.getAttribute('data-tab');
-      var el = document.getElementById(id);
-      if(el){
-        e.preventDefault();
-        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-        history.replaceState(null, '', '#'+id);
-        setActive(id);
-      }
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ select(i, false); });
+    t.addEventListener('keydown', function(e){
+      var idx = i;
+      if(e.key==='ArrowRight' || e.key==='ArrowDown'){ idx=(i+1)%tabs.length; }
+      else if(e.key==='ArrowLeft' || e.key==='ArrowUp'){ idx=(i-1+tabs.length)%tabs.length; }
+      else if(e.key==='Home'){ idx=0; }
+      else if(e.key==='End'){ idx=tabs.length-1; }
+      else { return; }
+      e.preventDefault();
+      select(idx, true);
     });
   });
 
-  // Scroll: markera det spår som är närmast toppen
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting) setActive(en.target.id);
-      });
-    }, { rootMargin:'-20% 0px -70% 0px', threshold:0 });
-    areas.forEach(function(a){ io.observe(a); });
-  }
+  // Öppna på ev. hash (#korsrisk / #skatt), annars första fliken (Beteende)
+  var start = 0;
+  var h = (location.hash||'').replace('#','');
+  tabs.forEach(function(t, i){ if(t.getAttribute('data-tab')===h){ start=i; } });
+  select(start, false);
 })();
 
 // ══════════════════════════════════════════════════════════════════════

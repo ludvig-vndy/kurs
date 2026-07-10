@@ -78,6 +78,12 @@
   .hold .watch b{color:var(--good);font-weight:500}
   .hold .go{font-family:var(--mono);font-size:15px;color:var(--faint);margin-top:6px}
   .hold:hover .go{color:var(--oxblood)}
+  /* Äger/Följer-pill: liten etikett per rad, syns vid skumläsning. */
+  .tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);margin-left:8px;white-space:nowrap;vertical-align:middle}
+  .tag.ager{color:var(--oxblood);border-color:var(--oxblood)}
+  .tag.foljer{color:var(--gold);border-color:var(--gold)}
+  .hold .make{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px;letter-spacing:.02em}
+  .hold:hover .make{color:var(--oxblood)}
 
   /* ── Briefing ──────────────────────────────────────────────────────── */
   /* Bevakningen är en bred arbetsyta; briefingen är en läsning, så den får en
@@ -221,7 +227,7 @@
       <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
       <a href="#" class="here" aria-current="page">Dina bolag</a>
       <a href="/labs/upptack-i-marginalen.html">Upptäck</a>
-      <a href="/labs/din-portfolj-i-marginalen.html">Helheten</a>
+      <a href="/labs/din-portfolj-i-marginalen.html">Analysen</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
       <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
       <span class="nav-div" aria-hidden="true"></span>
@@ -274,19 +280,25 @@
 <script>
 // ── Data (troget mockens siffror, fiktiva bolag) ──────────────────────
 const LIST = [
-  { tk:'TELV', namn:'Telvio', dot:'neg', pris:'84,20 kr', chg:'-0,6%', chgc:'dn',
+  { tk:'TELV', namn:'Telvio', rel:'ager', dot:'neg', pris:'84,20 kr', chg:'-0,6%', chgc:'dn',
     ln:'Lönsamheten föll under 40 procent i Q3, gränsen du satte själv. Utdelningen står kvar men marginalen krymper sjätte kvartalet i rad.',
     open:true, href:'/labs/bolagssida-i-marginalen.html' },
-  { tk:'NORL', namn:'Norlux Industri', dot:'pos', pris:'284,50 kr', chg:'+1,8%', chgc:'up',
+  { tk:'NORL', namn:'Norlux Industri', rel:'ager', dot:'pos', pris:'284,50 kr', chg:'+1,8%', chgc:'up',
     ln:'Stark Q3: växte 11,0 procent av egen kraft, mer än egna prognosen. Höjd helårsprognos. Allt du bad oss vakta håller.' },
-  { tk:'KAVX', namn:'Kavex Medical', dot:'gold', pris:'156,00 kr', chg:'+0,4%', chgc:'up',
+  { tk:'KAVX', namn:'Kavex Medical', rel:'ager', dot:'gold', pris:'156,00 kr', chg:'+0,4%', chgc:'up',
     ln:'VD köpte aktier för 2,1 miljoner, första insiderköpet på 14 månader. Q3-rapporten släpps i dag 08:00.' },
-  { tk:'VOLT', namn:'Voltcell', dot:'calm', watch:'Certifieringsbesked väntas i september · kassan räcker cirka 21 månader',
+  { tk:'VOLT', namn:'Voltcell', rel:'ager', dot:'calm', watch:'Certifieringsbesked väntas i september · kassan räcker cirka 21 månader',
     ln:'Tillväxtcase. Inget nytt just nu, vi säger till när certifieringsbeskedet kommer.', open:true, href:'/labs/bolagssida-i-marginalen.html' },
-  { tk:'BRUN', namn:'Brunna Hydro', dot:'calm', watch:'Utdelning täckt <b>1,3x</b> · larm vid 1,0x',
+  { tk:'BRUN', namn:'Brunna Hydro', rel:'ager', dot:'calm', watch:'Utdelning täckt <b>1,3x</b> · larm vid 1,0x',
     ln:'Inget nytt av betydelse. Vakten är intakt.' },
-  { tk:'ALMI', namn:'Almi Foods', dot:'calm', watch:'Stabil efterfrågan · larm vid volymfall två kvartal',
+  { tk:'ALMI', namn:'Almi Foods', rel:'ager', dot:'calm', watch:'Stabil efterfrågan · larm vid volymfall två kvartal',
     ln:'Inget nytt av betydelse. Defensiv profil.' },
+  { tk:'SUND', namn:'Sundby Verktyg', rel:'foljer', dot:'pos', pris:'112,40 kr', chg:'+3,2%', chgc:'up',
+    ln:'Följt sedan Upptäck, stark delårsrapport i morse. Ännu inte i din portfölj, du markerade intresse i förra veckan.',
+    href:'/labs/bolagssida-i-marginalen.html' },
+  { tk:'HAVR', namn:'Havregården', rel:'foljer', dot:'calm', watch:'Ingen bevakning satt · du följer utan larm',
+    ln:'Följt sedan Upptäck. Defensiv livsmedelsprofil du ville hålla ögonen på inför nästa rapport.',
+    href:'/labs/bolagssida-i-marginalen.html' },
 ];
 
 const TELV = {
@@ -357,25 +369,32 @@ function holdRow(h){
   const rt = h.pris
     ? '<div class="pr">'+h.pris+'<span class="chg '+h.chgc+'">'+h.chg+'</span></div>'
     : '<div class="watch">'+h.watch+'</div>';
+  const foljer = h.rel==='foljer';
+  const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>';
+  const foot = foljer ? 'Gör till innehav →' : (h.open?'Öppna →':'');
   return '<a class="hold" href="'+(h.href||'#')+'" '+(h.href?'':(h.open?'data-open="'+h.tk+'"':'aria-disabled="true"'))+'>'+
     '<span class="dot '+h.dot+'"></span>'+
-    '<div><div><span class="nm">'+h.namn+'</span><span class="tk">'+h.tk+'</span></div>'+
+    '<div><div><span class="nm">'+h.namn+'</span><span class="tk">'+h.tk+'</span>'+tag+'</div>'+
     '<div class="ln">'+h.ln+'</div></div>'+
-    '<div class="rt">'+rt+'<div class="go">'+(h.open?'Öppna →':'')+'</div></div></a>';
+    '<div class="rt">'+rt+'<div class="'+(foljer?'make':'go')+'">'+foot+'</div></div></a>';
 }
 
 function renderList(){
-  const attn = LIST.filter(h=>h.dot==='neg');
-  const move = LIST.filter(h=>h.dot==='pos'||h.dot==='gold');
-  const calm = LIST.filter(h=>h.dot==='calm');
+  const owned = LIST.filter(h=>h.rel!=='foljer');
+  const follow = LIST.filter(h=>h.rel==='foljer');
+  const attn = owned.filter(h=>h.dot==='neg');
+  const move = owned.filter(h=>h.dot==='pos'||h.dot==='gold');
+  const calm = owned.filter(h=>h.dot==='calm');
   view.innerHTML =
     '<div class="page-h" data-reveal><h1 class="h-title">Dina bolag</h1>'+
       '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a></div>'+
-    '<p class="lede" data-reveal><b>Ett bolag kräver din uppmärksamhet</b> i dag, två rör på sig, tre är lugna. '+
-      'Vi läste 51 nyheter och registerposter om dina sex bolag i natt.</p>'+
-    '<div class="flag" data-reveal><span class="cnt">Kräver uppmärksamhet</span></div>'+ attn.map(holdRow).join('')+
+    '<p class="lede" data-reveal><b>Du äger sex bolag och följer två till.</b> Bland innehaven kräver ett din uppmärksamhet i dag, '+
+      'två rör på sig, tre är lugna. Vi läste 51 nyheter och registerposter om dina bolag i natt.</p>'+
+    '<div class="flag" data-reveal><span class="cnt">Äger</span> · sex innehav</div>'+
+    '<div class="flag" data-reveal style="margin-top:20px">Kräver uppmärksamhet</div>'+ attn.map(holdRow).join('')+
     '<div class="flag" data-reveal>Rör på sig</div>'+ move.map(holdRow).join('')+
-    '<div class="flag" data-reveal>Lugnt</div>'+ calm.map(holdRow).join('');
+    '<div class="flag" data-reveal>Lugnt</div>'+ calm.map(holdRow).join('')+
+    '<div class="flag" data-reveal style="margin-top:38px"><span class="cnt">Följer</span> · markerat intresse, ej innehav</div>'+ follow.map(holdRow).join('');
   wire();
   setAsk(null);
 }

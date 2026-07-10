@@ -117,6 +117,96 @@
   .fadd.sub:hover{color:var(--oxblood);border-color:var(--oxblood)}
   .feed-empty{font-family:var(--serif);font-size:15px;color:var(--muted);padding:24px 0;font-style:italic}
 
+  /* ── MOMENTUM: digest-remsa "sedan du sist tittade" ────────────────── */
+  .digest{margin:24px 0 6px;border:1px solid var(--rule-strong);border-radius:12px;background:var(--card);overflow:hidden}
+  .digest-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:13px 18px;border-bottom:1px solid var(--rule);background:var(--paper-2)}
+  .digest-lab{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--oxblood);font-weight:600}
+  .digest-lab .num{color:var(--ink)}
+  .digest-meta{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .digest-list{list-style:none;margin:0;padding:0}
+  .digest-list li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;padding:11px 18px;border-top:1px solid var(--rule)}
+  .digest-list li:first-child{border-top:none}
+  .dmark{font-family:var(--mono);font-size:12px;line-height:1.3;flex:0 0 auto;width:1.2em;text-align:center}
+  .dmark.gold{color:var(--gold)} .dmark.good{color:var(--good)} .dmark.bad{color:var(--bad)}
+  .dtext{font-family:var(--serif);font-size:14.5px;line-height:1.5;color:var(--ink-soft);min-width:0}
+  .dtext .dtk{font-family:var(--num);font-size:11px;letter-spacing:.03em;color:var(--muted);background:var(--paper-2);border-radius:4px;padding:1px 6px;margin-right:2px}
+  .dtext b{font-family:var(--display);font-weight:600;color:var(--ink);font-size:13.5px}
+  .dlink{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--oxblood);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px;white-space:nowrap;align-self:center}
+  .dlink:hover{border-color:var(--oxblood)}
+
+  /* ── MOMENTUM: rubrikblock "dagens uppstickare" ────────────────────── */
+  .upp-head{margin:34px 0 4px}
+  .upp-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--oxblood);margin-bottom:9px}
+  .upp-title{font-family:var(--display);font-weight:300;font-size:clamp(26px,3.6vw,38px);line-height:1.04;letter-spacing:-.02em;text-wrap:balance;max-width:16ch}
+  .upp-sub{font-family:var(--serif);font-size:15px;line-height:1.55;color:var(--muted);max-width:64ch;margin-top:10px;text-wrap:pretty;font-style:italic}
+
+  /* ── MOMENTUM: hero-kort för toppuppstickaren ──────────────────────── */
+  .hero{border:1px solid var(--rule-strong);border-radius:14px;background:var(--card);margin-top:20px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:0}
+  .hero-l{padding:22px 24px;min-width:0}
+  .hero-r{padding:22px 24px;border-left:1px solid var(--rule);min-width:0;display:flex;flex-direction:column;gap:14px}
+  @media(max-width:720px){.hero-grid{grid-template-columns:1fr}.hero-r{border-left:none;border-top:1px solid var(--rule)}}
+  .hero-co{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,26px);line-height:1.1;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .hero-tk{font-family:var(--num);font-size:12px;letter-spacing:.03em;color:var(--muted);background:var(--paper-2);border-radius:4px;padding:2px 8px;font-weight:400}
+  .hero-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+  .htag{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:1px solid var(--rule);border-radius:99px;padding:3px 10px}
+  .htag.mkt{color:var(--oxblood);border-color:rgba(44,86,70,.4)}
+  .hero-lead{font-family:var(--serif);font-size:16px;line-height:1.56;color:var(--ink-soft);margin-top:14px;text-wrap:pretty}
+  .hero-lead .fnum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink)}
+  .vad{margin-top:16px;border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:13px 15px}
+  .vad-lab{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--oxblood);margin-bottom:8px}
+  .vad ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .vad li{font-family:var(--serif);font-size:14px;line-height:1.45;color:var(--ink-soft);padding-left:16px;position:relative}
+  .vad li::before{content:"›";position:absolute;left:0;top:0;color:var(--gold);font-family:var(--mono);font-weight:700}
+  .vad li .fnum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink)}
+
+  /* mini-diagram (delas av hero + rader) */
+  .chart{width:100%;display:block;height:auto}
+  .chart-cap{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--muted);margin-top:7px;line-height:1.5}
+  .chart-wrap{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:12px 12px 9px}
+  .chart-wrap.pos{border-color:rgba(47,122,85,.35)}
+  .chart-wrap.neg{border-color:rgba(155,58,46,.32)}
+
+  /* scorecard-prickar */
+  .score{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--ink-soft)}
+  .score .snum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+  .score .dots{display:inline-flex;gap:3px}
+  .score .sd{width:8px;height:8px;border-radius:50%;border:1px solid var(--oxblood)}
+  .score .sd.on{background:var(--oxblood)}
+
+  .hero-stats{display:flex;align-items:baseline;gap:14px 20px;flex-wrap:wrap;justify-content:space-between}
+  .hero-price{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:22px;font-weight:600;color:var(--ink);white-space:nowrap}
+  .hero-price .chg{font-size:14px;font-weight:500;margin-left:8px}
+  .chg.good{color:var(--good)} .chg.bad{color:var(--bad)}
+  .rep-pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(176,124,30,.5);border-radius:99px;padding:4px 11px;white-space:nowrap;background:var(--gold-soft)}
+  .hero-cta{display:flex;gap:10px 18px;flex-wrap:wrap;align-items:baseline;margin-top:2px}
+
+  /* ── MOMENTUM: rika rader med mini-diagram ─────────────────────────── */
+  .rows{list-style:none;margin:16px 0 0;padding:0}
+  .rows li{padding:20px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:132px minmax(0,1fr) auto;gap:6px 22px;align-items:start}
+  .rows li:first-child{border-top:1px solid var(--rule-strong)}
+  .rchart{grid-row:span 3;align-self:center}
+  @media(max-width:640px){.rows li{grid-template-columns:1fr;gap:12px}.rchart{grid-row:auto;max-width:220px}}
+  .rrow-co{font-family:var(--display);font-weight:600;font-size:15.5px;color:var(--ink);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .rrow-co .fticker{font-family:var(--num);font-size:11.5px;letter-spacing:.03em;color:var(--muted);background:var(--paper-2);border-radius:4px;padding:2px 7px;font-weight:400}
+  .rkind{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);border:1px solid var(--rule);border-radius:99px;padding:3px 9px}
+  .rdata{display:flex;gap:6px 18px;flex-wrap:wrap;margin-top:9px}
+  .rstat{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.35}
+  .rstat b{display:block;font-family:var(--num);font-variant-numeric:tabular-nums;font-size:14px;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:500;margin-top:2px}
+  .rstat b.good{color:var(--good)} .rstat b.bad{color:var(--bad)}
+  .rright{grid-column:3;grid-row:1 / span 3;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px;white-space:nowrap}
+  @media(max-width:640px){.rright{grid-column:1;grid-row:auto;align-items:flex-start;text-align:left}}
+  .rprice{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:17px;font-weight:600;color:var(--ink)}
+  .rprice .chg{font-size:12.5px;font-weight:500;margin-left:6px}
+  .rrow-cta{grid-column:2 / -1;margin-top:4px;display:flex;gap:10px 18px;flex-wrap:wrap;align-items:baseline}
+  @media(max-width:640px){.rrow-cta{grid-column:1}}
+
+  /* meta-rader (guardrail + datanotis) */
+  .metaline{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--muted);line-height:1.6;margin-top:14px;display:flex;gap:8px;align-items:baseline}
+  .metaline::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--faint);flex:0 0 auto;position:relative;top:5px}
+  .metaline.guard::before{background:var(--gold)}
+  .metaline b{color:var(--ink-soft);font-weight:600}
+
   /* ── SCREENER: frågeruta + chips ───────────────────────────────────── */
   .qform{max-width:760px}
   .qlab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
@@ -207,7 +297,7 @@
       <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
       <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
       <a href="#" class="here" aria-current="page">Upptäck</a>
-      <a href="/labs/din-portfolj-i-marginalen.html">Helheten</a>
+      <a href="/labs/din-portfolj-i-marginalen.html">Analysen</a>
       <a href="/labs/fraga-i-marginalen.html">Fråga</a>
       <a href="/labs/havstang-i-marginalen.html">Hävstång</a>
       <span class="nav-div" aria-hidden="true"></span>
@@ -248,6 +338,15 @@
       <p class="mode-desc">Spaningen: bolag som rör sig just nu, var rad strikt formulerad som <span class="cite">fakta om en rörelse</span>, aldrig ett köpråd. Vi konstaterar vad vi ser i flödet, varför något rör sig avgör du.</p>
       <p class="lens-sub">Följ = vi analyserar bolagets rapporter och väsentliga händelser åt dig, utan att du äger. Vill du äga det, lägg till i Dina bolag.</p>
 
+      <!-- digest: sedan du sist tittade -->
+      <div class="digest" id="digest">
+        <div class="digest-top">
+          <span class="digest-lab">Sedan du sist tittade <span class="num">·</span> <span class="num">3</span> handelsdagar sedan</span>
+          <span class="digest-meta">4 notiser</span>
+        </div>
+        <ul class="digest-list" id="digest-list"></ul>
+      </div>
+
       <div class="fchips" id="mfilters">
         <button class="fchip on" data-kind="alla"><span class="cdot"></span>Alla rörelser</button>
         <button class="fchip" data-kind="kursavvikelse"><span class="cdot"></span>Kursavvikelse</button>
@@ -257,9 +356,21 @@
         <button class="fchip" data-kind="niva"><span class="cdot"></span>Teknisk nivå</button>
       </div>
 
-      <ul class="feed" id="mfeed"></ul>
+      <!-- rubrikblock: dagens uppstickare -->
+      <div class="upp-head">
+        <div class="upp-kicker">Dagens uppstickare</div>
+        <h3 class="upp-title">Det nytända och nyinträdda</h3>
+        <p class="upp-sub">Om du hajar-värdet: rankat på vad som ändrats, inte hur billigt. Fakta om rörelser, aldrig ett köpråd.</p>
+      </div>
 
-      <p class="honesty"><span><b>Det här är fakta om rörelser, inte köpsignaler.</b> Varför något rör sig avgör du, inte vi. Exempeldata, fördröjt 15 minuter.</span></p>
+      <!-- hero: toppuppstickaren -->
+      <div id="hero-slot"></div>
+
+      <!-- rika rader -->
+      <ul class="rows" id="mfeed"></ul>
+
+      <p class="metaline guard"><span><b>Verktyget pekar, det beslutar inte.</b> Vad en rörelse betyder för värdet avgör du, inte vi.</span></p>
+      <p class="metaline"><span>Data per <span class="num">9 juli 2026</span> stängning, EOD, ej live. Fiktiva bolag, illustrativa siffror.</span></p>
     </section>
 
     <!-- ── MODE 2: SCREENER ────────────────────────────────────────── -->
@@ -356,48 +467,176 @@
 </footer>
 
 <script>
-/* ---------- MOMENTUM: faktafeed (illustrativ, fiktiva bolag) ----------
-   Var rad är strikt fakta om en rörelse. kind styr filterchipen.
-   metric/unit renderas i JetBrains Mono (--num). */
-const MOVES = [
-  { co:'Norlux Industri', tk:'NORL', kind:'kursavvikelse', kindLab:'Kursavvikelse',
-    metric:'+6,2', unit:'% mot sektor',
-    fact:'Rörde sig <span class="fnum">+6,2 procent</span> mot en sektor som stod still. Vi hittade ingen förklaring i flödet.' },
-  { co:'Kavex Medical', tk:'KAVX', kind:'volym', kindLab:'Ovanlig volym',
-    metric:'3,0', unit:'× snittvolym',
-    fact:'Ovanligt hög handel i går, <span class="fnum">tre gånger</span> snittvolymen, ingen nyhet ute.' },
-  { co:'Telvio', tk:'TELV', kind:'blankning', kindLab:'Blankning',
-    metric:'+1,1', unit:'pp på 30 dgr',
-    fact:'Blankningen steg <span class="fnum">1,1 procentenheter</span> på 30 dagar, nu <span class="fnum">4,3 procent</span> av aktierna.' },
-  { co:'Voltcell', tk:'VOLT', kind:'niva', kindLab:'Teknisk nivå',
-    metric:'52v', unit:'högsta',
-    fact:'Noterade en ny <span class="fnum">52-veckors högsta</span> i går. Vad det betyder för värdet avgör du.' },
-  { co:'Brunna Hydro', tk:'BRHY', kind:'insyn', kindLab:'Insyn',
-    metric:'4', unit:'insynsköp',
-    fact:'Kluster av insynsköp: <span class="fnum">fyra befattningshavare</span> köpte inom en vecka, totalt <span class="fnum">3,4 Mkr</span>.' },
-  { co:'Almi Foods', tk:'ALMF', kind:'niva', kindLab:'Teknisk nivå',
-    metric:'MA200', unit:'brott',
-    fact:'Bröt sitt <span class="fnum">200-dagars</span> glidande medelvärde nedåt för första gången på ett år.' },
-  { co:'Sundby Verktyg', tk:'SUND', kind:'volym', kindLab:'Ovanlig volym',
-    metric:'2,4', unit:'× snittvolym',
-    fact:'Handeln var <span class="fnum">2,4 gånger</span> snittet under eftermiddagen, kursen slutade i stort oförändrad.' },
-  { co:'Lärka Digital', tk:'LARK', kind:'kursavvikelse', kindLab:'Kursavvikelse',
-    metric:'-4,8', unit:'% mot index',
-    fact:'Föll <span class="fnum">4,8 procent</span> medan indexet steg. Vi såg ingen bolagsspecifik nyhet i flödet.' }
+/* ---------- MOMENTUM: rikare spaning (illustrativ, fiktiva bolag) ------
+   Var rad/kort är strikt fakta om en rörelse. kind styr filterchipen.
+   Alla tal är fiktiva/illustrativa. Mini-diagrammen genereras som inline
+   SVG ur en deterministisk seed, ingen extern data. dir:'up'|'down'
+   avgör grön (good) eller röd (bad) prislinje. */
+
+/* liten deterministisk PRNG (mulberry32) så kurvorna är stabila mellan renders */
+function rng(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+/* bygg en 90-punkters prisserie (0..1 normaliserad) med en drift åt dir-hållet */
+function makeSeries(seed, dir){
+  const r = rng(seed), n = 90, out = [];
+  let v = 0.5, drift = (dir==='up' ? 1 : -1) * 0.0055;
+  for(let i=0;i<n;i++){ v += drift + (r()-0.5)*0.05; out.push(v); }
+  const lo = Math.min(...out), hi = Math.max(...out), span = (hi-lo)||1;
+  return out.map(x => (x-lo)/span);
+}
+/* enkelt glidande medel för MA-referenslinjen */
+function movingAvg(s, w){
+  return s.map((_,i)=>{ const a=Math.max(0,i-w+1); let sum=0; for(let j=a;j<=i;j++) sum+=s[j]; return sum/(i-a+1); });
+}
+/* rendera mini-diagram som inline SVG. W×H i viewBox-enheter, width:100% via CSS. */
+function miniChart(m, W, H){
+  const pad = 3, n = m.series.length;
+  const X = i => pad + (i/(n-1))*(W-2*pad);
+  const Y = v => (H-pad) - v*(H-2*pad);
+  const line = m.series.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  const ma = movingAvg(m.series, 20);
+  const maLine = ma.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  const col = m.dir==='up' ? 'var(--good)' : 'var(--bad)';
+  // 52v-högsta som streckad linje nära toppen
+  const hiY = Y(0.94);
+  // insynsköp-markörer på givna index
+  const marks = (m.marks||[]).map(i=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(m.series[i]).toFixed(1)}" r="2.4" fill="var(--gold)" stroke="var(--card)" stroke-width="1"/>`).join('');
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Prisutveckling 90 dagar för ${m.co}" preserveAspectRatio="none">
+    <line x1="${pad}" y1="${hiY.toFixed(1)}" x2="${W-pad}" y2="${hiY.toFixed(1)}" stroke="var(--rule-strong)" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="${maLine}" fill="none" stroke="var(--faint)" stroke-width="1.2"/>
+    <path d="${line}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+    ${marks}
+  </svg>`;
+}
+
+/* prickscorecard: fyllt/tomt av totalt */
+function scoreDots(n, tot){
+  let d=''; for(let i=0;i<tot;i++) d+=`<span class="sd${i<n?' on':''}"></span>`;
+  return `<span class="score"><span class="snum">${n}/${tot}</span><span class="dots">${d}</span><span style="color:var(--muted)">scorecard</span></span>`;
+}
+
+/* digest: sedan du sist tittade */
+const DIGEST = [
+  { mark:'★', cls:'gold', tk:'TELV', co:'Telvio', text:'nytt guldläge: momentum tände ovanpå en vidgad substansrabatt', link:'scorecard', href:'/labs/bolagssida-i-marginalen.html' },
+  { mark:'▲', cls:'good', tk:'KAVX', co:'Kavex Medical', text:'volymspik, handeln 3× snittet två dagar i rad', link:'Följ bolaget', href:'/labs/bolagssida-i-marginalen.html' },
+  { mark:'▲', cls:'bad', tk:'TELV', co:'Telvio', text:'blankningen steg 1,1 procentenheter på 30 dagar', link:'scorecard', href:'/labs/bolagssida-i-marginalen.html' },
+  { mark:'▽', cls:'muted', tk:'ALMF', co:'Almi Foods', text:'momentum slocknade, bröt sitt 200-dagars medel nedåt', link:'Följ bolaget', href:'/labs/bolagssida-i-marginalen.html' }
 ];
+function renderDigest(){
+  document.getElementById('digest-list').innerHTML = DIGEST.map(d=>`
+    <li>
+      <span class="dmark ${d.cls==='muted'?'':d.cls}" ${d.cls==='muted'?'style="color:var(--muted)"':''}>${d.mark}</span>
+      <span class="dtext"><span class="dtk">${d.tk}</span> ${d.text}</span>
+      <a class="dlink" href="${d.href}">${d.link} →</a>
+    </li>`).join('');
+}
+
+/* toppuppstickaren (hero) och rika rader.
+   dir styr färg; series/marks/hi genereras; scorecard n/tot; rep = dagar till rapport. */
+const HERO = {
+  co:'Telvio', tk:'TELV', kind:'kursavvikelse', kindLab:'Nytt guldläge',
+  sector:['Investment','Substans'], mkt:'Small Cap',
+  dir:'up', seed:1337, marks:[58,63,71],
+  score:3, scoreTot:4, price:'84,20', chg:'+6,2 %', chgCls:'good', rep:11,
+  lead:'Momentum tände i går ovanpå en substansrabatt som vidgats hela våren. Kursen drog <span class="fnum">+6,2 procent</span> mot en sektor som stod still, och ett insynskluster la sig under rörelsen.',
+  vad:[
+    'Momentum tände <b style="font-weight:600">ovanpå</b> en vidgad substansrabatt, inte tvärtom.',
+    'Insynskluster: tre befattningshavare la <span class="fnum">2,8 Mkr</span> på tre veckor.',
+    'Substansrabatten står nu på <span class="fnum">31 procent</span>, mot <span class="fnum">22 procent</span> vid årsskiftet.',
+    'Ny <span class="fnum">52-veckors högsta</span> i samma pass som volymen fördubblades.'
+  ]
+};
+const MOVES = [
+  { co:'Kavex Medical', tk:'KAVX', kind:'volym', kindLab:'Ovanlig volym',
+    dir:'up', seed:22, marks:[70,74],
+    volym:'3,0×', rs:'+8 %', blank:'2,1 %', niva:'nära 52v', score:3, scoreTot:4,
+    price:'147,60', chg:'+2,1 %', chgCls:'good' },
+  { co:'Norlux Industri', tk:'NORL', kind:'kursavvikelse', kindLab:'Kursavvikelse',
+    dir:'up', seed:7, marks:[80],
+    volym:'1,4×', rs:'+11 %', blank:'0,8 %', niva:'52v högsta', score:4, scoreTot:4,
+    price:'212,00', chg:'+6,2 %', chgCls:'good' },
+  { co:'Brunna Hydro', tk:'BRHY', kind:'insyn', kindLab:'Insyn',
+    dir:'up', seed:91, marks:[60,64,67,72],
+    volym:'1,9×', rs:'+4 %', blank:'1,2 %', niva:'mitten', score:3, scoreTot:4,
+    price:'58,40', chg:'+1,3 %', chgCls:'good' },
+  { co:'Telvio', tk:'TELV', kind:'blankning', kindLab:'Blankning',
+    dir:'up', seed:1337, marks:[58,63,71],
+    volym:'2,2×', rs:'+9 %', blank:'4,3 %', niva:'52v högsta', score:3, scoreTot:4,
+    price:'84,20', chg:'+6,2 %', chgCls:'good' },
+  { co:'Almi Foods', tk:'ALMF', kind:'niva', kindLab:'Teknisk nivå',
+    dir:'down', seed:404, marks:[],
+    volym:'1,1×', rs:'-6 %', blank:'3,7 %', niva:'brott MA200', score:1, scoreTot:4,
+    price:'31,80', chg:'-4,8 %', chgCls:'bad' }
+];
+// bind serier
+HERO.series = makeSeries(HERO.seed, HERO.dir);
+MOVES.forEach(m => m.series = makeSeries(m.seed, m.dir));
+
+function renderHero(m){
+  const tags = m.sector.map(t=>`<span class="htag">${t}</span>`).join('') + `<span class="htag mkt">${m.mkt}</span>`;
+  const vad = m.vad.map(v=>`<li>${v}</li>`).join('');
+  return `<div class="hero">
+    <div class="hero-grid">
+      <div class="hero-l">
+        <div class="hero-co">${m.co} <span class="hero-tk">${m.tk}</span></div>
+        <div class="hero-tags">${tags}</div>
+        <p class="hero-lead">${m.lead}</p>
+        <div class="vad">
+          <div class="vad-lab">Vad ändrades</div>
+          <ul>${vad}</ul>
+        </div>
+      </div>
+      <div class="hero-r">
+        <div class="chart-wrap ${m.dir==='up'?'pos':'neg'}">
+          ${miniChart(m, 300, 120)}
+          <div class="chart-cap">90 d · 50/200-d MA · streckad = 52v högsta · klicka för hela utbrottet</div>
+        </div>
+        ${scoreDots(m.score, m.scoreTot)}
+        <div class="hero-stats">
+          <span class="hero-price">${m.price} kr <span class="chg ${m.chgCls}">${m.chg}</span></span>
+          <span class="rep-pill">Rapport om ${m.rep} d</span>
+        </div>
+        <div class="hero-cta">
+          <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
+          <a class="fadd sub" href="/labs/bolagssida-i-marginalen.html">Scorecard →</a>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderRow(m){
+  const chgCls = m.chgCls;
+  const rsCls = m.rs.trim().startsWith('-') ? 'bad' : 'good';
+  return `<li>
+    <div class="rchart chart-wrap ${m.dir==='up'?'pos':'neg'}">${miniChart(m, 132, 54)}</div>
+    <div class="rrow-co">${m.co} <span class="fticker">${m.tk}</span> <span class="rkind">${m.kindLab}</span></div>
+    <div class="rdata">
+      <span class="rstat">Volym<b>${m.volym} snittet</b></span>
+      <span class="rstat">Relativstyrka<b class="${rsCls}">${m.rs}</b></span>
+      <span class="rstat">Blankning<b>${m.blank}</b></span>
+      <span class="rstat">52v-nivå<b>${m.niva}</b></span>
+      <span class="rstat">Scorecard<b>${m.score}/${m.scoreTot}</b></span>
+    </div>
+    <div class="rright">
+      <span class="rprice">${m.price} kr <span class="chg ${chgCls}">${m.chg}</span></span>
+    </div>
+    <div class="rrow-cta">
+      <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
+      <a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a>
+    </div>
+  </li>`;
+}
 
 let activeFilter = 'alla';
 function renderFeed(){
   const rows = MOVES.filter(m => activeFilter==='alla' || m.kind===activeFilter);
+  // hero visas bara i "alla"-vyn (toppuppstickaren); i filtrerad vy räcker raderna
+  document.getElementById('hero-slot').innerHTML = activeFilter==='alla' ? renderHero(HERO) : '';
+  document.querySelector('.upp-head').style.display = activeFilter==='alla' ? '' : 'none';
   const feed = document.getElementById('mfeed');
-  if(!rows.length){ feed.innerHTML = '<li class="feed-empty">Inga rörelser av den typen just nu. Byt filter, eller vänta på nästa avläsning.</li>'; return; }
-  feed.innerHTML = rows.map(m => `
-    <li>
-      <div class="frow-co">${m.co} <span class="fticker">${m.tk}</span> <span class="fkind">${m.kindLab}</span></div>
-      <div class="fmetric">${m.metric}<small>${m.unit}</small></div>
-      <div class="ffact">${m.fact}</div>
-      <div class="faddwrap"><a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
-    </li>`).join('');
+  if(!rows.length){ feed.innerHTML = '<li class="feed-empty" style="grid-template-columns:1fr">Inga rörelser av den typen just nu. Byt filter, eller vänta på nästa avläsning.</li>'; return; }
+  feed.innerHTML = rows.map(renderRow).join('');
 }
 document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('click', () => {
   document.querySelectorAll('#mfilters .fchip').forEach(x => x.classList.remove('on'));
@@ -405,6 +644,7 @@ document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('c
   activeFilter = c.dataset.kind;
   renderFeed();
 }));
+renderDigest();
 renderFeed();
 
 /* ---------- SCREENER: träffar (illustrativ, fiktiva bolag) ----------
