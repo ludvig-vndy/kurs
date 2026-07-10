@@ -18,6 +18,10 @@ Måste vara avklarade innan tjänsten öppnas publikt. Uppdaterad 2026-07-10.
       annars går magic-länkarna fel.
 - [ ] **Egen SMTP (t.ex. Resend, verifierad avsändardomän)** så mejl når riktiga mottagare
       utan den rate-limitade gratis-mejlen.
+- [ ] **Fråga-AI (`functions/api/fraga.js`):** sätt `ANTHROPIC_API_KEY` som Cloudflare-secret
+      (`wrangler pages secret put ANTHROPIC_API_KEY --project-name kurs`). **Server-side
+      rate limiting saknas** (per user/IP/tokenbudget) — varje anrop kostar pengar, måste
+      på plats innan publik öppning. Klient-klampen i fraga-sidan räcker inte mot bots.
 
 ## Redan härdat (2026-07-10)
 
