@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fördjupning · Ägarbrevet · Pro</title>
-<meta name="description" content="Fördjupning: skiss över Pro-lagret i Marginalen. Sex verktyg som kräver dyr data eller ett kvalitativt öga, alla under samma regler: fakta med källa, aldrig signal, aldrig fryst skattebelopp.">
+<meta name="description" content="Fördjupning: skiss över Pro-lagret i Marginalen. Pro-verktygen bor numera i ytorna du redan använder, alla under samma regler: fakta med källa, aldrig signal, aldrig fryst skattebelopp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- impeccable-disable overused-font -- Inter is the locked Marginalen label font (broadsheet.css house token: --mono), shared across the whole suite; changing it here would break house consistency. -->
@@ -61,60 +61,17 @@
   .intro-rule::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:5px}
   .intro-rule b{color:var(--ink-soft);font-weight:600}
 
-  /* ── redaktionell tool-sektion (rule-separerad, INTE kortrutnät) ──── */
-  .tool{padding:40px 0 34px;border-top:2px solid var(--rule-strong)}
-  .tool-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
-  .tool-name{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.2vw,32px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
-  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);white-space:nowrap;align-self:center}
-  .badge.pro{color:var(--gold);border-color:rgba(176,124,30,.5)}
-  .tool-desc{font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink-soft);max-width:62ch;margin-top:8px;text-wrap:pretty}
-  .tool-desc .cite{color:var(--oxblood);font-style:italic}
-  .tool-body{margin-top:22px;display:grid;grid-template-columns:1fr;gap:16px}
-
-  /* preview-panel (kort, distinkt per verktyg) */
-  .prev{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:20px 22px;max-width:760px}
-  .prev-lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-
-  /* 1. screener: frågeruta + minitreff */
-  .qbox{background:var(--paper);border:1px solid var(--rule-strong);border-radius:12px;padding:15px 17px;font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--ink);position:relative}
-  .qbox::before{content:"›";font-family:var(--mono);color:var(--oxblood);font-weight:600;margin-right:8px}
-  .qbox em{font-style:italic;color:var(--ink)}
-  .hits{list-style:none;margin:14px 0 0;padding:0}
-  .hit{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--rule)}
-  .hit:first-child{border-top:none}
-  .hit-co{font-family:var(--display);font-weight:600;font-size:15px}
-  .hit-mc{font-family:var(--num);font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
-  .hit-why{grid-column:1 / -1;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
-  .hit-why .halt{color:var(--muted)}
-
-  /* 2 & 3. faktafeed (avvikelser + omvärld) */
-  .feed{list-style:none;margin:0;padding:0}
-  .feed li{padding:13px 0;border-top:1px solid var(--rule);font-family:var(--serif);font-size:15.5px;line-height:1.5;color:var(--ink-soft);display:flex;gap:12px;align-items:baseline}
-  .feed li:first-child{border-top:none;padding-top:0}
-  .feed .fdot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:7px}
-  .feed .fnum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink)}
-  .feed .fco{font-family:var(--display);font-weight:600;font-size:15px;color:var(--ink)}
-
-  /* 4. korsrisk-mening */
-  .overlap{font-family:var(--serif);font-size:16px;line-height:1.55;color:var(--ink)}
-  .overlap .big{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--oxblood);font-size:17px}
-  .overlap-note{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);line-height:1.55}
-
-  /* 5. skattehjälp-rad */
-  .taxrow{display:flex;gap:13px;align-items:baseline;font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--ink)}
-  .taxrow .tnum{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--oxblood);font-weight:500}
-  .tax-note{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);line-height:1.55}
-
-  /* 6. konsensus-delta minitabell */
-  .kscroll{overflow-x:auto}
-  table.kt{width:100%;border-collapse:collapse;font-size:13.5px;min-width:340px}
-  table.kt th{text-align:right;color:var(--faint);font-weight:500;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:0 14px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
-  table.kt th:first-child,table.kt td:first-child{text-align:left}
-  table.kt td{padding:11px 14px;border-bottom:1px solid var(--rule);font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;white-space:nowrap}
-  table.kt tr:last-child td{border-bottom:none}
-  table.kt td.nm{font-family:var(--serif);color:var(--ink-soft);text-align:left}
-  table.kt td.pos{color:var(--good)} table.kt td.mutc{color:var(--muted)}
-  .k-cap{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:10px;letter-spacing:.01em;line-height:1.55}
+  /* ── "Var Pro bor nu" (rule-separerad redaktionell lista) ──────────── */
+  .lives{padding:40px 0 34px;border-top:2px solid var(--rule-strong)}
+  .lives-head{font-family:var(--display);font-weight:300;font-size:clamp(24px,3.2vw,32px);line-height:1.1;letter-spacing:-.015em;text-wrap:balance;max-width:22ch}
+  .lives-lede{font-family:var(--serif);font-size:16.5px;color:var(--ink-soft);margin-top:12px;max-width:58ch;text-wrap:pretty}
+  .lives-list{margin-top:14px}
+  .lv{padding:22px 0;border-top:1px solid var(--rule)}
+  .lv-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .lv a.lv-name{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.4vw,23px);letter-spacing:-.01em;color:var(--oxblood);text-decoration:none;border-bottom:1px solid transparent}
+  .lv a.lv-name:hover{border-bottom-color:var(--oxblood)}
+  .lv-cap{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .lv-desc{font-family:var(--serif);font-size:16px;line-height:1.55;color:var(--ink-soft);margin-top:8px;max-width:60ch;text-wrap:pretty}
 
   /* ── stängningsremsa: vad fas 3 aldrig gör ────────────────────────── */
   .never{padding:40px 0 34px;border-top:2px solid var(--rule-strong)}
@@ -178,133 +135,35 @@
       <span class="intro-tag">Skiss · fas 3 · exempeldata</span>
       <div class="kicker">Fördjupning · Pro-lagret</div>
       <h1 class="h-title">Fördjupning</h1>
-      <p class="standfirst">Det här är Pro-lagret: det som kräver dyr data eller måste hållas kvalitativt, och därför bor ett steg ovanpå medlemskapet. <span class="quiet">Sex verktyg, var och en med en kort skiss så du ser formen på den.</span></p>
+      <p class="standfirst">Det här är Pro-lagret: det som kräver dyr data eller måste hållas kvalitativt, och därför bor ett steg ovanpå medlemskapet. <span class="quiet">Verktygen bor numera inne i ytorna du redan använder, inte som en egen hylla.</span></p>
       <p class="intro-rule"><span><b>Allt här följer samma regler som resten av huset.</b> Fakta med källa, aldrig en signal, aldrig ett fryst skattebelopp, aldrig kvantifierad pseudoprecision. Där data saknas står det, i stället för att gissas.</span></p>
     </section>
 
-    <!-- ── 1. SCREENERN PÅ SVENSKA ─────────────────────────────────── -->
-    <section class="tool" data-reveal>
-      <div class="tool-head">
-        <h2 class="tool-name">Screenern på svenska</h2>
-        <span class="badge pro">Pro · kräver fundamenta-licens</span>
-      </div>
-      <p class="tool-desc">Skriv vad du letar efter i klartext, få en lista ut. Varje träff kommer med en rad om <span class="cite">varför den matchar och var den haltar</span>, aldrig en rekommendation. Det är objektiv filtrering, inte ett köpråd.</p>
-      <div class="tool-body">
-        <div class="prev">
-          <div class="prev-lab">Fråga i klartext</div>
-          <div class="qbox"><em>bolag under 5 mdkr som växer över 15 procent, har nettokassa och insynsköp senaste kvartalet</em></div>
-          <ul class="hits">
-            <li class="hit">
-              <span class="hit-co">Norlux Industri</span><span class="hit-mc num">3,8 mdkr</span>
-              <span class="hit-why">Matchar: växer 17 procent av egen kraft, nettokassa, VD köpte i mars. <span class="halt">Haltar: tillväxten är delvis förvärvad.</span></span>
-            </li>
-            <li class="hit">
-              <span class="hit-co">Kavex Medical</span><span class="hit-mc num">4,4 mdkr</span>
-              <span class="hit-why">Matchar: 16 procent tillväxt, nettokassa, två insynsköp i kvartalet. <span class="halt">Haltar: marginalen har vänt ned två kvartal.</span></span>
-            </li>
-            <li class="hit">
-              <span class="hit-co">Voltcell</span><span class="hit-mc num">1,2 mdkr</span>
-              <span class="hit-why">Matchar: växer 22 procent, insynsköp i februari. <span class="halt">Haltar: nettokassan räcker under 18 månader, förhoppningsbolag.</span></span>
-            </li>
-          </ul>
-        </div>
-        <a href="/labs/upptack-i-marginalen.html" style="display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oxblood);text-decoration:none">Öppna Upptäck: momentum och screener &rarr;</a>
-      </div>
-    </section>
-
-    <!-- ── 2. VECKANS AVVIKELSER ───────────────────────────────────── -->
-    <section class="tool" data-reveal>
-      <div class="tool-head">
-        <h2 class="tool-name">Veckans avvikelser</h2>
-        <span class="badge">fakta, aldrig signal</span>
-      </div>
-      <p class="tool-desc">Det som avviker i dina bolag den här veckan, ovanlig handel, en rörelse mot sektorn, blankning som byggs upp. Formulerat strikt som fakta. Vi konstaterar vad vi ser, vi tolkar det aldrig åt dig.</p>
-      <div class="tool-body">
-        <div class="prev">
-          <div class="prev-lab">Den här veckan</div>
-          <ul class="feed">
-            <li><span class="fdot"></span><span>Ovanligt hög handel i <span class="fco">Norlux</span> i går, vi hittade ingen förklaring.</span></li>
-            <li><span class="fdot"></span><span><span class="fco">Kavex</span> rörde sig <span class="fnum">6 procent</span> mot en sektor som stod still.</span></li>
-            <li><span class="fdot"></span><span>Blankningen i <span class="fco">Telvio</span> steg <span class="fnum">1,1 procentenheter</span> på 30 dagar.</span></li>
-          </ul>
-        </div>
-        <a href="/labs/upptack-i-marginalen.html" style="display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oxblood);text-decoration:none">Öppna Veckans avvikelser &rarr;</a>
-      </div>
-    </section>
-
-    <!-- ── 3. OMVÄRLDSBEVAKNINGEN ──────────────────────────────────── -->
-    <section class="tool" data-reveal>
-      <div class="tool-head">
-        <h2 class="tool-name">Omvärldsbevakningen</h2>
-        <span class="badge pro">Pro · kräver bransch- och konkurrentkartor</span>
-      </div>
-      <p class="tool-desc">Det som påverkar ditt innehav utan att bolaget nämns: en konkurrent som vinstvarnar, en regel för hela branschen. Vi drar tråden till ditt bolag och stannar där, kopplingen är fakta, konsekvensen är din.</p>
-      <div class="tool-body">
-        <div class="prev">
-          <div class="prev-lab">Påverkar dina bolag</div>
-          <ul class="feed">
-            <li><span class="fdot"></span><span>En konkurrent till <span class="fco">Norlux</span> vinstvarnade, samma slutmarknad.</span></li>
-            <li><span class="fdot"></span><span>Ny EU-reglering för branschen träder i kraft Q1.</span></li>
-          </ul>
-        </div>
-        <a href="/labs/omvarldsbevakningen-i-marginalen.html" style="display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oxblood);text-decoration:none">Öppna Omvärldsbevakningen &rarr;</a>
-      </div>
-    </section>
-
-    <!-- ── 4. PORTFÖLJRÖNTGEN OCH KORSRISK ─────────────────────────── -->
-    <section class="tool" data-reveal>
-      <div class="tool-head">
-        <h2 class="tool-name">Portföljröntgen och korsrisk</h2>
-        <span class="badge">kvalitativ · Pro</span>
-      </div>
-      <p class="tool-desc">Var lutar dina bolag åt samma håll utan att du tänkt på det? Vi visar kvalitativa samband, <span class="cite">inte kvantifierade fallscenarier</span>. En rad som "62 procent faller om ..." vore pseudoprecision, och den bygger vi inte.</p>
-      <div class="tool-body">
-        <div class="prev">
-          <div class="prev-lab">Ett samband i din portfölj</div>
-          <p class="overlap">Tre av dina bolag lutar mot samma europeiska industrikonjunktur, tillsammans <span class="big">46 procent</span> av portföljen.</p>
-          <p class="overlap-note">Vi säger var risken samlas, inte hur mycket den kostar. Ett exakt utfallstal skulle låta säkrare än det är.</p>
-        </div>
-        <a href="/labs/din-portfolj-i-marginalen.html#korsrisk" style="display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oxblood);text-decoration:none">Öppna Portföljröntgen &rarr;</a>
-      </div>
-    </section>
-
-    <!-- ── 5. SKATTEHJÄLPEN ────────────────────────────────────────── -->
-    <section class="tool" data-reveal>
-      <div class="tool-head">
-        <h2 class="tool-name">Skattehjälpen</h2>
-        <span class="badge pro">säsong (nov) · kräver transaktionshistorik</span>
-      </div>
-      <p class="tool-desc">Inför årsskiftet: kvittningsmöjligheter och K4-underlag, räknat på dina egna affärer. Skattereglerna ges alltid som mekanism, <span class="cite">aldrig som ett fryst belopp</span>, satserna ändras och tjänsten fryser dem inte.</p>
-      <div class="tool-body">
-        <div class="prev">
-          <div class="prev-lab">Inför årsskiftet</div>
-          <p class="taxrow"><span>Du har <span class="tnum">3 realiserade förluster</span> som kan kvittas mot din vinst i Norlux inför årsskiftet.</span></p>
-          <p class="tax-note">Kvittningen är mekaniken; storleken på skatteeffekten beror på reglerna det år du deklarerar, och dem räknar du på med aktuell sats.</p>
-        </div>
-        <a href="/labs/din-portfolj-i-marginalen.html#skatt" style="display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--oxblood);text-decoration:none">Öppna Skattehjälpen &rarr;</a>
-      </div>
-    </section>
-
-    <!-- ── 6. KONSENSUS OCH MULTIPLAR ──────────────────────────────── -->
-    <section class="tool" data-reveal>
-      <div class="tool-head">
-        <h2 class="tool-name">Konsensus och multiplar</h2>
-        <span class="badge pro">Pro · kräver datalicens</span>
-      </div>
-      <p class="tool-desc">Utöver rapportens delta mot bolagets egen historik: hur utfallet står mot analytikernas konsensus, och var multiplarna ligger. Det steget kräver köpt estimatdata, därför bor det här uppe.</p>
-      <div class="tool-body">
-        <div class="prev">
-          <div class="prev-lab">Norlux Q3 mot konsensus</div>
-          <div class="kscroll">
-            <table class="kt">
-              <thead><tr><th>Nyckeltal</th><th>Utfall</th><th>Konsensus</th><th>Delta</th></tr></thead>
-              <tbody>
-                <tr><td class="nm">Omsättning</td><td>2 410</td><td class="mutc">2 363</td><td class="pos">+2,0 %</td></tr>
-                <tr><td class="nm">EBIT</td><td>463</td><td class="mutc">461</td><td class="mutc">i linje</td></tr>
-              </tbody>
-            </table>
+    <!-- ── VAR PRO BOR NU ──────────────────────────────────────────── -->
+    <section class="lives" data-reveal>
+      <h2 class="lives-head">Var Pro bor nu</h2>
+      <p class="lives-lede">Pro-verktygen bor numera där de hör hemma, i ytorna du redan använder. Här är kartan.</p>
+      <div class="lives-list">
+        <div class="lv">
+          <div class="lv-top">
+            <a class="lv-name" href="/labs/upptack-i-marginalen.html">Upptäck &rarr;</a>
+            <span class="lv-cap">Screener på svenska och veckans avvikelser (momentum)</span>
           </div>
-          <p class="k-cap">Omsättning 2 procent över konsensus, EBIT i linje. Deltat räknas i kod, konsensus kommer ur datalicensen, allt citerat.</p>
+          <p class="lv-desc">Hitta bolag som matchar dina kriterier, och se vad som rör sig.</p>
+        </div>
+        <div class="lv">
+          <div class="lv-top">
+            <a class="lv-name" href="/labs/din-portfolj-i-marginalen.html">Helheten &rarr;</a>
+            <span class="lv-cap">Korsrisk och skatt</span>
+          </div>
+          <p class="lv-desc">Var portföljen lutar åt samma håll, och kvittning inför årsskiftet.</p>
+        </div>
+        <div class="lv">
+          <div class="lv-top">
+            <a class="lv-name" href="/labs/bolagssida-i-marginalen.html">Bolagssidan &rarr;</a>
+            <span class="lv-cap">Konsensus och omvärld</span>
+          </div>
+          <p class="lv-desc">Utfall mot marknadens förväntan, och det som rör bolaget utan att nämna det.</p>
         </div>
       </div>
     </section>

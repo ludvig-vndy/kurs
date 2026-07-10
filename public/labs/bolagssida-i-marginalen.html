@@ -278,6 +278,17 @@
 
   .fine{font-family:var(--num);font-size:10.5px;letter-spacing:.03em;color:var(--faint);margin-top:8px;line-height:1.7;max-width:70ch}
 
+  /* ── Omvärld: händelser som rör bolaget utan att nämna det ─────────── */
+  .omv-lede{color:var(--ink-soft);max-width:66ch;margin:4px 0 16px}
+  .omv{list-style:none;padding:0;margin:0}
+  .omv .oe{padding:20px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:auto 1fr;gap:0 16px}
+  .omv .oe:first-child{border-top:none;padding-top:4px}
+  .omv .odot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex:0 0 auto;position:relative;top:9px;grid-row:1 / span 2}
+  .omv .ofact{font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink)}
+  .omv .ofact .lab{margin-left:0}
+  .omv .osrc{font-family:var(--sans);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:8px;white-space:nowrap}
+  .omv .ofor{font-family:var(--serif);font-size:14.5px;line-height:1.5;color:var(--ink-soft);margin-top:10px;max-width:60ch}
+
   /* ── ambient Fråga ─────────────────────────────────────────────────── */
   .askdock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(transparent,var(--paper) 26%)}
   .askbar{max-width:820px;margin:0 auto;padding:0 clamp(20px,5vw,52px) 18px;display:flex;align-items:center;gap:12px}
@@ -568,6 +579,25 @@
       <div class="note">I går läste vi 9 nyheter och registerposter om Telvio. En rörde ditt skäl (Q3-rapporten). Resten låg still.</div>
     </section>
 
+    <!-- V9 · Omvärld (Telvio) -->
+    <section class="sec" data-sec="omvard" data-co="telvio" data-reveal>
+      <div class="sech"><h2>Omvärld</h2><span class="sm">det som rör bolaget utan att nämna det</span></div>
+      <p class="omv-lede">Händelser utanför Telvio som ändå drar en tråd till det. Ingen av dem nämner ditt innehav, det gör vi. Varje rad har händelsen som fakta med källtyp, och en "för dig"-rad som är vår slutsats.</p>
+      <ul class="omv">
+        <li class="oe">
+          <span class="odot"></span>
+          <p class="ofact">En konkurrent till Telvio vinstvarnade, samma slutmarknad (europeisk mobilinfrastruktur).<span class="osrc"><span class="lab">fakta</span>pressmeddelande</span></p>
+          <p class="ofor"><span class="lab slut">slutsats</span>För dig: samma prispress som redan syns i marginalen. Läs nästa rapport med det i bakhuvudet, inget mer.</p>
+        </li>
+        <li class="oe">
+          <span class="odot"></span>
+          <p class="ofact">Riksbanken lämnar räntebesked på torsdag.<span class="osrc"><span class="lab">fakta</span>Riksbanken</span></p>
+          <p class="ofor"><span class="lab slut">slutsats</span>För dig: Telvio är ditt mest skuldsatta innehav, så en höjning märks mer här. En post att bevaka, inte ett skäl att agera i dag.</p>
+        </li>
+      </ul>
+      <div class="note">Skiss · exempeldata. Varje rad är en fakta (händelse med källtyp) plus en slutsats (kopplingen till ditt bolag). Information, aldrig råd.</div>
+    </section>
+
     <!-- ══════════════════ FÖRHOPPNING (Voltcell) sektioner ═══════════ -->
 
     <!-- F1 · Läget just nu (kassa, burn, runway) + vakter -->
@@ -712,6 +742,25 @@
         <a class="kurs" href="/fokus/kapitel/12">Fördjupning: scenarier och asymmetri (12.7) →</a>
         <a class="kurs" href="/fokus/kapitel/11">Fördjupning: positionsstorlek (11.4) →</a>
       </div>
+    </section>
+
+    <!-- F8 · Omvärld (Voltcell) -->
+    <section class="sec" data-sec="omvard" data-co="voltcell" data-reveal>
+      <div class="sech"><h2>Omvärld</h2><span class="sm">det som rör bolaget utan att nämna det</span></div>
+      <p class="omv-lede">Händelser utanför Voltcell som ändå drar en tråd till det. Ingen av dem nämner ditt innehav, det gör vi. Varje rad har händelsen som fakta med källtyp, och en "för dig"-rad som är vår slutsats.</p>
+      <ul class="omv">
+        <li class="oe">
+          <span class="odot"></span>
+          <p class="ofact">Litiumpriset steg efter ett produktionsstopp i Sydamerika.<span class="osrc"><span class="lab">fakta</span>råvaruindex</span></p>
+          <p class="ofor"><span class="lab slut">slutsats</span>För dig: litium är en insatsvara, så det pressar Voltcells materialkostnad. Vi säger till, du väger.</p>
+        </li>
+        <li class="oe">
+          <span class="odot"></span>
+          <p class="ofact">Ny EU-reglering för branschen träder i kraft Q1.<span class="osrc"><span class="lab">fakta</span>EU-förordning</span></p>
+          <p class="ofor"><span class="lab slut">slutsats</span>För dig: kan höja certifieringskostnaden. En post att bevaka i nästa rapport, inte ett skäl att agera i dag.</p>
+        </li>
+      </ul>
+      <div class="note">Skiss · exempeldata. Varje rad är en fakta (händelse med källtyp) plus en slutsats (kopplingen till ditt bolag). Information, aldrig råd.</div>
     </section>
 
     <p class="fine" id="fineLine"></p>
@@ -925,18 +974,18 @@ const REL = {
     text:'<b>Du äger detta bolag.</b> Vi vaktar dina skäl och säger till när en gräns korsas.',
     cta:'',
     // Äger: allt. Vinstbolag: alla V-sektioner. Förhoppning: alla F-sektioner.
-    telvio:['hant','skal','rapport','fund','agare','blankutd','kalhist','cover'],
-    voltcell:['laget','casetrappa','avtal','loften','emis','utspadning','scenarier'],
+    telvio:['hant','skal','rapport','fund','agare','blankutd','kalhist','cover','omvard'],
+    voltcell:['laget','casetrappa','avtal','loften','emis','utspadning','scenarier','omvard'],
     hideSkal:false
   },
   foljer:{
     dot:'foljer',
     text:'<b>Du följer detta bolag.</b> Vi analyserar rapporter och väsentliga händelser åt dig, men vaktar inget skäl än.',
     cta:'<a class="btn primary" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag</a>',
-    // Följer: rapport/rapportanalys + väsentliga händelser + fundamenta/nyckeltal.
+    // Följer: rapport/rapportanalys + väsentliga händelser + fundamenta/nyckeltal + omvärld.
     // Döljer "varför du äger / vakter / skäl".
-    telvio:['hant','rapport','fund','kalhist'],
-    voltcell:['laget','avtal','loften','kalhist'],
+    telvio:['hant','rapport','fund','kalhist','omvard'],
+    voltcell:['laget','avtal','loften','kalhist','omvard'],
     hideSkal:true
   },
   upptackt:{
