@@ -20,8 +20,13 @@ const {
   active,
   nav = 'app',
   chrome = 'masthead',
-  editionLine2 = 'En kurs i sjutton kapitel',
+  editionLine2,
 } = Astro.props;
+
+// Edition-radens rad 2 namnger ytan du star pa (som i Agarbrevet), harledd ur
+// active. Explicit editionLine2 vinner; annars faller vi tillbaka pa kursraden.
+const EDITION_BY_ACTIVE = { hem: 'Hem', kurs: 'Kursöversikt', verktyg: 'Analysverktyg', ordlista: 'Ordlista' };
+const editionSub = editionLine2 ?? EDITION_BY_ACTIVE[active] ?? 'En kurs i sjutton kapitel';
 
 const wordmarkHref = nav === 'landing' ? '/' : '/hem';
 ---
@@ -57,7 +62,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
           <div class="mast-rule mast-rule--top"></div>
           <div class="mast-top">
             <a class="wordmark" href={wordmarkHref}>Delägaren</a>
-            <div class="edition">Fundamental aktieanalys<br />{editionLine2}</div>
+            <div class="edition">Fundamental aktieanalys<br />{editionSub}</div>
           </div>
           <div class="mast-rule"></div>
           {nav === 'app' && (
