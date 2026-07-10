@@ -152,28 +152,11 @@
 <script>
 // Förberedda svar. Tre slag: portföljfråga (data + källa), kursfråga (lektion),
 // och en utanför-scope-fråga som avböjs (källgrinden + ämnesvakten).
-const QA = {
-  'Vad kräver mest uppmärksamhet i dag?':{
-    html:'<p><span class="lab slut">slutsats</span>Telvio. Lönsamheten gick under din gräns på 40,0 procent i Q3<a class="cit" title="Telvio Q3, sid 4">1</a>. Norlux vill också ha en stund, men av trevligare skäl: stark rapport, allt du bad oss vakta håller<a class="cit" title="Norlux Q3, sid 2">2</a>.</p>'+
-      '<div class="tscroll"><table class="dt"><thead><tr><th>Bolag</th><th>Vad</th><th>Nu</th><th>Din gräns</th></tr></thead><tbody>'+
-      '<tr><td>Telvio</td><td>Lönsamhet</td><td>38,0%</td><td class="neg">40,0% korsad</td></tr>'+
-      '<tr><td>Norlux</td><td>Tillväxt</td><td>11,0%</td><td class="pos">8,0% håller</td></tr>'+
-      '</tbody></table></div>',
-    foot:'<a href="/labs/dina-bolag-i-marginalen.html">Öppna Telvio →</a><a class="kurs" href="/fokus/kapitel/5">Fördjupning: nyckeltal →</a>'},
-  'Äger jag för mycket av samma sak?':{
-    html:'<p><span class="lab slut">slutsats</span>En sak är bra att känna till: Norlux och Telvio drivs av samma europeiska industrikonjunktur. Tillsammans är de 46 procent av din portfölj. Ingen varning, men de kan dippa samtidigt.</p>'+
-      '<div class="tscroll"><table class="dt"><thead><tr><th>Innehav</th><th>Andel</th><th>Cykelkänslighet</th></tr></thead><tbody>'+
-      '<tr><td>Norlux</td><td>28%</td><td style="font-family:var(--serif);text-align:left">europeisk industri</td></tr>'+
-      '<tr><td>Telvio</td><td>18%</td><td style="font-family:var(--serif);text-align:left">europeisk industri</td></tr>'+
-      '<tr><td>Övriga fyra</td><td>54%</td><td style="font-family:var(--serif);text-align:left">blandad</td></tr>'+
-      '</tbody></table></div>',
-    foot:'<a class="kurs" href="/fokus/kapitel/10">Fördjupning: risk och felmarginal →</a>'},
-  'Vad är en moat egentligen?':{
-    html:'<p><span class="lab">fakta</span>En moat, eller konkurrensfördel, är det som hindrar andra bolag från att konkurrera bort din vinst. Vanliga former: kunder som sitter fast, en stark varumärkespremie, lägst kostnad, eller nätverk som blir bättre ju fler som är med.</p>'+
-      '<p>Det syns i siffrorna som hög avkastning på kapitalet som håller i sig år efter år, i stället för att pressas ned av konkurrens. Det är kapitel 6 i kursen, med exempel.</p>',
-    foot:'<a class="kurs" href="/fokus/kapitel/6">Läs: Konkurrensfördelar (moats) →</a>'},
-};
-const SEEDS = Object.keys(QA);
+const SEEDS = [
+  "Vad kräver mest uppmärksamhet i mitt innehav?",
+  "Äger jag för mycket av samma sak?",
+  "Vad är en moat egentligen?"
+];
 const seed=document.getElementById('seed'), thread=document.getElementById('thread'), inp=document.getElementById('askinput');
 seed.innerHTML = SEEDS.map(q=>'<button class="seedb" type="button">'+q+'</button>').join('');
 seed.querySelectorAll('.seedb').forEach((b,i)=>b.addEventListener('click',()=>ask(SEEDS[i])));
@@ -201,22 +184,31 @@ function rlNotice(msg){
   requestAnimationFrame(()=>block.scrollIntoView({behavior:'smooth',block:'center'}));
 }
 
-function ask(q){
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function fmt(t){return esc(t).split(/\n{2,}/).map(function(p){return '<p>'+p.replace(/\n/g,'<br>')+'</p>';}).join('');}
+async function ask(q){
   const gate = rlCheck();
   if(!gate.ok){ rlNotice(gate.msg); return; }
-  const a = QA[q];
-  const block = document.createElement('div');
-  block.className='qa';
-  const body = a ? a.html + '<div class="foot">'+a.foot+'</div>'
-    : '<p><span class="lab">prototyp</span>I den här prototypen är svar förberedda på de föreslagna frågorna. I skarpt läge svarar modellen med varje siffra spårad till källa och en länk till rätt lektion, och avböjer det som ligger utanför dina bolag och kursen.</p>';
-  block.innerHTML = '<div class="q"><span class="who">Du</span><span class="qt">'+q+'</span></div><div class="a'+(a&&a.decline?' decline':'')+'">'+body+'</div>';
+  const block = document.createElement('div'); block.className='qa';
+  block.innerHTML = '<div class="q"><span class="who">Du</span><span class="qt">'+esc(q)+'</span></div><div class="a"><p class="thinking"><span class="lab">tänker</span> …</p></div>';
   thread.appendChild(block);
-  requestAnimationFrame(()=>{block.querySelectorAll('*');block.scrollIntoView({behavior:'smooth',block:'center'});});
+  const aEl = block.querySelector('.a');
+  requestAnimationFrame(function(){ block.scrollIntoView({behavior:'smooth',block:'center'}); });
+  let token=null;
+  try{ if(window.AB && window.AB.ready){ const ses=await window.AB.getSession(); token = ses && ses.access_token; } }catch(e){}
+  try{
+    const r = await fetch('/api/fraga',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q, token:token})});
+    const d = await r.json().catch(function(){return{};});
+    if(!r.ok){ aEl.innerHTML = '<p><span class="lab">'+(r.status===501?'ej på':'fel')+'</span>'+esc(d.error||'Något gick fel.')+'</p>'; return; }
+    aEl.innerHTML = fmt(d.answer||'') + (token?'':'<div class="foot"><a href="/labs/inbjudan-i-marginalen.html">Logga in för att fråga om ditt innehav →</a></div>');
+  }catch(e){ aEl.innerHTML = '<p><span class="lab">fel</span>Kunde inte nå tjänsten just nu.</p>'; }
 }
 document.getElementById('askform').addEventListener('submit',e=>{e.preventDefault();const v=inp.value.trim();if(v){ask(v);inp.value='';}});
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();}});
 (function(){const els=document.querySelectorAll('[data-reveal]');if(matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(el=>el.classList.add('on'));return;}
 const io=new IntersectionObserver((en)=>en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target);}}),{threshold:.05});els.forEach(el=>io.observe(el));})();
 </script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
+<script defer src="/labs/agarbrevet-supabase.js"></script>
 </body>
 </html>
