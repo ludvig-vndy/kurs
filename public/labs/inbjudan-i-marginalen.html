@@ -132,6 +132,12 @@
   .chip.pending{color:var(--muted)}
   .chip.pending .dot{background:var(--muted)}
   .chip[hidden]{display:none}   /* .chip har egen display, annars göms den inte i gated-läge */
+  /* Boxad sigill-logga (den hela loggan) som ceremoni-huvud på inbjudan */
+  .invite-seal{display:flex;justify-content:center;margin:4px 0 34px}
+  .seal{display:inline-flex;flex-direction:column;align-items:center;gap:9px;color:var(--ink);border:1.5px solid var(--ink);padding:16px 34px 14px}
+  .seal__name{font-family:"Zilla Slab",Georgia,serif;font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:.05em;font-size:clamp(26px,7vw,40px)}
+  .seal__sub{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .seal__sub::before,.seal__sub::after{content:"";width:26px;height:1px;background:var(--gold)}
 
   /* medlem-läget: inkluderat-lista */
   .incl{list-style:none;margin:22px 0 4px;padding:0}
@@ -230,6 +236,12 @@
 
     <!-- ════ SKÄRM 1 · Inbjudningslandning ═══════════════════════════════ -->
     <section class="screen on" id="screen-1" aria-label="Inbjudan">
+      <div class="invite-seal">
+        <span class="seal">
+          <span class="seal__name">Delägaren</span>
+          <span class="seal__sub">Din del av bolaget</span>
+        </span>
+      </div>
       <span class="chip" id="inviteChip"><span class="dot" aria-hidden="true"></span>Inbjudan verifierad · <span class="tok">a1b2c3</span></span>
       <div class="kicker">Personlig inbjudan</div>
       <h1 class="h-title">Du är inbjuden till <strong>Delägaren</strong>.</h1>

@@ -1,5 +1,6 @@
 ---
 import Broadsheet from '../layouts/Broadsheet.astro';
+import Seal from '../components/Seal.astro';
 
 // Start-CTA:erna leder till kursöversikten, inte rakt in i en lektion.
 ---
@@ -12,6 +13,7 @@ import Broadsheet from '../layouts/Broadsheet.astro';
   <main class="wrap" style="flex:1; display:flex; flex-direction:column">
     <section class="hero hero--bild">
       <div>
+        <div style="margin:0 0 28px"><Seal size="lg" href="/" /></div>
         <div class="kicker">Onlinekurs i fundamental analys</div>
         <h1 class="h-title">Lär dig analysera aktier som en <em>ägare</em>, inte en spekulant.</h1>
         <p class="standfirst">Sjutton kapitel, ett steg i taget. Från vad en aktie faktiskt är till att läsa en årsredovisning och sätta ditt eget riktpris med felmarginal.</p>

@@ -1,0 +1,13 @@
+---
+// Den boxade loggan. Stilarna bor i broadsheet.css (.seal), så samma sigill
+// återanvänds i footer, startsida och andra broadsheet-ytor utan duplicering.
+interface Props {
+  size?: 'sm' | 'lg';
+  href?: string;
+}
+const { size = 'lg', href = '/hem' } = Astro.props;
+---
+<a class:list={['seal', { 'seal--sm': size === 'sm' }]} href={href} aria-label="Delägaren, din del av bolaget">
+  <span class="seal__name">Delägaren</span>
+  <span class="seal__sub">Din del av bolaget</span>
+</a>

@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import Seal from '../components/Seal.astro';
 import '../styles/broadsheet.css';
 
 interface Props {
@@ -88,10 +89,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
       <footer class="site-foot">
         <div class="wrap">
           <div class="site-foot__top">
-            <a class="foot-seal" href="/hem" aria-label="Delägaren, din del av bolaget">
-              <span class="foot-seal__name">Delägaren</span>
-              <span class="foot-seal__sub">Din del av bolaget</span>
-            </a>
+            <Seal size="sm" href="/hem" />
             <nav class="site-foot__nav">
               <a href="/hem">Hem</a>
               <a href="/fokus">Kursöversikt</a>
@@ -109,12 +107,6 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
       .site-foot { margin-top: 56px; border-top: 2px solid var(--rule-strong); }
       .site-foot .wrap { padding-top: 26px; padding-bottom: 60px; }
       .site-foot__top { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-      /* Boxad sigill-logga: hela loggan, som footer-sign-off pa varje sida. */
-      .foot-seal { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); border: 1.5px solid var(--ink); padding: 13px 30px 12px; transition: background .2s; }
-      .foot-seal:hover { background: rgba(33,28,23,.04); }
-      .foot-seal__name { font-family: var(--slab); font-weight: 700; font-size: 22px; letter-spacing: .05em; text-transform: uppercase; line-height: 1; }
-      .foot-seal__sub { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
-      .foot-seal__sub::before, .foot-seal__sub::after { content: ""; width: 20px; height: 1px; background: var(--gold); }
       .site-foot__nav { display: flex; flex-wrap: wrap; gap: 10px 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
       .site-foot__nav a { color: var(--muted); text-decoration: none; }
       .site-foot__nav a:hover { color: var(--oxblood); }
