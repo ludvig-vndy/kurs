@@ -1,8 +1,10 @@
 /* ────────────────────────────────────────────────────────────────────────
    Ägarbrevet · delad Supabase-klient för de wirade mockarna
    ------------------------------------------------------------------------
-   Laddas EFTER supabase-js UMD-bundlen (window.supabase) och FÖRE varje sidas
-   egen inline-skript. Exponerar window.AB med de anrop sidorna behöver.
+   Laddas deferrat, EFTER supabase-js UMD-bundlen (window.supabase, samma defer).
+   Kör alltså efter sidans inline-skript: sidorna rör AB först i händelse-
+   hanterare eller på DOMContentLoaded. Exponerar window.AB med de anrop
+   sidorna behöver.
 
    Nyckeln nedan är den PUBLIKA (sb_publishable_...): den är byggd för att
    ligga i klientkod. Allt data skyddas av Row Level Security i databasen,
@@ -51,15 +53,17 @@
   }
 
   // ── Magic-link-inloggning ──────────────────────────────────────────────
-  // opts.createUser: false i login-läge (skapar inte nytt konto utan giltig
-  // inbjudan). Default true för bakåtkompatibilitet. opts.redirectPath valfri.
+  // Säker som standard: konto skapas ENDAST när anroparen uttryckligen skickar
+  // { createUser: true } (inbjudningsflödet, efter verifierad token). Utan det
+  // är detta ren inloggning, så en glömd flagga aldrig öppnar registrering.
+  // opts.redirectPath valfri.
   async function sendMagicLink(email, opts) {
     opts = opts || {};
     return sb.auth.signInWithOtp({
       email: email,
       options: {
         emailRedirectTo: redirectTo(opts.redirectPath),
-        shouldCreateUser: opts.createUser !== false
+        shouldCreateUser: opts.createUser === true
       }
     });
   }

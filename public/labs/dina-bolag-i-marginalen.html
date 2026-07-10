@@ -337,8 +337,8 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/labs/agarbrevet-supabase.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
+<script defer src="/labs/agarbrevet-supabase.js"></script>
 <script>
 // ── Data (troget mockens siffror, fiktiva bolag) ──────────────────────
 // Exempeldata (fiktiva bolag, påhittade siffror). Innehaven summerar till
@@ -712,7 +712,8 @@ async function boot(){
   if(holds && holds.length) renderReal(holds, user);
   else renderEmpty(user);
 }
-boot();
+// Modulen laddas nu deferrat: kor boot efter DOM (AB garanterat redo da).
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 </script>
 </body>
 </html>

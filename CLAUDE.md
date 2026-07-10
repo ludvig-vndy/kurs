@@ -94,3 +94,5 @@ Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-
 - Verktyget "Säkra eller stretcha" (`docs/specs/verktyg-sakra-eller-stretcha.md`) är bara spec, inte byggt i `/verktyg`.
 - Användarens egen `Ägarboken - Startsida (standalone).html` innehåller fortfarande några em-dashes (lämnat till användaren).
 - `KURS-EXPORT.md` och `src/content/kurs.zip` är artefakter, inte källa.
+- **Lanseringsblockerare för Delägaren (betaltjänst) samlas i `LAUNCH.md`.** Viktigast: testbakdörren `functions/api/devlink.js` (kontoövertagande) måste raderas innan publik lansering. Behållen medvetet under test.
+- `design-explorations/` är borttagen (2026-07-10). Labs-mockar dual-writeas inte längre dit, prototyphistoriken finns i git-historiken.
