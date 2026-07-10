@@ -44,22 +44,33 @@ const verktyg = [
       <a class="lp-login" href="/hem">Logga in</a>
     </div>
 
-    <!-- Hero -->
-    <section class="wrap lp-hero hero--bild">
+    <div class="wrap lp-mast">
       <Seal size="lg" href="/" />
-      <div class="kicker">Onlinekurs i fundamental analys · inbjudan krävs</div>
-      <h1 class="h-title">Lär dig analysera aktier som en <em>ägare</em>, inte en spekulant.</h1>
-      <p class="standfirst">Sjutton kapitel i fem delar, ett steg i taget, från vad en aktie faktiskt är till att sätta ditt eget riktpris med felmarginal. Och verktygen som gör analysen på riktigt, inte bara i teorin.</p>
-      <div class="cta-row">
-        <a class="btn-ink" href="/fokus">Börja kursen →</a>
-        <a class="link-mono" href="/labs/inbjudan-i-marginalen.html" style="color:var(--ink-soft)">Har du en inbjudan? →</a>
-      </div>
-      <div class="lp-hero__stats">
-        <span><b>19</b> kapitel</span><span class="lp-dot" aria-hidden="true">·</span>
-        <span><b>5</b> delar</span><span class="lp-dot" aria-hidden="true">·</span>
-        <span><b>6</b> verktyg ingår</span>
-      </div>
+      <div class="kicker">Onlinekurs i fundamental analys, plus verktygen · inbjudan krävs</div>
+    </div>
+
+    <!-- Två heroes: kursen (oxblod) och Ägarbrevet (skogsgrön), var sin USP -->
+    <section class="wrap lp-heroes">
+      <a class="lp-hero2 lp-hero2--kurs" href="/fokus">
+        <div class="lp-hero2__k">Kursen</div>
+        <h1 class="lp-hero2__h">Lär dig analysera aktier som en ägare, inte en spekulant.</h1>
+        <p class="lp-hero2__p">Sjutton kapitel i fem delar, från vad en aktie faktiskt är till att sätta ditt eget riktpris med felmarginal. Du bygger omdömet, steg för steg.</p>
+        <span class="lp-hero2__cta">Börja kursen →</span>
+      </a>
+      <a class="lp-hero2 lp-hero2--brev" href="/labs/agarbrevet-i-marginalen.html">
+        <div class="lp-hero2__k">Ägarbrevet</div>
+        <h1 class="lp-hero2__h">Dina bolag, lästa varje natt. Varje siffra med källa.</h1>
+        <p class="lp-hero2__p">Morgonbrevet, analysverktygen och Fråga, på dina riktiga innehav. Omdömet från kursen får verktyg att använda det på.</p>
+        <span class="lp-hero2__cta">Till Ägarbrevet →</span>
+      </a>
     </section>
+
+    <div class="wrap lp-stats">
+      <span><b>19</b> kapitel</span><span class="lp-dot" aria-hidden="true">·</span>
+      <span><b>5</b> delar</span><span class="lp-dot" aria-hidden="true">·</span>
+      <span><b>6</b> verktyg ingår</span>
+      <a class="lp-stats__cta link-mono" href="/labs/inbjudan-i-marginalen.html">Har du en inbjudan? →</a>
+    </div>
 
     <!-- Läroplan + verktyg -->
     <section class="wrap lp-body">
@@ -125,23 +136,29 @@ const verktyg = [
   .lp-login { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; min-height: 40px; display: inline-flex; align-items: center; }
   .lp-login:hover { color: var(--oxblood); }
 
-  /* Hero */
-  .lp-hero { position: relative; padding: clamp(30px,6vh,70px) 0 clamp(34px,5vh,54px); }
-  .lp-hero .seal { margin: 0 0 30px; }
-  .lp-hero h1 { text-wrap: balance; max-width: 20ch; margin-top: 16px; }
-  .lp-hero .standfirst { text-wrap: pretty; max-width: 60ch; margin-top: 18px; }
-  .lp-hero .cta-row { display: flex; gap: 14px; align-items: center; margin-top: 30px; flex-wrap: wrap; }
-  .lp-hero__stats { margin-top: 26px; display: flex; align-items: baseline; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-  .lp-hero__stats b { font-family: var(--display); font-weight: 500; font-size: 17px; color: var(--oxblood); }
-  .lp-dot { color: var(--faint); }
+  /* Sigill + kicker, centrerat ovanfor de tva heroerna */
+  .lp-mast { text-align: center; padding: clamp(20px,4vh,44px) 0 clamp(20px,3vh,32px); }
+  .lp-mast .seal { margin: 0 auto; }
+  .lp-mast .kicker { margin-top: 16px; }
 
-  .hero--bild::before {
-    content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; margin-left: -50vw;
-    background-image: url('/bilder/borshuset-1600.jpg'); background-size: cover; background-position: center 30%;
-    filter: grayscale(1) contrast(.95); opacity: .11; pointer-events: none; z-index: -1;
-    -webkit-mask: linear-gradient(180deg, #000 0%, #000 55%, transparent 96%);
-    mask: linear-gradient(180deg, #000 0%, #000 55%, transparent 96%);
-  }
+  /* Tva heroes: kursen (oxblod) + Agarbrevet (skogsgron), farg-dranks */
+  .lp-heroes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .lp-hero2 { position: relative; overflow: hidden; isolation: isolate; text-decoration: none;
+    display: flex; flex-direction: column; padding: clamp(26px,3.4vw,44px); min-height: 320px; color: var(--paper);
+    transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+  .lp-hero2:hover { transform: translateY(-3px); }
+  .lp-hero2--kurs { background: linear-gradient(rgba(122,38,30,.90), rgba(96,28,22,.95)), url('/bilder/borshuset-1600.jpg') center 34% / cover; }
+  .lp-hero2--brev { background: linear-gradient(rgba(30,58,48,.90), rgba(18,42,34,.95)), url('/bilder/kapitel-16.jpg') center / cover; }
+  .lp-hero2__k { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(246,244,239,.82); margin-bottom: 16px; }
+  .lp-hero2__h { font-family: var(--slab); font-weight: 600; font-size: clamp(21px,2.3vw,29px); line-height: 1.14; letter-spacing: -.005em; margin: 0; text-wrap: balance; }
+  .lp-hero2__p { font-family: var(--serif); font-size: 15.5px; line-height: 1.5; color: rgba(246,244,239,.86); margin: 14px 0 0; max-width: 42ch; }
+  .lp-hero2__cta { margin-top: auto; padding-top: 24px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--paper); }
+  .lp-hero2:hover .lp-hero2__cta { text-decoration: underline; text-underline-offset: 3px; }
+
+  .lp-stats { margin-top: 18px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .lp-stats b { font-family: var(--display); font-weight: 500; font-size: 17px; color: var(--ink); }
+  .lp-stats__cta { margin-left: auto; color: var(--oxblood); }
+  .lp-dot { color: var(--faint); }
 
   /* Läroplan + verktyg */
   .lp-body { display: grid; grid-template-columns: 1.5fr .9fr; gap: clamp(28px,4vw,56px); padding: 6px 0 8px; align-items: start; border-top: 2px solid var(--rule-strong); margin-top: 4px; padding-top: 34px; }
@@ -160,14 +177,16 @@ const verktyg = [
   .lp-learn__all { display: inline-block; margin-top: 22px; color: var(--oxblood); }
 
   /* Verktygsrail */
-  .lp-tools { border: 1px solid var(--rule-strong); background: var(--card); padding: 24px 24px 12px; position: sticky; top: 20px; }
+  /* Verktygsrailen tillhor Agarbrevet-varlden: skogsgron accent. */
+  .lp-tools { border: 1px solid var(--rule-strong); border-top: 2px solid #2C5646; background: var(--card); padding: 22px 24px 12px; position: sticky; top: 20px; }
+  .lp-tools .lp-h { color: #2C5646; }
   .lp-tools__intro { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin: 0 0 18px; }
   .lp-tools__list { list-style: none; margin: 0; padding: 0; }
   .lp-tools__list li { border-top: 1px solid var(--rule); }
   .lp-tool { display: block; padding: 14px 0; text-decoration: none; }
   .lp-tool__t { display: block; font-family: var(--display); font-weight: 500; font-size: 16px; color: var(--ink); }
   .lp-tool__d { display: block; font-family: var(--serif); font-size: 14px; line-height: 1.4; color: var(--muted); margin-top: 3px; }
-  .lp-tool:hover .lp-tool__t { color: var(--oxblood); }
+  .lp-tool:hover .lp-tool__t { color: #2C5646; }
   .lp-tool:hover .lp-tool__d { color: var(--ink-soft); }
 
   /* CTA-band, samma fotografi dränkt i oxblod */
@@ -184,6 +203,10 @@ const verktyg = [
   .lp-foot { padding: 20px 0 36px; border-top: 1px solid var(--rule); }
   .lp-fine { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: var(--faint); }
 
+  @media (max-width: 720px) {
+    .lp-heroes { grid-template-columns: 1fr; }
+    .lp-hero2 { min-height: 0; }
+  }
   @media (max-width: 860px) {
     .lp-body { grid-template-columns: 1fr; gap: 34px; }
     .lp-tools { position: static; }
