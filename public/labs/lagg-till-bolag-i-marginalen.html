@@ -25,7 +25,7 @@
 
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
-  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark-wrap{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
   .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
@@ -50,9 +50,25 @@
   h1{font-family:var(--display);font-weight:300;font-size:clamp(28px,4vw,42px);line-height:1.06;letter-spacing:-.02em}
   .sub{font-family:var(--serif);font-size:17px;color:var(--ink-soft);margin-top:12px;max-width:54ch}
 
-  /* val av bolag */
-  .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
-  .chip{font-family:var(--display);font-weight:500;font-size:15.5px;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:10px 18px;color:var(--ink-soft);cursor:pointer;transition:.15s}
+  /* val av bolag: sök + träfflista */
+  .searchwrap{position:relative;margin-top:22px}
+  .searchwrap input{width:100%;background:var(--card);border:1px solid var(--rule-strong);border-radius:12px;font-family:var(--serif);font-size:17px;color:var(--ink);padding:15px 16px 15px 46px;outline:none;transition:border-color .15s,box-shadow .15s}
+  .searchwrap input:focus{border-color:var(--oxblood);box-shadow:0 0 0 4px rgba(44,86,70,.12)}
+  .searchwrap input::placeholder{color:var(--muted)}
+  .searchwrap .sic{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:18px}
+  .results{display:flex;flex-direction:column;margin-top:8px}
+  .rrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border:1px solid var(--rule);border-top:none;background:var(--card);cursor:pointer;text-align:left;font-family:var(--serif);font-size:16px;color:var(--ink);transition:background .12s}
+  .rrow:first-child{border-top:1px solid var(--rule);border-radius:10px 10px 0 0}
+  .rrow:last-child{border-radius:0 0 10px 10px}
+  .rrow:only-child{border-radius:10px}
+  .rrow:hover,.rrow.sel{background:var(--paper-2)}
+  .rrow .rmeta{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  .rrow.sel .rmeta{color:var(--oxblood)}
+  .rrow.add{color:var(--oxblood)} .rrow.add .rmeta{color:var(--oxblood)}
+  .rempty{font-family:var(--mono);font-size:12px;color:var(--muted);padding:10px 2px;line-height:1.6}
+  .quick{margin-top:16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .quick .ql{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .chip{font-family:var(--display);font-weight:500;font-size:14.5px;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 15px;color:var(--ink-soft);cursor:pointer;transition:.15s}
   .chip:hover{border-color:var(--oxblood);color:var(--oxblood)}
   .chip.sel{border-color:var(--oxblood);color:var(--paper);background:var(--oxblood)}
 
@@ -136,8 +152,15 @@
   <div class="wrap"><p class="site-foot__fine">Prototyp · exempeldata · fiktiva bolag. Information i utbildningssyfte, aldrig köp- eller säljråd.</p></div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/labs/agarbrevet-supabase.js"></script>
 <script>
 const BOLAG = ['Norlux Industri','Telvio','Kavex Medical','Voltcell','Brunna Hydro'];
+// Sökbart universum (prototyp: samma fiktiva bolag som resten av demot). I skarpt
+// läge är det motorns bevakningsbara lista + fri sökning på namn/ticker/ISIN.
+const UNIVERSE = ['Norlux Industri','Telvio','Kavex Medical','Voltcell','Brunna Hydro','Almi Foods','Sundby Verktyg','Havregården'];
+let searchQ='';
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const OB = {
   a:'köpa upp lönsamma småbolag och driva dem bättre',
   b:'marknaden är fragmenterad och kassaflödet betalar nästa förvärv',
@@ -153,17 +176,48 @@ const pipsEl=document.getElementById('pips'), stepEl=document.getElementById('st
 
 function pips(){ pipsEl.innerHTML = Array.from({length:NSTEP},(_,i)=>'<i class="'+(i<=step?'on':'')+'"></i>').join(''); }
 
+// ── Spara det tillagda bolaget till Dina bolag (holdings) ─────────────────
+let savedFor=null, saveState='';
+function saveNoteText(){
+  if(saveState==='saving') return 'Sparar i Dina bolag ...';
+  if(saveState==='saved')  return 'Sparat i Dina bolag.';
+  if(saveState==='login')  return 'Sparas i Dina bolag så fort du loggar in.';
+  if(saveState.indexOf('error:')===0) return 'Kunde inte spara: '+saveState.slice(6);
+  return '';
+}
+function setSaveNote(state){ saveState=state; const el=document.getElementById('saveNote'); if(el) el.textContent=saveNoteText(); }
+function persistHolding(){
+  if(!sel || savedFor===sel) return;   // spara varje bolag en gång
+  savedFor=sel;
+  const row={ name:sel, ticker:null, isin:null, quantity:null, gav:null, relation:'ager', source:'manual' };
+  if(!(window.AB && window.AB.ready)){ setSaveNote('login'); return; }
+  setSaveNote('saving');
+  window.AB.getUser().then(u=>{
+    if(u){ return window.AB.insertHoldings([row]).then(()=>setSaveNote('saved')); }
+    // Ej inloggad: lägg i samma pending-kö som importen; Dina bolag flushar den efter login.
+    try{
+      const key='agarbrevet-pending-import';
+      const cur=JSON.parse(localStorage.getItem(key)||'[]');
+      cur.push(row); localStorage.setItem(key, JSON.stringify(cur));
+    }catch(e){}
+    setSaveNote('login');
+  }).catch(e=>setSaveNote('error:'+((e&&e.message)||e)));
+}
+
 function render(){
   pips();
   let h='';
   if(step===0){
     h='<div class="kicker">Lägg till bolag · steg 1 av 4</div>'+
       '<h1>Vilket bolag äger du?</h1>'+
-      '<div class="sub">Mer än så behövs inte: bevakning och sammanfattningar startar direkt. Resten är valfritt.</div>'+
-      '<div class="chips">'+BOLAG.map(b=>'<button class="chip'+(sel===b?' sel':'')+'" data-b="'+b+'">'+b+'</button>').join('')+
-        '<button class="chip" data-b="__annat">Annat bolag...</button></div>'+
+      '<div class="sub">Sök på namn, ticker eller ISIN, eller välj ett vanligt nedan. Mer än så behövs inte: bevakning och sammanfattningar startar direkt.</div>'+
+      '<div class="searchwrap"><span class="sic">⌕</span>'+
+        '<input id="cosearch" type="text" autocomplete="off" placeholder="Sök bolag, t.ex. Telvio eller SE0000..." value="'+esc(searchQ)+'"></div>'+
+      '<div class="results" id="results"></div>'+
+      '<div class="quick"><span class="ql">Vanliga</span>'+
+        BOLAG.map(b=>'<button class="chip'+(sel===b?' sel':'')+'" data-b="'+esc(b)+'">'+b+'</button>').join('')+'</div>'+
       '<div class="nav-btns"><a class="btn ghost" href="/labs/dina-bolag-i-marginalen.html">Avbryt</a><span class="spacer"></span>'+
-        '<button class="btn prim" id="next" '+(sel?'':'disabled')+'>Fortsätt →</button></div>';
+        '<button class="btn prim" id="next" '+(sel?'':'disabled')+'>'+(sel?'Fortsätt med '+esc(sel)+' →':'Fortsätt →')+'</button></div>';
   } else if(step===1){
     const cn = sel||'bolaget';
     h='<div class="kicker">Steg 2 av 4 · valfritt</div>'+
@@ -185,6 +239,7 @@ function render(){
       '<div class="nav-btns"><button class="btn" data-go="1">← Tillbaka</button><span class="spacer"></span>'+
         '<button class="btn prim" data-go="3">Fortsätt →</button></div>';
   } else {
+    persistHolding();
     const cn = sel||'bolaget';
     h='<div class="kicker">Klart</div>'+
       '<h1>Vi håller koll på '+cn+' åt dig.</h1>'+
@@ -193,17 +248,48 @@ function render(){
         : 'Vi läser allt om bolaget och sammanfattar varje morgon. Dina tre vakter är igång: passeras en gräns säger vi till direkt.')+'</div>'+
       '<div class="done-card"><div class="dh">Det här händer nu</div>'+
         '<p>I morgon 07:30: ditt första Ägarbrev med '+cn+' i.<br>Vid rapport: analysen klar inom minuter, varje siffra med källa.<br>'+
-        (skip?'Alla väsentliga händelser: sammanfattade och graderade.':'Om en gräns passeras: vi säger till samma morgon.')+'</p></div>'+
+        (skip?'Alla väsentliga händelser: sammanfattade och graderade.':'Om en gräns passeras: vi säger till samma morgon.')+'</p>'+
+        '<div id="saveNote" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;color:var(--oxblood)">'+saveNoteText()+'</div></div>'+
       '<div class="nav-btns"><button class="btn ghost" data-go="0">Lägg till ett bolag till</button><span class="spacer"></span>'+
-        '<a class="btn prim" href="/labs/agarbrevet-i-marginalen.html">Öppna Ägarbrevet →</a></div>';
+        '<a class="btn prim" href="/labs/dina-bolag-i-marginalen.html">Öppna Dina bolag →</a></div>';
   }
   stepEl.innerHTML = '<div class="step">'+h+'</div>';
   wire();
 }
 
+// Träfflistan: filtrerar universumet och erbjuder ALLTID att lägga till det man
+// skrivit, så vilket bolag som helst går att lägga till (inte bara de fördefinierade).
+function renderResults(){
+  const rEl=document.getElementById('results'); if(!rEl) return;
+  const q=searchQ.trim().toLowerCase();
+  if(!q){ rEl.innerHTML=''; return; }
+  const hits=UNIVERSE.filter(n=>n.toLowerCase().includes(q));
+  let html=hits.map(n=>'<button type="button" class="rrow'+(sel===n?' sel':'')+'" data-pick="'+esc(n)+'">'+
+    '<span>'+esc(n)+'</span><span class="rmeta">'+(sel===n?'vald ✓':'bevaka')+'</span></button>').join('');
+  const typed=searchQ.trim();
+  if(typed && !UNIVERSE.some(n=>n.toLowerCase()===q)){
+    html+='<button type="button" class="rrow add" data-pick="'+esc(typed)+'">'+
+      '<span>Lägg till &bdquo;'+esc(typed)+'&rdquo;</span><span class="rmeta">nytt bolag →</span></button>';
+  }
+  if(!html) html='<div class="rempty">Inga träffar. Skriv hela namnet så lägger vi till det ändå.</div>';
+  rEl.innerHTML=html;
+  rEl.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>{ sel=b.dataset.pick; render(); }));
+}
+
 function wire(){
+  const cs=stepEl.querySelector('#cosearch');
+  if(cs){
+    renderResults();
+    cs.addEventListener('input',()=>{ searchQ=cs.value; renderResults(); });
+    cs.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){ e.preventDefault();
+        const first=stepEl.querySelector('.rrow[data-pick]');
+        if(first){ sel=first.getAttribute('data-pick'); render(); }
+      }
+    });
+  }
   stepEl.querySelectorAll('.chip[data-b]').forEach(c=>c.addEventListener('click',()=>{
-    sel = c.dataset.b==='__annat' ? 'ditt bolag' : c.dataset.b; render();
+    sel = c.dataset.b; render();
   }));
   const next=stepEl.querySelector('#next'); if(next) next.addEventListener('click',()=>{step=1;render();});
   const use=stepEl.querySelector('#use'); if(use) use.addEventListener('click',()=>{skip=false;step=2;render();});

@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkyl · Ägarbrevet</title>
+<meta name="description" content="Intern kalkyl över våra rörliga kostnader, fasta kostnader och marginal. Illustrativa antaganden, justerbara med reglagen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E; --good:#2F7A55; --bad:#9B3A2E; --good-soft:#E7EFE6; --bad-soft:#F3E3DD;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--oxblood);outline-offset:2px}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(18px,5vw,52px)}
+  .num{font-family:var(--num);font-variant-numeric:tabular-nums}
+
+  /* ── masthead ─────────────────────────────────────────────────────── */
+  .masthead{padding:30px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
+  .wordmark-wrap{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+  .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
+  .byline:hover{color:var(--oxblood)}
+  .edition{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+  .nav-div{width:1px;height:14px;background:var(--rule-strong);align-self:center}
+  .nav-back{color:var(--muted)!important}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:2px 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+  .nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);text-decoration:none}
+  .nav a:hover,.nav a.here{color:var(--ink)}
+  .nav a.here{color:var(--oxblood)}
+
+  /* ── lead ─────────────────────────────────────────────────────────── */
+  .sheet{padding:8px 0 8px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--oxblood);margin-bottom:14px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(32px,5vw,52px);line-height:1.03;letter-spacing:-.02em;text-wrap:balance}
+  .standfirst{font-family:var(--serif);font-size:clamp(16px,1.8vw,20px);line-height:1.55;color:var(--ink-soft);max-width:60ch;margin-top:16px;text-wrap:pretty}
+
+  /* ── kalkyl-rutnät ────────────────────────────────────────────────── */
+  .calc{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(20px,3.4vw,42px);margin-top:34px;align-items:start;border-top:2px solid var(--rule-strong);padding-top:28px}
+  .calc>*{min-width:0}
+  @media(max-width:820px){.calc{grid-template-columns:1fr}}
+
+  .panel-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+
+  /* reglage */
+  .ctrl{padding:15px 0;border-top:1px solid var(--rule)}
+  .ctrl:first-of-type{border-top:none;padding-top:2px}
+  .ctrl-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ctrl-name{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink-soft);line-height:1.35}
+  .ctrl-val{font-family:var(--num);font-variant-numeric:tabular-nums;font-weight:600;font-size:16px;color:var(--oxblood);flex:0 0 auto;white-space:nowrap}
+  .ctrl-note{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--faint);margin-top:3px}
+
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;margin-top:8px;cursor:pointer;display:block}
+  input[type=range]:focus{outline:none}
+  input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px var(--good-soft),0 0 0 4px var(--oxblood)}
+  input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--rule-strong);border-radius:0}
+  input[type=range]::-moz-range-track{height:2px;background:var(--rule-strong);border-radius:0}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;margin-top:-7px;border-radius:50%;background:var(--oxblood);border:2px solid var(--paper);box-shadow:0 0 0 1px var(--rule-strong);transition:transform .12s}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--oxblood);border:2px solid var(--paper);box-shadow:0 0 0 1px var(--rule-strong)}
+  input[type=range]:active::-webkit-slider-thumb{transform:scale(1.14)}
+  input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--good-soft),0 0 0 4px var(--oxblood)}
+
+  /* modellval, segmenterad */
+  .seg{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:10px}
+  @media(min-width:400px){.seg{grid-template-columns:repeat(4,1fr)}}
+  .seg button{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;text-transform:none;padding:9px 4px;background:var(--card);border:1px solid var(--rule);color:var(--muted);cursor:pointer;line-height:1.25;transition:border-color .15s,color .15s}
+  .seg button .mx{display:block;font-family:var(--num);font-variant-numeric:tabular-nums;font-size:11px;color:var(--faint);margin-top:3px}
+  .seg button:hover{color:var(--ink)}
+  .seg button.on{border-color:var(--oxblood);color:var(--oxblood);box-shadow:inset 0 0 0 1px var(--oxblood)}
+  .seg button.on .mx{color:var(--oxblood)}
+
+  /* antaganden */
+  .assume{margin-top:26px;border:1px solid var(--rule);background:var(--card);padding:16px 18px}
+  .assume summary{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;list-style:none}
+  .assume summary::-webkit-details-marker{display:none}
+  .assume summary::after{content:"visa";float:right;color:var(--faint);letter-spacing:.06em}
+  .assume[open] summary::after{content:"dölj"}
+  .assume-body{margin-top:14px}
+  .arow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--rule)}
+  .arow:first-child{border-top:none}
+  .arow label{font-family:var(--mono);font-size:11px;letter-spacing:.01em;color:var(--ink-soft);flex:1;line-height:1.35}
+  .arow input[type=number]{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:13px;width:88px;text-align:right;padding:5px 8px;background:var(--paper);border:1px solid var(--rule-strong);color:var(--ink)}
+  .arow input[type=number]:focus{outline:none;border-color:var(--oxblood)}
+
+  /* ── utfall ───────────────────────────────────────────────────────── */
+  .out-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .headline{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:18px 0;margin-bottom:4px}
+  .headline .hl-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .headline .hl-val{font-family:var(--num);font-variant-numeric:tabular-nums;font-weight:600;font-size:clamp(30px,6vw,42px);line-height:1;letter-spacing:-.01em;color:var(--ink)}
+  .headline .hl-val small{font-size:.42em;font-weight:500;color:var(--muted);letter-spacing:.02em;margin-left:6px}
+  .headline .hl-sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:9px;font-variant-numeric:tabular-nums}
+
+  .line{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-top:1px solid var(--rule)}
+  .line .lx{font-family:var(--mono);font-size:12.5px;letter-spacing:.01em;color:var(--ink-soft)}
+  .line .lx em{font-style:normal;color:var(--muted);font-size:11px;display:block;margin-top:2px}
+  .line .lv{font-family:var(--num);font-variant-numeric:tabular-nums;font-weight:500;font-size:16px;color:var(--ink);white-space:nowrap;flex:0 0 auto}
+  .line.tot{border-top:2px solid var(--rule-strong);margin-top:4px}
+  .line.tot .lx{font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.01em;color:var(--ink)}
+  .line.tot .lv{font-size:19px;font-weight:600}
+  .lv.good{color:var(--good)} .lv.bad{color:var(--bad)}
+
+  /* marginalkort */
+  .margin-card{margin-top:22px;padding:18px;border:1px solid var(--rule);background:var(--card)}
+  .margin-card.pos{background:var(--good-soft);border-color:rgba(47,122,85,.4)}
+  .margin-card.neg{background:var(--bad-soft);border-color:rgba(155,58,46,.4)}
+  .mc-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mc-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .mc-pct{font-family:var(--num);font-variant-numeric:tabular-nums;font-weight:600;font-size:28px;line-height:1}
+  .mc-pct.good{color:var(--good)} .mc-pct.bad{color:var(--bad)}
+  .mc-kr{font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-top:8px;font-variant-numeric:tabular-nums}
+  .mc-kr .num{font-weight:500}
+
+  /* fördelningsstapel */
+  .bd{margin-top:26px}
+  .bd-bar{display:flex;height:16px;background:var(--paper-2);overflow:hidden;border:1px solid var(--rule)}
+  .bd-bar i{display:block;height:100%;transition:width .18s ease}
+  .bd-bar .b-ext{background:var(--oxblood)}
+  .bd-bar .b-q{background:var(--gold)}
+  .bd-bar .b-tts{background:#7A9B84}
+  .bd-bar .b-fix{background:var(--faint)}
+  .bd-legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin-top:12px}
+  @media(min-width:480px){.bd-legend{grid-template-columns:repeat(4,1fr)}}
+  .bd-item{display:flex;align-items:baseline;gap:7px;font-family:var(--mono);font-size:11px;color:var(--muted);min-width:0}
+  .bd-item .sw{width:9px;height:9px;flex:0 0 auto;position:relative;top:1px}
+  .bd-item .bn{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink-soft);margin-left:auto;white-space:nowrap}
+  .sw.b-ext{background:var(--oxblood)} .sw.b-q{background:var(--gold)} .sw.b-tts{background:#7A9B84} .sw.b-fix{background:var(--faint)}
+
+  .honest{font-family:var(--mono);font-size:11.5px;letter-spacing:.01em;color:var(--muted);border-top:1px solid var(--rule);padding-top:16px;margin-top:26px;line-height:1.72}
+  .honest b{color:var(--ink-soft);font-weight:500}
+
+  /* ── footer ───────────────────────────────────────────────────────── */
+  .site-foot{margin-top:56px;border-top:2px solid var(--rule-strong)}
+  .site-foot .wrap{padding-top:26px;padding-bottom:60px}
+  .site-foot__top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .site-foot__mark{font-family:var(--display);font-weight:500;font-size:20px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .site-foot__nav{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .site-foot__nav a{color:var(--muted);text-decoration:none}
+  .site-foot__nav a:hover{color:var(--oxblood)}
+  .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint);line-height:1.7}
+
+  @media(max-width:560px){
+    .ctrl-name{font-size:12px}
+    .headline .hl-val{font-size:clamp(28px,9vw,38px)}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top">
+      <div class="wordmark-wrap">
+        <span class="wordmark">Ägarbrevet</span>
+        <a class="byline" href="/hem">by Marginalen</a>
+      </div>
+      <div class="edition">Kalkyl · våra kostnader och marginal</div>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/upptack-i-marginalen.html">Upptäck</a>
+      <a href="/labs/fraga-i-marginalen.html">Fråga</a>
+      <a href="#" class="here" aria-current="page">Kalkyl</a>
+      <span class="nav-div" aria-hidden="true"></span>
+      <a href="/fokus" class="nav-back">Till kursen ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="sheet">
+    <div class="kicker">Intern kalkyl</div>
+    <h1 class="h-title">Vad kostar en läsare oss</h1>
+    <p class="standfirst">Motorn läser bolagens rapporter och pressmeddelanden med en språkmodell och en källgrind. Här är vår rörliga kostnad, våra fasta kostnader och marginalen, allt räknat i kronor. Dra i reglagen och se hur enhetsekonomin rör sig. Alla tal är illustrativa antaganden, satta för att kunna ändras.</p>
+
+    <div class="calc">
+      <!-- ── reglage ─────────────────────────────────────── -->
+      <div class="controls">
+        <div class="panel-lbl">Antaganden, dra för att ändra</div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Antal betalande användare</span><span class="ctrl-val" id="v-users">300</span></div>
+          <input type="range" id="s-users" min="10" max="5000" step="10" value="300">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Bolag per användare</span><span class="ctrl-val" id="v-cos">8</span></div>
+          <input type="range" id="s-cos" min="1" max="40" step="1" value="8">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Dokument per bolag och månad</span><span class="ctrl-val" id="v-docs">4</span></div>
+          <input type="range" id="s-docs" min="0" max="20" step="1" value="4">
+          <div class="ctrl-note">Driver extraktionskostnaden</div>
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Andel fulla PDF-rapporter mot korta PM</span><span class="ctrl-val" id="v-pdf">25 %</span></div>
+          <input type="range" id="s-pdf" min="0" max="100" step="1" value="25">
+          <div class="ctrl-note">Blandar kort PM mot full rapport</div>
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Frågor per användare och månad</span><span class="ctrl-val" id="v-q">20</span></div>
+          <input type="range" id="s-q" min="0" max="200" step="1" value="20">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Ljudbrev per användare och månad</span><span class="ctrl-val" id="v-tts">0</span></div>
+          <input type="range" id="s-tts" min="0" max="30" step="1" value="0">
+          <div class="ctrl-note">Morgonbrevet uppläst som tvåminuterspodd med neural röst. Kostnad = antal per användare gånger pris per uppläsning (se antaganden i botten). Manuset finns redan och är grindat, bara syntessteget kostar. 0 = ingen ljudutgåva.</div>
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Modellval</span><span class="ctrl-val" id="v-model">1,0x</span></div>
+          <div class="seg" id="seg-model" role="group" aria-label="Modellval">
+            <button type="button" data-mult="0.5">gpt-5.4-mini<span class="mx">0,5x</span></button>
+            <button type="button" data-mult="1" class="on">claude-haiku<span class="mx">1,0x</span></button>
+            <button type="button" data-mult="3">claude-sonnet<span class="mx">3,0x</span></button>
+            <button type="button" data-mult="5">gpt-5.5<span class="mx">5,0x</span></button>
+          </div>
+          <div class="ctrl-note">Kostnadsmultipel mot claude-haiku, blandat</div>
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Pris per användare och månad</span><span class="ctrl-val" id="v-price">99 kr</span></div>
+          <input type="range" id="s-price" min="0" max="1000" step="1" value="99">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-head"><span class="ctrl-name">Fasta kostnader per månad</span><span class="ctrl-val" id="v-fixed">160 kr</span></div>
+          <input type="range" id="s-fixed" min="0" max="3000" step="10" value="160">
+          <div class="ctrl-note">Kostnader som inte växer per användare, delas av alla: on demand-endpoint (Node, cirka 15 USD/mån), mejlutskick (Resend), domän och loggning. Databas och datalicenser läggs här när de kommer. Cloudflare Pages för sajten är gratis.</div>
+        </div>
+
+        <details class="assume">
+          <summary>Antaganden i botten, per enhet</summary>
+          <div class="assume-body">
+            <div class="arow">
+              <label for="a-fx">Växelkurs USD till SEK</label>
+              <input type="number" id="a-fx" min="1" max="20" step="0.1" value="10.6">
+            </div>
+            <div class="arow">
+              <label for="a-pm">Kort PM, extraktion (USD/dok)</label>
+              <input type="number" id="a-pm" min="0" max="1" step="0.001" value="0.01">
+            </div>
+            <div class="arow">
+              <label for="a-report">Full PDF-rapport (USD/dok)</label>
+              <input type="number" id="a-report" min="0" max="1" step="0.001" value="0.057">
+            </div>
+            <div class="arow">
+              <label for="a-q">Fråga, klassa och svara (USD/st)</label>
+              <input type="number" id="a-q" min="0" max="1" step="0.001" value="0.01">
+            </div>
+            <div class="arow">
+              <label for="a-tts">Ljudbrev, neural TTS (USD/st)</label>
+              <input type="number" id="a-tts" min="0" max="1" step="0.001" value="0.03">
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- ── utfall ──────────────────────────────────────── -->
+      <div class="outputs">
+        <div class="out-lbl">Utfall, räknat i kronor per månad</div>
+
+        <div class="headline">
+          <div class="hl-lbl">Rörlig kostnad per användare</div>
+          <div class="hl-val"><span class="num" id="o-peruser">0,00</span> <small>kr / mån</small></div>
+          <div class="hl-sub" id="o-peruser-sub">extraktion, frågor och ljudbrev</div>
+        </div>
+
+        <div class="line">
+          <span class="lx">Total rörlig kostnad<em id="o-var-sub">användare gånger per användare</em></span>
+          <span class="lv"><span class="num" id="o-var">0</span> kr</span>
+        </div>
+        <div class="line">
+          <span class="lx">Fasta kostnader</span>
+          <span class="lv"><span class="num" id="o-fixed">0</span> kr</span>
+        </div>
+        <div class="line tot">
+          <span class="lx">Total månadskostnad</span>
+          <span class="lv"><span class="num" id="o-total">0</span> kr</span>
+        </div>
+
+        <div class="line" style="margin-top:12px">
+          <span class="lx">Intäkt per månad<em id="o-rev-sub">användare gånger pris</em></span>
+          <span class="lv"><span class="num" id="o-rev">0</span> kr</span>
+        </div>
+
+        <div class="margin-card" id="margin-card">
+          <div class="mc-top">
+            <span class="mc-lbl">Bruttomarginal</span>
+            <span class="mc-pct" id="o-margin-pct">0 %</span>
+          </div>
+          <div class="mc-kr">Bruttoresultat <span class="num" id="o-margin-kr">0</span> kr per månad</div>
+        </div>
+
+        <div class="line" style="margin-top:22px">
+          <span class="lx">Kostnad per användare inklusive fasta</span>
+          <span class="lv"><span class="num" id="o-fullcost">0,00</span> kr</span>
+        </div>
+        <div class="line">
+          <span class="lx">Break-even, pris per användare<em>täcker rörligt plus fasta</em></span>
+          <span class="lv"><span class="num" id="o-breakeven">0,00</span> kr</span>
+        </div>
+
+        <!-- fördelning -->
+        <div class="bd">
+          <div class="out-lbl" style="margin-bottom:12px">Vart kostnaden går, hela månaden</div>
+          <div class="bd-bar" aria-hidden="true">
+            <i class="b-ext" id="bar-ext"></i>
+            <i class="b-q" id="bar-q"></i>
+            <i class="b-tts" id="bar-tts"></i>
+            <i class="b-fix" id="bar-fix"></i>
+          </div>
+          <div class="bd-legend">
+            <div class="bd-item"><span class="sw b-ext"></span>Extraktion<span class="bn" id="lg-ext">0 kr</span></div>
+            <div class="bd-item"><span class="sw b-q"></span>Frågor<span class="bn" id="lg-q">0 kr</span></div>
+            <div class="bd-item"><span class="sw b-tts"></span>Ljudbrev<span class="bn" id="lg-tts">0 kr</span></div>
+            <div class="bd-item"><span class="sw b-fix"></span>Fasta<span class="bn" id="lg-fix">0 kr</span></div>
+          </div>
+        </div>
+
+        <p class="honest"><b>Ärligt om grinden.</b> Verifieringen blockerar dåligt utflöde men lägger ingen extra modellkostnad utöver själva extraktionsanropet. Den verkliga kostnadsdrivaren är dokumentvolym gånger modellval, inte grinden.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__top">
+      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <nav class="site-foot__nav">
+        <a href="/labs/agarbrevet-i-marginalen.html">Brevet</a>
+        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/fokus">Kursen</a>
+      </nav>
+    </div>
+    <p class="site-foot__fine">Prototyp · interna, illustrativa antaganden. Justera reglagen. Inte en prislista.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+
+  // reglage
+  var S={
+    users:$('s-users'), cos:$('s-cos'), docs:$('s-docs'), pdf:$('s-pdf'),
+    q:$('s-q'), tts:$('s-tts'), price:$('s-price'), fixed:$('s-fixed')
+  };
+  // antaganden
+  var A={ fx:$('a-fx'), pm:$('a-pm'), report:$('a-report'), q:$('a-q'), tts:$('a-tts') };
+
+  var mult=1; // modellmultipel
+
+  // svensk formatering: mellanslag som tusental, komma som decimal
+  function fmt(n,dec){
+    if(!isFinite(n)) n=0;
+    dec = dec==null?0:dec;
+    var neg = n<0; n=Math.abs(n);
+    var s = n.toFixed(dec);
+    var parts = s.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+    var out = parts.length>1 ? parts[0]+','+parts[1] : parts[0];
+    return (neg?'−':'')+out; // matematiskt minus, inte bindestreck
+  }
+
+  function num(el,fallback){ var v=parseFloat(String(el.value).replace(',','.')); return isFinite(v)?v:fallback; }
+
+  function compute(){
+    var users = +S.users.value;
+    var cos   = +S.cos.value;
+    var docs  = +S.docs.value;
+    var pdfSh = +S.pdf.value/100;      // andel fulla rapporter
+    var qPer  = +S.q.value;
+    var ttsPer= +S.tts.value;
+    var price = +S.price.value;
+    var fixed = +S.fixed.value;
+
+    var fx     = num(A.fx,10.6);
+    var cPm    = num(A.pm,0.01);       // USD kort PM
+    var cReport= num(A.report,0.057);  // USD full rapport
+    var cQ     = num(A.q,0.01);        // USD fraga
+    var cTts   = num(A.tts,0.03);      // USD ljudbrev
+
+    // dokument per anvandare och manad
+    var docsPerUser = cos*docs;
+    // blandad dokumentkostnad i USD, foljer modellmultipel
+    var blendDocUsd = (pdfSh*cReport + (1-pdfSh)*cPm)*mult;
+
+    // rorliga delar i USD per anvandare
+    var extUsd = docsPerUser*blendDocUsd;   // fragorna anvander modellen -> mult
+    var qUsd   = qPer*cQ*mult;
+    var ttsUsd = ttsPer*cTts;               // TTS ar egen tjanst, ingen modellmult
+
+    // -> SEK per anvandare
+    var extKr = extUsd*fx;
+    var qKr   = qUsd*fx;
+    var ttsKr = ttsUsd*fx;
+    var perUser = extKr+qKr+ttsKr;
+
+    var varTotal = perUser*users;
+    var total    = varTotal+fixed;
+    var revenue  = price*users;
+    var grossKr  = revenue-total;
+    var grossPct = revenue>0 ? grossKr/revenue*100 : (total>0?-100:0);
+
+    var fullCost = users>0 ? total/users : 0;      // per anvandare inkl fasta
+    var breakeven= fullCost;                        // pris som ger noll
+
+    // fordelning, hela manaden
+    var extAll=extKr*users, qAll=qKr*users, ttsAll=ttsKr*users, fixAll=fixed;
+    var costAll=extAll+qAll+ttsAll+fixAll;
+
+    return {users:users, price:price, fixed:fixed, perUser:perUser,
+      extKr:extKr, qKr:qKr, ttsKr:ttsKr, docsPerUser:docsPerUser,
+      varTotal:varTotal, total:total, revenue:revenue, grossKr:grossKr, grossPct:grossPct,
+      fullCost:fullCost, breakeven:breakeven,
+      extAll:extAll, qAll:qAll, ttsAll:ttsAll, fixAll:fixAll, costAll:costAll};
+  }
+
+  function render(){
+    var r=compute();
+
+    // reglage-etiketter
+    $('v-users').textContent = fmt(+S.users.value,0);
+    $('v-cos').textContent   = fmt(+S.cos.value,0);
+    $('v-docs').textContent  = fmt(+S.docs.value,0);
+    $('v-pdf').textContent   = fmt(+S.pdf.value,0)+' %';
+    $('v-q').textContent     = fmt(+S.q.value,0);
+    $('v-tts').textContent   = fmt(+S.tts.value,0);
+    $('v-price').textContent = fmt(+S.price.value,0)+' kr';
+    $('v-fixed').textContent = fmt(+S.fixed.value,0)+' kr';
+    $('v-model').textContent = fmt(mult,1)+'x';
+
+    // headline
+    $('o-peruser').textContent = fmt(r.perUser,2);
+    $('o-peruser-sub').textContent = fmt(r.docsPerUser,0)+' dokument per användare, blandat PM och rapport';
+
+    $('o-var').textContent   = fmt(r.varTotal,0);
+    $('o-var-sub').textContent = fmt(r.users,0)+' användare gånger '+fmt(r.perUser,2)+' kr';
+    $('o-fixed').textContent = fmt(r.fixed,0);
+    $('o-total').textContent = fmt(r.total,0);
+
+    $('o-rev').textContent   = fmt(r.revenue,0);
+    $('o-rev-sub').textContent = fmt(r.users,0)+' användare gånger '+fmt(r.price,0)+' kr';
+
+    // marginal
+    var good = r.grossKr>=0;
+    var card=$('margin-card');
+    card.classList.toggle('pos',good);
+    card.classList.toggle('neg',!good);
+    var pctEl=$('o-margin-pct');
+    pctEl.textContent = fmt(r.grossPct,0)+' %';
+    pctEl.classList.toggle('good',good);
+    pctEl.classList.toggle('bad',!good);
+    $('o-margin-kr').textContent = fmt(r.grossKr,0);
+
+    $('o-fullcost').textContent  = fmt(r.fullCost,2);
+    $('o-breakeven').textContent = fmt(r.breakeven,2);
+
+    // fordelningsstapel
+    var tot=r.costAll||1;
+    $('bar-ext').style.width = (r.extAll/tot*100)+'%';
+    $('bar-q').style.width   = (r.qAll/tot*100)+'%';
+    $('bar-tts').style.width = (r.ttsAll/tot*100)+'%';
+    $('bar-fix').style.width = (r.fixAll/tot*100)+'%';
+    $('lg-ext').textContent = fmt(r.extAll,0)+' kr';
+    $('lg-q').textContent   = fmt(r.qAll,0)+' kr';
+    $('lg-tts').textContent = fmt(r.ttsAll,0)+' kr';
+    $('lg-fix').textContent = fmt(r.fixAll,0)+' kr';
+  }
+
+  // koppla reglage
+  Object.keys(S).forEach(function(k){ S[k].addEventListener('input',render); });
+  Object.keys(A).forEach(function(k){ A[k].addEventListener('input',render); });
+
+  // modellval, segmenterad
+  var seg=$('seg-model');
+  seg.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    mult=parseFloat(b.getAttribute('data-mult'));
+    seg.querySelectorAll('button').forEach(function(x){
+      var on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-pressed',on?'true':'false');
+    });
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

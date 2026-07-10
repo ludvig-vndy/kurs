@@ -25,7 +25,7 @@
 
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
-  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark-wrap{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
   .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
@@ -191,7 +191,33 @@ const SEEDS = Object.keys(QA);
 const seed=document.getElementById('seed'), thread=document.getElementById('thread'), inp=document.getElementById('askinput');
 seed.innerHTML = SEEDS.map(q=>'<button class="seedb" type="button">'+q+'</button>').join('');
 seed.querySelectorAll('.seedb').forEach((b,i)=>b.addEventListener('click',()=>ask(SEEDS[i])));
+// ── Hastighetsklamp mot rapid-fire (skript-bot) ──────────────────────────
+// VIKTIGT: detta är bara klient-friktion. Den riktiga gränsen MÅSTE sitta på
+// LLM-endpointen (per IP/konto/tokenbudget) eftersom en bot struntar i JS:et
+// här. Klampen finns för att fånga oavsiktlig spam och göra beteendet tydligt.
+const RL = { minMs:1500, perMin:10, perDay:60, key:'agarbrevet-fraga-rl' };
+function rlLoad(){ try{ return JSON.parse(localStorage.getItem(RL.key)||'[]'); }catch(e){ return []; } }
+function rlCheck(){
+  const now = Date.now();
+  const hist = rlLoad().filter(t => now - t < 864e5); // senaste dygnet
+  const last = hist.length ? hist[hist.length-1] : 0;
+  if (now - last < RL.minMs) return { ok:false, msg:'Du frågar väldigt snabbt. Ta en andning och prova igen om en stund.' };
+  if (hist.filter(t => now - t < 6e4).length >= RL.perMin) return { ok:false, msg:'Många frågor på kort tid. Vänta en minut, så öppnar det igen.' };
+  if (hist.length >= RL.perDay) return { ok:false, msg:'Du har nått dagens gräns för frågor i prototypen. Den återställs i morgon.' };
+  hist.push(now); try{ localStorage.setItem(RL.key, JSON.stringify(hist)); }catch(e){}
+  return { ok:true };
+}
+function rlNotice(msg){
+  const block = document.createElement('div'); block.className='qa';
+  block.innerHTML = '<div class="a"><p><span class="lab">gräns</span>'+msg+
+    ' <span style="color:var(--faint)">Skyddet mot skript sitter på riktigt på servern.</span></p></div>';
+  thread.appendChild(block);
+  requestAnimationFrame(()=>block.scrollIntoView({behavior:'smooth',block:'center'}));
+}
+
 function ask(q){
+  const gate = rlCheck();
+  if(!gate.ok){ rlNotice(gate.msg); return; }
   const a = QA[q];
   const block = document.createElement('div');
   block.className='qa';

@@ -31,7 +31,7 @@
   /* ── masthead (delad) ──────────────────────────────────────────────── */
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
-  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark-wrap{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
   .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
@@ -50,6 +50,7 @@
   .h-side{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule-strong);padding:11px 18px;border-radius:99px;text-decoration:none;background:none;cursor:pointer;transition:border-color .2s,color .2s;white-space:nowrap}
   .ghost:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .page-h-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
   /* ── Dina bolag: arbetsyta ─────────────────────────────────────────── */
   .lede{font-family:var(--serif);font-size:18px;color:var(--ink-soft);max-width:60ch;margin-top:8px}
@@ -119,8 +120,11 @@
   .rt .day .v.up{color:var(--good)} .rt .day .v.dn{color:var(--bad)}
   .rt .day .lbl{color:var(--faint)}
 
-  /* ── Bevakningsrad (Följer): ingen position, bara skäl + affordance ── */
+  /* ── Bevakningsrad (Följer): ingen position, kursförändring + skäl + affordance ── */
   .hold.watchrow .rt{text-align:left}
+  .hold .fchg{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:15px;font-weight:500;white-space:nowrap}
+  .hold .fchg.up{color:var(--good)} .hold .fchg.dn{color:var(--bad)}
+  .hold .fchg .lbl{font-family:var(--mono);font-size:10.5px;font-weight:400;color:var(--faint);margin-left:8px;letter-spacing:.02em;white-space:normal}
   .hold .watch{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.02em;max-width:44ch}
   .hold .watch b{color:var(--good);font-weight:500}
   .hold .make{font-family:var(--mono);font-size:12.5px;color:var(--faint);margin-top:7px;letter-spacing:.02em}
@@ -330,6 +334,8 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/labs/agarbrevet-supabase.js"></script>
 <script>
 // ── Data (troget mockens siffror, fiktiva bolag) ──────────────────────
 // Exempeldata (fiktiva bolag, påhittade siffror). Innehaven summerar till
@@ -367,10 +373,12 @@ const LIST = [
     watch:'Stabil efterfrågan · larm vid volymfall två kvartal',
     ln:'Inget nytt av betydelse. Defensiv profil.' },
   { tk:'SUND', namn:'Sundby Verktyg', rel:'foljer', dot:'pos',
+    sedan:'+8,2%', sedanc:'up', sedandat:'sedan 3 juli',
     watch:'Följd sedan Upptäck · markerat intresse förra veckan',
     ln:'Stark delårsrapport i morse. Inte i din portfölj, du bevakar den inför ett eventuellt köp.',
     href:'/labs/bolagssida-i-marginalen.html' },
   { tk:'HAVR', namn:'Havregården', rel:'foljer', dot:'calm',
+    sedan:'-2,1%', sedanc:'dn', sedandat:'sedan 12 juni',
     watch:'Ingen bevakning satt · du följer utan larm',
     ln:'Defensiv livsmedelsprofil du ville hålla ögonen på inför nästa rapport.',
     href:'/labs/bolagssida-i-marginalen.html' },
@@ -455,8 +463,10 @@ function holdRow(h){
   const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>';
   let rt;
   if(foljer){
-    // Bevakning: ingen position (du äger den inte), bara skäl + affordance.
-    rt = '<div class="watch">'+h.watch+'</div>'+
+    // Bevakning: ingen position (du äger den inte). Kursförändring sedan
+    // följstart (den enda siffran som betyder något här), skäl, affordance.
+    rt = '<div class="fchg '+h.sedanc+'">'+h.sedan+'<span class="lbl">sedan följstart · '+h.sedandat+'</span></div>'+
+         '<div class="watch">'+h.watch+'</div>'+
          '<div class="make">Gör till innehav →</div>';
   } else {
     // Innehav: värde + andel på en rad, totalavkastning (prominent), i dag (tyst).
@@ -497,7 +507,10 @@ function renderList(){
 
   view.innerHTML =
     '<div class="page-h" data-reveal><h1 class="h-title">Dina bolag</h1>'+
-      '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a></div>'+
+      '<div class="page-h-actions">'+
+        '<a class="ghost" href="/labs/importera-i-marginalen.html">Importera innehav</a>'+
+        '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a>'+
+      '</div></div>'+
     '<p class="lede" data-reveal>Vad du äger, vad det är värt och hur det gått. '+
       '<b>Ett innehav kräver din uppmärksamhet i dag</b>, två rör på sig, tre är lugna. '+
       'Vi läste 51 nyheter och registerposter om dina bolag i natt.</p>'+
@@ -619,8 +632,84 @@ function reveal(){
   els.forEach(el=>io.observe(el));
 }
 addEventListener('popstate', e=>{ const v=(e.state&&e.state.v)||'list'; if(v==='telv') renderTelvio(); else renderList(); scrollTo(0,0); });
-history.replaceState({v:'list'},'');
-renderList();
+
+// ── Riktiga innehav (Supabase) kontra demo ────────────────────────────
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtSEK(n){ if(n==null||isNaN(n)) return null; return Math.round(n).toLocaleString('sv-SE')+' kr'; }
+
+function realRow(h){
+  const foljer = h.relation==='foljer';
+  const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>';
+  const ansk = (h.quantity!=null && h.gav!=null) ? fmtSEK(h.quantity*h.gav) : null;
+  const antal = (h.quantity!=null) ? (Number(h.quantity).toLocaleString('sv-SE')+' st') : '';
+  const kalla = h.source==='csv' ? 'CSV' : (h.source==='manual' ? 'manuell inmatning' : (h.source||'import'));
+  const ln = 'Importerad från '+kalla+'. Analys och bevakning tillkommer när motorn körts på bolaget.';
+  const rt = ansk
+    ? '<div class="amt">'+ansk+(antal?'<span class="andel">'+antal+'</span>':'')+'</div>'+
+      '<div class="day"><span class="lbl">anskaffningsvärde</span></div>'
+    : (antal?'<div class="amt">'+antal+'</div>':'');
+  return '<div class="hold" aria-disabled="true">'+
+    '<span class="dot calm"></span>'+
+    '<div><div><span class="nm">'+esc(h.name)+'</span>'+(h.ticker?'<span class="tk">'+esc(h.ticker)+'</span>':'')+tag+'</div>'+
+    '<div class="ln">'+ln+'</div></div>'+
+    '<div class="rt">'+rt+'</div></div>';
+}
+
+function pageHeader(){
+  // Samma huvud som demovyn: identitet/utloggning ligger nu i masthuvudets chip.
+  return '<div class="page-h" data-reveal><h1 class="h-title">Dina bolag</h1>'+
+    '<div class="page-h-actions">'+
+      '<a class="ghost" href="/labs/importera-i-marginalen.html">Importera innehav</a>'+
+      '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a>'+
+    '</div></div>';
+}
+function groupH(txt){
+  return '<div style="font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px">'+txt+'</div>';
+}
+
+function renderReal(holds, user){
+  const owned = holds.filter(h=>h.relation!=='foljer');
+  const follow = holds.filter(h=>h.relation==='foljer');
+  let html = pageHeader();
+  if(owned.length){ html += groupH('Äger ('+owned.length+')') + owned.map(realRow).join(''); }
+  if(follow.length){ html += groupH('Följer ('+follow.length+')') + follow.map(realRow).join(''); }
+  view.innerHTML = html;
+  reveal();
+  setAsk(null);
+}
+
+function renderEmpty(user){
+  view.innerHTML = pageHeader() +
+    '<div style="text-align:center;padding:56px 20px;color:var(--muted)">'+
+      '<div style="font-family:var(--serif);font-size:22px;color:var(--ink);margin:0 0 10px">Inga innehav än.</div>'+
+      '<p style="max-width:42ch;margin:0 auto 22px;font-size:15px">Importera din depå från Avanza eller Nordnet, så lägger vi in bolagen här och börjar bevaka dem åt dig.</p>'+
+      '<a href="/labs/importera-i-marginalen.html" style="display:inline-block;background:var(--oxblood);color:#fff;font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 22px;border-radius:2px;text-decoration:none">Importera innehav &rarr;</a>'+
+    '</div>';
+  reveal();
+  setAsk(null);
+}
+
+async function boot(){
+  history.replaceState({v:'list'},'');
+  if(!(window.AB && window.AB.ready)){ renderList(); return; }
+  let user=null;
+  try{ user = await AB.getUser(); }catch(e){}
+  if(!user){ renderList(); return; }   // ej inloggad -> demo som förr
+  // Flusha en import som lades undan innan inloggningen.
+  try{
+    const pend = localStorage.getItem('agarbrevet-pending-import');
+    if(pend){
+      const rows = JSON.parse(pend);
+      if(rows && rows.length){ await AB.insertHoldings(rows); }
+      localStorage.removeItem('agarbrevet-pending-import');
+    }
+  }catch(e){ console.error('flush pending import:', e); }
+  let holds=[];
+  try{ holds = await AB.listHoldings(); }catch(e){ console.error('listHoldings:', e); }
+  if(holds && holds.length) renderReal(holds, user);
+  else renderEmpty(user);
+}
+boot();
 </script>
 </body>
 </html>

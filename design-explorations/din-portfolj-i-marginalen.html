@@ -36,7 +36,7 @@
   /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
   .masthead{padding:30px 0 0}
   .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:14px}
-  .wordmark-wrap{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wordmark-wrap{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
   .wordmark{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.4vw,38px);letter-spacing:.04em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
   .byline{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule-strong);padding-bottom:1px}
   .byline:hover{color:var(--oxblood)}
@@ -161,7 +161,7 @@
   .twin{border:1px solid var(--rule);background:var(--card);padding:22px 24px;margin-top:6px}
   .twincost{font-family:var(--display);font-weight:300;font-size:clamp(21px,3vw,30px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);max-width:30ch}
   .twincost b{font-weight:600}
-  .twincost .kr{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--bad);font-weight:500}
+  .twincost .kr{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--bad);font-weight:500;white-space:nowrap}
   .twinsub{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.6;max-width:60ch}
   .twinfig{margin:22px 0 8px}
   .twinfig svg{width:100%;max-width:620px;height:auto;display:block;overflow:visible}
@@ -900,7 +900,7 @@
   if(!tabs.length) return;
   var panels = tabs.map(function(t){ return document.getElementById(t.getAttribute('data-tab')); });
 
-  function select(idx, focusTab){
+  function select(idx, focusTab, writeHash){
     tabs.forEach(function(t, i){
       var on = i===idx;
       t.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -908,7 +908,10 @@
       if(panels[i]){ panels[i].hidden = !on; }
     });
     if(focusTab){ tabs[idx].focus(); }
-    history.replaceState(null, '', '#'+tabs[idx].getAttribute('data-tab'));
+    // Skriv bara hash vid interaktion. Att skapa en hash vid inladdning fick
+    // webbläsaren att hoppa ned till panelen (mastheaden försvann, den mörka
+    // aktiva fliken hamnade som en bar i toppen). Därför writeHash=false init.
+    if(writeHash!==false){ history.replaceState(null, '', '#'+tabs[idx].getAttribute('data-tab')); }
     if(window.__setPanelCtx){ window.__setPanelCtx(tabs[idx].getAttribute('data-tab')); }
   }
 
@@ -930,7 +933,7 @@
   var start = 0;
   var h = (location.hash||'').replace('#','');
   tabs.forEach(function(t, i){ if(t.getAttribute('data-tab')===h){ start=i; } });
-  select(start, false);
+  select(start, false, !!h);
 })();
 
 // ══════════════════════════════════════════════════════════════════════
