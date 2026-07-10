@@ -54,36 +54,83 @@
   /* ── Dina bolag: arbetsyta ─────────────────────────────────────────── */
   .lede{font-family:var(--serif);font-size:18px;color:var(--ink-soft);max-width:60ch;margin-top:8px}
   .lede b{font-weight:500;color:var(--ink)}
-  .flag{display:flex;align-items:center;gap:12px;margin:34px 0 2px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* ── Portföljöversikt (summary) ────────────────────────────────────────
+     Ägarens tre tal, inte en handlartavla: värdet och totalavkastningen är
+     de stora, dagsavkastningen visas liten med flit. Ett band binder ihop
+     dem, allokeringen ligger som en tunn stapel under, inte som kort. */
+  .ovr{border-top:2px solid var(--rule-strong);border-bottom:1px solid var(--rule);margin:24px 0 6px;padding:20px 0 18px}
+  .ovr-fig{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 40px}
+  .ovr-block{min-width:0}
+  .ovr-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .ovr-tot{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(30px,5vw,42px);font-weight:500;letter-spacing:-.01em;line-height:1;color:var(--ink)}
+  .ovr-tot .kr{font-size:.5em;font-weight:400;color:var(--muted);margin-left:4px;letter-spacing:.02em}
+  .ovr-avk{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(19px,3vw,24px);font-weight:500;line-height:1.1}
+  .ovr-avk .pct{font-size:.78em;margin-left:8px;opacity:.92}
+  .ovr-avk.up{color:var(--good)} .ovr-avk.dn{color:var(--bad)}
+  /* Dagen: medvetet liten och tyst. Ägare, inte spekulant. */
+  .ovr-day{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);letter-spacing:.01em;margin-top:2px}
+  .ovr-day .v.up{color:var(--good)} .ovr-day .v.dn{color:var(--bad)}
+  .ovr-day .lbl{color:var(--faint)}
+  /* Allokering: tunn stapel + en rad text, ingen tårtbit-cirkus. */
+  .alloc{margin-top:16px}
+  .alloc-bar{display:flex;height:7px;border-radius:99px;overflow:hidden;background:var(--paper-2)}
+  .alloc-bar span{display:block;height:100%;border-right:1.5px solid var(--paper)}
+  .alloc-bar span:last-child{border-right:none}
+  .alloc-line{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--muted);margin-top:8px}
+  .alloc-line b{color:var(--ink);font-weight:500}
+
+  /* ── Sektionshuvuden: gör Äger/Följer omisskännligt ────────────────── */
+  .split{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;margin:38px 0 4px}
+  .split .lab{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink)}
+  .split.foljer .lab{color:var(--gold)}
+  .split.ager .lab{color:var(--oxblood)}
+  .split .meta{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
+  .split::after{content:"";flex:1;min-width:20px;height:2px;background:var(--rule-strong);align-self:center;margin-left:4px}
+  /* Undergrupp inom Äger (uppmärksamhet/rör sig/lugnt): mjukare flagga. */
+  .flag{display:flex;align-items:center;gap:12px;margin:22px 0 2px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .flag::after{content:"";flex:1;height:1px;background:var(--rule)}
   .flag .cnt{color:var(--oxblood)}
 
-  .hold{display:grid;grid-template-columns:14px 1fr auto;gap:16px;align-items:baseline;padding:16px 4px;border-top:1px solid var(--rule);text-decoration:none;color:inherit;cursor:pointer;transition:background .14s,transform .2s}
+  /* ── Innehavsrad (Äger): namn+status vänster, tal högerställda ──────── */
+  .hold{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:14px 18px;align-items:baseline;padding:16px 4px;border-top:1px solid var(--rule);text-decoration:none;color:inherit;cursor:pointer;transition:background .14s,transform .2s}
   .hold:hover{background:var(--card);transform:translateX(4px)}
   .hold:first-of-type{border-top:none}
-  /* Låt textkolumnen krympa i stället för att tvinga bredd (mobil-overflow). */
   .hold>div{min-width:0}
-  .dot{width:9px;height:9px;border-radius:50%;position:relative;top:4px}
+  .dot{width:9px;height:9px;border-radius:50%;position:relative;top:6px}
   .dot.neg{background:var(--bad)} .dot.pos{background:var(--good)} .dot.gold{background:var(--gold)} .dot.calm{background:var(--faint)}
   .hold .nm{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.01em}
   .hold .tk{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--faint);margin-left:8px}
-  .hold .ln{color:var(--muted);font-size:15px;margin-top:4px;max-width:60ch}
-  .hold .rt{text-align:right}
-  /* Bara priset hålls ihop; vaktstexten (.watch) måste få radbrytas, annars
-     tvingar nowrap bredd och sidan blir dragbar på mobil. */
-  .hold .pr{font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .hold .chg{font-family:var(--mono);font-size:12px;margin-left:8px;white-space:nowrap}
-  .hold .chg.up{color:var(--good)} .hold .chg.dn{color:var(--bad)}
-  .hold .watch{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.02em}
-  .hold .watch b{color:var(--good);font-weight:500}
-  .hold .go{font-family:var(--mono);font-size:15px;color:var(--faint);margin-top:6px}
+  .hold .ln{color:var(--muted);font-size:15px;margin-top:4px;max-width:52ch}
+  .hold .go{font-family:var(--mono);font-size:13px;color:var(--faint);margin-top:7px;letter-spacing:.02em}
   .hold:hover .go{color:var(--oxblood)}
+
+  /* Talkolumnen: två rader. Rad 1 = värde + andel (position), rad 2 =
+     totalavkastning (prominent) och i dag (liten). Allt tabellärt och
+     högerställt så kolumnen linjerar rad mot rad. */
+  .rt{text-align:right;font-variant-numeric:tabular-nums}
+  .rt .amt{font-family:var(--mono);font-size:15px;color:var(--ink);white-space:nowrap}
+  .rt .amt .st{font-size:11px;color:var(--faint);margin-right:9px}
+  .rt .pos-share{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap}
+  .rt .pos-share .andel{color:var(--ink-soft)}
+  .rt .tavk{font-family:var(--mono);font-size:16px;font-weight:500;margin-top:8px;white-space:nowrap}
+  .rt .tavk.up{color:var(--good)} .rt .tavk.dn{color:var(--bad)}
+  .rt .tavk .kr{font-size:11px;font-weight:400;color:var(--muted);margin-left:7px}
+  .rt .day{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap}
+  .rt .day .v.up{color:var(--good)} .rt .day .v.dn{color:var(--bad)}
+  .rt .day .lbl{color:var(--faint)}
+
+  /* ── Bevakningsrad (Följer): ingen position, bara skäl + affordance ── */
+  .hold.watchrow .rt{text-align:left}
+  .hold .watch{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.02em;max-width:44ch}
+  .hold .watch b{color:var(--good);font-weight:500}
+  .hold .make{font-family:var(--mono);font-size:12.5px;color:var(--faint);margin-top:7px;letter-spacing:.02em}
+  .hold:hover .make{color:var(--oxblood)}
+
   /* Äger/Följer-pill: liten etikett per rad, syns vid skumläsning. */
   .tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);margin-left:8px;white-space:nowrap;vertical-align:middle}
   .tag.ager{color:var(--oxblood);border-color:var(--oxblood)}
   .tag.foljer{color:var(--gold);border-color:var(--gold)}
-  .hold .make{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px;letter-spacing:.02em}
-  .hold:hover .make{color:var(--oxblood)}
 
   /* ── Briefing ──────────────────────────────────────────────────────── */
   /* Bevakningen är en bred arbetsyta; briefingen är en läsning, så den får en
@@ -204,13 +251,20 @@
     .factbar .sep{margin:0 10px}
     .shead .pr{margin-left:0;width:100%;text-align:left}
     .askctx{display:none}
-    /* stapla priset/vakten under raden så den långa vakt-texten kan brytas
-       i stället för att tvinga bredd på auto-kolumnen */
+    .ovr-fig{gap:14px 32px}
+    /* stapla talkolumnen under namn+status så inga tal tvingar bredd på
+       auto-kolumnen; talen vänsterställs och ligger på egen rad. */
     .hold{grid-template-columns:14px 1fr}
-    .hold .rt{grid-column:2;text-align:left;margin-top:7px}
-    .hold .pr,.hold .chg{font-size:14px}
-    .hold .go{display:none}
-    .hold .watch{margin-top:0}
+    .hold .rt{grid-column:2;text-align:left;margin-top:9px}
+    .hold.watchrow .rt{margin-top:6px}
+    /* På smalt: håll värde/andel och avkastning/dag ihop på var sin rad
+       men lägg dem sida vid sida i stället för högerkolumn. */
+    .rt .pos-share{display:inline;margin-left:14px}
+    .rt .day{display:inline;margin-left:14px}
+    .hold .go{margin-top:9px}
+  }
+  @media(max-width:360px){
+    .rt .pos-share,.rt .day{display:block;margin-left:0}
   }
 </style>
 </head>
@@ -279,26 +333,58 @@
 
 <script>
 // ── Data (troget mockens siffror, fiktiva bolag) ──────────────────────
+// Exempeldata (fiktiva bolag, påhittade siffror). Innehaven summerar till
+// portföljens totalvärde 486 235 kr; totalavkastning +92 180 kr (+23,4%);
+// i dag +1 857 kr (+0,4%). Fälten per innehav: antal · värde · andel av
+// portföljen · total avkastning (kr + %) · dagens rörelse. Statusraden (ln)
+// är bolagets läge i sak, inte priset: det är skillnaden mot en kurslista.
 const LIST = [
-  { tk:'TELV', namn:'Telvio', rel:'ager', dot:'neg', pris:'84,20 kr', chg:'-0,6%', chgc:'dn',
+  { tk:'TELV', namn:'Telvio', rel:'ager', dot:'neg',
+    antal:'1 200 st', varde:'101 040 kr', andel:'21%',
+    tavk:'-9,5%', tavkkr:'-10 606 kr', tavkc:'dn', day:'-0,6%', dayc:'dn',
     ln:'Lönsamheten föll under 40 procent i Q3, gränsen du satte själv. Utdelningen står kvar men marginalen krymper sjätte kvartalet i rad.',
     open:true, href:'/labs/bolagssida-i-marginalen.html' },
-  { tk:'NORL', namn:'Norlux Industri', rel:'ager', dot:'pos', pris:'284,50 kr', chg:'+1,8%', chgc:'up',
+  { tk:'NORL', namn:'Norlux Industri', rel:'ager', dot:'pos',
+    antal:'480 st', varde:'136 560 kr', andel:'28%',
+    tavk:'+77,0%', tavkkr:'+59 407 kr', tavkc:'up', day:'+1,8%', dayc:'up',
     ln:'Stark Q3: växte 11,0 procent av egen kraft, mer än egna prognosen. Höjd helårsprognos. Allt du bad oss vakta håller.' },
-  { tk:'KAVX', namn:'Kavex Medical', rel:'ager', dot:'gold', pris:'156,00 kr', chg:'+0,4%', chgc:'up',
+  { tk:'KAVX', namn:'Kavex Medical', rel:'ager', dot:'gold',
+    antal:'462 st', varde:'72 072 kr', andel:'15%',
+    tavk:'+45,0%', tavkkr:'+22 367 kr', tavkc:'up', day:'+0,4%', dayc:'up',
     ln:'VD köpte aktier för 2,1 miljoner, första insiderköpet på 14 månader. Q3-rapporten släpps i dag 08:00.' },
-  { tk:'VOLT', namn:'Voltcell', rel:'ager', dot:'calm', watch:'Certifieringsbesked väntas i september · kassan räcker cirka 21 månader',
-    ln:'Tillväxtcase. Inget nytt just nu, vi säger till när certifieringsbeskedet kommer.', open:true, href:'/labs/bolagssida-i-marginalen.html' },
-  { tk:'BRUN', namn:'Brunna Hydro', rel:'ager', dot:'calm', watch:'Utdelning täckt <b>1,3x</b> · larm vid 1,0x',
+  { tk:'BRUN', namn:'Brunna Hydro', rel:'ager', dot:'calm',
+    antal:'656 st', varde:'63 238 kr', andel:'13%',
+    tavk:'+29,0%', tavkkr:'+14 216 kr', tavkc:'up', day:'+0,1%', dayc:'up',
+    watch:'Utdelning täckt <b>1,3x</b> · larm vid 1,0x',
     ln:'Inget nytt av betydelse. Vakten är intakt.' },
-  { tk:'ALMI', namn:'Almi Foods', rel:'ager', dot:'calm', watch:'Stabil efterfrågan · larm vid volymfall två kvartal',
+  { tk:'VOLT', namn:'Voltcell', rel:'ager', dot:'calm',
+    antal:'1 232 st', varde:'58 274 kr', andel:'12%',
+    tavk:'-5,1%', tavkkr:'-3 132 kr', tavkc:'dn', day:'-0,5%', dayc:'dn',
+    watch:'Certifieringsbesked väntas i september · kassan räcker cirka 21 månader',
+    ln:'Tillväxtcase. Inget nytt just nu, vi säger till när certifieringsbeskedet kommer.', open:true, href:'/labs/bolagssida-i-marginalen.html' },
+  { tk:'ALMI', namn:'Almi Foods', rel:'ager', dot:'calm',
+    antal:'463 st', varde:'55 051 kr', andel:'11%',
+    tavk:'+22,0%', tavkkr:'+9 927 kr', tavkc:'up', day:'-0,1%', dayc:'dn',
+    watch:'Stabil efterfrågan · larm vid volymfall två kvartal',
     ln:'Inget nytt av betydelse. Defensiv profil.' },
-  { tk:'SUND', namn:'Sundby Verktyg', rel:'foljer', dot:'pos', pris:'112,40 kr', chg:'+3,2%', chgc:'up',
-    ln:'Följt sedan Upptäck, stark delårsrapport i morse. Ännu inte i din portfölj, du markerade intresse i förra veckan.',
+  { tk:'SUND', namn:'Sundby Verktyg', rel:'foljer', dot:'pos',
+    watch:'Följd sedan Upptäck · markerat intresse förra veckan',
+    ln:'Stark delårsrapport i morse. Inte i din portfölj, du bevakar den inför ett eventuellt köp.',
     href:'/labs/bolagssida-i-marginalen.html' },
-  { tk:'HAVR', namn:'Havregården', rel:'foljer', dot:'calm', watch:'Ingen bevakning satt · du följer utan larm',
-    ln:'Följt sedan Upptäck. Defensiv livsmedelsprofil du ville hålla ögonen på inför nästa rapport.',
+  { tk:'HAVR', namn:'Havregården', rel:'foljer', dot:'calm',
+    watch:'Ingen bevakning satt · du följer utan larm',
+    ln:'Defensiv livsmedelsprofil du ville hålla ögonen på inför nästa rapport.',
     href:'/labs/bolagssida-i-marginalen.html' },
+];
+
+// Allokering till översiktens stapel: andel + färg per innehav, störst först.
+const ALLOC = [
+  { namn:'Norlux', andel:28, col:'var(--oxblood)' },
+  { namn:'Telvio', andel:21, col:'var(--gold)' },
+  { namn:'Kavex',  andel:15, col:'#6E8F7E' },
+  { namn:'Brunna', andel:13, col:'#8A7A52' },
+  { namn:'Voltcell',andel:12,col:'#A9B8AE' },
+  { namn:'Almi',   andel:11, col:'#CBBE9E' },
 ];
 
 const TELV = {
@@ -366,17 +452,26 @@ function spark(pts, larm, state){
 const view = document.getElementById('view');
 
 function holdRow(h){
-  const rt = h.pris
-    ? '<div class="pr">'+h.pris+'<span class="chg '+h.chgc+'">'+h.chg+'</span></div>'
-    : '<div class="watch">'+h.watch+'</div>';
   const foljer = h.rel==='foljer';
   const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>';
-  const foot = foljer ? 'Gör till innehav →' : (h.open?'Öppna →':'');
-  return '<a class="hold" href="'+(h.href||'#')+'" '+(h.href?'':(h.open?'data-open="'+h.tk+'"':'aria-disabled="true"'))+'>'+
+  let rt;
+  if(foljer){
+    // Bevakning: ingen position (du äger den inte), bara skäl + affordance.
+    rt = '<div class="watch">'+h.watch+'</div>'+
+         '<div class="make">Gör till innehav →</div>';
+  } else {
+    // Innehav: värde + andel, sedan totalavkastning (prominent) och i dag (tyst).
+    rt = '<div class="amt"><span class="st">'+h.antal+'</span>'+h.varde+'</div>'+
+         '<div class="pos-share"><span class="andel">'+h.andel+'</span> av portföljen</div>'+
+         '<div class="tavk '+h.tavkc+'">'+h.tavk+'<span class="kr">'+h.tavkkr+'</span></div>'+
+         '<div class="day"><span class="lbl">i dag </span><span class="v '+h.dayc+'">'+h.day+'</span></div>';
+  }
+  const go = (!foljer && h.open) ? '<div class="go">Öppna briefing →</div>' : '';
+  return '<a class="hold'+(foljer?' watchrow':'')+'" href="'+(h.href||'#')+'" '+(h.href?'':(h.open?'data-open="'+h.tk+'"':'aria-disabled="true"'))+'>'+
     '<span class="dot '+h.dot+'"></span>'+
     '<div><div><span class="nm">'+h.namn+'</span><span class="tk">'+h.tk+'</span>'+tag+'</div>'+
-    '<div class="ln">'+h.ln+'</div></div>'+
-    '<div class="rt">'+rt+'<div class="'+(foljer?'make':'go')+'">'+foot+'</div></div></a>';
+    '<div class="ln">'+h.ln+'</div>'+go+'</div>'+
+    '<div class="rt">'+rt+'</div></a>';
 }
 
 function renderList(){
@@ -385,16 +480,37 @@ function renderList(){
   const attn = owned.filter(h=>h.dot==='neg');
   const move = owned.filter(h=>h.dot==='pos'||h.dot==='gold');
   const calm = owned.filter(h=>h.dot==='calm');
+  const allocBar = ALLOC.map(a=>'<span style="flex:'+a.andel+';background:'+a.col+'" title="'+a.namn+' '+a.andel+'%"></span>').join('');
+
+  const overview =
+    '<div class="ovr" data-reveal>'+
+      '<div class="ovr-fig">'+
+        '<div class="ovr-block"><div class="ovr-k">Totalt värde</div>'+
+          '<div class="ovr-tot">486 235<span class="kr">kr</span></div></div>'+
+        '<div class="ovr-block"><div class="ovr-k">Total avkastning</div>'+
+          '<div class="ovr-avk up">+92 180 kr<span class="pct">+23,4%</span></div>'+
+          '<div class="ovr-day"><span class="lbl">i dag </span><span class="v up">+1 857 kr</span> · <span class="v up">+0,4%</span></div></div>'+
+      '</div>'+
+      '<div class="alloc">'+
+        '<div class="alloc-bar" aria-hidden="true">'+allocBar+'</div>'+
+        '<div class="alloc-line">6 innehav · 2 följda · störst: <b>Norlux 28%</b></div>'+
+      '</div>'+
+    '</div>';
+
   view.innerHTML =
     '<div class="page-h" data-reveal><h1 class="h-title">Dina bolag</h1>'+
       '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a></div>'+
-    '<p class="lede" data-reveal><b>Du äger sex bolag och följer två till.</b> Bland innehaven kräver ett din uppmärksamhet i dag, '+
-      'två rör på sig, tre är lugna. Vi läste 51 nyheter och registerposter om dina bolag i natt.</p>'+
-    '<div class="flag" data-reveal><span class="cnt">Äger</span> · sex innehav</div>'+
-    '<div class="flag" data-reveal style="margin-top:20px">Kräver uppmärksamhet</div>'+ attn.map(holdRow).join('')+
+    '<p class="lede" data-reveal>Vad du äger, vad det är värt och hur det gått. '+
+      '<b>Ett innehav kräver din uppmärksamhet i dag</b>, två rör på sig, tre är lugna. '+
+      'Vi läste 51 nyheter och registerposter om dina bolag i natt.</p>'+
+    overview+
+    '<div class="split ager" data-reveal><span class="lab">Äger</span>'+
+      '<span class="meta">6 innehav · 486 235 kr</span></div>'+
+    '<div class="flag" data-reveal>Kräver uppmärksamhet</div>'+ attn.map(holdRow).join('')+
     '<div class="flag" data-reveal>Rör på sig</div>'+ move.map(holdRow).join('')+
     '<div class="flag" data-reveal>Lugnt</div>'+ calm.map(holdRow).join('')+
-    '<div class="flag" data-reveal style="margin-top:38px"><span class="cnt">Följer</span> · markerat intresse, ej innehav</div>'+ follow.map(holdRow).join('');
+    '<div class="split foljer" data-reveal><span class="lab">Följer</span>'+
+      '<span class="meta">markerat intresse, ej innehav · 2 bolag</span></div>'+ follow.map(holdRow).join('');
   wire();
   setAsk(null);
 }

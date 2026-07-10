@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Upptäck · Ägarbrevet · Pro</title>
-<meta name="description" content="Upptäck: två sätt att hitta nytt. Momentum visar vad som rör sig som fakta, aldrig signal. Screenern filtrerar objektivt mot dina kriterier. En sida i Marginalen.">
+<meta name="description" content="Upptäck: två sätt att hitta nytt. Momentum visar vad som rör sig som fakta, aldrig signal. Urvalet filtrerar objektivt mot dina kriterier. En sida i Marginalen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- impeccable-disable overused-font -- Inter is the locked Marginalen label font (broadsheet.css house token: --mono), shared across the whole suite; changing it here would break house consistency. -->
@@ -315,7 +315,7 @@
         <span class="wordmark">Ägarbrevet</span>
         <a class="byline" href="/hem">by Marginalen</a>
       </div>
-      <div class="edition">Upptäck · momentum och screener</div>
+      <div class="edition">Upptäck · momentum och urvalet</div>
     </div>
     <div class="mast-rule"></div>
     <nav class="nav">
@@ -348,7 +348,7 @@
         <span class="lens-lab">Lins</span>
         <div class="seg" id="lens-seg" role="tablist" aria-label="Välj lins">
           <button data-mode="momentum" class="on" role="tab" aria-selected="true"><span class="sdot"></span>Momentum</button>
-          <button data-mode="screener" role="tab" aria-selected="false"><span class="sdot"></span>Screener</button>
+          <button data-mode="screener" role="tab" aria-selected="false"><span class="sdot"></span>Urvalet</button>
         </div>
       </div>
       <p class="lens-sub" id="lens-sub">Aktier som rör sig. Spaningens DNA: rena fakta om rörelser, aldrig en tolkning.</p>
@@ -401,7 +401,7 @@
     <!-- ── MODE 2: SCREENER ────────────────────────────────────────── -->
     <section class="mode" id="mode-screener" data-reveal>
       <div class="mode-head">
-        <h2 class="mode-name">Screener</h2>
+        <h2 class="mode-name">Urvalet</h2>
         <span class="badge">objektiv filtrering</span>
       </div>
       <p class="mode-desc">Skriv vad du letar efter i klartext, få en lista ut. Varje träff kommer med en rad om <span class="cite">varför den matchar och var den haltar</span>. Objektiv filtrering mot dina kriterier, aldrig en rekommendation.</p>
@@ -453,7 +453,7 @@
         <div class="cstep">
           <span class="cverb">Först</span>
           <b>Upptäck hittar</b>
-          <span>Momentum visar vad som rör sig, screenern vad som matchar. Fakta, aldrig en signal.</span>
+          <span>Momentum visar vad som rör sig, urvalet vad som matchar. Fakta, aldrig en signal.</span>
         </div>
         <div class="cstep">
           <span class="cverb">Sedan</span>
@@ -743,6 +743,7 @@ function setMode(mode){
   document.getElementById('mode-momentum').classList.toggle('on', mode==='momentum');
   document.getElementById('mode-screener').classList.toggle('on', mode==='screener');
   document.getElementById('lens-sub').textContent = LENS_SUB[mode];
+  if(window.__setPanelCtx){ window.__setPanelCtx(mode); }
 }
 document.querySelectorAll('#lens-seg button').forEach(b =>
   b.addEventListener('click', () => setMode(b.dataset.mode)));
@@ -765,15 +766,31 @@ document.querySelectorAll('#lens-seg button').forEach(b =>
 <div class="askdock"><div class="askbar"><form id="askform"><span class="askctx">Upptäck</span>
 <input id="askinput" type="text" placeholder="Fråga om Upptäck..." autocomplete="off" aria-label="Fråga AI">
 <span class="kbd">⌘K</span><button class="asksend" type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></form></div></div>
-<script>(function(){var SEEDS=["Varför rör sig Telvio?","Vad matchar mina kriterier?","Är det här en signal?"];var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
-seed.innerHTML=SEEDS.map(function(q){return '<button class="seedb" type="button">'+q+'</button>';}).join('');
-seed.querySelectorAll('.seedb').forEach(function(b){b.addEventListener('click',function(){ansv(b.textContent);});});
+<script>(function(){
+// Kontexten följer den valda linsen: Momentum / Urvalet.
+var CTX={
+  momentum:{label:'Momentum',seeds:["Varför rör sig Telvio?","Är det här en signal?","Vad betyder relativstyrka?"]},
+  screener:{label:'Urvalet',seeds:["Vad matchar mina kriterier?","Hur läser jag P/E?","Var haltar den här träffen?"]}
+};
+var SEEDS=CTX.momentum.seeds;
+var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
+var ctxEl=document.querySelector('.askctx'),seedh=document.querySelector('.seedh');
+function renderSeeds(){seed.innerHTML=SEEDS.map(function(q){return '<button class="seedb" type="button">'+q+'</button>';}).join('');
+seed.querySelectorAll('.seedb').forEach(function(b){b.addEventListener('click',function(){ansv(b.textContent);});});}
+window.__setPanelCtx=function(mode){var c=CTX[mode]||CTX.momentum;SEEDS=c.seeds;
+if(ctxEl)ctxEl.textContent=c.label;
+if(inp)inp.setAttribute('placeholder','Fråga om '+c.label.toLowerCase()+'...');
+if(seedh)seedh.textContent='Fråga om '+c.label.toLowerCase();
+renderSeeds();};
 function ansv(q){ans.innerHTML='<b>'+q+'</b><br>I den här prototypen är svaren förberedda. I skarpt läge svarar modellen med varje siffra spårad till källa och en länk till rätt lektion, och avböjer det som ligger utanför dina bolag och kursen.';ans.classList.add('show');op();}
 function op(){panel.classList.add('show');panel.setAttribute('aria-hidden','false');}
 function cl(){panel.classList.remove('show');panel.setAttribute('aria-hidden','true');}
 document.getElementById('askx').addEventListener('click',cl);
 document.getElementById('askform').addEventListener('submit',function(e){e.preventDefault();ansv((inp.value||'').trim()||SEEDS[0]);});
 inp.addEventListener('focus',op);
-document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});})();</script>
+document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});
+// Sätt kontexten från den lins som är vald vid inladdning.
+var act=document.querySelector('#lens-seg button.on');
+window.__setPanelCtx(act?act.dataset.mode:'momentum');})();</script>
 </body>
 </html>

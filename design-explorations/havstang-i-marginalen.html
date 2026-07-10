@@ -18,7 +18,7 @@
     --ink:#211C17; --mut:#6E6456; --faint:#9C907E;
     --long:#2F7A55; --long-d:#2F7A55; --short:#9B3A2E;
     --gold:#B07C1E; --accent:#2C5646;
-    --disp:"Outfit",system-ui,sans-serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+    --disp:"Outfit",system-ui,sans-serif; --sans:"Inter",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
     --serif:"Spectral",Georgia,serif;
     /* soft chip-fyllningar */
     --long-soft:#E7EFE6; --short-soft:#F3E3DD; --gold-soft:#F1E8D1;
@@ -33,7 +33,7 @@
   .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
   a{color:inherit}
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .mono{font-family:var(--num);font-variant-numeric:tabular-nums}
 
   /* ── masthead (delad med resten av Marginalen) ─────────────────────── */
   .masthead{padding:30px 0 0}
@@ -56,7 +56,7 @@
   .h1{font-family:var(--disp);font-weight:300;font-size:clamp(30px,5vw,52px);line-height:1.05;margin:0 0 14px;letter-spacing:-.02em;text-wrap:balance}
   .sub{font-family:var(--serif);color:var(--ink-soft);font-size:clamp(16px,1.8vw,19px);max-width:540px;margin:0 auto 12px;line-height:1.55;text-wrap:pretty}
   .landing-tag{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--line2);border-radius:99px;padding:4px 12px;letter-spacing:.06em;margin:0 auto 30px;display:inline-block}
-  .searchbox{width:min(560px,90vw);position:relative}
+  .searchbox{width:min(560px,90vw);position:relative;margin:0 auto}
   .searchbox input{width:100%;background:var(--card);border:1px solid var(--line2);border-radius:99px;color:var(--ink);font-size:18px;font-family:var(--sans);padding:17px 22px 17px 52px;outline:none;transition:border-color .15s,box-shadow .15s}
   .searchbox input::placeholder{color:var(--mut)}
   .searchbox input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(44,86,70,.14)}
@@ -64,6 +64,25 @@
   .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
   .chip{background:var(--card);border:1px solid var(--line2);border-radius:99px;padding:8px 15px;font-size:13.5px;color:var(--mut);cursor:pointer;transition:.14s}
   .chip:hover{color:var(--accent);border-color:var(--accent);background:var(--card)}
+
+  /* populärt just nu (levande ingång på landningen) */
+  .pop{width:min(780px,92vw);margin:44px auto 0;text-align:left}
+  .pop-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:15px;margin-bottom:15px}
+  .pop-k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .pop-note{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+  .pop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:11px}
+  .pcard{display:flex;flex-direction:column;gap:11px;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;text-align:left;transition:border-color .15s,transform .18s cubic-bezier(.2,.7,.2,1),box-shadow .18s}
+  .pcard:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 9px 24px rgba(33,28,23,.10)}
+  .pc-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .pc-name{font-family:var(--disp);font-weight:500;font-size:16px;letter-spacing:-.01em;color:var(--ink)}
+  .pc-move{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;white-space:nowrap}
+  .pc-move.up{color:var(--long)}
+  .pc-move.down{color:var(--short)}
+  .spark{width:100%;height:32px;display:block}
+  .pc-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .pc-n{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+  .pc-go{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+  @media(prefers-reduced-motion:reduce){.pcard{transition:border-color .15s}.pcard:hover{transform:none}}
 
   /* wizard */
   #wizard{display:none;padding:48px 0 80px}
@@ -115,7 +134,7 @@
   .wtag{font-size:12px;background:var(--long-soft);border:1px solid var(--long-d);color:var(--long);border-radius:99px;padding:5px 11px}
   .metrics{display:grid;grid-template-columns:repeat(4,auto);gap:12px 28px}
   .met .k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
-  .met .v{font-family:var(--mono);font-size:18px;font-weight:500;margin-top:2px}
+  .met .v{font-family:var(--num);font-size:18px;font-weight:500;margin-top:2px}
   .cta{margin-top:18px;display:flex;gap:10px;position:relative;flex-wrap:wrap}
   .btn{font-family:var(--sans);font-size:13px;border-radius:99px;padding:11px 18px;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--ink);transition:.14s}
   .btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -128,7 +147,7 @@
   .bk .lab{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:9px;display:flex;align-items:center;gap:6px}
   .bk .nm{font-family:var(--disp);font-weight:500;font-size:14.5px;line-height:1.25}
   .bk .em{color:var(--mut);font-size:12px;margin-top:2px}
-  .bk .big{font-family:var(--mono);font-size:21px;font-weight:600;margin-top:11px}
+  .bk .big{font-family:var(--num);font-size:21px;font-weight:600;margin-top:11px}
   .bk .note{font-size:11.5px;color:var(--mut);margin-top:4px}
   .bk.warn .big{color:var(--gold)}
 
@@ -158,7 +177,7 @@
   table{width:100%;border-collapse:collapse;font-size:13px}
   th{text-align:right;color:var(--faint);font-weight:500;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:0 0 10px;border-bottom:1px solid var(--line)}
   th:first-child,td:first-child{text-align:left}
-  td{padding:11px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+  td{padding:11px 0;border-bottom:1px solid var(--line);font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink)}
   td.nm{font-family:var(--sans);color:var(--ink-soft)}
   tr.dom td{opacity:.4}
   .pill{display:inline-block;font-size:10.5px;border-radius:99px;padding:2px 9px;font-family:var(--sans)}
@@ -166,7 +185,7 @@
   .pill.warr{background:var(--gold-soft);color:var(--gold)}
 
   /* isin */
-  .isin input{width:100%;background:var(--card);border:1px solid var(--line2);border-radius:99px;color:var(--ink);padding:11px 16px;font-family:var(--mono);font-size:13px;outline:none}
+  .isin input{width:100%;background:var(--card);border:1px solid var(--line2);border-radius:99px;color:var(--ink);padding:11px 16px;font-family:var(--num);font-size:13px;outline:none}
   .isin input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(44,86,70,.13)}
   .isinres{margin-top:12px;font-size:13px;line-height:1.5;display:none}
   .isinres .own{color:var(--mut)} .isinres b{color:var(--ink)}
@@ -186,6 +205,30 @@
   .site-foot__nav a{color:var(--muted);text-decoration:none}
   .site-foot__nav a:hover{color:var(--oxblood)}
   .site-foot__fine{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint)}
+
+  /* ambient Fråga (injicerad, delad med resten av Ägarbrevet) */
+  body{padding-bottom:88px}
+  .askdock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(transparent,var(--paper) 32%);pointer-events:none}
+  .askbar{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,52px) 18px;pointer-events:auto}
+  .askbar form{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:10px 12px 10px 16px;box-shadow:0 6px 24px rgba(33,28,23,.10)}
+  .askctx{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);white-space:nowrap;border-right:1px solid var(--rule);padding-right:10px}
+  .askbar input{flex:1;border:none;background:none;font-family:var(--serif);font-size:15px;color:var(--ink);outline:none;min-width:0}
+  .askbar input::placeholder{color:var(--muted)}
+  .askbar .kbd{font-family:var(--mono);font-size:10px;color:var(--faint);border:1px solid var(--rule-strong);border-radius:6px;padding:3px 7px;white-space:nowrap}
+  .asksend{border:none;background:var(--oxblood);color:var(--paper);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+  .asksend svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .askpanel{position:fixed;left:0;right:0;bottom:74px;z-index:41;display:none}
+  .askpanel.show{display:block}
+  .askpanel .inner{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,52px);position:relative}
+  .askcard{background:var(--card);border:1px solid var(--rule-strong);border-radius:16px;padding:16px 18px;box-shadow:0 18px 50px rgba(33,28,23,.22)}
+  .askcard .seedh{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .askcard .seed{display:flex;gap:8px;flex-wrap:wrap}
+  .askcard .seedb{font-family:var(--serif);font-size:14px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 14px;color:var(--ink-soft);cursor:pointer}
+  .askcard .seedb:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .askcard .ans{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);display:none;font-size:14px;color:var(--ink-soft);line-height:1.55}
+  .askcard .ans.show{display:block}
+  .askcard .ans b{color:var(--ink);font-weight:600}
+  .askx{position:absolute;top:-40px;right:clamp(20px,5vw,52px);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 12px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -228,6 +271,10 @@
     <div class="chips">
       <span class="chip">Tesla</span><span class="chip">NVIDIA</span><span class="chip">OMXS30</span>
       <span class="chip">Guld</span><span class="chip">Olja</span><span class="chip">Bitcoin</span><span class="chip">S&P 500</span>
+    </div>
+    <div class="pop">
+      <div class="pop-h"><span class="pop-k">Populärt just nu</span><span class="pop-note">fiktiv rörelse · 30 dagar</span></div>
+      <div class="pop-grid" id="popgrid"></div>
     </div>
   </div>
 </section>
@@ -561,6 +608,48 @@ document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>showWizard(c.textCon
 document.getElementById('search').addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target.value.trim()) showWizard(e.target.value.trim());
 });
+
+/* ---------- populärt just nu (levande ingång, fiktiv rörelse) ---------- */
+const POP=[
+  {u:'Tesla',  move:3.4,  n:142, s:[38,42,40,46,44,50,48,55,52,60,58,66,63,70,74,79]},
+  {u:'NVIDIA', move:1.8,  n:168, s:[50,52,55,53,58,60,59,63,62,66,64,68,70,69,73,76]},
+  {u:'Bitcoin',move:-2.7, n:121, s:[70,66,68,62,64,58,60,54,56,50,52,46,48,44,46,41]},
+  {u:'Guld',   move:0.9,  n:54,  s:[44,45,44,46,47,46,48,49,48,50,51,50,52,53,52,54]},
+  {u:'OMXS30', move:-0.6, n:96,  s:[62,61,63,60,58,59,57,56,58,55,54,56,53,55,52,54]},
+  {u:'Olja',   move:1.2,  n:63,  s:[48,52,49,54,51,56,53,58,50,55,52,57,54,59,56,61]},
+];
+function spark(series,up){
+  var w=100,h=32,mn=Math.min.apply(null,series),mx=Math.max.apply(null,series),rng=(mx-mn)||1;
+  var pts=series.map(function(v,i){var x=(i/(series.length-1))*w;var y=h-((v-mn)/rng)*(h-5)-2.5;return x.toFixed(1)+','+y.toFixed(1);});
+  var col=up?'var(--long)':'var(--short)';
+  return '<svg class="spark" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true">'+
+    '<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+col+'" stroke-width="1.6" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+document.getElementById('popgrid').innerHTML=POP.map(function(p){
+  var up=p.move>=0, sign=up?'+':'';
+  return '<button type="button" class="pcard" data-u="'+p.u+'">'+
+    '<div class="pc-top"><span class="pc-name">'+p.u+'</span><span class="pc-move '+(up?'up':'down')+'">'+sign+p.move.toFixed(1).replace('.',',')+' %</span></div>'+
+    spark(p.s,up)+
+    '<div class="pc-foot"><span class="pc-n">'+p.n+' produkter</span><span class="pc-go">Jämför →</span></div>'+
+  '</button>';
+}).join('');
+document.querySelectorAll('.pcard').forEach(function(c){c.addEventListener('click',function(){showWizard(c.dataset.u);});});
 </script>
+
+<div class="askpanel" id="askpanel" aria-hidden="true"><div class="inner"><button class="askx" id="askx">Stäng · Esc</button>
+<div class="askcard"><div class="seedh">Fråga om Hävstång</div><div class="seed" id="seed"></div><div class="ans" id="ans"></div></div></div></div>
+<div class="askdock"><div class="askbar"><form id="askform"><span class="askctx">Hävstång</span>
+<input id="askinput" type="text" placeholder="Fråga om hävstång..." autocomplete="off" aria-label="Fråga AI">
+<span class="kbd">⌘K</span><button class="asksend" type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></form></div></div>
+<script>(function(){var SEEDS=["Vad är knock-out-nivån?","Vilken emittent är billigast?","Hur funkar finansieringskostnaden?"];var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
+seed.innerHTML=SEEDS.map(function(q){return '<button class="seedb" type="button">'+q+'</button>';}).join('');
+seed.querySelectorAll('.seedb').forEach(function(b){b.addEventListener('click',function(){ansv(b.textContent);});});
+function ansv(q){ans.innerHTML='<b>'+q+'</b><br>I den här prototypen är svaren förberedda. I skarpt läge svarar modellen med varje siffra spårad till källa och en länk till rätt lektion, och avböjer det som ligger utanför dina bolag och kursen.';ans.classList.add('show');op();}
+function op(){panel.classList.add('show');panel.setAttribute('aria-hidden','false');}
+function cl(){panel.classList.remove('show');panel.setAttribute('aria-hidden','true');}
+document.getElementById('askx').addEventListener('click',cl);
+document.getElementById('askform').addEventListener('submit',function(e){e.preventDefault();ansv((inp.value||'').trim()||SEEDS[0]);});
+inp.addEventListener('focus',op);
+document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});})();</script>
 </body>
 </html>

@@ -104,12 +104,12 @@
      ett medföljande rutnät. Faller till en kolumn på smala skärmar. */
   .beteende-grid{display:grid;grid-template-columns:1fr;gap:0 44px;align-items:start;margin-top:6px}
   .bt-main{min-width:0}
-  .bt-rail{min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-top:8px}
-  .bt-rail .col{max-width:none}
+  .bt-rail{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 28px;margin-top:8px}
+  .bt-rail .col{max-width:none;min-width:0}
   .bt-rail .bt-wide{grid-column:1 / -1}
   @media(min-width:1000px){
     .beteende-grid{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
-    .bt-rail{grid-template-columns:1fr;margin-top:0}
+    .bt-rail{grid-template-columns:minmax(0,1fr);margin-top:0}
     .bt-rail .bt-wide{grid-column:auto}
   }
   @media(max-width:640px){
@@ -909,6 +909,7 @@
     });
     if(focusTab){ tabs[idx].focus(); }
     history.replaceState(null, '', '#'+tabs[idx].getAttribute('data-tab'));
+    if(window.__setPanelCtx){ window.__setPanelCtx(tabs[idx].getAttribute('data-tab')); }
   }
 
   tabs.forEach(function(t, i){
@@ -1023,15 +1024,32 @@ renderBody();
 <div class="askdock"><div class="askbar"><form id="askform"><span class="askctx">Analysen</span>
 <input id="askinput" type="text" placeholder="Fråga om Analysen..." autocomplete="off" aria-label="Fråga AI">
 <span class="kbd">⌘K</span><button class="asksend" type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></form></div></div>
-<script>(function(){var SEEDS=["Var lutar min portfölj lika?","Vad kostar mitt beteende?","Kan jag kvitta förluster?"];var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
-seed.innerHTML=SEEDS.map(function(q){return '<button class="seedb" type="button">'+q+'</button>';}).join('');
-seed.querySelectorAll('.seedb').forEach(function(b){b.addEventListener('click',function(){ansv(b.textContent);});});
+<script>(function(){
+// Kontexten följer den aktiva fliken: Beteende / Korsrisk / Skatt.
+var CTX={
+  beteende:{label:'Beteende',seeds:["Vad kostar mitt beteende?","Säljer jag vinnare för tidigt?","Vad säger min beslutsdagbok?"]},
+  korsrisk:{label:'Korsrisk',seeds:["Var lutar min portfölj lika?","Vilken risk delar mina bolag?","Hur koncentrerad är jag?"]},
+  skatt:{label:'Skatt',seeds:["Kan jag kvitta förluster?","Vad gäller vid årsskiftet?","Hur funkar K4?"]}
+};
+var SEEDS=CTX.beteende.seeds;
+var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
+var ctxEl=document.querySelector('.askctx'),seedh=document.querySelector('.seedh');
+function renderSeeds(){seed.innerHTML=SEEDS.map(function(q){return '<button class="seedb" type="button">'+q+'</button>';}).join('');
+seed.querySelectorAll('.seedb').forEach(function(b){b.addEventListener('click',function(){ansv(b.textContent);});});}
+window.__setPanelCtx=function(tab){var c=CTX[tab]||CTX.beteende;SEEDS=c.seeds;
+if(ctxEl)ctxEl.textContent=c.label;
+if(inp)inp.setAttribute('placeholder','Fråga om '+c.label.toLowerCase()+'...');
+if(seedh)seedh.textContent='Fråga om '+c.label.toLowerCase();
+renderSeeds();};
 function ansv(q){ans.innerHTML='<b>'+q+'</b><br>I den här prototypen är svaren förberedda. I skarpt läge svarar modellen med varje siffra spårad till källa och en länk till rätt lektion, och avböjer det som ligger utanför dina bolag och kursen.';ans.classList.add('show');op();}
 function op(){panel.classList.add('show');panel.setAttribute('aria-hidden','false');}
 function cl(){panel.classList.remove('show');panel.setAttribute('aria-hidden','true');}
 document.getElementById('askx').addEventListener('click',cl);
 document.getElementById('askform').addEventListener('submit',function(e){e.preventDefault();ansv((inp.value||'').trim()||SEEDS[0]);});
 inp.addEventListener('focus',op);
-document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});})();</script>
+document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});
+// Sätt kontexten från den flik som är vald vid inladdning.
+var act=document.querySelector('.ptab[aria-selected="true"]');
+window.__setPanelCtx(act?act.getAttribute('data-tab'):'beteende');})();</script>
 </body>
 </html>
