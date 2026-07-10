@@ -11,7 +11,7 @@
   /* Modern stack: Outfit (sans display/rubriker), Spectral (serif brodtext +
      kursiva pull-quotes), Inter (etiketter, ersatter maskinskriften). --mono
      behaller sitt namn men ar nu Inter sans. */
-  --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif;
+  --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif; --slab:"Zilla Slab",Georgia,serif;
 }
 *{box-sizing:border-box;margin:0}
 /* Always reserve the scrollbar track so centered content (and the masthead)
@@ -33,10 +33,11 @@ a{color:inherit}
 /* ── masthead ───────────────────────────────────────────────────────── */
 .masthead{padding:30px 0 0}
 .mast-top{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap; padding-bottom:14px}
-.wordmark{font-family:var(--display); font-weight:500; font-size:clamp(26px,3.4vw,38px); letter-spacing:.04em; text-transform:uppercase; line-height:.9; text-decoration:none; color:var(--ink)}
+.wordmark{font-family:var(--slab); font-weight:700; font-size:clamp(24px,3.2vw,36px); letter-spacing:.03em; text-transform:uppercase; line-height:.9; text-decoration:none; color:var(--ink)}
 .wordmark span{color:inherit}
 .edition{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.7}
 .mast-rule{height:2px; background:var(--rule-strong)}
+.mast-rule--top{height:1px; margin-bottom:15px}
 .nav{display:flex; flex-wrap:wrap; gap:2px 24px; padding:2px 0; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase}
 .nav a{display:inline-flex; align-items:center; min-height:40px; color:var(--muted); text-decoration:none}
 .nav a:hover,.nav a.here{color:var(--ink)}
