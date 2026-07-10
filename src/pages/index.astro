@@ -2,26 +2,43 @@
 import Broadsheet from '../layouts/Broadsheet.astro';
 import Seal from '../components/Seal.astro';
 
-// Start-CTA:erna leder till kursöversikten, inte rakt in i en lektion.
+// Slank invite-only-omslag. Skiljer sig medvetet fran /hem (det inloggade navet):
+// har ar boxade sigillet hjalten, mastheaden gomd (chrome=none), och sidan ar en
+// entré, inte en saljlandning. Sigillet syns EN gang; footern kor vanlig wordmark.
 ---
 
 <Broadsheet
-  title="Delägaren: Lär dig analysera aktier som en ägare"
-  description="Onlinekurs i fundamental aktieanalys. Sjutton kapitel, ett steg i taget: från vad en aktie är till att sätta ett eget riktpris med felmarginal."
-  nav="landing"
+  title="Delägaren: analysera aktier som en ägare"
+  description="Inbjudningsstyrd onlinekurs i fundamental aktieanalys. Sjutton kapitel, ett steg i taget: från vad en aktie är till att sätta ett eget riktpris med felmarginal."
+  nav="none"
+  chrome="none"
 >
-  <main class="wrap" style="flex:1; display:flex; flex-direction:column">
-    <section class="hero hero--bild">
-      <div>
-        <div style="margin:0 0 28px"><Seal size="lg" href="/" /></div>
-        <div class="kicker">Onlinekurs i fundamental analys</div>
+  <script is:inline>
+    // Redan inloggad? Skicka till det inloggade hemmet i stallet for omslaget.
+    try {
+      if (localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token')) {
+        location.replace('/hem');
+      }
+    } catch (e) {}
+  </script>
+
+  <main class="cover">
+    <div class="wrap cover-top">
+      <a class="cover-login" href="/hem">Logga in</a>
+    </div>
+
+    <section class="wrap cover-hero hero--bild">
+      <div class="cover-lead">
+        <Seal size="lg" href="/" />
+        <div class="kicker">Onlinekurs i fundamental analys · inbjudan krävs</div>
         <h1 class="h-title">Lär dig analysera aktier som en <em>ägare</em>, inte en spekulant.</h1>
         <p class="standfirst">Sjutton kapitel, ett steg i taget. Från vad en aktie faktiskt är till att läsa en årsredovisning och sätta ditt eget riktpris med felmarginal.</p>
         <div class="cta-row">
           <a class="btn-ink" href="/fokus">Börja kursen →</a>
-          <a class="link-mono" href="/fokus" style="color:var(--ink-soft)">Se innehållet</a>
+          <a class="link-mono" href="/labs/inbjudan-i-marginalen.html" style="color:var(--ink-soft)">Har du en inbjudan? →</a>
         </div>
       </div>
+
       <figure class="fig">
         <div class="cap"><span>Figur 1 · Pris mot värde</span><span>illustrativ</span></div>
         <svg viewBox="0 0 360 150" aria-hidden="true">
@@ -39,44 +56,28 @@ import Seal from '../components/Seal.astro';
       </figure>
     </section>
 
-    <section class="vps">
-      <div class="vp">
-        <div class="num">01</div>
-        <h3>Tänk som ägare</h3>
-        <p>Du köper en bit av ett företag, inte en lott. Den vanan lägger vi först, allt annat vilar på den.</p>
-      </div>
-      <div class="vp">
-        <div class="num">02</div>
-        <h3>Läs ett bolag</h3>
-        <p>Resultat, balans och kassaflöde, plus nyckeltalen som betyder något, förklarat med grafik som byggs upp framför dig.</p>
-      </div>
-      <div class="vp">
-        <div class="num">03</div>
-        <h3>Värdera på riktigt</h3>
-        <p>Sätt ett eget riktpris med säkerhetsmarginal, och gå igenom checklistan innan du köper.</p>
-      </div>
-    </section>
-
-    <section class="cta-band">
-      <div class="cta-inner">
-        <div>
-          <div class="cta-kicker">Börja idag</div>
-          <div class="cta-rubrik">Första lektionen tar åtta minuter.</div>
-        </div>
-        <a class="btn-ink" href="/fokus">Kom igång →</a>
-      </div>
-      <div class="bildkredit">Börshuset, Stockholm · foto: Jorge Láscar (CC BY 2.0)</div>
-    </section>
+    <div class="wrap cover-foot">
+      <a class="wordmark" href="/">Delägaren</a>
+      <p class="cover-fine">Delägaren, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
+    </div>
   </main>
 </Broadsheet>
 
 <style>
-  .hero { flex-shrink:0; display:grid; grid-template-columns:1.2fr .8fr; gap:clamp(32px,5vw,60px); align-items:center; padding:56px 0 44px; border-bottom:1px solid var(--rule); }
+  /* Omslaget fyller hela vyn: hjalten vertikalt centrerad. */
+  .cover { flex:1; display:flex; flex-direction:column; }
+  .cover-top { display:flex; justify-content:flex-end; align-items:center; padding:22px 0 0; }
+  .cover-login { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); text-decoration:none; min-height:40px; display:inline-flex; align-items:center; }
+  .cover-login:hover { color:var(--oxblood); }
 
-  /* Börshusets fasad som dämpat tryck bakom heron: gråskala i låg opacitet över
-     papperet ger gravyrkänsla, och en paperskyddande gradient håller textspalten
-     på säker kontrast. Full utfallsbredd via viewport-breakout. */
-  .hero--bild { position:relative; }
+  .cover-hero { flex:1; display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(32px,5vw,60px); align-items:center; padding:40px 0 44px; position:relative; }
+  .cover-lead .seal { margin:0 0 28px; }
+  .cover-hero h1 { text-wrap:balance; margin-top:14px; }
+  .cover-hero .standfirst { text-wrap:pretty; }
+  .cover-hero .cta-row { display:flex; gap:14px; align-items:center; margin-top:30px; flex-wrap:wrap; }
+
+  /* Borshusets fasad som dampat tryck bakom omslaget: grayscale i lag opacitet,
+     paperskyddande gradient haller textspalten pa kontrast. Full utfallsbredd. */
   .hero--bild::before {
     content:""; position:absolute; top:0; bottom:0; left:50%; width:100vw; margin-left:-50vw;
     background-image:url('/bilder/borshuset-1600.jpg');
@@ -90,38 +91,12 @@ import Seal from '../components/Seal.astro';
                linear-gradient(180deg, var(--paper) 0%, rgba(246,244,239,0) 22%, rgba(246,244,239,0) 72%, var(--paper) 100%);
     pointer-events:none; z-index:-1;
   }
-  .hero h1 { text-wrap:balance; }
-  .hero .standfirst { text-wrap:pretty; }
 
-  /* CTA-bandet: samma fotografi, dränkt i oxblod. En bild, två behandlingar. */
-  .cta-band {
-    position:relative; left:50%; width:100vw; margin-left:-50vw;
-    margin-top:auto; padding:clamp(40px,6vw,72px) 0 18px;
-    background:
-      linear-gradient(rgba(122,38,30,.90), rgba(96,28,22,.93)),
-      url('/bilder/borshuset-1600.jpg') center 40% / cover;
-    color:var(--paper);
-  }
-  .cta-inner {
-    max-width:var(--maxw, 1080px); margin:0 auto; padding:0 clamp(20px,5vw,52px);
-    display:flex; align-items:center; justify-content:space-between; gap:28px; flex-wrap:wrap;
-  }
-  .cta-kicker { font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:rgba(246,244,239,.75); margin-bottom:8px; }
-  .cta-rubrik { font-family:var(--slab); font-weight:500; font-size:clamp(22px,2.6vw,30px); letter-spacing:-.005em; text-wrap:balance; }
-  .cta-band .btn-ink { background:var(--paper); color:var(--ink); }
-  .cta-band .btn-ink:hover { background:var(--paper-2); color:var(--oxblood); transform:translateX(3px); }
-  .cta-band .btn-ink:focus-visible { outline-color:var(--paper); }
-  .bildkredit { max-width:var(--maxw, 1080px); margin:26px auto 0; padding:10px clamp(20px,5vw,52px) 0; border-top:1px solid rgba(246,244,239,.22); font-family:var(--mono); font-size:10px; letter-spacing:.05em; color:rgba(246,244,239,.6); }
-  .hero .cta-row { display:flex; gap:14px; align-items:center; margin-top:30px; flex-wrap:wrap; }
-  .vps { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:50px 0; border-top:1px solid var(--rule); }
-  .vp { padding:28px 26px 28px 0; }
-  .vp + .vp { border-left:1px solid var(--rule); padding-left:26px; }
-  .vp .num { font-family:var(--display); font-weight:300; font-size:30px; color:var(--oxblood); line-height:1; }
-  .vp h3 { font-family:var(--display); font-weight:500; font-size:19px; margin:12px 0 8px; letter-spacing:-.01em; }
-  .vp p { font-size:15.5px; color:var(--ink-soft); line-height:1.55; }
+  .cover-foot { border-top:1px solid var(--rule); padding:22px 0 40px; display:flex; justify-content:space-between; align-items:center; gap:16px 24px; flex-wrap:wrap; }
+  .cover-foot .wordmark { font-size:clamp(20px,2.4vw,26px); }
+  .cover-fine { font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; color:var(--faint); }
+
   @media (max-width:760px) {
-    .hero { grid-template-columns:1fr; gap:30px; }
-    .vps { grid-template-columns:1fr; }
-    .vp { border-left:0 !important; padding-left:0 !important; border-top:1px solid var(--rule); }
+    .cover-hero { grid-template-columns:1fr; gap:30px; padding-top:20px; }
   }
 </style>
