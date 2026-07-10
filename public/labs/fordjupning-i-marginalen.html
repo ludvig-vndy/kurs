@@ -100,6 +100,31 @@
   [data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
   [data-reveal].on{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}}
+
+  /* ambient Fråga (injicerad) */
+  body{padding-bottom:88px}
+  .askdock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:linear-gradient(transparent,var(--paper) 32%);pointer-events:none}
+  .askbar{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,52px) 18px;pointer-events:auto}
+  .askbar form{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;padding:10px 12px 10px 16px;box-shadow:0 6px 24px rgba(33,28,23,.10)}
+  .askctx{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);white-space:nowrap;border-right:1px solid var(--rule);padding-right:10px}
+  .askbar input{flex:1;border:none;background:none;font-family:var(--serif);font-size:15px;color:var(--ink);outline:none;min-width:0}
+  .askbar input::placeholder{color:var(--muted)}
+  .askbar .kbd{font-family:var(--mono);font-size:10px;color:var(--faint);border:1px solid var(--rule-strong);border-radius:6px;padding:3px 7px;white-space:nowrap}
+  .asksend{border:none;background:var(--oxblood);color:var(--paper);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+  .asksend svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .askpanel{position:fixed;left:0;right:0;bottom:74px;z-index:41;display:none}
+  .askpanel.show{display:block}
+  .askpanel .inner{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,52px);position:relative}
+  .askcard{background:var(--card);border:1px solid var(--rule-strong);border-radius:16px;padding:16px 18px;box-shadow:0 18px 50px rgba(33,28,23,.22)}
+  .askcard .seedh{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .askcard .seed{display:flex;gap:8px;flex-wrap:wrap}
+  .askcard .seedb{font-family:var(--serif);font-size:14px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:99px;padding:8px 14px;color:var(--ink-soft);cursor:pointer}
+  .askcard .seedb:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .askcard .ans{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);display:none;font-size:14px;color:var(--ink-soft);line-height:1.55}
+  .askcard .ans.show{display:block}
+  .askcard .ans b{color:var(--ink);font-weight:600}
+  .askx{position:absolute;top:-40px;right:clamp(20px,5vw,52px);background:var(--card);border:1px solid var(--rule-strong);border-radius:99px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 12px;cursor:pointer}
+
 </style>
 </head>
 <body>
@@ -218,5 +243,21 @@
     els.forEach(function(el){ io.observe(el); });
   })();
 </script>
+
+<div class="askpanel" id="askpanel" aria-hidden="true"><div class="inner"><button class="askx" id="askx">Stäng · Esc</button>
+<div class="askcard"><div class="seedh">Fråga om Pro</div><div class="seed" id="seed"></div><div class="ans" id="ans"></div></div></div></div>
+<div class="askdock"><div class="askbar"><form id="askform"><span class="askctx">Pro</span>
+<input id="askinput" type="text" placeholder="Fråga om Pro..." autocomplete="off" aria-label="Fråga AI">
+<span class="kbd">⌘K</span><button class="asksend" type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></form></div></div>
+<script>(function(){var SEEDS=["Vad ingår i Pro?","Vad kräver datalicens?","Vad gör ni aldrig?"];var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
+seed.innerHTML=SEEDS.map(function(q){return '<button class="seedb" type="button">'+q+'</button>';}).join('');
+seed.querySelectorAll('.seedb').forEach(function(b){b.addEventListener('click',function(){ansv(b.textContent);});});
+function ansv(q){ans.innerHTML='<b>'+q+'</b><br>I den här prototypen är svaren förberedda. I skarpt läge svarar modellen med varje siffra spårad till källa och en länk till rätt lektion, och avböjer det som ligger utanför dina bolag och kursen.';ans.classList.add('show');op();}
+function op(){panel.classList.add('show');panel.setAttribute('aria-hidden','false');}
+function cl(){panel.classList.remove('show');panel.setAttribute('aria-hidden','true');}
+document.getElementById('askx').addEventListener('click',cl);
+document.getElementById('askform').addEventListener('submit',function(e){e.preventDefault();ansv((inp.value||'').trim()||SEEDS[0]);});
+inp.addEventListener('focus',op);
+document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});})();</script>
 </body>
 </html>
