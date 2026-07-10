@@ -10,7 +10,10 @@
    innehavet som kontext. Ingen inloggning -> svarar anda pa kursfragor. */
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
-const MODEL = "claude-sonnet-4-6";
+// Haiku: Fraga ar kort, interaktivt Q&A dar innehavet redan ges som kontext,
+// sa snabbhet + kostnad vinner over tungt resonemang. Sonnet sparas till den
+// tunga dokument-/rapportanalysen (Rapportkollen) dar noggrannhet ar kritisk.
+const MODEL = "claude-haiku-4-5-20251001";
 
 function json(obj, status) {
   return new Response(JSON.stringify(obj), {
