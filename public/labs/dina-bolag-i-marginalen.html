@@ -81,28 +81,29 @@
   .alloc-line b{color:var(--ink);font-weight:500}
 
   /* ── Sektionshuvuden: gör Äger/Följer omisskännligt ────────────────── */
-  .split{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;margin:38px 0 4px}
+  .split{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;margin:26px 0 4px}
   .split .lab{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink)}
   .split.foljer .lab{color:var(--gold)}
   .split.ager .lab{color:var(--oxblood)}
   .split .meta{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
   .split::after{content:"";flex:1;min-width:20px;height:2px;background:var(--rule-strong);align-self:center;margin-left:4px}
   /* Undergrupp inom Äger (uppmärksamhet/rör sig/lugnt): mjukare flagga. */
-  .flag{display:flex;align-items:center;gap:12px;margin:22px 0 2px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .flag{display:flex;align-items:center;gap:12px;margin:16px 0 2px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .flag::after{content:"";flex:1;height:1px;background:var(--rule)}
   .flag .cnt{color:var(--oxblood)}
 
   /* ── Innehavsrad (Äger): namn+status vänster, tal högerställda ──────── */
-  .hold{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:14px 18px;align-items:baseline;padding:16px 4px;border-top:1px solid var(--rule);text-decoration:none;color:inherit;cursor:pointer;transition:background .14s,transform .2s}
+  .hold{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:3px 18px;align-items:baseline;padding:11px 4px;border-top:1px solid var(--rule);text-decoration:none;color:inherit;cursor:pointer;transition:background .14s,transform .2s}
   .hold:hover{background:var(--card);transform:translateX(4px)}
   .hold:first-of-type{border-top:none}
   .hold>div{min-width:0}
-  .dot{width:9px;height:9px;border-radius:50%;position:relative;top:6px}
+  .dot{width:8px;height:8px;border-radius:50%;position:relative;top:6px}
   .dot.neg{background:var(--bad)} .dot.pos{background:var(--good)} .dot.gold{background:var(--gold)} .dot.calm{background:var(--faint)}
-  .hold .nm{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.01em}
-  .hold .tk{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--faint);margin-left:8px}
-  .hold .ln{color:var(--muted);font-size:15px;margin-top:4px;max-width:52ch}
-  .hold .go{font-family:var(--mono);font-size:13px;color:var(--faint);margin-top:7px;letter-spacing:.02em}
+  .hold .nm{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.01em}
+  .hold .tk{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--faint);margin-left:8px}
+  /* Status: en enda scanningsbar rad, klipps med ellips. Full text i briefingen. */
+  .hold .ln{color:var(--ink-soft);font-size:14px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hold .go{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:4px;letter-spacing:.02em}
   .hold:hover .go{color:var(--oxblood)}
 
   /* Talkolumnen: två rader. Rad 1 = värde + andel (position), rad 2 =
@@ -110,13 +111,11 @@
      högerställt så kolumnen linjerar rad mot rad. */
   .rt{text-align:right;font-variant-numeric:tabular-nums}
   .rt .amt{font-family:var(--mono);font-size:15px;color:var(--ink);white-space:nowrap}
-  .rt .amt .st{font-size:11px;color:var(--faint);margin-right:9px}
-  .rt .pos-share{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap}
-  .rt .pos-share .andel{color:var(--ink-soft)}
-  .rt .tavk{font-family:var(--mono);font-size:16px;font-weight:500;margin-top:8px;white-space:nowrap}
+  .rt .amt .andel{font-size:11px;color:var(--muted);margin-left:9px}
+  .rt .tavk{font-family:var(--mono);font-size:15px;font-weight:500;margin-top:4px;white-space:nowrap}
   .rt .tavk.up{color:var(--good)} .rt .tavk.dn{color:var(--bad)}
   .rt .tavk .kr{font-size:11px;font-weight:400;color:var(--muted);margin-left:7px}
-  .rt .day{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap}
+  .rt .day{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:2px;white-space:nowrap}
   .rt .day .v.up{color:var(--good)} .rt .day .v.dn{color:var(--bad)}
   .rt .day .lbl{color:var(--faint)}
 
@@ -460,9 +459,8 @@ function holdRow(h){
     rt = '<div class="watch">'+h.watch+'</div>'+
          '<div class="make">Gör till innehav →</div>';
   } else {
-    // Innehav: värde + andel, sedan totalavkastning (prominent) och i dag (tyst).
-    rt = '<div class="amt"><span class="st">'+h.antal+'</span>'+h.varde+'</div>'+
-         '<div class="pos-share"><span class="andel">'+h.andel+'</span> av portföljen</div>'+
+    // Innehav: värde + andel på en rad, totalavkastning (prominent), i dag (tyst).
+    rt = '<div class="amt">'+h.varde+'<span class="andel">'+h.andel+'</span></div>'+
          '<div class="tavk '+h.tavkc+'">'+h.tavk+'<span class="kr">'+h.tavkkr+'</span></div>'+
          '<div class="day"><span class="lbl">i dag </span><span class="v '+h.dayc+'">'+h.day+'</span></div>';
   }
