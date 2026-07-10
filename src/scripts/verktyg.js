@@ -183,7 +183,13 @@ function valuation(){
 
 /* ---------- Rendering ---------- */
 const $ = s=>document.querySelector(s);
-const panels = {}; document.querySelectorAll(".panel").forEach(p=>panels[p.dataset.tab]=p);
+// Fylls om vid varje montering: under ClientRouter byts DOM ut vid navigering,
+// sa panel-referenser fran modulens forsta korning blir annars foraldralosa.
+const panels = {};
+function refreshPanels(){
+  for(const k in panels) delete panels[k];
+  document.querySelectorAll(".panel").forEach(p=>panels[p.dataset.tab]=p);
+}
 
 function gaugeHTML(pct,b){
   const w = pct===null?0:pct;
@@ -490,7 +496,7 @@ function resetAll(){
 // och klient-navigering under ClientRouter). Guard: no-op utanfor verktygssidan.
 export function mountVerktyg(){
   if(!document.getElementById("nav")) return;
-  buildNav(); bindContext(); activate("checklista");
+  refreshPanels(); buildNav(); bindContext(); activate("checklista");
 }
 
 // Panelernas inline-onclick + toolbaren refererar dessa som globaler.
