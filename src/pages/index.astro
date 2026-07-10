@@ -2,84 +2,194 @@
 import Broadsheet from '../layouts/Broadsheet.astro';
 import Seal from '../components/Seal.astro';
 
-// Slank invite-only-omslag. Skiljer sig medvetet fran /hem (det inloggade navet):
-// har ar boxade sigillet hjalten, mastheaden gomd (chrome=none), och sidan ar en
-// entré, inte en saljlandning. Sigillet syns EN gang; footern kor vanlig wordmark.
+// Landningen: redaktionell forstasida ("Laroplanen"). Hero + vad du lar dig
+// (de 5 delarna med representativa kapitelbilder) + verktygen som ingar.
+// Mastheaden ar gomd (chrome=none); sigillet bar identiteten i heron.
+
+const delar = [
+  { n: 'I',   titel: 'Grunderna',      sub: 'Tankesätt och hur ett bolag fungerar', kap: 'Kapitel 0–2',   img: '/bilder/kapitel-1.jpg',
+    lar: 'Vad en aktie faktiskt är, en investeringsfilosofi att stå på, och hur affärsmodeller tjänar pengar.' },
+  { n: 'II',  titel: 'Förstå bolaget', sub: 'Läsa rapporten och bedöma kvalitet',   kap: 'Kapitel 3–7',   img: '/bilder/kapitel-4.jpg',
+    lar: 'Årsredovisningen, räkenskaperna, nyckeltalen som betyder något, konkurrensfördelar och kapitalallokering.' },
+  { n: 'III', titel: 'Värdering',      sub: 'Sätta en siffra och en felmarginal',   kap: 'Kapitel 8–10',  img: '/bilder/kapitel-8.jpg',
+    lar: 'Värderingsgrunderna, värdering i praktiken, och att bygga in en säkerhetsmarginal du överlever att ha fel med.' },
+  { n: 'IV',  titel: 'I praktiken',    sub: 'Psykologi, case och egen process',     kap: 'Kapitel 11–16', img: '/bilder/kapitel-11.jpg',
+    lar: 'Investeringspsykologi, tillväxtbolag, en skarp fallstudie och din egen checklista innan du köper.' },
+  { n: 'V',   titel: 'Fördjupning',    sub: 'Äga bolagen och säkra avkastningen',   kap: 'Kapitel 17–18', img: '/bilder/kapitel-18.jpg',
+    lar: 'Att äga ett förhoppningsbolag med öppna ögon, och att hålla girigheten i schack när det gått bra.' },
+];
+
+const verktyg = [
+  { t: 'Analysverktyg', d: 'Sju verktyg att gå igenom innan du köper en aktie.',        href: '/verktyg' },
+  { t: 'Fråga',         d: 'Fråga om dina bolag och kursen. Svar med källa.',           href: '/labs/fraga-i-marginalen.html' },
+  { t: 'Dina bolag',    d: 'Dina innehav, lästa varje natt med källa till varje siffra.', href: '/labs/dina-bolag-i-marginalen.html' },
+  { t: 'Rapportkollen', d: 'Årsredovisningen tolkad, varje tal spårat till sidan.',      href: '/labs/rapportkollen-i-marginalen.html' },
+  { t: 'Hävstång',      d: 'Beslutsstöd för risk och belåning, utan pseudoprecision.',   href: '/labs/havstang-i-marginalen.html' },
+  { t: 'Ägarbrevet',    d: 'Morgonbrevet: vad som rör sig i dina bolag, kort.',          href: '/labs/agarbrevet-i-marginalen.html' },
+];
 ---
 
 <Broadsheet
   title="Delägaren: analysera aktier som en ägare"
-  description="Inbjudningsstyrd onlinekurs i fundamental aktieanalys. Sjutton kapitel, ett steg i taget: från vad en aktie är till att sätta ett eget riktpris med felmarginal."
+  description="Inbjudningsstyrd onlinekurs i fundamental aktieanalys. Sjutton kapitel i fem delar, plus verktygen som gör analysen på riktigt: analysverktyg, Fråga, Dina bolag, Rapportkollen."
   nav="none"
   chrome="none"
 >
   <script is:inline>
-    // Redan inloggad? Skicka till det inloggade hemmet i stallet for omslaget.
-    try {
-      if (localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token')) {
-        location.replace('/hem');
-      }
-    } catch (e) {}
+    try { if (localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token')) location.replace('/hem'); } catch (e) {}
   </script>
 
-  <main class="cover">
-    <div class="wrap cover-top">
-      <a class="cover-login" href="/hem">Logga in</a>
+  <main class="lp">
+    <div class="wrap lp-top">
+      <a class="lp-login" href="/hem">Logga in</a>
     </div>
 
-    <section class="wrap cover-hero hero--bild">
-      <div class="cover-lead">
-        <Seal size="lg" href="/" />
-        <div class="kicker">Onlinekurs i fundamental analys · inbjudan krävs</div>
-        <h1 class="h-title">Lär dig analysera aktier som en <em>ägare</em>, inte en spekulant.</h1>
-        <p class="standfirst">Sjutton kapitel, ett steg i taget. Från vad en aktie faktiskt är till att läsa en årsredovisning och sätta ditt eget riktpris med felmarginal.</p>
-        <div class="cta-row">
-          <a class="btn-ink" href="/fokus">Börja kursen →</a>
-          <a class="link-mono" href="/labs/inbjudan-i-marginalen.html" style="color:var(--ink-soft)">Har du en inbjudan? →</a>
-        </div>
+    <!-- Hero -->
+    <section class="wrap lp-hero hero--bild">
+      <Seal size="lg" href="/" />
+      <div class="kicker">Onlinekurs i fundamental analys · inbjudan krävs</div>
+      <h1 class="h-title">Lär dig analysera aktier som en <em>ägare</em>, inte en spekulant.</h1>
+      <p class="standfirst">Sjutton kapitel i fem delar, ett steg i taget, från vad en aktie faktiskt är till att sätta ditt eget riktpris med felmarginal. Och verktygen som gör analysen på riktigt, inte bara i teorin.</p>
+      <div class="cta-row">
+        <a class="btn-ink" href="/fokus">Börja kursen →</a>
+        <a class="link-mono" href="/labs/inbjudan-i-marginalen.html" style="color:var(--ink-soft)">Har du en inbjudan? →</a>
+      </div>
+      <div class="lp-hero__stats">
+        <span><b>19</b> kapitel</span><span class="lp-dot" aria-hidden="true">·</span>
+        <span><b>5</b> delar</span><span class="lp-dot" aria-hidden="true">·</span>
+        <span><b>6</b> verktyg ingår</span>
       </div>
     </section>
 
-    <div class="wrap cover-foot">
-      <p class="cover-fine">Delägaren, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
+    <!-- Läroplan + verktyg -->
+    <section class="wrap lp-body">
+      <div class="lp-learn">
+        <h2 class="lp-h">Detta lär du dig</h2>
+        <ol class="lp-delar">
+          {delar.map((d) => (
+            <li class="lp-del">
+              <a class="lp-del__fig" href="/fokus" aria-hidden="true" tabindex="-1">
+                <img src={d.img} alt="" loading="lazy" width="120" height="96" />
+              </a>
+              <div class="lp-del__body">
+                <div class="lp-del__head">
+                  <span class="lp-del__n">Del {d.n}</span>
+                  <h3 class="lp-del__t">{d.titel}</h3>
+                  <span class="lp-del__kap">{d.kap}</span>
+                </div>
+                <p class="lp-del__sub">{d.sub}. {d.lar}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <a class="lp-learn__all link-mono" href="/fokus">Se hela kursöversikten →</a>
+      </div>
+
+      <aside class="lp-tools">
+        <h2 class="lp-h">Verktygen ingår</h2>
+        <p class="lp-tools__intro">Kursen lär dig omdömet. Verktygen finns där när du ska använda det, på riktiga bolag.</p>
+        <ul class="lp-tools__list">
+          {verktyg.map((v) => (
+            <li>
+              <a class="lp-tool" href={v.href}>
+                <span class="lp-tool__t">{v.t}</span>
+                <span class="lp-tool__d">{v.d}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </section>
+
+    <!-- CTA-band -->
+    <section class="lp-cta">
+      <div class="lp-cta__in">
+        <div>
+          <div class="lp-cta__k">Börja idag</div>
+          <div class="lp-cta__h">Första lektionen tar åtta minuter.</div>
+        </div>
+        <a class="btn-ink" href="/fokus">Kom igång →</a>
+      </div>
+      <div class="lp-cta__credit">Börshuset, Stockholm · foto: Jorge Láscar (CC BY 2.0)</div>
+    </section>
+
+    <div class="wrap lp-foot">
+      <p class="lp-fine">Delägaren, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
     </div>
   </main>
 </Broadsheet>
 
 <style>
-  /* Omslaget fyller hela vyn: hjalten vertikalt centrerad. */
-  .cover { flex:1; display:flex; flex-direction:column; }
-  .cover-top { display:flex; justify-content:flex-end; align-items:center; padding:22px 0 0; }
-  .cover-login { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); text-decoration:none; min-height:40px; display:inline-flex; align-items:center; }
-  .cover-login:hover { color:var(--oxblood); }
+  .lp { flex: 1; display: flex; flex-direction: column; }
+  .lp-top { display: flex; justify-content: flex-end; align-items: center; padding: 22px 0 0; }
+  .lp-login { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; min-height: 40px; display: inline-flex; align-items: center; }
+  .lp-login:hover { color: var(--oxblood); }
 
-  .cover-hero { flex:1; display:flex; flex-direction:column; justify-content:flex-start; padding:clamp(36px,8vh,88px) 0 56px; position:relative; }
-  .cover-lead { max-width:640px; }
-  .cover-lead .seal { margin:0 0 36px; }
-  .cover-hero h1 { text-wrap:balance; margin-top:16px; }
-  .cover-hero .standfirst { text-wrap:pretty; max-width:52ch; margin-top:18px; }
-  .cover-hero .cta-row { display:flex; gap:14px; align-items:center; margin-top:30px; flex-wrap:wrap; }
+  /* Hero */
+  .lp-hero { position: relative; padding: clamp(30px,6vh,70px) 0 clamp(34px,5vh,54px); }
+  .lp-hero .seal { margin: 0 0 30px; }
+  .lp-hero h1 { text-wrap: balance; max-width: 20ch; margin-top: 16px; }
+  .lp-hero .standfirst { text-wrap: pretty; max-width: 60ch; margin-top: 18px; }
+  .lp-hero .cta-row { display: flex; gap: 14px; align-items: center; margin-top: 30px; flex-wrap: wrap; }
+  .lp-hero__stats { margin-top: 26px; display: flex; align-items: baseline; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .lp-hero__stats b { font-family: var(--display); font-weight: 500; font-size: 17px; color: var(--oxblood); }
+  .lp-dot { color: var(--faint); }
 
-  /* Borshusets fasad som dampat tryck bakom omslaget: grayscale i lag opacitet,
-     paperskyddande gradient haller textspalten pa kontrast. Full utfallsbredd. */
   .hero--bild::before {
-    content:""; position:absolute; top:0; bottom:0; left:50%; width:100vw; margin-left:-50vw;
-    background-image:url('/bilder/borshuset-1600.jpg');
-    background-size:cover; background-position:center 32%;
-    filter:grayscale(1) contrast(.92);
-    opacity:.11; pointer-events:none; z-index:-1;
-  }
-  .hero--bild::after {
-    content:""; position:absolute; top:0; bottom:0; left:50%; width:100vw; margin-left:-50vw;
-    background:linear-gradient(90deg, var(--paper) 0%, rgba(246,244,239,.55) 42%, rgba(246,244,239,.2) 70%, var(--paper) 100%),
-               linear-gradient(180deg, var(--paper) 0%, rgba(246,244,239,0) 22%, rgba(246,244,239,0) 72%, var(--paper) 100%);
-    pointer-events:none; z-index:-1;
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; margin-left: -50vw;
+    background-image: url('/bilder/borshuset-1600.jpg'); background-size: cover; background-position: center 30%;
+    filter: grayscale(1) contrast(.95); opacity: .11; pointer-events: none; z-index: -1;
+    -webkit-mask: linear-gradient(180deg, #000 0%, #000 55%, transparent 96%);
+    mask: linear-gradient(180deg, #000 0%, #000 55%, transparent 96%);
   }
 
-  .cover-foot { border-top:1px solid var(--rule); padding:20px 0 36px; }
-  .cover-fine { font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; color:var(--faint); }
+  /* Läroplan + verktyg */
+  .lp-body { display: grid; grid-template-columns: 1.5fr .9fr; gap: clamp(28px,4vw,56px); padding: 6px 0 8px; align-items: start; border-top: 2px solid var(--rule-strong); margin-top: 4px; padding-top: 34px; }
+  .lp-h { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--oxblood); margin: 0 0 18px; }
 
-  @media (max-width:760px) {
-    .cover-hero { padding-top:24px; }
+  .lp-delar { list-style: none; margin: 0; padding: 0; }
+  .lp-del { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 20px 0; border-top: 1px solid var(--rule); align-items: start; }
+  .lp-del:first-child { border-top: 0; padding-top: 0; }
+  .lp-del__fig { display: block; border: 1px solid var(--rule); background: var(--card); padding: 5px; align-self: start; }
+  .lp-del__fig img { display: block; width: 100%; height: auto; aspect-ratio: 5/4; object-fit: cover; filter: grayscale(1) contrast(1.02); }
+  .lp-del__head { display: flex; align-items: baseline; gap: 10px 14px; flex-wrap: wrap; }
+  .lp-del__n { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .lp-del__t { font-family: var(--slab); font-weight: 600; font-size: 22px; letter-spacing: -.005em; margin: 0; color: var(--ink); }
+  .lp-del__kap { font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); margin-left: auto; }
+  .lp-del__sub { font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--ink-soft); margin: 8px 0 0; }
+  .lp-learn__all { display: inline-block; margin-top: 22px; color: var(--oxblood); }
+
+  /* Verktygsrail */
+  .lp-tools { border: 1px solid var(--rule-strong); background: var(--card); padding: 24px 24px 12px; position: sticky; top: 20px; }
+  .lp-tools__intro { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin: 0 0 18px; }
+  .lp-tools__list { list-style: none; margin: 0; padding: 0; }
+  .lp-tools__list li { border-top: 1px solid var(--rule); }
+  .lp-tool { display: block; padding: 14px 0; text-decoration: none; }
+  .lp-tool__t { display: block; font-family: var(--display); font-weight: 500; font-size: 16px; color: var(--ink); }
+  .lp-tool__d { display: block; font-family: var(--serif); font-size: 14px; line-height: 1.4; color: var(--muted); margin-top: 3px; }
+  .lp-tool:hover .lp-tool__t { color: var(--oxblood); }
+  .lp-tool:hover .lp-tool__d { color: var(--ink-soft); }
+
+  /* CTA-band, samma fotografi dränkt i oxblod */
+  .lp-cta { position: relative; left: 50%; width: 100vw; margin-left: -50vw; margin-top: clamp(40px,6vw,68px);
+    padding: clamp(38px,6vw,64px) 0 16px; color: var(--paper);
+    background: linear-gradient(rgba(122,38,30,.90), rgba(96,28,22,.93)), url('/bilder/borshuset-1600.jpg') center 40% / cover; }
+  .lp-cta__in { max-width: var(--maxw,1080px); margin: 0 auto; padding: 0 clamp(20px,5vw,52px); display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+  .lp-cta__k { font-family: var(--mono); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: rgba(246,244,239,.75); margin-bottom: 8px; }
+  .lp-cta__h { font-family: var(--slab); font-weight: 500; font-size: clamp(22px,2.6vw,30px); letter-spacing: -.005em; }
+  .lp-cta .btn-ink { background: var(--paper); color: var(--ink); }
+  .lp-cta .btn-ink:hover { background: var(--paper-2); color: var(--oxblood); transform: translateX(3px); }
+  .lp-cta__credit { max-width: var(--maxw,1080px); margin: 24px auto 0; padding: 10px clamp(20px,5vw,52px) 0; border-top: 1px solid rgba(246,244,239,.22); font-family: var(--mono); font-size: 10px; letter-spacing: .05em; color: rgba(246,244,239,.6); }
+
+  .lp-foot { padding: 20px 0 36px; border-top: 1px solid var(--rule); }
+  .lp-fine { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: var(--faint); }
+
+  @media (max-width: 860px) {
+    .lp-body { grid-template-columns: 1fr; gap: 34px; }
+    .lp-tools { position: static; }
+  }
+  @media (max-width: 520px) {
+    .lp-del { grid-template-columns: 84px 1fr; gap: 14px; }
+    .lp-del__kap { margin-left: 0; }
   }
 </style>
