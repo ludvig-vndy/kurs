@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Inbjudan · Ägarbrevet</title>
-<meta name="description" content="Du är inbjuden till Ägarbrevet, den inbjudningsstyrda tjänsten i Marginalen. Access-flödet: inbjudan, konto, medlemskap, välkommen.">
+<title>Inbjudan · Delägaren</title>
+<meta name="description" content="Du är inbjuden till Delägaren, den inbjudningsstyrda tjänsten. Access-flödet: inbjudan, konto, medlemskap, välkommen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -124,6 +124,14 @@
   .devlink-box .dl-link{display:inline-block;font-family:var(--mono);font-size:14px;font-weight:500;color:var(--oxblood);text-decoration:none;border-bottom:1px solid var(--oxblood);padding-bottom:2px}
   .devlink-box .dl-link:hover{color:var(--gold);border-color:var(--gold)}
   .devlink-box .dl-note{margin:10px 0 0;font-size:12px;color:var(--muted);line-height:1.5}
+  /* Grind: gated-meddelande + login-växel */
+  .gate-note{margin:8px 0 22px;padding:16px 18px;border:1px solid var(--rule-strong);border-radius:4px;background:var(--paper-2);color:var(--ink-soft);font-size:14.5px;line-height:1.55}
+  .gate-note b{color:var(--ink)}
+  .login-toggle{margin-top:16px;background:none;border:0;padding:0;color:var(--oxblood);font-family:var(--mono);font-size:13px;letter-spacing:.02em;cursor:pointer}
+  .login-toggle:hover{color:var(--gold)}
+  .chip.pending{color:var(--muted)}
+  .chip.pending .dot{background:var(--muted)}
+  .chip[hidden]{display:none}   /* .chip har egen display, annars göms den inte i gated-läge */
 
   /* medlem-läget: inkluderat-lista */
   .incl{list-style:none;margin:22px 0 4px;padding:0}
@@ -193,8 +201,8 @@
   <div class="wrap">
     <div class="mast-top">
       <div class="wordmark-wrap">
-        <span class="wordmark">Ägarbrevet</span>
-        <a class="byline" href="/hem">by Marginalen</a>
+        <span class="wordmark">Delägaren</span>
+        
       </div>
       <div class="edition">Inbjudan · exklusiv access</div>
     </div>
@@ -219,9 +227,9 @@
 
     <!-- ════ SKÄRM 1 · Inbjudningslandning ═══════════════════════════════ -->
     <section class="screen on" id="screen-1" aria-label="Inbjudan">
-      <span class="chip"><span class="dot" aria-hidden="true"></span>Inbjudan verifierad · <span class="tok">a1b2c3</span></span>
+      <span class="chip" id="inviteChip"><span class="dot" aria-hidden="true"></span>Inbjudan verifierad · <span class="tok">a1b2c3</span></span>
       <div class="kicker">Personlig inbjudan</div>
-      <h1 class="h-title">Du är inbjuden till <strong>Ägarbrevet</strong>.</h1>
+      <h1 class="h-title">Du är inbjuden till <strong>Delägaren</strong>.</h1>
       <p class="standfirst">Spara maximalt med tid utan att missa något om dina investeringar. Allt som händer i dina bolag: läst, sorterat och sammanfattat varje morgon.</p>
 
       <div class="card accent">
@@ -231,15 +239,19 @@
         <a class="card-link" href="/fokus/kapitel/0">Öppna Kapitel 0 <span class="arr">→</span></a>
       </div>
 
+      <div class="gate-note" id="gateNote" hidden></div>
+
       <form class="form" id="accountForm" novalidate>
-        <label class="form-lbl" for="email">Skapa konto med din mejl</label>
+        <label class="form-lbl" for="email" id="formLbl">Skapa konto med din mejl</label>
         <div class="field">
           <input class="input" type="email" id="email" name="email" inputmode="email" autocomplete="email" placeholder="du@exempel.se" aria-describedby="emailNote">
-          <button class="btn" type="submit">Skapa konto <span class="arr">→</span></button>
+          <button class="btn" type="submit" id="formSubmit">Skapa konto <span class="arr">→</span></button>
         </div>
         <p class="field-err" id="emailErr">Skriv en giltig mejladress så skickar vi länken dit.</p>
         <p class="field-note" id="emailNote">Vi mejlar en inloggningslänk. Inget lösenord att minnas.</p>
       </form>
+
+      <button class="login-toggle" id="loginToggle" type="button" hidden>Redan medlem? Logga in <span class="arr">→</span></button>
     </section>
 
     <!-- ════ SKÄRM 2 · Kolla din mejl ════════════════════════════════════ -->
@@ -349,7 +361,7 @@
 
     <p class="fine">
       <span class="ftag">Prototyp · exempeldata · fiktivt konto</span><br>
-      Inget betalas, ingen inbjudan förbrukas. Access-flödet för Ägarbrevet i Marginalen. Arbetsnamn och illustrativa siffror. Information i utbildningssyfte, aldrig köp- eller säljråd.
+      Inget betalas, ingen inbjudan förbrukas. Access-flödet för Delägaren. Arbetsnamn och illustrativa siffror. Information i utbildningssyfte, aldrig köp- eller säljråd.
     </p>
 
   </div>
@@ -358,7 +370,7 @@
 <footer class="site-foot">
   <div class="wrap">
     <div class="site-foot__top">
-      <a class="site-foot__mark" href="/hem">Marginalen</a>
+      <a class="site-foot__mark" href="/hem">Delägaren</a>
       <nav class="site-foot__nav">
         <a href="/hem">Hem</a>
         <a href="/fokus">Kursöversikt</a>
@@ -416,6 +428,64 @@
     var sentTo = document.getElementById('sentTo');
     function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
+    // ── Grind: bara giltig inbjudan får skapa konto ─────────────────────
+    var inviteChip = document.getElementById('inviteChip');
+    var tokEl = inviteChip ? inviteChip.querySelector('.tok') : null;
+    var gateNote = document.getElementById('gateNote');
+    var loginToggle = document.getElementById('loginToggle');
+    var formLbl = document.getElementById('formLbl');
+    var formSubmit = document.getElementById('formSubmit');
+    var mode = 'gated';            // 'signup' | 'login' | 'gated'
+    var currentToken = null;
+
+    var GATE_MSG = {
+      saknas:  '<b>Delägaren är på inbjudan.</b> Öppna din personliga inbjudningslänk för att skapa konto. Har du ingen, hör av dig till den som bjöd in dig.',
+      okand:   '<b>Inbjudan känns inte igen.</b> Länken kan vara ofullständig, kontrollera att du öppnade hela länken du fick.',
+      anvand:  '<b>Inbjudan är redan använd.</b> Varje inbjudan gäller ett konto. Är det ditt, logga in i stället.',
+      utgangen:'<b>Inbjudan har gått ut.</b> Be om en ny från den som bjöd in dig.',
+      fel:     'Kunde inte kontrollera inbjudan just nu. Försök igen om en stund.'
+    };
+    function setSignup(token){
+      mode = 'signup'; currentToken = token;
+      if (inviteChip){ inviteChip.hidden = false; inviteChip.classList.remove('pending'); }
+      if (tokEl) tokEl.textContent = token.slice(0, 6) + '…';
+      form.hidden = false;
+      if (formLbl) formLbl.textContent = 'Skapa konto med din mejl';
+      if (formSubmit) formSubmit.innerHTML = 'Skapa konto <span class="arr">→</span>';
+      if (gateNote) gateNote.hidden = true;
+      if (loginToggle) loginToggle.hidden = false;
+    }
+    function setLogin(){
+      mode = 'login';
+      if (inviteChip) inviteChip.hidden = true;
+      form.hidden = false;
+      if (formLbl) formLbl.textContent = 'Logga in med din mejl';
+      if (formSubmit) formSubmit.innerHTML = 'Skicka inloggningslänk <span class="arr">→</span>';
+      if (gateNote) gateNote.hidden = true;
+      if (loginToggle) loginToggle.hidden = true;
+      email.focus();
+    }
+    function setGated(reason){
+      mode = 'gated';
+      if (inviteChip) inviteChip.hidden = true;
+      form.hidden = true;
+      if (gateNote){ gateNote.hidden = false; gateNote.innerHTML = GATE_MSG[reason] || GATE_MSG.saknas; }
+      if (loginToggle) loginToggle.hidden = false;
+    }
+    if (loginToggle) loginToggle.addEventListener('click', setLogin);
+
+    (function initGate(){
+      var token = (new URLSearchParams(window.location.search).get('token') || '').trim();
+      if (!token){ setGated('saknas'); return; }
+      if (inviteChip){ inviteChip.hidden = false; inviteChip.classList.add('pending'); }
+      if (tokEl) tokEl.textContent = 'kontrollerar…';
+      form.hidden = true;
+      fetch('/api/invite-check', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ token: token }) })
+        .then(function(r){ return r.json(); })
+        .then(function(res){ if (res && res.valid){ setSignup(token); } else { setGated((res && res.reason) || 'okand'); } })
+        .catch(function(){ setGated('fel'); });
+    })();
+
     var submitBtn = form.querySelector('button[type="submit"], .btn.checkout, button:not([data-back]):not([data-next])');
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -428,6 +498,11 @@
       }
       email.classList.remove('err');
       emailErr.classList.remove('on');
+      if (mode === 'gated') return;   // ingen kontoskapning utan giltig inbjudan
+      if (mode === 'signup' && currentToken){
+        // Bär token genom magic-link-rundan; accepteras efter inloggning.
+        try { localStorage.setItem('agarbrevet-pending-invite', currentToken); } catch(e){}
+      }
       sentTo.textContent = v;
       show(2);
 
@@ -453,8 +528,8 @@
           note.textContent = String((err && err.message) || err);
         });
 
-      // Skicka även det riktiga mejlet, men låt rate-limit inte stoppa flödet.
-      if (window.AB && window.AB.ready){ window.AB.sendMagicLink(v).catch(function(){}); }
+      // Skicka även det riktiga mejlet (login-läge skapar inte nytt konto).
+      if (window.AB && window.AB.ready){ window.AB.sendMagicLink(v, { createUser: mode === 'signup' }).catch(function(){}); }
     });
     email.addEventListener('input', function(){
       if (email.classList.contains('err') && validEmail(email.value.trim())){

@@ -51,14 +51,15 @@
   }
 
   // ── Magic-link-inloggning ──────────────────────────────────────────────
-  // Skapar användaren om den inte finns (shouldCreateUser:true). För en helt
-  // stängd tjänst stänger vi av det senare och kräver accepterad inbjudan först.
-  async function sendMagicLink(email, redirectPath) {
+  // opts.createUser: false i login-läge (skapar inte nytt konto utan giltig
+  // inbjudan). Default true för bakåtkompatibilitet. opts.redirectPath valfri.
+  async function sendMagicLink(email, opts) {
+    opts = opts || {};
     return sb.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: redirectTo(redirectPath),
-        shouldCreateUser: true
+        emailRedirectTo: redirectTo(opts.redirectPath),
+        shouldCreateUser: opts.createUser !== false
       }
     });
   }
@@ -225,7 +226,24 @@
     if (document.readyState !== "loading") fn();
     else document.addEventListener("DOMContentLoaded", fn);
   }
-  whenReady(mountUserChip);
-  // Sessionen dyker ofta upp strax efter load (hashen parsas asynkront) -> mounta om.
-  sb.auth.onAuthStateChange(function () { mountUserChip(); });
+
+  // ── Acceptera en väntande inbjudan efter inloggning ──────────────────────
+  // Skapa konto-sidan lägger token i localStorage; när sessionen finns
+  // (efter magic-link-klicket) konsumerar vi den engångs och länkar inbjudaren.
+  var inviteFlushed = false;
+  async function flushPendingInvite() {
+    if (inviteFlushed) return;
+    var session = await getSession();
+    if (!session) return;
+    var token = null;
+    try { token = localStorage.getItem("agarbrevet-pending-invite"); } catch (e) {}
+    if (!token) return;
+    inviteFlushed = true;
+    try { await acceptInvite(token); } catch (e) { /* redan använd/ogiltig */ }
+    try { localStorage.removeItem("agarbrevet-pending-invite"); } catch (e) {}
+  }
+
+  whenReady(function () { mountUserChip(); flushPendingInvite(); });
+  // Sessionen dyker ofta upp strax efter load (hashen parsas asynkront) -> kör om.
+  sb.auth.onAuthStateChange(function () { mountUserChip(); flushPendingInvite(); });
 })();
