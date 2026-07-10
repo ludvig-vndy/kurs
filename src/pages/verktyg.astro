@@ -1,0 +1,57 @@
+---
+import Broadsheet from '../layouts/Broadsheet.astro';
+import '../styles/verktyg.css';
+
+// Analysverktyget: tidigare en fristaende public/verktyg/index.html med en egen
+// kopierad masthead (som hann bli gammal). Nu en riktig route som arver EXAKT
+// samma masthead/footer fran Broadsheet, sa headern bor pa ett enda stalle.
+// Verktygets egna stilar bor i src/styles/verktyg.css (scoped under .vtyg),
+// logiken i src/scripts/verktyg.js (monteras pa astro:page-load nedan).
+---
+
+<Broadsheet
+  title="Delägaren · Analysverktyg före aktieköp"
+  description="Sju verktyg att gå igenom innan du köper en aktie: checklista, kvalitet, vallgrav, ledning, risk och värdering, sammanvägt till en hållning."
+  active="verktyg"
+  editionLine2="Analysverktyg"
+>
+  <section class="vtyg">
+    <header>
+      <p class="eyebrow">Verktygslåda för fundamental analys</p>
+      <h1 class="mark">Analysverktyg</h1>
+      <p class="sub">Sju verktyg att gå igenom innan du köper en aktie. Du fyller i, poängen räknas ut medan du arbetar, och sammanställningen väger ihop allt till en hållning. Tänk som en ägare, inte en aktiehandlare.</p>
+      <p class="disclaim">Utbildningsverktyg, inte investeringsrådgivning. Du fattar dina egna beslut, och dimensionerar dem så att du överlever att ha fel.</p>
+    </header>
+
+    <div class="context">
+      <div><label for="cn">Bolag</label><input id="cn" type="text" placeholder="Bolagets namn" /></div>
+      <div class="num"><label for="ct">Ticker</label><input id="ct" type="text" placeholder="t.ex. ABC" /></div>
+      <div class="num"><label for="cp">Aktuellt pris (kr)</label><input id="cp" type="number" step="any" placeholder="0" /></div>
+    </div>
+
+    <nav id="nav"></nav>
+
+    <section class="panel" data-tab="checklista"></section>
+    <section class="panel" data-tab="kvalitet"></section>
+    <section class="panel" data-tab="smallcap"></section>
+    <section class="panel" data-tab="moat"></section>
+    <section class="panel" data-tab="ledning"></section>
+    <section class="panel" data-tab="risk"></section>
+    <section class="panel" data-tab="vardering"></section>
+    <section class="panel" data-tab="summa"></section>
+
+    <div class="toolbar">
+      <button class="btn" onclick="window.print()">Skriv ut / spara som PDF</button>
+      <button class="btn ghost" onclick="exportJSON()">Exportera analys (JSON)</button>
+      <button class="btn ghost" onclick="document.getElementById('imp').click()">Importera analys</button>
+      <input id="imp" type="file" accept="application/json" style="display:none" onchange="importJSON(event)" />
+      <button class="btn ghost" onclick="resetAll()">Nollställ</button>
+    </div>
+  </section>
+</Broadsheet>
+
+<script>
+  import { mountVerktyg } from '../scripts/verktyg.js';
+  // Kors bade vid full laddning och vid klient-navigering (View Transitions).
+  document.addEventListener('astro:page-load', mountVerktyg);
+</script>
