@@ -84,7 +84,7 @@ const plateY = 18 + ((kap.nummer * 53) % 46);
 
     <!-- Header: one bold chapter numeral is the single anchor. The chapter
          number is not repeated in the kicker (the breadcrumb already states it). -->
-    <header class="chead">
+    <header class="chead" style={`--plate:url('${plateImg}'); --plate-pos:${plateX}% ${plateY}%`}>
       <div class="chead__num" aria-hidden="true">{kap.nummer}</div>
       <div class="chead__body">
         <div class="kicker">{del.titel}</div>
@@ -98,12 +98,6 @@ const plateY = 18 + ((kap.nummer * 53) % 46);
           </span>
         </div>
       </div>
-      {plateImg && (
-        <figure class="chead__fig" aria-hidden="true">
-          <div class="chplate" style={`--plate:url('${plateImg}'); background-position:${plateX}% ${plateY}%`}></div>
-          <figcaption>Kapitel {String(kap.nummer).padStart(2, '0')}</figcaption>
-        </figure>
-      )}
     </header>
 
     <!-- Outcomes -->
@@ -168,18 +162,16 @@ const plateY = 18 + ((kap.nummer * 53) % 46);
   /* Chapter header: a single large numeral anchors the page so the number
      isn't echoed across kicker + breadcrumb + numeral. The kicker is the part
      name only; the meta + progress collapse to one calm line. */
-  .chead { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(18px, 4vw, 46px); align-items: start; margin-top: 6px; }
+  .chead { position: relative; isolation: isolate; display: grid; grid-template-columns: auto 1fr; gap: clamp(18px, 4vw, 46px); align-items: start; margin-top: 6px; }
   .chead__num { font-family: var(--display); font-weight: 300; font-size: clamp(72px, 13vw, 150px); line-height: .8; letter-spacing: -.03em; color: var(--oxblood); font-variant-numeric: lining-nums; }
-  /* Per-kapitel plåt: Börshusets fasad, gråskala och pappersdämpad (samma
-     leadprint-behandling som /hem och /fokus), inramad som ett stilla tryck.
-     Beskärningen skiftar per kapitel så ingen ram är den andra lik. */
-  .chead__fig { margin: 0; width: 240px; border: 1px solid var(--rule); background: var(--card); padding: 14px 14px 8px; position: relative; align-self: start; }
-  .chead__fig::before { content: ""; position: absolute; inset: 5px; border: 1px solid var(--rule); pointer-events: none; z-index: 1; }
-  .chplate { position: relative; width: 100%; aspect-ratio: 5 / 4;
-    background-image: linear-gradient(rgba(246,244,239,.34), rgba(246,244,239,.60)), var(--plate);
-    background-size: cover; background-repeat: no-repeat; filter: grayscale(1) contrast(1.04); }
-  .chead__fig figcaption { position: relative; font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: right; margin-top: 8px; }
-  @media (max-width: 900px) { .chead { grid-template-columns: auto 1fr; } .chead__fig { display: none; } }
+  /* Per-kapitel bild som dämpat, pappersfadat tryck BAKOM kapitelhuvudet (samma
+     leadprint-behandling som /hem), i stället för en inramad plåt. Bilden
+     landar dig i kapitlet; masken tonar ut den nedåt så texten står kvar. */
+  .chead::before { content: ""; position: absolute; z-index: -1; inset: -12px -14px 0;
+    background-image: var(--plate); background-size: cover; background-position: var(--plate-pos, center 30%);
+    filter: grayscale(1) contrast(1.03); opacity: .14;
+    -webkit-mask: linear-gradient(178deg, #000 0%, #000 46%, transparent 94%);
+    mask: linear-gradient(178deg, #000 0%, #000 46%, transparent 94%); }
   .chead__body { min-width: 0; padding-top: clamp(4px, 1.2vw, 12px); }
   .chead__meta { display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
   .chead__prog { display: flex; align-items: center; gap: 12px; margin-left: auto; }
@@ -193,7 +185,7 @@ const plateY = 18 + ((kap.nummer * 53) % 46);
 
   /* Sebastian tänker: a signed chapter note, same monogram language as the
      lesson takeaway, framing the chapter in his voice. */
-  .chsebastian { margin: 26px 0 0; border: 1px solid var(--rule); border-left: 3px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
+  .chsebastian { margin: 26px 0 0; border: 1px solid var(--rule); border-top: 2px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
   .chsebastian__by { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 10px; }
   .chsebastian__mono { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--oxblood); color: var(--paper); font-family: var(--display); font-size: 14px; font-weight: 500; flex: none; }
   .chsebastian__text { font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.45; color: var(--ink); margin: 0; }

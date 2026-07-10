@@ -52,13 +52,18 @@ export async function getStaticPaths() {
   return builtLessons.map(({ lektion, lesson }, idx) => {
     const prev = idx > 0 ? builtLessons[idx - 1] : null;
     const next = idx < builtLessons.length - 1 ? builtLessons[idx + 1] : null;
+    // Nar nasta lektion tillhor ett NYTT kapitel: landa pa kapitelsidan (dar
+    // "Sebastian tanker" bor) i stallet for rakt in i forsta lektionen.
+    const nextIsChapter = !!next && next.lesson.kapitel !== lesson.kapitel;
     return {
       params: { lektion },
       props: {
         lesson,
         prevHref: prev ? `/fokus/${prev.lektion}` : null,
-        nextHref: next ? `/fokus/${next.lektion}` : null,
+        nextHref: next ? (nextIsChapter ? `/fokus/kapitel/${next.lesson.kapitel}` : `/fokus/${next.lektion}`) : null,
         nextLektion: next ? next.lektion : null,
+        nextIsChapter,
+        nextKapitel: next ? next.lesson.kapitel : null,
         chapterIds: chapterIdsMap[lesson.kapitel] ?? [],
         kapitelTitel: (course.kapitel.find((k) => k.nummer === lesson.kapitel) || { titel: '' }).titel,
         courseIds,
@@ -67,11 +72,13 @@ export async function getStaticPaths() {
   });
 }
 
-const { lesson, prevHref, nextHref, nextLektion, chapterIds, courseIds, kapitelTitel } = Astro.props as {
+const { lesson, prevHref, nextHref, nextLektion, nextIsChapter, nextKapitel, chapterIds, courseIds, kapitelTitel } = Astro.props as {
   lesson: LessonJson;
   prevHref: string | null;
   nextHref: string | null;
   nextLektion: string | null;
+  nextIsChapter: boolean;
+  nextKapitel: number | null;
   chapterIds: string[];
   kapitelTitel: string;
   courseIds: string[];
@@ -323,7 +330,7 @@ function visualEl(v: VisualObj) {
         </div>
         <div class="done-cta">
           <a class="btn-ghost" href={`/fokus/kapitel/${lesson.kapitel}`}>Till kapitlet</a>
-          {nextHref && <a class="btn-ink" href={nextHref}>Nästa: lektion {nextLektion} →</a>}
+          {nextHref && <a class="btn-ink" href={nextHref}>{nextIsChapter ? `Nästa: kapitel ${nextKapitel} →` : `Nästa: lektion ${nextLektion} →`}</a>}
           {!nextHref && <a class="btn-ink" href="/fokus">Till kursöversikt →</a>}
         </div>
       </div>
@@ -342,7 +349,7 @@ function visualEl(v: VisualObj) {
   /* Delägaren-mastheaden ligger kvar överst i lektionen; brödsmulan nedanför
      blir en sub-header. Samma hus, hela tiden. */
   .rh-brand { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 11px; margin-bottom: 12px; border-bottom: 1px solid var(--rule); }
-  .rh-mark { font-family: var(--display); font-weight: 500; font-size: 19px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); text-decoration: none; line-height: 1; }
+  .rh-mark { font-family: var(--slab); font-weight: 700; font-size: 19px; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); text-decoration: none; line-height: 1; }
   .rh-mark span { color: inherit; }
   .rh-ed { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   .rh-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }

@@ -57,7 +57,7 @@
     var label = '';
     for (var i = 0; i < NAV.length; i++) if (NAV[i][0] === active) label = NAV[i][1];
     var edition = this.getAttribute('edition');
-    if (edition == null) edition = (label ? esc(label) + '<br>' : '') + 'Din del av bolaget';
+    if (edition == null) edition = 'Din del av bolaget' + (label ? '<br>' + esc(label) : '');
 
     var nav = '';
     if (!mini) {
