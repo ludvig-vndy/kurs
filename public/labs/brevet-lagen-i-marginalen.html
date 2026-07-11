@@ -473,7 +473,7 @@
 <div class="askdock"><div class="askbar"><form id="askform"><span class="askctx">Brevet</span>
 <input id="askinput" type="text" placeholder="Fråga om Brevet..." autocomplete="off" aria-label="Fråga AI">
 <span class="kbd">⌘K</span><button class="asksend" type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></form></div></div>
-<script>(function(){var SEEDS=["Vad kräver mig i dag?","Sammanfatta Telvio","Vad hände i natt?"];var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
+<script>(function(){var SEEDS=["Vad kräver mig i dag?","Sammanfatta det som ändrats","Vad hände i natt?"];var panel=document.getElementById('askpanel'),seed=document.getElementById('seed'),ans=document.getElementById('ans'),inp=document.getElementById('askinput');
 seed.innerHTML=SEEDS.map(function(q){return '<button class="seedb" type="button">'+q+'</button>';}).join('');
 seed.querySelectorAll('.seedb').forEach(function(b){b.addEventListener('click',function(){ansv(b.textContent);});});
 function ansv(q){ans.innerHTML='<b>'+q+'</b><br>I den här prototypen är svaren förberedda. I skarpt läge svarar modellen med varje siffra spårad till källa och en länk till rätt lektion, och avböjer det som ligger utanför dina bolag och kursen.';ans.classList.add('show');op();}
