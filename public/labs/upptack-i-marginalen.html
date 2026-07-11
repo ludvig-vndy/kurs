@@ -195,6 +195,8 @@
   .itx i{font-style:normal;color:var(--ink-soft);margin-left:5px}
   .itx em{font-style:normal;color:var(--faint);margin-left:6px}
   .ireal-note{font-family:var(--serif);font-style:italic;font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
+  .hbef{color:var(--muted)}
+  .hero-co .ireal{vertical-align:middle}
   .rrow-co{font-family:var(--display);font-weight:600;font-size:15.5px;color:var(--ink);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
   .rrow-co .fticker{font-family:var(--num);font-size:11.5px;letter-spacing:.03em;color:var(--muted);background:var(--paper-2);border-radius:4px;padding:2px 7px;font-weight:400}
   .rkind{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);border:1px solid var(--rule);border-radius:99px;padding:3px 9px}
@@ -357,8 +359,8 @@
       <!-- digest: sedan du sist tittade -->
       <div class="digest" id="digest">
         <div class="digest-top">
-          <span class="digest-lab">Sedan du sist tittade <span class="num">·</span> <span class="num">3</span> handelsdagar sedan</span>
-          <span class="digest-meta">4 notiser</span>
+          <span class="digest-lab">Störst insynsköp <span class="num">·</span> senaste 30 dagarna</span>
+          <span class="digest-meta">Källa: Finansinspektionen</span>
         </div>
         <ul class="digest-list" id="digest-list"></ul>
       </div>
@@ -539,12 +541,19 @@ const DIGEST = [
   { mark:'▽', cls:'muted', tk:'ALMF', co:'Almi Foods', text:'momentum slocknade, bröt sitt 200-dagars medel nedåt', link:'Följ bolaget', href:'/labs/bolagssida-i-marginalen.html' }
 ];
 function renderDigest(){
-  document.getElementById('digest-list').innerHTML = DIGEST.map(d=>`
-    <li>
-      <span class="dmark ${d.cls==='muted'?'':d.cls}" ${d.cls==='muted'?'style="color:var(--muted)"':''}>${d.mark}</span>
-      <span class="dtext"><span class="dtk">${d.tk}</span> ${d.text}</span>
-      <a class="dlink" href="${d.href}">${d.link} →</a>
-    </li>`).join('');
+  const el = document.getElementById('digest-list');
+  if(INSYN_REAL && INSYN_REAL.bolag && INSYN_REAL.bolag.length){
+    el.innerHTML = INSYN_REAL.bolag.slice(0,4).map(b=>{
+      const bel = b.belopp>=1e6 ? (b.belopp/1e6).toFixed(1)+' mkr' : Math.round(b.belopp/1e3)+' tkr';
+      return `<li>
+        <span class="dmark good">▲</span>
+        <span class="dtext"><b>${b.co}</b> — ${b.personer} insiders köpte för ${bel}</span>
+        <a class="dlink" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
+      </li>`;
+    }).join('');
+    return;
+  }
+  el.innerHTML = '<li style="grid-template-columns:1fr"><span class="dtext" style="color:var(--muted)">Hämtar insynsköp från Finansinspektionen…</span></li>';
 }
 
 /* toppuppstickaren (hero) och rika rader.
@@ -646,10 +655,11 @@ function renderRow(m){
 
 let activeFilter = 'alla';
 let INSYN_REAL = null;   // riktig insynsdata (FI), laddas asynkront
+const realReady = () => INSYN_REAL && INSYN_REAL.bolag && INSYN_REAL.bolag.length;
+const dagar = () => (INSYN_REAL && INSYN_REAL.period && INSYN_REAL.period.dagar) || 30;
+const belText = v => v>=1e6 ? (v/1e6).toFixed(1)+' mkr' : v>=1e3 ? Math.round(v/1e3)+' tkr' : (v||0)+' kr';
 
 function renderInsiderRow(b){
-  const bel = b.belopp>=1e6 ? (b.belopp/1e6).toFixed(1)+' mkr'
-            : b.belopp>=1e3 ? Math.round(b.belopp/1e3)+' tkr' : (b.belopp||0)+' kr';
   const tx = (b.tx||[]).slice(0,3).map(t =>
     `<span class="itx">${t.person}<i>${t.befattning||''}</i><em>${t.datum}</em></span>`).join('');
   return `<li class="irow">
@@ -657,7 +667,7 @@ function renderInsiderRow(b){
     <div class="rdata">
       <span class="rstat">Insiders<b>${b.personer}</b></span>
       <span class="rstat">Köp<b>${b.kop}</b></span>
-      <span class="rstat">Belopp<b class="good">${bel}</b></span>
+      <span class="rstat">Belopp<b class="good">${belText(b.belopp)}</b></span>
       <span class="rstat">Sista köp<b>${b.sista}</b></span>
     </div>
     <div class="itxs">${tx}</div>
@@ -668,22 +678,47 @@ function renderInsiderRow(b){
   </li>`;
 }
 
+function renderInsiderHero(b){
+  const tx = (b.tx||[]).slice(0,4).map(t => `<li>${t.person} <span class="hbef">${t.befattning||''}</span> · ${t.datum}</li>`).join('');
+  return `<div class="hero">
+    <div class="hero-grid">
+      <div class="hero-l">
+        <div class="hero-co">${b.co} <span class="ireal">riktig data · FI</span></div>
+        <div class="hero-tags"><span class="htag">Insynskluster</span><span class="htag mkt">Senaste ${dagar()} dagarna</span></div>
+        <p class="hero-lead"><b>${b.personer} personer i ledande ställning</b> köpte aktier för <b>${belText(b.belopp)}</b> över ${b.kop} köp, sista köpet ${b.sista}. Fakta ur Finansinspektionens register, aldrig en signal.</p>
+        <div class="vad"><div class="vad-lab">Vem köpte</div><ul>${tx}</ul></div>
+      </div>
+      <div class="hero-r">
+        <div class="hero-cta">
+          <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
+          <a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderFeed(){
   const feed = document.getElementById('mfeed');
-  document.getElementById('hero-slot').innerHTML = activeFilter==='alla' ? renderHero(HERO) : '';
+  const insiderView = activeFilter==='alla' || activeFilter==='insyn';
+  // Hero i 'alla': leder med det starkaste insiderklustret (riktig data).
+  document.getElementById('hero-slot').innerHTML =
+    (activeFilter==='alla' && realReady()) ? renderInsiderHero(INSYN_REAL.bolag[0]) : '';
   document.querySelector('.upp-head').style.display = activeFilter==='alla' ? '' : 'none';
-  // Insyn-filtret kor pa RIKTIG data ur FI:s insynsregister (gratis, publikt).
-  if(activeFilter==='insyn'){
-    if(INSYN_REAL && INSYN_REAL.bolag && INSYN_REAL.bolag.length){
-      const dagar = (INSYN_REAL.period && INSYN_REAL.period.dagar) || 30;
-      const note = `<li class="ireal-note" style="grid-template-columns:1fr">Riktiga insynsköp de senaste ${dagar} dagarna, ur Finansinspektionens insynsregister, rankat på insiderkluster och belopp. Fakta, aldrig en signal.</li>`;
-      feed.innerHTML = note + INSYN_REAL.bolag.map(renderInsiderRow).join('');
+
+  if(insiderView){
+    if(realReady()){
+      const note = `<li class="ireal-note" style="grid-template-columns:1fr">Riktiga insynsköp de senaste ${dagar()} dagarna, ur Finansinspektionens insynsregister, rankat på insiderkluster och belopp. Fakta, aldrig en signal.</li>`;
+      // i 'alla' ligger #1 redan i heron -> visa resten; i 'insyn' visa alla.
+      const list = activeFilter==='alla' ? INSYN_REAL.bolag.slice(1) : INSYN_REAL.bolag;
+      feed.innerHTML = note + list.map(renderInsiderRow).join('');
     } else {
       feed.innerHTML = '<li class="feed-empty" style="grid-template-columns:1fr">Hämtar riktiga insynsköp från Finansinspektionen…</li>';
     }
     return;
   }
-  const rows = MOVES.filter(m => activeFilter==='alla' || m.kind===activeFilter);
+  // Pris-baserade filter ar markt exempel tills prisdatan ar licensierad.
+  const rows = MOVES.filter(m => m.kind===activeFilter);
   if(!rows.length){ feed.innerHTML = '<li class="feed-empty" style="grid-template-columns:1fr">Inga rörelser av den typen just nu. Byt filter, eller vänta på nästa avläsning.</li>'; return; }
   feed.innerHTML = rows.map(renderRow).join('');
 }
@@ -695,9 +730,9 @@ document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('c
 }));
 renderDigest();
 renderFeed();
-// Ladda riktig insynsdata och rita om om Insyn-filtret redan ar aktivt.
+// Ladda riktig insynsdata och rita om digest + flode.
 fetch('/labs/data/upptack-insyn.json').then(r => r.ok ? r.json() : null)
-  .then(d => { if(d){ INSYN_REAL = d; if(activeFilter==='insyn') renderFeed(); } }).catch(()=>{});
+  .then(d => { if(d){ INSYN_REAL = d; renderDigest(); renderFeed(); } }).catch(()=>{});
 
 /* ---------- SCREENER: träffar (illustrativ, fiktiva bolag) ----------
    krit-flaggor: 'yes' matchar, 'part' matchar delvis, 'no' matchar ej.
