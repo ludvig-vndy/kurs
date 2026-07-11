@@ -40,13 +40,33 @@ import Seal from '../components/Seal.astro';
         show('Skickar…');
         try {
           if (!(window.AB && window.AB.ready)) { show('Tjänsten laddar fortfarande, försök igen om en sekund.'); return; }
-          const r = await window.AB.sendMagicLink(v, { createUser: false, redirectPath: '/hem' });
+          // Magic-länken returnerar hit (/logga-in ar publik); vi satter cookien
+          // och skickar in till /hem nar sessionen dykt upp.
+          const r = await window.AB.sendMagicLink(v, { createUser: false, redirectPath: '/logga-in' });
           if (r && r.error) { show('Kunde inte skicka just nu. Har du ett konto med den mejlen?'); }
           else { show('Klart. Kolla din mejl, vi skickade en inloggningslänk till ' + v + '.'); form.reset(); }
         } catch (err) { show('Något gick fel. Försök igen om en stund.'); }
       });
     }
-    document.addEventListener('astro:page-load', bindLogin);
+    // Redan inloggad, eller precis inloggad via magic-länk -> sätt cookie + in.
+    function watchSession() {
+      let n = 0;
+      const iv = setInterval(() => {
+        try {
+          const raw = localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token');
+          if (raw) {
+            const o = JSON.parse(raw);
+            const t = o.access_token || (o.currentSession && o.currentSession.access_token);
+            if (t) {
+              document.cookie = 'da_session=' + t + '; path=/; max-age=3600; SameSite=Lax; Secure';
+              clearInterval(iv); location.replace('/hem');
+            }
+          }
+        } catch (e) {}
+        if (++n > 40) clearInterval(iv);  // ~12s
+      }, 300);
+    }
+    document.addEventListener('astro:page-load', () => { bindLogin(); watchSession(); });
   </script>
 </Broadsheet>
 

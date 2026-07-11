@@ -296,7 +296,19 @@
     try { localStorage.removeItem("agarbrevet-pending-invite"); } catch (e) {}
   }
 
-  whenReady(function () { mountUserChip(); flushPendingInvite(); });
+  // Speglar sessionen i en cookie sa serverns kontogrind (_middleware.js) kan
+  // verifiera JWT:n. Access-token som varde; utgang styr max-age.
+  function setSessionCookie(session) {
+    try {
+      if (session && session.access_token) {
+        document.cookie = "da_session=" + session.access_token + "; path=/; max-age=" + (session.expires_in || 3600) + "; SameSite=Lax; Secure";
+      } else {
+        document.cookie = "da_session=; path=/; max-age=0; SameSite=Lax; Secure";
+      }
+    } catch (e) {}
+  }
+
+  whenReady(function () { getSession().then(setSessionCookie); mountUserChip(); flushPendingInvite(); });
   // Sessionen dyker ofta upp strax efter load (hashen parsas asynkront) -> kör om.
-  sb.auth.onAuthStateChange(function () { mountUserChip(); flushPendingInvite(); });
+  sb.auth.onAuthStateChange(function (_event, session) { setSessionCookie(session); mountUserChip(); flushPendingInvite(); });
 })();

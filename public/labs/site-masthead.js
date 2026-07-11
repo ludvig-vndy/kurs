@@ -34,6 +34,17 @@
     }
   } catch (e) {}
 
+  // Spegla sessionen i da_session-cookien sa serverns kontogrind kan verifiera
+  // JWT:n aven pa labbar som inte laddar supabase-js.
+  try {
+    var _raw = localStorage.getItem(SB_KEY);
+    if (_raw) {
+      var _o = JSON.parse(_raw);
+      var _t = _o.access_token || (_o.currentSession && _o.currentSession.access_token);
+      if (_t) document.cookie = 'da_session=' + _t + '; path=/; max-age=3600; SameSite=Lax; Secure';
+    }
+  } catch (e) {}
+
   function readSession() {
     try {
       var raw = localStorage.getItem(SB_KEY);
@@ -67,6 +78,7 @@
     av.addEventListener('click', function (e) { e.stopPropagation(); var o = menu.classList.toggle('open'); av.setAttribute('aria-expanded', o ? 'true' : 'false'); });
     el.querySelector('.out').addEventListener('click', function () {
       try { localStorage.removeItem(SB_KEY); } catch (e) {}
+      try { document.cookie = 'da_session=; path=/; max-age=0; SameSite=Lax; Secure'; } catch (e) {}
       location.replace('/logga-in');
     });
     if (!accBound) {
