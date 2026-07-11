@@ -208,7 +208,7 @@ document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLower
 (function(){const els=document.querySelectorAll('[data-reveal]');if(matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(el=>el.classList.add('on'));return;}
 const io=new IntersectionObserver((en)=>en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target);}}),{threshold:.05});els.forEach(el=>io.observe(el));})();
 </script>
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
+<script defer src="/vendor/supabase-js-2.110.2.min.js"></script>
 <script defer src="/labs/agarbrevet-supabase.js"></script>
 </body>
 </html>

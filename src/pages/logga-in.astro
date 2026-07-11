@@ -33,7 +33,7 @@ import Seal from '../components/Seal.astro';
     </div>
   </main>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
+  <script defer src="/vendor/supabase-js-2.110.2.min.js"></script>
   <script defer src="/labs/agarbrevet-supabase.js"></script>
   <script>
     // Kod-som-andra-vag-in kraver att Supabase-mejlmallen visar {{ .Token }},
@@ -41,6 +41,19 @@ import Seal from '../components/Seal.astro';
     // dolt sa vi inte ber om en kod som inte finns i mejlet. Flippa till true
     // nar SMTP + mallen ar klara.
     const CODE_LOGIN_ENABLED = false;
+
+    // Vantar in att Supabase-klienten (window.AB) blir redo, i stallet for att
+    // skramma direkt om den deferrade bundeln inte hunnit ladda. ~5s tak.
+    function waitForAB() {
+      return new Promise((resolve) => {
+        if (window.AB && window.AB.ready) return resolve(true);
+        let n = 0;
+        const iv = setInterval(() => {
+          if (window.AB && window.AB.ready) { clearInterval(iv); resolve(true); }
+          else if (++n > 50) { clearInterval(iv); resolve(false); }
+        }, 100);
+      });
+    }
 
     // Satt cookie fran token och skicka in till /hem. Delas av kod- och
     // lank-vagen (watchSession).
@@ -63,7 +76,8 @@ import Seal from '../components/Seal.astro';
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { show('Skriv en giltig mejladress.'); return; }
         show('Skickar…');
         try {
-          if (!(window.AB && window.AB.ready)) { show('Tjänsten laddar fortfarande, försök igen om en sekund.'); return; }
+          const ready = await waitForAB();
+          if (!ready) { show('Tjänsten kunde inte laddas. Ladda om sidan och försök igen.'); return; }
           // Magic-länken returnerar hit (/logga-in ar publik); vi satter cookien
           // och skickar in till /hem nar sessionen dykt upp.
           const r = await window.AB.sendMagicLink(v, { createUser: false, redirectPath: '/logga-in' });
