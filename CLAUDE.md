@@ -8,7 +8,7 @@ Plattform för en svenskspråkig kurs i fundamental aktieanalys. Astro-byggd sta
 
 - **Stack:** Astro 5 (static output), content collections med Zod-schema, View Transitions (ClientRouter). Inga ramverk utöver det. Endast `astro` + `@astrojs/mdx` som beroenden; `playwright` som dev-dep.
 - **Deploy:** Cloudflare Pages, projekt `kurs` -> `kurs-7m8.pages.dev`. Deployas med **wrangler** (`wrangler pages deploy`), inte via GitHub-push.
-- **Lösenord:** Sajten är lösenordsskyddad i `functions/_middleware.js` (Pages Function). Lösen: `env.SITE_PASSWORD || 'kurs2026'`. Cookie: `kurs_auth`.
+- **Åtkomst:** Sajten är kontogrindad i `functions/_middleware.js` (Pages Function): middleware verifierar en inloggad Supabase-session (`da_session`-cookie, access-token JWT) mot Supabases JWKS (ES256) på edgen. Publika undantag: landning (`/`), `/logga-in`, inbjudan, statiska tillgångar, `/api/*`. Det gamla sajtlösenordet (`kurs2026`/`kurs_auth`) är borttaget (2026-07-11).
 - **Aktuell gren:** `trunk` (huvudgren: `main`).
 - **Commit-trailer:** avsluta commits med `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
 
@@ -33,7 +33,7 @@ src/
   pages/kurs/[...slug].astro  deck-spelaren (en lektion -> steg/slides)
   scripts/deck.ts          klient: grupperar H2-sektioner till slides
   layouts/ components/      AppShell, Quiz, LessonHeader, PrevNext, m.fl.
-functions/_middleware.js   lösenordsgrind (Cloudflare Pages)
+functions/_middleware.js   kontogrind: verifierar Supabase-JWT (Cloudflare Pages)
 tools/                     innehållsgrindar + skript (se nedan)
 docs/                      mallar, style guide, planer, specs, case-källor
 content/fundamental-aktieanalys/  NYTT: Fokus-spelarens JSON (se nedan)
@@ -57,7 +57,7 @@ Strukturgrinden kräver bl.a. 6 H2-sektioner, ordantal 700 till 1600, quiz (>=3 
 ## Status: vad som är gjort
 
 ### Plattformen (klar, deployad)
-Deck-UI med stegnavigering, lösenordsgrind, quiz med %-resultat, localStorage-progress, mörkt tema som default med toggle, reveal-on-scroll. Modul-gating (`/oversikt` vid låst modul).
+Deck-UI med stegnavigering, kontogrind (Supabase-inloggning), quiz med %-resultat, localStorage-progress, mörkt tema som default med toggle, reveal-on-scroll. Modul-gating (`/oversikt` vid låst modul).
 
 ### Innehållet (klar) — B+ till A+
 Hela omskrivningsplanen (`docs/superpowers/plans/2026-06-18-kurs-bplus-till-aplus.md`) körd: 103 lektioner omskrivna och granskade (varje modul godkänd), capstone ombyggd, ny content (index, WACC, sektor, praktik, Lifco-case), quiz på alla 95 standardlektioner (~379 frågor totalt). Em-dashes och en-dashes borttagna ur allt kursmaterial. Alla grindar gröna.
