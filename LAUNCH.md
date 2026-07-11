@@ -36,4 +36,9 @@ Måste vara avklarade innan tjänsten öppnas publikt. Uppdaterad 2026-07-10.
 
 - Stripe checkout + webhook (`subscriptions.status = active` → 2 inbjudningar).
 - "Dina inbjudningar"-vy.
-- Marknadsdatalicens (fas 3).
+- **Marknadsdatalicens (kommersiell) före publik lansering.** Retail-abonnemang
+  (Börsdata Pro/Pro+, FMP Starter/Premium) är PRIVAT bruk och får INTE
+  redistribueras/visas för betalande kunder. Skarp tjänst kräver ett kommersiellt
+  avtal: Börsdata Enterprise (kontakta dem) eller FMP:s "Data Display and Licensing
+  Agreement". Egen kostnads-/avtalspost. Gratis nu: FI-insynsregistret (publikt).
+  För att bara BYGGA/testa nordisk fundamenta räcker Börsdata **Pro €25/mån** (Nordic API).

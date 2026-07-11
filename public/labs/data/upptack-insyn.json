@@ -1,0 +1,401 @@
+{
+  "kalla": "Finansinspektionens insynsregister",
+  "hamtad": "2026-07-11",
+  "period": {
+    "from": "2026-06-11",
+    "to": "2026-07-11",
+    "dagar": 30
+  },
+  "bolag": [
+    {
+      "co": "Kjell Group AB (publ)",
+      "belopp": 18928618,
+      "kop": 9,
+      "personer": 6,
+      "sista": "2026-07-07",
+      "tx": [
+        {
+          "person": "Göran Westerberg",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-07-07",
+          "belopp": 8520000
+        },
+        {
+          "person": "Göran Westerberg",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-07-01",
+          "belopp": 1574927
+        },
+        {
+          "person": "Göran Westerberg",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-06-30",
+          "belopp": 814356
+        },
+        {
+          "person": "Göran Westerberg",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-06-29",
+          "belopp": 1671104
+        }
+      ]
+    },
+    {
+      "co": "Sivers Semiconductors AB",
+      "belopp": 2013996,
+      "kop": 5,
+      "personer": 5,
+      "sista": "2026-07-09",
+      "tx": [
+        {
+          "person": "Joakim Nideborn",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-07-09",
+          "belopp": 460427
+        },
+        {
+          "person": "Helena Maria Svancar",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-07-09",
+          "belopp": 459933
+        },
+        {
+          "person": "Vickram Vathulya",
+          "befattning": "Verkställande direktör (VD)",
+          "datum": "2026-07-09",
+          "belopp": 98640
+        },
+        {
+          "person": "Karin Raj",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-07-09",
+          "belopp": 459996
+        }
+      ]
+    },
+    {
+      "co": "Ambea AB ( publ )",
+      "belopp": 1830692,
+      "kop": 5,
+      "personer": 5,
+      "sista": "2026-06-29",
+      "tx": [
+        {
+          "person": "Laura Ämmälä",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-06-29",
+          "belopp": 103950
+        },
+        {
+          "person": "Susanne Sjöberg",
+          "befattning": "Annan ledande befattningshavare",
+          "datum": "2026-06-29",
+          "belopp": 99902
+        },
+        {
+          "person": "Dan Olsson",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-06-29",
+          "belopp": 254388
+        },
+        {
+          "person": "Benno Eliasson",
+          "befattning": "Ekonomichef/finanschef/finansdirektör",
+          "datum": "2026-06-29",
+          "belopp": 433202
+        }
+      ]
+    },
+    {
+      "co": "Lindab International AB",
+      "belopp": 1610943,
+      "kop": 5,
+      "personer": 5,
+      "sista": "2026-06-17",
+      "tx": [
+        {
+          "person": "Tobias Augustsson",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-06-17",
+          "belopp": 158456
+        },
+        {
+          "person": "Niklas Löfmark",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-06-17",
+          "belopp": 155984
+        },
+        {
+          "person": "Lars Ynner",
+          "befattning": "Ekonomichef/finanschef/finansdirektör",
+          "datum": "2026-06-17",
+          "belopp": 266953
+        },
+        {
+          "person": "Lars Per Georg Christensson",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-06-17",
+          "belopp": 182622
+        }
+      ]
+    },
+    {
+      "co": "SAAB Aktiebolag",
+      "belopp": 12253,
+      "kop": 5,
+      "personer": 5,
+      "sista": "2026-06-16",
+      "tx": [
+        {
+          "person": "Robert Hellgren",
+          "befattning": "Arbetstagarrepresentant i styrelsen eller arbetstagarsuppleant",
+          "datum": "2026-06-16",
+          "belopp": 1227
+        },
+        {
+          "person": "Marcus Wandt",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-06-16",
+          "belopp": 3260
+        },
+        {
+          "person": "Lars Svensson",
+          "befattning": "Arbetstagarrepresentant i styrelsen eller arbetstagarsuppleant",
+          "datum": "2026-06-16",
+          "belopp": 2130
+        },
+        {
+          "person": "Magnus Gustafsson",
+          "befattning": "Arbetstagarrepresentant i styrelsen eller arbetstagarsuppleant",
+          "datum": "2026-06-16",
+          "belopp": 1536
+        }
+      ]
+    },
+    {
+      "co": "Atrium Ljungberg AB",
+      "belopp": 2904463,
+      "kop": 4,
+      "personer": 4,
+      "sista": "2026-07-08",
+      "tx": [
+        {
+          "person": "Helena Martini",
+          "befattning": "Annan ledande befattningshavare",
+          "datum": "2026-07-08",
+          "belopp": 49955
+        },
+        {
+          "person": "Annica Ånäs",
+          "befattning": "Verkställande direktör (VD)",
+          "datum": "2026-07-08",
+          "belopp": 266100
+        },
+        {
+          "person": "Linus Kjellberg",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-07-08",
+          "belopp": 90908
+        },
+        {
+          "person": "Jim Andreas Wik",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-07-07",
+          "belopp": 2497500
+        }
+      ]
+    },
+    {
+      "co": "Cereno Scientific AB",
+      "belopp": 1283417,
+      "kop": 9,
+      "personer": 4,
+      "sista": "2026-07-07",
+      "tx": [
+        {
+          "person": "Jeppe Oevlesen",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-07-07",
+          "belopp": 211837
+        },
+        {
+          "person": "Jeppe Oevlesen",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-07-07",
+          "belopp": 30720
+        },
+        {
+          "person": "Björn Dahlöf",
+          "befattning": "Annan ledande befattningshavare",
+          "datum": "2026-07-07",
+          "belopp": 91203
+        },
+        {
+          "person": "Sten Sörensen",
+          "befattning": "Verkställande direktör (VD)",
+          "datum": "2026-07-06",
+          "belopp": 249946
+        }
+      ]
+    },
+    {
+      "co": "Fastpartner AB",
+      "belopp": 16137691,
+      "kop": 8,
+      "personer": 3,
+      "sista": "2026-07-08",
+      "tx": [
+        {
+          "person": "Sven-Olof Johansson",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-07-08",
+          "belopp": 5648975
+        },
+        {
+          "person": "Christopher Johansson",
+          "befattning": "Verkställande direktör (VD)",
+          "datum": "2026-07-07",
+          "belopp": 70700
+        },
+        {
+          "person": "Christopher Johansson",
+          "befattning": "Verkställande direktör (VD)",
+          "datum": "2026-07-07",
+          "belopp": 70654
+        },
+        {
+          "person": "Christopher Johansson",
+          "befattning": "Verkställande direktör (VD)",
+          "datum": "2026-07-07",
+          "belopp": 17650
+        }
+      ]
+    },
+    {
+      "co": "Intrum AB",
+      "belopp": 2029351,
+      "kop": 4,
+      "personer": 3,
+      "sista": "2026-06-29",
+      "tx": [
+        {
+          "person": "Indre Bartulyte-Uzupe",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-06-29",
+          "belopp": 456832
+        },
+        {
+          "person": "Slavomir Mizak",
+          "befattning": "Annan ledande befattningshavare",
+          "datum": "2026-06-24",
+          "belopp": 460184
+        },
+        {
+          "person": "Debra Davies",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-06-17",
+          "belopp": 125465
+        },
+        {
+          "person": "Slavomir Mizak",
+          "befattning": "Annan ledande befattningshavare",
+          "datum": "2026-06-17",
+          "belopp": 986870
+        }
+      ]
+    },
+    {
+      "co": "Freja eID Group AB",
+      "belopp": 1168953,
+      "kop": 5,
+      "personer": 3,
+      "sista": "2026-07-08",
+      "tx": [
+        {
+          "person": "Pär-Ola Gustavsson",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-07-08",
+          "belopp": 2300
+        },
+        {
+          "person": "Pär-Ola Gustavsson",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-07-06",
+          "belopp": 5000
+        },
+        {
+          "person": "Monitor ERP Group AB",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-06-26",
+          "belopp": 565145
+        },
+        {
+          "person": "Monitor ERP Group AB",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-06-25",
+          "belopp": 240240
+        }
+      ]
+    },
+    {
+      "co": "Kinda Brave Entertainment Group AB (publ)",
+      "belopp": 1060432,
+      "kop": 3,
+      "personer": 3,
+      "sista": "2026-06-23",
+      "tx": [
+        {
+          "person": "Johan Willdeck",
+          "befattning": "Styrelseordförande",
+          "datum": "2026-06-23",
+          "belopp": 650002
+        },
+        {
+          "person": "Kristoffer Lindström",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-06-22",
+          "belopp": 400001
+        },
+        {
+          "person": "Alexander Benitez",
+          "befattning": "Annan medlem i bolagets administrations-, lednings- eller kontrollorgan",
+          "datum": "2026-06-18",
+          "belopp": 10429
+        }
+      ]
+    },
+    {
+      "co": "Sweden BuyersClub AB",
+      "belopp": 485117,
+      "kop": 5,
+      "personer": 3,
+      "sista": "2026-07-08",
+      "tx": [
+        {
+          "person": "Simon Forsslund",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-07-08",
+          "belopp": 207322
+        },
+        {
+          "person": "Simon Forsslund",
+          "befattning": "Styrelseledamot",
+          "datum": "2026-07-07",
+          "belopp": 221784
+        },
+        {
+          "person": "Jacob Wendel",
+          "befattning": "Annan ledande befattningshavare",
+          "datum": "2026-07-07",
+          "belopp": 30013
+        },
+        {
+          "person": "Jacob Wendel",
+          "befattning": "Annan ledande befattningshavare",
+          "datum": "2026-07-06",
+          "belopp": 14998
+        }
+      ]
+    }
+  ]
+}
