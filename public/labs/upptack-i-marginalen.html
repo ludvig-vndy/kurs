@@ -196,6 +196,7 @@
   .itx em{font-style:normal;color:var(--faint);margin-left:6px}
   .ireal-note{font-family:var(--serif);font-style:italic;font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
   .hbef{color:var(--muted)}
+  .ireal-note.ex{color:var(--muted);border-top:1px solid var(--rule-strong)!important;margin-top:8px;padding-top:18px!important}
   .hero-co .ireal{vertical-align:middle}
   .rrow-co{font-family:var(--display);font-weight:600;font-size:15.5px;color:var(--ink);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
   .rrow-co .fticker{font-family:var(--num);font-size:11.5px;letter-spacing:.03em;color:var(--muted);background:var(--paper-2);border-radius:4px;padding:2px 7px;font-weight:400}
@@ -378,7 +379,7 @@
       <div class="upp-head">
         <div class="upp-kicker">Dagens uppstickare</div>
         <h3 class="upp-title">Det nytända och nyinträdda</h3>
-        <p class="upp-sub">Om du hajar-värdet: rankat på vad som ändrats, inte hur billigt. Fakta om rörelser, aldrig ett köpråd.</p>
+        <p class="upp-sub">Rankat på vad som ändrats, inte hur billigt något är. Fakta om rörelser, aldrig ett köpråd.</p>
       </div>
 
       <!-- hero: toppuppstickaren -->
@@ -388,7 +389,7 @@
       <ul class="rows" id="mfeed"></ul>
 
       <p class="metaline guard"><span><b>Verktyget pekar, det beslutar inte.</b> Vad en rörelse betyder för värdet avgör du, inte vi.</span></p>
-      <p class="metaline"><span>Data per <span class="num">9 juli 2026</span> stängning, EOD, ej live. Fiktiva bolag, illustrativa siffror.</span></p>
+      <p class="metaline"><span><b>Insynsköp: riktig data</b> ur Finansinspektionens register, senaste 30 dagarna. Pris- och volymsignalerna längre ned är exempel tills marknadsdatan är licensierad.</span></p>
     </section>
 
     <!-- ── MODE 2: SCREENER ────────────────────────────────────────── -->
@@ -708,10 +709,16 @@ function renderFeed(){
 
   if(insiderView){
     if(realReady()){
-      const note = `<li class="ireal-note" style="grid-template-columns:1fr">Riktiga insynsköp de senaste ${dagar()} dagarna, ur Finansinspektionens insynsregister, rankat på insiderkluster och belopp. Fakta, aldrig en signal.</li>`;
+      const note = `<li class="ireal-note" style="grid-template-columns:1fr"><b>Riktiga insynsköp</b> de senaste ${dagar()} dagarna, ur Finansinspektionens insynsregister, rankat på insiderkluster och belopp. Fakta, aldrig en signal.</li>`;
       // i 'alla' ligger #1 redan i heron -> visa resten; i 'insyn' visa alla.
       const list = activeFilter==='alla' ? INSYN_REAL.bolag.slice(1) : INSYN_REAL.bolag;
-      feed.innerHTML = note + list.map(renderInsiderRow).join('');
+      let html = note + list.map(renderInsiderRow).join('');
+      // i 'alla' visar vi ocksa pris/volym-signalerna, tydligt markt exempel.
+      if(activeFilter==='alla'){
+        html += `<li class="ireal-note ex" style="grid-template-columns:1fr"><b>Exempel</b> · pris- och volymsignaler (kursavvikelse, ovanlig volym, blankning, teknisk nivå) väntar på marknadsdatalicens. Bolagen nedan är illustrativa.</li>`
+          + MOVES.map(renderRow).join('');
+      }
+      feed.innerHTML = html;
     } else {
       feed.innerHTML = '<li class="feed-empty" style="grid-template-columns:1fr">Hämtar riktiga insynsköp från Finansinspektionen…</li>';
     }
