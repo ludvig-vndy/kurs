@@ -1,0 +1,53 @@
+{
+  "_kommentar": "Illustrativt underlag, fiktiva bolag och konstruerade tal (sifferpolicy). I skarp drift kommer siffrorna ur Rapportkollen eller datakällan i samma form. Byt 'checked' och 'figures' mot verkliga och kör: node motor/vigilans/brief-build.mjs",
+  "date": "2026-07-11",
+  "checked": { "reports": 51, "filings": 3, "insiders": 2 },
+  "holdings": [
+    {
+      "id": "h1",
+      "name": "Exempelbolag AB (illustrativt)",
+      "thesis": {
+        "why": "Lönsam nischtillverkare med prissättningsmakt.",
+        "invariants": ["Bruttomarginal över 40 procent", "Nettoskuld under 1x EBITDA"]
+      },
+      "tripwires": [
+        { "id": "t1", "metric": "gross_margin", "op": "below", "value": 40, "unit": "%", "note": "marginalgolv" },
+        { "id": "t2", "metric": "net_debt", "op": "above", "value": 100, "unit": "Mkr", "note": "skuldtak" }
+      ],
+      "figures": {
+        "gross_margin": { "value": 38, "period": "2025Q3", "source_ref": { "title": "Q3-rapport", "page": 4 } },
+        "net_debt": { "value": 92, "period": "2025Q3", "source_ref": { "title": "Q3-rapport", "page": 9 } }
+      },
+      "prev": {
+        "gross_margin": { "value": 41, "period": "2025Q2" }
+      }
+    },
+    {
+      "id": "h2",
+      "name": "Förhoppningsbolaget AB (illustrativt)",
+      "thesis": {
+        "why": "Tidig skalningsfas, äger positionen för optionaliteten.",
+        "invariants": ["Kassan räcker minst 4 kvartal", "Ingen utspädning över 10 procent"]
+      },
+      "tripwires": [
+        { "id": "t3", "metric": "cash_runway", "op": "below", "value": 4, "unit": "kvartal", "note": "runway-golv" },
+        { "id": "t4", "metric": "dilution", "op": "above", "value": 10, "unit": "%", "note": "utspädningstak" }
+      ],
+      "figures": {
+        "cash_runway": { "value": 3, "period": "2025Q3", "source_ref": { "title": "Q3-rapport", "page": 12 } },
+        "dilution": { "value": 6, "period": "2025Q3", "source_ref": { "title": "Q3-rapport", "page": 2 } }
+      }
+    },
+    {
+      "id": "h3",
+      "name": "Lugna Bolaget AB (illustrativt)",
+      "thesis": { "why": "Stabil kassako.", "invariants": ["Marginal över 25 procent"] },
+      "tripwires": [
+        { "id": "t5", "metric": "gross_margin", "op": "below", "value": 25, "unit": "%", "note": "marginalgolv" }
+      ],
+      "figures": {
+        "gross_margin": { "value": 31, "period": "2025Q3", "source_ref": { "title": "Q3-rapport", "page": 5 } }
+      }
+    }
+  ]
+}
