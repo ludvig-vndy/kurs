@@ -172,7 +172,52 @@
     document.head.appendChild(s);
   }
   var chipBound = false;
+  function bindChipDismiss() {
+    if (chipBound) return;
+    chipBound = true;
+    document.addEventListener("click", function (e) {
+      var m = document.querySelector(".ab-menu.open");
+      if (m && !m.closest(".ab-user").contains(e.target)) {
+        m.classList.remove("open");
+        var a = m.closest(".ab-user").querySelector(".ab-avatar");
+        if (a) a.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        var m = document.querySelector(".ab-menu.open");
+        if (m) { m.classList.remove("open"); var a = m.closest(".ab-user").querySelector(".ab-avatar"); if (a) a.setAttribute("aria-expanded", "false"); }
+      }
+    });
+  }
+  // Slot-montering (Astro-mastheaden): avatar/login i nav-radens .mast-account,
+  // utan att flytta edition-raden, sa den inte puttar runt masthuvudet.
+  async function mountChipInSlot(slot) {
+    var session = await getSession();
+    injectChipStyles();
+    slot.innerHTML = "";
+    if (!session) {
+      var la = document.createElement("a");
+      la.className = "ab-login"; la.href = "/logga-in"; la.textContent = "Logga in";
+      slot.appendChild(la);
+      return;
+    }
+    var user = session.user || {};
+    var email = (user.email || "").replace(/[&<>"']/g, "");
+    var chip = document.createElement("div");
+    chip.className = "ab-user";
+    chip.innerHTML =
+      '<button class="ab-avatar" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Konto">' + monogram(user) + '</button>' +
+      '<div class="ab-menu" role="menu"><div class="who"><b>Inloggad som</b>' + email + '</div><button class="out" type="button" role="menuitem">Logga ut</button></div>';
+    slot.appendChild(chip);
+    var avatar = chip.querySelector(".ab-avatar"), menu = chip.querySelector(".ab-menu");
+    avatar.addEventListener("click", function (e) { e.stopPropagation(); var open = menu.classList.toggle("open"); avatar.setAttribute("aria-expanded", open ? "true" : "false"); });
+    chip.querySelector(".out").addEventListener("click", async function () { try { await signOut(); } catch (e) {} location.reload(); });
+    bindChipDismiss();
+  }
   async function mountUserChip() {
+    var slot = document.querySelector(".mast-account");
+    if (slot) { await mountChipInSlot(slot); return; }
     var mastTop = document.querySelector(".mast-top");
     if (!mastTop) return;
     var session = await getSession();
@@ -228,23 +273,7 @@
       try { await signOut(); } catch (e) {}
       location.reload();
     });
-    if (!chipBound) {
-      chipBound = true;
-      document.addEventListener("click", function (e) {
-        var m = document.querySelector(".ab-menu.open");
-        if (m && !m.closest(".ab-user").contains(e.target)) {
-          m.classList.remove("open");
-          var a = m.closest(".ab-user").querySelector(".ab-avatar");
-          if (a) a.setAttribute("aria-expanded", "false");
-        }
-      });
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          var m = document.querySelector(".ab-menu.open");
-          if (m) { m.classList.remove("open"); var a = m.closest(".ab-user").querySelector(".ab-avatar"); if (a) a.setAttribute("aria-expanded", "false"); }
-        }
-      });
-    }
+    bindChipDismiss();
   }
   function whenReady(fn) {
     if (document.readyState !== "loading") fn();

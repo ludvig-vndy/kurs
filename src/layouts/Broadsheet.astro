@@ -21,6 +21,8 @@ const {
   nav = 'app',
   chrome = 'masthead',
   editionLine2,
+  /** open=true => publik sida (ingen inloggningsgrind): landning, logga-in */
+  open = false,
 } = Astro.props;
 
 // Edition-radens rad 2 namnger ytan du star pa (som i Agarbrevet), harledd ur
@@ -38,6 +40,19 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    {!open && (
+      <script is:inline>
+        {/* Inloggningsgrind: ej publika sidor kraver ett Supabase-konto. Kors
+            fore innehallet renderas -> ingen flash. Undantar magic-link-retur
+            (access_token i hashen) sa inloggningen far slutforas. */}
+        try {
+          if (!localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token') && !location.hash.includes('access_token')) {
+            location.replace('/logga-in');
+          }
+        } catch (e) {}
+      </script>
+    )}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -73,6 +88,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
               <a href="/ordlista" class:list={[{ here: active === 'ordlista' }]} aria-current={active === 'ordlista' ? 'page' : undefined}>Ordlista</a>
               <span class="nav-div" aria-hidden="true"></span>
               <a href="/labs/agarbrevet-i-marginalen.html" class="nav-cross">Till Ägarbrevet ↗</a>
+              <span class="mast-account" aria-live="polite"></span>
             </nav>
           )}
           {nav === 'landing' && (
@@ -109,6 +125,9 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
     )}
 
     <style>
+      /* Kontochipen sitter langst till hoger i nav-raden (under masthuvudet),
+         sa den inte puttar wordmark/edition. Fylls av AB.mountUserChip. */
+      .mast-account { margin-left: auto; display: inline-flex; align-items: center; min-height: 40px; }
       .site-foot { margin-top: 56px; border-top: 2px solid var(--rule-strong); }
       .site-foot .wrap { padding-top: 26px; padding-bottom: 60px; }
       .site-foot__top { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
