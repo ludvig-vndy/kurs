@@ -19,6 +19,16 @@ import Seal from '../components/Seal.astro';
       </form>
       <p id="li-msg" class="li-msg" role="status" hidden></p>
 
+      <!-- Andra vagen in: koden ur samma mejl, ifall lanken inte tar dig hela vagen. -->
+      <form id="li-code" class="li-code" novalidate hidden>
+        <p class="li-code-lead">Krånglar länken? Skriv 6-siffriga koden ur mejlet.</p>
+        <div class="li-code-row">
+          <input id="li-otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6" placeholder="123456" aria-label="Inloggningskod" />
+          <button class="btn-ink" type="submit">Logga in →</button>
+        </div>
+        <p id="li-code-msg" class="li-msg" role="status" hidden></p>
+      </form>
+
       <p class="li-fine">Har du fått en inbjudan men inget konto än? <a href="/labs/inbjudan-i-marginalen.html">Aktivera inbjudan →</a></p>
     </div>
   </main>
@@ -26,12 +36,20 @@ import Seal from '../components/Seal.astro';
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
   <script defer src="/labs/agarbrevet-supabase.js"></script>
   <script>
+    // Satt cookie fran token och skicka in till /hem. Delas av kod- och
+    // lank-vagen (watchSession).
+    function enterWithToken(t) {
+      document.cookie = 'da_session=' + t + '; path=/; max-age=3600; SameSite=Lax; Secure';
+      location.replace('/hem');
+    }
+
     function bindLogin() {
       const form = document.getElementById('li-form');
       if (!form || form.dataset.bound) return;
       form.dataset.bound = '1';
       const email = document.getElementById('li-email');
       const msg = document.getElementById('li-msg');
+      const codeForm = document.getElementById('li-code');
       const show = (t) => { msg.hidden = false; msg.textContent = t; };
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -44,7 +62,37 @@ import Seal from '../components/Seal.astro';
           // och skickar in till /hem nar sessionen dykt upp.
           const r = await window.AB.sendMagicLink(v, { createUser: false, redirectPath: '/logga-in' });
           if (r && r.error) { show('Kunde inte skicka just nu. Har du ett konto med den mejlen?'); }
-          else { show('Klart. Kolla din mejl, vi skickade en inloggningslänk till ' + v + '.'); form.reset(); }
+          else {
+            show('Klart. Kolla din mejl, vi skickade en inloggningslänk och en kod till ' + v + '.');
+            // Andra vagen in: kod ur samma mejl. Kom ihag mejlen sa verifyOtp
+            // kan bindas till den.
+            if (codeForm) { codeForm.hidden = false; codeForm.dataset.email = v; }
+          }
+        } catch (err) { show('Något gick fel. Försök igen om en stund.'); }
+      });
+    }
+
+    function bindCode() {
+      const codeForm = document.getElementById('li-code');
+      if (!codeForm || codeForm.dataset.bound) return;
+      codeForm.dataset.bound = '1';
+      const otp = document.getElementById('li-otp');
+      const cmsg = document.getElementById('li-code-msg');
+      const show = (t) => { cmsg.hidden = false; cmsg.textContent = t; };
+      codeForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = (codeForm.dataset.email || '').trim();
+        const code = (otp.value || '').replace(/\D/g, '');
+        if (code.length !== 6) { show('Koden är 6 siffror.'); return; }
+        if (!email) { show('Fyll i din mejl ovan och skicka först.'); return; }
+        show('Loggar in…');
+        try {
+          if (!(window.AB && window.AB.verifyCode)) { show('Tjänsten laddar fortfarande, försök igen om en sekund.'); return; }
+          const r = await window.AB.verifyCode(email, code);
+          const t = r && r.data && r.data.session && r.data.session.access_token;
+          if (r && r.error) { show('Fel eller utgången kod. Dubbelkolla siffrorna i mejlet.'); }
+          else if (t) { enterWithToken(t); }
+          else { show('Kunde inte logga in. Prova länken i mejlet istället.'); }
         } catch (err) { show('Något gick fel. Försök igen om en stund.'); }
       });
     }
@@ -57,16 +105,13 @@ import Seal from '../components/Seal.astro';
           if (raw) {
             const o = JSON.parse(raw);
             const t = o.access_token || (o.currentSession && o.currentSession.access_token);
-            if (t) {
-              document.cookie = 'da_session=' + t + '; path=/; max-age=3600; SameSite=Lax; Secure';
-              clearInterval(iv); location.replace('/hem');
-            }
+            if (t) { clearInterval(iv); enterWithToken(t); }
           }
         } catch (e) {}
         if (++n > 40) clearInterval(iv);  // ~12s
       }, 300);
     }
-    document.addEventListener('astro:page-load', () => { bindLogin(); watchSession(); });
+    document.addEventListener('astro:page-load', () => { bindLogin(); bindCode(); watchSession(); });
   </script>
 </Broadsheet>
 
@@ -81,6 +126,14 @@ import Seal from '../components/Seal.astro';
   .li-form input:focus { outline: none; border-color: var(--oxblood); }
   .li-form .btn-ink { flex: 0 0 auto; }
   .li-msg { font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; color: var(--oxblood); margin: 16px 0 0; }
+  .li-code { margin: 22px 0 0; padding: 20px 0 0; border-top: 1px solid var(--rule); text-align: left; }
+  .li-code-lead { font-family: var(--serif); font-size: 14.5px; line-height: 1.5; color: var(--ink-soft); margin: 0 0 12px; }
+  .li-code-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .li-code-row input { flex: 1; min-width: 0; border: 1px solid var(--rule-strong); background: var(--card); font-family: var(--mono); font-size: 17px; letter-spacing: .3em; color: var(--ink); padding: 13px 16px; }
+  .li-code-row input:focus { outline: none; border-color: var(--oxblood); }
+  .li-code-row .btn-ink { flex: 0 0 auto; }
+  .li-code .li-msg { margin: 12px 0 0; }
+  @media (max-width: 460px) { .li-code-row { flex-direction: column; } .li-code-row .btn-ink { width: 100%; justify-content: center; } }
   .li-fine { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); margin: 28px 0 0; }
   .li-fine a { color: var(--ink-soft); }
   .li-fine a:hover { color: var(--oxblood); }

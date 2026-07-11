@@ -68,6 +68,13 @@
     });
   }
 
+  // Andra vagen in: samma mejl bar en 6-siffrig kod. Nar lanken inte tar dig
+  // hela vagen in (oppnas i fel webblasare, branns av en mejlskanner) skriver
+  // du koden pa samma flik. type:'email' galler bade signup- och magic-koder.
+  async function verifyCode(email, code) {
+    return sb.auth.verifyOtp({ email: email, token: String(code).trim(), type: "email" });
+  }
+
   async function signOut() {
     return sb.auth.signOut();
   }
@@ -128,6 +135,7 @@
     getSession: getSession,
     getUser: getUser,
     sendMagicLink: sendMagicLink,
+    verifyCode: verifyCode,
     signOut: signOut,
     listHoldings: listHoldings,
     insertHoldings: insertHoldings,
