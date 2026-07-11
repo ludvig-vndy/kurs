@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tes-tidslinjen · Delägaren</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --card:#FCFAF4; --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#8A2E26; --gold:#9A6E1C; --good:#3E7A4F;
+    --slab:"Zilla Slab",Georgia,serif; --serif:"Spectral",Georgia,serif; --mono:"Inter",system-ui,sans-serif;
+    --band-intact:rgba(62,122,79,.10); --band-drift:rgba(154,110,28,.16); --band-broken:rgba(138,46,38,.13);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+  header{padding:28px 0 18px;border-bottom:2px solid var(--rule-strong)}
+  .word{font-family:var(--slab);font-weight:700;font-size:22px;letter-spacing:.06em;text-transform:uppercase;color:var(--oxblood);text-decoration:none}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:22px 0 0}
+  h1{font-family:var(--slab);font-weight:600;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.008em;margin:6px 0 0}
+  .sub{font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:10px 0 0;max-width:60ch}
+  .co{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+  figure{margin:6px 0 0;border:1px solid var(--rule-strong);background:var(--card)}
+  svg{display:block;width:100%;height:auto}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 20px;padding:12px 16px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted)}
+  .legend b{display:inline-flex;align-items:center;gap:7px;font-weight:400}
+  .sw{width:14px;height:10px;display:inline-block;border-radius:2px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .price-line{fill:none;stroke:var(--ink);stroke-width:2}
+  .axis{stroke:var(--rule-strong);stroke-width:1}
+  .tick{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+  .mk{cursor:pointer}
+  .mk:hover .halo{opacity:.25}
+  .detail{margin:16px 0 0;border:1px solid var(--rule-strong);background:var(--card);padding:18px 20px;min-height:96px}
+  .detail .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .detail .t{font-family:var(--slab);font-weight:600;font-size:20px;margin:4px 0 0}
+  .detail p{font-size:15px;color:var(--ink-soft);margin:8px 0 0}
+  .detail .src{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:8px 0 0}
+  .detail .lesson{display:inline-block;margin:12px 0 0;font-family:var(--mono);font-size:12px;color:var(--oxblood);text-decoration:none;border:1px solid var(--rule-strong);padding:8px 12px}
+  .detail .lesson:hover{background:rgba(138,46,38,.06)}
+  .note{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--faint);margin:16px 0 40px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="word" href="/hem">Delägaren</a>
+    <div class="eyebrow">Tes-tidslinjen · prototyp</div>
+    <h1 id="co-name">Innehavets kurva, förklarad</h1>
+    <p class="sub">Priset, dina trådhändelser och dina beslut på samma tidslinje, med tes-bandet under. Beskrivande, aldrig en förutsägelse: den visar vad som hänt mot ditt eget skäl att äga.</p>
+  </header>
+
+  <div class="co" id="co-range">Laddar…</div>
+  <figure>
+    <svg id="chart" viewBox="0 0 960 400" role="img" aria-label="Tes-tidslinje"></svg>
+    <div class="legend">
+      <b><span class="sw" style="background:var(--band-intact)"></span> Tes intakt</b>
+      <b><span class="sw" style="background:var(--band-drift)"></span> Tes glider</b>
+      <b><span class="sw" style="background:var(--band-broken)"></span> Tes bruten</b>
+      <b><span class="dot" style="background:var(--oxblood)"></span> Trådkorsning</b>
+      <b><span class="dot" style="background:var(--gold)"></span> Insider</b>
+      <b><span class="dot" style="background:#fff;border:2px solid var(--ink)"></span> Ditt beslut</b>
+    </div>
+  </figure>
+
+  <div class="detail" id="detail">
+    <div class="k">Markör</div>
+    <div class="t">Klicka en markör på kurvan</div>
+    <p>Varje punkt är ett faktum med källa: en trådkorsning, en insideraffär eller ett eget beslut. Klicka för detaljer och lektionen som förklarar mekaniken.</p>
+  </div>
+
+  <p class="note">Illustrativt underlag, fiktiva bolag och konstruerade tal. Beskrivande, inte prognos.</p>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const BAND={intact:getCSS('--band-intact'),drifting:getCSS('--band-drift'),broken:getCSS('--band-broken')};
+const MK={tripwire:getCSS('--oxblood'),insider:getCSS('--gold'),decision:'#ffffff'};
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function el(n,a){const e=document.createElementNS(NS,n);for(const k in (a||{}))e.setAttribute(k,a[k]);return e;}
+function t(d){return new Date(d+'T00:00:00').getTime();}
+function fmtDate(d){return new Date(d+'T00:00:00').toLocaleDateString('sv-SE',{month:'short',year:'2-digit'});}
+
+const METRIC={gross_margin:'Bruttomarginalen',net_debt:'Nettoskulden',cash_runway:'Runway',dilution:'Utspädningen',roic:'ROIC',insider_sell:'Insiderförsäljningen'};
+const LESSON={'4.4':'Vinstkvalitet och varningslampor','5.1':'Marginaler och ROIC','7.1':'Att bedöma en ledning','12.5':'Kassa, burn och finansieringsrisk','17.3':'Kallelsen och utspädningen'};
+
+fetch('/labs/data/tidslinje-exempel.json').then(r=>r.json()).then(draw).catch(()=>{
+  document.getElementById('co-range').textContent='Kunde inte ladda underlaget.';
+});
+
+function draw(tl){
+  if(tl.holding&&tl.holding.name) document.getElementById('co-name').textContent=tl.holding.name;
+  document.getElementById('co-range').textContent = tl.range.from+'  till  '+tl.range.to;
+  const svg=document.getElementById('chart');
+  const W=960,H=400,padL=48,padR=18,padT=22,padB=30;
+  const x0=t(tl.range.from),x1=t(tl.range.to);
+  const pad=(tl.domain.max-tl.domain.min)*.12||1;
+  const ymin=tl.domain.min-pad,ymax=tl.domain.max+pad;
+  const X=d=>padL+(t(d)-x0)/(x1-x0||1)*(W-padL-padR);
+  const Y=v=>padT+(ymax-v)/(ymax-ymin||1)*(H-padT-padB);
+
+  // tes-band (bakgrund)
+  for(const b of tl.band){
+    svg.appendChild(el('rect',{x:X(b.from),y:padT,width:Math.max(0,X(b.to)-X(b.from)),height:H-padT-padB,fill:BAND[b.state]||'none'}));
+  }
+  // y-ticks
+  [ymin,(ymin+ymax)/2,ymax].forEach(v=>{
+    const y=Y(v);
+    svg.appendChild(el('line',{x1:padL,y1:y,x2:W-padR,y2:y,class:'axis',opacity:.35}));
+    const tx=el('text',{x:padL-8,y:y+3,'text-anchor':'end',class:'tick'});tx.textContent=Math.round(v);svg.appendChild(tx);
+  });
+  // x-ticks (first, mid, last)
+  [tl.range.from, tl.series[Math.floor(tl.series.length/2)]?.d, tl.range.to].filter(Boolean).forEach(d=>{
+    const tx=el('text',{x:X(d),y:H-8,'text-anchor':'middle',class:'tick'});tx.textContent=fmtDate(d);svg.appendChild(tx);
+  });
+  // prislinje
+  const pts=tl.series.map(p=>X(p.d)+','+Y(p.close)).join(' ');
+  svg.appendChild(el('polyline',{points:pts,class:'price-line'}));
+
+  // markörer
+  for(const m of tl.markers){
+    if(m.close==null) continue;
+    const cx=X(m.date),cy=Y(m.close);
+    const g=el('g',{class:'mk'});
+    g.appendChild(el('circle',{cx,cy,r:12,fill:MK[m.kind]||'#000',opacity:.001,class:'halo'})); // hit area
+    if(m.kind==='decision'){
+      g.appendChild(el('circle',{cx,cy,r:6,fill:'#fff',stroke:getCSS('--ink'),'stroke-width':2}));
+    }else if(m.kind==='insider'){
+      g.appendChild(el('rect',{x:cx-5,y:cy-5,width:10,height:10,fill:MK.insider,transform:`rotate(45 ${cx} ${cy})`}));
+    }else{
+      g.appendChild(el('circle',{cx,cy,r:6,fill:MK.tripwire}));
+    }
+    g.addEventListener('click',()=>showDetail(m));
+    svg.appendChild(g);
+  }
+}
+
+function showDetail(m){
+  const d=document.getElementById('detail');
+  const metric=METRIC[m.metric]||m.metric||'';
+  let kindLab={tripwire:'Trådkorsning',insider:'Insider',decision:'Ditt beslut'}[m.kind]||'Markör';
+  let title=m.label||metric||'Markör';
+  let body='';
+  if(m.kind==='tripwire'&&m.observed!=null&&m.threshold!=null){
+    body=metric+' '+m.observed+(m.unit==='%'?' %':'')+' under din gräns '+m.threshold+(m.unit==='%'?' %':'')+' ('+m.date+').';
+  }else{
+    body=(m.label||'')+' ('+m.date+').';
+  }
+  const src=m.source_ref?('Källa: '+[m.source_ref.title,m.source_ref.page!=null?'sid '+m.source_ref.page:'',m.source_ref.url||''].filter(Boolean).join(', ')):'';
+  const lid=(m.lesson_ids||[])[0];
+  d.innerHTML='<div class="k">'+kindLab+'</div><div class="t">'+esc(title)+'</div>'+
+    '<p>'+esc(body)+'</p>'+
+    (src?'<p class="src">'+esc(src)+'</p>':'')+
+    (lid?'<a class="lesson" href="/fokus/'+lid+'">Läs: '+lid+' '+esc(LESSON[lid]||'')+' →</a>':'');
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+</script>
+</body>
+</html>

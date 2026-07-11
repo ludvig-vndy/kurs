@@ -1,0 +1,39 @@
+{
+  "_kommentar": "Illustrativt (fiktivt bolag, konstruerade tal). Visar killer-scenariot: priset stiger medan tesen tyst brister. I skarp drift kommer prices ur datakallan och figures/events ur Rapportkollen, i samma form.",
+  "holding": { "id": "h1", "name": "Exempelbolag AB (illustrativt)" },
+  "near": 0.1,
+  "invariants": [
+    { "metric": "gross_margin", "op": "below", "value": 40 }
+  ],
+  "prices": [
+    { "d": "2025-01-31", "close": 100 },
+    { "d": "2025-02-28", "close": 108 },
+    { "d": "2025-03-31", "close": 116 },
+    { "d": "2025-04-30", "close": 121 },
+    { "d": "2025-05-31", "close": 129 },
+    { "d": "2025-06-30", "close": 134 },
+    { "d": "2025-07-31", "close": 141 },
+    { "d": "2025-08-29", "close": 138 }
+  ],
+  "figures": [
+    { "as_of": "2025-03-31", "metric": "gross_margin", "value": 43 },
+    { "as_of": "2025-06-30", "metric": "gross_margin", "value": 38 }
+  ],
+  "events": [
+    {
+      "as_of": "2025-06-30", "kind": "tripwire", "metric": "gross_margin",
+      "note": "marginalgolv", "observed": 38, "threshold": 40, "unit": "%",
+      "source_ref": { "title": "Q2-rapport", "page": 4 },
+      "lesson_ids": ["4.4", "5.1"]
+    },
+    {
+      "as_of": "2025-07-15", "kind": "insider",
+      "note": "VD sålde 1,2 Mkr",
+      "source_ref": { "title": "FI insynsregister" },
+      "lesson_ids": ["7.1"]
+    }
+  ],
+  "decisions": [
+    { "as_of": "2025-01-31", "action": "Köp", "note": "Startposition" }
+  ]
+}
