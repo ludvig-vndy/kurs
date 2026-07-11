@@ -34,6 +34,38 @@ Import -> fånga tes + trådar (tripwires) -> hämta/läsa periodsiffror
 Resten (insiders, kalender, filings/kallelser, den disciplinerade tvillingen,
 kurskoppling) är påbyggnad på samma rygg.
 
+## 2b. Det visuella målet: tes-tidslinjen (produktens kärna, north star)
+
+Detta är inte ett sidospår. Det är den yta allt annat matar. Från och med Fas 2
+byggs backend-datan så att den kan renderas direkt i tidslinjen, aldrig som en
+eftertanke. Varje mäklare har en kurva; skillnaden är att **vår kurva minns
+varför du köpte**. Den gör portföljen till en samling levande teser med minne,
+och minnet är den brutala switching cost-effekten: ju längre man stannar, desto
+rikare blir spegeln, desto dyrare att lämna.
+
+Fem lager på en tidslinje per innehav:
+
+1. **Händelse-annoterad kurva.** Prislinjen med markörer: trådkorsningar,
+   insiderkluster, emissionsmandat, rapport-hit/miss, dina egna köp/sälj. Varje
+   markör klickbar: faktum, källa, och lektionen som förklarar den.
+2. **Tes-bandet.** Ett band längs tiden: tes intakt / glider / bruten, drivet av
+   invarianterna. Visar det farliga: priset kan stiga medan tesen tyst brister
+   (kapitel 24.2 gjord synlig). Divergensen kurva mot ditt skäl är insikten.
+3. **Ditt beteende på kurvan.** Beslutsdagboken inritad. "Du sålde här, mot din
+   egen håll-regel." Om dig, inte om marknaden. Ingen framtidsutsaga.
+4. **Kontrafaktisken.** Skuggkurva: om du följt dina egna regler (trim-trappan,
+   håll-regeln), var hade du stått? Beteendegapet visualiserat. Förnyelsedrivaren.
+5. **Basräntor, hederligt.** Aggregat med urvalsstorlek och missarna synliga,
+   ramat som odds (kapitel 10.3), aldrig enskild framåtblick.
+
+**Hederlighetsprinciper (det som gör den premium, inte billig):** beskrivande
+aldrig prediktivt; visa missarna (annars survivorship-teater); tes-relativt inte
+pris-relativt. Dessa är designregler, inte API-frågor.
+
+Moaten är strukturell: tjänsten vet *varför* du äger (tesen), *vad du sa var
+viktigt* (trådarna) och *hur du betett dig* (dagboken). Det kan en mäklargraf
+inte kopiera, för den minns inte dig.
+
 ## 3. Positioneringsvakter (låses INNAN copy skrivs)
 
 Dessa är hårda regler, inte önskemål, av juridiska och tillitsskäl:
@@ -106,19 +138,31 @@ tripwires (
   created_at
 )
 
--- Korsningar (när en tråd slår)
+-- Korsningar (när en tråd slår). TIDSLINJE-REDO: as_of + kind gör varje rad
+-- till en ritbar markör; lesson_ids kopplar markören till kursen.
 tripwire_events (
   id uuid pk, tripwire_id uuid fk, holding_id uuid, user_id uuid,
-  observed_value numeric, source_type text,   -- report | filing | insider
+  kind text,          -- tripwire | insider | emission | report | decision
+  as_of date,         -- datum markören sitter på kurvan (skilt från triggered_at)
+  observed_value numeric, threshold numeric, source_type text, -- report|filing|insider
   source_ref jsonb,   -- {url, page, title}
+  lesson_ids text[],  -- från lektionskartan (händelse -> lektion)
   triggered_at, acknowledged_at
 )
 
 -- Strukturerade periodsiffror (från datakälla eller Rapportkollen)
 holding_figures (
   id uuid pk, holding_id uuid, period text,   -- t.ex. 2025Q3
+  as_of date,         -- perioden som datum, för tes-bandet över tiden
   metric text, value numeric, unit text,
   source_ref jsonb, ingested_at
+)
+
+-- Prisserie per innehav (tidslinjens x/y-axel). Dagsslut räcker för annotering;
+-- ingen realtid. Fylls av datakällan; slotten finns från Fas 2 även om den är gles.
+prices (
+  id uuid pk, holding_id uuid, d date, close numeric,
+  source text, unique (holding_id, d)
 )
 
 -- Genererat morgonbrev per användare per dag
@@ -132,7 +176,15 @@ briefs (
 ```
 
 Utökning av befintlig `decisions` (beslutsdagboken): `rule_ref uuid` (vilken
-tråd/tes den hänger på), för den disciplinerade tvillingen senare.
+tråd/tes den hänger på) + `as_of date`, så besluten blir markörer på tidslinjen
+(lager 3, spegeln) och matar den disciplinerade tvillingen.
+
+**Tidslinjens läsmodell:** en assembler (ren funktion, mönster som `brief-build`)
+slår ihop `prices` (kurvan) + `tripwire_events`/`decisions` (markörer, via
+`as_of`) + `holding_figures` mot `theses.invariants` (tes-bandet: intakt/glider/
+bruten per period) till en färdig tidslinje-nyttolast per innehav. Rendering
+ritar bara, räknar aldrig. Assemblern kan skrivas och testas offline på inmatade
+`prices`, precis som brief-build, långt innan en prisfeed finns.
 
 ## 7. Pipeline (motor + endpoints)
 
@@ -148,13 +200,19 @@ Nya skript i `motor/` (Windows-säkra, `pathToFileURL`-guard som resten):
 - `brief-build.mjs` : per användare, samla dagens `tripwire_events` + relevanta
   insiders + kalender -> `briefs.payload` i risk-först-ordning. Inga events ->
   `status='silent'` + kvittolog.
+- `timeline-build.mjs` : läsmodellen för tes-tidslinjen (north star, avsnitt 2b).
+  Ren funktion: `prices` + markörer (`tripwire_events`/`decisions` via `as_of`)
+  + tes-band (`holding_figures` mot `theses.invariants`) -> tidslinje-nyttolast
+  per innehav. Testbar offline på inmatade `prices`, som `brief-build`.
 - Utöka `upptack-json.mjs` -> koppla insynsposter till användarens `holdings`
-  (inte bara momentum).
+  (inte bara momentum), och skriv dem som markörer (`kind='insider'`).
 
 Nya endpoints i `functions/api/`:
 
 - `brief.js` : verifierar session (som `_middleware.js`), returnerar användarens
   senaste `briefs`-rad.
+- `timeline.js` : returnerar tidslinje-nyttolasten för ett innehav (kurva +
+  markörer + tes-band).
 - `thesis.js` : CRUD för tes + trådar (RLS-skyddat).
 
 Cron: ny `.github/workflows/vigilans-daily.yml` (mönster från upptack-daily):
@@ -176,13 +234,23 @@ Cron: ny `.github/workflows/vigilans-daily.yml` (mönster från upptack-daily):
 - **Bevis:** en användare kan tala om varför hen äger X och vad som får ändra det.
 - Effort: M. Beroende: migration.
 
-### Fas 2 - Vaksamhetsloopen MVP (tunn vertikal skiva)
+### Fas 2 - Vaksamhetsloopen MVP, tidslinje-redo (tunn vertikal skiva)
+Målbilden för Fas 2 är tes-tidslinjen (avsnitt 2b), inte bara ett brev. Datan
+byggs så att den matar tidslinjen DIREKT, aldrig som eftertanke.
 - EN metrik, ETT innehav: bruttomarginal ur EN riktig rapport via
-  `rapportkollen-extract` -> `holding_figures` -> `tripwire-eval` -> `briefs`.
-- `brief.js` + Ägarbrevet renderar en riktig korsning, risk-först, med källa.
+  `rapportkollen-extract` -> `holding_figures` (med `as_of`) -> `tripwire-eval`
+  -> `tripwire_events` (med `kind`, `as_of`, `lesson_ids`) -> `briefs`.
+- Prisserie (`prices`) för samma innehav, glest men äkta (dagsslut räcker).
+- `timeline-build.mjs` slår ihop kurva + markören + tes-bandet -> nyttolast.
+- Två renderingar av SAMMA nyttolast: Ägarbrevet (korsningen, risk-först, källa)
+  OCH en första tidslinje-vy som visar markören på kurvan med tes-bandet.
 - Tyst morgon om ingen korsning ("Vi skannade allt, inga förändringar").
-- **Bevis:** Ägarbrevet är äkta, inte Telvio-mock. Loopen lever.
-- Effort: L. Beroende: Fas 0-beslut (eller manuell rapport-inklistring i MVP).
+- **Bevis:** en riktig trådkorsning syns både som brev OCH som en klickbar markör
+  på innehavets kurva, med källa och lektionspekare. Ägarbrevet är äkta, inte
+  Telvio-mock. Tidslinjen, produktens kärna, existerar från första skivan.
+- Effort: L. Beroende: Fas 0-beslut (figures + prices); i MVP kan båda matas
+  manuellt (rapport-inklistring + inklistrad prisserie), loopen och tidslinjen
+  kan alltså demas offline innan datakällan är vald.
 
 ### Fas 3 - Händelseflöden (bredda vad som bevakas)
 - Insiders kopplat till innehav (utöka `upptack-json`): "en insider i ett bolag
@@ -191,7 +259,10 @@ Cron: ny `.github/workflows/vigilans-daily.yml` (mönster från upptack-daily):
 - Runway/utspädningsklocka för olönsamma innehav (intervall, inte decimal).
 - Kallelse/filings-vakt (utspädningsmandat, närståendetransaktioner): kräver
   filings-feed eller manuell inmatning.
-- **Bevis:** brevet fångar det en fundamental ägare faktiskt bryr sig om.
+- Varje nytt flöde skrivs som en markörtyp på tidslinjen (`kind`): insider,
+  emission, rapport. Bygger lager 1 (den annoterade kurvan) tätare.
+- **Bevis:** brevet OCH kurvan fångar det en fundamental ägare faktiskt bryr sig
+  om, som klickbara markörer.
 - Effort: L. Beroende: Fas 2 + ev. filings-källa.
 
 ### Fas 4 - Beteendelagret (den disciplinerade tvillingen, retention)
@@ -202,9 +273,11 @@ Cron: ny `.github/workflows/vigilans-daily.yml` (mönster från upptack-daily):
 - Bygg "Säkra eller stretcha" (spec finns:
   `docs/specs/verktyg-sakra-eller-stretcha.md`).
 - Kvartalsvis ånger-spegel: ditt beteendegap mot en disciplinerad baslinje.
-- **Bevis:** produkten bevisar kursens värde med användarens egna pengar. Detta
-  är den starkaste förnyelsekroken.
-- Effort: L. Beroende: `decisions` i bruk.
+- Detta ÄR tidslinjens lager 3 och 4 (dina beslut på kurvan + kontrafaktisken).
+  Beslutsmarkörer (`decisions.as_of`) och skuggkurvan ritas på samma yta.
+- **Bevis:** produkten bevisar kursens värde med användarens egna pengar, visuellt,
+  på innehavets egen kurva. Den starkaste förnyelsekroken.
+- Effort: L. Beroende: `decisions` i bruk + tidslinjen (Fas 2).
 
 ### Fas 5 - Kurs-loopen (Hantverket gifter sig med Maskinen)
 - Lektion i rätt ögonblick: när en utspädnings-tråd larmar, visa kapitel 17
@@ -253,8 +326,12 @@ Fas 2 så trådar och lektioner delar id-rymd från början.
 
 En riktig användare med ETT importerat innehav och en satt marginaltråd får, dagen
 efter att en rapport publicerats som korsar tröskeln, ett Ägarbrev som leder med
-den korsningen, med klickbar källa, och en tyst morgon annars. Ingen mock i den
-kedjan.
+den korsningen, med klickbar källa, och en tyst morgon annars. **Och samma
+korsning syns som en klickbar markör på innehavets kurva (tes-tidslinjen, avsnitt
+2b), med tes-bandet och lektionspekaren.** Ingen mock i den kedjan. Tidslinjen är
+inte ett senare tillägg: den är målbilden Fas 2 byggs mot, och backend-datan
+(`prices`, `holding_figures.as_of`, `tripwire_events.kind/as_of/lesson_ids`) matar
+den direkt.
 
 ## 11. Öppna beslut
 

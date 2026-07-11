@@ -55,6 +55,7 @@ create table holding_figures (
   id uuid primary key default gen_random_uuid(),
   holding_id uuid not null references holdings(id) on delete cascade,
   period text not null,           -- t.ex. 2025Q3
+  as_of date,                     -- perioden som datum, för tes-bandet över tiden
   metric text not null,
   value numeric,
   unit text,
@@ -65,12 +66,15 @@ create table holding_figures (
 alter table holding_figures enable row level security;
 create index on holding_figures (holding_id, metric);
 
--- ── tripwire_events: när en tråd korsats ───────────────────────────────────
+-- ── tripwire_events: när en tråd korsats. Tidslinje-redo (avsnitt 2b): kind +
+--    as_of gör raden till en ritbar markör, lesson_ids kopplar den till kursen.
 create table tripwire_events (
   id uuid primary key default gen_random_uuid(),
   tripwire_id uuid references tripwires(id) on delete set null,
   holding_id uuid not null references holdings(id) on delete cascade,
   user_id uuid not null references profiles(id) on delete cascade,
+  kind text not null default 'tripwire', -- tripwire | insider | emission | report
+  as_of date,                     -- datum markören sitter på kurvan
   metric text not null,
   observed numeric,
   threshold numeric,
@@ -83,7 +87,20 @@ create table tripwire_events (
 );
 alter table tripwire_events enable row level security;
 create index on tripwire_events (user_id, triggered_at);
-create index on tripwire_events (holding_id);
+create index on tripwire_events (holding_id, as_of);
+
+-- ── prices: prisserie per innehav (tidslinjens axlar). Dagsslut räcker för
+--    annotering, ingen realtid. Fylls av datakällan; slotten finns från Fas 2.
+create table prices (
+  id uuid primary key default gen_random_uuid(),
+  holding_id uuid not null references holdings(id) on delete cascade,
+  d date not null,
+  close numeric,
+  source text,
+  unique (holding_id, d)
+);
+alter table prices enable row level security;
+create index on prices (holding_id, d);
 
 -- ── briefs: genererat morgonbrev per användare per dag ─────────────────────
 create table briefs (
@@ -105,10 +122,18 @@ create policy "egna teser skriv"    on theses          for all    using (user_id
 create policy "egna tradar"         on tripwires       for all    using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "egna handelser"      on tripwire_events for select using (user_id = auth.uid());
 create policy "egna brev"           on briefs          for select using (user_id = auth.uid());
--- holding_figures speglar innehavets ägare (via holdings), läsning tillåts ägaren.
+-- holding_figures och prices speglar innehavets ägare (via holdings).
 create policy "egna siffror" on holding_figures for select
   using (exists (select 1 from holdings h where h.id = holding_figures.holding_id and h.user_id = auth.uid()));
+create policy "egna priser" on prices for select
+  using (exists (select 1 from holdings h where h.id = prices.holding_id and h.user_id = auth.uid()));
 
--- Skriv till figures/events/briefs sker via motor-skript med service-nyckeln
--- (security definer eller direkt REST), aldrig av klienten. Därför ingen
--- insert/update-policy för dem här.
+-- Skriv till figures/prices/events/briefs sker via motor-skript med
+-- service-nyckeln (security definer eller direkt REST), aldrig av klienten.
+-- Därför ingen insert/update-policy för dem här.
+
+-- ── Beslutsdagboken blir markörer på tidslinjen (lager 3, spegeln) ─────────
+-- Utökar befintliga decisions (20260710000000_init.sql) så varje beslut kan
+-- ritas på kurvan och mata den disciplinerade tvillingen.
+alter table decisions add column if not exists rule_ref uuid references tripwires(id) on delete set null;
+alter table decisions add column if not exists as_of date;
