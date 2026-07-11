@@ -1,11 +1,12 @@
 ---
 import Broadsheet from '../layouts/Broadsheet.astro';
+import Seal from '../components/Seal.astro';
 
-// Landningen: den stangda tjanstens forstasida. Boxad wordmark + logga in/kod,
-// ett hero ("For dig som ager bolag. Inte aktier."), Agarbrevet-sektionen, och
-// tjanstens tva delar som fargdrankta kort (Kursen i oxblod, Verktygen i
-// skogsgron). Inbjudningsstyrd: entren gar via /logga-in eller inbjudningskod.
-// Husregeln: inga em/en-dashes, kolon och komma istallet.
+// Landningen: den stangda tjanstens forstasida. Centrerad nameplate (sigillet
+// med undertitel) flankerad av logga in/kod, ett hero ("Ag bolaget bakom
+// aktien."), Agarbrevet-sektionen, och tjanstens tva delar som fargdrankta kort
+// (Kursen i oxblod, Verktygen i skogsgron). Inbjudningsstyrd: entren gar via
+// /logga-in eller inbjudningskod. Husregeln: inga em/en-dashes, kolon istallet.
 
 const KOD = '/labs/inbjudan-i-marginalen.html';
 
@@ -28,13 +29,14 @@ const vakter = [
   </script>
 
   <main class="lp">
-    <!-- Masthead: boxad wordmark, logga in / ange kod -->
+    <!-- Masthead: centrerad nameplate (sigill + undertitel), logga in / ange kod flankerar -->
     <div class="wrap">
       <header class="lp-mast">
-        <a class="lp-brand" href="/">Delägaren</a>
-        <nav class="lp-mast__nav">
+        <nav class="lp-mast__side lp-mast__side--l">
           <a href="/logga-in">Logga in</a>
-          <span class="sep" aria-hidden="true">·</span>
+        </nav>
+        <Seal size="lg" href="/" />
+        <nav class="lp-mast__side lp-mast__side--r">
           <a class="accent" href={KOD}>Ange kod</a>
         </nav>
       </header>
@@ -44,8 +46,7 @@ const vakter = [
     <!-- Hero -->
     <section class="wrap">
       <div class="lp-hero">
-        <div class="lp-hero__k">Din del av bolaget</div>
-        <h1 class="lp-hero__h">För dig som äger bolag.<br />Inte aktier.</h1>
+        <h1 class="lp-hero__h">Äg bolaget<br />bakom aktien.</h1>
         <p class="lp-hero__p">En plattform för fundamental analys och automatiserad bolagsbevakning, designad av <em>Sebastian Berg</em>.</p>
         <p class="lp-hero__meta">Inträde sker enbart via personlig inbjudan</p>
       </div>
@@ -118,27 +119,27 @@ const vakter = [
 <style>
   .lp { flex: 1; display: flex; flex-direction: column; }
 
-  /* Masthead */
-  .lp-mast { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 26px 0 22px; }
-  .lp-brand { display: inline-flex; border: 1.5px solid var(--ink); padding: 9px 18px; font-family: var(--slab); font-weight: 700; font-size: 19px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: background .2s; }
-  .lp-brand:hover { background: rgba(33,28,23,.05); }
-  .lp-mast__nav { display: flex; align-items: center; gap: 16px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; }
-  .lp-mast__nav a { color: var(--ink-soft); text-decoration: none; min-height: 40px; display: inline-flex; align-items: center; }
-  .lp-mast__nav a:hover { color: var(--oxblood); }
-  .lp-mast__nav a.accent { color: var(--oxblood); }
-  .lp-mast__nav .sep { color: var(--faint); }
+  /* Masthead: centrerad nameplate, links flankerar */
+  .lp-mast { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 30px 0 24px; }
+  /* Sigillet bor i Seal-komponenten (egen scope), :global for att na det harifran */
+  .lp-mast :global(.seal) { justify-self: center; }
+  .lp-mast__side { display: flex; align-items: center; font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; }
+  .lp-mast__side--l { justify-content: flex-start; }
+  .lp-mast__side--r { justify-content: flex-end; }
+  .lp-mast__side a { color: var(--ink-soft); text-decoration: none; min-height: 40px; display: inline-flex; align-items: center; }
+  .lp-mast__side a:hover { color: var(--oxblood); }
+  .lp-mast__side a.accent { color: var(--oxblood); }
   .lp-mast-rule { height: 1px; background: var(--rule-strong); }
 
   /* Hero */
-  .lp-hero { text-align: center; max-width: 760px; margin: 0 auto; padding: clamp(40px,7vh,92px) 0 clamp(34px,6vh,68px); }
-  .lp-hero__k { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--oxblood); }
-  .lp-hero__h { font-family: var(--slab); font-weight: 600; font-size: clamp(38px,6.4vw,76px); line-height: 1.03; letter-spacing: -.015em; color: var(--ink); margin: 16px 0 0; text-wrap: balance; }
+  .lp-hero { text-align: center; max-width: 760px; margin: 0 auto; padding: clamp(30px,5.5vh,60px) 0 clamp(22px,3.5vh,38px); }
+  .lp-hero__h { font-family: var(--slab); font-weight: 600; font-size: clamp(38px,6.4vw,76px); line-height: 1.03; letter-spacing: -.015em; color: var(--ink); margin: 0; text-wrap: balance; }
   .lp-hero__p { font-family: var(--serif); font-size: clamp(17px,1.7vw,19px); line-height: 1.55; color: var(--ink-soft); max-width: 46ch; margin: 22px auto 0; }
   .lp-hero__p em { font-style: italic; color: var(--ink); }
-  .lp-hero__meta { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 26px 0 0; }
+  .lp-hero__meta { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 22px 0 0; }
 
   /* Section divider with centred label */
-  .lp-sec { display: flex; align-items: center; gap: clamp(16px,3vw,26px); margin: clamp(44px,7vw,74px) 0 0; }
+  .lp-sec { display: flex; align-items: center; gap: clamp(16px,3vw,26px); margin: clamp(30px,4.5vw,50px) 0 0; }
   .lp-sec::before, .lp-sec::after { content: ""; flex: 1; height: 1px; background: var(--rule-strong); }
   .lp-sec span { font-family: var(--mono); font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
 
@@ -172,9 +173,9 @@ const vakter = [
   .lp-card__p { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: rgba(246,244,239,.84); margin: 14px 0 0; }
   .lp-card__label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(246,244,239,.55); margin: 24px 0 0; }
 
-  .lp-checks { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
-  .lp-checks li { position: relative; padding-left: 30px; font-family: var(--serif); font-size: 15px; line-height: 1.45; color: rgba(246,244,239,.82); }
-  .lp-checks li::before { content: ""; position: absolute; left: 0; top: 3px; width: 14px; height: 14px; border: 1px solid rgba(246,244,239,.5); }
+  .lp-checks { list-style: none; margin: 15px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .lp-checks li { position: relative; padding-left: 25px; font-family: var(--serif); font-size: 13.5px; line-height: 1.4; color: rgba(246,244,239,.82); text-wrap: pretty; }
+  .lp-checks li::before { content: ""; position: absolute; left: 0; top: 3px; width: 12px; height: 12px; border: 1px solid rgba(246,244,239,.5); }
   .lp-checks b { color: var(--paper); font-weight: 600; }
 
   .lp-card__cta { align-self: flex-start; margin-top: auto; padding-top: 30px; }
@@ -195,8 +196,9 @@ const vakter = [
     .lp-modes { grid-template-columns: 1fr; }
     .lp-mode + .lp-mode { border-left: 0; border-top: 1px solid var(--rule-strong); }
   }
-  @media (max-width: 420px) {
-    .lp-brand { font-size: 16px; padding: 8px 14px; }
-    .lp-mast__nav { gap: 12px; font-size: 10.5px; }
+  @media (max-width: 620px) {
+    /* Sigillet överst i full bredd, logga in / ange kod under på var sin sida */
+    .lp-mast { grid-template-columns: 1fr 1fr; row-gap: 14px; }
+    .lp-mast :global(.seal) { grid-column: 1 / -1; order: -1; margin-bottom: 2px; }
   }
 </style>
