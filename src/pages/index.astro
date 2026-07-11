@@ -63,7 +63,7 @@ const vakter = [
       <div class="lp-sec"><span>Ägarbrevet</span></div>
       <div class="lp-brev">
         <h2 class="lp-brev__h">Varje morgon klockan 07:30</h2>
-        <p class="lp-brev__p">Du ska inte behöva gräva i brus. Varje morgon sammanfattas allt viktigt som har hänt i dina bolag, tillgängligt både som skriven utgåva vid skrivbordet och som en två minuter lång ljudutgåva i din privata poddfeed.</p>
+        <p class="lp-brev__p">Du ska inte behöva gräva i brus. Varje morgon sammanfattas allt viktigt som har hänt i dina bolag, tillgängligt både som skriven utgåva vid skrivbordet och som en två minuter lång ljudutgåva.</p>
         <blockquote class="lp-pull">”I natt läste vi <span class="num">51</span> rapporter och pressmeddelanden. <span class="num">Tre</span> var värda din tid.”</blockquote>
       </div>
     </section>
@@ -151,7 +151,7 @@ const vakter = [
 
   /* Tjänstens delar: två färgdränkta kort */
   .lp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: clamp(22px,3vw,30px) 0 0; }
-  .lp-card { display: flex; flex-direction: column; padding: clamp(26px,3vw,40px); min-height: 380px; color: var(--paper); }
+  .lp-card { display: flex; flex-direction: column; padding: clamp(26px,3vw,40px); min-height: 400px; color: var(--paper); }
   .lp-card--kurs { background:
       repeating-linear-gradient(90deg, rgba(246,244,239,.028) 0 1px, transparent 1px 8px),
       #4A1521; }
@@ -164,15 +164,17 @@ const vakter = [
   .lp-card__p { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: rgba(246,244,239,.84); margin: 14px 0 0; }
   .lp-card__label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(246,244,239,.55); margin: 20px 0 0; }
 
-  .lp-checks { list-style: none; margin: 13px 0 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  /* margin-bottom = garanterat gap ner till knappen aven nar innehallet fyller
+     kortet; margin-top:auto pa knappen lagger ev. extra luft ovanpa det. */
+  .lp-checks { list-style: none; margin: 13px 0 34px; padding: 0; display: flex; flex-direction: column; gap: 11px; }
   .lp-checks li { position: relative; padding-left: 24px; font-family: var(--serif); font-size: 13.5px; line-height: 1.35; color: rgba(246,244,239,.82); }
   .lp-checks li::before { content: ""; position: absolute; left: 0; top: 2px; width: 12px; height: 12px; border: 1px solid rgba(246,244,239,.5); }
   .lp-checks b { color: var(--paper); font-weight: 600; }
 
-  .lp-card__cta { align-self: flex-start; margin-top: auto; padding-top: 30px; }
-  .lp-card__cta { display: inline-flex; align-items: center; gap: 10px; margin-top: auto; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--paper); text-decoration: none; }
-  /* Ramad knapp separat sa margin-top:auto ovan skjuter den till botten */
-  .lp-card__cta { border: 1px solid rgba(246,244,239,.5); padding: 15px 24px; transition: background .2s, border-color .2s, transform .2s; }
+  /* margin-top:auto skjuter knappen till botten; kortets min-height ger alltid
+     luft ovanfor sa den aldrig klibbar mot sista punkten. Egen padding ar
+     knappens ram, inte gapet. */
+  .lp-card__cta { align-self: flex-start; margin-top: auto; display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--paper); text-decoration: none; border: 1px solid rgba(246,244,239,.5); padding: 15px 24px; transition: background .2s, border-color .2s, transform .2s; }
   .lp-card__cta:hover { background: rgba(246,244,239,.1); border-color: var(--paper); transform: translateX(3px); }
 
   /* Avslutande band */
