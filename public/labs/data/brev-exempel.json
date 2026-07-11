@@ -1,0 +1,50 @@
+{
+  "date": "2026-07-11",
+  "status": "alerts",
+  "alerts": [
+    {
+      "holding_id": "h2",
+      "tripwire_id": "t3",
+      "metric": "cash_runway",
+      "op": "below",
+      "threshold": 4,
+      "observed": 3,
+      "unit": "kvartal",
+      "period": "2025Q3",
+      "source_ref": {
+        "title": "Q3-rapport",
+        "page": 12
+      },
+      "note": "runway-golv",
+      "lesson_ids": [
+        "12.5"
+      ],
+      "holding_name": "Förhoppningsbolaget AB (illustrativt)"
+    },
+    {
+      "holding_id": "h1",
+      "tripwire_id": "t1",
+      "metric": "gross_margin",
+      "op": "below",
+      "threshold": 40,
+      "observed": 38,
+      "unit": "%",
+      "period": "2025Q3",
+      "source_ref": {
+        "title": "Q3-rapport",
+        "page": 4
+      },
+      "note": "marginalgolv",
+      "lesson_ids": [
+        "4.4",
+        "5.1"
+      ],
+      "holding_name": "Exempelbolag AB (illustrativt)"
+    }
+  ],
+  "checked": {
+    "reports": 51,
+    "filings": 3,
+    "insiders": 2
+  }
+}

@@ -117,7 +117,7 @@
   .facts .fx{color:var(--muted);font-size:15px}
   .facts .fv.up{color:var(--good)} .facts .fv.dn{color:var(--bad)}
 
-  /* liten graf (Telvio) */
+  /* liten graf (valfri, per story) */
   .fig{border:1px solid var(--rule);background:var(--card);padding:16px 18px 12px;margin:20px 0}
   .fig .cap{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:8px}
   .fig svg{width:100%;height:auto;display:block;overflow:visible}
@@ -199,9 +199,9 @@
 
     <!-- Lead: grönt Börshus-band, egen färgton för brevvärlden -->
     <div class="hero-band" data-reveal>
-      <div class="hb-eyebrow">№ 12 · Ägarbrevet · onsdag 2 juli 2026 · 07:30</div>
-      <h1 class="hb-title">God morgon.<br>Tre saker har hänt i dina bolag.</h1>
-      <p class="hb-sub">Resten av portföljen är lugn. Vi läste 51 poster om dina sex bolag i natt och behöll det som rör dig. Hela brevet tar 90 sekunder.</p>
+      <div class="hb-eyebrow" id="brev-eyebrow">Ägarbrevet</div>
+      <h1 class="hb-title" id="brev-title">God morgon.</h1>
+      <p class="hb-sub" id="brev-sub"></p>
     </div>
 
     <div class="pod" data-reveal>
@@ -216,91 +216,20 @@
     <!-- Summering -->
     <section class="summ" data-reveal>
       <div class="lbl">I korthet</div>
-      <div class="srow"><span class="dot neg"></span><div><b>Telvio</b> <span>· lönsamheten gick under din gräns</span></div></div>
-      <div class="srow"><span class="dot pos"></span><div><b>Norlux Industri</b> <span>· stark rapport, höjd prognos</span></div></div>
-      <div class="srow"><span class="dot gold"></span><div><b>Kavex Medical</b> <span>· insiderköp, och Q3 släpps i dag</span></div></div>
-      <p class="term-legend">Stryk under: klicka för förklaring.</p>
+      <div id="brev-summ"></div>
+      
+      
+      
     </section>
 
     <article>
 
-      <!-- Telvio -->
-      <section class="story" data-reveal>
-        <div class="slug"><span class="dot neg"></span><span class="co">Telvio</span><span class="sep">/</span><span>Det du bad oss vakta</span></div>
-        <h2>Lönsamheten föll under 40 procent, gränsen du satte själv</h2>
-        <p><a class="term" href="/ordlista" title="Rörelseresultatet delat med omsättningen, hur många kronor per hundra som blir kvar efter rörelsens kostnader.">Rörelsemarginalen</a> sjönk till 38,0 procent i tredje kvartalet<a class="cit" title="Källa: Telvio delårsrapport Q3, sid 4">1</a>, ned 3,5 procentenheter i priskriget på mobilsidan. Det tog kurvan under de 40 procent du bad oss säga till vid. Riktningen är fel, inte nivån: bolaget tjänar fortfarande pengar.</p>
-
-        <div class="fig">
-          <div class="cap"><span>Rörelsemarginal · sex kvartal</span><span>procent</span></div>
-          <svg viewBox="0 0 300 64" role="img" aria-label="Rörelsemarginalen faller från 41,5 till 38,0 procent och passerar larmnivån 40 procent.">
-            <line x1="10" y1="29.1" x2="290" y2="29.1" stroke="var(--oxblood)" stroke-width="1.4" stroke-dasharray="4 5" opacity=".7"></line>
-            <polyline points="10,11.8 66,17.6 122,22.2 178,28 234,38.4 290,52.2" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-            <circle cx="290" cy="52.2" r="4.2" fill="var(--oxblood)"></circle>
-          </svg>
-          <div class="gmeta"><span>för ett år sedan · 41,5</span><span class="gth">larm 40,0</span><span>nu · 38,0</span></div>
-        </div>
-
-        <p><a class="term" href="/ordlista" title="Den del av vinsten som bolaget betalar ut till aktieägarna.">Utdelningen</a> står kvar och täcks fortfarande, 1,15 kronor in per utdelad krona<a class="cit" title="Beräknat ur rapportens kassaflöde">2</a>, men marginalen krymper sjätte kvartalet i rad. Ta ställning i lugn och ro, det är därför vi säger till tidigt.</p>
-        <div class="srcs">
-          <a href="#">Källdokumentet: Q3-rapporten →</a>
-          <a class="kurs" href="/fokus/kapitel/5">Fördjupning: nyckeltal och marginaler →</a>
-        </div>
-      </section>
-
-      <!-- Norlux -->
-      <section class="story" data-reveal>
-        <div class="slug"><span class="dot pos"></span><span class="co">Norlux Industri</span><span class="sep">/</span><span>Rapport</span></div>
-        <h2>Norlux växte 11 procent av egen kraft</h2>
-        <p>Mer än bolagets egen prognos, som låg på 7 till 9 procent. Dessutom höjdes prognosen för resten av året, ovanligt mitt i ett år. Allt du bad oss bevaka håller.</p>
-        <ul class="facts">
-          <li><span class="fv up">+11,0 %</span><span class="fx"><a class="term" href="/ordlista" title="Tillväxt av egen kraft, exklusive förvärv och valuta.">organisk tillväxt</a>, mot väntade 8,5<a class="cit" title="Källa: Norlux Q3, sid 2">3</a></span></li>
-          <li><span class="fv">388 mkr</span><span class="fx">kvar i kassan, <a class="term" href="/ordlista" title="Pengarna verksamheten genererar efter nödvändiga investeringar, det som faktiskt kan delas ut eller återinvesteras.">fritt kassaflöde</a> upp 18 procent<a class="cit" title="Källa: Norlux Q3, kassaflödesanalys">4</a></span></li>
-          <li><span class="fv up">Höjd</span><span class="fx">helårsprognos, andra höjningen i år</span></li>
-        </ul>
-        <div class="srcs">
-          <a href="#">Källdokumentet: rapporten →</a>
-          <a class="kurs" href="/fokus/kapitel/3">Fördjupning: läsa en delårsrapport →</a>
-        </div>
-      </section>
-
-      <!-- Kavex -->
-      <section class="story" data-reveal>
-        <div class="slug"><span class="dot gold"></span><span class="co">Kavex Medical</span><span class="sep">/</span><span>Insynshandel</span></div>
-        <h2>VD i Kavex köpte aktier för 2,1 miljoner</h2>
-        <p>Första <a class="term" href="/ordlista" title="När personer med insyn i bolaget, ledning och styrelse, köper eller säljer egna aktier.">insiderköpet</a> på 14 månader<a class="cit" title="Källa: Finansinspektionens insynsregister">5</a>. En trevlig signal om att ledningen tror på bolaget, inte mer än så. Klockan 08:00 i dag släpper Kavex sin Q3-rapport, och analysen ligger här några minuter senare. Du behöver inte göra något.</p>
-        <div class="srcs">
-          <a href="#">Källa: insynsregistret →</a>
-          <a class="kurs" href="/fokus/kapitel/7">Fördjupning: vad insiderköp betyder →</a>
-        </div>
-      </section>
-
-      <!-- Lugnt -->
-      <section class="story" data-reveal>
-        <div class="slug"><span class="dot calm"></span><span>I de här är det lugnt</span></div>
-        <ul class="facts">
-          <li><span class="fv">Voltcell</span><span class="fx">tillväxtcase. Certifieringsbeskedet väntas i september, kassan räcker cirka 21 månader. Vi säger till när beskedet kommer.</span></li>
-          <li><span class="fv">Brunna Hydro</span><span class="fx">inget nytt av betydelse för dig.</span></li>
-          <li><span class="fv">Almi Foods</span><span class="fx">inget nytt av betydelse för dig.</span></li>
-        </ul>
-        <p class="grind"><b>I natt:</b> 51 nyheter, registerposter och flöden lästa om dina sex bolag. Tre var viktiga för dig, och dem har du just läst. Varje siffra ovan är spårad till sin källa innan brevet skickades.</p>
-      </section>
-
-      <!-- Att hålla koll på: utanför portföljen -->
-      <section class="story" data-reveal>
-        <div class="slug"><span class="dot gold"></span><span>Att hålla koll på</span><span class="sep">/</span><span>Utanför din portfölj</span></div>
-        <h2>Två saker att vara medveten om, i bolag du inte äger</h2>
-        <p>Utanför din portfölj, men värt en blick. Det här är bolag du följer eller som Upptäck fann i natt, inte dina innehav. Ren information: du avgör om något är värt din tid.</p>
-        <ul class="facts">
-          <li><span class="fv">Sundby Verktyg</span><span class="fx">bolag du följer: släppte en stark delårsrapport i morse, tillväxten över egen prognos<a class="cit" title="Källa: Sundby Verktyg delårsrapport Q3">6</a>. <a href="/labs/bolagssida-i-marginalen.html">Öppna bolaget →</a></span></li>
-          <li><span class="fv">Från Spaningen</span><span class="fx">Upptäck fann i natt ett bolag som matchar dina kriterier: växer, nettokassa, insiderköp. Inte följt av dig än. <a href="/labs/upptack-i-marginalen.html">Se i Upptäck →</a></span></li>
-        </ul>
-        <p class="grind"><b>Att minnas:</b> ingen av de här ligger i din portfölj. De är med för att du ska veta att de finns, inte för att du ska göra något. Du bestämmer.</p>
-      </section>
+      <div id="brev-stories"></div>
 
       <!-- Omvärld + slut -->
       <section class="end" data-reveal>
         <h2>Du är uppdaterad.</h2>
-        <p>En sak att ha i bakhuvudet i dag: Riksbanken lämnar räntebesked 09:30. Av dina bolag är Telvio mest skuldsatt och därmed mest känsligt, Norlux och Almi påverkas knappt. Nästa brev i morgon bitti. Passeras en gräns dessförinnan säger vi till direkt.</p>
+        <p>Nästa brev kommer i morgon bitti. Passeras en av dina gränser dessförinnan säger vi till direkt. Varje siffra ovan är spårad till sin källa innan brevet skickades.</p>
         <p class="fine">
           <span class="tag">Prototyp · exempeldata</span><br>
           Ägarbrevet · av Marginalen. Arbetsnamn, fiktiva bolag, påhittade siffror. Information i utbildningssyfte, aldrig köp- eller säljråd. Maskinläst, mänskligt ogranskad.
@@ -377,5 +306,44 @@ document.getElementById('askx').addEventListener('click',cl);
 document.getElementById('askform').addEventListener('submit',function(e){e.preventDefault();ansv((inp.value||'').trim()||SEEDS[0]);});
 inp.addEventListener('focus',op);
 document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});})();</script>
+<script>
+/* Av-mockad: brevet renderas ur en brief-payload (motor/vigilans/brief-build.mjs),
+   samma slags data som tidslinjen. Inga hardkodade bolag. */
+(function(){
+  var METRIC={gross_margin:'Bruttomarginalen',revenue_growth:'Tillväxten',net_debt:'Nettoskulden',cash_runway:'Runway',dilution:'Utspädningen',roic:'ROIC',insider_sell:'Insiderförsäljningen'};
+  var OP={below:'under',above:'över'};
+  var LESSON={'4.2':'Balansräkningen','4.4':'Vinstkvalitet och varningslampor','5.1':'Marginaler och ROIC','5.3':'ROIC i djupet','7.1':'Att bedöma en ledning','12.5':'Kassa, burn och finansieringsrisk','17.3':'Kallelsen och utspädningen'};
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function unit(u){return u==='%'?' %':(u?' '+u:'');}
+  function src(r){ if(!r) return ''; if(r.url) return 'Källa: '+esc((r.title?r.title+', ':'')+r.url); var p=[]; if(r.title)p.push(r.title); if(r.page!=null)p.push('sid '+r.page); return p.length?'Källa: '+esc(p.join(', ')):''; }
+  function render(b){
+    var alerts=b.alerts||[], n=alerts.length, c=b.checked||{};
+    document.getElementById('brev-eyebrow').textContent='Ägarbrevet · '+(b.date||'')+' · 07:30';
+    document.getElementById('brev-title').innerHTML = n ? 'God morgon.<br>'+n+(n===1?' sak kräver':' saker kräver')+' dig i dina bolag.' : 'God morgon.<br>Inget kräver dig i dag.';
+    document.getElementById('brev-sub').textContent='Vi läste '+(c.reports||0)+' rapporter, '+(c.filings||0)+' pressmeddelanden och '+(c.insiders||0)+' insynsanmälningar i natt. '+(n?'Resten är lugnt.':'Inga trådar korsades, inget har ändrats i det du bad oss vakta.');
+    var summ=document.getElementById('brev-summ');
+    summ.innerHTML = n ? alerts.map(function(a){
+      var m=(METRIC[a.metric]||a.metric||'').toLowerCase();
+      return '<div class="srow"><span class="dot neg"></span><div><b>'+esc(a.holding_name)+'</b> <span>· '+esc(m)+' gick '+(OP[a.op]||a.op)+' din gräns</span></div></div>';
+    }).join('') : '<div class="srow"><span class="dot calm"></span><div><b>Lugnt</b> <span>· inga trådar korsade</span></div></div>';
+    var st=document.getElementById('brev-stories');
+    st.innerHTML = alerts.map(function(a){
+      var m=METRIC[a.metric]||a.metric, opw=OP[a.op]||a.op, lid=(a.lesson_ids||[])[0], srcTxt=src(a.source_ref);
+      return '<section class="story">'+
+        '<div class="slug"><span class="dot neg"></span><span class="co">'+esc(a.holding_name)+'</span><span class="sep">/</span><span>'+esc(a.note||'Det du bad oss vakta')+'</span></div>'+
+        '<h2>'+esc(m)+' gick '+opw+' gränsen du satte själv</h2>'+
+        '<p>'+esc(m)+' '+esc(a.observed)+esc(unit(a.unit))+' '+opw+' din gräns '+esc(a.threshold)+esc(unit(a.unit))+(a.period?' ('+esc(a.period)+')':'')+'. Det är gränsen du bad oss säga till vid, inte ett råd.</p>'+
+        '<div class="srcs">'+
+          (srcTxt?'<a href="#">'+srcTxt+' →</a>':'')+
+          (lid?'<a class="kurs" href="/fokus/'+esc(lid)+'">Läs: '+esc(lid)+' '+esc(LESSON[lid]||'')+' →</a>':'')+
+        '</div></section>';
+    }).join('');
+  }
+  fetch('/labs/data/brev-exempel.json').then(function(r){return r.json();}).then(render).catch(function(){
+    var t=document.getElementById('brev-title'); if(t) t.textContent='Kunde inte ladda brevet.';
+  });
+})();
+</script>
+
 </body>
 </html>
