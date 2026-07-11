@@ -677,10 +677,13 @@ function renderEmpty(user){
 
 async function boot(){
   history.replaceState({v:'list'},'');
-  if(!(window.AB && window.AB.ready)){ renderList(); return; }
+  // Sidan ar inloggningsgrindad -> visa aldrig demo-mocken; riktiga innehav
+  // eller tomt tillstand galler. (renderList/renderTelvio ar kvar som dod kod,
+  // sopas i ett stadpass.)
+  if(!(window.AB && window.AB.ready)){ renderEmpty(); return; }
   let user=null;
   try{ user = await AB.getUser(); }catch(e){}
-  if(!user){ renderList(); return; }   // ej inloggad -> demo som förr
+  if(!user){ renderEmpty(); return; }
   // Flusha en import som lades undan innan inloggningen.
   try{
     const pend = localStorage.getItem('agarbrevet-pending-import');
