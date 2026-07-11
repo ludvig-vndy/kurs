@@ -187,6 +187,14 @@
   .rows li:first-child{border-top:1px solid var(--rule-strong)}
   .rchart{grid-row:span 3;align-self:center}
   @media(max-width:640px){.rows li{grid-template-columns:1fr;gap:12px}.rchart{grid-row:auto;max-width:220px}}
+  /* Riktiga insynsrader (FI): ingen sparkline, en spalt. */
+  .rows li.irow{grid-template-columns:1fr;gap:9px}
+  .ireal{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--good);border:1px solid var(--rule);border-radius:99px;padding:2px 8px}
+  .itxs{display:flex;flex-wrap:wrap;gap:5px 18px}
+  .itx{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .itx i{font-style:normal;color:var(--ink-soft);margin-left:5px}
+  .itx em{font-style:normal;color:var(--faint);margin-left:6px}
+  .ireal-note{font-family:var(--serif);font-style:italic;font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
   .rrow-co{font-family:var(--display);font-weight:600;font-size:15.5px;color:var(--ink);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
   .rrow-co .fticker{font-family:var(--num);font-size:11.5px;letter-spacing:.03em;color:var(--muted);background:var(--paper-2);border-radius:4px;padding:2px 7px;font-weight:400}
   .rkind{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);border:1px solid var(--rule);border-radius:99px;padding:3px 9px}
@@ -637,12 +645,45 @@ function renderRow(m){
 }
 
 let activeFilter = 'alla';
+let INSYN_REAL = null;   // riktig insynsdata (FI), laddas asynkront
+
+function renderInsiderRow(b){
+  const bel = b.belopp>=1e6 ? (b.belopp/1e6).toFixed(1)+' mkr'
+            : b.belopp>=1e3 ? Math.round(b.belopp/1e3)+' tkr' : (b.belopp||0)+' kr';
+  const tx = (b.tx||[]).slice(0,3).map(t =>
+    `<span class="itx">${t.person}<i>${t.befattning||''}</i><em>${t.datum}</em></span>`).join('');
+  return `<li class="irow">
+    <div class="rrow-co">${b.co} <span class="rkind">Insyn</span> <span class="ireal">riktig data · FI</span></div>
+    <div class="rdata">
+      <span class="rstat">Insiders<b>${b.personer}</b></span>
+      <span class="rstat">Köp<b>${b.kop}</b></span>
+      <span class="rstat">Belopp<b class="good">${bel}</b></span>
+      <span class="rstat">Sista köp<b>${b.sista}</b></span>
+    </div>
+    <div class="itxs">${tx}</div>
+    <div class="rrow-cta">
+      <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
+      <a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a>
+    </div>
+  </li>`;
+}
+
 function renderFeed(){
-  const rows = MOVES.filter(m => activeFilter==='alla' || m.kind===activeFilter);
-  // hero visas bara i "alla"-vyn (toppuppstickaren); i filtrerad vy räcker raderna
+  const feed = document.getElementById('mfeed');
   document.getElementById('hero-slot').innerHTML = activeFilter==='alla' ? renderHero(HERO) : '';
   document.querySelector('.upp-head').style.display = activeFilter==='alla' ? '' : 'none';
-  const feed = document.getElementById('mfeed');
+  // Insyn-filtret kor pa RIKTIG data ur FI:s insynsregister (gratis, publikt).
+  if(activeFilter==='insyn'){
+    if(INSYN_REAL && INSYN_REAL.bolag && INSYN_REAL.bolag.length){
+      const dagar = (INSYN_REAL.period && INSYN_REAL.period.dagar) || 30;
+      const note = `<li class="ireal-note" style="grid-template-columns:1fr">Riktiga insynsköp de senaste ${dagar} dagarna, ur Finansinspektionens insynsregister, rankat på insiderkluster och belopp. Fakta, aldrig en signal.</li>`;
+      feed.innerHTML = note + INSYN_REAL.bolag.map(renderInsiderRow).join('');
+    } else {
+      feed.innerHTML = '<li class="feed-empty" style="grid-template-columns:1fr">Hämtar riktiga insynsköp från Finansinspektionen…</li>';
+    }
+    return;
+  }
+  const rows = MOVES.filter(m => activeFilter==='alla' || m.kind===activeFilter);
   if(!rows.length){ feed.innerHTML = '<li class="feed-empty" style="grid-template-columns:1fr">Inga rörelser av den typen just nu. Byt filter, eller vänta på nästa avläsning.</li>'; return; }
   feed.innerHTML = rows.map(renderRow).join('');
 }
@@ -654,6 +695,9 @@ document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('c
 }));
 renderDigest();
 renderFeed();
+// Ladda riktig insynsdata och rita om om Insyn-filtret redan ar aktivt.
+fetch('/labs/data/upptack-insyn.json').then(r => r.ok ? r.json() : null)
+  .then(d => { if(d){ INSYN_REAL = d; if(activeFilter==='insyn') renderFeed(); } }).catch(()=>{});
 
 /* ---------- SCREENER: träffar (illustrativ, fiktiva bolag) ----------
    krit-flaggor: 'yes' matchar, 'part' matchar delvis, 'no' matchar ej.
