@@ -36,6 +36,12 @@ import Seal from '../components/Seal.astro';
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
   <script defer src="/labs/agarbrevet-supabase.js"></script>
   <script>
+    // Kod-som-andra-vag-in kraver att Supabase-mejlmallen visar {{ .Token }},
+    // vilket i sin tur kraver custom SMTP. Tills det ar pa plats halls kodfaltet
+    // dolt sa vi inte ber om en kod som inte finns i mejlet. Flippa till true
+    // nar SMTP + mallen ar klara.
+    const CODE_LOGIN_ENABLED = false;
+
     // Satt cookie fran token och skicka in till /hem. Delas av kod- och
     // lank-vagen (watchSession).
     function enterWithToken(t) {
@@ -63,10 +69,10 @@ import Seal from '../components/Seal.astro';
           const r = await window.AB.sendMagicLink(v, { createUser: false, redirectPath: '/logga-in' });
           if (r && r.error) { show('Kunde inte skicka just nu. Har du ett konto med den mejlen?'); }
           else {
-            show('Klart. Kolla din mejl, vi skickade en inloggningslänk och en kod till ' + v + '.');
+            show('Klart. Kolla din mejl, vi skickade en inloggningslänk' + (CODE_LOGIN_ENABLED ? ' och en kod' : '') + ' till ' + v + '.');
             // Andra vagen in: kod ur samma mejl. Kom ihag mejlen sa verifyOtp
-            // kan bindas till den.
-            if (codeForm) { codeForm.hidden = false; codeForm.dataset.email = v; }
+            // kan bindas till den. Dold tills SMTP + mall ar pa plats.
+            if (CODE_LOGIN_ENABLED && codeForm) { codeForm.hidden = false; codeForm.dataset.email = v; }
           }
         } catch (err) { show('Något gick fel. Försök igen om en stund.'); }
       });
