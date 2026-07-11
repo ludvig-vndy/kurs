@@ -7,31 +7,24 @@ import Seal from '../components/Seal.astro';
 // Mastheaden ar gomd (chrome=none); sigillet bar identiteten i heron.
 
 const delar = [
-  { n: 'I',   titel: 'Grunderna',      sub: 'Tankesätt och hur ett bolag fungerar', kap: 'Kapitel 0–2',   img: '/bilder/kapitel-1.jpg',
-    lar: 'Vad en aktie faktiskt är, en investeringsfilosofi att stå på, och hur affärsmodeller tjänar pengar.' },
-  { n: 'II',  titel: 'Förstå bolaget', sub: 'Läsa rapporten och bedöma kvalitet',   kap: 'Kapitel 3–7',   img: '/bilder/kapitel-4.jpg',
-    lar: 'Årsredovisningen, räkenskaperna, nyckeltalen som betyder något, konkurrensfördelar och kapitalallokering.' },
-  { n: 'III', titel: 'Värdering',      sub: 'Sätta en siffra och en felmarginal',   kap: 'Kapitel 8–10',  img: '/bilder/kapitel-8.jpg',
-    lar: 'Värderingsgrunderna, värdering i praktiken, och att bygga in en säkerhetsmarginal du överlever att ha fel med.' },
-  { n: 'IV',  titel: 'I praktiken',    sub: 'Psykologi, case och egen process',     kap: 'Kapitel 11–16', img: '/bilder/kapitel-11.jpg',
-    lar: 'Investeringspsykologi, tillväxtbolag, en skarp fallstudie och din egen checklista innan du köper.' },
-  { n: 'V',   titel: 'Fördjupning',    sub: 'Äga bolagen och säkra avkastningen',   kap: 'Kapitel 17–18', img: '/bilder/kapitel-18.jpg',
-    lar: 'Att äga ett förhoppningsbolag med öppna ögon, och att hålla girigheten i schack när det gått bra.' },
+  { n: 'I',   titel: 'Grunderna',      kap: 'Kapitel 0–2',   img: '/bilder/kapitel-1.jpg',  lar: 'Vad en aktie är, en filosofi att stå på, och hur bolag tjänar pengar.' },
+  { n: 'II',  titel: 'Förstå bolaget', kap: 'Kapitel 3–7',   img: '/bilder/kapitel-4.jpg',  lar: 'Läsa årsredovisningen, nyckeltalen, och vad som skyddar vinsten.' },
+  { n: 'III', titel: 'Värdering',      kap: 'Kapitel 8–10',  img: '/bilder/kapitel-8.jpg',  lar: 'Sätta ett eget riktpris, med marginal att tåla att ha fel.' },
+  { n: 'IV',  titel: 'I praktiken',    kap: 'Kapitel 11–16', img: '/bilder/kapitel-11.jpg', lar: 'Psykologin, ett skarpt case, och din checklista före köp.' },
+  { n: 'V',   titel: 'Fördjupning',    kap: 'Kapitel 17–18', img: '/bilder/kapitel-18.jpg', lar: 'Att äga med öppna ögon, och säkra avkastningen när det gått bra.' },
 ];
 
 const verktyg = [
-  { t: 'Analysverktyg', d: 'Sju verktyg att gå igenom innan du köper en aktie.',        href: '/verktyg' },
-  { t: 'Fråga',         d: 'Fråga om dina bolag och kursen. Svar med källa.',           href: '/labs/fraga-i-marginalen.html' },
-  { t: 'Dina bolag',    d: 'Dina innehav, lästa varje natt med källa till varje siffra.', href: '/labs/dina-bolag-i-marginalen.html' },
-  { t: 'Rapportkollen', d: 'Årsredovisningen tolkad, varje tal spårat till sidan.',      href: '/labs/rapportkollen-i-marginalen.html' },
-  { t: 'Hävstång',      d: 'Beslutsstöd för risk och belåning, utan pseudoprecision.',   href: '/labs/havstang-i-marginalen.html' },
-  { t: 'Ägarbrevet',    d: 'Morgonbrevet: vad som rör sig i dina bolag, kort.',          href: '/labs/agarbrevet-i-marginalen.html' },
+  { t: 'Din bevakning',   d: 'Innehaven lästa varje natt.',               href: '/labs/dina-bolag-i-marginalen.html' },
+  { t: 'Rapporterna',     d: 'Tolkade, varje siffra spårad till källan.',  href: '/labs/rapportkollen-i-marginalen.html' },
+  { t: 'Svar med källa',  d: 'Fråga om dina bolag, få svar direkt.',       href: '/labs/fraga-i-marginalen.html' },
+  { t: 'Analysverktygen', d: 'Checklistan du går igenom före ett köp.',    href: '/verktyg' },
 ];
 ---
 
 <Broadsheet
   title="Delägaren: analysera aktier som en ägare"
-  description="Inbjudningsstyrd onlinekurs i fundamental aktieanalys. Sjutton kapitel i fem delar, plus verktygen som gör analysen på riktigt: analysverktyg, Fråga, Dina bolag, Rapportkollen."
+  description="Inbjudningsstyrd onlinekurs i fundamental aktieanalys. Sjutton kapitel i fem delar, plus tjänsten som håller koll på ditt innehav och hjälper dig analysera vidare."
   nav="none"
   chrome="none"
 >
@@ -54,13 +47,13 @@ const verktyg = [
       <a class="lp-hero2 lp-hero2--kurs" href="/fokus">
         <div class="lp-hero2__k">Kursen</div>
         <h1 class="lp-hero2__h">Lär dig analysera aktier som en ägare, inte en spekulant.</h1>
-        <p class="lp-hero2__p">Sjutton kapitel i fem delar, från vad en aktie faktiskt är till att sätta ditt eget riktpris med felmarginal. Du bygger omdömet, steg för steg.</p>
+        <p class="lp-hero2__p">En kurs i fundamental analys, sjutton kapitel i lugn takt. Du lär dig läsa ett bolag, värdera det själv och sätta ett riktpris du kan lita på.</p>
         <span class="lp-hero2__cta">Börja kursen →</span>
       </a>
       <a class="lp-hero2 lp-hero2--brev" href="/labs/agarbrevet-i-marginalen.html">
         <div class="lp-hero2__k">Ägarbrevet</div>
-        <h1 class="lp-hero2__h">Dina bolag, lästa varje natt. Varje siffra med källa.</h1>
-        <p class="lp-hero2__p">Morgonbrevet, analysverktygen och Fråga, på dina riktiga innehav. Omdömet från kursen får verktyg att använda det på.</p>
+        <h1 class="lp-hero2__h">Håll koll på ditt innehav, utan att missa det som betyder något.</h1>
+        <p class="lp-hero2__p">Delägaren följer dina bolag, läser rapporterna åt dig och säger till när något ändrats. Du kan fråga om innehaven och få svar med källa, och gå igenom analysen innan du bestämmer dig.</p>
         <span class="lp-hero2__cta">Till Ägarbrevet →</span>
       </a>
     </section>
@@ -68,7 +61,7 @@ const verktyg = [
     <div class="wrap lp-stats">
       <span><b>19</b> kapitel</span><span class="lp-dot" aria-hidden="true">·</span>
       <span><b>5</b> delar</span><span class="lp-dot" aria-hidden="true">·</span>
-      <span><b>6</b> verktyg ingår</span>
+      <span>verktygen ingår</span>
       <a class="lp-stats__cta link-mono" href="/labs/inbjudan-i-marginalen.html">Har du en inbjudan? →</a>
     </div>
 
@@ -88,7 +81,7 @@ const verktyg = [
                   <h3 class="lp-del__t">{d.titel}</h3>
                   <span class="lp-del__kap">{d.kap}</span>
                 </div>
-                <p class="lp-del__sub">{d.sub}. {d.lar}</p>
+                <p class="lp-del__sub">{d.lar}</p>
               </div>
             </li>
           ))}
