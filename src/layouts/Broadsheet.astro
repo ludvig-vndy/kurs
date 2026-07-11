@@ -81,7 +81,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
                 <a href="/fokus">Kursen</a>
                 <a href="/verktyg">Verktyget</a>
               </span>
-              <a href="/hem">Logga in</a>
+              <a href="/logga-in">Logga in</a>
             </nav>
           )}
         </div>
@@ -161,5 +161,18 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
       [data-reveal].is-visible { opacity: 1; }
       @media (prefers-reduced-motion: reduce) { [data-reveal] { transition: none; } }
     </style>
+    {chrome === 'masthead' && (
+      <>
+        <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
+        <script defer src="/labs/agarbrevet-supabase.js"></script>
+        <script>
+          // Kontochipen (inloggad -> avatar, utloggad -> "Logga in") mountas om
+          // vid varje navigering under ClientRouter.
+          document.addEventListener('astro:page-load', function () {
+            if (window.AB && window.AB.ready) window.AB.mountUserChip();
+          });
+        </script>
+      </>
+    )}
   </body>
 </html>

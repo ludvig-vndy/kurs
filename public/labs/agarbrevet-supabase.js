@@ -166,7 +166,9 @@
       ".ab-menu .who{font-size:12.5px;color:var(--ink-soft,#4A4239);word-break:break-all;margin:0 0 11px}" +
       ".ab-menu .who b{display:block;font-size:10.5px;color:var(--muted,#6E6456);font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin:0 0 3px}" +
       ".ab-menu .out{width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--rule,rgba(33,28,23,.16));padding:10px 0 0;color:var(--oxblood,#2C5646);font-family:inherit;font-size:12.5px;cursor:pointer}" +
-      ".ab-menu .out:hover{color:var(--bad,#9B3A2E)}";
+      ".ab-menu .out:hover{color:var(--bad,#9B3A2E)}" +
+      ".ab-login{font-family:var(--mono,Inter),sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft,#4A4239);text-decoration:none;min-height:40px;display:inline-flex;align-items:center}" +
+      ".ab-login:hover{color:var(--oxblood,#2C5646)}";
     document.head.appendChild(s);
   }
   var chipBound = false;
@@ -175,7 +177,25 @@
     if (!mastTop) return;
     var session = await getSession();
     var existing = mastTop.querySelector(".ab-user");
-    if (!session) { if (existing) existing.remove(); return; }
+    var loginLink = mastTop.querySelector(".ab-login");
+    // Utloggad: visa en tydlig "Logga in"-lank i masthuvudet.
+    if (!session) {
+      if (existing) existing.remove();
+      if (!loginLink) {
+        injectChipStyles();
+        var ed0 = mastTop.querySelector(".edition");
+        var r0 = mastTop.querySelector(".mast-right");
+        if (!r0) {
+          r0 = document.createElement("div"); r0.className = "mast-right";
+          if (ed0) { mastTop.insertBefore(r0, ed0); r0.appendChild(ed0); } else { mastTop.appendChild(r0); }
+        }
+        var la = document.createElement("a");
+        la.className = "ab-login"; la.href = "/logga-in"; la.textContent = "Logga in";
+        r0.appendChild(la);
+      }
+      return;
+    }
+    if (loginLink) loginLink.remove();
     if (existing) return;
     injectChipStyles();
     var user = session.user || {};

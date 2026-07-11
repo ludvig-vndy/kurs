@@ -1,0 +1,68 @@
+---
+import Broadsheet from '../layouts/Broadsheet.astro';
+import Seal from '../components/Seal.astro';
+
+// Inloggningsyta for aterkommande medlemmar: mejl -> magisk lank (login-lage,
+// skapar inte konto). Sajtlosenordet ar en separat grind; det har ar kontot.
+---
+
+<Broadsheet title="Logga in · Delägaren" description="Logga in på ditt Delägaren-konto med en inloggningslänk." nav="none" chrome="none">
+  <main class="li">
+    <div class="li-card">
+      <Seal size="lg" href="/" />
+      <h1 class="li-h">Logga in</h1>
+      <p class="li-sub">Skriv din mejl, så skickar vi en inloggningslänk. Inget lösenord att komma ihåg.</p>
+
+      <form id="li-form" class="li-form" novalidate>
+        <input id="li-email" type="email" required placeholder="din@mejl.se" autocomplete="email" aria-label="Mejladress" />
+        <button class="btn-ink" type="submit">Skicka länk →</button>
+      </form>
+      <p id="li-msg" class="li-msg" role="status" hidden></p>
+
+      <p class="li-fine">Har du fått en inbjudan men inget konto än? <a href="/labs/inbjudan-i-marginalen.html">Aktivera inbjudan →</a></p>
+    </div>
+  </main>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.2/dist/umd/supabase.min.js" integrity="sha384-sgcvElP/LlNRtORGYFLO/9K/bENcpJK19HgvqslWXog6d8f/Va4TpltGiBlGntCM" crossorigin="anonymous"></script>
+  <script defer src="/labs/agarbrevet-supabase.js"></script>
+  <script>
+    function bindLogin() {
+      const form = document.getElementById('li-form');
+      if (!form || form.dataset.bound) return;
+      form.dataset.bound = '1';
+      const email = document.getElementById('li-email');
+      const msg = document.getElementById('li-msg');
+      const show = (t) => { msg.hidden = false; msg.textContent = t; };
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const v = (email.value || '').trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { show('Skriv en giltig mejladress.'); return; }
+        show('Skickar…');
+        try {
+          if (!(window.AB && window.AB.ready)) { show('Tjänsten laddar fortfarande, försök igen om en sekund.'); return; }
+          const r = await window.AB.sendMagicLink(v, { createUser: false, redirectPath: '/hem' });
+          if (r && r.error) { show('Kunde inte skicka just nu. Har du ett konto med den mejlen?'); }
+          else { show('Klart. Kolla din mejl, vi skickade en inloggningslänk till ' + v + '.'); form.reset(); }
+        } catch (err) { show('Något gick fel. Försök igen om en stund.'); }
+      });
+    }
+    document.addEventListener('astro:page-load', bindLogin);
+  </script>
+</Broadsheet>
+
+<style>
+  .li { flex: 1; display: flex; align-items: center; justify-content: center; padding: clamp(30px, 8vh, 90px) 0; }
+  .li-card { width: 100%; max-width: 440px; text-align: center; }
+  .li-card .seal { margin: 0 auto 30px; }
+  .li-h { font-family: var(--slab); font-weight: 600; font-size: clamp(30px, 5vw, 40px); letter-spacing: -.01em; margin: 0; }
+  .li-sub { font-family: var(--serif); font-size: 16.5px; line-height: 1.5; color: var(--ink-soft); margin: 12px auto 26px; max-width: 34ch; }
+  .li-form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .li-form input { flex: 1; min-width: 0; border: 1px solid var(--rule-strong); background: var(--card); font-family: var(--serif); font-size: 16px; color: var(--ink); padding: 13px 16px; }
+  .li-form input:focus { outline: none; border-color: var(--oxblood); }
+  .li-form .btn-ink { flex: 0 0 auto; }
+  .li-msg { font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; color: var(--oxblood); margin: 16px 0 0; }
+  .li-fine { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); margin: 28px 0 0; }
+  .li-fine a { color: var(--ink-soft); }
+  .li-fine a:hover { color: var(--oxblood); }
+  @media (max-width: 460px) { .li-form { flex-direction: column; } .li-form .btn-ink { width: 100%; justify-content: center; } }
+</style>
