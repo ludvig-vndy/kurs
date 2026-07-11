@@ -10,10 +10,16 @@ import Seal from '../components/Seal.astro';
 
 const KOD = '/labs/inbjudan-i-marginalen.html';
 
+// Symmetriska kort: bada har intro + kort, enradig punktlista.
+const larande = [
+  { t: 'Fundamenta', d: 'räkenskaper, värdering, riktpris.' },
+  { t: 'Multibaggern', d: 'fånga och hålla bolag utan vinst.' },
+  { t: 'Temperament', d: 'läsa kallelser, tåla svängarna.' },
+];
 const vakter = [
-  { t: 'Tillväxtläget', d: 'kassa- och runway-vakt, utspädningsvarning i kod.' },
-  { t: 'Avtalsliggaren', d: 'vi skiljer ramavtal från bindande order.' },
-  { t: 'Beteendespåret', d: 'beslutsdagbok och en disciplinerad tvilling.' },
+  { t: 'Tillväxtläget', d: 'kassa- och runway-vakt, utspädning i kod.' },
+  { t: 'Avtalsliggaren', d: 'ramavtal skilt från bindande order.' },
+  { t: 'Beteendespåret', d: 'beslutsdagbok och en tvilling.' },
 ];
 ---
 
@@ -57,20 +63,7 @@ const vakter = [
       <div class="lp-sec"><span>Ägarbrevet</span></div>
       <div class="lp-brev">
         <h2 class="lp-brev__h">Varje morgon klockan 07:30</h2>
-        <div class="lp-brev__meta">07:30 · text &amp; ljud</div>
-        <p class="lp-brev__p">Du ska inte behöva gräva i brus. Varje morgon sammanfattas allt viktigt som har hänt i dina bolag.</p>
-
-        <div class="lp-modes">
-          <div class="lp-mode">
-            <div class="lp-mode__k">Text</div>
-            <p class="lp-mode__d">Läs utgåvan vid skrivbordet, sida för sida.</p>
-          </div>
-          <div class="lp-mode">
-            <div class="lp-mode__k">Ljud</div>
-            <p class="lp-mode__d">Eller lyssna, en två minuter lång ljudutgåva i din privata poddfeed, under pendlingen.</p>
-          </div>
-        </div>
-
+        <p class="lp-brev__p">Du ska inte behöva gräva i brus. Varje morgon sammanfattas allt viktigt som har hänt i dina bolag, tillgängligt både som skriven utgåva vid skrivbordet och som en två minuter lång ljudutgåva i din privata poddfeed.</p>
         <blockquote class="lp-pull">”I natt läste vi <span class="num">51</span> rapporter och pressmeddelanden. <span class="num">Tre</span> var värda din tid.”</blockquote>
       </div>
     </section>
@@ -83,8 +76,13 @@ const vakter = [
           <div class="lp-card__k">Kursen</div>
           <div class="lp-card__sub">Hantverket</div>
           <h3 class="lp-card__h">Masterclass i fundamental analys.</h3>
-          <p class="lp-card__p">Hela utbildningen ingår i ditt medlemskap. Nitton kapitel som tar dig från grunderna till avancerad småbolagsanalys.</p>
-          <p class="lp-card__p">Inkluderar den unika Multibagger-modulen: disciplinen bakom att analysera, fånga och hålla bolag utan vinst. Lär dig läsa kallelser, avkoda pressmeddelanden och hantera 50-procentiga svängar utan att tappa din ursprungliga tes.</p>
+          <p class="lp-card__p">Hela utbildningen ingår i ditt medlemskap. Nitton kapitel från grunderna till avancerad småbolagsanalys.</p>
+          <div class="lp-card__label">Detta lär du dig</div>
+          <ul class="lp-checks">
+            {larande.map((v) => (
+              <li><b>{v.t}:</b> {v.d}</li>
+            ))}
+          </ul>
           <a class="lp-card__cta" href={KOD}>Ansök om medlemskap →</a>
         </article>
 
@@ -92,7 +90,7 @@ const vakter = [
           <div class="lp-card__k">Verktygen</div>
           <div class="lp-card__sub">Maskinen</div>
           <h3 class="lp-card__h">Din digitala analytiker.</h3>
-          <p class="lp-card__p">Vår motor läser rapporterna, korskollar siffrorna mot källan och vaktar dina innehav dygnet runt. En tjänst enbart grundad i verkliga tal.</p>
+          <p class="lp-card__p">Vår motor läser rapporterna, korskollar siffrorna mot källan och vaktar dina innehav dygnet runt. Enbart verkliga tal.</p>
           <div class="lp-card__label">Detta vaktar dina innehav</div>
           <ul class="lp-checks">
             {vakter.map((v) => (
@@ -120,7 +118,7 @@ const vakter = [
   .lp { flex: 1; display: flex; flex-direction: column; }
 
   /* Masthead: centrerad nameplate, links flankerar */
-  .lp-mast { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 30px 0 24px; }
+  .lp-mast { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 24px 0 18px; }
   /* Sigillet bor i Seal-komponenten (egen scope), :global for att na det harifran */
   .lp-mast :global(.seal) { justify-self: center; }
   .lp-mast__side { display: flex; align-items: center; font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; }
@@ -132,35 +130,28 @@ const vakter = [
   .lp-mast-rule { height: 1px; background: var(--rule-strong); }
 
   /* Hero */
-  .lp-hero { text-align: center; max-width: 760px; margin: 0 auto; padding: clamp(30px,5.5vh,60px) 0 clamp(22px,3.5vh,38px); }
-  .lp-hero__h { font-family: var(--slab); font-weight: 600; font-size: clamp(38px,6.4vw,76px); line-height: 1.03; letter-spacing: -.015em; color: var(--ink); margin: 0; text-wrap: balance; }
-  .lp-hero__p { font-family: var(--serif); font-size: clamp(17px,1.7vw,19px); line-height: 1.55; color: var(--ink-soft); max-width: 46ch; margin: 22px auto 0; }
+  .lp-hero { text-align: center; max-width: 760px; margin: 0 auto; padding: clamp(20px,4vh,42px) 0 clamp(16px,2.6vh,28px); }
+  .lp-hero__h { font-family: var(--slab); font-weight: 600; font-size: clamp(38px,5.8vw,68px); line-height: 1.03; letter-spacing: -.015em; color: var(--ink); margin: 0; text-wrap: balance; }
+  .lp-hero__p { font-family: var(--serif); font-size: clamp(16.5px,1.6vw,18.5px); line-height: 1.55; color: var(--ink-soft); max-width: 46ch; margin: 18px auto 0; }
   .lp-hero__p em { font-style: italic; color: var(--ink); }
-  .lp-hero__meta { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 22px 0 0; }
+  .lp-hero__meta { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 16px 0 0; }
 
   /* Section divider with centred label */
-  .lp-sec { display: flex; align-items: center; gap: clamp(16px,3vw,26px); margin: clamp(30px,4.5vw,50px) 0 0; }
+  .lp-sec { display: flex; align-items: center; gap: clamp(16px,3vw,26px); margin: clamp(24px,3.5vw,40px) 0 0; }
   .lp-sec::before, .lp-sec::after { content: ""; flex: 1; height: 1px; background: var(--rule-strong); }
   .lp-sec span { font-family: var(--mono); font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
 
-  /* Ägarbrevet */
-  .lp-brev { text-align: center; padding: clamp(28px,4vw,44px) 0 0; }
-  .lp-brev__h { font-family: var(--slab); font-weight: 600; font-size: clamp(28px,3.7vw,42px); line-height: 1.08; letter-spacing: -.008em; color: var(--ink); margin: 0; text-wrap: balance; }
-  .lp-brev__meta { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin: 14px 0 0; }
-  .lp-brev__p { font-family: var(--serif); font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 52ch; margin: 20px auto 0; text-wrap: pretty; }
+  /* Ägarbrevet: löpande, stram text + citat (inga boxar) */
+  .lp-brev { text-align: center; padding: clamp(20px,3vw,32px) 0 0; }
+  .lp-brev__h { font-family: var(--slab); font-weight: 600; font-size: clamp(27px,3.5vw,40px); line-height: 1.08; letter-spacing: -.008em; color: var(--ink); margin: 0; text-wrap: balance; }
+  .lp-brev__p { font-family: var(--serif); font-size: 17px; line-height: 1.55; color: var(--ink-soft); max-width: 58ch; margin: 16px auto 0; text-wrap: pretty; }
 
-  .lp-modes { display: grid; grid-template-columns: 1fr 1fr; max-width: 680px; margin: 34px auto 0; border: 1px solid var(--rule-strong); background: var(--card); text-align: left; }
-  .lp-mode { padding: 22px clamp(20px,3vw,28px); }
-  .lp-mode + .lp-mode { border-left: 1px solid var(--rule-strong); }
-  .lp-mode__k { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--oxblood); }
-  .lp-mode__d { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin: 8px 0 0; }
-
-  .lp-pull { font-family: var(--serif); font-style: italic; font-size: clamp(19px,2.2vw,24px); line-height: 1.42; color: var(--ink); max-width: 34ch; margin: clamp(34px,5vw,48px) auto 0; text-wrap: balance; }
+  .lp-pull { font-family: var(--serif); font-style: italic; font-size: clamp(19px,2.2vw,24px); line-height: 1.42; color: var(--ink); max-width: 34ch; margin: clamp(22px,3.2vw,32px) auto 0; text-wrap: balance; }
   .lp-pull .num { color: var(--oxblood); font-style: normal; }
 
   /* Tjänstens delar: två färgdränkta kort */
-  .lp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 34px 0 0; }
-  .lp-card { display: flex; flex-direction: column; padding: clamp(28px,3.4vw,46px); min-height: 440px; color: var(--paper); }
+  .lp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: clamp(22px,3vw,30px) 0 0; }
+  .lp-card { display: flex; flex-direction: column; padding: clamp(26px,3vw,40px); min-height: 380px; color: var(--paper); }
   .lp-card--kurs { background:
       repeating-linear-gradient(90deg, rgba(246,244,239,.028) 0 1px, transparent 1px 8px),
       #4A1521; }
@@ -171,11 +162,11 @@ const vakter = [
   .lp-card__sub { font-family: var(--serif); font-style: italic; font-size: 16px; color: rgba(246,244,239,.68); margin: 7px 0 0; }
   .lp-card__h { font-family: var(--slab); font-weight: 600; font-size: clamp(24px,2.6vw,31px); line-height: 1.08; letter-spacing: -.008em; color: var(--paper); margin: 16px 0 0; text-wrap: balance; }
   .lp-card__p { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: rgba(246,244,239,.84); margin: 14px 0 0; }
-  .lp-card__label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(246,244,239,.55); margin: 24px 0 0; }
+  .lp-card__label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(246,244,239,.55); margin: 20px 0 0; }
 
-  .lp-checks { list-style: none; margin: 15px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-  .lp-checks li { position: relative; padding-left: 25px; font-family: var(--serif); font-size: 13.5px; line-height: 1.4; color: rgba(246,244,239,.82); text-wrap: pretty; }
-  .lp-checks li::before { content: ""; position: absolute; left: 0; top: 3px; width: 12px; height: 12px; border: 1px solid rgba(246,244,239,.5); }
+  .lp-checks { list-style: none; margin: 13px 0 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  .lp-checks li { position: relative; padding-left: 24px; font-family: var(--serif); font-size: 13.5px; line-height: 1.35; color: rgba(246,244,239,.82); }
+  .lp-checks li::before { content: ""; position: absolute; left: 0; top: 2px; width: 12px; height: 12px; border: 1px solid rgba(246,244,239,.5); }
   .lp-checks b { color: var(--paper); font-weight: 600; }
 
   .lp-card__cta { align-self: flex-start; margin-top: auto; padding-top: 30px; }
@@ -185,16 +176,14 @@ const vakter = [
   .lp-card__cta:hover { background: rgba(246,244,239,.1); border-color: var(--paper); transform: translateX(3px); }
 
   /* Avslutande band */
-  .lp-close { max-width: 820px; margin: clamp(48px,8vw,90px) auto 0; border-top: 2px solid var(--rule-strong); border-bottom: 2px solid var(--rule-strong); padding: 26px 20px; text-align: center; }
-  .lp-close p { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: var(--muted); max-width: 60ch; margin: 0 auto; }
-  .lp-foot { padding: 22px 0 40px; text-align: center; }
+  .lp-close { max-width: 820px; margin: clamp(32px,5vw,56px) auto 0; border-top: 2px solid var(--rule-strong); border-bottom: 2px solid var(--rule-strong); padding: 22px 20px; text-align: center; }
+  .lp-close p { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 60ch; margin: 0 auto; }
+  .lp-foot { padding: 18px 0 34px; text-align: center; }
   .lp-fine { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; color: var(--faint); }
 
   @media (max-width: 760px) {
     .lp-cards { grid-template-columns: 1fr; }
     .lp-card { min-height: 0; }
-    .lp-modes { grid-template-columns: 1fr; }
-    .lp-mode + .lp-mode { border-left: 0; border-top: 1px solid var(--rule-strong); }
   }
   @media (max-width: 620px) {
     /* Sigillet överst i full bredd, logga in / ange kod under på var sin sida */
