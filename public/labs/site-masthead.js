@@ -22,6 +22,62 @@
     ['havstang', 'Hävstång',   '/labs/havstang-i-marginalen.html']
   ];
 
+  var SB_KEY = 'sb-xpxghvxrckpzbbkjmtcw-auth-token';
+
+  // Inloggningsgrind: produktytorna kraver ett Delagaren-konto. Kors i <head>,
+  // fore innehallet renderas (ingen flash). Undantar magic-link-retur
+  // (#access_token i hashen) sa inloggningen kan slutforas.
+  try {
+    if (!localStorage.getItem(SB_KEY) && location.hash.indexOf('access_token') === -1) {
+      location.replace('/logga-in');
+      return;
+    }
+  } catch (e) {}
+
+  function readSession() {
+    try {
+      var raw = localStorage.getItem(SB_KEY);
+      if (!raw) return null;
+      var o = JSON.parse(raw);
+      var tok = o && (o.access_token || (o.currentSession && o.currentSession.access_token));
+      if (!tok) return { email: '', initials: '', name: '' };
+      var seg = tok.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      seg += '==='.slice((seg.length + 3) % 4);
+      var p = JSON.parse(decodeURIComponent(escape(atob(seg))));
+      var m = p.user_metadata || {};
+      return { email: p.email || '', initials: m.initials || '', name: m.full_name || m.name || '' };
+    } catch (e) { return { email: '', initials: '', name: '' }; }
+  }
+  function monogram(s) {
+    if (s.initials) return String(s.initials).slice(0, 2).toUpperCase();
+    var name = (s.name || '').trim();
+    if (name) { var q = name.split(/\s+/); return ((q[0].charAt(0) || '') + (q.length > 1 ? q[q.length - 1].charAt(0) : (q[0].charAt(1) || ''))).toUpperCase(); }
+    var local = (s.email || '?').split('@')[0];
+    return (local.slice(0, 2) || '?').toUpperCase();
+  }
+  var accBound = false;
+  function renderAccount(el) {
+    var s = readSession();
+    if (!s) { el.innerHTML = '<a class="dm-login" href="/logga-in">Logga in</a>'; return; }
+    el.innerHTML =
+      '<button class="dm-avatar" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Konto">' + esc(monogram(s)) + '</button>' +
+      '<div class="dm-menu" role="menu"><div class="who"><b>Inloggad som</b>' + esc(s.email || 'Ditt konto') + '</div>' +
+      '<button class="out" type="button" role="menuitem">Logga ut</button></div>';
+    var av = el.querySelector('.dm-avatar'), menu = el.querySelector('.dm-menu');
+    av.addEventListener('click', function (e) { e.stopPropagation(); var o = menu.classList.toggle('open'); av.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    el.querySelector('.out').addEventListener('click', function () {
+      try { localStorage.removeItem(SB_KEY); } catch (e) {}
+      location.replace('/logga-in');
+    });
+    if (!accBound) {
+      accBound = true;
+      document.addEventListener('click', function (e) {
+        var m = document.querySelector('.dm-menu.open');
+        if (m && !m.closest('.mast-account').contains(e.target)) { m.classList.remove('open'); }
+      });
+    }
+  }
+
   if (!document.getElementById('dm-mast-css')) {
     var st = document.createElement('style');
     st.id = 'dm-mast-css';
@@ -42,7 +98,16 @@
       '.dm-nav a.here{color:var(--oxblood,#2C5646)}' +
       '.dm-div{width:1px;height:14px;background:var(--rule-strong,rgba(33,28,23,.42));align-self:center}' +
       '.dm-back{color:var(--muted,#6E6456)}' +
-      '.dm-back:hover{color:var(--oxblood,#2C5646)}';
+      '.dm-back:hover{color:var(--oxblood,#2C5646)}' +
+      '.mast-account{margin-left:auto;display:inline-flex;align-items:center;position:relative}' +
+      '.dm-login{font-family:var(--mono,Inter),sans-serif;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted,#6E6456);text-decoration:none;min-height:40px;display:inline-flex;align-items:center}' +
+      '.dm-login:hover{color:var(--oxblood,#2C5646)}' +
+      '.dm-avatar{width:32px;height:32px;border-radius:50%;background:var(--oxblood,#2C5646);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:600;border:0;cursor:pointer}' +
+      '.dm-menu{position:absolute;top:40px;right:0;min-width:200px;background:var(--card,#FCFAF4);border:1px solid var(--rule-strong,rgba(33,28,23,.42));border-radius:9px;box-shadow:0 14px 34px rgba(33,28,23,.16);padding:12px 14px;display:none;z-index:60}' +
+      '.dm-menu.open{display:block}' +
+      '.dm-menu .who{font-size:12px;color:var(--ink-soft,#4A4239);word-break:break-all;margin:0 0 10px}' +
+      '.dm-menu .who b{display:block;font-size:10px;color:var(--muted,#6E6456);text-transform:uppercase;letter-spacing:.07em;margin:0 0 3px}' +
+      '.dm-menu .out{width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--rule,rgba(33,28,23,.16));padding:9px 0 0;color:var(--oxblood,#2C5646);font-family:inherit;font-size:12px;cursor:pointer}';
     document.head.appendChild(st);
   }
 
@@ -67,7 +132,8 @@
       }).join('');
       nav = '<div class="dm-rule"></div><nav class="dm-nav">' + links +
         '<span class="dm-div" aria-hidden="true"></span>' +
-        '<a href="/fokus" class="dm-back">Till kursen ↗</a></nav>';
+        '<a href="/fokus" class="dm-back">Till kursen ↗</a>' +
+        '<span class="mast-account" aria-live="polite"></span></nav>';
     }
 
     this.innerHTML =
@@ -77,6 +143,8 @@
       '<div class="edition">' + edition + '</div></div>' +
       (mini ? '<div class="dm-rule"></div>' : nav) +
       '</div></header>';
+    var acc = this.querySelector('.mast-account');
+    if (acc) renderAccount(acc);
   };
 
   if (!customElements.get('site-masthead')) customElements.define('site-masthead', SiteMasthead);
