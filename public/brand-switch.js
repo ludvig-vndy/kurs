@@ -22,7 +22,7 @@
 
   function swap() {
     var toDelagaren = delagarenMode();
-    document.querySelectorAll('.wordmark, .dm-word, .seal__name, .lp-brand').forEach(function (el) {
+    document.querySelectorAll('.wordmark, .dm-word, .seal__name, .lp-brand, .brandname').forEach(function (el) {
       var t = el.textContent;
       if (toDelagaren) { if (/^\s*marginalen\s*$/i.test(t)) el.textContent = 'Delägaren'; }
       else { if (/^\s*del[äa]garen\s*$/i.test(t)) el.textContent = 'Marginalen'; } // om nagon kalla annu sager Delagaren
