@@ -11,9 +11,12 @@
 const COOKIE = 'da_session';
 const JWKS_URL = 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1/.well-known/jwks.json';
 
+// Inbjudan maste vara publik (nya inbjudna har ingen session). Cloudflare Pages
+// serverar .html-filer aven pa den rena URL:en och 308-omdirigerar bort .html,
+// sa bada formerna listas: /labs/inbjudan OCH /labs/inbjudan.html.
 const PUBLIC_EXACT = new Set([
   '/', '/logga-in', '/logga-in/',
-  '/labs/inbjudan.html',
+  '/labs/inbjudan', '/labs/inbjudan.html',
 ]);
 
 function isExempt(path) {
