@@ -75,6 +75,12 @@
     return sb.auth.verifyOtp({ email: email, token: String(code).trim(), type: "email" });
   }
 
+  // Lösenordsinloggning: robust väg som inte hänger på mejl eller länkar.
+  // Används för testkonton nu; kan bli allmän fallback senare.
+  async function signInPassword(email, password) {
+    return sb.auth.signInWithPassword({ email: email, password: password });
+  }
+
   async function signOut() {
     return sb.auth.signOut();
   }
@@ -136,6 +142,7 @@
     getUser: getUser,
     sendMagicLink: sendMagicLink,
     verifyCode: verifyCode,
+    signInPassword: signInPassword,
     signOut: signOut,
     listHoldings: listHoldings,
     insertHoldings: insertHoldings,

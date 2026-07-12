@@ -29,6 +29,18 @@ import Seal from '../components/Seal.astro';
         <p id="li-code-msg" class="li-msg" role="status" hidden></p>
       </form>
 
+      <!-- Robust väg: e-post + lösenord, hänger inte på mejl eller länkar. -->
+      <button id="li-pw-toggle" class="li-link" type="button">Logga in med lösenord istället →</button>
+      <form id="li-pw" class="li-code" novalidate hidden>
+        <p class="li-code-lead">Logga in med e-post och lösenord.</p>
+        <input id="li-pw-email" type="email" required placeholder="din@mejl.se" autocomplete="email" aria-label="Mejladress" />
+        <div class="li-code-row">
+          <input id="li-pw-pass" type="password" required placeholder="Lösenord" autocomplete="current-password" aria-label="Lösenord" />
+          <button class="btn-ink" type="submit">Logga in →</button>
+        </div>
+        <p id="li-pw-msg" class="li-msg" role="status" hidden></p>
+      </form>
+
       <p class="li-fine">Har du fått en inbjudan men inget konto än? <a href="/labs/inbjudan-i-marginalen.html">Aktivera inbjudan →</a></p>
     </div>
   </main>
@@ -36,6 +48,20 @@ import Seal from '../components/Seal.astro';
   <script defer src="/vendor/supabase-js-2.110.2.min.js"></script>
   <script defer src="/labs/agarbrevet-supabase.js"></script>
   <script>
+    // Magic-länken kan slutföras HELT utan supabase-js: implicit-flödet lägger
+    // access-token i URL-hashen (#access_token=...). Läs den direkt, sätt
+    // da_session-cookien och gå in. Robust även om den tunga klienten inte
+    // laddar på enheten (gammal Safari, blockerare). Kör omedelbart vid load.
+    (function () {
+      try {
+        var m = /[#&]access_token=([^&]+)/.exec(location.hash || '');
+        if (m && m[1]) {
+          document.cookie = 'da_session=' + decodeURIComponent(m[1]) + '; path=/; max-age=3600; SameSite=Lax; Secure';
+          location.replace('/hem');
+        }
+      } catch (e) {}
+    })();
+
     // Kod-som-andra-vag-in kraver att Supabase-mejlmallen visar {{ .Token }},
     // vilket i sin tur kraver custom SMTP. Tills det ar pa plats halls kodfaltet
     // dolt sa vi inte ber om en kod som inte finns i mejlet. Flippa till true
@@ -116,6 +142,44 @@ import Seal from '../components/Seal.astro';
         } catch (err) { show('Något gick fel. Försök igen om en stund.'); }
       });
     }
+    function bindPassword() {
+      const toggle = document.getElementById('li-pw-toggle');
+      const form = document.getElementById('li-pw');
+      if (!toggle || !form || toggle.dataset.bound) return;
+      toggle.dataset.bound = '1';
+      toggle.addEventListener('click', () => {
+        const open = form.hidden;
+        form.hidden = !open;
+        toggle.hidden = open; // dölj länken när formuläret öppnats
+        if (open) {
+          const pre = (document.getElementById('li-email').value || '').trim();
+          if (pre) document.getElementById('li-pw-email').value = pre;
+          document.getElementById('li-pw-email').focus();
+        }
+      });
+      const email = document.getElementById('li-pw-email');
+      const pass = document.getElementById('li-pw-pass');
+      const msg = document.getElementById('li-pw-msg');
+      const show = (t) => { msg.hidden = false; msg.textContent = t; };
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const em = (email.value || '').trim();
+        const pw = pass.value || '';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { show('Skriv en giltig mejladress.'); return; }
+        if (!pw) { show('Skriv ditt lösenord.'); return; }
+        show('Loggar in…');
+        try {
+          const ready = await waitForAB();
+          if (!ready || !window.AB.signInPassword) { show('Tjänsten kunde inte laddas. Ladda om sidan och försök igen.'); return; }
+          const r = await window.AB.signInPassword(em, pw);
+          const t = r && r.data && r.data.session && r.data.session.access_token;
+          if (r && r.error) { show('Fel mejl eller lösenord.'); }
+          else if (t) { enterWithToken(t); }
+          else { show('Kunde inte logga in. Försök igen.'); }
+        } catch (err) { show('Något gick fel. Försök igen om en stund.'); }
+      });
+    }
+
     // Redan inloggad, eller precis inloggad via magic-länk -> sätt cookie + in.
     function watchSession() {
       let n = 0;
@@ -131,7 +195,7 @@ import Seal from '../components/Seal.astro';
         if (++n > 40) clearInterval(iv);  // ~12s
       }, 300);
     }
-    document.addEventListener('astro:page-load', () => { bindLogin(); bindCode(); watchSession(); });
+    document.addEventListener('astro:page-load', () => { bindLogin(); bindCode(); bindPassword(); watchSession(); });
   </script>
 </Broadsheet>
 
@@ -154,6 +218,10 @@ import Seal from '../components/Seal.astro';
   .li-code-row .btn-ink { flex: 0 0 auto; }
   .li-code .li-msg { margin: 12px 0 0; }
   @media (max-width: 460px) { .li-code-row { flex-direction: column; } .li-code-row .btn-ink { width: 100%; justify-content: center; } }
+  .li-link { display: inline-block; margin: 18px 0 0; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--ink-soft); }
+  .li-link:hover { color: var(--oxblood); }
+  #li-pw input[type="email"] { width: 100%; border: 1px solid var(--rule-strong); background: var(--card); font-family: var(--serif); font-size: 16px; color: var(--ink); padding: 13px 16px; margin: 0 0 10px; }
+  #li-pw input[type="email"]:focus { outline: none; border-color: var(--oxblood); }
   .li-fine { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); margin: 28px 0 0; }
   .li-fine a { color: var(--ink-soft); }
   .li-fine a:hover { color: var(--oxblood); }
