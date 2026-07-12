@@ -24,6 +24,14 @@
 
   var SB_KEY = 'sb-xpxghvxrckpzbbkjmtcw-auth-token';
 
+  // Intern dev-växel: wordmarken Delägaren <-> Marginalen (?brand=marginalen,
+  // sparas). Bara synlig text, för delning/skärmdumpar. Se public/brand-switch.js.
+  try {
+    var _bq = new URLSearchParams(location.search).get('brand');
+    if (_bq) { if (_bq.toLowerCase() === 'marginalen') localStorage.setItem('da-brand', 'marginalen'); else localStorage.removeItem('da-brand'); }
+  } catch (e) {}
+  function brandWord() { try { return localStorage.getItem('da-brand') === 'marginalen' ? 'Marginalen' : 'Delägaren'; } catch (e) { return 'Delägaren'; } }
+
   // Inloggningsgrind: produktytorna kraver ett Delagaren-konto. Kors i <head>,
   // fore innehallet renderas (ingen flash). Undantar magic-link-retur
   // (#access_token i hashen) sa inloggningen kan slutforas.
@@ -151,7 +159,7 @@
     this.innerHTML =
       '<header class="dm-mast"><div class="dm-in">' +
       '<div class="dm-rule dm-rule--top"></div>' +
-      '<div class="mast-top"><a class="dm-word" href="/labs/agarbrevet.html">Delägaren</a>' +
+      '<div class="mast-top"><a class="dm-word" href="/labs/agarbrevet.html">' + brandWord() + '</a>' +
       '<div class="edition">' + edition + '</div></div>' +
       (mini ? '<div class="dm-rule"></div>' : nav) +
       '</div></header>';
