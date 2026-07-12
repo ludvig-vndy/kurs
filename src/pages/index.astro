@@ -10,16 +10,18 @@ import Seal from '../components/Seal.astro';
 
 const KOD = '/labs/inbjudan.html';
 
-// Symmetriska kort: bada har intro + kort, enradig punktlista.
+// Symmetriska kort: bada har intro + kort punktlista. Copy enligt SPRAKSTIL:
+// kategoritermer (rakenskaper, vardering) behalls + glossas, intern jargong
+// (runway, liggare, Maskinen) skrivs bort. Skiljetecken bor i t (fritt lag).
 const larande = [
-  { t: 'Fundamenta', d: 'räkenskaper, värdering, riktpris.' },
-  { t: 'Multibaggern', d: 'fånga och hålla bolag utan vinst.' },
-  { t: 'Temperament', d: 'läsa kallelser, tåla svängarna.' },
+  { t: 'Räkenskaper och värdering:', d: 'läsa ett bokslut och räkna fram vad ett bolag är värt.' },
+  { t: 'De stora vinnarna:', d: 'hitta och våga behålla bolag som ännu inte går med vinst.' },
+  { t: 'Psykologin:', d: 'hålla dig lugn när kursen svänger, och inte sälja i panik.' },
 ];
 const vakter = [
-  { t: 'Tillväxtläget', d: 'kassa- och runway-vakt, utspädning i kod.' },
-  { t: 'Avtalsliggaren', d: 'ramavtal skilt från bindande order.' },
-  { t: 'Beteendespåret', d: 'beslutsdagbok och en tvilling.' },
+  { t: 'Räcker pengarna?', d: 'Vi varnar om ett bolags kassa sinar, eller om bolaget trycker nya aktier så att din del blir mindre.' },
+  { t: 'Är avtalet på riktigt?', d: 'Vi skiljer avtal som bara låter stora från order som faktiskt ger pengar.' },
+  { t: 'Håller du din plan?', d: 'Vi för dagbok över dina köp och sälj, och visar vad det kostat att avvika.' },
 ];
 ---
 
@@ -53,7 +55,7 @@ const vakter = [
     <section class="wrap">
       <div class="lp-hero">
         <h1 class="lp-hero__h">Äg bolaget<br />bakom aktien.</h1>
-        <p class="lp-hero__p">En plattform för fundamental analys och automatiserad bolagsbevakning, designad av <em>Sebastian Berg</em>.</p>
+        <p class="lp-hero__p">Lär dig fundamental analys: att läsa och värdera ett bolag från grunden. Och låt oss hålla koll på dina bolag åt dig, varje dag. Designad av <em>Sebastian Berg</em>.</p>
         <p class="lp-hero__meta">Inträde sker enbart via personlig inbjudan</p>
       </div>
     </section>
@@ -74,13 +76,12 @@ const vakter = [
       <div class="lp-cards">
         <article class="lp-card lp-card--kurs">
           <div class="lp-card__k">Kursen</div>
-          <div class="lp-card__sub">Hantverket</div>
-          <h3 class="lp-card__h">Masterclass i fundamental analys.</h3>
-          <p class="lp-card__p">Hela utbildningen ingår i ditt medlemskap. Nitton kapitel från grunderna till avancerad småbolagsanalys.</p>
+          <h3 class="lp-card__h">Lär dig värdera ett bolag, från grunden.</h3>
+          <p class="lp-card__p">Hela utbildningen ingår i ditt medlemskap. Nitton kapitel, från de första grunderna till hur du synar mindre bolag.</p>
           <div class="lp-card__label">Detta lär du dig</div>
           <ul class="lp-checks">
             {larande.map((v) => (
-              <li><b>{v.t}:</b> {v.d}</li>
+              <li><b>{v.t}</b> {v.d}</li>
             ))}
           </ul>
           <a class="lp-card__cta" href={KOD}>Ansök om medlemskap →</a>
@@ -88,13 +89,12 @@ const vakter = [
 
         <article class="lp-card lp-card--verktyg">
           <div class="lp-card__k">Verktygen</div>
-          <div class="lp-card__sub">Maskinen</div>
           <h3 class="lp-card__h">Din digitala analytiker.</h3>
-          <p class="lp-card__p">Vår motor läser rapporterna, korskollar siffrorna mot källan och vaktar dina innehav dygnet runt. Enbart verkliga tal.</p>
+          <p class="lp-card__p">Vi läser rapporterna åt dig, dubbelkollar varje siffra mot källan och håller koll på dina bolag dygnet runt. Bara verkliga tal, aldrig gissningar.</p>
           <div class="lp-card__label">Detta vaktar dina innehav</div>
           <ul class="lp-checks">
             {vakter.map((v) => (
-              <li><b>{v.t}:</b> {v.d}</li>
+              <li><b>{v.t}</b> {v.d}</li>
             ))}
           </ul>
           <a class="lp-card__cta" href={KOD}>Ange inbjudningskod →</a>
