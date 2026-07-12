@@ -2,16 +2,25 @@
    Loaded by the broadsheet surfaces: /, /hem, /fokus, /fokus/kapitel/[nr], /fokus/[lektion].
    The markdown course (/oversikt, /kurs/*) keeps tokens.css/global.css. */
 
+/* Sjalvvard Schibsted Grotesk (etikett-rollen, --mono). Variabel font, en fil
+   per subset, ingen tredjeparts-CDN. OFL, fri aven kommersiellt. */
+@font-face{font-family:'Schibsted Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('/fonts/schibsted-grotesk-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Schibsted Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('/fonts/schibsted-grotesk-latin-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
 :root{
   --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
   --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
   --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
   --oxblood:#8A2E26; --gold:#9A6E1C;
   --good:#3E7A4F; --good-soft:#E6EFE3; --bad:#8A2E26; --bad-soft:#F3E2DE;
-  /* Modern stack: Outfit (sans display/rubriker), Spectral (serif brodtext +
-     kursiva pull-quotes), Inter (etiketter, ersatter maskinskriften). --mono
-     behaller sitt namn men ar nu Inter sans. */
-  --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Inter",system-ui,sans-serif; --slab:"Zilla Slab",Georgia,serif;
+  /* Stack: Outfit (sans display/rubriker), Spectral (serif brodtext + kursiva
+     pull-quotes), Schibsted Grotesk (etiketter, --mono, nordisk tidnings-grotesk
+     som ersatter Inter), Zilla Slab (wordmark). */
+  --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif; --mono:"Schibsted Grotesk",system-ui,sans-serif; --slab:"Zilla Slab",Georgia,serif;
 }
 *{box-sizing:border-box;margin:0}
 /* Always reserve the scrollbar track so centered content (and the masthead)
