@@ -36,7 +36,7 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       tokenbudget). Varje anrop kostar pengar; klient-klampen stoppar inte bots. Kräver
       en KV-binding **[Du]** eller Cloudflare WAF-rate-limit-regel; sen logiken **[Jag]**.
 - [ ] **[Jag] Radera testbakdörren `functions/api/devlink.js`** + dess anrop i
-      `inbjudan-i-marginalen.html`. Genererar inloggningslänk för valfri mejl =
+      `inbjudan.html`. Genererar inloggningslänk för valfri mejl =
       kontoövertagande. **Behålls under stängd test** (Sebastian m.fl.), tas bort som
       sista steg före publik öppning.
 - [ ] **[Du+Jag] Betalning:** Stripe checkout + webhook -> `subscriptions.status=active`

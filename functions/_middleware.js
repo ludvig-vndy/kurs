@@ -13,7 +13,7 @@ const JWKS_URL = 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1/.well-known/j
 
 const PUBLIC_EXACT = new Set([
   '/', '/logga-in', '/logga-in/',
-  '/labs/inbjudan-i-marginalen.html',
+  '/labs/inbjudan.html',
 ]);
 
 function isExempt(path) {

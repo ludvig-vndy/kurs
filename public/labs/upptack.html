@@ -452,7 +452,7 @@
         <div class="cstep">
           <span class="cverb">Sedan</span>
           <b>Du lägger till</b>
-          <span>Ett klick lägger bolaget i <a href="/labs/dina-bolag-i-marginalen.html" style="color:var(--oxblood)">Dina bolag</a>. Där skriver du ditt eget skäl.</span>
+          <span>Ett klick lägger bolaget i <a href="/labs/dina-bolag.html" style="color:var(--oxblood)">Dina bolag</a>. Där skriver du ditt eget skäl.</span>
         </div>
         <div class="cstep">
           <span class="cverb">Därefter</span>
@@ -476,8 +476,8 @@
       <nav class="site-foot__nav">
         <a href="/hem">Hem</a>
         <a href="/fokus">Kursöversikt</a>
-        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
-        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/labs/agarbrevet.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag.html">Dina bolag</a>
         <a href="/verktyg">Verktyg</a>
       </nav>
     </div>
@@ -536,10 +536,10 @@ function scoreDots(n, tot){
 
 /* digest: sedan du sist tittade */
 const DIGEST = [
-  { mark:'★', cls:'gold', tk:'TELV', co:'Telvio', text:'nytt guldläge: momentum tände ovanpå en vidgad substansrabatt', link:'scorecard', href:'/labs/bolagssida-i-marginalen.html' },
-  { mark:'▲', cls:'good', tk:'KAVX', co:'Kavex Medical', text:'volymspik, handeln 3× snittet två dagar i rad', link:'Följ bolaget', href:'/labs/bolagssida-i-marginalen.html' },
-  { mark:'▲', cls:'bad', tk:'TELV', co:'Telvio', text:'blankningen steg 1,1 procentenheter på 30 dagar', link:'scorecard', href:'/labs/bolagssida-i-marginalen.html' },
-  { mark:'▽', cls:'muted', tk:'ALMF', co:'Almi Foods', text:'momentum slocknade, bröt sitt 200-dagars medel nedåt', link:'Följ bolaget', href:'/labs/bolagssida-i-marginalen.html' }
+  { mark:'★', cls:'gold', tk:'TELV', co:'Telvio', text:'nytt guldläge: momentum tände ovanpå en vidgad substansrabatt', link:'scorecard', href:'/labs/bolagssida.html' },
+  { mark:'▲', cls:'good', tk:'KAVX', co:'Kavex Medical', text:'volymspik, handeln 3× snittet två dagar i rad', link:'Följ bolaget', href:'/labs/bolagssida.html' },
+  { mark:'▲', cls:'bad', tk:'TELV', co:'Telvio', text:'blankningen steg 1,1 procentenheter på 30 dagar', link:'scorecard', href:'/labs/bolagssida.html' },
+  { mark:'▽', cls:'muted', tk:'ALMF', co:'Almi Foods', text:'momentum slocknade, bröt sitt 200-dagars medel nedåt', link:'Följ bolaget', href:'/labs/bolagssida.html' }
 ];
 function renderDigest(){
   const el = document.getElementById('digest-list');
@@ -549,7 +549,7 @@ function renderDigest(){
       return `<li>
         <span class="dmark good">▲</span>
         <span class="dtext"><b>${b.co}</b> — ${b.personer} insiders köpte för ${bel}</span>
-        <a class="dlink" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
+        <a class="dlink" href="/labs/bolagssida.html">Följ bolaget →</a>
       </li>`;
     }).join('');
     return;
@@ -623,8 +623,8 @@ function renderHero(m){
           <span class="rep-pill">Rapport om ${m.rep} d</span>
         </div>
         <div class="hero-cta">
-          <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
-          <a class="fadd sub" href="/labs/bolagssida-i-marginalen.html">Scorecard →</a>
+          <a class="fadd follow" href="/labs/bolagssida.html">Följ bolaget →</a>
+          <a class="fadd sub" href="/labs/bolagssida.html">Scorecard →</a>
         </div>
       </div>
     </div>
@@ -648,8 +648,8 @@ function renderRow(m){
       <span class="rprice">${m.price} kr <span class="chg ${chgCls}">${m.chg}</span></span>
     </div>
     <div class="rrow-cta">
-      <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
-      <a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a>
+      <a class="fadd follow" href="/labs/bolagssida.html">Följ bolaget →</a>
+      <a class="fadd sub" href="/labs/dina-bolag.html">Lägg till i Dina bolag →</a>
     </div>
   </li>`;
 }
@@ -673,8 +673,8 @@ function renderInsiderRow(b){
     </div>
     <div class="itxs">${tx}</div>
     <div class="rrow-cta">
-      <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
-      <a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a>
+      <a class="fadd follow" href="/labs/bolagssida.html">Följ bolaget →</a>
+      <a class="fadd sub" href="/labs/dina-bolag.html">Lägg till i Dina bolag →</a>
     </div>
   </li>`;
 }
@@ -691,8 +691,8 @@ function renderInsiderHero(b){
       </div>
       <div class="hero-r">
         <div class="hero-cta">
-          <a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a>
-          <a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a>
+          <a class="fadd follow" href="/labs/bolagssida.html">Följ bolaget →</a>
+          <a class="fadd sub" href="/labs/dina-bolag.html">Lägg till i Dina bolag →</a>
         </div>
       </div>
     </div>
@@ -787,7 +787,7 @@ function renderScreener(){
       <div class="mrow-co">${m.co} <span class="fticker">${m.tk}</span></div>
       <div class="mrow-mc num">${m.mc}</div>
       <div class="mrow-why">${m.why} <span class="halt">${m.halt}</span></div>
-      <div class="maddwrap faddwrap"><a class="fadd follow" href="/labs/bolagssida-i-marginalen.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag-i-marginalen.html">Lägg till i Dina bolag →</a></div>
+      <div class="maddwrap faddwrap"><a class="fadd follow" href="/labs/bolagssida.html">Följ bolaget →</a><a class="fadd sub" href="/labs/dina-bolag.html">Lägg till i Dina bolag →</a></div>
     </li>`).join('');
 }
 renderScreener();

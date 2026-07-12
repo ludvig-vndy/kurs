@@ -347,7 +347,7 @@ letter-spacing:.02em;
     </div>
     <div class="mast-rule"></div>
     <div class="mast-nav">
-      <a class="backlink" href="/labs/dina-bolag-i-marginalen.html">&larr; Dina bolag</a>
+      <a class="backlink" href="/labs/dina-bolag.html">&larr; Dina bolag</a>
     </div>
   </header>
 
@@ -428,7 +428,7 @@ letter-spacing:.02em;
   <section id="stage-success" class="hidden">
     <div class="success">
       <h2>Klart</h2>
-      <p><span id="successN"></span> innehav ligger nu i <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>.</p>
+      <p><span id="successN"></span> innehav ligger nu i <a href="/labs/dina-bolag.html">Dina bolag</a>.</p>
     </div>
     <div class="importbar">
       <button class="btn ghost" id="restartBtn2">Importera fler</button>
@@ -838,7 +838,7 @@ el("importBtn").addEventListener("click", function(){
     // Inte inloggad: lägg undan importen och skicka till inloggningen.
     // Dina bolag flushar den till kontot direkt efter magic-link-klicket.
     try { localStorage.setItem(PENDING_KEY, JSON.stringify(rows)); } catch(e){}
-    window.location.href = "/labs/inbjudan-i-marginalen.html?next=import";
+    window.location.href = "/labs/inbjudan.html?next=import";
   }).catch(function(err){
     btn.disabled = false; btn.innerHTML = prev;
     el("parseError").textContent = "Kunde inte spara: " + (err && err.message ? err.message : err);

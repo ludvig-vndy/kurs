@@ -39,7 +39,7 @@
   // att den funkar både lokalt (http.server) och på den deployade domänen,
   // förutsatt att båda ligger i Supabase Auth -> URL Configuration -> Redirect URLs.
   function redirectTo(path) {
-    return window.location.origin + (path || "/labs/dina-bolag-i-marginalen.html");
+    return window.location.origin + (path || "/labs/dina-bolag.html");
   }
 
   // ── Session / användare ────────────────────────────────────────────────

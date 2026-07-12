@@ -33,7 +33,7 @@ export async function onRequestPost(context) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: "ogiltig mejladress" }, 400);
 
   const origin = new URL(request.url).origin;
-  const redirect_to = origin + "/labs/dina-bolag-i-marginalen.html";
+  const redirect_to = origin + "/labs/dina-bolag.html";
 
   const r = await fetch(base + "/auth/v1/admin/generate_link", {
     method: "POST",

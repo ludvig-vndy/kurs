@@ -141,8 +141,8 @@
       <nav class="site-foot__nav">
         <a href="/hem">Hem</a>
         <a href="/fokus">Kursöversikt</a>
-        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
-        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/labs/agarbrevet.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag.html">Dina bolag</a>
       </nav>
     </div>
     <p class="site-foot__fine">Prototyp · exempeldata · fiktiva bolag, påhittade siffror. Information i utbildningssyfte, aldrig köp- eller säljråd.</p>
@@ -200,7 +200,7 @@ async function ask(q){
     const r = await fetch('/api/fraga',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q, token:token})});
     const d = await r.json().catch(function(){return{};});
     if(!r.ok){ aEl.innerHTML = '<p><span class="lab">'+(r.status===501?'ej på':'fel')+'</span>'+esc(d.error||'Något gick fel.')+'</p>'; return; }
-    aEl.innerHTML = fmt(d.answer||'') + (token?'':'<div class="foot"><a href="/labs/inbjudan-i-marginalen.html">Logga in för att fråga om ditt innehav →</a></div>');
+    aEl.innerHTML = fmt(d.answer||'') + (token?'':'<div class="foot"><a href="/labs/inbjudan.html">Logga in för att fråga om ditt innehav →</a></div>');
   }catch(e){ aEl.innerHTML = '<p><span class="lab">fel</span>Kunde inte nå tjänsten just nu.</p>'; }
 }
 document.getElementById('askform').addEventListener('submit',e=>{e.preventDefault();const v=inp.value.trim();if(v){ask(v);inp.value='';}});

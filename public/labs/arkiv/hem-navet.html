@@ -174,8 +174,8 @@
     <nav class="nav">
       <a href="#" class="here" aria-current="page">Hem</a>
       <a href="/fokus">Kursöversikt</a>
-      <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
-      <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+      <a href="/labs/agarbrevet.html">Ägarbrevet</a>
+      <a href="/labs/dina-bolag.html">Dina bolag</a>
       <a href="/verktyg">Verktyg</a>
     </nav>
   </div>
@@ -192,8 +192,8 @@
       <h2>Telvio: lönsamheten gick under din gräns på 40 procent.</h2>
       <p>En av dina sex innehav kräver en stund av dig i dag. Resten är lugnt. Hela morgonbrevet tar 90 sekunder.</p>
       <div class="acts">
-        <a class="btn-ink" href="/labs/agarbrevet-i-marginalen.html">Öppna Ägarbrevet →</a>
-        <a class="btn-ghost" href="/labs/agarbrevet-i-marginalen.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Lyssna · 2:10</a>
+        <a class="btn-ink" href="/labs/agarbrevet.html">Öppna Ägarbrevet →</a>
+        <a class="btn-ghost" href="/labs/agarbrevet.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Lyssna · 2:10</a>
       </div>
     </div>
   </section>
@@ -201,16 +201,16 @@
   <!-- Fusionsband: portföljen till vänster, kursen till höger -->
   <section class="band" data-reveal>
     <div class="panel">
-      <div class="ph"><h3>Dina bolag</h3><a href="/labs/dina-bolag-i-marginalen.html">Alla sex →</a></div>
-      <a class="brow" href="/labs/dina-bolag-i-marginalen.html">
+      <div class="ph"><h3>Dina bolag</h3><a href="/labs/dina-bolag.html">Alla sex →</a></div>
+      <a class="brow" href="/labs/dina-bolag.html">
         <span class="dot neg"></span>
         <span><span class="nm">Telvio</span><span class="ln">Marginalen gick under din gräns på 40 procent</span></span>
         <span class="rt">84,20<span class="chg dn">-0,6%</span></span></a>
-      <a class="brow" href="/labs/dina-bolag-i-marginalen.html">
+      <a class="brow" href="/labs/dina-bolag.html">
         <span class="dot pos"></span>
         <span><span class="nm">Norlux Industri</span><span class="ln">Stark rapport, höjd prognos. Allt du vaktar håller</span></span>
         <span class="rt">284,50<span class="chg up">+1,8%</span></span></a>
-      <a class="brow" href="/labs/dina-bolag-i-marginalen.html">
+      <a class="brow" href="/labs/dina-bolag.html">
         <span class="dot gold"></span>
         <span><span class="nm">Kavex Medical</span><span class="ln">Insiderköp 2,1 Mkr, Q3-rapport i dag 08:00</span></span>
         <span class="rt">156,00<span class="chg up">+0,4%</span></span></a>
@@ -277,8 +277,8 @@
       <a class="site-foot__mark" href="/hem">Marginalen</a>
       <nav class="site-foot__nav">
         <a href="/fokus">Kursöversikt</a>
-        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
-        <a href="/labs/dina-bolag-i-marginalen.html">Dina bolag</a>
+        <a href="/labs/agarbrevet.html">Ägarbrevet</a>
+        <a href="/labs/dina-bolag.html">Dina bolag</a>
         <a href="/verktyg">Verktyg</a>
       </nav>
     </div>
@@ -291,7 +291,7 @@ const SEEDS=['Vilket bolag behöver mig mest i dag?','Vad hände i mina bolag i 
 const ANS={
   'Vilket bolag behöver mig mest i dag?':{
     html:'<p><span style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule-strong);color:var(--muted);padding:2px 6px;margin-right:7px">fakta</span>Telvio. Lönsamheten gick under din gräns på 40,0 procent i Q3, den enda av dina vakter som brutits. Norlux vill också ha en stund, men av trevligare skäl: stark rapport.</p>',
-    foot:'<a href="/labs/dina-bolag-i-marginalen.html">Öppna Telvio →</a><a class="kurs" href="/fokus/kapitel/5">Fördjupning: nyckeltal →</a>'}
+    foot:'<a href="/labs/dina-bolag.html">Öppna Telvio →</a><a class="kurs" href="/fokus/kapitel/5">Fördjupning: nyckeltal →</a>'}
 };
 const seed=document.getElementById('seed'),ansEl=document.getElementById('ans'),panel=document.getElementById('askpanel'),inp=document.getElementById('askinput');
 seed.innerHTML=SEEDS.map(q=>'<button class="seedb" type="button">'+q+'</button>').join('');

@@ -6,7 +6,7 @@
 
 ## 1. Inventering (allt som finns)
 
-### A. Ägarbrevet-tjänsten (gröna mockar, public/labs, `*-i-marginalen.html`)
+### A. Ägarbrevet-tjänsten (gröna mockar, public/labs, `*.html`)
 **Dagliga ingången**
 - `agarbrevet` (Brevet) · morgonbrevet, dagens tre saker
 - `brevet-lagen` · showcase: samma brev som tyst dag / larmdag / rapportdag

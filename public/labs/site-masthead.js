@@ -14,12 +14,12 @@
      mini     wordmark + edition, ingen nav (floden) */
 (function () {
   var NAV = [
-    ['brevet',   'Brevet',     '/labs/agarbrevet-i-marginalen.html'],
-    ['bolag',    'Dina bolag', '/labs/dina-bolag-i-marginalen.html'],
-    ['upptack',  'Upptäck',    '/labs/upptack-i-marginalen.html'],
-    ['analysen', 'Analysen',   '/labs/din-portfolj-i-marginalen.html'],
-    ['fraga',    'Fråga',      '/labs/fraga-i-marginalen.html'],
-    ['havstang', 'Hävstång',   '/labs/havstang-i-marginalen.html']
+    ['brevet',   'Brevet',     '/labs/agarbrevet.html'],
+    ['bolag',    'Dina bolag', '/labs/dina-bolag.html'],
+    ['upptack',  'Upptäck',    '/labs/upptack.html'],
+    ['analysen', 'Analysen',   '/labs/din-portfolj.html'],
+    ['fraga',    'Fråga',      '/labs/fraga.html'],
+    ['havstang', 'Hävstång',   '/labs/havstang.html']
   ];
 
   var SB_KEY = 'sb-xpxghvxrckpzbbkjmtcw-auth-token';
@@ -151,7 +151,7 @@
     this.innerHTML =
       '<header class="dm-mast"><div class="dm-in">' +
       '<div class="dm-rule dm-rule--top"></div>' +
-      '<div class="mast-top"><a class="dm-word" href="/labs/agarbrevet-i-marginalen.html">Delägaren</a>' +
+      '<div class="mast-top"><a class="dm-word" href="/labs/agarbrevet.html">Delägaren</a>' +
       '<div class="edition">' + edition + '</div></div>' +
       (mini ? '<div class="dm-rule"></div>' : nav) +
       '</div></header>';

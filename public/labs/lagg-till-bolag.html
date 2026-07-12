@@ -202,7 +202,7 @@ function render(){
       '<div class="results" id="results"></div>'+
       '<div class="quick"><span class="ql">Vanliga</span>'+
         BOLAG.map(b=>'<button class="chip'+(sel===b?' sel':'')+'" data-b="'+esc(b)+'">'+b+'</button>').join('')+'</div>'+
-      '<div class="nav-btns"><a class="btn ghost" href="/labs/dina-bolag-i-marginalen.html">Avbryt</a><span class="spacer"></span>'+
+      '<div class="nav-btns"><a class="btn ghost" href="/labs/dina-bolag.html">Avbryt</a><span class="spacer"></span>'+
         '<button class="btn prim" id="next" '+(sel?'':'disabled')+'>'+(sel?'Fortsätt med '+esc(sel)+' →':'Fortsätt →')+'</button></div>';
   } else if(step===1){
     const cn = sel||'bolaget';
@@ -237,7 +237,7 @@ function render(){
         (skip?'Alla väsentliga händelser: sammanfattade och graderade.':'Om en gräns passeras: vi säger till samma morgon.')+'</p>'+
         '<div id="saveNote" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;color:var(--oxblood)">'+saveNoteText()+'</div></div>'+
       '<div class="nav-btns"><button class="btn ghost" data-go="0">Lägg till ett bolag till</button><span class="spacer"></span>'+
-        '<a class="btn prim" href="/labs/dina-bolag-i-marginalen.html">Öppna Dina bolag →</a></div>';
+        '<a class="btn prim" href="/labs/dina-bolag.html">Öppna Dina bolag →</a></div>';
   }
   stepEl.innerHTML = '<div class="step">'+h+'</div>';
   wire();

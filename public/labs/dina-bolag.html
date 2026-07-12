@@ -312,7 +312,7 @@
       <nav class="site-foot__nav">
         <a href="/hem">Hem</a>
         <a href="/fokus">Kursöversikt</a>
-        <a href="/labs/agarbrevet-i-marginalen.html">Ägarbrevet</a>
+        <a href="/labs/agarbrevet.html">Ägarbrevet</a>
         <a href="/verktyg">Verktyg</a>
       </nav>
     </div>
@@ -334,7 +334,7 @@ const LIST = [
     antal:'1 200 st', varde:'101 040 kr', andel:'21%',
     tavk:'-9,5%', tavkkr:'-10 606 kr', tavkc:'dn', day:'-0,6%', dayc:'dn',
     ln:'Lönsamheten föll under 40 procent i Q3, gränsen du satte själv. Utdelningen står kvar men marginalen krymper sjätte kvartalet i rad.',
-    open:true, href:'/labs/bolagssida-i-marginalen.html' },
+    open:true, href:'/labs/bolagssida.html' },
   { tk:'NORL', namn:'Norlux Industri', rel:'ager', dot:'pos',
     antal:'480 st', varde:'136 560 kr', andel:'28%',
     tavk:'+77,0%', tavkkr:'+59 407 kr', tavkc:'up', day:'+1,8%', dayc:'up',
@@ -352,7 +352,7 @@ const LIST = [
     antal:'1 232 st', varde:'58 274 kr', andel:'12%',
     tavk:'-5,1%', tavkkr:'-3 132 kr', tavkc:'dn', day:'-0,5%', dayc:'dn',
     watch:'Certifieringsbesked väntas i september · kassan räcker cirka 21 månader',
-    ln:'Tillväxtcase. Inget nytt just nu, vi säger till när certifieringsbeskedet kommer.', open:true, href:'/labs/bolagssida-i-marginalen.html' },
+    ln:'Tillväxtcase. Inget nytt just nu, vi säger till när certifieringsbeskedet kommer.', open:true, href:'/labs/bolagssida.html' },
   { tk:'ALMI', namn:'Almi Foods', rel:'ager', dot:'calm',
     antal:'463 st', varde:'55 051 kr', andel:'11%',
     tavk:'+22,0%', tavkkr:'+9 927 kr', tavkc:'up', day:'-0,1%', dayc:'dn',
@@ -362,12 +362,12 @@ const LIST = [
     sedan:'+8,2%', sedanc:'up', sedandat:'sedan 3 juli',
     watch:'Följd sedan Upptäck · markerat intresse förra veckan',
     ln:'Stark delårsrapport i morse. Inte i din portfölj, du bevakar den inför ett eventuellt köp.',
-    href:'/labs/bolagssida-i-marginalen.html' },
+    href:'/labs/bolagssida.html' },
   { tk:'HAVR', namn:'Havregården', rel:'foljer', dot:'calm',
     sedan:'-2,1%', sedanc:'dn', sedandat:'sedan 12 juni',
     watch:'Ingen bevakning satt · du följer utan larm',
     ln:'Defensiv livsmedelsprofil du ville hålla ögonen på inför nästa rapport.',
-    href:'/labs/bolagssida-i-marginalen.html' },
+    href:'/labs/bolagssida.html' },
 ];
 
 // Allokering till översiktens stapel: andel + färg per innehav, störst först.
@@ -494,8 +494,8 @@ function renderList(){
   view.innerHTML =
     '<div class="page-h" data-reveal><h1 class="h-title">Dina bolag</h1>'+
       '<div class="page-h-actions">'+
-        '<a class="ghost" href="/labs/importera-i-marginalen.html">Importera innehav</a>'+
-        '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a>'+
+        '<a class="ghost" href="/labs/importera.html">Importera innehav</a>'+
+        '<a class="ghost" href="/labs/lagg-till-bolag.html">+ Lägg till bolag</a>'+
       '</div></div>'+
     '<p class="lede" data-reveal>Vad du äger, vad det är värt och hur det gått. '+
       '<b>Ett innehav kräver din uppmärksamhet i dag</b>, två rör på sig, tre är lugna. '+
@@ -645,8 +645,8 @@ function pageHeader(){
   // Samma huvud som demovyn: identitet/utloggning ligger nu i masthuvudets chip.
   return '<div class="page-h" data-reveal><h1 class="h-title">Dina bolag</h1>'+
     '<div class="page-h-actions">'+
-      '<a class="ghost" href="/labs/importera-i-marginalen.html">Importera innehav</a>'+
-      '<a class="ghost" href="/labs/lagg-till-bolag-i-marginalen.html">+ Lägg till bolag</a>'+
+      '<a class="ghost" href="/labs/importera.html">Importera innehav</a>'+
+      '<a class="ghost" href="/labs/lagg-till-bolag.html">+ Lägg till bolag</a>'+
     '</div></div>';
 }
 function groupH(txt){
@@ -669,7 +669,7 @@ function renderEmpty(user){
     '<div style="text-align:center;padding:56px 20px;color:var(--muted)">'+
       '<div style="font-family:var(--serif);font-size:22px;color:var(--ink);margin:0 0 10px">Inga innehav än.</div>'+
       '<p style="max-width:42ch;margin:0 auto 22px;font-size:15px">Importera din depå från Avanza eller Nordnet, så lägger vi in bolagen här och börjar bevaka dem åt dig.</p>'+
-      '<a href="/labs/importera-i-marginalen.html" style="display:inline-block;background:var(--oxblood);color:#fff;font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 22px;border-radius:2px;text-decoration:none">Importera innehav &rarr;</a>'+
+      '<a href="/labs/importera.html" style="display:inline-block;background:var(--oxblood);color:#fff;font-family:var(--mono);font-size:13px;letter-spacing:.04em;padding:12px 22px;border-radius:2px;text-decoration:none">Importera innehav &rarr;</a>'+
     '</div>';
   reveal();
   setAsk(null);
