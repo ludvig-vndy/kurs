@@ -526,25 +526,33 @@
       var box = document.getElementById('devlinkBox');
       var a = document.getElementById('devlinkA');
       var note = document.getElementById('devlinkNote');
-      if (box){ box.hidden = false; a.textContent = 'Skapar inloggningslänk ...'; a.removeAttribute('href'); note.textContent = ''; }
-      fetch('/api/devlink', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email: v }) })
-        .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
-        .then(function(res){
-          if (res.ok && res.d.link){
-            a.href = res.d.link; a.textContent = 'Klicka för att logga in →';
-            note.textContent = 'Genererad direkt. Ett riktigt mejl skickas också, men kan dröja eller rate-limitas under test.';
-          } else {
+      // Kontoskapande sker BARA server-side mot en giltig inbjudan (token).
+      // Login-läge (befintligt konto) gar via mejlad magic-lank nedan.
+      if (mode === 'signup' && currentToken) {
+        if (box){ box.hidden = false; a.textContent = 'Skapar inloggningslänk ...'; a.removeAttribute('href'); note.textContent = ''; }
+        fetch('/api/devlink', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email: v, token: currentToken }) })
+          .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
+          .then(function(res){
+            if (res.ok && res.d.link){
+              a.href = res.d.link; a.textContent = 'Klicka för att logga in →';
+              note.textContent = 'Genererad direkt. Ett riktigt mejl skickas också, men kan dröja eller rate-limitas under test.';
+            } else {
+              a.textContent = 'Kunde inte skapa länk';
+              note.textContent = (res.d && res.d.error) ? res.d.error : 'okänt fel';
+            }
+          })
+          .catch(function(err){
             a.textContent = 'Kunde inte skapa länk';
-            note.textContent = (res.d && res.d.error) ? res.d.error : 'okänt fel';
-          }
-        })
-        .catch(function(err){
-          a.textContent = 'Kunde inte skapa länk';
-          note.textContent = String((err && err.message) || err);
-        });
+            note.textContent = String((err && err.message) || err);
+          });
+      } else if (box) {
+        box.hidden = true;
+      }
 
-      // Skicka även det riktiga mejlet (login-läge skapar inte nytt konto).
-      if (window.AB && window.AB.ready){ window.AB.sendMagicLink(v, { createUser: mode === 'signup' }).catch(function(){}); }
+      // Skicka även det riktiga mejlet. Skapar ALDRIG konto klient-sidan:
+      // signup gar via devlink (server, mot giltig inbjudan), login mot ett konto
+      // som redan finns. Sa self-registrering ar omojlig aven om denna sida ses.
+      if (window.AB && window.AB.ready){ window.AB.sendMagicLink(v, { createUser: false }).catch(function(){}); }
     });
     email.addEventListener('input', function(){
       if (email.classList.contains('err') && validEmail(email.value.trim())){

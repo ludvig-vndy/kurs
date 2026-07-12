@@ -35,10 +35,14 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
 - [ ] **[Jag+Du] Server-side rate limiting på `functions/api/fraga.js`** (per IP +
       tokenbudget). Varje anrop kostar pengar; klient-klampen stoppar inte bots. Kräver
       en KV-binding **[Du]** eller Cloudflare WAF-rate-limit-regel; sen logiken **[Jag]**.
-- [ ] **[Jag] Radera testbakdörren `functions/api/devlink.js`** + dess anrop i
-      `inbjudan.html`. Genererar inloggningslänk för valfri mejl =
-      kontoövertagande. **Behålls under stängd test** (Sebastian m.fl.), tas bort som
-      sista steg före publik öppning.
+- [ ] **[Du] Stäng av publik signup i Supabase** (Authentication -> Sign In / Providers
+      -> "Allow new users to sign up" AV). Annars kan klienten self-registrera med den
+      publika publishable-nyckeln, helt förbi inbjudan = full åtkomst. **KRITISKT:** utan
+      detta finns en väg förbi inbjudningsgrinden oavsett hur tät den är.
+- [x] **`/api/devlink` härdad till inbjudnings-inlösen** (2026-07-12): kräver en giltig,
+      pending, engångs-token, mejlbindning om `invites.email` är satt, och skapar kontot
+      server-side. Inte längre en öppen bakdörr (verifierat: mejl utan token -> 403). Kan
+      behållas som onboarding eller döpas om till `/api/accept-invite`.
 - [ ] **[Du+Jag] Betalning:** Stripe checkout + webhook -> `subscriptions.status=active`
       (triggar redan 2 inbjudningar i schemat). Kod **[Jag]**, konto/nycklar **[Du]**.
 - [ ] **[Du/Jur] Villkor + integritetspolicy (GDPR).** Ni lagrar innehav = känsliga
