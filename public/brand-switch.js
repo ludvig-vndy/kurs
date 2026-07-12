@@ -1,40 +1,40 @@
-/* Intern dev-växel: flippar wordmarken Delägaren <-> Marginalen för delning och
-   skärmdumpar på sociala medier. INTE en publik feature.
+/* Varumärke i headern. DEFAULT = Marginalen (utskrivet i källan). Intern dev-
+   växel för att förhandsvisa Delägaren-namnet:
 
-   Aktivera:   lägg till ?brand=marginalen i URL:en (sparas i localStorage)
-   Återställ:  ?brand=delagaren
+   Flippa till Delägaren:  ?brand=delagaren  (sparas i localStorage)
+   Tillbaka till default:  ?brand=marginalen
 
-   Rör bara synlig text (wordmark, sigill, titel), aldrig den byggda identiteten
-   eller server-metan. Gäller tills du återställer, per webbläsare. */
+   Rör bara synlig text (wordmark, sigill, fliktitel), aldrig server-metan. */
 (function () {
   var KEY = 'da-brand';
   try {
     var q = new URLSearchParams(location.search).get('brand');
     if (q) {
       var v = q.toLowerCase();
-      if (v === 'marginalen') localStorage.setItem(KEY, 'marginalen');
-      else localStorage.removeItem(KEY); // delagaren / annat = tillbaka till standard
+      if (v === 'delagaren' || v === 'delägaren') localStorage.setItem(KEY, 'delagaren');
+      else localStorage.removeItem(KEY); // marginalen / annat = default
     }
   } catch (e) {}
 
-  function marginalen() {
-    try { return localStorage.getItem(KEY) === 'marginalen'; } catch (e) { return false; }
+  function delagarenMode() {
+    try { return localStorage.getItem(KEY) === 'delagaren'; } catch (e) { return false; }
   }
 
   function swap() {
-    if (!marginalen()) return;
-    // Wordmark (Broadsheet .wordmark, labs .dm-word), sigillets namn, ev. boxad brand.
+    var toDelagaren = delagarenMode();
     document.querySelectorAll('.wordmark, .dm-word, .seal__name, .lp-brand').forEach(function (el) {
-      if (/^\s*del[äa]garen\s*$/i.test(el.textContent)) el.textContent = 'Marginalen';
+      var t = el.textContent;
+      if (toDelagaren) { if (/^\s*marginalen\s*$/i.test(t)) el.textContent = 'Delägaren'; }
+      else { if (/^\s*del[äa]garen\s*$/i.test(t)) el.textContent = 'Marginalen'; } // om nagon kalla annu sager Delagaren
     });
-    // Fliktitel, så delade skärmdumpar av fliken stämmer.
-    if (document.title && /del[äa]garen/i.test(document.title)) {
-      document.title = document.title.replace(/del[äa]garen/gi, 'Marginalen');
+    // Fliktitel: source sager "Delägaren", spegla valt lage.
+    if (document.title) {
+      if (toDelagaren) document.title = document.title.replace(/marginalen/gi, 'Delägaren');
+      else document.title = document.title.replace(/del[äa]garen/gi, 'Marginalen');
     }
   }
 
   if (document.readyState !== 'loading') swap();
   else document.addEventListener('DOMContentLoaded', swap);
-  // View Transitions: kör om efter varje klient-navigering.
   document.addEventListener('astro:page-load', swap);
 })();

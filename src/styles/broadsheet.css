@@ -40,15 +40,11 @@ a{color:inherit}
 .mast-rule--top{height:1px; margin-bottom:15px}
 
 /* ── Sigill: den boxade loggan, återanvänds i footer, startsida, inbjudan ── */
-.seal{display:inline-flex; flex-direction:column; align-items:center; gap:9px; text-decoration:none; color:var(--ink); border:1.5px solid var(--ink); padding:16px 34px 14px; transition:background .2s}
-.seal:hover{background:rgba(33,28,23,.04)}
-.seal__name{font-family:var(--slab); font-weight:700; text-transform:uppercase; line-height:1; letter-spacing:.05em; font-size:clamp(26px,4vw,42px)}
-.seal__sub{display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted)}
-.seal__sub::before,.seal__sub::after{content:""; width:26px; height:1px; background:var(--gold)}
-.seal--sm{padding:13px 26px 11px; gap:8px}
+/* Strippad sigill: ren utskriven wordmark, ingen box, ingen undertitel. */
+.seal{display:inline-flex; align-items:center; text-decoration:none; color:var(--ink); transition:color .2s}
+.seal:hover{color:var(--oxblood)}
+.seal__name{font-family:var(--slab); font-weight:700; text-transform:uppercase; line-height:1; letter-spacing:.05em; font-size:clamp(30px,4.6vw,46px)}
 .seal--sm .seal__name{font-size:20px}
-.seal--sm .seal__sub{font-size:9px; gap:10px}
-.seal--sm .seal__sub::before,.seal--sm .seal__sub::after{width:18px}
 .nav{display:flex; flex-wrap:wrap; gap:2px 24px; padding:2px 0; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase}
 .nav a{display:inline-flex; align-items:center; min-height:40px; color:var(--muted); text-decoration:none}
 .nav a:hover,.nav a.here{color:var(--ink)}

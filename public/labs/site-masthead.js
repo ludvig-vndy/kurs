@@ -24,13 +24,13 @@
 
   var SB_KEY = 'sb-xpxghvxrckpzbbkjmtcw-auth-token';
 
-  // Intern dev-växel: wordmarken Delägaren <-> Marginalen (?brand=marginalen,
-  // sparas). Bara synlig text, för delning/skärmdumpar. Se public/brand-switch.js.
+  // Varumärke: DEFAULT = Marginalen. Dev-växel ?brand=delagaren flippar till
+  // Delägaren (sparas). Bara synlig text. Se public/brand-switch.js.
   try {
     var _bq = new URLSearchParams(location.search).get('brand');
-    if (_bq) { if (_bq.toLowerCase() === 'marginalen') localStorage.setItem('da-brand', 'marginalen'); else localStorage.removeItem('da-brand'); }
+    if (_bq) { if (_bq.toLowerCase() === 'delagaren') localStorage.setItem('da-brand', 'delagaren'); else localStorage.removeItem('da-brand'); }
   } catch (e) {}
-  function brandWord() { try { return localStorage.getItem('da-brand') === 'marginalen' ? 'Marginalen' : 'Delägaren'; } catch (e) { return 'Delägaren'; } }
+  function brandWord() { try { return localStorage.getItem('da-brand') === 'delagaren' ? 'Delägaren' : 'Marginalen'; } catch (e) { return 'Marginalen'; } }
 
   // Inloggningsgrind: produktytorna kraver ett Delagaren-konto. Kors i <head>,
   // fore innehallet renderas (ingen flash). Undantar magic-link-retur
