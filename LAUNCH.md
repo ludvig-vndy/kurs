@@ -32,9 +32,9 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       `kurs`. Sen **[Jag]** uppdaterar `KURS_BAS` i `motor/tokens.mjs` + canonical/OG.
 - [ ] **[Du] Secrets i Cloudflare** för prod (och preview): `SUPABASE_SECRET_KEY`,
       `ANTHROPIC_API_KEY`. Aldrig i klientkod.
-- [ ] **[Jag+Du] Server-side rate limiting på `functions/api/fraga.js`** (per IP +
-      tokenbudget). Varje anrop kostar pengar; klient-klampen stoppar inte bots. Kräver
-      en KV-binding **[Du]** eller Cloudflare WAF-rate-limit-regel; sen logiken **[Jag]**.
+- [x] **Server-side rate limiting på `functions/api/fraga.js`** (2026-07-14): KV-bunden
+      (wrangler.toml, namespace fraga-rl), per IP 10/min + 60/dygn, 429 med vänlig text.
+      Verifierat live. Utan bindning släpper limitern igenom (aldrig SPOF).
 - [ ] **[Du] Stäng av publik signup i Supabase** (Authentication -> Sign In / Providers
       -> "Allow new users to sign up" AV). Annars kan klienten self-registrera med den
       publika publishable-nyckeln, helt förbi inbjudan = full åtkomst. **KRITISKT:** utan

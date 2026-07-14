@@ -1,0 +1,13 @@
+# Cloudflare Pages-konfig (projekt "kurs"). Bindningar har appliceras vid
+# `wrangler pages deploy`. Secrets (SUPABASE_SECRET_KEY, ANTHROPIC_API_KEY)
+# ligger kvar som krypterade env-vars pa projektet och styrs INTE harifran.
+name = "kurs"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-01-01"
+
+# Rate-limit-lager for Fraga (functions/api/fraga.js). Saknas bindningen
+# (t.ex. lokal dev) slapper limitern igenom, sa den ar aldrig en single
+# point of failure for sjalva svaret.
+[[kv_namespaces]]
+binding = "RL"
+id = "33773ae0f9864d78853252d6cab09031"

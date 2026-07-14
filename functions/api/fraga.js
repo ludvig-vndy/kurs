@@ -47,11 +47,41 @@ async function getHoldings(base, secret, uid) {
   } catch (e) { return []; }
 }
 
+/* Server-side rate limit (KV-bindningen RL, se wrangler.toml). Varje anrop
+   kostar riktiga pengar hos Anthropic; klient-klampen i sidan stoppar inga
+   skript. Per IP: 10/minut och 60/dygn. KV ar inte atomiskt, men grov
+   fonsterrakning racker som kostnadsskydd. Utan bindning: slapp igenom. */
+async function rateLimited(env, request) {
+  const kv = env.RL;
+  if (!kv) return null;
+  const ip = request.headers.get("CF-Connecting-IP") || "okand";
+  const now = Date.now();
+  const windows = [
+    { key: "m:" + ip + ":" + Math.floor(now / 60e3), max: 10, ttl: 120 },
+    { key: "d:" + ip + ":" + Math.floor(now / 864e5), max: 60, ttl: 90000 },
+  ];
+  for (const w of windows) {
+    let n = 0;
+    try { n = parseInt((await kv.get(w.key)) || "0", 10) || 0; } catch (e) { return null; }
+    if (n >= w.max) {
+      return w.max === 10
+        ? "Många frågor på kort tid. Vänta en minut, så öppnar det igen."
+        : "Du har nått dagens gräns för frågor. Den återställs i morgon.";
+    }
+    try { await kv.put(w.key, String(n + 1), { expirationTtl: w.ttl }); } catch (e) { /* ok */ }
+  }
+  return null;
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   const apiKey = env.ANTHROPIC_API_KEY;
   const secret = env.SUPABASE_SECRET_KEY;
   const base = env.SUPABASE_URL || FALLBACK_URL;
+
+  const limited = await rateLimited(env, request);
+  if (limited) return json({ error: limited }, 429);
+
   if (!apiKey) return json({ error: "AI ej konfigurerad (saknar ANTHROPIC_API_KEY)." }, 501);
 
   let question = "", token = "";
