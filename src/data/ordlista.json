@@ -1,30 +1,113 @@
 {
-  "P/E": "Price to Earnings. Priset delat med vinst per aktie, alltså hur många årsvinster du betalar.",
-  "EV": "Enterprise Value. Börsvärdet plus nettoskuld, priset på hela rörelsen.",
-  "EV/EBITDA": "Enterprise Value genom EBITDA.",
-  "EV/EBITA": "Enterprise Value genom EBITA.",
-  "EV/EBIT": "Enterprise Value genom EBIT.",
-  "P/B": "Price to Book. Priset delat med eget kapital per aktie.",
-  "P/S": "Price to Sales. Priset delat med omsättning per aktie.",
-  "EBITDA": "Earnings Before Interest, Taxes, Depreciation and Amortization.",
-  "EBITA": "Earnings Before Interest, Taxes and Amortization. Rörelseresultat före avskrivningar på förvärv.",
-  "EBIT": "Earnings Before Interest and Taxes. Rörelseresultatet.",
-  "ROIC": "Return on Invested Capital.",
-  "ROCE": "Return on Capital Employed.",
-  "ROE": "Return on Equity.",
-  "ROA": "Return on Assets.",
-  "WACC": "Weighted Average Cost of Capital. Det vägda avkastningskravet på bolagets kapital.",
-  "DCF": "Discounted Cash Flow. Värdering som nuvärdesberäknar framtida kassaflöden.",
-  "FCF": "Free Cash Flow. Kassan som blir över efter investeringar.",
-  "VPA": "Vinst per aktie. På engelska EPS, Earnings Per Share.",
-  "TAM": "Total Addressable Market. Hela marknadens storlek.",
-  "SAM": "Serviceable Addressable Market. Den del bolaget realistiskt kan nå.",
-  "LTV": "Lifetime Value. Vad en kund inbringar över sin livstid.",
-  "CAC": "Customer Acquisition Cost. Kostnaden att värva en kund.",
-  "burn rate": "Takten som bolaget gör av med sin kassa.",
-  "runway": "Hur länge kassan räcker givet burn rate.",
-  "churn": "Andelen kunder som lämnar under en period.",
-  "moat": "Engelska för vallgrav, en varaktig konkurrensfördel som skyddar lönsamheten.",
-  "yield": "Avkastningskravet, driftnettot i procent av fastighetens pris.",
-  "MSEK": "Miljoner kronor."
+  "P/E": {
+    "forklaring": "Price to Earnings. Priset delat med vinst per aktie, alltså hur många årsvinster du betalar.",
+    "lektion": "9.1"
+  },
+  "EV": {
+    "forklaring": "Enterprise Value. Börsvärdet plus nettoskuld, priset på hela rörelsen.",
+    "lektion": "9.1"
+  },
+  "EV/EBITDA": {
+    "forklaring": "Enterprise Value genom EBITDA.",
+    "lektion": "9.1"
+  },
+  "EV/EBITA": {
+    "forklaring": "Enterprise Value genom EBITA.",
+    "lektion": "9.1"
+  },
+  "EV/EBIT": {
+    "forklaring": "Enterprise Value genom EBIT.",
+    "lektion": "9.1"
+  },
+  "P/B": {
+    "forklaring": "Price to Book. Priset delat med eget kapital per aktie.",
+    "lektion": "9.1"
+  },
+  "P/S": {
+    "forklaring": "Price to Sales. Priset delat med omsättning per aktie.",
+    "lektion": "9.1"
+  },
+  "EBITDA": {
+    "forklaring": "Earnings Before Interest, Taxes, Depreciation and Amortization.",
+    "lektion": "4.1"
+  },
+  "EBITA": {
+    "forklaring": "Earnings Before Interest, Taxes and Amortization. Rörelseresultat före avskrivningar på förvärv.",
+    "lektion": "4.1"
+  },
+  "EBIT": {
+    "forklaring": "Earnings Before Interest and Taxes. Rörelseresultatet.",
+    "lektion": "4.1"
+  },
+  "ROIC": {
+    "forklaring": "Return on Invested Capital.",
+    "lektion": "5.1"
+  },
+  "ROCE": {
+    "forklaring": "Return on Capital Employed.",
+    "lektion": "5.3"
+  },
+  "ROE": {
+    "forklaring": "Return on Equity.",
+    "lektion": "5.3"
+  },
+  "ROA": {
+    "forklaring": "Return on Assets.",
+    "lektion": "5.3"
+  },
+  "WACC": {
+    "forklaring": "Weighted Average Cost of Capital. Det vägda avkastningskravet på bolagets kapital.",
+    "lektion": "9.3"
+  },
+  "DCF": {
+    "forklaring": "Discounted Cash Flow. Värdering som nuvärdesberäknar framtida kassaflöden.",
+    "lektion": "9.3"
+  },
+  "FCF": {
+    "forklaring": "Free Cash Flow. Kassan som blir över efter investeringar.",
+    "lektion": "4.3"
+  },
+  "VPA": {
+    "forklaring": "Vinst per aktie. På engelska EPS, Earnings Per Share.",
+    "lektion": "4.1"
+  },
+  "TAM": {
+    "forklaring": "Total Addressable Market. Hela marknadens storlek.",
+    "lektion": "12.2"
+  },
+  "SAM": {
+    "forklaring": "Serviceable Addressable Market. Den del bolaget realistiskt kan nå.",
+    "lektion": "12.2"
+  },
+  "LTV": {
+    "forklaring": "Lifetime Value. Vad en kund inbringar över sin livstid.",
+    "lektion": "2.3"
+  },
+  "CAC": {
+    "forklaring": "Customer Acquisition Cost. Kostnaden att värva en kund.",
+    "lektion": "2.3"
+  },
+  "burn rate": {
+    "forklaring": "Takten som bolaget gör av med sin kassa.",
+    "lektion": "12.5"
+  },
+  "runway": {
+    "forklaring": "Hur länge kassan räcker givet burn rate.",
+    "lektion": "12.5"
+  },
+  "churn": {
+    "forklaring": "Andelen kunder som lämnar under en period.",
+    "lektion": "2.3"
+  },
+  "moat": {
+    "forklaring": "Engelska för vallgrav, en varaktig konkurrensfördel som skyddar lönsamheten.",
+    "lektion": "6.1"
+  },
+  "yield": {
+    "forklaring": "Avkastningskravet, driftnettot i procent av fastighetens pris.",
+    "lektion": "15.2"
+  },
+  "MSEK": {
+    "forklaring": "Miljoner kronor."
+  }
 }

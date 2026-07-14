@@ -90,7 +90,7 @@ const meta = { lektion: lesson.lektion, kapitel: lesson.kapitel, chapterIds, cou
 // ── Ordlista: margin-note glosses on a term's first appearance in the lesson ─
 const ordlista = JSON.parse(
   fs.readFileSync(path.resolve('src/data/ordlista.json'), 'utf8')
-) as Record<string, string>;
+) as Record<string, { forklaring: string; lektion?: string }>;
 // Longest terms first so EV/EBITDA is matched (and masked) before EV.
 const glossTerms = Object.keys(ordlista).sort((a, b) => b.length - a.length);
 
@@ -116,14 +116,14 @@ function termRe(term: string, global: boolean): RegExp {
   return new RegExp('(?<![A-Za-zÅÄÖåäö0-9])' + esc + '(?![A-Za-zÅÄÖåäö0-9])', flags);
 }
 const seenTerms = new Set<string>();
-const stepGloss: { term: string; forklaring: string }[][] = lesson.steg.map((s) => {
+const stepGloss: { term: string; forklaring: string; lektion?: string }[][] = lesson.steg.map((s) => {
   let work = stepText(s);
-  const found: { term: string; forklaring: string }[] = [];
+  const found: { term: string; forklaring: string; lektion?: string }[] = [];
   for (const term of glossTerms) {
     if (seenTerms.has(term)) continue;
     if (termRe(term, false).test(work)) {
       seenTerms.add(term);
-      found.push({ term, forklaring: ordlista[term] });
+      found.push({ term, forklaring: ordlista[term].forklaring, lektion: ordlista[term].lektion });
       work = work.replace(termRe(term, true), '  '); // mask so shorter terms don't match inside
     }
   }
@@ -280,6 +280,9 @@ function visualEl(v: VisualObj) {
                       <div class="gloss__item">
                         <div class="gloss__term">{g.term}</div>
                         <div class="gloss__def">{g.forklaring}</div>
+                        {g.lektion && g.lektion !== lesson.lektion && (
+                          <a class="gloss__lesson" href={`/fokus/${g.lektion}`}>Lärs ut i {g.lektion} →</a>
+                        )}
                       </div>
                     ))}
                   </aside>
@@ -391,6 +394,8 @@ function visualEl(v: VisualObj) {
   .gloss__item { border-left: 2px solid var(--oxblood); padding: 1px 0 1px 14px; }
   .gloss__term { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 6px; }
   .gloss__def { font-family: var(--serif); font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); }
+  .gloss__lesson { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); text-decoration: none; }
+  .gloss__lesson:hover { color: var(--oxblood); }
 
   /* kicker spacing override for intro */
   .kicker--intro { letter-spacing: .16em; font-size: 12px; margin-bottom: 22px; }
