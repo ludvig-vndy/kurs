@@ -294,6 +294,39 @@ byggs så att den matar tidslinjen DIREKT, aldrig som eftertanke.
 - **Bevis:** en förnyelsedrivande artefakt folk faktiskt vill ha.
 - Effort: M. Beroende: Fas 4 (beteendedata).
 
+### Fas 3+ kandidater: kreativa Börsdata-användningar (godkända 2026-07-14)
+
+Utöver grundflödena (nyckeltal, kurser, kalender, uppslag, historik) byggs dessa
+när datakällan är på plats. Sorterade per hemvist; allt är beskrivning, aldrig råd.
+
+**I brevet och bevakningen (Fas 3):**
+- **Blankningsvakt:** "andelen som blankar ditt bolag har dubblats sedan i somras".
+  (Finns även gratis via FI; Börsdata = bekvämlighet, inte exklusivitet.)
+- **Återköpsvakt:** spegeln till utspädningsvakten, "din andel växer utan att du
+  gjort något".
+- **Utdelningsvakt:** sänkt/slopad utdelning mot historiken + ex-dagar i kalendern.
+- **Rapportdags-förberedelsen:** kvällen före rapport: dina gränser + de senaste
+  8 kvartalens leverans.
+- **Bransch-kontext på larmen:** larmet jämförs mot sektorsnittet, "hela branschen
+  föll" är ett annat besked än "bara ditt bolag föll". Kräver sektor-KPI:er.
+
+**I kursen (Fas 5):**
+- **Levande övningar:** kör checklistan på ett riktigt bolag med färska siffror
+  hämtade i stunden.
+- **Post-mortem-fabriken:** vid en krasch, hämta 10 års historik och bygg
+  "tecknen fanns här"-caset på en dag. Snabbaste vägen till färskt kursinnehåll.
+- **Levande ordlista:** varje begrepp med dagsfärskt exempel ur riktig data
+  (bygger på delade termsystemet i ordlista.json).
+
+**I beteendespåret (Fas 4):**
+- **Tvillingen på riktigt:** kontrafaktisken räknad exakt ur prishistoriken.
+  Kräver minst data (bara kurser), ger störst wow. Prioriteras först av dessa.
+- **Årsrapporten om dig:** portföljhälsorapporten på riktiga siffror (Fas 6).
+
+Guldet i Börsdata-API:et för oss är fundamentahistoriken och kurserna; blankning
+och insyn finns gratis hos FI. Licensnot: allt ovan visas endast för betalande
+medlemmar bakom inloggning, aldrig publikt (Enterprise-avtalets kärnfråga).
+
 ## 9. Tvärgående (byggs in från start, inte efteråt)
 
 - **Kvittologgen** ("Vad vi kollade i natt") i `briefs.checked`, även lugna dagar.
