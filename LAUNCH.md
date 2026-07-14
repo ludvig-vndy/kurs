@@ -43,8 +43,13 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       pending, engångs-token, mejlbindning om `invites.email` är satt, och skapar kontot
       server-side. Inte längre en öppen bakdörr (verifierat: mejl utan token -> 403). Kan
       behållas som onboarding eller döpas om till `/api/accept-invite`.
-- [ ] **[Du+Jag] Betalning:** Stripe checkout + webhook -> `subscriptions.status=active`
-      (triggar redan 2 inbjudningar i schemat). Kod **[Jag]**, konto/nycklar **[Du]**.
+- [ ] **[Du] Betalning, nycklarna:** koden är skaffoldad (2026-07-14): `/api/stripe-checkout`
+      (session per plan ar/manad/kurs, kräver inloggning) + `/api/stripe-webhook`
+      (signaturverifierad, skriver `subscriptions.status=active` -> triggar 2 inbjudningar)
+      + prissidan `/medlemskap` (utkast, bakom grinden). Kvar hos dig: Stripe-konto,
+      skapa priserna, sätt secrets `STRIPE_SECRET_KEY`, `STRIPE_PRICE_AR`,
+      `STRIPE_PRICE_MANAD`, `STRIPE_PRICE_KURS`, `STRIPE_WEBHOOK_SECRET`, och registrera
+      webhooken (https://DOMÄN/api/stripe-webhook) i Stripes dashboard.
 - [ ] **[Du/Jur] Villkor + integritetspolicy (GDPR).** Ni lagrar innehav = känsliga
       personuppgifter, och tar betalt. Villkor, dataskydd och ansvarsfriskrivning
       ("aldrig köp/säljråd") måste finnas innan publik betalning.

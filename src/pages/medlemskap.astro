@@ -1,0 +1,112 @@
+---
+import Broadsheet from '../layouts/Broadsheet.astro';
+
+// Prissidan: tva nivaer, Kursen (ingang) och Delagaren (full). Ligger bakom
+// kontogrinden tills Stripe ar oppnad = internt utkast som kan granskas pa
+// riktig yta. Copy enligt SPRAKSTIL: inga ogloassade facktermer, inga loften
+// ("forsakring" ar metafor, aldrig produktlofte); vaksamheten marks "pa vag"
+// sa vi inte tar betalt for en demo. Priserna ar beslutad riktning:
+// Delagaren 5000/ar (795/man ar prova-ankaret), Kursen ingangsniva.
+
+const KOD = '/labs/inbjudan.html';
+---
+
+<Broadsheet title="Medlemskap · Delägaren" description="Två nivåer: Kursen och Delägaren." active="" nav="app" editionLine2="Medlemskap">
+  <main class="wrap pris">
+    <div class="pris-head">
+      <div class="pris-utkast">Utkast · internt, betalning öppnar senare</div>
+      <h1 class="h-title">Medlemskap</h1>
+      <p class="standfirst">Två nivåer. Kursen lär dig hantverket. Delägaren lägger till bevakningen av dina egna bolag, när den är redo tar vi betalt för den, inte före.</p>
+    </div>
+
+    <div class="tiers">
+      <article class="tier">
+        <div class="tier__k">Kursen</div>
+        <div class="tier__pris">1 900 kr<span class="per">/år</span></div>
+        <p class="tier__sub">Hela utbildningen i fundamental analys: att läsa och värdera ett bolag från grunden.</p>
+        <ul class="tier__list">
+          <li>Nitton kapitel, från de första grunderna till hur du synar mindre bolag</li>
+          <li>Quiz och repetition som gör att det fastnar</li>
+          <li>Analysverktyget: checklistan du går igenom före ett köp</li>
+          <li>Ordlistan, kopplad till lektionerna</li>
+        </ul>
+        <button class="btn-ink tier__cta" data-plan="kurs">Välj Kursen →</button>
+      </article>
+
+      <article class="tier tier--full">
+        <div class="tier__k">Delägaren</div>
+        <div class="tier__pris">5 000 kr<span class="per">/år</span></div>
+        <div class="tier__alt">eller 795 kr/mån</div>
+        <p class="tier__sub">Allt i Kursen, plus att vi håller koll på dina egna bolag åt dig.</p>
+        <ul class="tier__list">
+          <li>Allt som ingår i Kursen</li>
+          <li>Ägarbrevet varje morgon: det viktiga i dina bolag, med källa <span class="snart">på väg</span></li>
+          <li>Bevakning av gränserna du själv satt, vi säger till när något ändrats <span class="snart">på väg</span></li>
+          <li>Fråga om dina bolag och få svar med källa, aldrig gissningar</li>
+          <li>Dagbok över dina beslut, och vad det kostat att avvika från din plan <span class="snart">på väg</span></li>
+        </ul>
+        <button class="btn-ink tier__cta" data-plan="ar">Välj Delägaren →</button>
+        <button class="tier__manad" data-plan="manad">Hellre månadsvis? 795 kr/mån →</button>
+      </article>
+    </div>
+
+    <p class="pris-fot">Inträde kräver personlig inbjudan. <a href={KOD}>Har du en? Aktivera den →</a></p>
+    <p id="pris-msg" class="pris-msg" role="status" hidden></p>
+  </main>
+
+  <script>
+    function bindPris() {
+      const msg = document.getElementById('pris-msg') as HTMLElement | null;
+      const show = (t: string) => { if (msg) { msg.hidden = false; msg.textContent = t; } };
+      document.querySelectorAll<HTMLButtonElement>('[data-plan]').forEach((btn) => {
+        if (btn.dataset.bound) return;
+        btn.dataset.bound = '1';
+        btn.addEventListener('click', async () => {
+          let token: string | null = null;
+          try {
+            const raw = localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token');
+            if (raw) { const o = JSON.parse(raw); token = o.access_token || (o.currentSession && o.currentSession.access_token) || null; }
+          } catch (e) {}
+          show('Öppnar betalningen…');
+          try {
+            const r = await fetch('/api/stripe-checkout', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ plan: btn.dataset.plan, token }),
+            });
+            const d = await r.json().catch(() => ({}));
+            if (r.ok && d.url) { location.href = d.url; return; }
+            if (r.status === 501) { show('Betalningen öppnar snart. Under tiden går inträdet via personlig inbjudan.'); return; }
+            show(d.error || 'Kunde inte starta betalningen. Försök igen om en stund.');
+          } catch (e) { show('Kunde inte starta betalningen. Försök igen om en stund.'); }
+        });
+      });
+    }
+    document.addEventListener('astro:page-load', bindPris);
+  </script>
+</Broadsheet>
+
+<style>
+  .pris { flex: 1; padding-top: 8px; }
+  .pris-head { max-width: 640px; }
+  .pris-utkast { display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 5px 10px; margin: 18px 0 14px; }
+  .tiers { display: grid; grid-template-columns: 1fr 1.15fr; gap: 18px; margin: 30px 0 0; align-items: start; }
+  .tier { border: 1px solid var(--rule-strong); background: var(--card); padding: clamp(24px, 3vw, 36px); }
+  .tier--full { border: 2px solid var(--oxblood); }
+  .tier__k { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--oxblood); }
+  .tier__pris { font-family: var(--slab); font-weight: 600; font-size: clamp(30px, 3.4vw, 40px); letter-spacing: -.01em; margin: 12px 0 0; }
+  .tier__pris .per { font-size: 16px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+  .tier__alt { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 4px 0 0; }
+  .tier__sub { font-family: var(--serif); font-size: 15.5px; line-height: 1.5; color: var(--ink-soft); margin: 14px 0 0; }
+  .tier__list { list-style: none; margin: 18px 0 0; padding: 0; }
+  .tier__list li { position: relative; padding: 8px 0 8px 22px; font-family: var(--serif); font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); border-top: 1px solid var(--rule); }
+  .tier__list li::before { content: ""; position: absolute; left: 0; top: 15px; width: 10px; height: 10px; border: 1px solid var(--oxblood); }
+  .snart { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 1px 6px; margin-left: 6px; white-space: nowrap; }
+  .tier__cta { margin-top: 22px; }
+  .tier__manad { display: block; margin: 14px 0 0; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--muted); }
+  .tier__manad:hover { color: var(--oxblood); }
+  .pris-fot { font-family: var(--serif); font-size: 15px; color: var(--muted); margin: 30px 0 0; }
+  .pris-fot a { color: var(--ink-soft); }
+  .pris-fot a:hover { color: var(--oxblood); }
+  .pris-msg { font-family: var(--mono); font-size: 12.5px; color: var(--oxblood); margin: 14px 0 40px; }
+  @media (max-width: 760px) { .tiers { grid-template-columns: 1fr; } }
+</style>
