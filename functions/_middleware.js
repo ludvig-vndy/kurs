@@ -24,6 +24,9 @@ function isExempt(path) {
   if (path.startsWith('/api/')) return true;                 // funktioner auth:ar sjalva
   if (path.startsWith('/_astro/')) return true;              // Astro-bundlar
   if (path.startsWith('/bilder/')) return true;              // bilder
+  // Medlems-/prototypdata grindas trots .json-andelsen: sidorna som hamtar den
+  // ar inloggade och skickar cookien automatiskt (same-origin fetch).
+  if (path.startsWith('/labs/data/')) return false;
   // statiska tillgangar (INTE .html, som ar sidor som ska grindas)
   if (/\.(css|js|mjs|json|map|woff2?|ttf|otf|eot|ico|png|jpe?g|svg|webp|gif|avif|txt|xml)$/i.test(path)) return true;
   return false;
