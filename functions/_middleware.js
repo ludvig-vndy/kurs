@@ -74,6 +74,10 @@ async function verifyJwt(token) {
     const payload = b64urlToJson(p[1]);
     if (header.alg !== 'ES256') return false;
     if (!payload.exp || payload.exp * 1000 < Date.now()) return false;
+    // Bind token till var egen Supabase-utfardare och publik: en signerad JWT
+    // fran ett annat projekt (eller en anon/service-token) far inte slappas in.
+    if (payload.aud !== 'authenticated') return false;
+    if (payload.iss !== 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1') return false;
     const keys = await getKeys();
     const jwk = keys.find((k) => k.kid === header.kid) || keys[0];
     if (!jwk) return false;

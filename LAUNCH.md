@@ -95,3 +95,17 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
 - Inbjudningsgrind verifierar token server-side (`invite-check.js`), RLS isolerar rader.
 - Vaksamhetens rygg byggd och testad offline: motor, brief-build, timeline-build,
   datamodell (migration), kurskarta. 46 tester gröna.
+- **Säkerhetsheaders (2026-07-15):** `public/_headers` sätter CSP (default-src 'self',
+  script/style 'self'+inline, font/style mot Google Fonts, connect mot Supabase +
+  Supabase-wss), `X-Frame-Options: DENY`, `frame-ancestors 'none'`,
+  `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `HSTS` (1 år),
+  `Permissions-Policy` (kamera/mic/geo av). Verifierat live på `/` + `/logga-in`:
+  headers närvarande, noll CSP-violations, fonter och supabase-js laddar. Not:
+  `script-src` tillåter `'unsafe-inline'` (sajten kör inline-skript överallt) så CSP:n
+  skyddar mot injicerade *externa* skript och clickjacking, inte mot inline-XSS, det
+  senare bärs av att all rendering redan escapar. Nonce-baserad CSP kräver ombyggnad
+  av alla labs-mockar, uppskjutet tills de blir riktiga routes.
+- **JWT härdad med aud/iss (2026-07-15):** middleware kräver nu `aud === 'authenticated'`
+  och `iss === <vårt Supabase-projekt>` utöver alg-pinning (ES256) och signaturkoll, så
+  en giltigt signerad token från ett annat projekt eller en anon/service-token inte
+  släpps in. Verifierat: `/hem` utan cookie -> 302 logga-in, medlems-JSON grindad.
