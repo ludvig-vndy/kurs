@@ -1,7 +1,7 @@
 {
  "_kommentar": "Fejkade ordvisa tidsstamplar (lastakt) for berattarlage-prototypen. Skarp drift: ElevenLabs text-to-speech with-timestamps -> samma {w,t0,t1}-form via tecken->ord-adapter, plus riktig mp3. Texten ar lektionens egen (0.1), aldrig ny copy.",
  "lektion": "0.1",
- "total": 75.27,
+ "total": 75.11,
  "steg": [
   {
    "id": "intro",
@@ -372,7 +372,7 @@
   {
    "id": "lasning",
    "rubrik": "Tre siffror",
-   "text": "Tre studier tecknar samma bild: de flesta slår inte index över tid. Proffsen klarar det knappt, aktiva småsparare gör det sämre, och även den som äger indexfonder saboterar ofta sig själv. Även indexspararen: Morningstars mätning Mind the Gap visar att spararen i snitt får någon procentenhet mindre per år än de fonder hen själv äger, för att hen köper på topp och säljer i botten. Det kallas beteendegapet. Det är inte bara vad du äger, utan hur du beter dig. Och det pekar rakt mot det som den här kursen handlar om.",
+   "text": "Tre studier tecknar samma bild: de flesta slår inte index över tid. Proffsen klarar det knappt, aktiva småsparare gör det sämre, och även den som äger indexfonder saboterar ofta sig själv. Även indexspararen: Morningstars mätning Mind the Gap visar att spararen i snitt får någon procentenhet mindre per år än de fonder hen själv äger, för att hen köper på topp och säljer i botten. Det kallas beteendegapet. Utfallet avgörs lika mycket av hur du beter dig som av vad du äger. Det pekar rakt mot det den här kursen handlar om.",
    "ord": [
     {
      "w": "Tre",
@@ -715,124 +715,124 @@
      "t1": 64.25
     },
     {
-     "w": "Det",
+     "w": "Utfallet",
      "t0": 64.8,
-     "t1": 65.14
+     "t1": 65.2
     },
     {
-     "w": "är",
-     "t0": 65.18,
-     "t1": 65.5
+     "w": "avgörs",
+     "t0": 65.24,
+     "t1": 65.61
     },
     {
-     "w": "inte",
-     "t0": 65.54,
-     "t1": 65.89
+     "w": "lika",
+     "t0": 65.65,
+     "t1": 66
     },
     {
-     "w": "bara",
-     "t0": 65.93,
-     "t1": 66.28
+     "w": "mycket",
+     "t0": 66.04,
+     "t1": 66.41
     },
     {
-     "w": "vad",
-     "t0": 66.32,
-     "t1": 66.66
-    },
-    {
-     "w": "du",
-     "t0": 66.7,
-     "t1": 67.02
-    },
-    {
-     "w": "äger,",
-     "t0": 67.06,
-     "t1": 67.42
-    },
-    {
-     "w": "utan",
-     "t0": 67.7,
-     "t1": 68.05
+     "w": "av",
+     "t0": 66.45,
+     "t1": 66.78
     },
     {
      "w": "hur",
-     "t0": 68.09,
-     "t1": 68.42
+     "t0": 66.82,
+     "t1": 67.15
     },
     {
      "w": "du",
-     "t0": 68.46,
-     "t1": 68.79
+     "t0": 67.19,
+     "t1": 67.52
     },
     {
      "w": "beter",
-     "t0": 68.83,
-     "t1": 69.19
+     "t0": 67.56,
+     "t1": 67.92
     },
     {
-     "w": "dig.",
-     "t0": 69.23,
-     "t1": 69.58
-    },
-    {
-     "w": "Och",
-     "t0": 70.13,
-     "t1": 70.46
-    },
-    {
-     "w": "det",
-     "t0": 70.5,
-     "t1": 70.84
-    },
-    {
-     "w": "pekar",
-     "t0": 70.88,
-     "t1": 71.24
-    },
-    {
-     "w": "rakt",
-     "t0": 71.28,
-     "t1": 71.63
-    },
-    {
-     "w": "mot",
-     "t0": 71.67,
-     "t1": 72
-    },
-    {
-     "w": "det",
-     "t0": 72.04,
-     "t1": 72.38
+     "w": "dig",
+     "t0": 67.96,
+     "t1": 68.29
     },
     {
      "w": "som",
-     "t0": 72.42,
-     "t1": 72.75
+     "t0": 68.33,
+     "t1": 68.67
+    },
+    {
+     "w": "av",
+     "t0": 68.71,
+     "t1": 69.03
+    },
+    {
+     "w": "vad",
+     "t0": 69.07,
+     "t1": 69.41
+    },
+    {
+     "w": "du",
+     "t0": 69.45,
+     "t1": 69.77
+    },
+    {
+     "w": "äger.",
+     "t0": 69.81,
+     "t1": 70.17
+    },
+    {
+     "w": "Det",
+     "t0": 70.72,
+     "t1": 71.06
+    },
+    {
+     "w": "pekar",
+     "t0": 71.1,
+     "t1": 71.46
+    },
+    {
+     "w": "rakt",
+     "t0": 71.5,
+     "t1": 71.85
+    },
+    {
+     "w": "mot",
+     "t0": 71.89,
+     "t1": 72.22
+    },
+    {
+     "w": "det",
+     "t0": 72.26,
+     "t1": 72.6
     },
     {
      "w": "den",
-     "t0": 72.79,
-     "t1": 73.13
+     "t0": 72.64,
+     "t1": 72.97
     },
     {
      "w": "här",
-     "t0": 73.17,
-     "t1": 73.51
+     "t0": 73.01,
+     "t1": 73.35
     },
     {
      "w": "kursen",
-     "t0": 73.55,
-     "t1": 73.92
+     "t0": 73.39,
+     "t1": 73.76
     },
     {
      "w": "handlar",
-     "t0": 73.96,
-     "t1": 74.34
+     "t0": 73.8,
+     "t1": 74.19
     },
     {
      "w": "om.",
-     "t0": 74.38,
-     "t1": 74.72
+     "t0": 74.23,
+     "t1": 74.56
     }
    ],
    "stycken": [
