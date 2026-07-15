@@ -1,0 +1,155 @@
+{
+ "_kommentar": "Ett riktigt exempel per visual-typ, kopierat ur lektionerna for Motion-koreografi-provet. Kalla: content/fundamental-aktieanalys.",
+ "prov": {
+  "rutnat": {
+   "lektion": "0.1",
+   "titel": "Av 100 slår ungefär 11",
+   "visual": {
+    "typ": "rutnat",
+    "kolumner": 10,
+    "celler": 100,
+    "markerad": 11,
+    "etikett": "Av 100 aktiva fonder slår ungefär 11 sitt index över 15 år",
+    "figurtext": "Illustrativ ruta. Andelen bygger på SPIVA US, cirka 89 procent av fonderna underpresterade över 15 år."
+   }
+  },
+  "linjediagram": {
+   "lektion": "1.2",
+   "titel": "I gapet finns möjligheten",
+   "visual": {
+    "typ": "linjediagram",
+    "serier": [
+     {
+      "namn": "Värde",
+      "stil": "heldragen",
+      "accent": true,
+      "punkter": [
+       25,
+       30,
+       34,
+       39,
+       45,
+       50,
+       56,
+       62,
+       68,
+       73,
+       78
+      ]
+     },
+     {
+      "namn": "Pris",
+      "stil": "streckad",
+      "punkter": [
+       22,
+       38,
+       20,
+       44,
+       28,
+       52,
+       36,
+       60,
+       44,
+       70,
+       62
+      ]
+     }
+    ],
+    "markor": {
+     "serieIndex": 1,
+     "punktIndex": 4,
+     "etikett": "köpläge"
+    },
+    "figurtext": "Illustrativ. Punkterna visar mönstret, inte verkliga kurser."
+   }
+  },
+  "jamforelse": {
+   "lektion": "0.2",
+   "titel": "Det är sällan analysen som fäller dig",
+   "visual": {
+    "typ": "jamforelse",
+    "element": [
+     {
+      "rubrik": "Överhandel",
+      "text": "Ju mer du köper och säljer, desto mer betalar du i avgifter för varje affär, och desto fler chanser ger du dig själv att tajma fel. De mest aktiva underpresterar mest."
+     },
+     {
+      "rubrik": "Övertro",
+      "text": "De flesta tror sig ligga över snittet. Det leder till för stora innehav, för lite ödmjukhet och för sena omprövningar."
+     }
+    ],
+    "figurtext": "Två av de vanligaste sätten att förlora."
+   }
+  },
+  "stapeldiagram": {
+   "lektion": "1.3",
+   "titel": "Samma verksamhet, två olika år",
+   "visual": {
+    "typ": "stapeldiagram",
+    "data": [
+     {
+      "kategori": "Ett år, multipeln faller",
+      "varde": -12,
+      "accent": true
+     },
+     {
+      "kategori": "Ett år, multipeln oförändrad",
+      "varde": 10
+     },
+     {
+      "kategori": "Per år över tio år",
+      "varde": 10
+     }
+    ],
+    "etiketter": "Ungefärlig årsavkastning i procent",
+    "figurtext": "Illustrativt räkneexempel. Vinsten växer 10 procent. Faller multipeln från P/E 15 till P/E 12 blir ettårsavkastningen omkring minus 12 procent, samma goda verksamhet men ett negativt år."
+   }
+  },
+  "flode": {
+   "lektion": "12.2",
+   "titel": "Löser produkten det så väl att kunderna stannar",
+   "visual": {
+    "typ": "flode",
+    "noder": [
+     {
+      "etikett": "Verkligt, akut problem"
+     },
+     {
+      "etikett": "Produkt som löser det väl",
+      "operator": "plus"
+     },
+     {
+      "etikett": "Product-market fit",
+      "operator": "likamed",
+      "accent": true
+     }
+    ],
+    "figurtext": "Konceptuell kedja: efterfrågan som finns oavsett bolaget, en produkt som möter den väl, och kunder som stannar kvar."
+   }
+  },
+  "andel": {
+   "lektion": "1.3",
+   "titel": "Varifrån avkastningen faktiskt kommer",
+   "visual": {
+    "typ": "andel",
+    "delar": [
+     {
+      "etikett": "Vinsttillväxt",
+      "varde": 45,
+      "accent": true
+     },
+     {
+      "etikett": "Utdelning",
+      "varde": 20,
+      "accent": true
+     },
+     {
+      "etikett": "Multipelförändring",
+      "varde": 35
+     }
+    ],
+    "figurtext": "Illustrativa proportioner. Vinsttillväxt och utdelning går att analysera, multipelförändringen styrs av marknadens humör."
+   }
+  }
+ }
+}
