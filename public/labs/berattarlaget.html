@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berättarläget · prototyp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --card:#FCFAF4; --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42); --oxblood:#8A2E26; --gold:#9A6E1C;
+    --slab:"Zilla Slab",Georgia,serif; --serif:"Spectral",Georgia,serif; --mono:"Schibsted Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+  header{padding:26px 0 16px;border-bottom:2px solid var(--rule-strong)}
+  .word{font-family:var(--slab);font-weight:700;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--oxblood);text-decoration:none}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:16px}
+  h1{font-family:var(--slab);font-weight:600;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.008em;margin:4px 0 0}
+  .sub{font-size:15.5px;color:var(--ink-soft);margin:8px 0 0;max-width:58ch}
+
+  .controls{display:flex;align-items:center;gap:14px;margin:24px 0 0}
+  .play{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 22px;cursor:pointer}
+  .play:hover{background:var(--oxblood);border-color:var(--oxblood)}
+  .fart{background:none;border:1px solid var(--rule-strong);color:var(--muted);font-family:var(--mono);font-size:11px;padding:10px 14px;cursor:pointer}
+  .fart:hover{color:var(--oxblood)}
+  .tid{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em}
+  .prog{flex:1;height:2px;background:var(--rule);position:relative}
+  .prog i{position:absolute;inset:0 auto 0 0;width:0;background:var(--oxblood)}
+
+  .stage{margin:30px 0 60px;border:1px solid var(--rule-strong);background:var(--card);padding:clamp(26px,4vw,46px);min-height:430px}
+  .steg{display:none}
+  .steg.on{display:block}
+  .steg-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--oxblood)}
+  .steg h2{font-family:var(--slab);font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-.008em;margin:8px 0 18px}
+  .tal{font-size:17.5px;line-height:1.7;color:var(--ink-soft);max-width:60ch}
+  .tal .w{transition:color .15s, background .15s;border-radius:2px}
+  .tal .w.sagt{color:var(--ink)}
+  .tal .w.nu{color:var(--ink);background:rgba(154,110,28,.22)}
+  .tal p{margin:0 0 14px;opacity:1}
+  .tal p[data-dold]{opacity:0}
+
+  /* Rutnätet: 100 celler, 11 markeras i takt med rösten */
+  .rutnat{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;max-width:420px;margin:26px 0 10px}
+  .cell{aspect-ratio:1;background:rgba(33,28,23,.08);border-radius:2px}
+  .cell.mark{background:var(--oxblood);opacity:0} /* Motion tänder dem */
+  .figt{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint);max-width:52ch;margin-top:10px}
+
+  .note{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--faint);margin:0 0 50px}
+  .note b{color:var(--muted);font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="word" href="/fokus">Marginalen</a>
+    <div class="eyebrow">Berättarläget · prototyp · lektion 0.1</div>
+    <h1 id="rubrik">Oddsen</h1>
+    <p class="sub">Rösten läser lektionen och grafiken rör sig i takt med orden. Rösten är simulerad här: samma tidsstämpelform som ElevenLabs levererar, så riktig röst är bara att koppla in.</p>
+  </header>
+
+  <div class="controls">
+    <button class="play" id="play">Spela ▸</button>
+    <button class="fart" id="fart" data-v="1">1×</button>
+    <div class="prog"><i id="prog"></i></div>
+    <div class="tid" id="tid">0:00</div>
+  </div>
+
+  <div class="stage" id="stage" aria-live="polite"></div>
+
+  <p class="note"><b>ElevenLabs-sömmen:</b> byt klockan mot ett audio-element + deras with-timestamps
+  (tecken till ord-adapter), samma cue-form. Grafiken är våra egna renderare; rörelsen är Motion.
+  Texten är lektionens egen, aldrig ny copy.</p>
+</div>
+
+<script src="/vendor/motion-12.min.js"></script>
+<script>
+(function(){
+  var M = window.Motion;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stage = document.getElementById('stage');
+  var playBtn = document.getElementById('play'), fartBtn = document.getElementById('fart');
+  var progEl = document.getElementById('prog'), tidEl = document.getElementById('tid');
+
+  var DATA = null, LEK = null;
+  Promise.all([
+    fetch('/labs/data/berattare-0.1-cues.json').then(function(r){return r.json();}),
+    fetch('/labs/data/0.1-oddsen.json').then(function(r){return r.json();})
+  ]).then(function(res){ DATA=res[0]; LEK=res[1]; bygg(); });
+
+  // ── Bygg scenen: ett block per steg, ordvisa spans för karaoke ──────────
+  var ordEls = [];  // [stegIdx][ordIdx] -> span
+  function bygg(){
+    stage.innerHTML='';
+    ordEls = DATA.steg.map(function(s, si){
+      var sec=document.createElement('section'); sec.className='steg'; sec.dataset.id=s.id;
+      var kick=document.createElement('div'); kick.className='steg-kicker'; kick.textContent='Innan du börjar';
+      var h=document.createElement('h2'); h.textContent=s.rubrik;
+      sec.appendChild(kick); sec.appendChild(h);
+      var tal=document.createElement('div'); tal.className='tal';
+      var spans=[];
+      var stycken = s.stycken || [{fran:0, till:s.ord.length-1}];
+      stycken.forEach(function(st, pi){
+        var p=document.createElement('p');
+        if(pi>0) p.setAttribute('data-dold','');
+        for(var i=st.fran;i<=st.till;i++){
+          var sp=document.createElement('span'); sp.className='w'; sp.textContent=s.ord[i].w;
+          p.appendChild(sp); p.appendChild(document.createTextNode(' '));
+          spans[i]=sp;
+        }
+        tal.appendChild(p);
+      });
+      sec.appendChild(tal);
+      if(s.id==='rutnat'){
+        var viz=(LEK.steg||[]).filter(function(x){return x.typ==='dataviz';})[0];
+        var v=viz && viz.visual || {celler:100, markerad:11};
+        var g=document.createElement('div'); g.className='rutnat'; g.setAttribute('role','img');
+        g.setAttribute('aria-label', v.etikett||'');
+        for(var c=0;c<(v.celler||100);c++){
+          var d=document.createElement('div'); d.className='cell'+(c<(v.markerad||11)?' mark':''); g.appendChild(d);
+        }
+        sec.appendChild(g);
+        var ft=document.createElement('div'); ft.className='figt'; ft.textContent=(viz&&viz.visual&&viz.visual.figurtext)||'';
+        sec.appendChild(ft);
+      }
+      stage.appendChild(sec);
+      return spans;
+    });
+    visaSteg(0);
+  }
+
+  function visaSteg(i){
+    var alla=stage.querySelectorAll('.steg');
+    alla.forEach(function(el,j){ el.classList.toggle('on', j===i); });
+    document.getElementById('rubrik').textContent = DATA.steg[i].rubrik;
+    if(!reduce && M) M.animate(alla[i], {opacity:[0,1], y:[14,0]}, {duration:.45, ease:[0.22,1,0.36,1]});
+  }
+
+  // ── Triggers: rösten når ett ord -> grafiken svarar ─────────────────────
+  var triggade = {};
+  function trigga(gor, stegIdx){
+    if(triggade[stegIdx+':'+gor]) return; triggade[stegIdx+':'+gor]=1;
+    if(gor==='fyllRutnat'){
+      var celler = stage.querySelectorAll('.steg.on .cell.mark');
+      if(reduce || !M){ celler.forEach(function(c){c.style.opacity=1;}); return; }
+      M.animate(celler, {opacity:[0,1], scale:[.4,1]}, {delay:M.stagger(0.09), type:'spring', stiffness:320, damping:18});
+    } else if(gor.indexOf('stycke:')===0){
+      var pi=+gor.split(':')[1];
+      var p = stage.querySelectorAll('.steg.on .tal p')[pi];
+      if(!p) return;
+      p.removeAttribute('data-dold');
+      if(!reduce && M) M.animate(p, {opacity:[0,1], y:[10,0]}, {duration:.4, ease:'easeOut'});
+      else p.style.opacity=1;
+    }
+  }
+
+  // ── Klockan (ElevenLabs-sömmen: ersätts av <audio> + timeupdate) ────────
+  var playing=false, t=0, last=null, speed=1, stegIdx=0, raf=null;
+  var q=new URLSearchParams(location.search); if(q.get('fart')) speed=+q.get('fart')||1; // testkrok
+  function tick(now){
+    if(!playing) return;
+    if(last!=null) t += (now-last)/1000*speed;
+    last=now;
+    uppdatera();
+    if(t < DATA.total) raf=requestAnimationFrame(tick);
+    else { playing=false; playBtn.textContent='Spela igen ▸'; }
+  }
+  function uppdatera(){
+    // aktivt steg
+    var si=0;
+    for(var i=0;i<DATA.steg.length;i++){ var o=DATA.steg[i].ord; if(t>=o[0].t0) si=i; }
+    if(si!==stegIdx){ stegIdx=si; visaSteg(si); }
+    // karaoke
+    var s=DATA.steg[si];
+    for(var w=0;w<s.ord.length;w++){
+      var el=ordEls[si][w]; if(!el) continue;
+      var c=s.ord[w];
+      el.classList.toggle('sagt', t>=c.t1);
+      el.classList.toggle('nu', t>=c.t0 && t<c.t1);
+      if(t>=c.t0){ (s.triggers||[]).forEach(function(tr){ if(tr.vidOrd===w) trigga(tr.gor, si); }); }
+    }
+    progEl.style.width=Math.min(100, t/DATA.total*100)+'%';
+    tidEl.textContent=Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
+  }
+  playBtn.addEventListener('click', function(){
+    if(t>=DATA.total){ t=0; stegIdx=0; triggade={}; bygg(); }
+    playing=!playing; last=null;
+    playBtn.textContent=playing?'Paus ⏸':'Spela ▸';
+    if(playing) raf=requestAnimationFrame(tick); else cancelAnimationFrame(raf);
+  });
+  fartBtn.addEventListener('click', function(){
+    speed = speed>=2 ? 1 : speed+0.5;
+    fartBtn.textContent=(speed+'×').replace('.',',');
+  });
+})();
+</script>
+</body>
+</html>
