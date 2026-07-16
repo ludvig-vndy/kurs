@@ -19,7 +19,25 @@ const PUBLIC_EXACT = new Set([
   '/labs/inbjudan', '/labs/inbjudan.html',
 ]);
 
+// Normalisera pathen FORE alla grindbeslut: avkoda procent-escapes (upprepat, sa
+// dubbelkodning inte smugglar) och gemena. Utan detta ser `/labs/data%2fx.json` inte
+// ut att borja med `/labs/data/` -> hoppar over grinden -> exempt via .json-regexen,
+// medan Cloudflares asset-router anda avkodar %2f -> / och serverar den grindade filen.
+// Samma trick med skiftlage (/labs/Data/) eller bakstreck (%5c). Vid trasig kodning:
+// returnera null -> behandlas som ej-exempt (grindas).
+function normalizePath(rawPath) {
+  let p = rawPath;
+  for (let i = 0; i < 3; i++) {
+    let d;
+    try { d = decodeURIComponent(p); } catch { return null; }
+    if (d === p) break;
+    p = d;
+  }
+  return p.toLowerCase();
+}
+
 function isExempt(path) {
+  if (path === null) return false;                            // trasig/smugglad kodning
   if (PUBLIC_EXACT.has(path)) return true;
   if (path.startsWith('/api/')) return true;                 // funktioner auth:ar sjalva
   if (path.startsWith('/_astro/')) return true;              // Astro-bundlar
@@ -92,7 +110,7 @@ async function verifyJwt(token) {
 export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
-  if (isExempt(url.pathname)) return next();
+  if (isExempt(normalizePath(url.pathname))) return next();
 
   const token = getCookie(request, COOKIE);
   if (token && (await verifyJwt(token))) return next();
