@@ -54,6 +54,22 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       personuppgifter, och tar betalt. Villkor, dataskydd och ansvarsfriskrivning
       ("aldrig köp/säljråd") måste finnas innan publik betalning.
 
+- [ ] **[Du] Applicera `supabase/migrations/20260716000000_sakerhet-invites.sql`** på
+      live-DB (`supabase db push` eller SQL-editor) OCH deploya klientändringen som
+      hör ihop (accept_invite utan p_user, se migrationens not). Härdar två audit-fynd:
+      accept_invite litade på klientstyrt user-id (spoofing av annans invited_by), och
+      inbjudningar utan utgång (permanenta bakdörrar). **[Jag]** gör klientändringen när
+      du säger till att migrationen är körd (annars bryts signaturen i prod).
+- [ ] **[Beslut] Mejlbind inbjudningar** så devlink inte låter en token-innehavare skapa
+      konto åt en godtycklig NY mejl (utfärdaren anger mottagarens mejl; devlink kräver
+      match). Befintlig-konto-övertagandet är redan stängt **[Jag, 2026-07-15]**, men
+      denna halva kvarstår tills invite-UI:t ber om mottagarmejl. Bäst löst ihop med
+      att länken skickas via mejl (kräver SMTP) i stället för i svarskroppen.
+- [ ] **[Beslut] Grinda betalda ytor på subscription-status, inte bara giltig session.**
+      Idag släpper kontogrinden in varje inloggat konto; en inbjuden får hela produkten
+      utan att betala. Är det avsikten i betan (inbjudan == gratis access) räcker en rad
+      i LAUNCH; ska betalning krävas behöver middleware slå upp subscriptions.
+
 ## P1 — bör vara på plats kort efter (eller före, om enkelt)
 
 - [ ] **[Jag] Positioneringsvakterna i all copy:** försäkring som metafor aldrig löfte,
@@ -109,3 +125,13 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
   och `iss === <vårt Supabase-projekt>` utöver alg-pinning (ES256) och signaturkoll, så
   en giltigt signerad token från ett annat projekt eller en anon/service-token inte
   släpps in. Verifierat: `/hem` utan cookie -> 302 logga-in, medlems-JSON grindad.
+- **Adversariell multi-agent-audit körd (2026-07-15):** sju granskare + skeptisk
+  verifiering per fynd (18 bekräftade, 4 falsklarm). Tre åtgärdade + deployade direkt:
+  (1) **CRITICAL** encoded-slash (`%2f`) kringgick `/labs/data/`-grinden och läckte all
+  medlems-JSON oautentiserat (verifierat live); fixat med path-normalisering (decode +
+  gemener + multi-encoding) före alla grindbeslut. (2) **HIGH** XSS i `/verktyg`:
+  bolagsnamn interpolerades oescapat i innerHTML och kunde komma från en delad
+  analys-JSON; fixat med esc() vid källan. (3) **CRITICAL(halva)** devlink mintade
+  inloggningslänk för befintligt konto = övertagande; stängt (vägrar 409 om kontot
+  finns). Kvarvarande fynd: se P0-raderna ovan (invite-migration, mejlbindning,
+  subscription-gating) samt P1/P2. Rotera `.env`-nycklarna (låg, lokal disk).
