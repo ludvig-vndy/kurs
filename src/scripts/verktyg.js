@@ -393,7 +393,10 @@ function renderSummary(){
     <div class="sline"><span class="sn" style="color:${b.col}">${s===null?"-":s}<span style="font-size:13px;color:var(--ink-faint)">${s===null?"":suffix}</span></span><span class="sb" style="color:${b.col}">${b.label}</span></div>
     <div class="minigauge"><div class="fill" style="width:${s===null?0:s}%;background:${b.col}"></div></div></div>`;
 
-  const name=S.meta.name||"Bolaget";
+  // Bolagsnamnet interpoleras i innerHTML nedan och kan komma fran en importerad
+  // (delad, opalitlig) analys-JSON, sa det maste HTML-escapas for att inte bli XSS.
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const name=esc(S.meta.name||"Bolaget");
   const cards = card("Kvalitet",q.pct,qb)+card("Moat",mo.pct,mob)+card("Ledning",mg.pct,mgb)+card("Small cap-potential",sc.pct,scb)
     + `<div class="scard"><div class="t">Risk</div><div class="sline"><span class="sn" style="color:${rb.col}">${rs.idx===null?"-":rs.idx}<span style="font-size:13px;color:var(--ink-faint)">${rs.idx===null?"":"/100"}</span></span><span class="sb" style="color:${rb.col}">${rb.label}</span></div><div class="minigauge"><div class="fill" style="width:${rs.idx===null?0:rs.idx}%;background:${rb.col}"></div></div></div>`
     + `<div class="scard"><div class="t">Värdering</div><div class="sline"><span class="sn" style="color:${val&&val.verdict?val.verdict.col:'var(--ink-faint)'}">${val?val.central.toLocaleString("sv-SE",{maximumFractionDigits:1}):"-"}<span style="font-size:13px;color:var(--ink-faint)">${val?" kr":""}</span></span><span class="sb" style="color:${val&&val.verdict?val.verdict.col:'var(--ink-faint)'}">${val&&val.verdict?val.verdict.t:(val&&val.mos==null?"Sätt pris":"Ej klar")}</span></div><div class="minigauge"><div class="fill" style="width:${val&&val.mos!=null?Math.max(0,Math.min(100,val.mos)):0}%;background:${val&&val.verdict?val.verdict.col:'var(--line-soft)'}"></div></div></div>`;
