@@ -9,18 +9,13 @@
    innehav (server-side, filtrerat pa user_id), och later Claude svara med
    innehavet som kontext. Ingen inloggning -> svarar anda pa kursfragor. */
 
+import { secureJson as json } from "./_lib.js";
+
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 // Haiku: Fraga ar kort, interaktivt Q&A dar innehavet redan ges som kontext,
 // sa snabbhet + kostnad vinner over tungt resonemang. Sonnet sparas till den
 // tunga dokument-/rapportanalysen (Rapportkollen) dar noggrannhet ar kritisk.
 const MODEL = "claude-haiku-4-5-20251001";
-
-function json(obj, status) {
-  return new Response(JSON.stringify(obj), {
-    status: status || 200,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 async function getUser(base, secret, token) {
   if (!token) return null;

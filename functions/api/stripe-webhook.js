@@ -14,7 +14,12 @@
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 
-function respond(status) { return new Response(status === 200 ? "ok" : "nej", { status }); }
+function respond(status) {
+  return new Response(status === 200 ? "ok" : "nej", {
+    status,
+    headers: { "Content-Type": "text/plain; charset=utf-8", "X-Content-Type-Options": "nosniff" },
+  });
+}
 
 async function validSignature(secretRaw, header, payload) {
   try {

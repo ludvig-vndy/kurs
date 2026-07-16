@@ -13,14 +13,9 @@
      STRIPE_PRICE_KURS   price-id, Kursen (ingangsniva, arlig)
    Utan konfig: 501 (samma monster som ovriga funktioner). */
 
-const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
+import { secureJson as json } from "./_lib.js";
 
-function json(obj, status) {
-  return new Response(JSON.stringify(obj), {
-    status: status || 200,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 
 export async function onRequestPost(context) {
   const { request, env } = context;

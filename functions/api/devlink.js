@@ -17,20 +17,20 @@
    Publik signup MÅSTE vara avstängd i Supabase, annars finns en väg förbi denna
    grind (klienten kan self-registrera med publishable-nyckeln). Se LAUNCH.md. */
 
-const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
+import { secureJson as json, rateLimited } from "./_lib.js";
 
-function json(obj, status) {
-  return new Response(JSON.stringify(obj), {
-    status: status || 200,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 
 export async function onRequestPost(context) {
   const { request, env } = context;
   const secret = env.SUPABASE_SECRET_KEY;
   const base = env.SUPABASE_URL || FALLBACK_URL;
   if (!secret) return json({ error: "ej konfigurerad (saknar SUPABASE_SECRET_KEY)" }, 501);
+
+  // Oautentiserad service-nyckel-endpoint: takta per IP mot missbruk (konto-/
+  // länkgenerering och token-sondering i skala).
+  const limited = await rateLimited(env, request, "devlink", 12, 60);
+  if (limited) return json({ error: limited }, 429);
   const H = { apikey: secret, Authorization: "Bearer " + secret, "Content-Type": "application/json" };
 
   let email = "", token = "";

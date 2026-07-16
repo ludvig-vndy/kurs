@@ -4,20 +4,18 @@
    Den här endpointen kontrollerar token server-side med service-nyckeln och
    svarar bara med ett ja/nej + skäl, aldrig med tabelldata. */
 
-const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
+import { secureJson as json, rateLimited } from "./_lib.js";
 
-function json(obj, status) {
-  return new Response(JSON.stringify(obj), {
-    status: status || 200,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 
 export async function onRequestPost(context) {
   const { request, env } = context;
   const secret = env.SUPABASE_SECRET_KEY;
   const base = env.SUPABASE_URL || FALLBACK_URL;
   if (!secret) return json({ valid: false, reason: "config" }, 501);
+
+  const limited = await rateLimited(env, request, "invchk", 30, 300);
+  if (limited) return json({ valid: false, reason: "rate" }, 429);
 
   let token = "";
   try { token = String((await request.json()).token || "").trim(); } catch (e) { /* tom */ }
