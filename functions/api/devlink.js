@@ -68,11 +68,20 @@ export async function onRequestPost(context) {
   const consumed = await r2.json().catch(() => []);
   if (!Array.isArray(consumed) || consumed.length === 0) return json({ error: "Inbjudan är redan använd." }, 403);
 
-  // 5. Skapa kontot server-side (idempotent: 422 = finns redan, ok).
-  await fetch(base + "/auth/v1/admin/users", {
+  // 5. Skapa kontot server-side. VIKTIGT: en inbjudan loser bara in NYA konton.
+  //    Om mejlen redan har ett konto (422/409) far vi INTE minta en inloggningslank
+  //    for det, annars vore detta en overtagande-primitiv: vem som helst med en
+  //    (icke-mejlbunden) token kunde ange en befintlig medlems mejl och fa en lank
+  //    rakt in i deras konto. Aterinloggning sker via /logga-in, aldrig hit.
+  const createRes = await fetch(base + "/auth/v1/admin/users", {
     method: "POST", headers: H,
     body: JSON.stringify({ email, email_confirm: true }),
-  }).catch(() => {});
+  }).catch(() => null);
+  if (!createRes) return json({ error: "Kunde inte skapa kontot." }, 502);
+  if (createRes.status === 409 || createRes.status === 422) {
+    return json({ error: "Ett konto finns redan for den har mejladressen. Logga in i stallet." }, 409);
+  }
+  if (!createRes.ok) return json({ error: "Kunde inte skapa kontot." }, 502);
 
   // 6. Generera inloggningslänk (landar på /logga-in som slutför sessionen).
   const origin = new URL(request.url).origin;
