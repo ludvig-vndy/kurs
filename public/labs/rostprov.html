@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Röstprov · Supertonic (svenska, on-device)</title>
+<style>
+  :root{
+    --bg:#14110d; --panel:#1c1813; --line:#332c22; --ink:#efe7d8; --faint:#a89a82;
+    --gold:#c8a34e; --oxblood:#7c2b2b; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Spectral",Georgia,serif;line-height:1.55;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  .kicker{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+  h1{font-family:ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:26px;
+    letter-spacing:-.01em;margin:0 0 10px}
+  .lede{color:var(--faint);margin:0 0 6px;font-size:16px}
+  .meta{color:var(--faint);font-size:13px;font-family:ui-monospace,monospace;margin:0 0 26px}
+  h2{font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line);
+    padding-bottom:8px;margin:30px 0 12px}
+  .row{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--line);
+    border-radius:var(--radius);background:var(--panel);margin-bottom:10px;cursor:pointer;
+    transition:border-color .15s,background .15s}
+  .row:hover{border-color:var(--gold)}
+  .row.playing{border-color:var(--gold);background:#231d16}
+  .play{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
+    background:#241e17;color:var(--gold);display:grid;place-items:center;font-size:15px}
+  .row.playing .play{background:var(--gold);color:#1a140c}
+  .rmain{flex:1 1 auto;min-width:0}
+  .rtitle{font-family:ui-sans-serif,system-ui,sans-serif;font-weight:600;font-size:15px}
+  .rsub{color:var(--faint);font-size:12.5px;font-family:ui-monospace,monospace}
+  .rdur{flex:0 0 auto;color:var(--faint);font-size:13px;font-family:ui-monospace,monospace}
+  .cmp{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px}
+  .cmp button{font-family:ui-sans-serif,system-ui,sans-serif;font-size:14px;font-weight:600;
+    padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--panel);
+    color:var(--ink);cursor:pointer}
+  .cmp button:hover{border-color:var(--gold)}
+  .cmp button.playing{background:var(--gold);color:#1a140c;border-color:var(--gold)}
+  .note{color:var(--faint);font-size:13.5px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius);padding:14px 16px;margin:18px 0}
+  .note b{color:var(--ink)}
+  #bar{position:fixed;left:0;right:0;bottom:0;background:#0f0c08;border-top:1px solid var(--line);
+    padding:10px 16px;display:none}
+  #bar.on{display:block}
+  #bar audio{width:100%;max-width:760px;display:block;margin:0 auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Ljudprov · byggd on-device</p>
+  <h1>Sebastian-rösten, steg 1: låter svenskan bra nog?</h1>
+  <p class="lede">Kapitel 0 och 1 upplästa med Supertonic, en gratis röst som körs lokalt (ingen ElevenLabs, ingen per-tecken-kostnad). Rösten här är en <b>förinställd</b> manlig röst, inte Sebastians, det steget kostar och görs bara om motorn redan låter bra.</p>
+  <p class="meta">7 lektioner · ~23 min · genererat lokalt på CPU</p>
+
+  <div class="note">
+    <b>Så bedömer du:</b> lyssna på röstjämförelsen först och hör om någon av de fem timbrerna
+    känns rätt. Lyssna sedan på en riktig lektion, särskilt hur den uttalar facktermer
+    (avkastning på kapital, index, felmarginal) och siffror. Låter det stelt redan här,
+    är det ingen idé att klona Sebastian, en klon ärver motorns kvalitet.
+  </div>
+
+  <h2>Röstjämförelse · samma mening, fem röster</h2>
+  <div class="cmp" id="cmp"></div>
+
+  <h2>Kapitel 0 · Innan du börjar</h2>
+  <div id="k0"></div>
+  <h2>Kapitel 1 · Investeringsfilosofi</h2>
+  <div id="k1"></div>
+</div>
+
+<div id="bar"><audio id="au" controls preload="none"></audio></div>
+
+<script>
+const AUD = "data/audio/";
+const au = document.getElementById("au");
+const bar = document.getElementById("bar");
+let current = null;
+
+function play(src, el){
+  if(current && current !== el) current.classList.remove("playing");
+  if(current === el && !au.paused){ au.pause(); el.classList.remove("playing"); return; }
+  au.src = AUD + src;
+  au.play();
+  el.classList.add("playing");
+  current = el;
+  bar.classList.add("on");
+}
+au.addEventListener("ended", ()=>{ if(current) current.classList.remove("playing"); });
+au.addEventListener("pause", ()=>{ if(current) current.classList.remove("playing"); });
+au.addEventListener("play",  ()=>{ if(current) current.classList.add("playing"); });
+
+const mmss = s => (Math.floor(s/60)) + ":" + String(Math.round(s%60)).padStart(2,"0");
+
+// Röstjämförelse
+["M1","M2","M3","M4","M5"].forEach(v=>{
+  const b = document.createElement("button");
+  b.textContent = v + (v==="M3" ? " (uppläsning)" : "");
+  b.onclick = ()=> play("cmp-"+v+".mp3", b);
+  document.getElementById("cmp").appendChild(b);
+});
+
+function row(item){
+  const d = document.createElement("div");
+  d.className = "row";
+  d.innerHTML = `<div class="play">▶</div>
+    <div class="rmain"><div class="rtitle">${item.lektion} · ${item.titel}</div>
+    <div class="rsub">förinställd röst M3</div></div>
+    <div class="rdur">${mmss(item.sek)}</div>`;
+  d.onclick = ()=> play(item.fil, d);
+  return d;
+}
+
+fetch(AUD+"manifest.json").then(r=>r.json()).then(list=>{
+  list.forEach(it=>{
+    const target = it.lektion.startsWith("0.") ? "k0" : "k1";
+    document.getElementById(target).appendChild(row(it));
+  });
+});
+</script>
+</body>
+</html>

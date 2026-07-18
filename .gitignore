@@ -30,3 +30,7 @@ rost*.csv
 *standalone*.html
 motor/out/
 motor/in/
+
+# TTS-rostprov (prototyp): venv + genererat ljud
+.venv-tts/
+public/labs/data/audio/
