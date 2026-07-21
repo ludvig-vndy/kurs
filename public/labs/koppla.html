@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koppla via Tink · sandbox-POC</title>
+<style>
+  :root{--bg:#14110d;--panel:#1c1813;--line:#332c22;--ink:#efe7d8;--faint:#a89a82;--gold:#c8a34e;--red:#c56}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:34px 20px 80px}
+  .kick{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+  h1{font-size:25px;letter-spacing:-.01em;margin:0 0 10px}
+  p{color:var(--faint);margin:0 0 14px}
+  .btn{display:inline-block;font-size:16px;font-weight:600;padding:13px 22px;border-radius:12px;
+    border:1px solid var(--gold);background:var(--gold);color:#1a140c;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--gold)}
+  .note{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+    font-size:13.5px;color:var(--faint);margin:16px 0}
+  .note b{color:var(--ink)}
+  pre{background:#0f0c08;border:1px solid var(--line);border-radius:12px;padding:14px;overflow:auto;
+    font-family:ui-monospace,monospace;font-size:12.5px;color:#d9ceb8;white-space:pre-wrap;word-break:break-word}
+  .err{color:var(--red)}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--faint);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  td.num{text-align:right;font-family:ui-monospace,monospace}
+  .status{font-size:14px;color:var(--faint);margin:14px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kick">Sandbox-POC · Tink</p>
+  <h1>Koppla innehav via Tink</h1>
+  <p>Bevisar flödet: du loggar in hos din bank via Tink, vi ser aldrig inloggningen, och får ut positioner med anskaffningsvärde. Det här är <b>sandbox</b> (testbanker), inte skarpa Avanza än.</p>
+
+  <div id="start">
+    <a href="#" class="btn" id="connect">Koppla via Tink (sandbox)</a>
+    <div class="note">
+      <b>Kräver:</b> att <code>TINK_CLIENT_SECRET</code> är satt som Cloudflare-secret och att
+      denna sidas URL är registrerad som redirect-URI i Tink Console. Se instruktionerna du fick.
+    </div>
+  </div>
+
+  <div id="result" style="display:none">
+    <div class="status" id="status">Hämtar data ...</div>
+    <div id="holdings"></div>
+    <details open><summary style="cursor:pointer;color:var(--gold);margin:10px 0">Rådata (POC: så här ser Tinks svar ut)</summary>
+      <pre id="raw"></pre>
+    </details>
+    <a href="/labs/koppla" class="btn ghost" style="margin-top:12px">Börja om</a>
+  </div>
+</div>
+
+<script>
+const CLIENT_ID = "b91c4551543a40dd8d3a830d7ac9e9cb"; // publik
+const REDIRECT = location.origin + "/labs/koppla";
+const SCOPE = "accounts:read,investments:read,user:read";
+
+function tinkUrl(){
+  const p = new URLSearchParams({
+    client_id: CLIENT_ID, redirect_uri: REDIRECT,
+    market: "SE", locale: "sv_SE", scope: SCOPE, test: "true",
+  });
+  return "https://link.tink.com/1.0/transactions/connect-accounts?" + p.toString();
+}
+
+document.getElementById("connect").onclick = (e)=>{ e.preventDefault(); location.href = tinkUrl(); };
+
+// Retur fran Tink: ?code=... (eller ?error=...)
+const qs = new URLSearchParams(location.search);
+const code = qs.get("code");
+const errParam = qs.get("error") || qs.get("message");
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function tryHoldings(inv){
+  // Defensiv: vi vet inte exakt shape forran vi sett riktig data. Leta efter en
+  // lista med instrument/positioner och visa namn/antal/pris om de finns.
+  const arr = (inv && (inv.holdings || inv.instruments || inv.positions ||
+    (inv.investments && inv.investments.flatMap && inv.investments.flatMap(a=>a.instruments||[])) )) || null;
+  if(!Array.isArray(arr) || !arr.length) return "";
+  let rows = arr.map(h=>{
+    const name = h.name || h.instrumentName || h.displayName || (h.instrument && h.instrument.name) || "?";
+    const isin = h.isin || (h.instrument && h.instrument.isin) || "";
+    const qty = h.quantity ?? h.count ?? "";
+    const price = h.price ?? h.marketValue ?? (h.value && (h.value.value ?? h.value.unscaledValue)) ?? "";
+    const gav = h.averageAcquisitionPrice ?? h.acquisitionPrice ?? h.averagePrice ?? "";
+    return `<tr><td>${esc(name)}</td><td>${esc(isin)}</td><td class="num">${esc(qty)}</td><td class="num">${esc(price)}</td><td class="num">${esc(gav)}</td></tr>`;
+  }).join("");
+  return `<table><thead><tr><th>Instrument</th><th>ISIN</th><th>Antal</th><th>Pris</th><th>GAV</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+if(code || errParam){
+  document.getElementById("start").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  const status = document.getElementById("status");
+  if(errParam && !code){
+    status.innerHTML = `<span class="err">Tink returnerade ett fel: ${esc(errParam)}</span>`;
+  } else {
+    fetch("/api/tink-exchange", { method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ code }) })
+      .then(r=>r.json())
+      .then(d=>{
+        document.getElementById("raw").textContent = JSON.stringify(d, null, 2);
+        if(d.error){ status.innerHTML = `<span class="err">${esc(d.error)}${d.detail?(" ("+esc(d.detail)+")"):""}</span>`; return; }
+        status.textContent = "Klart. Scope: " + (d.scope || "okänt");
+        const t = tryHoldings(d.investments);
+        document.getElementById("holdings").innerHTML = t || "<p>Inga positioner tolkade automatiskt, se rådatan nedan för shapen.</p>";
+      })
+      .catch(e=>{ status.innerHTML = `<span class="err">Nätverksfel mot /api/tink-exchange.</span>`; });
+  }
+}
+</script>
+</body>
+</html>
