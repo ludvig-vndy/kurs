@@ -127,13 +127,13 @@ function visualEl(v: VisualObj) {
     <header class="rh">
       <div class="rh-in">
         <div class="rh-brand">
-          <a class="rh-mark" href="/hem">{k.varumarke}</a>
+          <a class="rh-mark" href={k.hem}>{k.varumarke}</a>
           <span class="rh-ed">{kurs.titel}</span>
         </div>
         <div class="rh-top">
           <nav class="crumb" aria-label="Brodsmulor">
             <span class="mk" aria-hidden="true"></span>
-            <a href="/hem">Hem</a><span class="sep">›</span>
+            <a href={k.hem}>{k.hemEtikett}</a><span class="sep">›</span>
             <a href={`${k.bas}/kapitel/${lesson.kapitel}`}>Kapitel {lesson.kapitel} · {kapitelTitel}</a><span class="sep">›</span>
             <span class="here">Lektion {lesson.lektion}</span>
           </nav>

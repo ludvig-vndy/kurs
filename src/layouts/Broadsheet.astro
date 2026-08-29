@@ -15,7 +15,12 @@ interface Props {
   /** klass pa body som satter om fargtokens for en annan kurs */
   bodyClass?: string;
   /** kursen sidan tillhor, styr edition-rad, nav-lank och sidfot */
-  kurs?: { titel: string; bas: string; varumarke: string; fin: string };
+  kurs?: {
+    titel: string; bas: string; varumarke: string; fin: string;
+    wordmark: string; edition1: string; hem: string;
+    nav: { href: string; label: string; nyckel?: string }[];
+    korslank: { href: string; label: string; kort: string } | null;
+  };
 }
 
 const {
@@ -31,6 +36,16 @@ const {
     bas: '/fokus',
     varumarke: 'Delägaren',
     fin: 'fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.',
+    wordmark: 'Marginalen',
+    edition1: 'Fundamental aktieanalys',
+    hem: '/hem',
+    nav: [
+      { href: '/hem', label: 'Hem', nyckel: 'hem' },
+      { href: '/fokus', label: 'Kursöversikt', nyckel: 'kurs' },
+      { href: '/verktyg', label: 'Analysverktyg', nyckel: 'verktyg' },
+      { href: '/ordlista', label: 'Ordlista', nyckel: 'ordlista' },
+    ],
+    korslank: { href: '/labs/agarbrevet.html', label: 'Till Ägarbrevet ↗', kort: 'Ägarbrevet' },
   },
   /** open=true => publik sida (ingen inloggningsgrind): landning, logga-in */
   open = false,
@@ -41,7 +56,7 @@ const {
 const EDITION_BY_ACTIVE = { hem: 'Hem', kurs: 'Kursöversikt', verktyg: 'Analysverktyg', ordlista: 'Ordlista' };
 const editionSub = editionLine2 ?? EDITION_BY_ACTIVE[active] ?? 'En kurs i sjutton kapitel';
 
-const wordmarkHref = nav === 'landing' ? '/' : '/hem';
+const wordmarkHref = nav === 'landing' ? '/' : kurs.hem;
 ---
 
 <!doctype html>
@@ -90,18 +105,25 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
         <div class="wrap">
           <div class="mast-rule mast-rule--top"></div>
           <div class="mast-top">
-            <a class="wordmark" href={wordmarkHref}>Marginalen</a>
-            <div class="edition">{kurs.titel}<br />{editionSub}</div>
+            <a class="wordmark" href={wordmarkHref}>{kurs.wordmark}</a>
+            <div class="edition">{kurs.edition1}<br />{editionSub}</div>
           </div>
           <div class="mast-rule"></div>
           {nav === 'app' && (
             <nav class="nav">
-              <a href="/hem" class:list={[{ here: active === 'hem' }]} aria-current={active === 'hem' ? 'page' : undefined}>Hem</a>
-              <a href={kurs.bas} class:list={[{ here: active === 'kurs' }]} aria-current={active === 'kurs' ? 'page' : undefined}>Kursöversikt</a>
-              <a href="/verktyg" class:list={[{ here: active === 'verktyg' }]} aria-current={active === 'verktyg' ? 'page' : undefined}>Analysverktyg</a>
-              <a href="/ordlista" class:list={[{ here: active === 'ordlista' }]} aria-current={active === 'ordlista' ? 'page' : undefined}>Ordlista</a>
-              <span class="nav-div" aria-hidden="true"></span>
-              <a href="/labs/agarbrevet.html" class="nav-cross">Till Ägarbrevet ↗</a>
+              {kurs.nav.map((post) => (
+                <a
+                  href={post.href}
+                  class:list={[{ here: active === post.nyckel }]}
+                  aria-current={active === post.nyckel ? 'page' : undefined}
+                >{post.label}</a>
+              ))}
+              {kurs.korslank && (
+                <>
+                  <span class="nav-div" aria-hidden="true"></span>
+                  <a href={kurs.korslank.href} class="nav-cross">{kurs.korslank.label}</a>
+                </>
+              )}
               <span class="mast-account" aria-live="polite"></span>
             </nav>
           )}
@@ -124,13 +146,10 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
       <footer class="site-foot">
         <div class="wrap">
           <div class="site-foot__top">
-            <Seal size="sm" href="/hem" />
+            <Seal size="sm" href={kurs.hem} namn={kurs.wordmark} />
             <nav class="site-foot__nav">
-              <a href="/hem">Hem</a>
-              <a href={kurs.bas}>Kursöversikt</a>
-              <a href="/verktyg">Analysverktyg</a>
-              <a href="/ordlista">Ordlista</a>
-              <a href="/labs/agarbrevet.html">Ägarbrevet</a>
+              {kurs.nav.map((post) => <a href={post.href}>{post.label}</a>)}
+              {kurs.korslank && <a href={kurs.korslank.href}>{kurs.korslank.kort}</a>}
             </nav>
           </div>
           <p class="site-foot__fine"><span class="brandname">{kurs.varumarke}</span>, {kurs.fin}</p>

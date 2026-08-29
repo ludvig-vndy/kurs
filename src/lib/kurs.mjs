@@ -16,6 +16,12 @@ import path from 'node:path';
  * @property {string} varumarke    Namnet i spelarens löprubrik och sidfot
  * @property {string} fin          Sidfotens finstilta, efter varumärkesnamnet
  * @property {'foto'|'tryck'} plate  Kapitelhuvudets bakgrund: fotoplatta eller graverat märke
+ * @property {string} wordmark     Ordmärket i mastheaden
+ * @property {string} edition1     Edition-radens första rad, under ordmärket
+ * @property {string} hem          Vart ordmärket och brödsmulans första steg leder
+ * @property {string} hemEtikett   Brödsmulans första steg
+ * @property {{href:string,label:string,nyckel?:string}[]} nav  Nav-radens poster
+ * @property {{href:string,label:string,kort:string}|null} korslank  Valfri länk ut ur kursen, kort etikett för sidfoten
  */
 
 /** @type {Record<string, KursKonfig>} */
@@ -30,6 +36,17 @@ export const KURSER = {
     varumarke: 'Delägaren',
     fin: 'fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.',
     plate: 'foto',
+    wordmark: 'Marginalen',
+    edition1: 'Fundamental aktieanalys',
+    hem: '/hem',
+    hemEtikett: 'Hem',
+    nav: [
+      { href: '/hem', label: 'Hem', nyckel: 'hem' },
+      { href: '/fokus', label: 'Kursöversikt', nyckel: 'kurs' },
+      { href: '/verktyg', label: 'Analysverktyg', nyckel: 'verktyg' },
+      { href: '/ordlista', label: 'Ordlista', nyckel: 'ordlista' },
+    ],
+    korslank: { href: '/labs/agarbrevet.html', label: 'Till Ägarbrevet ↗', kort: 'Ägarbrevet' },
   },
   motparten: {
     nyckel: 'motparten',
@@ -41,6 +58,13 @@ export const KURSER = {
     varumarke: 'Motparten',
     fin: 'en kurs i försäljning. I utbildningssyfte.',
     plate: 'tryck',
+    wordmark: 'Motparten',
+    edition1: 'En kurs i försäljning',
+    hem: '/motparten',
+    hemEtikett: 'Motparten',
+    // Egen produkt: ingen Marginalen, ingen portfölj, inget Ägarbrevet.
+    nav: [{ href: '/motparten', label: 'Kursöversikt', nyckel: 'kurs' }],
+    korslank: null,
   },
 };
 

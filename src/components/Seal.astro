@@ -5,9 +5,11 @@
 interface Props {
   size?: 'sm' | 'lg';
   href?: string;
+  /** ordmärket. Default Marginalen, sätts om av en kurs med egen identitet. */
+  namn?: string;
 }
-const { size = 'lg', href = '/hem' } = Astro.props;
+const { size = 'lg', href = '/hem', namn = 'Marginalen' } = Astro.props;
 ---
-<a class:list={['seal', { 'seal--sm': size === 'sm' }]} href={href} aria-label="Marginalen">
-  <span class="seal__name">Marginalen</span>
+<a class:list={['seal', { 'seal--sm': size === 'sm' }]} href={href} aria-label={namn}>
+  <span class="seal__name">{namn}</span>
 </a>
