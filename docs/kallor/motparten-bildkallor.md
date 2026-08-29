@@ -8,10 +8,15 @@ Bilderna är hämtade beskurna från Pexels CDN i 1600 gånger 560, alltså den 
 kapitelhuvudet faktiskt använder. Ingen efterbehandling i repot: gråskalan och
 pappersfaden ligger i CSS, inte i filen.
 
-| Kapitel | Motiv | Fotograf | Pexels-id | Sida |
+| Yta | Motiv | Fotograf | Pexels-id | Sida |
 | --- | --- | --- | --- | --- |
-| 0, Glöm det du lärt dig | Tomma stolar vid ett fönster, svartvitt. Rummet innan någon satt sig, alltså att göra plats. | Laura Cleffmann (@cloudett) | 20297117 | https://www.pexels.com/photo/empty-chairs-in-an-office-20297117/ |
-| 1, Förtroende | Två personer vid ett bord, en lyssnar. Ett samtal, inte en handskakning. | LinkedIn Sales Navigator | 1251860 | https://www.pexels.com/photo/two-men-talking-while-sitting-beside-table-1251860/ |
+| Kursöversikt, crown | Svartvit rumsscen, en person sedd bakifrån mot dem som sitter mittemot. Vyn över din egen axel mot den andra sidan, alltså kursens namn. | Vinicius Quaresma | 29390067 | https://www.pexels.com/photo/black-and-white-group-discussion-scene-29390067/ |
+| Kapitel 0, Glöm det du lärt dig | Tomma stolar vid ett fönster, svartvitt. Rummet innan någon satt sig, alltså att göra plats. | Laura Cleffmann (@cloudett) | 20297117 | https://www.pexels.com/photo/empty-chairs-in-an-office-20297117/ |
+| Kapitel 1, Förtroende | Två personer vid ett bord, en lyssnar. Ett samtal, inte en handskakning. | LinkedIn Sales Navigator | 1251860 | https://www.pexels.com/photo/two-men-talking-while-sitting-beside-table-1251860/ |
+
+Crownbilden ligger i `public/bilder/motparten-crown-1600.jpg` och sätts genom
+`--leadprint` i `src/styles/motparten.css`. Regeln i `broadsheet.css` har
+börshuset som standardvärde, så Marginalen är oförändrad.
 
 ## Urvalsregel
 

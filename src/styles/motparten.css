@@ -5,4 +5,9 @@
 body.kurs-motparten {
   --oxblood: #234B5E;   /* petrolblå, kursens accent */
   --gold: #7A6A2E;      /* dämpad mässing, sekundär */
+
+  /* Kursoversiktens crown. Marginalen har borshusets fasad, en institution.
+     Motparten har vyn over din egen axel mot den som sitter mittemot. */
+  --leadprint: url('/bilder/motparten-crown-1600.jpg');
+  --leadprint-pos: center 34%;
 }
