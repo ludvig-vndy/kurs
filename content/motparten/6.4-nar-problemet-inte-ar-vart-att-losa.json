@@ -33,7 +33,7 @@
         "element": [
           {
             "rubrik": "Ingen har försökt",
-            "text": "Problemet har funnits i fyra år och ingen har gjort ett seriöst försök att lösa det. Det starkaste tecknet av alla. Saker som verkligen kostar får någon att försöka något, även om försöket misslyckas."
+            "text": "Problemet har funnits i fyra år och ingen har gjort ett seriöst försök att lösa det. Det starkaste tecknet av alla. Saker som kostar får någon att försöka något, även om försöket misslyckas."
           },
           {
             "rubrik": "Alla tycker, ingen äger",
@@ -66,7 +66,7 @@
       "forklaring": "Slutsatsen att problemet inte bär ska sägas rakt, och den ska sägas som en bedömning och inte som en dom över kunden.",
       "brodtext": [
         "Utifrån det vi räknat på tror jag inte att det här är värt besväret för er just nu. Ni skulle lägga fyra månader på något som sparar mindre än det kostar att införa. Jag hör gärna av mig när ni ser att det växer, eller om något annat blir aktuellt.",
-        "Det är obekvämt att säga och nästan alltid mottaget väl, av skäl vi går igenom i kapitel 9. Det är också den enda handlingen i kursen som med säkerhet kostar dig något på kort sikt, vilket är precis varför den bär så mycket vikt när du senare säger att något är värt att göra."
+        "Det är obekvämt att säga och nästan alltid mottaget väl, av skäl vi går igenom i kapitel 9. Det är också den enda handlingen i kursen som med säkerhet kostar dig något på kort sikt, vilket är varför den bär så mycket vikt när du senare säger att något är värt att göra."
       ]
     },
     {
@@ -92,7 +92,7 @@
             "Att flera leverantörer är inblandade"
           ],
           "ratt": [0],
-          "forklaring": "Saker som verkligen kostar får någon att försöka något, även om försöket misslyckas. Det tar tio sekunder att kontrollera."
+          "forklaring": "Saker som kostar får någon att försöka något, även om försöket misslyckas. Det tar tio sekunder att kontrollera."
         },
         {
           "typ": "single",

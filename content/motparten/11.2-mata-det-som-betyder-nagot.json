@@ -1,0 +1,131 @@
+{
+  "kapitel": 11,
+  "lektion": "11.2",
+  "titel": "Mäta det som betyder något",
+  "niva": "Avancerad",
+  "tid_min": 9,
+  "fardighet": "sjalvinsikt.matning",
+  "mal": "Efter lektionen kan eleven skilja mått som mäter aktivitet från mått som mäter hantverk, känner till fyra mått som går att följa själv, och vet varför flera populära säljmått inte bör användas.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "SJÄLVINSIKT",
+      "titel": "Mäta det som betyder något",
+      "ingress": "Antal samtal, antal möten, omsättning. Tre mått som alla mäts och som säger nästan ingenting om hantverket. Här är vad som går att mäta i stället, och vad som inte gör det."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROBLEMET MED AKTIVITETSMÅTT",
+      "lead": "Ett mått som går att leverera utan att göra jobbet kommer förr eller senare att levereras utan att jobbet görs.",
+      "highlight": "levereras utan att jobbet görs",
+      "brodtext": [
+        "Antal möten går att fylla med möten som inte borde bokats. Antal samtal går att fylla med samtal som avslutas på tio sekunder. Uppföljningar går att fylla med tomma mail, vilket kapitel 10 visade är sämre än inga alls. Inget av det är fusk, det är hur människor beter sig när något räknas.",
+        "Omsättning är det motsatta problemet. Det mäter rätt sak men kommer för sent, påverkas av tio saker du inte styr över, och säger ingenting om vad du ska göra annorlunda på tisdag."
+      ],
+      "takeaway": "Aktivitetsmått går att fejka utan att märka det själv. Utfallsmått kommer för sent för att lära dig något."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA SOM GÅR ATT FÖLJA",
+      "titel": "Mått på hantverket",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Andel möten med bokat nästa steg",
+            "text": "Enkelt att räkna, svårt att fejka, och direkt kopplat till kapitel 8. Under sextio procent finns det nästan alltid något att arbeta med."
+          },
+          {
+            "rubrik": "Antal kontakter per affär",
+            "text": "Hur många hos kunden du faktiskt pratat med. Går inte att fylla på med aktivitet, eftersom en person antingen är träffad eller inte."
+          },
+          {
+            "rubrik": "Andel förlorade av eget beslut",
+            "text": "Hur ofta det var du som avslutade, mot att kunden försvann. Ett mått på om kapitel 6.4 och 9.1 sitter, och det enda där en högre siffra kan vara ett gott tecken."
+          },
+          {
+            "rubrik": "Träffsäkerhet i prognosen",
+            "text": "Hur ofta de affärer du sa skulle stänga faktiskt gjorde det. Mäter om du förstår dina egna affärer, vilket är svårare än det låter."
+          }
+        ],
+        "figurtext": "Fyra mått du kan följa själv, utan system och utan chef."
+      },
+      "forklaring": "Det fjärde är det mest underskattade. En säljare som konsekvent tror att affärer stänger tidigare än de gör har inte ett optimismproblem, utan ett kunskapsproblem: något i affären syns inte. Att spåra sin egen träffsäkerhet är det snabbaste sättet att upptäcka vad det är."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD DU INTE SKA MÄTA",
+      "lead": "Flera populära mått ser ut som hantverk och är i bästa fall brus.",
+      "highlight": "i bästa fall brus",
+      "brodtext": [
+        "Talkvot är det tydligaste exemplet. Siffror som 43 mot 57 cirkulerar flitigt och kommer från leverantörers egna dataset, utan kontrollgrupp och utan publicerad metod. Riktningen är dessutom oklar: en kund som redan är intresserad pratar mer, vilket gör kvoten till ett symptom lika gärna som en orsak. Att sikta på ett tal här är att optimera mot en spegel.",
+        "Detsamma gäller poängsatta bedömningar av relation, förtroende och stämning. De känns mätbara och är i praktiken din egen känsla efter mötet, med en siffra på. Mät hellre något som kunden gjorde: bokade en tid, tog reda på något, involverade en kollega."
+      ],
+      "takeaway": "Mät handlingar, inte stämning. Handlingar går att kontrollera i efterhand.",
+      "evidens": {
+        "niva": "B",
+        "kalla": "K16",
+        "notering": "Om leverantörsdata: se den röda listan i kursens källregister. Materialet kan fånga något verkligt men saknar kontrollgrupp och publicerad metod, och riktningen i sambandet är oklar."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "HUR OFTA",
+      "titel": "En gång i kvartalet räcker",
+      "forklaring": "Mätning varje vecka ger brus och en känsla av kontroll. De här måtten rör sig långsamt, och att titta för ofta gör att du överreagerar på slumpen.",
+      "brodtext": [
+        "Sätt av en timme i slutet av varje kvartal. Räkna de fyra måtten, jämför med förra gången, och välj en sak att ändra. En, inte tre. Beteenden ändras ett i taget, och det är samma regel som stod i kontraktet i lektion 0.5.",
+        "Och skriv upp vad du valde. Nästa kvartal ska du kunna svara på om det blev någon skillnad, och det går bara om du kommer ihåg vad du försökte."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är problemet med aktivitetsmått?",
+          "alternativ": [
+            "De är svåra att samla in",
+            "De går att leverera utan att jobbet görs",
+            "De mäter fel personer"
+          ],
+          "ratt": [1],
+          "forklaring": "Möten går att fylla med möten som inte borde bokats. Det är inte fusk, det är hur människor beter sig när något räknas."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket mått kan vara gott tecken när det är högre?",
+          "alternativ": [
+            "Antal kontakter per affär",
+            "Andel förlorade affärer av eget beslut",
+            "Andel möten med bokat nästa steg"
+          ],
+          "ratt": [1],
+          "forklaring": "Det mäter om du avslutar affärer som inte bär, alltså om kapitel 6.4 och 9.1 sitter."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför ska du inte sikta på en viss talkvot?",
+          "alternativ": [
+            "För att den är svår att mäta",
+            "För att siffrorna kommer från leverantörsdata utan kontrollgrupp, och riktningen i sambandet är oklar",
+            "För att den varierar mellan branscher"
+          ],
+          "ratt": [1],
+          "forklaring": "En kund som redan är intresserad pratar mer, vilket gör kvoten till ett symptom lika gärna som en orsak."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur ofta ska du mäta?",
+          "alternativ": [
+            "Varje vecka, för att kunna justera snabbt",
+            "En gång i kvartalet, och ändra en sak i taget",
+            "Efter varje affär"
+          ],
+          "ratt": [1],
+          "forklaring": "Måtten rör sig långsamt, och att titta för ofta gör att du överreagerar på slumpen."
+        }
+      ]
+    }
+  ]
+}

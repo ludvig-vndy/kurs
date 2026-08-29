@@ -214,9 +214,9 @@
    ],
    "sebastian": "Jag har skrivit hundra mail som bara sa att jag hörde av mig igen. Inget av dem gjorde nytta och några gjorde skada. Regeln jag har nu är att jag inte hör av mig utan att ha något med mig: en siffra, en artikel, ett svar på något de undrade över. Har jag inget att komma med väntar jag.",
    "lektioner": [
-    { "lektion": "10.1", "titel": "Uppföljning som tillför något", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "10.1-uppfoljning-som-tillfor.json" },
-    { "lektion": "10.2", "titel": "Den långa tystnaden", "niva": "Mellan", "tid_min": 7, "status": "kommande", "fil": "10.2-den-langa-tystnaden.json" },
-    { "lektion": "10.3", "titel": "När du ska släppa", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "10.3-nar-du-ska-slappa.json" }
+    { "lektion": "10.1", "titel": "Uppföljning som tillför något", "niva": "Nybörjare", "tid_min": 7, "status": "klar", "fil": "10.1-uppfoljning-som-tillfor.json" },
+    { "lektion": "10.2", "titel": "Den långa tystnaden", "niva": "Mellan", "tid_min": 7, "status": "klar", "fil": "10.2-den-langa-tystnaden.json" },
+    { "lektion": "10.3", "titel": "När du ska släppa", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "10.3-nar-du-ska-slappa.json" }
    ]
   },
   {
@@ -232,9 +232,9 @@
    ],
    "sebastian": "Jag hade tolv år i yrket innan jag första gången gick igenom mina förlorade affärer i följd. Mönstret var pinsamt tydligt: jag pratade om lösningen för tidigt, nästan varje gång. Ingen hade sagt det till mig, för ingen såg alla mina möten. Det gjorde inte jag heller, förrän jag satte mig ner och tittade.",
    "lektioner": [
-    { "lektion": "11.1", "titel": "Se dina egna mönster", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "11.1-se-dina-egna-monster.json" },
-    { "lektion": "11.2", "titel": "Mäta det som betyder något", "niva": "Avancerad", "tid_min": 9, "status": "kommande", "fil": "11.2-mata-det-som-betyder-nagot.json" },
-    { "lektion": "11.3", "titel": "Syntes: din egen process", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "11.3-din-egen-process.json" }
+    { "lektion": "11.1", "titel": "Se dina egna mönster", "niva": "Avancerad", "tid_min": 8, "status": "klar", "fil": "11.1-se-dina-egna-monster.json" },
+    { "lektion": "11.2", "titel": "Mäta det som betyder något", "niva": "Avancerad", "tid_min": 9, "status": "klar", "fil": "11.2-mata-det-som-betyder-nagot.json" },
+    { "lektion": "11.3", "titel": "Syntes: din egen process", "niva": "Avancerad", "tid_min": 8, "status": "klar", "fil": "11.3-din-egen-process.json" }
    ]
   }
  ]

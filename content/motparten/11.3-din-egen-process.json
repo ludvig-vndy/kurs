@@ -1,0 +1,134 @@
+{
+  "kapitel": 11,
+  "lektion": "11.3",
+  "titel": "Syntes: din egen process",
+  "niva": "Avancerad",
+  "tid_min": 8,
+  "fardighet": "sjalvinsikt.process",
+  "mal": "Efter lektionen har eleven satt ihop kursens delar till en egen arbetsgång som håller under tidspress, och vet vilka tre beslut som ska vara fattade i förväg.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "SJÄLVINSIKT",
+      "titel": "Syntes: din egen process",
+      "ingress": "Sista lektionen. Inte en sammanfattning, utan en fråga: vad av allt det här gör du när du har bråttom?"
+    },
+    {
+      "typ": "reading",
+      "kicker": "DET SOM ÖVERLEVER PRESS",
+      "lead": "En process är inte vad du gör när du har gott om tid. Det är vad som är kvar när du inte har det.",
+      "highlight": "vad som är kvar när du inte har det",
+      "brodtext": [
+        "I en lugn vecka ställer alla den obekväma frågan, räknar på konsekvensen tillsammans med kunden och bokar ett riktigt nästa steg. I sista veckan i kvartalet, med tre affärer som glider och en chef som frågar, faller nästan allt bort utom det som blivit vana eller står nedskrivet.",
+        "Därför handlar den här lektionen inte om att komma ihåg kursen. Den handlar om att välja ut det lilla som ska överleva när minnet inte gör det."
+      ],
+      "takeaway": "Bygg för din sämsta vecka, inte din bästa. Den sämsta är den som avgör siffrorna."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE BESLUT I FÖRVÄG",
+      "titel": "Det som inte får avgöras i stunden",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Var din gräns går",
+            "text": "De tre eller fyra villkoren från 9.1 som gör att du avråder. Nedskrivna, konkreta, bestämda när det inte kostade något."
+          },
+          {
+            "rubrik": "När en affär läggs åt sidan",
+            "text": "Tecknen från 10.3, satta i förväg. Utan en regel avgörs det av hur pipen ser ut på måndagen, och det är fel domare."
+          },
+          {
+            "rubrik": "Vad du aldrig skickar",
+            "text": "Offert innan konsekvensen är räknad. Uppföljning utan innehåll. Två regler som tar bort de vanligaste misstagen utan att kräva omdöme i stunden."
+          }
+        ],
+        "figurtext": "Tre beslut som är lätta i lugn och omöjliga under press."
+      },
+      "forklaring": "Det gemensamma är att alla tre annars fattas av situationen. Under press känns varje undantag rimligt, och det är därför regeln behöver finnas innan pressen kommer. Det här är inte disciplin i moralisk mening, det är att flytta beslutet till en tidpunkt där ditt omdöme fungerar."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE VANOR",
+      "titel": "Det som ska ske utan att du tänker",
+      "forklaring": "Vid sidan av besluten finns tre handlingar som är små nog att bli vanor och som bär mest av kursens innehåll.",
+      "brodtext": [
+        "Före mötet: tre gissningar nedskrivna. Femton minuter, och det gör skillnaden mellan att samla information och att pröva en tes. Efter mötet: kryssa av dem, två minuter.",
+        "I slutet av varje möte: en återgivning som kunden får rätta, och ett nästa steg med datum. Trettio sekunder vardera, och tillsammans är de förmodligen det mest lönsamma du gör under hela dagen.",
+        "Efter varje avslutad affär: två meningar om varför den slutade som den gjorde. Fem minuter, och det är råmaterialet till nästa kvartals genomgång."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "OCH SEDAN EN SAK I TAGET",
+      "lead": "Det står tio saker ovanför. Du ska inte göra tio saker.",
+      "highlight": "Du ska inte göra tio saker",
+      "brodtext": [
+        "Välj den du är sämst på, inte den som är roligast. För de flesta är det något av de tre besluten, eftersom de kräver att man bestämmer sig innan man vill. Lägg ett kvartal på den, mät med måtten från förra lektionen, och gå sedan vidare.",
+        "Det är samma sak som stod i kontraktet i lektion 0.5, och det är inte en tillfällighet att kursen slutar där den började. Allt det här är enkelt att förstå och långsamt att bli bra på, och den som lovar dig något annat säljer något."
+      ],
+      "takeaway": "Ett beteende per kvartal. Det låter långsamt tills man räknar på fyra kvartal."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DET SOM ÅTERSTÅR",
+      "lead": "Kursen slutar här, och det som är kvar är den del ingen kan läsa sig till.",
+      "highlight": "den del ingen kan läsa sig till",
+      "brodtext": [
+        "Du kommer att sitta i möten där du vet vad du borde fråga och ändå låter bli, eftersom svaret kan bli fel. Du kommer att skicka en offert för tidigt i mars för att kvartalet slutar. Du kommer att låta bli att avråda någon gång när du borde. Alla gör det, och den som säger annat har inte arbetat tillräckligt länge.",
+        "Skillnaden mellan den som blir bra och den som inte blir det ligger inte i att undvika det. Den ligger i att märka när det hände, och att skriva ner det innan man hunnit förklara bort det för sig själv."
+      ],
+      "takeaway": "Du kommer att göra fel. Målet är att veta om det inom en vecka i stället för aldrig."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad kännetecknar en process som håller?",
+          "alternativ": [
+            "Att den är dokumenterad i ett system",
+            "Att den överlever din sämsta vecka, inte bara din bästa",
+            "Att den täcker alla delar av kursen"
+          ],
+          "ratt": [1],
+          "forklaring": "I sista kvartalsveckan faller allt bort utom det som blivit vana eller står nedskrivet. Den veckan avgör siffrorna."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför ska de tre besluten fattas i förväg?",
+          "alternativ": [
+            "För att spara tid i mötet",
+            "För att de annars fattas av situationen, där varje undantag känns rimligt",
+            "För att chefen ska kunna följa upp"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är inte disciplin i moralisk mening, det är att flytta beslutet till en tidpunkt där ditt omdöme fungerar."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur många saker ska du arbeta med i taget?",
+          "alternativ": [
+            "En, och helst den du är sämst på",
+            "Tre, för att få effekt snabbare",
+            "Alla, men i olika grad"
+          ],
+          "ratt": [0],
+          "forklaring": "Samma regel som i kontraktet i lektion 0.5. Ett beteende per kvartal låter långsamt tills man räknar på fyra kvartal."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är skillnaden mellan den som blir bra och den som inte blir det?",
+          "alternativ": [
+            "Att den förra aldrig gör fel",
+            "Att den förra märker felet och skriver ner det innan det förklarats bort",
+            "Att den förra har längre erfarenhet"
+          ],
+          "ratt": [1],
+          "forklaring": "Alla skickar en offert för tidigt någon gång. Målet är att veta om det inom en vecka i stället för aldrig."
+        }
+      ]
+    }
+  ]
+}

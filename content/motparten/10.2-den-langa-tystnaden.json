@@ -1,0 +1,119 @@
+{
+  "kapitel": 10,
+  "lektion": "10.2",
+  "titel": "Den långa tystnaden",
+  "niva": "Mellan",
+  "tid_min": 7,
+  "fardighet": "uppfoljning.tystnad",
+  "mal": "Efter lektionen tolkar eleven kundens tystnad utan att fylla den med egna antaganden, känner till de vanligaste verkliga orsakerna, och kan skriva mailet som bryter den utan att pressa.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "UPPFÖLJNING",
+      "titel": "Den långa tystnaden",
+      "ingress": "Kunden slutar svara. Du vet inte varför, och det du gissar är nästan alltid mer dramatiskt än sanningen."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD DU TROR",
+      "lead": "Tystnad läses som ett besked, och det är den nästan aldrig.",
+      "highlight": "läses som ett besked",
+      "brodtext": [
+        "De vanligaste gissningarna är att kunden valt någon annan, att något du sa var fel, eller att intresset var påhittat från början. Alla tre gör dig antingen defensiv eller påstridig, och båda tillstånden syns i nästa mail du skriver.",
+        "Vi har redan sett hur dåligt människor läser andras avsikter. Din tolkning av en utebliven svar är inte information, den är en berättelse du konstruerar för att slippa osäkerheten."
+      ],
+      "takeaway": "Tystnad är brist på data. Behandla den så, och sluta läsa den som ett svar.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K17",
+        "notering": "Bond och DePaulo (2006) om hur nära slumpen människor ligger när de tolkar andras avsikter. Tillämpningen på utebliven kontakt är kursens tolkning."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD DET OFTAST ÄR",
+      "titel": "Fyra tråkiga förklaringar",
+      "forklaring": "När man i efterhand får veta varför någon slutade svara är svaret sällan dramatiskt.",
+      "brodtext": [
+        "Något annat blev akut. Ett driftstopp, en omorganisation, en person som slutade. Din fråga var viktig i mars och är inte borta, bara nedprioriterad.",
+        "Personen väntar på någon annan. Ett budgetbeslut, en chef på semester, ett svar från it. Att skriva det till dig känns som att erkänna att man inte styr, så man skriver inget alls.",
+        "Svaret är nej men obekvämt att säga. Ett tyst nej är socialt billigare än ett uttalat, särskilt mot någon som varit trevlig.",
+        "Eller mailet drunknade. Osannolikt som förklaring till tre uteblivna svar, fullt rimligt som förklaring till ett."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "MAILET SOM BRYTER DEN",
+      "lead": "Det som får svar är inte en till påminnelse, det är att göra det billigt att säga nej.",
+      "highlight": "billigt att säga nej",
+      "brodtext": [
+        "Hej, jag har inte hört något och gissar att annat gått före, vilket är helt begripligt. Ska jag lägga det här åt sidan och höra av mig efter sommaren, eller är det fortfarande aktuellt? Båda svaren är helt okej.",
+        "Mailet fungerar därför att det ger kunden en färdig utväg som inte kräver en förklaring. Det innehåller ingen skuld, ingen påminnelse om hur mycket tid du lagt, och ingen ny fråga att svara på. Svarsfrekvensen på den sortens mail är i min erfarenhet högre än på tre påminnelser, och det du får är ett besked du kan planera efter."
+      ],
+      "takeaway": "Erbjud vägen ut. Det är det enda du kan göra som gör tystnaden dyrare för kunden än ett svar.",
+      "evidens": {
+        "niva": "C",
+        "notering": "Hantverk. Vanlig erfarenhet bland säljare, och rimlig utifrån reaktansteorin, men jag har inte hittat någon mätning av svarsfrekvens på den här sortens formulering."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "OCH SEDAN",
+      "titel": "Vad du gör med ett uteblivet svar även på det",
+      "forklaring": "Får du inget svar ens på utvägsmailet har du fått ditt besked, och det är dags att sluta.",
+      "brodtext": [
+        "Skicka ett kort avslutande mail som säger att du lägger det åt sidan och gärna hör av dig om ett halvår. Inget klagomål, ingen sista fråga, ingen underton. Det mailet får ofta svar, ibland med den verkliga förklaringen, eftersom det inte längre kostar något att ge den.",
+        "Och lägg det verkligen åt sidan. En pipeline med tolv affärer som inte svarar ser bättre ut än en med fyra som gör det, och den är sämre på varje sätt som betyder något: den ger dig fel bild av läget, den äter din tid, och den håller dig från att prospektera."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Hur ska tystnad tolkas?",
+          "alternativ": [
+            "Som ett nej",
+            "Som brist på data, inte som ett besked",
+            "Som att kunden valt en konkurrent"
+          ],
+          "ratt": [1],
+          "forklaring": "Din tolkning är en berättelse du konstruerar för att slippa osäkerheten, och människor läser andras avsikter nära slumpen."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken är den vanligaste verkliga orsaken?",
+          "alternativ": [
+            "Att något annat blev akut och frågan nedprioriterades",
+            "Att kunden blev irriterad på något du sa",
+            "Att en konkurrent lagt ett bättre bud"
+          ],
+          "ratt": [0],
+          "forklaring": "Din fråga var viktig i mars och är inte borta, bara nedprioriterad. Förklaringarna är sällan dramatiska."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad får oftast svar?",
+          "alternativ": [
+            "En påminnelse med ny information",
+            "Ett mail som erbjuder en färdig väg ut utan förklaring",
+            "Ett telefonsamtal i stället för mail"
+          ],
+          "ratt": [1],
+          "forklaring": "Det innehåller ingen skuld, ingen påminnelse om din nedlagda tid och ingen ny fråga att besvara."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är en pipeline full av tysta affärer skadlig?",
+          "alternativ": [
+            "Den ser dålig ut för chefen",
+            "Den ger fel bild av läget, äter tid och håller dig från att prospektera",
+            "Den gör att systemet blir långsamt"
+          ],
+          "ratt": [1],
+          "forklaring": "Tolv affärer som inte svarar ser bättre ut än fyra som gör det, och är sämre på varje sätt som betyder något."
+        }
+      ]
+    }
+  ]
+}

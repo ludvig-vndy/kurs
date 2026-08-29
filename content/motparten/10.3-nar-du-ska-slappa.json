@@ -1,0 +1,122 @@
+{
+  "kapitel": 10,
+  "lektion": "10.3",
+  "titel": "När du ska släppa",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "uppfoljning.slappa",
+  "mal": "Efter lektionen kan eleven avgöra när en affär ska läggas åt sidan, känner igen varför sunk cost gör beslutet svårt, och kan avsluta så att dörren står öppen.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "UPPFÖLJNING",
+      "titel": "När du ska släppa",
+      "ingress": "Att sluta jaga en affär är svårare än att starta den, av ett skäl som inte har med kunden att göra."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DET ÄR SVÅRT",
+      "lead": "Ju mer arbete du lagt ner, desto svårare blir det att sluta, och det är exakt bakvänt.",
+      "highlight": "exakt bakvänt",
+      "brodtext": [
+        "De fem mötena, presentationen, referenskunden du besvärade och de tre månaderna är redan spenderade. De kommer inte tillbaka oavsett vad du gör nu. Ändå väger de tungt i beslutet, eftersom det känns som att slänga bort dem att sluta.",
+        "Frågan som gäller är en helt annan: om den här affären dök upp i dag, i det skick den är i nu, skulle du börja arbeta med den? Är svaret nej är det bara det nedlagda arbetet som håller dig kvar, och det arbetet är borta hur som helst."
+      ],
+      "takeaway": "Nedlagd tid är ett skäl att vara ledsen, aldrig ett skäl att fortsätta."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE TECKEN",
+      "titel": "Att det är dags",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Inget nästa steg på två försök",
+            "text": "Du har föreslagit något konkret två gånger och inte fått ett bokat datum. Det är inte otur, det är ett mönster."
+          },
+          {
+            "rubrik": "Bara du arbetar",
+            "text": "Varje rörelse i affären kommer från dig. Kunden svarar vänligt men gör aldrig något mellan mötena. Ett åtagande som bara finns på ena sidan är inget åtagande."
+          },
+          {
+            "rubrik": "Problemet har krympt",
+            "text": "Det som var brådskande i mars beskrivs nu som något man lever med. Antingen löste de det, eller så var det aldrig så dyrt som det lät."
+          }
+        ],
+        "figurtext": "Ett tecken kan vara en dålig period. Två är ett besked."
+      },
+      "forklaring": "Det andra tecknet är det mest pålitliga och det som ignoreras mest. En affär där bara du arbetar känns levande, eftersom det hela tiden händer saker. Men det som händer är dina egna handlingar, och de säger ingenting om kundens avsikt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR DU AVSLUTAR",
+      "lead": "Ett avslut ska vara tydligt, kort och utan förebråelse, för det är det som gör att dörren står öppen.",
+      "highlight": "utan förebråelse",
+      "brodtext": [
+        "Jag lägger det här åt sidan tills vidare, så slipper du mina mail. Blir det aktuellt igen hör du av dig, annars hör jag av mig framåt hösten. Tack för tiden så här långt. Det är hela mailet.",
+        "Frestelsen är att lägga till en sista fråga, en sista påminnelse om värdet, eller en formulering som antyder att kunden slösat din tid. Alla tre gör samma sak: de gör det obekvämt för kunden att höra av sig senare, vilket är den möjlighet du vill behålla."
+      ],
+      "takeaway": "Avsluta så att det är lätt att komma tillbaka. Det är det enda värdet som finns kvar i en affär som inte blev av."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD DU TAR MED DIG",
+      "titel": "Skriv ner varför",
+      "forklaring": "Innan du stänger affären, skriv två meningar om varför den inte blev av. Inte i CRM-fältet med förvalda alternativ, utan för din egen del.",
+      "brodtext": [
+        "Alternativen i ett system är alltid för grova: pris, tajming, konkurrent. De tre svarar sällan på vad som hände, och de gör att alla dina förluster ser likadana ut i efterhand.",
+        "Dina egna två meningar gör något annat. Efter tjugo affärer har du ett material som visar mönster, och det materialet är förutsättningen för hela nästa kapitel. Det är också det enda du med säkerhet får ut av en affär som inte blev av."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilken fråga avgör om du ska fortsätta?",
+          "alternativ": [
+            "Hur mycket tid du redan lagt ner",
+            "Om du skulle börja arbeta med affären i dag, i det skick den är nu",
+            "Om kunden fortfarande svarar på mail"
+          ],
+          "ratt": [1],
+          "forklaring": "Det nedlagda arbetet är borta oavsett vad du gör. Att det känns som att slänga bort det är inte ett skäl att fortsätta."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket tecken är mest pålitligt?",
+          "alternativ": [
+            "Att kunden inte svarar på mail",
+            "Att bara du arbetar i affären",
+            "Att priset ifrågasatts"
+          ],
+          "ratt": [1],
+          "forklaring": "Affären känns levande eftersom det hela tiden händer saker, men det som händer är dina egna handlingar."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur ska avslutsmailet se ut?",
+          "alternativ": [
+            "Kort och utan förebråelse, med en öppen dörr",
+            "Med en sista sammanfattning av värdet",
+            "Med en fråga som kräver svar"
+          ],
+          "ratt": [0],
+          "forklaring": "Tillägg gör det obekvämt för kunden att höra av sig senare, vilket är den enda möjlighet du vill behålla."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför ska du skriva två egna meningar om varför affären dog?",
+          "alternativ": [
+            "För att kunna redovisa för chefen",
+            "För att systemets förvalda orsaker är för grova och döljer mönster",
+            "För att kunna återuppta affären senare"
+          ],
+          "ratt": [1],
+          "forklaring": "Efter tjugo affärer har du ett material som visar mönster, och det är förutsättningen för nästa kapitel."
+        }
+      ]
+    }
+  ]
+}

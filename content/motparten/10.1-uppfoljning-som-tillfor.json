@@ -1,0 +1,126 @@
+{
+  "kapitel": 10,
+  "lektion": "10.1",
+  "titel": "Uppföljning som tillför något",
+  "niva": "Nybörjare",
+  "tid_min": 7,
+  "fardighet": "uppfoljning.varde",
+  "mal": "Efter lektionen skickar eleven aldrig en uppföljning utan eget innehåll, känner till fyra sorters innehåll som duger, och vet varför den tomma påminnelsen kostar mer än den ger.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "UPPFÖLJNING",
+      "titel": "Uppföljning som tillför något",
+      "ingress": "Uppföljning som inte ger kunden något är inte uthållighet. Det är en avgift du tar ut på relationen, och du betalar den varje gång."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN TOMMA PÅMINNELSEN",
+      "lead": "Ville bara stämma av är en mening som bara betyder något för den som skriver den.",
+      "highlight": "bara betyder något för den som skriver den",
+      "brodtext": [
+        "För dig är den en aktivitet: ett mail skickat, en rad i systemet, en känsla av att affären lever. För kunden är den en uppgift som landar i en redan full inkorg, utan innehåll och utan möjlighet att svara kort. Det finns inget bra svar på ville bara stämma av utom att bekräfta att man inte hunnit, vilket ingen vill skriva.",
+        "Därför blir den obesvarad, och därför skickar du en till. Efter tre sådana har du lärt kunden att dina mail inte innehåller något, och då slutar även de mail som gör det att öppnas."
+      ],
+      "takeaway": "Varje tomt mail sänker värdet på ditt nästa. Det är en kostnad du tar ut i förskott."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD SOM DUGER",
+      "titel": "Fyra sorters innehåll",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Ett svar",
+            "text": "På något som togs upp i mötet, även när det dröjt. Bäst av alla, eftersom det bevisar att du gjorde det du sa och kostade dig arbete."
+          },
+          {
+            "rubrik": "Något användbart",
+            "text": "En siffra, ett räkneexempel, hur ett annat bolag löste det. Ska vara relevant för kundens fråga, inte för din produkt."
+          },
+          {
+            "rubrik": "En formulering",
+            "text": "Kundens egen beskrivning i skrift, redo att vidarebefordras. Lektion 7.3 i praktiken, och det som oftast saknas."
+          },
+          {
+            "rubrik": "Ett rakt besked",
+            "text": "Att du lägger affären åt sidan om du inte hör något. Ärligt, ger kunden en enkel utväg, och får ofta svar därför."
+          }
+        ],
+        "figurtext": "Fyra sorters innehåll. Gemensamt: kunden får något även om affären dör."
+      },
+      "forklaring": "Provet är enkelt. Om kunden aldrig svarar, har mailet ändå gett något? Blir svaret nej ska det inte skickas. Det betyder inte att du ska tiga, det betyder att du behöver hitta något att komma med, och det arbetet är uppföljningen."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TEMPOT",
+      "lead": "Hur ofta du hör av dig avgörs av vad du har att komma med, inte av ett schema.",
+      "highlight": "inte av ett schema",
+      "brodtext": [
+        "Ett CRM som säger att du ska följa upp var tionde dag producerar tomma mail var tionde dag, eftersom uppgiften finns även när innehållet inte gör det. Systemet mäter aktivitet, och aktivitet är lätt att leverera utan värde.",
+        "Vänd på ordningen. Vad har hänt sedan sist som kunden har nytta av? Har inget hänt är det inte dags. Har något hänt spelar det ingen roll om det gått tre dagar eller tre veckor."
+      ],
+      "takeaway": "Följ upp när du har något, inte när kalendern säger till."
+    },
+    {
+      "typ": "concept",
+      "kicker": "OCH DET SOM SLÅR ALLT",
+      "titel": "Gör det du sa att du skulle göra",
+      "forklaring": "Den mest effektiva uppföljningen är inte påhittad. Det är den du redan lovat: att ta reda på en sak, att skicka ett underlag, att återkomma om två veckor.",
+      "brodtext": [
+        "Det låter trivialt tills man räknar. De flesta säljare lovar tre eller fyra små saker i ett möte och levererar ett eller två. Den som levererar alla fyra, i tid, sticker ut utan att ha gjort något smart.",
+        "Det bygger dessutom integritet, alltså den enda dimensionen av trovärdighet som inte går att reparera i efterhand. Ett hållet löfte om ett dokument är litet i sig och stort i mängd."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är problemet med ville bara stämma av?",
+          "alternativ": [
+            "Att den är för informell",
+            "Att den inte ger kunden något och lär kunden att dina mail är tomma",
+            "Att den kommer för tidigt"
+          ],
+          "ratt": [1],
+          "forklaring": "Efter tre sådana slutar även de mail som innehåller något att öppnas. Kostnaden tas ut i förskott."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är provet på om en uppföljning ska skickas?",
+          "alternativ": [
+            "Om det gått tillräckligt lång tid",
+            "Om kunden fått något även utan att svara",
+            "Om affären fortfarande är i prognosen"
+          ],
+          "ratt": [1],
+          "forklaring": "Blir svaret nej ska mailet inte skickas. Att hitta något att komma med är uppföljningsarbetet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad styr tempot i uppföljningen?",
+          "alternativ": [
+            "Ett intervall i CRM-systemet",
+            "Vad du har att komma med",
+            "Hur nära kvartalsslutet det är"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett schema producerar tomma mail, eftersom uppgiften finns även när innehållet inte gör det."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken uppföljning är mest effektiv?",
+          "alternativ": [
+            "Den du redan lovat i mötet",
+            "Den som innehåller ett nytt erbjudande",
+            "Den som skickas samma dag som mötet"
+          ],
+          "ratt": [0],
+          "forklaring": "De flesta lovar tre eller fyra små saker och levererar ett eller två. Att leverera alla, i tid, sticker ut utan att vara smart."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "kapitel": 11,
+  "lektion": "11.1",
+  "titel": "Se dina egna mönster",
+  "niva": "Avancerad",
+  "tid_min": 8,
+  "fardighet": "sjalvinsikt.monster",
+  "mal": "Efter lektionen vet eleven varför egen erfarenhet är ett opålitligt underlag, kan göra en enkel genomgång av sina förlorade affärer, och känner till de vanligaste mönstren att leta efter.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "SJÄLVINSIKT",
+      "titel": "Se dina egna mönster",
+      "ingress": "Den som inte ser sina egna mönster upprepar dem i tjugo år och kallar det erfarenhet. Det här kapitlet handlar om hur man ser dem."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR MINNET INTE DUGER",
+      "lead": "Din erfarenhet är en samling minnen, och minnen sparar inte det du behöver.",
+      "highlight": "minnen sparar inte det du behöver",
+      "brodtext": [
+        "Du minns affärerna som gick bra och de som gick spektakulärt fel. Du minns inte de fjorton som tynade bort i mars, eftersom ingenting hände i dem. Men det är i dem mönstret sitter, för det är där ditt beteende var som mest oreflekterat.",
+        "Dessutom minns du dina skäl, inte dina handlingar. Du minns att du inte skickade offerten för tidigt, för du vet att man inte ska. Om du gjorde det står i mailkorgen, inte i minnet."
+      ],
+      "takeaway": "Erfarenhet utan anteckningar är en berättelse om dig själv, inte data."
+    },
+    {
+      "typ": "concept",
+      "kicker": "GENOMGÅNGEN",
+      "titel": "Tjugo affärer, en eftermiddag",
+      "forklaring": "Ta de tjugo senaste avslutade affärerna, vunna och förlorade, och gå igenom dem i mailkorgen och kalendern. Inte i CRM, eftersom det innehåller vad du rapporterade och inte vad du gjorde.",
+      "brodtext": [
+        "Anteckna fyra saker per affär. När skickades första offerten, räknat i antal möten. Hur många personer hos kunden hade du pratat med. Vem föreslog nästa steg, du eller kunden. Och hur affären slutade.",
+        "Det tar tre till fyra timmar och är det tråkigaste du gör i kvartalet. Det är också den enda övningen i hela kursen som med säkerhet ger dig något du inte redan visste, eftersom den bygger på vad som hände i stället för på vad du minns."
+      ]
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD FOLK BRUKAR HITTA",
+      "titel": "Fyra vanliga mönster",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Offert för tidigt",
+            "text": "Vunna affärer har offert efter tre eller fyra möten, förlorade efter ett eller två. Det vanligaste fyndet, och nästan alltid en överraskning för den som gör genomgången."
+          },
+          {
+            "rubrik": "För få personer",
+            "text": "Vunna affärer har tre till fem kontakter, förlorade har en. Den enda kontakten var trevlig, och det räckte ända fram till att någon annan skulle tycka något."
+          },
+          {
+            "rubrik": "Du föreslår allt",
+            "text": "I de förlorade kom varje nästa steg från dig. I de vunna föreslog kunden minst ett. Ett mått på engagemang som är svårt att lura sig själv om."
+          },
+          {
+            "rubrik": "Bransch eller storlek",
+            "text": "Ibland är mönstret inte ett beteende utan ett segment. Du vinner konsekvent hos små bolag och förlorar hos stora, eller tvärtom. Det är information om var du ska lägga tiden."
+          }
+        ],
+        "figurtext": "Fyra saker som brukar dyka upp. Ditt eget mönster kan vara ett femte."
+      },
+      "forklaring": "Var försiktig med hur du läser resultatet. Tjugo affärer är för få för att någon skillnad ska vara statistiskt säkerställd, och riktningen är dessutom osäker: kanske skickade du offert sent i de affärer som redan gick bra, snarare än tvärtom. Behandla fyndet som en hypotes att pröva i nästa kvartals affärer, inte som en lag."
+    },
+    {
+      "typ": "reading",
+      "kicker": "OCH INTE SKYLLA PÅ DIG SJÄLV",
+      "lead": "Alla mönster är inte ditt beteende, och den vanligaste feldiagnosen är att anta att de är det.",
+      "highlight": "den vanligaste feldiagnosen",
+      "brodtext": [
+        "Om du förlorar alla affärer över en viss storlek kan det vara ditt hantverk. Det kan lika gärna vara att produkten saknar något stora kunder kräver, att referenserna inte räcker, eller att ni prissatt fel i det segmentet. Om alla säljare i teamet har samma mönster är det knappast personligt.",
+        "Så jämför med någon annans siffror innan du drar slutsatsen. Ett mönster som bara du har är förmodligen ditt. Ett som alla har är organisationens, och att träna bort det är att arbeta på fel problem."
+      ],
+      "takeaway": "Fråga alltid om mönstret är ditt eller allas. Svaret avgör vad som ska ändras."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför duger inte minnet som underlag?",
+          "alternativ": [
+            "För att man glömmer detaljer",
+            "För att man minns de dramatiska affärerna och sina skäl, inte de tynande och sina handlingar",
+            "För att affärer är för olika för att jämföra"
+          ],
+          "ratt": [1],
+          "forklaring": "Mönstret sitter i de fjorton som tynade bort, eftersom det är där beteendet var som mest oreflekterat."
+        },
+        {
+          "typ": "single",
+          "fraga": "Var gör du genomgången?",
+          "alternativ": [
+            "I CRM, där affärerna är dokumenterade",
+            "I mailkorgen och kalendern",
+            "Genom att intervjua kunderna"
+          ],
+          "ratt": [1],
+          "forklaring": "CRM innehåller vad du rapporterade. Mailkorgen innehåller vad du gjorde."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur ska ett fynd i tjugo affärer tolkas?",
+          "alternativ": [
+            "Som ett bevisat samband",
+            "Som en hypotes att pröva i nästa kvartals affärer",
+            "Som ett tecken på att man behöver mer data innan man gör något"
+          ],
+          "ratt": [1],
+          "forklaring": "Tjugo affärer är för få för statistisk säkerhet, och riktningen är osäker. Men en hypotes går att pröva."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad ska du kontrollera innan du drar slutsatsen att mönstret är ditt?",
+          "alternativ": [
+            "Om det stämmer med din magkänsla",
+            "Om andra i teamet har samma mönster",
+            "Om det gäller både vunna och förlorade affärer"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett mönster alla har är organisationens, och att träna bort det är att arbeta på fel problem."
+        }
+      ]
+    }
+  ]
+}
