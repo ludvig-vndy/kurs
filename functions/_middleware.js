@@ -17,8 +17,12 @@ const JWKS_URL = 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1/.well-known/j
 const PUBLIC_EXACT = new Set([
   '/', '/logga-in', '/logga-in/',
   '/labs/inbjudan', '/labs/inbjudan.html',
-  '/pilot', '/pilot/',                                       // pilotinloggning, se nedan
 ]);
+
+// Pilotinloggningen ar Motpartens, inte Marginalens, och slapps darfor igenom i
+// motparten-grenen nedan i stallet for har. Pa Marginalens varder ar /pilot en
+// grindad sida som vilken annan, sa saljkursens inloggning inte gar att na dar.
+const PILOT_SIDA = new Set(['/pilot', '/pilot/']);
 
 // Normalisera pathen FORE alla grindbeslut: avkoda procent-escapes (upprepat, sa
 // dubbelkodning inte smugglar) och gemena. Utan detta ser `/labs/data%2fx.json` inte
@@ -167,6 +171,7 @@ export async function onRequest(context) {
   // far kopa vilken kurs ar en senare fraga (se LAUNCH.md), men skiljelinjen mellan
   // produkterna gar att halla redan nu, och den halls har.
   if (motparten) {
+    if (PILOT_SIDA.has(normalizePath(url.pathname))) return next();
     if (await verifieraPilot(request, env && env.PILOT_SECRET)) return next();
     return Response.redirect(new URL('/pilot', url.origin).toString(), 302);
   }
