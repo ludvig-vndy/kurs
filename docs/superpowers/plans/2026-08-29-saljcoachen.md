@@ -507,6 +507,17 @@ function lasLektioner(dir = DIR) {
     .map((d) => ({ d, kapitelTitel: kapitelTitel.get(d.kapitel) ?? '' }));
 }
 
+/* Lektionstexterna som en map. Egen export for att grinden ska kunna kora sina semantiska
+   canaries mot SJALVA MATERIALET. Kors de mot filstrangen ser de bara JSON-escapade rader,
+   och en radbaserad kontroll som "myt-pastaendet ska sta forst pa sin rad" blir alltid falsk. */
+export function byggMaterial(dir = DIR) {
+  const material = {};
+  for (const { d, kapitelTitel } of lasLektioner(dir)) {
+    material[d.lektion] = lektionsMaterial(d, kapitelTitel);
+  }
+  return material;
+}
+
 /** Korpusens innehall som strang. Exporteras sa grinden kan jamfora utan att skriva fil. */
 export function byggKorpus(dir = DIR) {
   const lektioner = lasLektioner(dir);
@@ -708,7 +719,7 @@ export function kollaKorpus(korpus) {
 överst i filen:
 
 ```js
-import { byggKorpus } from './bygg-korpus.mjs';
+import { byggKorpus, byggMaterial } from './bygg-korpus.mjs';
 ```
 
 och byt ut `return errs;` sist i `checkMotparten` mot:
@@ -722,7 +733,10 @@ och byt ut `return errs;` sist i `checkMotparten` mot:
     if (pa_disk !== forvantad) {
       errs.push('korpus: functions/api/_korpus.js ar ur synk, kor `node tools/bygg-korpus.mjs`');
     }
-    errs.push(...kollaKorpus(forvantad));
+    // Canaries kors mot materialet, inte mot filstrangen: i filen ar lektionstexten
+    // JSON-escapad, sa raderna finns inte som rader.
+    errs.push(...kollaKorpus(Object.values(byggMaterial(dir)).join('
+')));
   }
   return errs;
 ```

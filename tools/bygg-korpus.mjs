@@ -27,6 +27,18 @@ function lasLektioner(dir = DIR) {
     .map((d) => ({ d, kapitelTitel: kapitelTitel.get(d.kapitel) ?? '' }));
 }
 
+/* Lektionstexterna som en map. Egen export for att grinden ska kunna kora sina
+   semantiska canaries mot SJALVA MATERIALET. Kors de mot filstrangen nedan ser de bara
+   JSON-escapade rader, och en radbaserad kontroll som "myt-pastaendet ska sta forst pa
+   sin rad" blir da alltid falsk. */
+export function byggMaterial(dir = DIR) {
+  const material = {};
+  for (const { d, kapitelTitel } of lasLektioner(dir)) {
+    material[d.lektion] = lektionsMaterial(d, kapitelTitel);
+  }
+  return material;
+}
+
 /** Korpusens innehall som strang. Exporteras sa grinden kan jamfora utan att skriva fil. */
 export function byggKorpus(dir = DIR) {
   const lektioner = lasLektioner(dir);

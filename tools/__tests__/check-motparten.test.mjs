@@ -109,3 +109,42 @@ test('lasKallor plockar ut varje K- och R-id ur registret', () => {
   assert.ok(kallor.has('R7'), 'R7 ska finnas');
   assert.ok(!kallor.has('K99'), 'K99 ska inte finnas');
 });
+
+/* Semantiska canaries for korpusen. Se check-motparten.mjs och specen avsnitt 3. */
+import { kollaKorpus } from '../check-motparten.mjs';
+
+const KANONISK = [
+  'MYT-PÅSTÅENDE (falskt, får aldrig upprepas som sant): Bara 7 procent av kommunikationen är ord.',
+  '- Ingen har försökt: nagot',
+  '- Alla tycker, ingen äger: Utan en ägare finns ingen som tar strid för budgeten och sa vidare',
+  'EVIDENS nivå B, källa K9: Effekten finns i vissa sammanhang och är nära noll i genomsnitt.',
+];
+
+test('kollaKorpus godkanner en korpus med alla canaries', () => {
+  assert.deepEqual(kollaKorpus(KANONISK.join('\n')), []);
+});
+
+test('kollaKorpus faller om en distraktor lackt in', () => {
+  const fel = kollaKorpus([...KANONISK, 'Att kunden inte vill uppge en budget'].join('\n'));
+  assert.equal(fel.length, 1);
+  assert.match(fel[0], /distraktor/i);
+});
+
+test('kollaKorpus faller om myt-pastaendet star omarkt', () => {
+  const utan = KANONISK.slice(1);
+  const fel = kollaKorpus(['Bara 7 procent av kommunikationen är ord.', ...utan].join('\n'));
+  assert.equal(fel.length, 1);
+  assert.match(fel[0], /omärkt/);
+});
+
+test('kollaKorpus faller om visualtexten saknas', () => {
+  const fel = kollaKorpus([KANONISK[0], KANONISK[3]].join('\n'));
+  assert.equal(fel.length, 2);
+});
+
+test('kollaKorpus faller om evidensraden tappat nivan', () => {
+  const utan = KANONISK.slice(0, 3);
+  const fel = kollaKorpus([...utan, 'Effekten finns i vissa sammanhang och är nära noll i genomsnitt.'].join('\n'));
+  assert.equal(fel.length, 1);
+  assert.match(fel[0], /nivå B/);
+});

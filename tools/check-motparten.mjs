@@ -6,6 +6,7 @@
 
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { byggKorpus, byggMaterial } from './bygg-korpus.mjs';
 import { dirname, join } from 'node:path';
 import { checkLesson } from './check-fokus.mjs';
 
@@ -107,6 +108,60 @@ export function checkMotparten(dir = DIR) {
   const errs = [];
   for (const f of files) {
     checkMotpartenLektion(f, readFileSync(join(dir, f), 'utf8').replace(/\r\n/g, '\n'), errs, opt);
+  }
+
+  // Korpusen: forst att den ar i synk med lektionerna, sedan att den ar semantiskt hel.
+  const korpusfil = join(HERE, '..', 'functions', 'api', '_korpus.js');
+  if (existsSync(korpusfil)) {
+    const forvantad = byggKorpus(dir);
+    const paDisk = readFileSync(korpusfil, 'utf8').replace(/\r\n/g, '\n');
+    if (paDisk !== forvantad) {
+      errs.push('korpus: functions/api/_korpus.js ar ur synk, kor `node tools/bygg-korpus.mjs`');
+    }
+    // Canaries kors mot materialet, inte mot filstrangen: i filen ar lektionstexten
+    // JSON-escapad, sa raderna finns inte som rader.
+    errs.push(...kollaKorpus(Object.values(byggMaterial(dir)).join('\n')));
+  }
+  return errs;
+}
+
+/* Semantiska canaries for korpusen. Synkkontrollen nedan visar att _korpus.js kommer ur
+   samma generatorversion som lektionerna. Den visar INTE att generatorn tar med det den
+   borde: en generator kan vara perfekt synkad och anda tappa visualtext, evidens eller
+   myt-pastaenden, vilket ar precis det fel som hittades nar korpusen designades.
+   En canary per innehallstyp, inte 42 snapshots. Strangarna ar kontrollerade som unika i
+   materialet. Forsvinner en for att en lektion andrats: byt fixture medvetet. */
+const CANARIES = [
+  { typ: 'jamforelse-rubrik', text: 'Ingen har försökt', kravs: true },
+  { typ: 'jamforelse-text', text: 'Utan en ägare finns ingen som tar strid för budgeten', kravs: true },
+  { typ: 'quizdistraktor', text: 'Att kunden inte vill uppge en budget', kravs: false },
+];
+const EVIDENS_CANARY = 'Effekten finns i vissa sammanhang och är nära noll i genomsnitt';
+const MYT_CANARY = 'Bara 7 procent av kommunikationen är ord';
+
+export function kollaKorpus(korpus) {
+  const errs = [];
+  for (const c of CANARIES) {
+    const finns = korpus.includes(c.text);
+    if (c.kravs && !finns) {
+      errs.push(`korpus: ${c.typ} saknas, "${c.text}" borde finnas`);
+    }
+    if (!c.kravs && finns) {
+      errs.push(`korpus: distraktor lackte in, "${c.text}" far aldrig finnas i korpusen`);
+    }
+  }
+  const rader = korpus.split('\n');
+  const evidensrad = rader.find((r) => r.includes(EVIDENS_CANARY));
+  if (!evidensrad) {
+    errs.push(`korpus: evidensreservation saknas, "${EVIDENS_CANARY}" borde finnas`);
+  } else if (!evidensrad.includes('nivå B')) {
+    errs.push('korpus: evidensreservationen har tappat "nivå B" pa sin rad');
+  }
+  const mytrad = rader.find((r) => r.includes(MYT_CANARY));
+  if (!mytrad) {
+    errs.push(`korpus: myt-pastaende saknas, "${MYT_CANARY}" borde finnas`);
+  } else if (!mytrad.startsWith('MYT-PÅSTÅENDE')) {
+    errs.push('korpus: myt-pastaendet star omärkt, raden maste borja med MYT-PÅSTÅENDE');
   }
   return errs;
 }
