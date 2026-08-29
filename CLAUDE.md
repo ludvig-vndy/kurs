@@ -118,6 +118,19 @@ Egen produkt på samma plattform och i samma bygge, egen URL. 12 kapitel, 42 lek
 - **Åtkomst:** Delägaren och Motparten är skilda produkter och delar ingen session.
   Middlewaren skiljer på värdnamn: Supabase-JWT:n öppnar bara Marginalen, pilotcookien
   bara Motparten. Rättigheter per kurs (vem som får köpa vad) är inte byggt.
+- **Säljcoachen** (`/motparten/coach`, `functions/api/coach.js`): diagnos mot kursens
+  material i två steg, routning över `REGISTER` och svar på full text ur högst fem
+  lektioner. Korpusen genereras med `node tools/bygg-korpus.mjs` till
+  `functions/api/_korpus.js` och **committas**; grinden faller om den är ur synk eller om
+  en semantisk canary saknas. Utvinningen ligger i `tools/lib/motparten-text.mjs` och är
+  medvetet skild från `stegProsa` i röstverktyget, som tappar visualtext,
+  evidensnoteringar och myt-påståenden. All logik som går att pröva utan API ligger i
+  `functions/api/_routning.js`. Evaluering: `tools/prova-routning.mjs` (billig, kör den
+  ofta) och `tools/prova-coachen.mjs` (policy, mänsklig bedömning). Ingen av dem ingår i
+  `npm run check`, båda kostar pengar. Kräver `ANTHROPIC_API_KEY` och KV-bindningen `RL`
+  på Pages-projektet `motparten`, och faller stängt (501) utan dem. Spec:
+  `docs/superpowers/specs/2026-08-29-saljcoachen-design.md`. Plan:
+  `docs/superpowers/plans/2026-08-29-saljcoachen.md`.
 - Spec: `docs/superpowers/specs/2026-08-22-motparten-saljkurs-design.md`. Plan:
   `docs/superpowers/plans/2026-08-29-motparten-pilot.md`. Bildkällor:
   `docs/kallor/motparten-bildkallor.md`.
