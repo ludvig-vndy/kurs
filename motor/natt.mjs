@@ -221,6 +221,43 @@ const brevFil = p(`./out/brev-${datum}.html`);
 writeFileSync(brevFil, brevHtml, 'utf8');
 console.log(`\nDagsbrevet: ${brevFil} (${dagensPoster.length} poster, ${lugna.length} lugna bolag)`);
 
+// Strukturerad JSON för webbsidan (Ägarbrevet). Publiceras till KV och läses av
+// /api/brev; sidan renderar händelsebrevet ur den. Se motor/publicera-brev.mjs.
+const TYPNAMN = { rapport: 'Rapport', kallelse: 'Kallelse', emission: 'Emission', avtal: 'Avtal', forvarv: 'Förvärv', insyn: 'Insynshandel', avvikelse: 'Avvikelse', omvarld: 'Omvärld', ovrigt: 'Övrigt' };
+const faktaText = post => {
+  if (post.bevis) return String(post.bevis).slice(0, 220);
+  if (post.fakta && Object.keys(post.fakta).length) {
+    return Object.entries(post.fakta).slice(0, 3)
+      .map(([id, f]) => `${id.replace(/_/g, ' ')}: ${String(f.nu).replace('.', ',')}${f.fjol != null ? ` (${String(f.fjol).replace('.', ',')})` : ''}`)
+      .join(' · ');
+  }
+  return '';
+};
+const nr = Math.max(1, Math.round((new Date(datum + 'T12:00:00') - new Date('2026-07-07T12:00:00')) / 864e5) + 1);
+const isDok = t => ['rapport', 'kallelse', 'emission', 'avtal', 'forvarv'].includes(t);
+const brevData = {
+  date: datum,
+  nr,
+  checked: {
+    reports: dagensPoster.filter(dp => dp.post.typ === 'rapport').length,
+    filings: dagensPoster.filter(dp => isDok(dp.post.typ)).length,
+    insiders: dagensPoster.filter(dp => dp.post.typ === 'insyn').length,
+  },
+  poster: dagensPoster.map(({ bolag, post }) => ({
+    bolag,
+    typ: post.typ,
+    typnamn: TYPNAMN[post.typ] || post.typ,
+    rubrik: (post.rubrik || '').split('>').pop().trim(),
+    fakta: faktaText(post),
+    url: post.url || '',
+    lektion: post.typ,
+  })),
+  lugna,
+};
+const brevJsonFil = p(`./out/brev-latest.json`);
+writeFileSync(brevJsonFil, JSON.stringify(brevData, null, 2), 'utf8');
+console.log(`Brev-JSON: ${brevJsonFil}`);
+
 if (konf.utskick && process.env.RESEND_API_KEY) {
   try {
     const amne = `Ägarbrevet · ${dagensPoster.length} ${dagensPoster.length === 1 ? 'sak' : 'saker'} i dina bolag · ${datum}`;

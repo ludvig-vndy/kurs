@@ -339,8 +339,43 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
         '</div></section>';
     }).join('');
   }
-  fetch('/labs/data/brev-exempel.json').then(function(r){return r.json();}).then(render).catch(function(){
-    var t=document.getElementById('brev-title'); if(t) t.textContent='Kunde inte ladda brevet.';
+  // Händelsebrevet ur motorn (nyheter, insyn, blankning), formen { poster[], lugna[] }.
+  var TYPKLASS={rapport:'gold',forvarv:'gold',emission:'neg',kallelse:'gold',insyn:'neg',avvikelse:'neg',omvarld:'calm',avtal:'gold',ovrigt:'calm'};
+  function renderNyheter(b){
+    var poster=b.poster||[], lugna=b.lugna||[], n=poster.length, c=b.checked||{};
+    document.getElementById('brev-eyebrow').textContent='Ägarbrevet · '+(b.date||'')+' · 07:30';
+    document.getElementById('brev-title').innerHTML = n
+      ? 'God morgon.<br>'+n+(n===1?' händelse':' händelser')+' i dina bolag i natt.'
+      : 'God morgon.<br>Inget nytt i dina bolag i dag.';
+    document.getElementById('brev-sub').textContent='Vi läste '+(c.reports||0)+' rapporter, '+(c.filings||0)+' pressmeddelanden och '+(c.insiders||0)+' insynsanmälningar i natt. '+(n?'Det här rörde dina bolag, resten var brus.':'Inga trådar korsades, allt låg still.');
+    // Sammanfattningsband: ett bolag per rad med antal händelser, plus lugna.
+    var perBolag={}; poster.forEach(function(p){ perBolag[p.bolag]=(perBolag[p.bolag]||0)+1; });
+    var summ=document.getElementById('brev-summ');
+    var rows=Object.keys(perBolag).map(function(co){
+      return '<div class="srow"><span class="dot gold"></span><div><b>'+esc(co)+'</b> <span>· '+perBolag[co]+(perBolag[co]===1?' händelse':' händelser')+'</span></div></div>';
+    });
+    lugna.forEach(function(co){ rows.push('<div class="srow"><span class="dot calm"></span><div><b>'+esc(co)+'</b> <span>· lugnt, inget nytt</span></div></div>'); });
+    summ.innerHTML = rows.join('') || '<div class="srow"><span class="dot calm"></span><div><b>Lugnt</b> <span>· inget rörde dina bolag</span></div></div>';
+    // Berättelser: en per händelse.
+    var st=document.getElementById('brev-stories');
+    st.innerHTML = poster.map(function(p){
+      var dot=TYPKLASS[p.typ]||'calm';
+      return '<section class="story">'+
+        '<div class="slug"><span class="dot '+dot+'"></span><span class="co">'+esc(p.bolag)+'</span><span class="sep">/</span><span>'+esc(p.typnamn||p.typ)+'</span></div>'+
+        '<h2>'+esc(p.rubrik)+'</h2>'+
+        (p.fakta?'<p>'+esc(p.fakta)+'</p>':'')+
+        '<div class="srcs">'+(p.url?'<a href="'+esc(p.url)+'">Källdokumentet →</a>':'')+'</div>'+
+        '</section>';
+    }).join('');
+  }
+  // Primärt: riktigt brev ur KV (/api/brev). Fallback: exempeldatan (vakt-formen).
+  fetch('/api/brev').then(function(r){return r.ok?r.json():null;}).then(function(b){
+    if(b && b.poster){ renderNyheter(b); return; }
+    return fetch('/labs/data/brev-exempel.json').then(function(r){return r.json();}).then(render);
+  }).catch(function(){
+    fetch('/labs/data/brev-exempel.json').then(function(r){return r.json();}).then(render).catch(function(){
+      var t=document.getElementById('brev-title'); if(t) t.textContent='Kunde inte ladda brevet.';
+    });
   });
 })();
 </script>
