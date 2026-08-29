@@ -1,0 +1,100 @@
+{
+  "kapitel": 0,
+  "lektion": "0.5",
+  "titel": "Kontraktet",
+  "niva": "Nybörjare",
+  "tid_min": 4,
+  "fardighet": "grund.kontrakt",
+  "mal": "Efter lektionen vet eleven vad kursen lovar och vad den inte lovar, hur de fyra evidensnivåerna ska läsas, och vad som krävs av eleven själv för att kursen ska göra någon skillnad.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "AVLÄRNING",
+      "titel": "Kontraktet",
+      "ingress": "Sista lektionen i kapitlet är kursens löfte till dig, och ditt till kursen. Den är kort, och den är den enda lektionen där du får ställa krav tillbaka."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD KURSEN LOVAR",
+      "lead": "Kursen lovar dig förståelse och omdöme, alltså två saker som är långsammare än tekniker och håller längre.",
+      "highlight": "långsammare än tekniker och håller längre",
+      "brodtext": [
+        "Förståelse betyder att du vet varför något fungerar, inte bara att det gör det. Den som bara kan en teknik står still när situationen avviker från exemplet. Den som förstår mekanismen kan improvisera, och kundmöten består till största delen av avvikelser.",
+        "Omdöme betyder att du kan avgöra vad situationen kräver. När du ska fråga en gång till och när du ska sluta. När problemet är värt att lösa och när det inte är det. När du ska avråda. Omdöme går inte att lära ut som en regel, men det går att träna genom att titta på tillräckligt många fall och veta vad man ska titta efter."
+      ],
+      "takeaway": "Du ska lämna kursen med färre färdiga meningar och fler frågor du vet varför du ställer."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD DEN INTE LOVAR",
+      "lead": "Kursen lovar inte att du säljer mer nästa kvartal, och den som lovar dig det ljuger eller vet inte bättre.",
+      "highlight": "lovar inte att du säljer mer nästa kvartal",
+      "brodtext": [
+        "Det finns för mycket mellan dig och utfallet. Marknaden, prissättningen, produkten, vilka leads du får, hur lång er säljcykel är, och slumpen som avgör mer i enskilda affärer än någon vill erkänna. En kurs som lovar en procentsats gör ett påstående den inte kan belägga.",
+        "Den lovar inte heller några manus. Det finns inga meningar i den här kursen som du ska säga när kunden säger X. Det beror inte på finkänslighet, utan på att den sortens material är det första som slutar fungera när kunden känner igen det."
+      ],
+      "takeaway": "Det kursen kan lova är att du fattar bättre beslut i samtalet. Vad det ger i kronor beror på tio saker till."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SÅ LÄSER DU MARGINALEN",
+      "titel": "Fyra nivåer, och varför de står utsatta",
+      "forklaring": "Vid sidan av texten dyker det upp små märken som talar om hur säkert ett påstående är. De finns för att du ska kunna lita olika mycket på olika delar av kursen, vilket är ovanligt och avsiktligt.",
+      "brodtext": [
+        "Robust forskning betyder replikerat, publicerat och stabilt över sammanhang. Att förtroende vilar på bedömningar av förmåga, välvilja och integritet ligger här.",
+        "Omdiskuterat betyder publicerat och ofta citerat, men med seriös kritik eller stor spridning i effekten. Att förluster väger tyngre än vinster ligger här, och lektionen säger då vad tvisten gäller.",
+        "Hantverk betyder erfarenhet och rimligt resonemang utan publicerat stöd. Att din nöd syns på dig ligger här. Det kan mycket väl stämma, men ingen har mätt det, och då säger kursen det i stället för att låta det låta som forskning.",
+        "Den fjärde nivån syns bara som avfärdad. Det är påståenden som är spridda i branschen men bygger på feltolkning, och de finns med i kursen enbart för att tas isär, som i lektion 0.2."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM KRÄVS AV DIG",
+      "lead": "Kursen fungerar bara om du tar med dig en sak i taget in i ett riktigt möte och ser vad som händer.",
+      "highlight": "en sak i taget in i ett riktigt möte",
+      "brodtext": [
+        "Att läsa allt på en helg ger dig en behaglig känsla av att ha förstått, och nästan ingen förändring. Beteenden ändras långsamt och ett i taget. Välj det du är sämst på, inte det som är roligast att läsa om.",
+        "Räkna också med att de första försöken blir klumpiga. Att ställa den obekväma frågan känns fel de första gångerna, för du har tränat i tio år på att undvika den. Att det känns fel är inte ett tecken på att det är fel."
+      ],
+      "takeaway": "Läs ett kapitel, plocka ett beteende, ta det till nästa möte. Sedan nästa kapitel."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad lovar kursen?",
+          "alternativ": [
+            "Högre försäljning inom ett kvartal",
+            "Förståelse för varför något fungerar, och omdöme att avgöra vad situationen kräver",
+            "En uppsättning formuleringar för de vanligaste invändningarna"
+          ],
+          "ratt": [1],
+          "forklaring": "Utfallet i kronor beror på marknad, pris, produkt, leads och slump. En kurs som lovar en procentsats påstår något den inte kan belägga."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad betyder märket hantverk i marginalen?",
+          "alternativ": [
+            "Att påståendet är avfärdat av forskningen",
+            "Att påståendet bygger på erfarenhet och rimligt resonemang, utan publicerat stöd",
+            "Att påståendet är för nytt för att ha hunnit prövas"
+          ],
+          "ratt": [1],
+          "forklaring": "Det kan mycket väl stämma, men ingen har mätt det. Kursen säger då det, i stället för att låta det låta som forskning."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur ska du använda kursen för att den ska göra skillnad?",
+          "alternativ": [
+            "Läsa igenom allt först och sedan börja tillämpa",
+            "Ta ett beteende i taget in i ett riktigt möte, och börja med det du är sämst på",
+            "Öva formuleringarna tills de sitter innan du använder dem skarpt"
+          ],
+          "ratt": [1],
+          "forklaring": "Beteenden ändras långsamt och ett i taget. Att läsa allt på en helg ger en känsla av att ha förstått och nästan ingen förändring."
+        }
+      ]
+    }
+  ]
+}

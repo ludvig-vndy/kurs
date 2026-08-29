@@ -1,0 +1,127 @@
+{
+  "kapitel": 0,
+  "lektion": "0.3",
+  "titel": "Egot i vägen",
+  "niva": "Nybörjare",
+  "tid_min": 7,
+  "fardighet": "grund.sjalvinsikt",
+  "mal": "Efter lektionen kan eleven känna igen två behov som gör säljare sämre, behovet av att ha rätt och behovet av affären, och vet varför båda syns utifrån. Eleven vet också att osäkerhet som riktas rätt höjer trovärdigheten i stället för att sänka den.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "AVLÄRNING",
+      "titel": "Egot i vägen",
+      "ingress": "Två behov gör en säljare sämre, och båda känns som styrka inifrån. Det ena är behovet av att ha rätt. Det andra är behovet av affären."
+    },
+    {
+      "typ": "reading",
+      "kicker": "BEHOVET AV ATT HA RÄTT",
+      "lead": "När kunden säger något du vet är fel händer något i kroppen innan du hunnit bestämma dig för hur du ska svara.",
+      "highlight": "innan du hunnit bestämma dig",
+      "brodtext": [
+        "Du rättar. Du gör det vänligt, du gör det med belägg, och du har helt rätt i sak. Kunden nickar och säger att det är en bra poäng. Sedan händer ingenting mer i den affären, och du kommer aldrig få veta varför.",
+        "Reaktansen förklarar en del av det. Att bli rättad är ett litet hot mot friheten att tycka som man gör, och motreaktionen har en ilskekomponent även när ingen höjer rösten. Men det finns en enklare mekanism också: den som blivit rättad har nu ett skäl att inte behöva dig. Om du redan vet bättre finns det ingen anledning att berätta något för dig, och då tystnar den enda informationskälla du hade."
+      ],
+      "takeaway": "Att ha rätt är gratis. Att få rätt kostar dig det kunden hade tänkt berätta härnäst.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K8",
+        "notering": "Reaktansteorin gäller hot mot upplevd valfrihet i allmänhet. Att en rättelse i ett säljsamtal utlöser den är kursens tolkning, inte något studien mätt."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "DET SOM VÄNDER PÅ INTUITIONEN",
+      "titel": "Att fråga om råd höjer din kompetens",
+      "forklaring": "De flesta säljare undviker att säga att de inte vet, eftersom osäkerhet antas läsas som svaghet. Studier på rådfrågning pekar åt andra hållet. Den som ber om råd uppfattas som mer kompetent än den som inte gör det, och effekten är starkast när uppgiften är svår och när rådet begärs av personen själv.",
+      "brodtext": [
+        "Mekanismen är rimlig när man tänker efter. Att be någon om råd säger att du bedömer den personens omdöme som värt att ha, och det är smickrande. Det säger också att du hellre får rätt svar än ser stark ut, vilket är precis den egenskap man vill ha hos någon som ska leverera något.",
+        "Var noga med formen. Det som lyfter är den riktade frågan till en bestämd person om något svårt. Allmän vilsenhet lyfter ingenting. Skillnaden mellan att säga jag vet inte hur ni brukar hantera det här och att säga jag vet inte är hela lektionen."
+      ],
+      "evidens": {
+        "niva": "A",
+        "kalla": "K5",
+        "notering": "Brooks, Gino och Schweitzer (2015). Mäter upplevd kompetens i experiment, inte affärsutfall."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "BEHOVET AV AFFÄREN",
+      "lead": "Det andra behovet syns tydligare på dig än det första, och du är den enda i rummet som inte märker det.",
+      "highlight": "du är den enda i rummet som inte märker det",
+      "brodtext": [
+        "Det märks på tempot. På att du fyller tystnaden. På att du erbjuder rabatt innan någon frågat, föreslår ett extra möte som ingen behöver, eller följer upp på tisdagen fast ni sa nästa vecka. Ingen av de sakerna är fel i sig. Tillsammans ritar de en bild av någon som behöver det här mer än motparten gör.",
+        "Och en människa som behöver något av dig är svårare att lita på, inte lättare. Inte för att behovet är skamligt, utan för att det ger ett skäl att undanhålla. Kunden vet att du tjänar på ett visst svar. Ju mer du behöver det svaret, desto mer måste hon räkna bort från allt du säger."
+      ],
+      "takeaway": "Din nöd är inte en känsla du bär inombords. Den är information du sänder, och den prissätts.",
+      "evidens": {
+        "niva": "C",
+        "notering": "Hantverk. Rimligt och samstämmigt med hur förtroende beskrivs i forskningen, men jag har inte hittat någon studie som mäter just det här i säljsamtal."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "EN INVÄNDNING SOM FALLER",
+      "titel": "Jag är inte säljartypen",
+      "forklaring": "Den vanligaste ursäkten för att undvika det här yrket är att man inte har rätt personlighet. Den håller inte. Sambandet mellan extraversion och säljresultat är svagt och inkonsekvent, vilket är ett av de mer replikerade fynden på området. En studie på 340 telefonsäljare fann till och med ett kupolformat samband, där de i mitten sålde mest, men den studien står ensam och gäller ett smalt sammanhang.",
+      "brodtext": [
+        "Slutsatsen kursen drar är den försiktiga: personlighet förutsäger säljresultat dåligt. Inte att introverta är bäst, inte att de i mitten är bäst. Bara att den variabel folk tror avgör saken knappt gör det.",
+        "Vilket är goda nyheter, för det betyder att det som avgör är sådant som går att lära sig. Att ställa en fråga till och vänta ut svaret är en färdighet. Att inte rätta någon som har fel är en färdighet. Ingen av dem kräver att du är utåtriktad."
+      ],
+      "evidens": {
+        "niva": "B",
+        "kalla": "K12",
+        "notering": "Grant (2013) är en enskild studie på utgående telefonförsäljning utan känd replikering. Det svaga sambandet mellan extraversion och resultat är däremot väl etablerat."
+      }
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad kostar det dig att rätta en kund som har fel?",
+          "alternativ": [
+            "Ingenting, om du gör det vänligt och med belägg",
+            "Det kunden hade tänkt berätta härnäst",
+            "Trovärdighet, eftersom du framstår som osäker"
+          ],
+          "ratt": [1],
+          "forklaring": "Den som blivit rättad har fått ett skäl att inte behöva dig. Då tystnar den enda informationskälla du hade i rummet, och du får aldrig veta vad du gick miste om."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad visar forskningen om att be någon om råd?",
+          "alternativ": [
+            "Det sänker den upplevda kompetensen, men bygger relation",
+            "Det höjer den upplevda kompetensen, särskilt när uppgiften är svår",
+            "Det har ingen mätbar effekt på hur man uppfattas"
+          ],
+          "ratt": [1],
+          "forklaring": "Effekten är starkast när uppgiften är svår och när rådet begärs av personen själv. Det är den riktade frågan som lyfter, inte allmän osäkerhet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför gör behovet av affären dig svårare att lita på?",
+          "alternativ": [
+            "För att behov är skamligt och kunder föraktar det",
+            "För att det ger dig ett skäl att undanhålla, och kunden måste räkna bort mer av det du säger",
+            "För att det gör dig mindre påläst om produkten"
+          ],
+          "ratt": [1],
+          "forklaring": "Kunden vet redan att du tjänar på ett visst svar. Ju mer du verkar behöva det svaret, desto större blir avdraget på allt du påstår."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken slutsats drar kursen om personlighet och säljresultat?",
+          "alternativ": [
+            "Ambiverta säljer mest, vilket är väl belagt",
+            "Introverta har ett övertag i komplex försäljning",
+            "Personlighet förutsäger säljresultat dåligt, och det som avgör går att lära sig"
+          ],
+          "ratt": [2],
+          "forklaring": "Det kupolformade sambandet kommer från en enskild studie på telefonförsäljning utan känd replikering. Det som är väl etablerat är att extraversion förutsäger resultat svagt och inkonsekvent."
+        }
+      ]
+    }
+  ]
+}

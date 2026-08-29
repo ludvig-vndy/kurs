@@ -1,0 +1,144 @@
+{
+  "kapitel": 0,
+  "lektion": "0.4",
+  "titel": "Vad försäljning faktiskt är",
+  "niva": "Nybörjare",
+  "tid_min": 7,
+  "fardighet": "grund.definition",
+  "mal": "Efter lektionen kan eleven formulera vad försäljning är utan att använda ordet övertala, och vet varför den vanligaste konkurrenten är att kunden inte gör någonting alls. Eleven kan också skilja på att höja upplevt värde och att sänka upplevd risk.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "AVLÄRNING",
+      "titel": "Vad försäljning faktiskt är",
+      "ingress": "Vi har rivit tillräckligt. Nu bygger vi definitionen som resten av kursen står på, och den är kortare än du tror."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FRÅN FÖRSTA PRINCIPER",
+      "lead": "Ta bort allt som är bransch, produkt och personlighet, och se vad som blir kvar av situationen.",
+      "highlight": "se vad som blir kvar av situationen",
+      "brodtext": [
+        "Kvar blir två personer. Den ena ska bestämma sig om något hon inte kan veta säkert. Kommer det fungera hos oss. Kommer de hålla vad de lovar. Kommer jag få kritik för det här om ett halvår. Den andra personen sitter mitt emot och tjänar pengar på ett av svaren.",
+        "Det är hela situationen, och båda halvorna spelar roll. Om osäkerheten inte fanns skulle du inte behövas, för då hade kunden bara räknat. Om du inte tjänade på utfallet hade du varit en rådgivare, och då hade allt du sa vägt tyngre."
+      ],
+      "takeaway": "Försäljning är att hjälpa en annan människa fatta ett beslut under osäkerhet, när du själv tjänar på utfallet."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DEN OBEKVÄMA HALVAN",
+      "titel": "Du är part i saken",
+      "forklaring": "Den andra halvan av definitionen är den som säljkurser hoppar över, och den avgör nästan allt. Du tjänar på ett visst svar, kunden vet om det, och därför diskonteras allt du säger innan det når fram. Kunden hushållar rimligt med sin tilltro.",
+      "brodtext": [
+        "Det får en obehaglig följd: dina argument väger lite. Ju bättre de är, desto mer misstänkta blir de, eftersom du hade sagt detsamma oavsett om det stämde. Därför är den vanligaste reflexen, att argumentera bättre, en av de sämsta.",
+        "Det som väger är sådant som kostar dig något. Att säga att en del av lösningen inte passar. Att avråda från den dyrare varianten. Att säga att du inte vet och återkomma. Ingen av de sakerna är en teknik, och det är därför de biter: de går inte att göra på låtsas utan att avstå något."
+      ]
+    },
+    {
+      "typ": "concept",
+      "kicker": "DIN VERKLIGA KONKURRENT",
+      "titel": "Att göra ingenting vinner oftare än det borde",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Det du tror du tävlar mot",
+            "text": "Den andra leverantören. Deras pris, deras funktioner, deras referenser. Du förbereder dig på att vara bättre än dem, och det är där du lägger din tid."
+          },
+          {
+            "rubrik": "Det du oftast tävlar mot",
+            "text": "Att kunden behåller det hon har. Ingen behöver försvara ett beslut som aldrig fattades, och ingen får sparken för att allt fortsatte som förut ett kvartal till."
+          }
+        ],
+        "figurtext": "Status quo står sällan med i offertjämförelsen, men det är det alternativ som vinner flest gånger."
+      },
+      "forklaring": "Människor väljer oproportionerligt ofta att behålla det de redan har. Det är visat både i experiment och i verkliga val, till exempel när anställda får byta pensions- eller sjukvårdsplan och låter bli trots att bytet vore bättre för dem. Det som ser ut som ointresse för din lösning är ofta ett fullt begripligt försvar av det bestående.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K6",
+        "notering": "Samuelson och Zeckhauser (1988). Visar att tendensen finns och är stark, inte hur du bäst tar dig förbi den."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "KURSENS BÄRANDE SPÄNNING",
+      "lead": "Om status quo är motståndaren följer något som vänder på hur de flesta arbetar: risk blockerar oftare än värde.",
+      "highlight": "risk blockerar oftare än värde",
+      "brodtext": [
+        "Den vanliga instinkten när en affär står stilla är att höja värdet. Fler funktioner, bättre case, ett räkneexempel till. Ibland är det rätt. Men frågan som stoppar de flesta beslut är inte om det här är tillräckligt bra, utan vad som händer med mig om det inte blir bra.",
+        "Det finns en näraliggande idé som ofta överdrivs, nämligen att förluster väger ungefär dubbelt så tungt som lika stora vinster. Den siffran ska du inte bära. Stödet för förlustaversion som allmän lag är svagare än den populära versionen påstår, och en del av det som ser ut som förlustaversion förklaras av att förluster bara får mer uppmärksamhet. Kursen säger därför det försiktigare och mer användbara: människor är mer uppmärksamma på vad de kan förlora än på vad de kan vinna."
+      ],
+      "takeaway": "Fråga inte bara vad kunden vinner. Fråga vad hon riskerar, och vem som får skulden om du har fel.",
+      "evidens": {
+        "niva": "B",
+        "kalla": "K10",
+        "notering": "Gal och Rucker (2018) mot Kahneman och Tversky (1979). Effekten finns men är kontextberoende, och multipeln två ska aldrig sägas."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD DEFINITIONEN KRÄVER AV DIG",
+      "lead": "En definition är bara värd något om den ändrar vad du gör på tisdag förmiddag.",
+      "highlight": "ändrar vad du gör på tisdag förmiddag",
+      "brodtext": [
+        "Den här gör tre saker. Den flyttar fokus från din presentation till kundens beslutssituation, alltså från vad du ska säga till vad hon ska kunna försvara. Den gör osäkerheten till huvudpersonen, vilket betyder att du får betalt för att minska den och inte för att prata bort den. Och den erkänner att du är part, vilket betyder att din trovärdighet byggs med handlingar och inte med formuleringar.",
+        "Ordet övertala finns inte i definitionen. Inte av godhet, utan för att det starkaste stödet vi har säger att argumenterandet är den del som hänger ihop med sämre utfall."
+      ],
+      "takeaway": "Du får inte betalt för att övertyga. Du får betalt för att göra ett svårt beslut möjligt att fatta och möjligt att försvara.",
+      "evidens": {
+        "niva": "B",
+        "kalla": "K13",
+        "notering": "Magill med flera (2014) om motiverande samtal. Prövad på beteendeförändring inom vård, inte på köpbeslut."
+      }
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Hur definierar kursen försäljning?",
+          "alternativ": [
+            "Att övertyga någon om att en lösning är rätt för dem",
+            "Att hjälpa en annan människa fatta ett beslut under osäkerhet, när du själv tjänar på utfallet",
+            "Att matcha en produkt mot ett uttalat behov"
+          ],
+          "ratt": [1],
+          "forklaring": "Båda halvorna behövs. Osäkerheten är skälet till att du behövs, och att du är part är skälet till att det är svårt."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför väger dina argument mindre än du tror?",
+          "alternativ": [
+            "För att kunder sällan lyssnar på detaljer",
+            "För att du tjänar på ett visst svar, så kunden diskonterar allt du säger",
+            "För att argument alltid är svagare än känslor"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är rimlig hushållning med tilltro från kundens sida. Därför väger handlingar som kostar dig något mer än formuleringar som inte gör det."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket alternativ vinner flest affärer i komplex försäljning?",
+          "alternativ": [
+            "Den billigaste leverantören",
+            "Den leverantör som hörde av sig först",
+            "Att kunden behåller det hon redan har"
+          ],
+          "ratt": [2],
+          "forklaring": "Status quo står sällan med i jämförelsen men vinner ofta. Ingen behöver försvara ett beslut som aldrig fattades."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad säger kursen om förlustaversion?",
+          "alternativ": [
+            "Att förluster väger ungefär dubbelt så tungt som lika stora vinster",
+            "Att människor är mer uppmärksamma på vad de kan förlora, utan att sätta en multipel på det",
+            "Att idén är avfärdad och inte ska användas"
+          ],
+          "ratt": [1],
+          "forklaring": "Stödet för den generella lagen är svagare än den populära versionen påstår, och en del av effekten förklaras av uppmärksamhet snarare än obehag. Den försiktiga formuleringen är både mer korrekt och tillräcklig."
+        }
+      ]
+    }
+  ]
+}

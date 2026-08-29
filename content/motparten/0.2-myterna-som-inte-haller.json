@@ -1,0 +1,135 @@
+{
+  "kapitel": 0,
+  "lektion": "0.2",
+  "titel": "Myterna som inte håller",
+  "niva": "Nybörjare",
+  "tid_min": 9,
+  "fardighet": "grund.evidens",
+  "mal": "Efter lektionen kan eleven redogöra för fyra spridda säljpåståenden, varifrån de kom, och vad som faktiskt gäller. Eleven har också fått kursens sätt att pröva ett påstående, och ska använda det på resten av kursen.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "AVLÄRNING",
+      "titel": "Myterna som inte håller",
+      "ingress": "Fyra påståenden du har hört. Alla fyra låter vetenskapliga, tre av dem har en siffra, och inget av dem betyder vad du blivit itutad. Det här är också lektionen där du får se hur kursen prövar saker."
+    },
+    {
+      "typ": "myt",
+      "kicker": "MYT ETT",
+      "titel": "Siffran alla känner till",
+      "pastaende": "Bara 7 procent av kommunikationen är ord. Resten är tonfall och kroppsspråk.",
+      "varifran": "Två labbstudier av Albert Mehrabian 1967, med små urval av enbart kvinnor. De mätte en enda smal sak: hur människor tolkar motstridiga signaler om gillande, alltså när orden säger en sak och tonfallet en annan.",
+      "vad_som_galler": "Ekvationen gäller det fallet och inget annat. Mehrabian har själv sagt att den inte är tillämplig när någon kommunicerar något annat än känslor och attityder. Studierna undersökte varken samtal, förhandling eller överföring av sakuppgifter, och de tittade inte på kroppshållning eller gester, bara ansiktsuttryck. Att orden skulle stå för sju procent av vad du förmedlar i ett kundmöte följer inte av någonting.",
+      "kalla": "R1"
+    },
+    {
+      "typ": "myt",
+      "kicker": "MYT TVÅ",
+      "titel": "Tekniken som skulle skapa kontakt",
+      "pastaende": "Spegla kundens kroppsspråk och språkbruk, så bygger du rapport.",
+      "varifran": "NLP, utvecklat på 1970-talet, med idén att varje människa har ett föredraget sinnessystem som går att läsa av på ordval och ögonrörelser, och att den som anpassar sig efter det når fram bättre.",
+      "vad_som_galler": "Heap gick 1988 igenom 63 studier och fann att påståendena prövats sakligt och inte höll. Witkowski fann 2010 att endast 11 av 63 studier gav stöd, och att över 80 procent av dem hade metodproblem. Sambandet mellan ögonrörelser och inre bearbetning har inte gått att visa. Något annat finns däremot: omedveten spegling sker spontant och samvarierar med sympati, men effekten är liten, kontextberoende, och blir svagare eller negativ när speglingen upptäcks. Spegling är alltså ett symptom på att kontakt uppstått, inte ett verktyg för att skapa den.",
+      "kalla": "R2"
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DE SPRIDS",
+      "lead": "Myterna överlever inte för att folk är godtrogna, utan för att de är ovanligt lätta att lära ut.",
+      "highlight": "ovanligt lätta att lära ut",
+      "brodtext": [
+        "En bra myt har tre egenskaper. Den kommer med ett tal, och tal reser långt eftersom de låter kontrollerade. Den känns sann, för alla har varit med om ett möte där stämningen sa mer än orden. Och viktigast: den ger dig något att göra. Att sitta i ett kundmöte och inte veta vad man ska göra är obehagligt. Ett påstående som säger spegla kunden tar bort obehaget direkt.",
+        "Det är också därför de är svåra att avliva. Den som tar ifrån dig en teknik lämnar ett tomrum, och tomrummet känns sämre än en teknik som inte fungerar. Så räkna med att de här fyra kommer tillbaka i något säljmöte du sitter på, framförda av någon som menar väl."
+      ],
+      "takeaway": "Ett påstående som ger dig något att göra sprids snabbare än ett som ber dig sluta. Det säger ingenting om huruvida det stämmer."
+    },
+    {
+      "typ": "myt",
+      "kicker": "MYT TRE",
+      "titel": "Fyra lådor för sju miljarder människor",
+      "pastaende": "Läs av kundens personlighetstyp och anpassa din stil efter den.",
+      "varifran": "DISC, MBTI och de olika färgtesterna, alla från arbetspsykologins tidiga kommersialisering. De har spridits genom företagsutbildning snarare än genom forskning.",
+      "vad_som_galler": "MBTI ger ofta olika svar när samma person gör om testet efter en tid, och förutsäger inte arbetsprestation väl. DISC har hygglig mätsäkerhet men svagare begreppsvaliditet än femfaktormodellen, och delar ett kontinuum i fyra lådor som personlighetsforskningen inte känner igen. Närbesläktat: sambandet mellan extraversion och säljresultat är svagt och inkonsekvent, vilket är goda nyheter om du inte känner dig som säljartypen. Testerna kan duga som samtalsunderlag i ett team. De duger inte för att avgöra hur du ska sälja till en människa du träffat i tjugo minuter.",
+      "kalla": "R3"
+    },
+    {
+      "typ": "myt",
+      "kicker": "MYT FYRA",
+      "titel": "Halvsanningen som blivit lag",
+      "pastaende": "Människor fattar beslut känslomässigt och rättfärdigar dem sedan med logik.",
+      "varifran": "En populariserad läsning av Antonio Damasios arbete om somatiska markörer, ofta buren av berättelsen om patienter som efter en hjärnskada kunde analysera alternativ hur länge som helst men aldrig välja.",
+      "vad_som_galler": "Det Damasio visar är att känsla behövs för att man ska kunna besluta över huvud taget, inte att känslan bestämmer och förnuftet städar upp efteråt. Han kallar själv hypotesen en teori och inte något bevisat. Och för försäljning finns en viktigare invändning: i ett affärsbeslut är den så kallade efterhandskonstruktionen inget påhitt, den är en verklig arbetsuppgift. Köparen ska kunna försvara valet inför en chef, en styrelse eller en kollega som var emot. Att förse köparen med det försvaret är en stor del av ditt jobb, inte ett spel för gallerierna.",
+      "kalla": "R4"
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD DU GÖR I STÄLLET",
+      "titel": "Två frågor som håller resten av kursen",
+      "forklaring": "Du kommer inte att kunna kontrollera varje påstående du hör. Men två frågor tar dig förvånansvärt långt, och de fungerar även på den här kursen.",
+      "brodtext": [
+        "Den första: vad skulle jag se om det här inte stämde? Ett påstående som inte går att motbevisa är inte starkt, det är tomt. Sju procent-regeln klarar inte frågan. Att omedveten spegling samvarierar med sympati gör det, för det finns lägen där sambandet skulle ha uteblivit.",
+        "Den andra: vem tjänar på att jag tror det här? Nästan varje säljmyt säljs av någon. Personlighetstesterna säljs av dem som certifierar. Speglingstekniken säljs av dem som utbildar i den. Det gör inte påståendet falskt automatiskt, men det talar om var du ska titta noggrannare.",
+        "Från och med nu märker den här kursen sina egna påståenden. Robust forskning, omdiskuterat, eller hantverk. Ser du inget märke i marginalen ska du fråga varför."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad mätte Mehrabians studier från 1967 faktiskt?",
+          "alternativ": [
+            "Hur stor del av all kommunikation som är icke-verbal",
+            "Hur människor tolkar motstridiga signaler om gillande",
+            "Hur väl säljare uppfattas av kunder"
+          ],
+          "ratt": [1],
+          "forklaring": "Två små labbstudier på ett smalt fall: när orden säger en sak och tonfallet en annan om huruvida någon tycker om dig. Mehrabian har själv sagt att ekvationen inte gäller annan kommunikation."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gäller om spegling av kroppsspråk?",
+          "alternativ": [
+            "Den fungerar bäst när kunden märker den och känner sig sedd",
+            "Den sker spontant och samvarierar med sympati, men fungerar sämre eller negativt när den upptäcks",
+            "Den är en av de mest replikerade effekterna inom socialpsykologi"
+          ],
+          "ratt": [1],
+          "forklaring": "Fenomenet finns, men effekten är liten och kontextberoende. Som medveten teknik saknar den stöd, och den kan slå tillbaka. Spegling är ett symptom på kontakt, inte ett verktyg för att skapa den."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför duger inte personlighetstester för att avgöra hur du ska sälja till någon?",
+          "alternativ": [
+            "De är för dyra och tar för lång tid att genomföra i ett möte",
+            "De delar ett kontinuum i lådor och förutsäger arbetsprestation dåligt",
+            "De fungerar bara på personer med lång yrkeserfarenhet"
+          ],
+          "ratt": [1],
+          "forklaring": "MBTI ger ofta olika svar vid omtestning, och DISC har svagare begreppsvaliditet än femfaktormodellen. Som samtalsunderlag i ett team kan de duga. Som beslutsunderlag om en kund gör de inte det."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är kursens invändning mot påståendet att beslut fattas känslomässigt och rättfärdigas i efterhand?",
+          "alternativ": [
+            "Att känslor saknar betydelse i affärsbeslut",
+            "Att forskningen visar motsatsen, alltså att beslut är rent rationella",
+            "Att känsla behövs för att kunna besluta alls, och att försvaret inför andra är en verklig arbetsuppgift och inte en efterhandskonstruktion"
+          ],
+          "ratt": [2],
+          "forklaring": "Damasio visar att känsla är en förutsättning för beslut, inte att den bestämmer och förnuftet efterrationaliserar. I en affär ska köparen dessutom kunna försvara valet inför andra, och att hjälpa till med det är en del av arbetet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilka två frågor ger kursen dig för att pröva ett påstående?",
+          "alternativ": [
+            "Vad skulle jag se om det inte stämde, och vem tjänar på att jag tror det",
+            "Vem sa det först, och hur många gånger har det citerats",
+            "Låter det rimligt, och stämmer det med min egen erfarenhet"
+          ],
+          "ratt": [0],
+          "forklaring": "Det första prövar om påståendet går att motbevisa. Det andra talar om var du ska titta noggrannare. Egen erfarenhet är det svagaste testet, eftersom minnet sparar träffarna och tappar missarna."
+        }
+      ]
+    }
+  ]
+}
