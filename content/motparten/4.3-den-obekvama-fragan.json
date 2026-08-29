@@ -1,0 +1,131 @@
+{
+  "kapitel": 4,
+  "lektion": "4.3",
+  "titel": "Den obekväma frågan",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "fragor.obekvama",
+  "mal": "Efter lektionen vet eleven vilka fyra frågor som är obekväma att ställa och varför de sparar mest tid, och kan ställa dem utan att det blir en konfrontation.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FRÅGOR",
+      "titel": "Den obekväma frågan",
+      "ingress": "Det finns fyra frågor som nästan ingen ställer i ett första möte. Alla fyra känns som att man riskerar affären. Alla fyra sparar månader."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DE UNDVIKS",
+      "lead": "Den obekväma frågan undviks inte för att den är farlig, utan för att den kan ge ett svar som gör affären mindre trolig.",
+      "highlight": "ett svar som gör affären mindre trolig",
+      "brodtext": [
+        "Så länge du inte frågat kan affären fortfarande vara på väg någonstans. Ställer du frågan och får ett dåligt svar blir den mindre trolig i din egen prognos, och det känns som en förlust. Undvikandet handlar alltså om ditt humör, inte om kundens reaktion.",
+        "Men affären blev inte sämre av frågan. Den var redan så här. Det enda som ändrades är att du vet det nu i stället för i november, och att du kan lägga tiden på något annat under tiden."
+      ],
+      "takeaway": "Frågan förstör inte affären. Den avslöjar den affär du redan hade."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DE FYRA",
+      "titel": "Frågorna som sparar mest",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Vad talar emot",
+            "text": "Vad skulle få er att inte göra det här? Ger dig invändningarna medan de fortfarande går att arbeta med, i stället för efter att någon annan formulerat dem internt."
+          },
+          {
+            "rubrik": "Vem mer",
+            "text": "Vem mer behöver tycka något om det här innan det blir av? Den vanligaste orsaken till att en affär dör är någon du aldrig träffade."
+          },
+          {
+            "rubrik": "Vad händer om ingenting händer",
+            "text": "Om ni inte gör något alls det närmaste året, vad blir konsekvensen? Prövar om problemet är verkligt eller bara olägligt."
+          },
+          {
+            "rubrik": "Har ni pengar till det",
+            "text": "Finns det budget, eller ska den skapas? Skillnaden är ofta ett halvår, och den syns aldrig i entusiasmen på mötet."
+          }
+        ],
+        "figurtext": "Fyra frågor, ett gemensamt drag: alla kan ge ett svar du inte vill höra."
+      },
+      "forklaring": "Ingen av dem är aggressiv. De är obekväma därför att de bjuder in ett negativt svar, vilket är precis varför de bär information. En fråga som bara kan ge positiva svar har du redan lärt dig att ignorera."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SÅ ATT DET GÅR ATT SVARA",
+      "titel": "Betala först",
+      "forklaring": "Den obekväma frågan ställs bäst efter att du själv sagt något obekvämt. Forskningen på psykologisk trygghet gäller arbetsgrupper, men mekanismen är svår att komma ifrån: människor säger obekväma saker när de sett att sådant får sägas.",
+      "brodtext": [
+        "I praktiken betyder det att du går först. Säg att den här sortens projekt oftast fastnar av interna skäl snarare än tekniska, och fråga sedan vad som skulle kunna göra det här trögt hos er. Nu har du visat att du inte förväntar dig ett snyggt svar, och du har gjort det billigare att ge ett ärligt.",
+        "Alternativet, att ställa frågan naket och vänligt, fungerar också, men oftare i ett tredje möte än i ett första. Ju mindre kunden vet om dig, desto mer kostar det att erkänna något för dig."
+      ],
+      "evidens": {
+        "niva": "A",
+        "kalla": "K7",
+        "notering": "Edmondson (1999) om psykologisk trygghet i arbetsgrupper. Överföringen till ett kundmöte är kursens tolkning, inte något studien mätt."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "OCH TA SVARET PÅ ALLVAR",
+      "lead": "Det värsta du kan göra med ett obekvämt svar är att bemöta det direkt.",
+      "highlight": "bemöta det direkt",
+      "brodtext": [
+        "Kunden säger att införandet låter tungt. Du svarar att många tycker det men att det brukar gå smidigare än man tror. Nu har kunden lärt sig två saker: att obekväma svar möts av motargument, och att du inte lyssnade. Nästa obekväma sak sägs inte.",
+        "Gör i stället tvärtom. Fråga vidare. Vad är det som brukar bli tungt hos er. Har ni provat något liknande förut. Vad hände då. Först när du förstått vad invändningen bygger på är det meningsfullt att säga något om den, och då är det ofta kunden själv som har justerat den på vägen."
+      ],
+      "takeaway": "Ett obekvämt svar är en investering kunden gjorde i dig. Bemöt det så får du inget mer."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför undviker säljare de obekväma frågorna?",
+          "alternativ": [
+            "För att kunder tar illa upp",
+            "För att svaret kan göra affären mindre trolig i den egna prognosen",
+            "För att de tar för mycket tid i mötet"
+          ],
+          "ratt": [1],
+          "forklaring": "Undvikandet handlar om ditt humör, inte om kundens reaktion. Affären blev inte sämre av frågan, den var redan så här."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket drag har de fyra obekväma frågorna gemensamt?",
+          "alternativ": [
+            "De ställs sent i processen",
+            "De kan ge ett svar du inte vill höra",
+            "De kräver att du redan byggt relation"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är därför de bär information. En fråga som bara kan ge positiva svar har du redan lärt dig att ignorera."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur gör du det billigare för kunden att svara ärligt?",
+          "alternativ": [
+            "Genom att lova att svaret inte påverkar offerten",
+            "Genom att själv säga något obekvämt först",
+            "Genom att ställa frågan i skrift i stället för i mötet"
+          ],
+          "ratt": [1],
+          "forklaring": "Du visar att du inte förväntar dig ett snyggt svar. Ett löfte kostar dig ingenting och bär därför ingen information."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad ska du göra när du får ett obekvämt svar?",
+          "alternativ": [
+            "Bemöta det direkt så att det inte växer",
+            "Fråga vidare tills du förstår vad det bygger på",
+            "Notera det och gå vidare i agendan"
+          ],
+          "ratt": [1],
+          "forklaring": "Bemöter du det lär sig kunden att obekväma svar möts av motargument, och nästa obekväma sak sägs inte."
+        }
+      ]
+    }
+  ]
+}

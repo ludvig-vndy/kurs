@@ -1,0 +1,112 @@
+{
+  "kapitel": 4,
+  "lektion": "4.4",
+  "titel": "Tystnaden efter frågan",
+  "niva": "Mellan",
+  "tid_min": 7,
+  "fardighet": "fragor.tystnad",
+  "mal": "Efter lektionen vet eleven varför den egna tystnaden efter en fråga är svår att uthärda, vad som händer när den fylls, och har ett sätt att träna på att låta bli.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FRÅGOR",
+      "titel": "Tystnaden efter frågan",
+      "ingress": "Den svåraste delen av en bra fråga kommer efter att den ställts. Två sekunder känns som tio, och det du gör med dem avgör vilket svar du får."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM HÄNDER",
+      "lead": "Du ställer en bra fråga, kunden blir tyst, och du hjälper till.",
+      "highlight": "du hjälper till",
+      "brodtext": [
+        "Hjälpen kommer i tre former. Du förtydligar frågan, som om tystnaden betydde att den var oklar. Du erbjuder ett svarsalternativ, alltså är det till exempel att systemet är gammalt. Eller du byter fråga helt, eftersom den första uppenbarligen inte fungerade.",
+        "Alla tre gör samma sak: de tar tillbaka frågan innan den hunnit arbeta. Och den fråga som var värd att ställa var just den som krävde betänketid, eftersom svaret inte låg färdigt."
+      ],
+      "takeaway": "Tystnad efter en fråga betyder oftast att frågan var bra. Det är det enda tillfälle du inte ska ingripa."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VARFÖR DET ÄR SÅ SVÅRT",
+      "titel": "Tystnaden är obekväm på din sida av bordet",
+      "forklaring": "Den som ställt frågan upplever pausen som längre och mer laddad än den som svarar. Kunden tänker. Du tolkar tystnaden som att något gått fel, ofta att du sagt något olämpligt, och obehaget växer med varje sekund.",
+      "brodtext": [
+        "Ovanpå det ligger något vi redan gått igenom: behovet av att affären ska gå bra syns i beteendet. Att fylla en tystnad är en av de tydligaste formerna av det. Du visar att du inte står ut med att inte veta hur det går, och den signalen kostar dig mer än en obesvarad fråga hade gjort.",
+        "Det finns ingen studie jag hittat som mätt tystnad i säljsamtal, så behandla det här som hantverk. Men det är hantverk som varje erfaren säljare känner igen, och som går att öva bort."
+      ],
+      "evidens": {
+        "niva": "C",
+        "notering": "Hantverk. Att den som frågar upplever pausen som längre är en vanlig observation, men jag har inte hittat någon mätning av det i säljsamtal."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "ÖVNINGEN",
+      "titel": "Räkna till tre, med något att göra",
+      "forklaring": "Rådet att bara vara tyst fungerar dåligt, eftersom problemet inte är okunskap utan obehag. Det som fungerar är att ge dig själv en uppgift som tar den tid tystnaden behöver.",
+      "brodtext": [
+        "Skriv ner frågan du just ställde, ordagrant, i dina anteckningar. Det tar ungefär tre sekunder, det ser ut som uppmärksamhet, och det gör att du fysiskt inte kan prata. När du är klar har kunden nästan alltid börjat svara.",
+        "Bonusen är att du i slutet av mötet har en lista över dina egna frågor, vilket är det bästa underlag som finns för att bli bättre på att ställa dem. De flesta säljare kommer inte ihåg en enda av sina egna frågor två timmar efter ett möte."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "NÄR TYSTNADEN BETYDER NÅGOT ANNAT",
+      "lead": "Ibland är tystnaden inte betänketid, och skillnaden syns på vad som kommer efter.",
+      "highlight": "skillnaden syns på vad som kommer efter",
+      "brodtext": [
+        "Betänketid slutar i ett svar som börjar trevande och blir tydligare, ofta med en omformulering av frågan först. Det är den tystnad du ska skydda.",
+        "Den andra sortens tystnad slutar i ett kort, artigt och innehållslöst svar. Då var frågan antingen för känslig för det förtroende ni har hittills, eller så var den otydlig. Ställ den inte igen med andra ord i samma möte. Notera den, gå vidare, och ta upp den när ni känner varandra bättre. En fråga som är för tidig blir sällan bättre av att upprepas."
+      ],
+      "takeaway": "Skydda tystnaden som leder någonstans. Släpp den som inte gör det, och kom tillbaka senare."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad betyder oftast tystnad efter en fråga?",
+          "alternativ": [
+            "Att frågan var oklar",
+            "Att frågan var bra och svaret inte låg färdigt",
+            "Att kunden inte vill svara"
+          ],
+          "ratt": [1],
+          "forklaring": "Den fråga som var värd att ställa är just den som kräver betänketid. Att förtydliga eller byta fråga tar tillbaka den innan den hunnit arbeta."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är tystnaden svårare för dig än för kunden?",
+          "alternativ": [
+            "För att du har mer att förlora på mötet",
+            "För att den som frågat upplever pausen som längre och tolkar den som att något gått fel",
+            "För att kunden är van vid längre pauser"
+          ],
+          "ratt": [1],
+          "forklaring": "Kunden tänker. Du tolkar. Och att fylla tystnaden visar dessutom att du inte står ut med att inte veta hur det går."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken övning föreslår lektionen?",
+          "alternativ": [
+            "Att räkna tyst till fem innan du säger något",
+            "Att skriva ner frågan du just ställde, ordagrant",
+            "Att titta bort så att kunden inte känner sig pressad"
+          ],
+          "ratt": [1],
+          "forklaring": "Problemet är obehag, inte okunskap. Uppgiften tar tiden tystnaden behöver och ger dig dessutom en lista över dina egna frågor."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gör du när tystnaden slutar i ett kort och innehållslöst svar?",
+          "alternativ": [
+            "Omformulerar frågan och ställer den igen",
+            "Noterar den, går vidare, och tar upp den senare",
+            "Förklarar varför frågan är viktig"
+          ],
+          "ratt": [1],
+          "forklaring": "Då var frågan för tidig för det förtroende ni har hittills. En för tidig fråga blir sällan bättre av att upprepas i samma möte."
+        }
+      ]
+    }
+  ]
+}

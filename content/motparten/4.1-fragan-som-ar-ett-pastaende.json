@@ -1,0 +1,127 @@
+{
+  "kapitel": 4,
+  "lektion": "4.1",
+  "titel": "Frågan som egentligen är ett påstående",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "fragor.pastaende",
+  "mal": "Efter lektionen kan eleven höra när en egen fråga bär ett förväntat svar, veta varför sådana frågor ger sämre information än inga frågor alls, och känna igen de tre vanligaste formerna.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FRÅGOR",
+      "titel": "Frågan som egentligen är ett påstående",
+      "ingress": "De flesta frågor en säljare ställer är inte frågor. De är påståenden med frågetecken, och kunden hör skillnaden även när du inte gör det."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KÄNNETECKNET",
+      "lead": "Provet är enkelt: finns det ett svar som skulle göra dig besviken?",
+      "highlight": "finns det ett svar som skulle göra dig besviken",
+      "brodtext": [
+        "Om du frågar hur mycket tid den nuvarande processen tar och blir nöjd av svaret många timmar men irriterad av svaret inte särskilt mycket, då var det ingen fråga. Du letade efter en öppning. Kunden märker det på vad du gör med svaret: det som passar följs upp, det som inte passar möts av en ny fråga i en annan riktning.",
+        "En riktig fråga har minst två svar du kan leva med. Den kan också ha svar som gör affären svårare, och det är just det som gör att den bär information. En fråga som bara har ett acceptabelt svar är en presentation som har lärt sig att låta artig."
+      ],
+      "takeaway": "Ställ inga frågor du inte vill ha alla svaren på. Kunden vet redan vilket du hoppas på."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE FORMER",
+      "titel": "Hur påståendet klär ut sig",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Den ledande",
+            "text": "Ni skulle väl vilja korta ledtiderna? Svaret är givet innan frågan är färdig, och det enda kunden lär sig är att du vill sälja något som kortar ledtider."
+          },
+          {
+            "rubrik": "Den utpekande",
+            "text": "Hur mycket kostar det er att sitta kvar i det gamla systemet? Frågan innehåller redan slutsatsen att det kostar. Kunden får försvara sig eller hålla med, och båda ger dig sämre information än en öppen fråga."
+          },
+          {
+            "rubrik": "Den förklädda broschyren",
+            "text": "Har ni funderat på vad ni skulle kunna göra med automatisk rapportering? Det är inte en fråga om kunden, det är en funktion i frågeform."
+          }
+        ],
+        "figurtext": "Alla tre går att ställa vänligt. Ingen av dem ger dig något du inte redan visste."
+      },
+      "forklaring": "Gemensamt för de tre är att de bär din slutsats in i frågan. Kunden kan då göra en av två saker: hålla med, vilket inte lär dig något eftersom det var förväntat, eller inte hålla med, vilket i praktiken är att motsäga dig. Det andra alternativet kostar kunden något socialt, så det väljs sällan i ett första möte. Du får alltså ett ja som inte betyder något."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DET KOSTAR",
+      "lead": "Den ledande frågan är inte bara verkningslös. Den arbetar aktivt emot dig.",
+      "highlight": "arbetar aktivt emot dig",
+      "brodtext": [
+        "Forskningen på motiverande samtal ger den skarpaste versionen. Det som hängde tydligast ihop med sämre utfall var samtalsledarens egna felsteg, alltså att argumentera, övertala och styra. Den ledande frågan är styrning i förklädnad, och den utlöser samma sak som ett öppet argument gör: kunden börjar formulera skäl att inte göra det du föreslår.",
+        "Ovanpå det ligger reaktansen. En fråga som bara har ett rimligt svar är ett litet ingrepp i friheten att tycka något annat, och sådana möts av motstånd. Du har alltså betalat en kostnad utan att få någon information tillbaka."
+      ],
+      "takeaway": "En ledande fråga får kunden att öva på att säga nej till dig, med sina egna ord.",
+      "evidens": {
+        "niva": "B",
+        "kalla": "K13",
+        "notering": "Magill med flera (2014). Studerad på beteendeförändring inom vård. Att ledande frågor i säljsamtal utlöser samma mekanism är kursens tolkning."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD DU GÖR I STÄLLET",
+      "titel": "Lägg slutsatsen utanför frågan",
+      "forklaring": "Rätta inte till en ledande fråga genom att linda in den. Ta bort slutsatsen ur den.",
+      "brodtext": [
+        "I stället för hur mycket kostar det er att sitta kvar i det gamla systemet: hur ser det ut i dag när ni ska ta fram siffrorna. Den andra varianten innehåller ingen bedömning. Den kan besvaras med det fungerar bra, vilket är ett svar du behöver kunna ta emot utan att bli besviken, för ibland stämmer det.",
+        "Och när du har en tes, säg den som en tes i stället för att gömma den i en fråga. Min gissning är att det här mest är ett problem vid månadsskiftet, stämmer det? Då vet kunden vad du tror, kan rätta dig, och rättelsen är den mest värdefulla information du får den dagen."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är provet på om något är en riktig fråga?",
+          "alternativ": [
+            "Att den är öppen och inte går att besvara med ja eller nej",
+            "Att det finns minst ett svar som skulle göra dig besviken",
+            "Att den ställs tidigt i samtalet"
+          ],
+          "ratt": [1],
+          "forklaring": "En fråga med bara ett acceptabelt svar är en presentation som lärt sig låta artig. Det är svaren du inte hoppas på som bär information."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför ger en ledande fråga sämre information än ingen fråga alls?",
+          "alternativ": [
+            "För att kunden hinner förbereda ett svar",
+            "För att kunden antingen håller med, vilket var förväntat, eller måste motsäga dig, vilket kostar socialt",
+            "För att den tar tid från viktigare frågor"
+          ],
+          "ratt": [1],
+          "forklaring": "Du får ett ja som inte betyder något. Det andra alternativet väljs sällan i ett första möte, eftersom det kostar kunden något att motsäga dig."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad säger forskningen på motiverande samtal om styrning?",
+          "alternativ": [
+            "Att den fungerar när den görs vänligt",
+            "Att samtalsledarens argumenterande och styrande hängde tydligast ihop med sämre utfall",
+            "Att den saknar mätbar effekt"
+          ],
+          "ratt": [1],
+          "forklaring": "Den ledande frågan är styrning i förklädnad och får kunden att formulera skäl att inte göra det du föreslår."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad ska du göra när du har en tes om kunden?",
+          "alternativ": [
+            "Gömma den i en fråga så att kunden kommer fram till den själv",
+            "Säga den som en tes och be kunden rätta dig",
+            "Behålla den tills du har mer underlag"
+          ],
+          "ratt": [1],
+          "forklaring": "Rättelsen är den mest värdefulla information du får. En gömd tes ger dig bara ett medhåll du inte kan lita på."
+        }
+      ]
+    }
+  ]
+}

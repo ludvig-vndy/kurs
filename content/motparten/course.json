@@ -101,10 +101,10 @@
    ],
    "sebastian": "Den svåraste frågan jag lärt mig ställa är vad som talar emot att göra det här. Första gången var jag säker på att jag sabbade affären. Kunden räknade upp tre saker jag inte visste om, vi löste två av dem, och den tredje hade dödat projektet ett halvår senare. Frågan kostar tio sekunders obehag och sparar månader.",
    "lektioner": [
-    { "lektion": "4.1", "titel": "Frågan som egentligen är ett påstående", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "4.1-fragan-som-ar-ett-pastaende.json" },
-    { "lektion": "4.2", "titel": "Vad olika frågor gör", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "4.2-vad-olika-fragor-gor.json" },
-    { "lektion": "4.3", "titel": "Den obekväma frågan", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "4.3-den-obekvama-fragan.json" },
-    { "lektion": "4.4", "titel": "Tystnaden efter frågan", "niva": "Mellan", "tid_min": 7, "status": "kommande", "fil": "4.4-tystnaden-efter-fragan.json" }
+    { "lektion": "4.1", "titel": "Frågan som egentligen är ett påstående", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "4.1-fragan-som-ar-ett-pastaende.json" },
+    { "lektion": "4.2", "titel": "Vad olika frågor gör", "niva": "Mellan", "tid_min": 9, "status": "klar", "fil": "4.2-vad-olika-fragor-gor.json" },
+    { "lektion": "4.3", "titel": "Den obekväma frågan", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "4.3-den-obekvama-fragan.json" },
+    { "lektion": "4.4", "titel": "Tystnaden efter frågan", "niva": "Mellan", "tid_min": 7, "status": "klar", "fil": "4.4-tystnaden-efter-fragan.json" }
    ]
   },
   {

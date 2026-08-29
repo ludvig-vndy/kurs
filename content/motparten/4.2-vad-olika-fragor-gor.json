@@ -1,0 +1,131 @@
+{
+  "kapitel": 4,
+  "lektion": "4.2",
+  "titel": "Vad olika frågor gör",
+  "niva": "Mellan",
+  "tid_min": 9,
+  "fardighet": "fragor.typer",
+  "mal": "Efter lektionen kan eleven skilja fyra frågor efter vad de gör med samtalet i stället för efter hur de är formulerade, och vet varför följdfrågan är den enskilt viktigaste av dem.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FRÅGOR",
+      "titel": "Vad olika frågor gör",
+      "ingress": "Säljlitteraturen är full av frågemodeller med bokstavsförkortningar. Den här lektionen sorterar frågor efter vad de gör, inte efter vad de kallas."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EN VARNING FÖRST",
+      "lead": "Frågemodellerna i säljlitteraturen är hantverk, inte forskning, och den mest kända är dessutom sämre belagd än den ser ut.",
+      "highlight": "hantverk, inte forskning",
+      "brodtext": [
+        "Den frågeordning som citeras oftast bygger på ett stort observationsmaterial, omkring 35 000 samtal, insamlat av ett företag som sålde utbildning i metoden. Materialet är intressant och slutsatsen att avslutstekniker fungerar sämre i stora affärer än i små stämmer med annan forskning. Men själva frågeordningen är inte prövad på ett sätt som går att granska utifrån.",
+        "Sorteringen nedan är alltså mitt och andras hantverk. Den är användbar, den är inte bevisad, och du ska behandla den därefter."
+      ],
+      "takeaway": "Använd modellen som en påminnelse om vad du glömmer, inte som ett protokoll att följa."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA JOBB",
+      "titel": "Vad frågan gör med samtalet",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Kartlägga",
+            "text": "Hur ser det ut i dag. Billig att ställa, tråkig att svara på, och nödvändig i lagom mängd. För många av dem gör mötet till ett formulär och tär på kundens tålamod innan du kommit någonstans."
+          },
+          {
+            "rubrik": "Pröva",
+            "text": "Vad händer när det inte funkar. Letar efter friktion utan att påstå att den finns. Det är här de flesta möten tar slut för tidigt, eftersom svaret ofta är ett axelryck första gången."
+          },
+          {
+            "rubrik": "Konsekvens",
+            "text": "Vad leder det till, och för vem. Flyttar samtalet från en olägenhet till något som kostar. Ställd för tidigt låter den som en säljfråga, ställd i rätt läge är den den som avgör."
+          },
+          {
+            "rubrik": "Följdfråga",
+            "text": "Hur menar du då. Den enda som bevisar att du lyssnade, och den enda som inte går att förbereda."
+          }
+        ],
+        "figurtext": "Sorterade efter vad de gör. De tre första kan förberedas, den fjärde kan bara ställas."
+      },
+      "forklaring": "De tre första är lätta att öva in och därför lätta att överanvända. Den fjärde är svår, eftersom den kräver att du hört något specifikt i svaret och vågar stanna kvar där i stället för att gå vidare till nästa punkt. Det är också den som gör mest skillnad."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DEN SOM BÄR",
+      "titel": "Följdfrågan",
+      "forklaring": "Studier på verkliga samtal mellan två personer visar att den som ställer fler frågor, särskilt följdfrågor, blir mer omtyckt. Mekanismen som föreslås är upplevd lyhördhet: följdfrågan bevisar att du hörde vad som sades, medan en ny fråga i en annan riktning bevisar motsatsen.",
+      "brodtext": [
+        "För en säljare finns en praktisk vinst utöver sympatin. Följdfrågan är den enda frågan som inte går att ställa på förhand, vilket betyder att den tvingar dig att bearbeta svaret i stället för att vänta ut det. Efter tre följdfrågor i rad har du oftast kommit någonstans du inte hade planerat, och det är där det som är värt att veta brukar ligga.",
+        "Den enklaste varianten är också den bästa: säg det sista kunden sa, med frågande tonfall, och var tyst. Det låter för enkelt för att vara en teknik, vilket är precis varför det fungerar."
+      ],
+      "evidens": {
+        "niva": "B",
+        "kalla": "K4",
+        "notering": "Huang med flera (2017), nedflyttad till B eftersom en korrigering från 2025 inte gått att läsa. Mäter dessutom sympati, inte affärsutfall."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "ORDNINGEN",
+      "lead": "Den vanligaste felordningen är att hoppa direkt från kartläggning till lösning, och den är svår att se inifrån.",
+      "highlight": "hoppa direkt från kartläggning till lösning",
+      "brodtext": [
+        "Du frågar hur det ser ut i dag, kunden beskriver något som låter som er lösning, och du börjar berätta. Det känns effektivt och sparar tid. Men du hoppade över de två frågor som gör att kunden själv sätter ord på varför det är ett problem, och därmed över det enda som gör att beskrivningen håller när du inte är i rummet.",
+        "Det är också därför en offert som skickas för tidigt sällan får svar. Den svarar på en fråga ingen internt har ställt högt. Kunden som ska driva frågan vidare har din beskrivning av problemet, inte sin egen, och andras beskrivningar är svåra att argumentera för på ett möte du inte deltar i."
+      ],
+      "takeaway": "Skynda inte till lösningen. Det kunden inte har sagt högt går inte att upprepa för någon annan."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är statusen på de frågemodeller som säljlitteraturen lär ut?",
+          "alternativ": [
+            "Robust forskning med publicerade replikeringar",
+            "Hantverk, byggt på företagsägt material som inte går att granska utifrån",
+            "Avfärdade av senare forskning"
+          ],
+          "ratt": [1],
+          "forklaring": "Materialet är stort och intressant, och slutsatsen om avslutstekniker stämmer med annan forskning. Men frågeordningen som recept är inte prövad så att den går att granska."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken av de fyra frågetyperna går inte att förbereda?",
+          "alternativ": [
+            "Konsekvensfrågan",
+            "Följdfrågan",
+            "Den prövande frågan"
+          ],
+          "ratt": [1],
+          "forklaring": "Den kräver att du hört något specifikt i svaret och stannar kvar där. Därför är den också den enda som bevisar att du lyssnade."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är den vanligaste felordningen i ett säljsamtal?",
+          "alternativ": [
+            "Att ställa konsekvensfrågan för tidigt",
+            "Att hoppa från kartläggning direkt till lösning",
+            "Att ställa för många följdfrågor"
+          ],
+          "ratt": [1],
+          "forklaring": "Då hoppar du över de frågor som får kunden att själv sätta ord på problemet, och kvar blir din beskrivning i stället för kundens."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför får en offert som skickas för tidigt sällan svar?",
+          "alternativ": [
+            "För att priset inte är förankrat",
+            "För att den svarar på en fråga ingen internt har ställt högt",
+            "För att beslutsfattaren inte har hunnit involveras"
+          ],
+          "ratt": [1],
+          "forklaring": "Kunden har din beskrivning av problemet, inte sin egen, och andras beskrivningar är svåra att driva på ett möte du inte deltar i."
+        }
+      ]
+    }
+  ]
+}
