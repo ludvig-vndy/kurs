@@ -12,6 +12,8 @@ interface Props {
   /** page chrome: standard masthead, or none (lesson player brings its own) */
   chrome?: 'masthead' | 'none';
   editionLine2?: string;
+  /** klass pa body som satter om fargtokens for en annan kurs */
+  bodyClass?: string;
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   nav = 'app',
   chrome = 'masthead',
   editionLine2,
+  bodyClass = '',
   /** open=true => publik sida (ingen inloggningsgrind): landning, logga-in */
   open = false,
 } = Astro.props;
@@ -71,7 +74,7 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
 
     <ClientRouter />
   </head>
-  <body>
+  <body class:list={[bodyClass || undefined]}>
     <div class="bg"></div>
 
     {chrome === 'masthead' && (
