@@ -1964,15 +1964,28 @@ I `src/lib/kurs.mjs`, i `motparten`-objektets `nav`-lista, lägg till efter kurs
 
 - [ ] **Steg 4: Bygg och kontrollera att aktiekursen är oförändrad**
 
+`dist-hash.mjs` tar katalogen som argument, den läser inte hela `dist` av sig själv.
+Och baslinjen måste byggas utan den nya sidan, annars jämför du bygget med sig självt:
+
 ```bash
-node tools/dist-hash.mjs > /tmp/fore.txt
-npm run build > /tmp/build.log 2>&1; echo "bygge: $?"
-node tools/dist-hash.mjs > /tmp/efter.txt
-diff <(grep '/fokus' /tmp/fore.txt) <(grep '/fokus' /tmp/efter.txt) && echo "aktiekursen orord"
+mv src/pages/motparten/coach.astro /tmp/coach.astro
+cp src/lib/kurs.mjs /tmp/kurs.mjs.ny && git checkout -- src/lib/kurs.mjs
+npm run build > /tmp/b0.log 2>&1; echo "baslinje: $?"
+node tools/dist-hash.mjs dist/fokus > /tmp/fore.txt
+
+mv /tmp/coach.astro src/pages/motparten/coach.astro
+cp /tmp/kurs.mjs.ny src/lib/kurs.mjs
+npm run build > /tmp/b1.log 2>&1; echo "med coach: $?"
+node tools/dist-hash.mjs dist/fokus > /tmp/efter.txt
+
+diff /tmp/fore.txt /tmp/efter.txt > /dev/null && echo "IDENTISK" || diff /tmp/fore.txt /tmp/efter.txt
 ```
 
-Förväntat: `bygge: 0` och `aktiekursen orord`. Ändras `/fokus`-sidorna har något i
+Förväntat: båda byggena `0` och `IDENTISK` över 85 sidor. Ändras `/fokus` har något i
 kursmotorn påverkats som inte skulle det.
+
+Astros städsteg kraschar ibland på Windows (`Assertion failed: !(handle->flags &
+UV_HANDLE_CLOSING)`) med exit 127. Kör om bygget, det går igenom.
 
 - [ ] **Steg 5: Commit**
 

@@ -63,7 +63,10 @@ export const KURSER = {
     hem: '/motparten',
     hemEtikett: 'Motparten',
     // Egen produkt: ingen Marginalen, ingen portfölj, inget Ägarbrevet.
-    nav: [{ href: '/motparten', label: 'Kursöversikt', nyckel: 'kurs' }],
+    nav: [
+      { href: '/motparten', label: 'Kursöversikt', nyckel: 'kurs' },
+      { href: '/motparten/coach', label: 'Säljcoachen', nyckel: 'coach' },
+    ],
     korslank: null,
   },
 };
