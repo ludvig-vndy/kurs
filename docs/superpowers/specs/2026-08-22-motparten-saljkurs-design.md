@@ -109,13 +109,16 @@ Målgruppsberoende exempel läggs i egna tillämpningsspår senare, inte i funda
 
 ## 4. Piloten, lektion för lektion
 
-Varje lektion följer Fokus-formatet: tre till sju steg, `visual` valfri på concept och
-dataviz. Balansprincipen från aktiekursen gäller oförändrad: en grafik förtjänar sin plats
-bara om den visar en form som prosan inte kan.
+Varje lektion följer Fokus-formatet, kalibrerat mot vad kursen faktiskt gör i dag och inte
+mot CLAUDE.md, som säger 3 till 7 steg medan de 65 befintliga lektionerna ligger på 4 till 14
+med median 9. Motparten siktar därför på 6 till 11 steg per lektion, och grinden tillåter 3
+till 16 som den befintliga. `visual` är valfri på concept och dataviz. Balansprincipen från
+aktiekursen gäller oförändrad: en grafik förtjänar sin plats bara om den visar en form som
+prosan inte kan.
 
-Quiz följer befintligt kontrakt utan ändring: stegtypen `quiz` med `fraga`, `alternativ`,
-`ratt` som lista och valfri `forklaring`, tröskel 80 procent. Kapitel 0 får quiz på 0.2 och
-0.4, som är de lektioner med prövbar substans. Kapitel 1 får quiz på alla fyra.
+Quiz följer befintligt kontrakt utan ändring: exakt ett `quiz`-steg per lektion, med 3 till 6
+frågor, varje fråga med `typ` single eller multi, `fraga`, 2 till 4 `alternativ`, `ratt` som
+lista och `forklaring`. Tröskel 80 procent. Alla nio lektioner får quiz.
 
 ### Kapitel 0: Glöm det du lärt dig
 
@@ -298,9 +301,19 @@ aktiekursen senare.
 
 ### Åtkomst
 
-`/motparten/*` grindas i `functions/_middleware.js` på samma villkor som resten av sajten.
-Ingen ny åtkomstmodell. Deploy sker till samma Cloudflare Pages-projekt med
+`/motparten/*` grindas redan av `functions/_middleware.js`, som släpper igenom endast en
+uttrycklig lista och därutöver `/api/`, `/_astro/` och `/bilder/`. Ingen kodändring krävs,
+bara verifiering. Deploy sker till samma Cloudflare Pages-projekt med
 `wrangler pages deploy --branch=main`.
+
+### Ordlista
+
+Lektionsspelaren renderar marginalglosor genom att matcha termer ur
+`src/data/ordlista.json`, som innehåller finanstermer. Den filen är fel för en säljkurs.
+Ordlistan blir därför kursberoende, och Motparten får en egen med säljtermer, till exempel
+discovery, pipeline, ICP och intressent. Marginalen delas med `evidens`-noteringen: har ett
+steg både glosa och evidens renderas evidensen först, och sidoställda takeaways stängs av för
+det steget så att marginalen inte får tre saker att bära.
 
 ---
 
@@ -319,7 +332,9 @@ Den fäller:
 6. Frasmönster från röda listan som förekommer utanför ett `myt`-steg, till exempel
    "7 procent", "kroppsspråket står för", "köper på känsla". Träff kräver antingen
    omformulering eller att påståendet flyttas in i ett myt-steg.
-7. Lektioner med färre än tre eller fler än sju steg.
+7. Lektioner med färre än tre eller fler än sexton steg, och lektioner utan exakt ett
+   quiz-steg. Samma tröskel som `check-fokus.mjs`, eftersom grinden i övrigt återanvänder
+   den befintliga stegvalideringen.
 8. En lektion utan `mal`, `fardighet` eller `titel`.
 
 ---
