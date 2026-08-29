@@ -17,11 +17,24 @@ import { hittaTal } from './verify.mjs';
 import { hamtaInsyn } from './hamta-insyn.mjs';
 import { hamtaBlankning } from './hamta-blankning.mjs';
 import { skicka } from './skicka.mjs';
+import { byggBevakning } from './bevakningslista.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
 
 const konf = JSON.parse(readFileSync(p('./bolag.json'), 'utf8'));
+// Bevakningslistan = seed (bolag.json) UNION användarnas Supabase-innehav.
+// Lägg till ett bolag i Delägaren -> motorn bevakar det i morgondagens brev.
+// Utan Supabase-nycklar i miljön faller den tillbaka på enbart seed.
+try {
+  const { bolag, orapporterade } = await byggBevakning(konf);
+  konf.bolag = bolag;
+  const franInnehav = bolag.filter(b => b.kalla === 'innehav').length;
+  console.log(`Bevakningslista: ${bolag.length} bolag (${franInnehav} ur innehav).`);
+  if (orapporterade.length) console.log(`  Utan MFN-flöde (bevakas ej): ${orapporterade.join(', ')}`);
+} catch (e) {
+  console.log(`Kunde inte bygga bevakningslista ur innehav (${e.message}); kör seed.`);
+}
 const arkivFil = p('./in/arkiv.json');
 const arkiv = existsSync(arkivFil) ? JSON.parse(readFileSync(arkivFil, 'utf8')) : {};
 mkdirSync(p('./out/data'), { recursive: true });
