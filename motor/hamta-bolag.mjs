@@ -72,7 +72,11 @@ export async function hamtaBolag() {
       const key = cc + ':' + ticker;
       if (seen.has(key)) continue;
       seen.add(key);
-      all.push({ n: name, t: ticker, m: market, c: cc });
+      all.push({
+        n: name, t: ticker, m: market, c: cc,
+        p: typeof row.price === 'number' ? row.price : null,   // senaste kurs (snapshot)
+        ch: typeof row.change === 'number' ? row.change : null, // dagens förändring i procent
+      });
       n++;
     }
     console.log(`${market.padEnd(12)} ${slug.padEnd(26)} ${n} bolag`);
@@ -85,9 +89,13 @@ async function main() {
   const all = await hamtaBolag();
   const outDir = fileURLToPath(new URL('../public/labs/data/', import.meta.url));
   mkdirSync(outDir, { recursive: true });
+  // Kurserna är en daglig snapshot från källan, inte realtid: stämpla datumet
+  // så Dina bolag kan visa "kurs per <datum>" ärligt.
+  const payload = { uppdaterad: new Date().toISOString().slice(0, 10), bolag: all };
   const out = outDir + 'companies.json';
-  writeFileSync(out, JSON.stringify(all), 'utf8');
-  console.log(`TOTALT ${all.length} bolag, skrev ${out} (${(JSON.stringify(all).length / 1024) | 0} kB)`);
+  const json = JSON.stringify(payload);
+  writeFileSync(out, json, 'utf8');
+  console.log(`TOTALT ${all.length} bolag, skrev ${out} (${(json.length / 1024) | 0} kB)`);
 }
 
 // Windows-säker huvudmodulkoll.

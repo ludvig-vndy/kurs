@@ -374,22 +374,70 @@ function reveal(){
 // ── Riktiga innehav (Supabase) kontra demo ────────────────────────────
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function fmtSEK(n){ if(n==null||isNaN(n)) return null; return Math.round(n).toLocaleString('sv-SE')+' kr'; }
+function fmtN(n,d){ if(n==null||isNaN(n)) return null; return Number(n).toLocaleString('sv-SE',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+function pct(n){ if(n==null||isNaN(n)) return ''; return (n>0?'+':'')+Number(n).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %'; }
+function cur(cc){ return cc==='FI' ? '€' : 'kr'; }
+
+// Kurssnapshot: samma companies.json som söket i Lägg till bolag. Byggs till
+// uppslag på ticker (primärt) och namn (fallback). Daglig snapshot, inte realtid.
+let PRICES=new Map(), PRICES_N=new Map(), PRICE_DATE=null;
+async function loadPrices(){
+  try{
+    const r=await fetch('/labs/data/companies.json'); if(!r.ok) return;
+    const d=await r.json();
+    PRICE_DATE = (d && d.uppdaterad) || null;
+    const list=Array.isArray(d)?d:(d&&d.bolag)||[];
+    for(const o of list){
+      if(o.t) PRICES.set(String(o.t).toUpperCase(), o);
+      if(o.n) PRICES_N.set(String(o.n).toLowerCase().trim(), o);
+    }
+  }catch(e){ /* utan kurser faller raden tillbaka på anskaffningsvärde */ }
+}
+function priceFor(h){
+  if(h.ticker){ const k=String(h.ticker).toUpperCase(); if(PRICES.has(k)) return PRICES.get(k); }
+  if(h.name){ const k=String(h.name).toLowerCase().trim(); if(PRICES_N.has(k)) return PRICES_N.get(k); }
+  return null;
+}
 
 function realRow(h){
   const foljer = h.relation==='foljer';
   const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>';
-  const ansk = (h.quantity!=null && h.gav!=null) ? fmtSEK(h.quantity*h.gav) : null;
-  const antal = (h.quantity!=null) ? (Number(h.quantity).toLocaleString('sv-SE')+' st') : '';
-  const kalla = h.source==='csv' ? 'CSV' : (h.source==='manual' ? 'manuell inmatning' : (h.source||'import'));
-  const ln = 'Importerad från '+kalla+'. Analys och bevakning tillkommer när motorn körts på bolaget.';
-  const rt = ansk
-    ? '<div class="amt">'+ansk+(antal?'<span class="andel">'+antal+'</span>':'')+'</div>'+
-      '<div class="day"><span class="lbl">anskaffningsvärde</span></div>'
-    : (antal?'<div class="amt">'+antal+'</div>':'');
+  const px = priceFor(h);
+  const qty = (h.quantity!=null && !isNaN(h.quantity)) ? Number(h.quantity) : null;
+  const gav = (h.gav!=null && !isNaN(h.gav)) ? Number(h.gav) : null;
+  let rt='', dot='calm', ln='';
+
+  if(px && px.p!=null){
+    const c=cur(px.c), kurs=fmtN(px.p,2), dc=px.ch;
+    const dayv='<span class="v '+(dc>=0?'up':'dn')+'">'+pct(dc)+'</span>';
+    if(qty!=null && gav!=null){
+      // Innehav: marknadsvärde stort, totalavkastning prominent, kurs/dagens litet.
+      const mv=qty*px.p, ansk=qty*gav, avk=mv-ansk, avkPct=gav>0?(px.p/gav-1)*100:null, up=avk>=0;
+      rt='<div class="amt">'+fmtN(mv,0)+' '+c+'<span class="andel">'+fmtN(qty,0)+' st</span></div>'+
+         '<div class="tavk '+(up?'up':'dn')+'">'+pct(avkPct)+'<span class="kr">'+(up?'+':'')+fmtN(avk,0)+' '+c+'</span></div>'+
+         '<div class="day"><span class="lbl">kurs</span> '+kurs+' '+c+' '+dayv+' <span class="lbl">i dag · GAV '+fmtN(gav,2)+'</span></div>';
+      dot=up?'pos':'neg';
+    } else {
+      // Kurs men inget innehav (t.ex. följer, eller antal/GAV saknas).
+      rt='<div class="amt">'+kurs+' '+c+'</div>'+
+         '<div class="day">'+dayv+' <span class="lbl">i dag</span></div>';
+      dot=dc>=0?'pos':'neg';
+      if(!foljer) ln='Lägg till antal och inköpskurs för att se din avkastning.';
+    }
+  } else {
+    // Ingen kurs (onoterat eller ej i snapshoten): fall tillbaka på anskaffningsvärde.
+    const ansk=(qty!=null&&gav!=null)?fmtN(qty*gav,0)+' kr':null;
+    const antal=(qty!=null)?fmtN(qty,0)+' st':'';
+    rt=ansk
+      ? '<div class="amt">'+ansk+(antal?'<span class="andel">'+antal+'</span>':'')+'</div><div class="day"><span class="lbl">anskaffningsvärde</span></div>'
+      : (antal?'<div class="amt">'+antal+'</div>':'');
+    ln='Bevakning startar när motorn körts på bolaget.';
+  }
+
   return '<div class="hold" aria-disabled="true">'+
-    '<span class="dot calm"></span>'+
+    '<span class="dot '+dot+'"></span>'+
     '<div><div><span class="nm">'+esc(h.name)+'</span>'+(h.ticker?'<span class="tk">'+esc(h.ticker)+'</span>':'')+tag+'</div>'+
-    '<div class="ln">'+ln+'</div></div>'+
+    (ln?'<div class="ln">'+ln+'</div>':'')+'</div>'+
     '<div class="rt">'+rt+'</div></div>';
 }
 
@@ -405,10 +453,40 @@ function groupH(txt){
   return '<div style="font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px">'+txt+'</div>';
 }
 
+// Portföljöversikt: total värde, avkastning sedan köp, i dag, och allokering per
+// innehav. Räknas bara på innehav med både kurs och antal/GAV; övriga står som
+// rader men bidrar inte till totalerna.
+function portfolioOverview(owned){
+  const full = owned.map(h=>({h,px:priceFor(h)}))
+    .filter(x=>x.px&&x.px.p!=null&&x.h.quantity!=null&&x.h.gav!=null)
+    .map(x=>({h:x.h, mv:x.h.quantity*x.px.p, ansk:x.h.quantity*x.h.gav, ch:x.px.ch}));
+  if(!full.length) return '';
+  const totalMv=full.reduce((a,x)=>a+x.mv,0), ansk=full.reduce((a,x)=>a+x.ansk,0);
+  const avk=totalMv-ansk, avkPct=ansk>0?(totalMv/ansk-1)*100:0;
+  const dayKr=full.reduce((a,x)=>a+x.mv*(x.ch||0)/100,0), dayPct=totalMv>0?dayKr/totalMv*100:0;
+  const up=avk>=0, dup=dayKr>=0;
+  const PAL=['#2C5646','#B07C1E','#4A7C8C','#7A6A4A','#9B3A2E','#5B6E52','#8A6D3B'];
+  const sorted=[...full].sort((a,b)=>b.mv-a.mv);
+  const sw=c=>'<i style="width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:6px;background:'+c+'"></i>';
+  const bars=sorted.map((x,i)=>'<span style="width:'+(x.mv/totalMv*100).toFixed(2)+'%;background:'+PAL[i%PAL.length]+'"></span>').join('');
+  let leg=sorted.slice(0,4).map((x,i)=>'<span>'+sw(PAL[i%PAL.length])+esc(x.h.name.split(' ')[0])+' <b>'+(x.mv/totalMv*100).toFixed(0)+'%</b></span>').join('');
+  if(sorted.length>4){ const rest=sorted.slice(4).reduce((a,x)=>a+x.mv,0); leg+='<span>'+sw('var(--faint)')+'Övriga <b>'+(rest/totalMv*100).toFixed(0)+'%</b></span>'; }
+  return '<section class="ovr">'+
+    '<div class="ovr-fig">'+
+      '<div class="ovr-block"><div class="ovr-k">Din del är värd</div><div class="ovr-tot">'+fmtN(totalMv,0)+'<span class="kr">kr</span></div></div>'+
+      '<div class="ovr-block"><div class="ovr-k">Sedan du köpte</div><div class="ovr-avk '+(up?'up':'dn')+'">'+(up?'+':'')+fmtN(avk,0)+' kr<span class="pct">'+pct(avkPct)+'</span></div>'+
+        '<div class="ovr-day">I dag <span class="v '+(dup?'up':'dn')+'">'+(dup?'+':'')+fmtN(dayKr,0)+' kr</span> '+pct(dayPct)+' <span style="font-family:var(--serif);font-style:italic;color:var(--faint)">men det är inte i dag som räknas</span></div></div>'+
+    '</div>'+
+    '<div class="alloc"><div class="alloc-bar">'+bars+'</div><div class="alloc-line">'+leg+'</div></div>'+
+  '</section>';
+}
+
 function renderReal(holds, user){
   const owned = holds.filter(h=>h.relation!=='foljer');
   const follow = holds.filter(h=>h.relation==='foljer');
   let html = pageHeader();
+  if(PRICE_DATE) html += '<div style="font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--faint);margin:2px 0 2px">Kurser per '+esc(PRICE_DATE)+', daglig snapshot.</div>';
+  html += portfolioOverview(owned);
   if(owned.length){ html += groupH('Äger ('+owned.length+')') + owned.map(realRow).join(''); }
   if(follow.length){ html += groupH('Följer ('+follow.length+')') + follow.map(realRow).join(''); }
   view.innerHTML = html;
@@ -443,6 +521,7 @@ async function boot(){
       localStorage.removeItem('agarbrevet-pending-import');
     }
   }catch(e){ console.error('flush pending import:', e); }
+  await loadPrices();
   let holds=[];
   try{ holds = await AB.listHoldings(); }catch(e){ console.error('listHoldings:', e); }
   if(holds && holds.length) renderReal(holds, user);

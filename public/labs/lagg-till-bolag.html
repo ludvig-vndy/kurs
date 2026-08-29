@@ -141,10 +141,18 @@
 <script defer src="/vendor/supabase-js-2.110.2.min.js"></script>
 <script defer src="/labs/agarbrevet-supabase.js"></script>
 <script>
-const BOLAG = ['Norlux Industri','Telvio','Kavex Medical','Voltcell','Brunna Hydro'];
-// Sökbart universum (prototyp: samma fiktiva bolag som resten av demot). I skarpt
-// läge är det motorns bevakningsbara lista + fri sökning på namn/ticker/ISIN.
-const UNIVERSE = ['Norlux Industri','Telvio','Kavex Medical','Voltcell','Brunna Hydro','Almi Foods','Sundby Verktyg','Havregården'];
+// "Vanliga" = bolag motorn faktiskt bevakar i dag (motor/bolag.json), så POC-loopen
+// (lägg till -> följ -> brev -> fråga) fungerar direkt för dem.
+const BOLAG = ['Unibap Space Solutions','Lifco','Evolution','Telia Company','Sectra','Axfood'];
+// Sökbart universum: ~1165 noterade nordiska bolag (namn, ticker, marknad), genererat
+// av motor/hamta-bolag.mjs -> public/labs/data/companies.json. Laddas asynkront; innan
+// listan är inne går det ändå att lägga till valfritt namn. Bolag utanför BOLAG går
+// att lägga till men FÖLJS först när deras MFN-flöde lagts in i motorn.
+let UNIVERSE = [];  // [{n:namn, t:ticker, m:marknad, c:landskod, p:kurs, ch:dagens%}]
+fetch('/labs/data/companies.json').then(r=>r.ok?r.json():null).then(d=>{
+  UNIVERSE = Array.isArray(d) ? d : (d && d.bolag) || [];
+  if(document.getElementById('cosearch')) renderResults();
+}).catch(()=>{});
 let searchQ='';
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const OB = {
@@ -156,8 +164,8 @@ const OB = {
     ['Inga nya aktier trycks','säg till om antalet aktier ökar'],
   ]
 };
-let step=0, sel=null, skip=false;
-const NSTEP=4;
+let step=0, sel=null, selT=null, qty='', gav='';
+const NSTEP=3;
 const pipsEl=document.getElementById('pips'), stepEl=document.getElementById('step');
 
 function pips(){ pipsEl.innerHTML = Array.from({length:NSTEP},(_,i)=>'<i class="'+(i<=step?'on':'')+'"></i>').join(''); }
@@ -172,10 +180,17 @@ function saveNoteText(){
   return '';
 }
 function setSaveNote(state){ saveState=state; const el=document.getElementById('saveNote'); if(el) el.textContent=saveNoteText(); }
+function num(s){
+  if(s==null) return null;
+  var t=String(s).trim().replace(/[\s  ]/g,'').replace(/,/g,'.');
+  if(t==='') return null;
+  var n=parseFloat(t);
+  return (isNaN(n)||n<0) ? null : n;
+}
 function persistHolding(){
   if(!sel || savedFor===sel) return;   // spara varje bolag en gång
   savedFor=sel;
-  const row={ name:sel, ticker:null, isin:null, quantity:null, gav:null, relation:'ager', source:'manual' };
+  const row={ name:sel, ticker:selT||null, isin:null, quantity:num(qty), gav:num(gav), relation:'ager', source:'manual' };
   if(!(window.AB && window.AB.ready)){ setSaveNote('login'); return; }
   setSaveNote('saving');
   window.AB.getUser().then(u=>{
@@ -194,11 +209,11 @@ function render(){
   pips();
   let h='';
   if(step===0){
-    h='<div class="kicker">Lägg till bolag · steg 1 av 4</div>'+
+    h='<div class="kicker">Lägg till bolag · steg 1 av 3</div>'+
       '<h1>Vilket bolag äger du?</h1>'+
       '<div class="sub">Sök på namn, ticker eller ISIN, eller välj ett vanligt nedan. Mer än så behövs inte: bevakning och sammanfattningar startar direkt.</div>'+
       '<div class="searchwrap"><span class="sic">⌕</span>'+
-        '<input id="cosearch" type="text" autocomplete="off" placeholder="Sök bolag, t.ex. Telvio eller SE0000..." value="'+esc(searchQ)+'"></div>'+
+        '<input id="cosearch" type="text" autocomplete="off" placeholder="Sök bolag, t.ex. Volvo eller Sivers" value="'+esc(searchQ)+'"></div>'+
       '<div class="results" id="results"></div>'+
       '<div class="quick"><span class="ql">Vanliga</span>'+
         BOLAG.map(b=>'<button class="chip'+(sel===b?' sel':'')+'" data-b="'+esc(b)+'">'+b+'</button>').join('')+'</div>'+
@@ -206,35 +221,22 @@ function render(){
         '<button class="btn prim" id="next" '+(sel?'':'disabled')+'>'+(sel?'Fortsätt med '+esc(sel)+' →':'Fortsätt →')+'</button></div>';
   } else if(step===1){
     const cn = sel||'bolaget';
-    h='<div class="kicker">Steg 2 av 4 · valfritt</div>'+
-      '<h1>Vill du att vi vaktar något särskilt i '+cn+'?</h1>'+
-      '<div class="sub">Vi har skrivit ett förslag på varför du äger det, utifrån bolagets profil. Ändra orden, eller hoppa över. Vi läser och sammanfattar allt oavsett, tesen är ditt eget verktyg, inte ett krav.</div>'+
-      '<div class="sent">Jag äger en andel av <span class="co">'+cn+'</span> som tjänar pengar genom att '+
-        '<input value="'+OB.a+'" size="34" aria-label="hur bolaget tjänar pengar">, och kommer tjäna mer för att '+
-        '<input value="'+OB.b+'" size="34" aria-label="varför det tjänar mer framover">.</div>'+
-      '<a class="cross" href="/fokus/kapitel/1"><span class="ic">✎</span><span><b>Vill du kunna skriva det själv?</b><span>Kapitel 1 i kursen är gratis: vad det innebär att äga en aktie</span></span><span class="arr">→</span></a>'+
-      '<a class="cross" href="/fokus"><span class="ic">✓</span><span><b>Har du gått kursen?</b><span>Då har du redan skrivit den här meningen i övningarna. Vi hämtar ditt svar.</span></span><span class="arr">→</span></a>'+
+    h='<div class="kicker">Steg 2 av 3 · valfritt</div>'+
+      '<h1>Ditt innehav i '+cn+'</h1>'+
+      '<div class="sub">Fyll i om du vill följa din avkastning. Lämnar du tomt bevakar vi '+cn+' från och med i dag, utan siffror, och du kan lägga till dem när som helst senare.</div>'+
+      '<div class="vrow"><div class="vg"><span class="gl">Antal aktier</span><input id="f-qty" inputmode="decimal" autocomplete="off" value="'+esc(qty)+'" placeholder="t.ex. 1119"></div></div>'+
+      '<div class="vrow"><div class="vg"><span class="gl">Inköpskurs per aktie</span><input id="f-gav" inputmode="decimal" autocomplete="off" value="'+esc(gav)+'" placeholder="t.ex. 4,34"></div></div>'+
       '<div class="nav-btns"><button class="btn" data-go="0">← Tillbaka</button><span class="spacer"></span>'+
-        '<button class="btn ghost" id="skip">Hoppa över, bevaka allt</button>'+
-        '<button class="btn prim" id="use">Använd förslaget →</button></div>';
-  } else if(step===2){
-    h='<div class="kicker">Steg 3 av 4</div>'+
-      '<h1>Tre saker vi håller koll på åt dig</h1>'+
-      '<div class="sub">Byggda på varför du äger det. Nivån för när vi säger till kommer från kursens tumregler, ändra den om du vill.</div>'+
-      OB.vakter.map(v=>'<div class="vrow"><div class="vn">'+v[0]+'</div><div class="vg"><span class="gl">Säg till när</span><input value="'+v[1]+'"></div></div>').join('')+
-      '<div class="nav-btns"><button class="btn" data-go="1">← Tillbaka</button><span class="spacer"></span>'+
-        '<button class="btn prim" data-go="3">Fortsätt →</button></div>';
+        '<button class="btn ghost" id="hskip">Hoppa över</button>'+
+        '<button class="btn prim" id="hnext">Fortsätt →</button></div>';
   } else {
     persistHolding();
     const cn = sel||'bolaget';
     h='<div class="kicker">Klart</div>'+
       '<h1>Vi håller koll på '+cn+' åt dig.</h1>'+
-      '<div class="sub">'+(skip
-        ? 'Vi läser allt om bolaget, sorterar bort bruset och sammanfattar varje morgon. Vill du senare vakta något särskilt finns förslaget kvar under Ditt skäl.'
-        : 'Vi läser allt om bolaget och sammanfattar varje morgon. Dina tre vakter är igång: passeras en gräns säger vi till direkt.')+'</div>'+
+      '<div class="sub">Vi bevakar '+cn+' enligt kursens regler: rapporter, nyckeltal och väsentliga händelser läses och sammanfattas varje morgon, med källa på varje siffra.</div>'+
       '<div class="done-card"><div class="dh">Det här händer nu</div>'+
-        '<p>I morgon 07:30: ditt första Ägarbrev med '+cn+' i.<br>Vid rapport: analysen klar inom minuter, varje siffra med källa.<br>'+
-        (skip?'Alla väsentliga händelser: sammanfattade och graderade.':'Om en gräns passeras: vi säger till samma morgon.')+'</p>'+
+        '<p>I morgon 07:30: ditt första Ägarbrev med '+cn+' i.<br>Vid rapport: analysen klar inom minuter, varje siffra med källa.<br>Om en av våra gränser passeras: vi säger till samma morgon.</p>'+
         '<div id="saveNote" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;color:var(--oxblood)">'+saveNoteText()+'</div></div>'+
       '<div class="nav-btns"><button class="btn ghost" data-go="0">Lägg till ett bolag till</button><span class="spacer"></span>'+
         '<a class="btn prim" href="/labs/dina-bolag.html">Öppna Dina bolag →</a></div>';
@@ -249,17 +251,17 @@ function renderResults(){
   const rEl=document.getElementById('results'); if(!rEl) return;
   const q=searchQ.trim().toLowerCase();
   if(!q){ rEl.innerHTML=''; return; }
-  const hits=UNIVERSE.filter(n=>n.toLowerCase().includes(q));
-  let html=hits.map(n=>'<button type="button" class="rrow'+(sel===n?' sel':'')+'" data-pick="'+esc(n)+'">'+
-    '<span>'+esc(n)+'</span><span class="rmeta">'+(sel===n?'vald ✓':'bevaka')+'</span></button>').join('');
+  const hits=UNIVERSE.filter(o=>o.n.toLowerCase().includes(q)||(o.t&&o.t.toLowerCase().includes(q))).slice(0,8);
+  let html=hits.map(o=>'<button type="button" class="rrow'+(sel===o.n?' sel':'')+'" data-pick="'+esc(o.n)+'" data-t="'+esc(o.t||'')+'">'+
+    '<span>'+esc(o.n)+'</span><span class="rmeta">'+(sel===o.n?'vald ✓':esc((o.t||'')+' · '+o.m))+'</span></button>').join('');
   const typed=searchQ.trim();
-  if(typed && !UNIVERSE.some(n=>n.toLowerCase()===q)){
-    html+='<button type="button" class="rrow add" data-pick="'+esc(typed)+'">'+
-      '<span>Lägg till &bdquo;'+esc(typed)+'&rdquo;</span><span class="rmeta">nytt bolag →</span></button>';
+  if(typed && !UNIVERSE.some(o=>o.n.toLowerCase()===q)){
+    html+='<button type="button" class="rrow add" data-pick="'+esc(typed)+'" data-t="">'+
+      '<span>Lägg till ”'+esc(typed)+'”</span><span class="rmeta">nytt bolag →</span></button>';
   }
   if(!html) html='<div class="rempty">Inga träffar. Skriv hela namnet så lägger vi till det ändå.</div>';
   rEl.innerHTML=html;
-  rEl.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>{ sel=b.dataset.pick; render(); }));
+  rEl.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>{ sel=b.dataset.pick; selT=b.dataset.t||null; render(); }));
 }
 
 function wire(){
@@ -270,18 +272,22 @@ function wire(){
     cs.addEventListener('keydown',e=>{
       if(e.key==='Enter'){ e.preventDefault();
         const first=stepEl.querySelector('.rrow[data-pick]');
-        if(first){ sel=first.getAttribute('data-pick'); render(); }
+        if(first){ sel=first.getAttribute('data-pick'); selT=first.getAttribute('data-t')||null; render(); }
       }
     });
   }
   stepEl.querySelectorAll('.chip[data-b]').forEach(c=>c.addEventListener('click',()=>{
-    sel = c.dataset.b; render();
+    sel = c.dataset.b; selT=null; render();
   }));
   const next=stepEl.querySelector('#next'); if(next) next.addEventListener('click',()=>{step=1;render();});
-  const use=stepEl.querySelector('#use'); if(use) use.addEventListener('click',()=>{skip=false;step=2;render();});
-  const sk=stepEl.querySelector('#skip'); if(sk) sk.addEventListener('click',()=>{skip=true;step=3;render();});
+  const fq=stepEl.querySelector('#f-qty'); if(fq) fq.addEventListener('input',()=>{qty=fq.value;});
+  const fg=stepEl.querySelector('#f-gav'); if(fg) fg.addEventListener('input',()=>{gav=fg.value;});
+  const hn=stepEl.querySelector('#hnext'); if(hn) hn.addEventListener('click',()=>{step=2;render();});
+  const hs=stepEl.querySelector('#hskip'); if(hs) hs.addEventListener('click',()=>{qty='';gav='';step=2;render();});
   stepEl.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{
-    const g=+b.dataset.go; if(g===0){sel=step===3?null:sel;} step=g; render();
+    const g=+b.dataset.go;
+    if(g===0 && step===2){ sel=null; selT=null; qty=''; gav=''; savedFor=null; }
+    step=g; render();
   }));
 }
 render();
