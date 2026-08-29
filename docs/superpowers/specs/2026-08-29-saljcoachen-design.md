@@ -36,6 +36,22 @@ tecken evidensnoteringar i 36 steg, alltså exakt de reservationer som gör skil
 A-fynd och ett B-fynd. En coach som får påståendet utan reservationen kommer att påstå
 omtvistade saker som säkra. Korpusen får därför en egen utvinning, avsnitt 3.
 
+### Andra rundan
+
+Granskningen av revisionen gav sex ytterligare krav, alla inarbetade: evidensen ska in med
+struktur och etikett i stället för utplattad löptext, den deterministiska lektionsroutningen
+ska vara strikt och ha företräde inom femgränsen, korpusens sanningsprincip ska skrivas ut,
+lektionstitlar ska renderas server-side ur id:t, routningslistan ska ha tre kategorier, och
+korpusens **semantiska** integritet ska testas och inte bara dess synk.
+
+Och ett andra fynd av samma slag som det första. `stegProsa` tar med myt-stegens `varifran`
+och `vad_som_galler` men **inte** `pastaende`. Den gamla planen hade alltså gett coachen
+"varifrån myten kommer" och "vad som faktiskt gäller" utan själva påståendet de handlar om.
+Att bara lägga till fältet vore värre än att utelämna det: då hamnar meningen "Bara 7
+procent av kommunikationen är ord" som vanlig text i korpusen, vilket är den enskilt
+farligaste meningen att ha omärkt i just den här kursen. Påståendet ska med, och det ska
+bära sin märkning. Se sanningsprincipen i avsnitt 3.
+
 ---
 
 ## 1. Vad det är, och vad det inte är
@@ -104,8 +120,26 @@ Ett billigt anrop får bara lektionsregistret: 42 rader med lektionsnummer, tite
 `fardighet`-tagg och `mal`-meningen. Ungefär 1 500 tokens.
 
 **Före modellanropet, deterministisk routning.** Nämner frågan lektionsnummer i klartext
-(`\b\d{1,2}\.\d{1,2}\b`) och de numren finns, tas de rakt in. "Vad är skillnaden mellan
-4.3 och 4.4" ska inte avgöras av en modell.
+tas de rakt in. "Vad är skillnaden mellan 4.3 och 4.4" ska inte avgöras av en modell.
+
+Regeln måste vara strikt, annars gör den skada. En säljare skriver siffror hela tiden, och
+"vi låg på 3.2 miljoner" innehåller ett giltigt lektionsnummer. Svenska skriver visserligen
+decimaler med komma, så det vanliga fallet är redan ofarligt, men punkten förekommer. Därför
+tre nivåer:
+
+| Vad som står | Tolkning |
+| --- | --- |
+| Numret följs av ett enhetsord (miljoner, mkr, kr, tkr, procent, %, gånger, timmar, dagar, veckor, månader, personer) | Ignoreras helt |
+| Numret föregås av "lektion", "kapitel" eller "avsnitt", eller står i en jämförelsefras ("mellan 4.3 och 4.4") | **Stark referens** |
+| Bart nummer utan enhetsord | Svag referens |
+
+Kandidaterna vitlistas alltid mot nycklarna i `LEKTIONER`, så ett nummer som inte är en
+lektion faller bort oavsett nivå.
+
+**Starka referenser har företräde inom femgränsen och kan aldrig kastas ut** av modellens
+träffar. Nämner frågan uttryckligen fyra lektioner ska routern inte kunna ersätta två av dem
+med något den tycker verkar mer relevant. Svaga referenser läggs till som kandidater utan
+företräde. Är de starka referenserna fler än fem tas de fem första i den ordning de står.
 
 **Svarsschemat är hårt:**
 
@@ -187,7 +221,60 @@ Korpusen får därför en egen utvinning i `tools/lib/motparten-text.mjs`, med
   återge som en sanning
 
 `stegProsa` lämnas oförändrad för röstverktyget. Den är rätt för sitt syfte, den är fel för
-det här, och de två ska inte tvingas ihop.
+det här, och de två ska inte tvingas ihop. Gemensam kod är inte ett värde när konsumenterna
+har olika semantik.
+
+### Sanningsprincipen
+
+> Korpusen innehåller bara material som i sig är sant, eller som är uttryckligen märkt som
+> myt, invändning eller felaktigt exempel. Avsiktligt felaktiga formuleringar förekommer
+> aldrig utan sin märkning.
+
+Quizens `alternativ` är det tydligaste fallet: två av tre är formulerade felaktigheter, och
+utan facit i texten är de bara påståenden. En modell känner inte datamodellens semantik, den
+ser text. Myt-stegens `pastaende` är samma sak från andra hållet: det ska med, men aldrig
+naket. Principen gäller framåt också, eftersom fler steg-typer med avsiktligt fel innehåll
+kan tillkomma.
+
+### Korpusens textformat
+
+Relationen mellan påstående och reservation måste överleva utvinningen. Plattas allt till
+löptext kan modellen tappa vilket påstående en reservation kvalificerar. Formatet är därför
+etiketterat:
+
+```text
+## 6.4 När problemet inte är värt att lösa
+Kapitel 6, Problem och konsekvens · Färdighet: problem.avgransning
+Mål: Efter lektionen kan eleven avgöra om ett problem är stort nog...
+
+### TRE TECKEN: Att det inte bär   [concept]
+Det första tecknet är det mest användbara, och det tar tio sekunder att kontrollera...
+UPPRÄKNING:
+- Ingen har försökt: Problemet har funnits i fyra år och ingen har gjort ett seriöst...
+- Alla tycker, ingen äger: Många beskriver problemet, ingen har det på sin lista...
+FIGURTEXT: Ett tecken kan vara en tillfällighet. Två är ett besked.
+
+### OM ANTALET ALTERNATIV: Valparalys är verklig ibland, inte alltid   [concept]
+Den populära versionen säger att fler alternativ alltid leder till färre beslut...
+EVIDENS nivå B, källa K9: Iyengar och Lepper (2000) mot Scheibehenne, Greifeneder och
+Todd (2010). Effekten finns i vissa sammanhang och är nära noll i genomsnitt. Ska aldrig
+sägas som en naturlag.
+
+### MYT ETT: Siffran alla känner till   [myt]
+MYT-PÅSTÅENDE (falskt, får aldrig upprepas som sant): Bara 7 procent av kommunikationen
+är ord. Resten är tonfall och kroppsspråk.
+VARIFRÅN: Två labbstudier av Albert Mehrabian 1967...
+VAD SOM GÄLLER: Ekvationen gäller det fallet och inget annat...
+
+### QUIZ
+FRÅGA: Vad är kravet för att ett problem ska bära en affär?
+VARFÖR: Summan inkluderar pengar, tid, införande, internt motstånd...
+```
+
+Systemprompten får motsvarande läsregler: ett `EVIDENS`-block kvalificerar påståendet
+närmast före, nivå B betyder omtvistat och ska sägas med reservationen, nivå C betyder
+hantverk och inte forskning, och ett `MYT-PÅSTÅENDE` får bara återges tillsammans med vad
+som gäller.
 
 `tools/bygg-korpus.mjs` skriver `functions/api/_korpus.js` med `REGISTER` (raderna för steg
 1) och `LEKTIONER` (lektionsnummer till materialtext). Underscore-prefixet gör att Pages
@@ -197,6 +284,28 @@ korpus, och diffen visar vad coachen kan när materialet ändras.
 `tools/check-motparten.mjs` byggs ut med en synk-kontroll som genererar korpusen i minnet
 och jämför med filen på disk, och fäller med "kör `node tools/bygg-korpus.mjs`". Utan den
 kommer coachen förr eller senare citera en lektion som inte längre säger det den citerar.
+
+### Semantiska canaries
+
+Synk-kontrollen visar att lektionerna och `_korpus.js` kommer ur samma generatorversion.
+Den visar inte att generatorn tar med det den borde. Hela fyndet i avsnitt 0 var ett fall
+där generatorn kunde vara perfekt synkad och ändå semantiskt fel, så den kontrollen måste
+finnas separat. Annars kan någon om ett halvår städa i utvinningen och återinföra exakt
+samma klass av fel utan att grinden reagerar.
+
+Inte 42 snapshots, utan en canary per innehållstyp. Kontrollen är gratis, kräver inga
+API-anrop, och ligger därför i `npm run check`:
+
+| Innehållstyp | Fixture | Krav |
+| --- | --- | --- |
+| `jamforelse`-rubrik | "Ingen har försökt" (6.4) | ska finnas |
+| `jamforelse`-text | "Utan en ägare finns ingen som tar strid för budgeten" (6.4) | ska finnas |
+| Evidensreservation | "Effekten finns i vissa sammanhang och är nära noll i genomsnitt" (8.1) | ska finnas, och raden ska innehålla nivå B |
+| Quizdistraktor | "Att kunden inte vill uppge en budget" (6.4) | ska **inte** finnas någonstans |
+| Myt-påstående | "Bara 7 procent av kommunikationen är ord" (0.2) | ska finnas, och bara på en rad som börjar med MYT-PÅSTÅENDE |
+
+Alla fem strängarna är kontrollerade som unika i materialet. Ändras en lektion så att en
+fixture försvinner ska testet fällas och fixturen bytas medvetet, inte tas bort.
 
 **Servera inte korpusen som en statisk fil.** `isExempt` i `functions/_middleware.js`
 släpper igenom allt som slutar på `.json`, så en korpus under `public/` vore hela den
@@ -291,6 +400,15 @@ coach som gissar där lär ut fel sak i sin första mening.
   mer grundat ut än det är.
 - Oparsbar JSON: ett omförsök, sedan fel. Inget försök att rädda text.
 - Fält som inte hör till formen ignoreras.
+
+**Modellen returnerar bara id.** Titlar och länkar renderas server-side ur `LEKTIONER`, så
+provenance ägs av servern hela vägen. Modellen kan varken hitta på en lektionstitel eller
+formulera om den, och användaren ser en referens som per konstruktion motsvarar text som
+faktiskt skickades in:
+
+> **Vad materialet säger**
+> ...
+> Relevant: 6.2 Att sätta ord på problemet
 
 UI:t bygger länkarna ur `lektioner`, aldrig ur löptexten.
 
@@ -464,17 +582,43 @@ Runt 30 frågor med förväntade kärnlektioner. Kör bara steg 1, är därför 
 köras oftare.
 
 Assertionen är **inte** exakt uppsättning, det blir för skört. Den är att minst en av de
-förväntade lektionerna finns bland kandidaterna:
+förväntade lektionerna finns bland kandidaterna. Tre kategorier, och den mellersta är den
+som faktiskt prövar konstruktionen:
+
+**1. Direkt träff.** Kursen behandlar frågan.
 
 ```text
 "Jag frågade budget direkt i första mötet"      -> minst en av [6.2, 6.4, 4.4]
 "Kunden svarar inte på mina mejl längre"        -> minst en av [10.1, 10.2, 10.3]
 "Hur vet jag om det här är värt att jobba på"   -> minst en av [6.4, 9.1]
-"Hur sätter jag rätt pris på min tjänst"        -> saknar_underlag
-"Vad ska stå i avtalet"                         -> saknar_underlag
 ```
 
-Fallen som ska ge `saknar_underlag` är de viktigaste i listan. Se avsnitt 3.
+**2. Närliggande men utanför mandatet.** Ligger nära försäljning, men kursen har inget att
+säga om det. Här avgörs om skyddet i avsnitt 3 är verkligt eller teoretiskt.
+
+```text
+"Vilken prismodell bör ett SaaS-bolag använda"  -> saknar_underlag
+"Vad ska stå i avtalet"                         -> saknar_underlag
+"Hur bygger jag upp min pipeline i CRM:et"      -> saknar_underlag
+"Hur räknar jag ut min provision"               -> saknar_underlag
+```
+
+**3. Helt utanför.** Ska avböjas av steg 2, inte routas.
+
+```text
+"Hur installerar jag en skrivare"               -> avböjs
+```
+
+Kategori 2 är listans tyngdpunkt. En fråga om kvantfysik är för lätt: en routermodell som
+ser 42 lektioner rationaliserar gärna att avtalsjuridik hänger ihop med kundens risk, och
+det är precis den rationaliseringen som ska fångas.
+
+**Lös det inte med ett tredje anrop.** Att först fråga "är detta inom kursens scope" och
+sedan välja lektioner låter renare, men det är fortfarande en modell som är bra på att
+motivera varför något ligger inom scope. Behåll ett anrop, ge prompten kontrastiva exempel
+(en ren CRM-fråga är `unsupported`, en fråga om hur man formulerar ett kundsamtal om
+CRM-införandet kan vara `supported`), och låt evalen avgöra om modellen klarar jobbet.
+Arkitektur är fel verktyg för den här osäkerheten innan första mätningen finns.
 
 Routningen är det som gör att hela konstruktionen fungerar. Går den sönder märks det annars
 bara som att svaren blir gradvis sämre, vilket ingen upptäcker.

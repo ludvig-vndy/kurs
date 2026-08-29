@@ -116,6 +116,24 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       Att i stället låta JWT:n ta över vore att slå ihop produkterna igen, vilket
       är precis det beslutet gick ut på att undvika.
 
+- [ ] **Värdera korpusexfiltration innan Säljcoachen öppnas för betalande kunder.**
+      Coachen får full lektionstext i kontexten och är instruerad att inte återge den
+      ordagrant. Det är ett partiellt skydd, inte en åtkomstkontroll: en systemprompt
+      stoppar inte en legitim användare som metodiskt ber om en sammanfattning i taget.
+      Taket på 40 frågor per dygn bromsar hastigheten, inte metoden. Under piloten är
+      hotmodellen två namngivna personer, vilket gör risken acceptabel. Med tusentals
+      betalande användare är den det inte nödvändigtvis.
+
+      Punkten är avklarad när ett beslut är fattat och skrivet, inte när någon har
+      "sett över" saken. Alternativen är minst: acceptera risken uttryckligen, korta ned
+      materialet som skickas per fråga, eller acceptera att kursens text i praktiken är
+      läsbar för den som betalar för en månad.
+
+- [ ] **Kunduppgifter till Anthropic.** Säljcoachen kommer att få riktiga kundnamn och
+      affärsdata i fritext, eftersom det är så folk beskriver ett möte. Gränssnittet ber
+      användaren avstå, men en uppmaning är ingen behandlingsgrund. Avgör före lansering
+      vad som gäller: databehandlaravtal, vad som loggas, och hur länge.
+
 - [ ] **Rättigheter per kurs**, innan Motparten kan säljas separat. Varken Stripe
       eller Supabase vet i dag vilken kurs ett köp gäller. Skiljelinjen på värdnamn
       räcker för en pilot, inte för två betalande produkter. Eget arbete, egen spec.
