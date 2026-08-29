@@ -1,0 +1,150 @@
+# Flytt av Cloudflare-resurser till ludvig-kontot
+
+**Datum:** 2026-08-30
+**Status:** förberedd, väntar på inloggning till målkontot
+**Från:** vndy-kontot (`a525ec472526e7bb5e054e8f88922c50`)
+**Till:** ludvig-kontot
+
+Cloudflare har ingen överföringsfunktion för Pages-projekt, Workers eller KV-namespaces.
+Allt återskapas i målkontot och raderas i källkontot.
+
+---
+
+## Beslut
+
+| Sak | Nu | Efter |
+| --- | --- | --- |
+| Aktiekursen, Pages-projekt | `kurs` | `aktiekurs` |
+| Aktiekursens URL | kurs-7m8.pages.dev | aktiekurs.pages.dev |
+| Säljkursen, Pages-projekt | `motparten` | `motparten` (samma namn) |
+| Säljkursens URL | motparten.pages.dev | motparten.pages.dev (oförändrad) |
+
+`aktiekurs` är ett kodnamn. Tjänsten heter Delägaren och ska så småningom ligga på en egen
+domän, och då spelar pages.dev-namnet ingen roll. Pages-projekt går inte att döpa om, men
+det slutar spela roll så fort en domän ligger framför.
+
+`aktiekurs.pages.dev` var ledigt vid kontroll 2026-08-30 (svarade som ett påhittat namn,
+till skillnad från motparten.pages.dev som svarade 302).
+
+## Vad som flyttas
+
+| Resurs | Detalj | Data att rädda |
+| --- | --- | --- |
+| Pages `kurs` | 85 fokus-sidor plus resten | nej, byggs om ur repot |
+| Pages `motparten` | säljkursen | nej, byggs om ur repot |
+| KV `fraga-rl` | `33773ae0f9864d78853252d6cab09031` | nej, bara strypningsräknare |
+| KV `upptack-data` | `f155742e0cb14bb390fced9aea5ca641` | **nej, namespacet är tomt** (kontrollerat 2026-08-30) |
+| Worker `upptack-cron` | daglig cron 05:00 UTC | nej, kod i `worker-upptack/` |
+
+Att `upptack-data` är tomt är i sig värt att titta på efter flytten: workern ska skriva dit
+dagligen. Antingen har den inte kört, eller så skriver den med kort TTL. Det är en egen
+fråga och inget som hindrar flytten.
+
+## Secrets som måste matas in på nytt
+
+Ingen går att läsa tillbaka ur Cloudflare. Värdena hämtas från sin ursprungskälla.
+
+| Secret | Projekt efter flytt | Källa |
+| --- | --- | --- |
+| `SUPABASE_SECRET_KEY` | `aktiekurs` | Supabase, projektinställningar |
+| `ANTHROPIC_API_KEY` | `aktiekurs` och `motparten` | console.anthropic.com |
+| `TINK_CLIENT_SECRET` | `aktiekurs` | Tinks konsol |
+| `PILOT_SECRET` | `motparten` | valfri ny slumpsträng, se nedan |
+| `REFRESH_TOKEN` | Worker `upptack-cron` | den tjänst workern hämtar från |
+
+`PILOT_SECRET` kan bytas till ett nytt värde utan konsekvens. Det gör bara att befintliga
+pilotcookies slutar gälla, och de två piloterna loggar in igen på `/pilot`.
+
+**Sätt inte secrets via `wrangler pages secret put` genom Claude Code.** Kommandot frågar
+efter värdet på en prompt, och `!`-kommandon här har ingen tangentbordsinmatning. Wrangler
+tar då emot ett tomt värde och rapporterar ändå "Success", vilket hände 2026-08-29 och tog
+en stund att felsöka. Använd Cloudflares gränssnitt eller en egen terminal.
+
+## Ordningen
+
+Aktiekursen kan flyttas utan avbrott eftersom `aktiekurs` är ett nytt, ledigt namn.
+Motparten får ett kort glapp eftersom namnet måste frigöras först.
+
+### Fas 1, i målkontot (inget avbrott någonstans)
+
+- [ ] `npx wrangler login` mot ludvig-kontot, eller `CLOUDFLARE_API_TOKEN` satt per kommando
+- [ ] Skapa KV-namespaces och anteckna de nya id:na:
+
+```bash
+npx wrangler kv namespace create fraga-rl
+npx wrangler kv namespace create upptack-data
+```
+
+- [ ] Uppdatera `wrangler.toml`: `name = "aktiekurs"` och de två nya KV-id:na
+- [ ] Uppdatera `worker-upptack/wrangler.toml` med det nya `upptack-data`-id:t
+- [ ] Deploya aktiekursen:
+
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name=aktiekurs --branch=main
+```
+
+- [ ] Sätt `SUPABASE_SECRET_KEY`, `ANTHROPIC_API_KEY` och `TINK_CLIENT_SECRET` i
+      gränssnittet, Production, och **deploya om** (Pages plockar upp secrets först vid
+      nästa deployment)
+- [ ] Lägg till aktiekursens nya URL i Supabases lista över tillåtna redirect-URL:er.
+      **Ta inte bort den gamla än**, båda ska fungera under omställningen
+- [ ] Kontrollera: `https://aktiekurs.pages.dev/` svarar, `/fokus` omdirigerar till
+      `/logga-in`, och inloggning med magiclink fungerar hela vägen in
+- [ ] Deploya workern och sätt dess secret:
+
+```bash
+cd worker-upptack && npx wrangler deploy
+```
+
+### Fas 2, motparten (kort glapp)
+
+- [ ] Radera Pages-projektet `motparten` i **vndy-kontot** (gränssnittet, eller
+      `npx wrangler pages project delete motparten` med det kontots inloggning)
+- [ ] Skapa och deploya direkt i målkontot:
+
+```bash
+npx wrangler pages deploy dist --project-name=motparten --branch=main
+```
+
+- [ ] Kontrollera att `motparten.pages.dev` faktiskt hamnade på det nya projektet och inte
+      fick en suffix. Blev det `motparten-xxx.pages.dev` har Cloudflare inte hunnit frigöra
+      namnet: radera det nya projektet, vänta, försök igen
+- [ ] Sätt `PILOT_SECRET` och `ANTHROPIC_API_KEY`, deploya om
+- [ ] Lägg KV-bindningen `RL` på projektet (Settings, Functions, KV namespace bindings,
+      Production) mot det nya `fraga-rl`-id:t
+- [ ] Kontrollera: `/motparten` omdirigerar till `/pilot`, inloggning fungerar, och
+      `/api/coach` ger 401 utan cookie i stället för 501
+
+### Fas 3, städning
+
+- [ ] Radera Pages-projektet `kurs` i vndy-kontot
+- [ ] Radera KV-namespacen och workern i vndy-kontot
+- [ ] Ta bort den gamla URL:en ur Supabases redirect-lista
+- [ ] Uppdatera repot, se nedan
+
+## Ställen i repot som nämner den gamla URL:en
+
+Nio träffar. Ingen av dem är funktionell kod, det är dokumentation och kommentarer, så
+inget slutar fungera om de missas. De ska ändå stämma.
+
+| Fil | Vad |
+| --- | --- |
+| `README.md:8` | live-URL. **Innehåller dessutom det borttagna sajtlösenordet `kurs2026`**, som slutade gälla 2026-07-11. Rätta båda |
+| `CLAUDE.md:10` | deploy-raden med båda projekten |
+| `LAUNCH.md:104-105` | verifieringen av pilotcookiens räckvidd |
+| `functions/api/pilot-login.js:7` | kommentar om att endpointen svarar 404 på fel värd |
+| `docs/superpowers/specs/2026-08-22-motparten-saljkurs-design.md:313` | projektlistan |
+| `docs/superpowers/plans/2026-08-29-motparten-pilot.md:1862` | verifieringssteg |
+| `docs/superpowers/plans/2026-08-29-saljcoachen.md:2026-2027` | curl mot Marginalen i uppgift 12 |
+
+Kontrollera samtidigt att inget i koden antar värdnamnet. `motpartenVard()` i
+`functions/_middleware.js` matchar på att värdnamnet börjar med `motparten`, och
+klientgrinden i `Broadsheet.astro` gör detsamma. Båda fungerar oförändrat så länge
+säljkursen behåller sitt namn. Aktiekursen har inga värdnamnsantaganden alls.
+
+## Efter flytten
+
+Kontot är inte längre samma som det Börsdata-, Tink- och Stripe-integrationerna
+registrerades mot. Cloudflare-flytten påverkar inte dem tekniskt, men kontrollera att
+eventuella IP-lås eller callback-URL:er hos de tjänsterna pekar rätt.
