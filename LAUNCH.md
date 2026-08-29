@@ -109,6 +109,17 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       `verifieraPilot` och `/pilot` i `functions/_middleware.js`. Undantaget i
       Broadsheets klientgrind kan då också tas bort.
 
+      Läs det här först: sedan 2026-08-29 är kurserna åtskilda i middlewaren, och
+      på motparten-värden finns ingen annan väg in än pilotcookien. Delägarens
+      Supabase-JWT släpper inte in där. Att bara radera piloten stänger alltså
+      kursen helt. Den ska bytas mot Motpartens egen inloggning i samma ändring.
+      Att i stället låta JWT:n ta över vore att slå ihop produkterna igen, vilket
+      är precis det beslutet gick ut på att undvika.
+
+- [ ] **Rättigheter per kurs**, innan Motparten kan säljas separat. Varken Stripe
+      eller Supabase vet i dag vilken kurs ett köp gäller. Skiljelinjen på värdnamn
+      räcker för en pilot, inte för två betalande produkter. Eget arbete, egen spec.
+
 ## Rekommenderad sekvens
 
 1. **Datakälla-beslut** (P0), allt hänger på det.

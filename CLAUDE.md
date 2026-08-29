@@ -7,7 +7,7 @@ Plattform för en svenskspråkig kurs i fundamental aktieanalys. Astro-byggd sta
 ## Snabbfakta
 
 - **Stack:** Astro 5 (static output), content collections med Zod-schema, View Transitions (ClientRouter). Inga ramverk utöver det. Endast `astro` + `@astrojs/mdx` som beroenden; `playwright` som dev-dep.
-- **Deploy:** Cloudflare Pages, projekt `kurs` -> `kurs-7m8.pages.dev`. Deployas med **wrangler** (`wrangler pages deploy`), inte via GitHub-push.
+- **Deploy:** Cloudflare Pages, två projekt från samma bygge: `kurs` -> `kurs-7m8.pages.dev` (Delägaren) och `motparten` -> `motparten.pages.dev` (säljkursen). Deployas med **wrangler** (`wrangler pages deploy --branch=main`, utan flaggan blir det preview), inte via GitHub-push.
 - **Åtkomst:** Sajten är kontogrindad i `functions/_middleware.js` (Pages Function): middleware verifierar en inloggad Supabase-session (`da_session`-cookie, access-token JWT) mot Supabases JWKS (ES256) på edgen. Publika undantag: landning (`/`), `/logga-in`, inbjudan, statiska tillgångar, `/api/*`. Det gamla sajtlösenordet (`kurs2026`/`kurs_auth`) är borttaget (2026-07-11).
 - **Aktuell gren:** `trunk` (huvudgren: `main`).
 - **Commit-trailer:** avsluta commits med `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
@@ -36,7 +36,10 @@ src/
 functions/_middleware.js   kontogrind: verifierar Supabase-JWT (Cloudflare Pages)
 tools/                     innehållsgrindar + skript (se nedan)
 docs/                      mallar, style guide, planer, specs, case-källor
-content/fundamental-aktieanalys/  NYTT: Fokus-spelarens JSON (se nedan)
+content/fundamental-aktieanalys/  Fokus-spelarens JSON (se nedan)
+content/motparten/         Säljkursen Motparten, samma JSON-format (se nedan)
+src/lib/kurs.mjs           kursregistret: var varje kurs bor, vad den heter
+src/components/kurs/       delade sidkroppar (KursOversikt, KapitelSida, Spelare)
 ```
 
 ### Lektionsformat (markdown, nuvarande produkt)
@@ -88,11 +91,45 @@ Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-
 
 ---
 
+### Motparten: säljkurs, andra benet (2026-08)
+
+Egen produkt på samma plattform och i samma bygge, egen URL. 12 kapitel, 42 lektioner,
+259 steg, i Fokus-spelarens JSON-format under `content/motparten/`. Sebastian Berg är
+ämnesförankringen, Ludvig och han är piloter.
+
+- **Kursmotorn är generaliserad.** `src/lib/kurs.mjs` är enda stället som vet var en kurs
+  bor (katalog, ordlista, varumärke, navigation, korslänkar). Sidkropparna ligger i
+  `src/components/kurs/` och delas av båda kurserna, rutterna är tunna skal. Aktiekursen
+  ska rendera oförändrat efter varje ändring i motorn. Kontrollera med
+  `node tools/dist-hash.mjs`, som normaliserar bort Astros asset-namn och scope-id:n
+  (de flyttar utan att något syns på sidan) och jämför DOM och CSS var för sig.
+- **Evidenspolicy, säljkursens motsvarighet till sifferpolicyn.** Varje påstående som
+  låter som forskning ska ha `evidens: { niva, kalla }` mot
+  `docs/kallor/motparten-kallregister.md`. A robust, B omtvistad, C hantverk utan
+  forskningsstöd. Registret har också en röd lista (R1 till R7) med det som inte håller:
+  Mehrabian 7-38-55, NLP och spegling, DISC och MBTI, leverantörsdata som forskning.
+  Röd-listat får bara nämnas i ett `myt`-steg, aldrig i påstående-form. Grinden fäller
+  A eller B utan källa, C med källa, och röda fraser utanför myt-steg.
+- **Språkregel:** etablerade engelska facktermer skrivs på engelska, inte i påhittad
+  svensk översättning. Alltså always be closing och discovery, inte "alltid avsluta".
+- **Grindar:** `tools/check-motparten.mjs` (ingår i `npm run check`) och
+  `tools/motparten-rosttext.mjs`, som plockar ut prosan till markdown så
+  `granska_rost.py` kan läsa den. "hen" är hårt fel i rösten. Kör rösten FÖRE commit.
+- **Åtkomst:** Delägaren och Motparten är skilda produkter och delar ingen session.
+  Middlewaren skiljer på värdnamn: Supabase-JWT:n öppnar bara Marginalen, pilotcookien
+  bara Motparten. Rättigheter per kurs (vem som får köpa vad) är inte byggt.
+- Spec: `docs/superpowers/specs/2026-08-22-motparten-saljkurs-design.md`. Plan:
+  `docs/superpowers/plans/2026-08-29-motparten-pilot.md`. Bildkällor:
+  `docs/kallor/motparten-bildkallor.md`.
+
+---
+
 ## Att notera (ej åtgärdas om inte ombedd)
 - Ingen konsolideringspass kördes; kursen växte till 127 lektioner / 24 moduler.
 - Modul 24 är transformerad till Fokus-JSON som kapitel 18 (`content/fundamental-aktieanalys/18.1` till `18.5`, 24.6-syntesen invävd i 18.5).
 - Verktyget "Säkra eller stretcha" (`docs/specs/verktyg-sakra-eller-stretcha.md`) är bara spec, inte byggt i `/verktyg`.
 - Användarens egen `Ägarboken - Startsida (standalone).html` innehåller fortfarande några em-dashes (lämnat till användaren).
 - `KURS-EXPORT.md` och `src/content/kurs.zip` är artefakter, inte källa.
-- **Lanseringsblockerare för Delägaren (betaltjänst) samlas i `LAUNCH.md`.** Viktigast: testbakdörren `functions/api/devlink.js` (kontoövertagande) måste raderas innan publik lansering. Behållen medvetet under test.
+- **Lanseringsblockerare samlas i `LAUNCH.md`**, numera för båda kurserna. `functions/api/devlink.js` härdades 2026-07-12 (mintar ingen länk för befintligt konto och faller stängt utan `SUPABASE_SECRET_KEY`), men är fortfarande en testväg som ska bort före publik lansering. Motpartens pilotinloggning (`/pilot`) är P0 för den kursen.
+- Sebastian har ännu inte granskat de tolv "Sebastian tänker"-anekdoterna eller de tolv principerna i Motparten. De är skrivna i hans namn.
 - `design-explorations/` är borttagen (2026-07-10). Labs-mockar dual-writeas inte längre dit, prototyphistoriken finns i git-historiken.

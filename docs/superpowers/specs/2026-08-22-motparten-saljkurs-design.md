@@ -328,16 +328,25 @@ omdirigerar `/` och `/hem` till `/motparten` när värdnamnet börjar med
 Marginalens landningssida. Regeln matchar på värdnamn och gäller därför även en
 framtida egen domän.
 
-Projektet `motparten` har medvetet inga miljövariabler satta. Inloggningsgrinden
-behöver inga, eftersom den verifierar mot Supabases JWKS över en hårdkodad URL,
-men varje funktion under `/api/` returnerar 501 utan sina hemligheter. För en
+Projektet `motparten` har bara `PILOT_SECRET` satt, inga andra miljövariabler.
+Varje funktion under `/api/` returnerar därför 501 utan sina hemligheter. För en
 pilot är det rätt läge: sajten fungerar, och allt som rör betalning, konton och
 AI faller stängt.
 
-`/motparten/*` grindas redan av `functions/_middleware.js`, som släpper igenom endast en
-uttrycklig lista och därutöver `/api/`, `/_astro/` och `/bilder/`. Ingen kodändring krävs,
-bara verifiering. Deploy sker till samma Cloudflare Pages-projekt med
-`wrangler pages deploy --branch=main`.
+### Åtkomst: två produkter, ingen delad session
+
+Delägaren och Motparten är skilda produkter. Beslut 2026-08-29: de delar därför
+ingen session. På motparten-värden släpper Delägarens Supabase-JWT inte in, bara
+pilotens egen cookie, och pilotcookien öppnar aldrig något på Marginalens värdar.
+Middlewaren skiljer på värdnamn, så samma bygge kan serva båda utan att en
+prenumerant på den ena kursen får den andra på köpet.
+
+Det avgör inte vem som får köpa vad. Rättigheter per kurs kräver att köpet knyts
+till en kurs i Stripe och Supabase, och det är eget arbete med egen spec. Men
+skiljelinjen mellan produkterna går att hålla redan nu utan det, och hålls här.
+
+Deploy sker till Cloudflare Pages-projektet `motparten` med
+`wrangler pages deploy --branch=main`, från samma bygge som Marginalen.
 
 ### Ordlista
 
