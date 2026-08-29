@@ -5,6 +5,7 @@ import { checkStructure } from './check-structure.mjs';
 import { loadLessons } from './lib/lessons.mjs';
 import { findDuplicateSentences } from './check-dedup.mjs';
 import { checkFokus } from './check-fokus.mjs';
+import { checkMotparten } from './check-motparten.mjs';
 
 const base = process.argv[2] || 'src/content/kurs';
 
@@ -23,8 +24,9 @@ const dups = findDuplicateSentences(await loadLessons(base)).map(
 );
 
 const fokus = checkFokus();
+const motparten = checkMotparten();
 
-const groups = { integritet: integrity, referenser: refs, struktur: structure, dedup: dups, fokus };
+const groups = { integritet: integrity, referenser: refs, struktur: structure, dedup: dups, fokus, motparten };
 let failed = 0;
 for (const [name, errs] of Object.entries(groups)) {
   console.log(`\n${errs.length ? '✗' : '✓'} ${name} (${errs.length})`);

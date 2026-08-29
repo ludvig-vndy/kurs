@@ -10,7 +10,7 @@ import { dirname, join } from 'node:path';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DIR = join(HERE, '..', 'content', 'fundamental-aktieanalys');
 
-const STEG_TYPER = ['intro', 'reading', 'concept', 'dataviz', 'quiz'];
+const STEG_TYPER = ['intro', 'reading', 'concept', 'dataviz', 'quiz', 'myt'];
 const VISUAL_TYPER = ['rutnat', 'linjediagram', 'jamforelse', 'stapeldiagram', 'flode', 'andel'];
 const DASH = /[—–]/; // em-dash, en-dash
 
@@ -66,7 +66,7 @@ function checkVisual(v, where, errs) {
   }
 }
 
-function checkLesson(name, raw, errs) {
+export function checkLesson(name, raw, errs) {
   let data;
   try { data = JSON.parse(raw); }
   catch (e) { errs.push(`${name}: ogiltig JSON (${e.message})`); return; }
@@ -107,6 +107,10 @@ function checkLesson(name, raw, errs) {
       if (!isStr(s.underrubrik)) errs.push(`${w}: underrubrik saknas`);
       if (s.visual !== undefined) checkVisual(s.visual, w, errs); // visual valfri
       if (!isStr(s.slutsats) && !(isArr(s.brodtext) && s.brodtext.length)) errs.push(`${w}: slutsats eller brodtext krävs`);
+    } else if (s.typ === 'myt') {
+      for (const f of ['pastaende', 'varifran', 'vad_som_galler', 'kalla']) {
+        if (!isStr(s[f])) errs.push(`${w}: ${f} saknas`);
+      }
     } else if (s.typ === 'quiz') {
       quizCount++;
       if (!isArr(s.fragor) || s.fragor.length < 3 || s.fragor.length > 6) errs.push(`${w}: quiz ska ha 3 till 6 frågor`);
