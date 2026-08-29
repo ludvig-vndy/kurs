@@ -1,0 +1,249 @@
+---
+import Broadsheet from '../../layouts/Broadsheet.astro';
+import { konfig, laddaKurs, delFor } from '../../lib/kurs.mjs';
+
+// ── Types ────────────────────────────────────────────────────────────────
+interface CourseLektion {
+  lektion: string;
+  titel: string;
+  niva: string;
+  tid_min: number;
+  status: string;
+  fil: string;
+}
+interface CourseKapitel {
+  nummer: number;
+  titel: string;
+  niva: string;
+  tid_min: number;
+  blurb: string;
+  outcomes: string[];
+  sebastian?: string;
+  lektioner: CourseLektion[];
+}
+interface Props {
+  kursnyckel: string;
+  kap: CourseKapitel;
+}
+const { kursnyckel, kap } = Astro.props as Props;
+const k = konfig(kursnyckel);
+const kurs = laddaKurs(kursnyckel);
+
+// ── Helpers ─────────────────────────────────────────────────────────────
+function formatTime(min: number): string {
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  return m === 0 ? `${h} h` : `${h} h ${m} min`;
+}
+
+// Delen kapitlet tillhör, ur course.json.
+const del = delFor(kurs, kap.nummer);
+
+const lessonCount = kap.lektioner.length;
+const metaText = `${formatTime(kap.tid_min)} · ${kap.niva} · ${lessonCount} lektioner`;
+
+// Order of lesson-ids in this chapter (for client-side "nästa" computation)
+const chapterOrder = kap.lektioner.map((l) => l.lektion);
+
+// En egen paperstvattad bild per kapitel (0-18) i /bilder/kapitel-N.jpg,
+// inramad som en leadprint-plate (samma behandling som /hem och /fokus).
+// Crop-forskjutningen nedan varierar per kapitelnummer sa ingen ram ar den andra lik.
+const plateImg = `/bilder/${k.nyckel === 'fundamental-aktieanalys' ? '' : k.nyckel + '-'}kapitel-${kap.nummer}.jpg`;
+const plateX = 12 + ((kap.nummer * 37) % 64);
+const plateY = 18 + ((kap.nummer * 53) % 46);
+---
+
+<Broadsheet title={`Kapitel ${kap.nummer}: ${kap.titel}`} active="kurs" nav="app" editionLine2={`Kapitel ${kap.nummer}`} bodyClass={k.bodyClass}>
+  <main class="wrap" style="flex:1; padding-top:8px">
+    <script type="application/json" data-chapter-order set:html={JSON.stringify(chapterOrder)} />
+
+    <!-- Breadcrumb -->
+    <div class="crumb">
+      <a href="/hem">Hem</a><span class="sep">›</span>
+      <a href={k.bas}>Kursöversikt</a><span class="sep">›</span>
+      <span class="here">Kapitel {kap.nummer}</span>
+    </div>
+
+    <!-- Header: one bold chapter numeral is the single anchor. The chapter
+         number is not repeated in the kicker (the breadcrumb already states it). -->
+    <header class="chead" style={`--plate:url('${plateImg}'); --plate-pos:${plateX}% ${plateY}%`}>
+      <div class="chead__num" aria-hidden="true">{kap.nummer}</div>
+      <div class="chead__body">
+        <div class="kicker">{del.titel}</div>
+        <h1 class="h-title" style="max-width:18ch">{kap.titel}</h1>
+        <p class="standfirst">{kap.blurb}</p>
+        <div class="chead__meta">
+          <span>{metaText}</span>
+          <span class="chead__prog">
+            <span class="tk"><i data-chap-fill style="width:0%"></i></span>
+            <span data-chap-label>0 / {lessonCount} klara</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Outcomes -->
+    <div class="outcomes" style="margin-top:30px">
+      <div class="lbl">Det här lär du dig</div>
+      <ul>
+        {kap.outcomes.map((o) => <li>{o}</li>)}
+      </ul>
+    </div>
+
+    <!-- Sebastian tänker: chapter framing in his voice -->
+    {kap.sebastian && (
+      <aside class="chsebastian">
+        <span class="chsebastian__by"><span class="chsebastian__mono" aria-hidden="true">S</span>Sebastian tänker</span>
+        <p class="chsebastian__text">{kap.sebastian}</p>
+      </aside>
+    )}
+
+    <!-- Lessons -->
+    <div class="part" style="margin-bottom:0"><span class="n">Lektioner</span><span class="line"></span></div>
+    <div style="margin-bottom:8px">
+      {kap.lektioner.map((l) =>
+        l.status === 'klar' ? (
+          <a class="lrow" data-lesson-id={l.lektion} data-cta-cell href={`${k.bas}/${l.lektion}`}>
+            <span class="mk">
+              <span class="mk-num">{l.lektion}</span>
+              <svg class="mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span class="lt">{l.titel}</span>
+            <span class="lv">{l.niva}</span>
+            <span class="tm">{l.tid_min} min</span>
+            <span class="cta" data-cta></span>
+          </a>
+        ) : (
+          <div class="lrow lock" aria-label={`${l.titel} (kommande)`}>
+            <span class="mk">
+              <svg class="mk-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <span class="lt">{l.titel}</span>
+            <span class="lv">{l.niva}</span>
+            <span class="tm">{l.tid_min} min</span>
+            <span class="cta">Kommande</span>
+          </div>
+        )
+      )}
+    </div>
+
+    <!-- Footer band -->
+    <div class="foot">
+      <a class="btn-ghost" href={k.bas}>← Till kursöversikt</a>
+      <a class="btn-ink" data-chap-cta href={`${k.bas}/${chapterOrder[0]}`}>
+        <span style="display:flex;flex-direction:column;gap:2px;text-transform:none;letter-spacing:0">
+          <span data-cta-label style="font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase">Börja kapitlet</span>
+          <span data-cta-sub style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;opacity:.7;text-transform:none">Nästa: lektion {chapterOrder[0]}</span>
+        </span>
+      </a>
+    </div>
+  </main>
+</Broadsheet>
+
+<style>
+  /* Chapter header: a single large numeral anchors the page so the number
+     isn't echoed across kicker + breadcrumb + numeral. The kicker is the part
+     name only; the meta + progress collapse to one calm line. */
+  .chead { position: relative; isolation: isolate; display: grid; grid-template-columns: auto 1fr; gap: clamp(18px, 4vw, 46px); align-items: start; margin-top: 6px; }
+  .chead__num { font-family: var(--display); font-weight: 300; font-size: clamp(72px, 13vw, 150px); line-height: .8; letter-spacing: -.03em; color: var(--oxblood); font-variant-numeric: lining-nums; }
+  /* Per-kapitel bild som pappersfadat tryck bakom kapitelhuvudet. Bilden syns
+     tydligare (man ska se VAD det ar), men ett pappers-skikt over textspalten
+     haller rubriken pa ren kontrast; bilden lever i hogra, textfria halvan. */
+  .chead::before { content: ""; position: absolute; z-index: -1; inset: -12px -14px 0;
+    background-image: var(--plate); background-size: cover; background-position: center;
+    filter: grayscale(1) contrast(1.04); opacity: .5;
+    -webkit-mask: linear-gradient(180deg, #000 0%, #000 60%, transparent 98%);
+    mask: linear-gradient(180deg, #000 0%, #000 60%, transparent 98%); }
+  .chead::after { content: ""; position: absolute; z-index: -1; inset: -12px -14px 0; pointer-events: none;
+    background: linear-gradient(90deg, var(--paper) 0%, var(--paper) 30%, rgba(246,244,239,.55) 56%, rgba(246,244,239,0) 82%); }
+  .chead__body { min-width: 0; padding-top: clamp(4px, 1.2vw, 12px); }
+  .chead__meta { display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+  .chead__prog { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+  .chead__prog .tk { width: 130px; height: 3px; background: var(--paper-2); overflow: hidden; }
+  .chead__prog .tk i { display: block; height: 100%; background: var(--oxblood); transition: width .9s cubic-bezier(.2,.7,.2,1); }
+  @media (max-width: 560px) {
+    .chead { gap: 16px; }
+    .chead__num { font-size: clamp(56px, 18vw, 80px); }
+    .chead__prog { margin-left: 0; }
+  }
+
+  /* Sebastian tänker: a signed chapter note, same monogram language as the
+     lesson takeaway, framing the chapter in his voice. */
+  .chsebastian { margin: 26px 0 0; border: 1px solid var(--rule); border-top: 2px solid var(--oxblood); background: var(--card); padding: 18px 22px; }
+  .chsebastian__by { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 10px; }
+  .chsebastian__mono { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--oxblood); color: var(--paper); font-family: var(--display); font-size: 14px; font-weight: 500; flex: none; }
+  .chsebastian__text { font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.45; color: var(--ink); margin: 0; }
+
+  /* The mark cell carries both the lektion number and a check; the client
+     toggles which is shown by adding `done` to the row. */
+  .lrow .mk-num { display: inline; }
+  .lrow .mk-check { width: 14px; height: 14px; display: none; }
+  .lrow .mk-lock { width: 13px; height: 13px; }
+  .lrow.done .mk-num { display: none; }
+  .lrow.done .mk-check { display: inline-block; }
+  /* "next" mark accent mirrors broadsheet .lrow.next .mk */
+  .lrow.next .cta { color: var(--oxblood); }
+</style>
+
+<script>
+  import { getFokusDone, FOKUS_EVENT } from '../../scripts/fokus-progress';
+
+  function paint() {
+    const orderEl = document.querySelector('[data-chapter-order]');
+    if (!orderEl) return;
+    const order = JSON.parse(orderEl.textContent || '[]') as string[];
+    const done = new Set(getFokusDone());
+
+    // Per-lesson state: done | next | todo. First non-done klar lesson = next.
+    const rows = document.querySelectorAll<HTMLElement>('.lrow[data-lesson-id]');
+    let doneCount = 0;
+    let nextAssigned = false;
+    let nextId: string | null = null;
+
+    rows.forEach((row) => {
+      const id = row.dataset.lessonId || '';
+      const ctaEl = row.querySelector<HTMLElement>('[data-cta]');
+      row.classList.remove('done', 'next');
+      if (done.has(id)) {
+        row.classList.add('done');
+        doneCount++;
+        if (ctaEl) ctaEl.textContent = 'Repetera';
+      } else if (!nextAssigned) {
+        row.classList.add('next');
+        nextAssigned = true;
+        nextId = id;
+        if (ctaEl) ctaEl.textContent = 'Börja →';
+      } else {
+        if (ctaEl) ctaEl.textContent = '';
+      }
+    });
+
+    const total = order.length;
+    const pct = total ? Math.round((doneCount / total) * 100) : 0;
+
+    const fill = document.querySelector<HTMLElement>('[data-chap-fill]');
+    if (fill) fill.style.width = pct + '%';
+    const label = document.querySelector<HTMLElement>('[data-chap-label]');
+    if (label) label.textContent = `${doneCount} / ${total} klara`;
+
+    // CTA: continue to next incomplete lesson, or first if all done.
+    const cta = document.querySelector<HTMLAnchorElement>('[data-chap-cta]');
+    const ctaLabel = document.querySelector<HTMLElement>('[data-cta-label]');
+    const ctaSub = document.querySelector<HTMLElement>('[data-cta-sub]');
+    const target = nextId ?? order[0] ?? null;
+    // Basen läses ur den href servern redan satt, så kursen slipper ett extra attribut.
+    const bas = (cta?.getAttribute('href') || '/fokus/x').replace(/\/[^/]*$/, '');
+    if (cta && target) cta.href = `${bas}/${target}`;
+    if (ctaLabel) ctaLabel.textContent = doneCount > 0 ? 'Fortsätt kapitlet' : 'Börja kapitlet';
+    if (ctaSub) {
+      ctaSub.textContent =
+        doneCount >= total
+          ? 'Du har klarat kapitlet, repetera valfri lektion'
+          : `Nästa: lektion ${target}`;
+    }
+  }
+
+  document.addEventListener('astro:page-load', paint);
+  window.addEventListener(FOKUS_EVENT, paint);
+</script>
