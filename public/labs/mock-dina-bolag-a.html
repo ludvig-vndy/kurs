@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dina bolag · variant A (Översikt) · mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E; --good:#2F7A55; --good-soft:#E7EFE6; --bad:#9B3A2E; --bad-soft:#F3E3DD;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --label:"Schibsted Grotesk",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{overflow-x:clip;-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  .num{font-family:var(--num);font-variant-numeric:tabular-nums}
+  .wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+  a{color:inherit}
+
+  /* masthead */
+  .masthead{padding:28px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:12px}
+  .wordmark{font-family:"Zilla Slab",Georgia,serif;font-weight:700;font-size:clamp(24px,3.2vw,34px);letter-spacing:.03em;text-transform:uppercase;line-height:.9;color:var(--oxblood)}
+  .edition{font-family:var(--label);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;line-height:1.6}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:6px 0;font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+  .nav a{color:var(--muted);text-decoration:none;padding:6px 0}
+  .nav a.here{color:var(--oxblood)}
+
+  main{flex:1;padding-bottom:60px}
+  .page-h{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:26px 0 4px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(30px,4.4vw,46px);line-height:1.02;letter-spacing:-.02em}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .ghost{font-family:var(--label);font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule-strong);padding:11px 17px;border-radius:99px;text-decoration:none;white-space:nowrap;transition:.2s}
+  .ghost:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .datenote{font-family:var(--label);font-size:11px;letter-spacing:.03em;color:var(--faint);margin-top:6px}
+
+  /* Portföljöversikt */
+  .ovr{border-top:2px solid var(--rule-strong);border-bottom:1px solid var(--rule);margin:20px 0 8px;padding:22px 0 20px;display:grid;grid-template-columns:1fr auto;gap:26px 40px;align-items:center}
+  @media(max-width:680px){.ovr{grid-template-columns:1fr}}
+  .ovr-fig{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 44px}
+  .ovr-k{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .ovr-tot{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(30px,5vw,44px);font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--ink)}
+  .ovr-tot .kr{font-size:.44em;font-weight:400;color:var(--muted);margin-left:5px}
+  .ovr-avk{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(19px,3vw,25px);font-weight:600;line-height:1.1}
+  .ovr-avk .pct{font-size:.76em;margin-left:8px;opacity:.92}
+  .ovr-avk.up{color:var(--good)} .ovr-avk.dn{color:var(--bad)}
+  .ovr-day{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);margin-top:6px}
+  .ovr-day .v.up{color:var(--good)} .ovr-day .v.dn{color:var(--bad)}
+  .ovr-chart{width:min(340px,100%);align-self:stretch}
+  .ovr-chart svg{width:100%;height:86px;display:block;overflow:visible}
+  .alloc{grid-column:1/-1;margin-top:4px}
+  .alloc-bar{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--paper-2)}
+  .alloc-bar span{display:block;height:100%;border-right:1.5px solid var(--paper)}
+  .alloc-bar span:last-child{border-right:none}
+  .alloc-line{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--label);font-size:11px;letter-spacing:.02em;color:var(--muted);margin-top:10px}
+  .alloc-line b{color:var(--ink);font-weight:600}
+  .alloc-line i{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:6px;vertical-align:baseline}
+
+  .groupH{font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:26px 0 4px}
+
+  /* Innehavsrad */
+  .hold{display:grid;grid-template-columns:10px minmax(0,1.5fr) 86px auto;gap:2px 18px;align-items:center;padding:14px 4px;border-top:1px solid var(--rule);text-decoration:none;color:inherit;transition:background .15s,transform .2s}
+  .hold:hover{background:var(--card);transform:translateX(3px)}
+  .hold .dot{width:8px;height:8px;border-radius:50%}
+  .hold .dot.pos{background:var(--good)} .hold .dot.dn{background:var(--bad)}
+  .nmwrap{min-width:0}
+  .nm{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.01em}
+  .tk{font-family:var(--num);font-size:10px;letter-spacing:.06em;color:var(--faint);margin-left:8px}
+  .sec{font-family:var(--label);font-size:11px;color:var(--muted);margin-top:2px}
+  .spark{width:86px;height:30px;display:block}
+  .rt{text-align:right;font-variant-numeric:tabular-nums}
+  .rt .mv{font-family:var(--num);font-size:15.5px;color:var(--ink);white-space:nowrap}
+  .rt .mv .qty{font-family:var(--label);font-size:11px;color:var(--muted);margin-left:9px}
+  .rt .avk{font-family:var(--num);font-size:14.5px;font-weight:600;margin-top:4px;white-space:nowrap}
+  .rt .avk.up{color:var(--good)} .rt .avk.dn{color:var(--bad)}
+  .rt .avk .kr{font-size:11px;font-weight:400;color:var(--muted);margin-left:7px}
+  .rt .day{font-family:var(--num);font-size:10.5px;color:var(--muted);margin-top:3px;white-space:nowrap}
+  .rt .day .v.up{color:var(--good)} .rt .day .v.dn{color:var(--bad)}
+  .rt .day .lbl{color:var(--faint)}
+  @media(max-width:680px){
+    .hold{grid-template-columns:10px 1fr auto}
+    .spark{display:none}
+    .rt{grid-column:2/-1;text-align:left;margin-top:6px}
+  }
+
+  footer{border-top:2px solid var(--rule-strong);margin-top:40px}
+  footer .wrap{padding:22px 0 40px;font-family:var(--label);font-size:11px;letter-spacing:.03em;color:var(--faint)}
+  .variants{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .variants a{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;border:1px solid var(--rule-strong);border-radius:99px;padding:7px 13px}
+  .variants a.on{background:var(--oxblood);color:var(--paper);border-color:var(--oxblood)}
+
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .hold,.ovr{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  .hold{animation-delay:calc(var(--i,0)*.05s + .1s)}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="mast-top">
+      <span class="wordmark">Marginalen</span>
+      <span class="edition">Din del av bolagen<br>Dina bolag</span>
+    </div>
+    <div class="mast-rule"></div>
+    <nav class="nav">
+      <a href="#">Brevet</a><a href="#" class="here">Dina bolag</a><a href="#">Upptäck</a><a href="#">Analysen</a><a href="#">Fråga</a><a href="#">Hävstång</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-h">
+      <div>
+        <h1 class="h-title">Dina bolag</h1>
+        <div class="datenote">Kurser per 2026-08-29, daglig snapshot. Fiktiva bolag, illustrativa tal.</div>
+      </div>
+      <div class="actions">
+        <a class="ghost" href="#">Importera innehav</a>
+        <a class="ghost" href="#">+ Lägg till bolag</a>
+      </div>
+    </div>
+
+    <section class="ovr" id="ovr"></section>
+    <div id="rows"></div>
+  </main>
+
+  <footer><div class="wrap">
+    Prototyp, fiktiva bolag och påhittade siffror. Utbildningssyfte, aldrig köp- eller säljråd.
+    <div class="variants">
+      <a class="on" href="/labs/mock-dina-bolag-a.html">A · Översikt</a>
+      <a href="/labs/mock-dina-bolag-b.html">B · Grafik</a>
+      <a href="/labs/mock-dina-bolag-c.html">C · Ägarlugn</a>
+      <a href="/labs/mock-dina-bolag-ac.html">A+C · Kombo</a>
+    </div>
+  </div></footer>
+</div>
+
+<script>
+const PF = {
+  updated:'2026-08-29',
+  curve:[172,168,181,190,186,199,205,212,208,221,230,237.7],
+  holds:[
+    {n:'Norlux Industri',t:'NORL',q:480,gav:92,p:118.5,d:1.2,sec:'Industri',s:[92,95,101,98,106,112,109,115,118.5]},
+    {n:'Sundby Verktyg',t:'SUND',q:95,gav:305,p:412,d:1.8,sec:'Industri',s:[305,320,345,360,352,378,390,405,412]},
+    {n:'Brunna Hydro',t:'BRUN',q:640,gav:47,p:63.4,d:0.9,sec:'Energi',s:[47,49,52,50,55,58,60,62,63.4]},
+    {n:'Almi Foods',t:'ALMI',q:180,gav:210,p:236,d:0.3,sec:'Dagligvaror',s:[210,214,220,218,226,230,228,234,236]},
+    {n:'Kavex Medical',t:'KAVX',q:210,gav:88,p:143,d:0.6,sec:'Medtech',s:[88,96,104,112,120,128,134,140,143]},
+    {n:'Telvio',t:'TELV',q:300,gav:61,p:54.2,d:-2.4,sec:'Teknik',s:[61,64,59,57,60,55,58,52,54.2]},
+    {n:'Voltcell',t:'VOLT',q:1250,gav:12.4,p:9.85,d:-3.1,sec:'Energi',s:[12.4,13,11.8,10.9,11.4,10.2,9.9,10.3,9.85]},
+  ]
+};
+const SECCOL={Industri:'#2C5646',Energi:'#B07C1E',Dagligvaror:'#7A6A4A',Medtech:'#4A7C8C',Teknik:'#9B3A2E'};
+const fmt=(n,d=0)=>Number(n).toLocaleString('sv-SE',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=n=>(n>0?'+':'')+Number(n).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
+
+function linePath(arr,w,h,pad=2){
+  const mn=Math.min(...arr),mx=Math.max(...arr),rng=(mx-mn)||1;
+  return arr.map((v,i)=>{
+    const x=pad+i*(w-2*pad)/(arr.length-1);
+    const y=pad+(h-2*pad)*(1-(v-mn)/rng);
+    return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);
+  }).join(' ');
+}
+function spark(arr){
+  const w=86,h=30,up=arr[arr.length-1]>=arr[0];
+  return '<svg class="spark" viewBox="0 0 '+w+' '+h+'" fill="none"><path d="'+linePath(arr,w,h,3)+'" stroke="'+(up?'var(--good)':'var(--bad)')+'" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+// derive
+PF.holds.forEach(h=>{h.mv=h.q*h.p;h.ansk=h.q*h.gav;h.avk=h.mv-h.ansk;h.avkPct=(h.p/h.gav-1)*100;});
+const total=PF.holds.reduce((a,h)=>a+h.mv,0);
+const ansk=PF.holds.reduce((a,h)=>a+h.ansk,0);
+const avk=total-ansk, avkPct=(total/ansk-1)*100;
+const dayKr=PF.holds.reduce((a,h)=>a+h.mv*h.d/100,0), dayPct=dayKr/total*100;
+
+// overview
+const cw=340,ch=86;
+const area='M2 '+ch+' '+linePath(PF.curve,cw,ch,2).replace('M','L').slice(1)+' L'+(cw-2)+' '+ch+' Z';
+document.getElementById('ovr').innerHTML=
+  '<div class="ovr-fig">'+
+    '<div><div class="ovr-k">Marknadsvärde</div><div class="ovr-tot">'+fmt(total)+'<span class="kr">kr</span></div></div>'+
+    '<div><div class="ovr-k">Total avkastning</div><div class="ovr-avk up">+'+fmt(avk)+' kr<span class="pct">'+pct(avkPct)+'</span></div>'+
+      '<div class="ovr-day">I dag <span class="v up">+'+fmt(dayKr)+' kr</span> '+pct(dayPct)+'</div></div>'+
+  '</div>'+
+  '<div class="ovr-chart"><svg viewBox="0 0 '+cw+' '+ch+'" preserveAspectRatio="none">'+
+    '<defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="rgba(44,86,70,.20)"/><stop offset="1" stop-color="rgba(44,86,70,0)"/></linearGradient></defs>'+
+    '<path d="'+area+'" fill="url(#g)"/>'+
+    '<path d="'+linePath(PF.curve,cw,ch,2)+'" fill="none" stroke="var(--oxblood)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
+  '</svg></div>'+
+  allocBlock();
+
+function allocBlock(){
+  const bySec={};PF.holds.forEach(h=>bySec[h.sec]=(bySec[h.sec]||0)+h.mv);
+  const items=Object.entries(bySec).sort((a,b)=>b[1]-a[1]);
+  const bars=items.map(([s,v])=>'<span style="width:'+(v/total*100).toFixed(2)+'%;background:'+(SECCOL[s]||'#999')+'"></span>').join('');
+  const leg=items.map(([s,v])=>'<span><i style="background:'+(SECCOL[s]||'#999')+'"></i>'+s+' <b>'+(v/total*100).toFixed(0)+'%</b></span>').join('');
+  return '<div class="alloc"><div class="alloc-bar">'+bars+'</div><div class="alloc-line">'+leg+'</div></div>';
+}
+
+// rows
+document.getElementById('rows').innerHTML='<div class="groupH">Äger ('+PF.holds.length+')</div>'+
+  PF.holds.map((h,i)=>{
+    const up=h.avk>=0, dup=h.d>=0;
+    return '<a class="hold" href="#" style="--i:'+i+'">'+
+      '<span class="dot '+(up?'pos':'dn')+'"></span>'+
+      '<div class="nmwrap"><div><span class="nm">'+h.n+'</span><span class="tk">'+h.t+'</span></div><div class="sec">'+h.sec+'</div></div>'+
+      spark(h.s)+
+      '<div class="rt">'+
+        '<div class="mv">'+fmt(h.mv)+' kr<span class="qty">'+fmt(h.q)+' st</span></div>'+
+        '<div class="avk '+(up?'up':'dn')+'">'+pct(h.avkPct)+'<span class="kr">'+(up?'+':'')+fmt(h.avk)+' kr</span></div>'+
+        '<div class="day"><span class="lbl">kurs</span> '+fmt(h.p,2)+' kr <span class="v '+(dup?'up':'dn')+'">'+pct(h.d)+'</span> <span class="lbl">i dag · GAV '+fmt(h.gav,2)+'</span></div>'+
+      '</div></a>';
+  }).join('');
+</script>
+</body>
+</html>

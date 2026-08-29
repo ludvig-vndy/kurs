@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dina bolag · variant B (Grafik) · mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.16); --rule-strong:rgba(33,28,23,.42);
+    --oxblood:#2C5646; --gold:#B07C1E; --good:#2F7A55; --bad:#9B3A2E;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --label:"Schibsted Grotesk",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  .wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+  a{color:inherit}
+  .masthead{padding:28px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:12px}
+  .wordmark{font-family:"Zilla Slab",Georgia,serif;font-weight:700;font-size:clamp(24px,3.2vw,34px);letter-spacing:.03em;text-transform:uppercase;color:var(--oxblood);line-height:.9}
+  .edition{font-family:var(--label);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;line-height:1.6}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:6px 0;font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+  .nav a{color:var(--muted);text-decoration:none;padding:6px 0}
+  .nav a.here{color:var(--oxblood)}
+  main{flex:1;padding-bottom:60px}
+  .page-h{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:26px 0 4px}
+  .h-title{font-family:var(--display);font-weight:300;font-size:clamp(30px,4.4vw,46px);line-height:1.02;letter-spacing:-.02em}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .ghost{font-family:var(--label);font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule-strong);padding:11px 17px;border-radius:99px;text-decoration:none;white-space:nowrap;transition:.2s}
+  .ghost:hover{border-color:var(--oxblood);color:var(--oxblood)}
+
+  /* Hero-kurva */
+  .hero{border-top:2px solid var(--rule-strong);margin-top:18px;padding-top:20px}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+  .hero-k{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .hero-tot{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(34px,6vw,54px);font-weight:500;letter-spacing:-.02em;line-height:1;margin-top:6px}
+  .hero-tot .kr{font-size:.4em;color:var(--muted);margin-left:6px}
+  .hero-sub{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:15px;margin-top:8px}
+  .hero-sub .up{color:var(--good)} .hero-sub .dn{color:var(--bad)}
+  .hero-sub .day{color:var(--muted);font-size:12.5px;margin-left:6px}
+  .range{display:flex;gap:4px;background:var(--paper-2);border-radius:99px;padding:4px}
+  .range button{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.04em;border:none;background:none;color:var(--muted);padding:7px 13px;border-radius:99px;cursor:pointer}
+  .range button.on{background:var(--card);color:var(--oxblood);box-shadow:0 1px 3px rgba(33,28,23,.12)}
+  .heroChart{margin-top:14px}
+  .heroChart svg{width:100%;height:230px;display:block;overflow:visible}
+  .gl{stroke:var(--rule);stroke-width:1}
+  .glt{font-family:var(--num);font-size:10px;fill:var(--faint)}
+
+  /* Allokering + donut */
+  .split2{display:grid;grid-template-columns:200px 1fr;gap:34px;align-items:center;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:24px 0 6px;padding:22px 0}
+  @media(max-width:620px){.split2{grid-template-columns:1fr;gap:20px}}
+  .donut{width:200px;height:200px;margin:0 auto;position:relative}
+  .donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .donut .mid{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+  .donut .mid b{font-family:var(--num);font-size:22px;font-weight:500;display:block}
+  .donut .mid span{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .legend{display:flex;flex-direction:column;gap:2px}
+  .legend .lr{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--rule);font-size:15px}
+  .legend .lr:first-child{border-top:none}
+  .legend .lr i{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
+  .legend .lr .ln{flex:1;font-family:var(--display);font-weight:500}
+  .legend .lr .lv{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--muted)}
+
+  /* Tabell */
+  .groupH{font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 2px}
+  table{width:100%;border-collapse:collapse}
+  th{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);text-align:right;padding:10px 0 10px 16px;white-space:nowrap}
+  th:first-child{text-align:left;padding-left:0}
+  td{padding:13px 0 13px 16px;border-top:1px solid var(--rule);text-align:right;font-family:var(--num);font-variant-numeric:tabular-nums;font-size:14.5px;white-space:nowrap}
+  td:first-child{text-align:left;padding-left:0}
+  tr:hover td{background:var(--card)}
+  .cnm{font-family:var(--display);font-weight:600;font-size:16px}
+  .ctk{font-family:var(--num);font-size:10px;color:var(--faint);margin-left:7px}
+  .spark{width:74px;height:26px;display:block;margin-left:auto}
+  .up{color:var(--good)} .dn{color:var(--bad)}
+  .bar{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+  .bar .track{width:64px;height:6px;background:var(--paper-2);border-radius:99px;overflow:hidden;position:relative}
+  .bar .fill{position:absolute;top:0;bottom:0;border-radius:99px}
+  @media(max-width:720px){.hidem{display:none}}
+
+  footer{border-top:2px solid var(--rule-strong);margin-top:40px}
+  footer .wrap{padding:22px 0 40px;font-family:var(--label);font-size:11px;letter-spacing:.03em;color:var(--faint)}
+  .variants{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .variants a{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;border:1px solid var(--rule-strong);border-radius:99px;padding:7px 13px}
+  .variants a.on{background:var(--oxblood);color:var(--paper);border-color:var(--oxblood)}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .hero,.split2,tbody tr{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="mast-top"><span class="wordmark">Marginalen</span><span class="edition">Din del av bolagen<br>Dina bolag</span></div>
+    <div class="mast-rule"></div>
+    <nav class="nav"><a href="#">Brevet</a><a href="#" class="here">Dina bolag</a><a href="#">Upptäck</a><a href="#">Analysen</a><a href="#">Fråga</a><a href="#">Hävstång</a></nav>
+  </header>
+
+  <main>
+    <div class="page-h">
+      <h1 class="h-title">Dina bolag</h1>
+      <div class="actions"><a class="ghost" href="#">Importera innehav</a><a class="ghost" href="#">+ Lägg till bolag</a></div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="hero-k">Marknadsvärde</div>
+          <div class="hero-tot" id="tot"></div>
+          <div class="hero-sub" id="sub"></div>
+        </div>
+        <div class="range" id="range">
+          <button data-r="3">3M</button><button data-r="6">6M</button><button class="on" data-r="12">1Å</button><button data-r="12">Allt</button>
+        </div>
+      </div>
+      <div class="heroChart"><svg id="chart" viewBox="0 0 800 230" preserveAspectRatio="none"></svg></div>
+    </section>
+
+    <section class="split2">
+      <div class="donut" id="donut"></div>
+      <div class="legend" id="legend"></div>
+    </section>
+
+    <div class="groupH">Äger (<span id="cnt"></span>)</div>
+    <table>
+      <thead><tr><th>Bolag</th><th class="hidem">3 mån</th><th>Kurs</th><th>I dag</th><th>Värde</th><th>Avkastning</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </main>
+
+  <footer><div class="wrap">
+    Prototyp, fiktiva bolag och påhittade siffror. Utbildningssyfte, aldrig köp- eller säljråd.
+    <div class="variants"><a href="/labs/mock-dina-bolag-a.html">A · Översikt</a><a class="on" href="/labs/mock-dina-bolag-b.html">B · Grafik</a><a href="/labs/mock-dina-bolag-c.html">C · Ägarlugn</a><a href="/labs/mock-dina-bolag-ac.html">A+C · Kombo</a></div>
+  </div></footer>
+</div>
+
+<script>
+const PF={updated:'2026-08-29',
+  curve:[172,168,181,190,186,199,205,212,208,221,230,237.7],
+  holds:[
+    {n:'Norlux Industri',t:'NORL',q:480,gav:92,p:118.5,d:1.2,sec:'Industri',s:[92,95,101,98,106,112,109,115,118.5]},
+    {n:'Sundby Verktyg',t:'SUND',q:95,gav:305,p:412,d:1.8,sec:'Industri',s:[305,320,345,360,352,378,390,405,412]},
+    {n:'Brunna Hydro',t:'BRUN',q:640,gav:47,p:63.4,d:0.9,sec:'Energi',s:[47,49,52,50,55,58,60,62,63.4]},
+    {n:'Almi Foods',t:'ALMI',q:180,gav:210,p:236,d:0.3,sec:'Dagligvaror',s:[210,214,220,218,226,230,228,234,236]},
+    {n:'Kavex Medical',t:'KAVX',q:210,gav:88,p:143,d:0.6,sec:'Medtech',s:[88,96,104,112,120,128,134,140,143]},
+    {n:'Telvio',t:'TELV',q:300,gav:61,p:54.2,d:-2.4,sec:'Teknik',s:[61,64,59,57,60,55,58,52,54.2]},
+    {n:'Voltcell',t:'VOLT',q:1250,gav:12.4,p:9.85,d:-3.1,sec:'Energi',s:[12.4,13,11.8,10.9,11.4,10.2,9.9,10.3,9.85]},
+  ]};
+const SECCOL={Industri:'#2C5646',Energi:'#B07C1E',Dagligvaror:'#7A6A4A',Medtech:'#4A7C8C',Teknik:'#9B3A2E'};
+const fmt=(n,d=0)=>Number(n).toLocaleString('sv-SE',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=n=>(n>0?'+':'')+Number(n).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
+function lp(arr,w,h,pad){const mn=Math.min(...arr),mx=Math.max(...arr),r=(mx-mn)||1;return arr.map((v,i)=>{const x=pad+i*(w-2*pad)/(arr.length-1);const y=pad+(h-2*pad)*(1-(v-mn)/r);return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}).join(' ');}
+function spark(arr){const up=arr[arr.length-1]>=arr[0];return '<svg class="spark" viewBox="0 0 74 26" fill="none"><path d="'+lp(arr,74,26,3)+'" stroke="'+(up?'var(--good)':'var(--bad)')+'" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';}
+
+PF.holds.forEach(h=>{h.mv=h.q*h.p;h.ansk=h.q*h.gav;h.avk=h.mv-h.ansk;h.avkPct=(h.p/h.gav-1)*100;});
+const total=PF.holds.reduce((a,h)=>a+h.mv,0),ansk=PF.holds.reduce((a,h)=>a+h.ansk,0),avk=total-ansk,avkPct=(total/ansk-1)*100;
+const dayKr=PF.holds.reduce((a,h)=>a+h.mv*h.d/100,0),dayPct=dayKr/total*100;
+
+document.getElementById('tot').innerHTML=fmt(total)+'<span class="kr">kr</span>';
+document.getElementById('sub').innerHTML='<span class="up">+'+fmt(avk)+' kr '+pct(avkPct)+'</span><span class="day">i dag +'+fmt(dayKr)+' kr '+pct(dayPct)+'</span>';
+document.getElementById('cnt').textContent=PF.holds.length;
+
+// hero chart med gridlinjer
+function drawChart(months){
+  const arr=PF.curve.slice(-months); const w=800,h=230,pad=8;
+  const mn=Math.min(...arr),mx=Math.max(...arr);
+  const path=lp(arr,w,h,pad);
+  const area='M'+pad+' '+(h-pad)+' '+path.slice(1)+' L'+(w-pad)+' '+(h-pad)+' Z';
+  let grid='';
+  for(let i=0;i<=3;i++){const y=pad+(h-2*pad)*i/3;const val=mx-(mx-mn)*i/3;grid+='<line class="gl" x1="0" x2="'+w+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'"/><text class="glt" x="0" y="'+(y-4).toFixed(1)+'">'+fmt(val*1000)+' kr</text>';}
+  document.getElementById('chart').innerHTML=
+    '<defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="rgba(44,86,70,.22)"/><stop offset="1" stop-color="rgba(44,86,70,0)"/></linearGradient></defs>'+
+    grid+'<path d="'+area+'" fill="url(#g)"/><path d="'+path+'" fill="none" stroke="var(--oxblood)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'+
+    '<circle cx="'+(w-pad)+'" cy="'+(pad+(h-2*pad)*(1-(arr[arr.length-1]-mn)/((mx-mn)||1))).toFixed(1)+'" r="4" fill="var(--oxblood)"/>';
+}
+drawChart(12);
+document.querySelectorAll('#range button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#range button').forEach(x=>x.classList.remove('on'));b.classList.add('on');drawChart(+b.dataset.r);}));
+
+// donut
+const bySec={};PF.holds.forEach(h=>bySec[h.sec]=(bySec[h.sec]||0)+h.mv);
+const secs=Object.entries(bySec).sort((a,b)=>b[1]-a[1]);
+const C=2*Math.PI*54;let off=0,segs='';
+secs.forEach(([s,v])=>{const frac=v/total;segs+='<circle cx="70" cy="70" r="54" fill="none" stroke="'+(SECCOL[s]||'#999')+'" stroke-width="20" stroke-dasharray="'+(frac*C).toFixed(2)+' '+C.toFixed(2)+'" stroke-dashoffset="'+(-off*C).toFixed(2)+'"/>';off+=frac;});
+document.getElementById('donut').innerHTML='<svg viewBox="0 0 140 140">'+segs+'</svg><div class="mid"><div><b>'+secs.length+'</b><span>sektorer</span></div></div>';
+document.getElementById('legend').innerHTML=secs.map(([s,v])=>'<div class="lr"><i style="background:'+(SECCOL[s]||'#999')+'"></i><span class="ln">'+s+'</span><span class="lv">'+fmt(v)+' kr · '+(v/total*100).toFixed(0)+'%</span></div>').join('');
+
+// tabell
+document.getElementById('tb').innerHTML=PF.holds.map(h=>{
+  const up=h.avk>=0,dup=h.d>=0,mxAvk=62.5;
+  const w=Math.min(Math.abs(h.avkPct)/mxAvk*100,100);
+  return '<tr><td><span class="cnm">'+h.n+'</span><span class="ctk">'+h.t+'</span></td>'+
+    '<td class="hidem">'+spark(h.s)+'</td>'+
+    '<td>'+fmt(h.p,2)+' kr</td>'+
+    '<td class="'+(dup?'up':'dn')+'">'+pct(h.d)+'</td>'+
+    '<td>'+fmt(h.mv)+' kr</td>'+
+    '<td><span class="bar"><span class="'+(up?'up':'dn')+'">'+pct(h.avkPct)+'</span><span class="track"><span class="fill" style="width:'+w.toFixed(0)+'%;background:'+(up?'var(--good)':'var(--bad)')+';'+(up?'left:0':'right:0')+'"></span></span></span></td></tr>';
+}).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bolagssida · köp/sälj-historik · mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.14); --rule-strong:rgba(33,28,23,.40);
+    --oxblood:#2C5646; --gold:#B07C1E; --good:#2F7A55; --bad:#9B3A2E;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --label:"Schibsted Grotesk",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{overflow-x:clip;-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  .wrap{width:100%;max-width:940px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+  a{color:inherit}
+  .masthead{padding:26px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:12px}
+  .wordmark{font-family:"Zilla Slab",Georgia,serif;font-weight:700;font-size:clamp(22px,3vw,32px);letter-spacing:.03em;text-transform:uppercase;color:var(--oxblood);line-height:.9}
+  .edition{font-family:var(--label);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;line-height:1.6}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  main{flex:1;padding-bottom:60px}
+  .back{display:inline-block;font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin:20px 0 0}
+  .back:hover{color:var(--oxblood)}
+
+  /* Rubrik */
+  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:10px 0 0}
+  .head h1{font-family:var(--display);font-weight:300;font-size:clamp(30px,4.6vw,48px);line-height:1;letter-spacing:-.02em}
+  .head .tk{font-family:var(--num);font-size:13px;color:var(--faint);margin-left:12px;letter-spacing:.04em}
+  .head .tag{font-family:var(--label);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid var(--oxblood);color:var(--oxblood);margin-left:10px;vertical-align:middle}
+  .price{text-align:right}
+  .price .p{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(24px,3.6vw,32px);font-weight:500}
+  .price .c{font-family:var(--num);font-size:14px;margin-top:2px}
+  .price .c.up{color:var(--good)} .price .c.dn{color:var(--bad)}
+
+  /* Positionsband */
+  .pos{display:flex;flex-wrap:wrap;gap:16px 40px;border-top:2px solid var(--rule-strong);border-bottom:1px solid var(--rule);margin:18px 0 0;padding:18px 0}
+  .pos .b{min-width:0}
+  .pos .k{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .pos .v{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:20px;font-weight:500}
+  .pos .v small{font-family:var(--label);font-size:11px;color:var(--muted);margin-left:6px;font-weight:400}
+  .pos .v.up{color:var(--good)} .pos .v.dn{color:var(--bad)}
+  .pos .v .sub{font-size:13px;color:var(--muted);margin-left:7px}
+
+  /* Kursgraf */
+  .chartsec{margin:24px 0 0}
+  .charttop{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--label);font-size:10.5px;letter-spacing:.02em;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend .ln{width:16px;height:2px;background:var(--oxblood);display:inline-block}
+  .legend .gav{width:16px;height:0;border-top:2px dashed var(--gold);display:inline-block}
+  .legend .buy{color:var(--good);font-weight:700}
+  .legend .sell{color:var(--bad);font-weight:700}
+  .range{display:flex;gap:4px;background:var(--paper-2);border-radius:99px;padding:4px}
+  .range button{font-family:var(--label);font-size:11px;font-weight:600;border:none;background:none;color:var(--muted);padding:6px 12px;border-radius:99px;cursor:pointer}
+  .range button.on{background:var(--card);color:var(--oxblood);box-shadow:0 1px 3px rgba(33,28,23,.12)}
+  .chartbox{border:1px solid var(--rule);border-radius:6px;background:var(--card);padding:12px 10px 6px}
+  .chartbox svg{width:100%;height:280px;display:block;overflow:visible}
+  .gl{stroke:var(--rule);stroke-width:1}
+  .glt{font-family:var(--num);font-size:9.5px;fill:var(--faint)}
+  .xlt{font-family:var(--num);font-size:9px;fill:var(--faint)}
+  .mk{cursor:default}
+
+  /* Affärer */
+  .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:34px;margin:30px 0 0;align-items:start}
+  @media(max-width:720px){.grid{grid-template-columns:1fr;gap:26px}}
+  .sech{font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .trades{list-style:none}
+  .trades li{display:grid;grid-template-columns:auto 1fr auto;gap:3px 14px;align-items:center;padding:12px 2px;border-top:1px solid var(--rule)}
+  .trades li:first-child{border-top:none}
+  .tside{font-family:var(--label);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:99px}
+  .tside.buy{color:var(--good);border:1px solid var(--good)} .tside.sell{color:var(--bad);border:1px solid var(--bad)}
+  .tmid .td{font-family:var(--display);font-weight:500;font-size:15px}
+  .tmid .tsub{font-family:var(--num);font-size:11.5px;color:var(--muted)}
+  .tamt{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:14.5px;text-align:right;white-space:nowrap}
+  .tdel{background:none;border:none;color:var(--faint);cursor:pointer;font-family:var(--label);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 4px}
+  .tdel:hover{color:var(--bad)}
+
+  .form{background:var(--card);border:1px solid var(--rule-strong);border-radius:8px;padding:18px}
+  .form .fh{font-family:var(--display);font-weight:600;font-size:16px;margin-bottom:14px}
+  .seg{display:flex;border:1px solid var(--rule-strong);border-radius:8px;overflow:hidden;margin-bottom:12px}
+  .seg button{flex:1;font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.04em;border:none;background:var(--paper);color:var(--muted);padding:10px;cursor:pointer}
+  .seg button.on.buy{background:var(--good);color:#fff} .seg button.on.sell{background:var(--bad);color:#fff}
+  .frow{margin-bottom:11px}
+  .frow label{font-family:var(--label);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+  .frow input,.frow select{width:100%;background:var(--paper);border:1px solid var(--rule-strong);border-radius:7px;font-family:var(--num);font-size:15px;color:var(--ink);padding:10px 12px;outline:none}
+  .frow input:focus,.frow select:focus{border-color:var(--oxblood)}
+  .frow2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .addbtn{width:100%;font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--oxblood);color:var(--paper);border:none;border-radius:99px;padding:13px;cursor:pointer;margin-top:4px}
+  .addbtn:hover{background:#24493b}
+  .fhint{font-family:var(--label);font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
+
+  footer{border-top:2px solid var(--rule-strong);margin-top:40px}
+  footer .wrap{padding:22px 0 40px;font-family:var(--label);font-size:11px;letter-spacing:.03em;color:var(--faint)}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .pos,.chartsec,.grid{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="mast-top"><span class="wordmark">Marginalen</span><span class="edition">Din del av bolagen<br>Bolagssida</span></div>
+    <div class="mast-rule"></div>
+  </header>
+
+  <main>
+    <a class="back" href="/labs/mock-dina-bolag-ac.html">&larr; Dina bolag</a>
+
+    <div class="head">
+      <div><h1>Norlux Industri<span class="tk">NORL</span><span class="tag">Äger</span></h1></div>
+      <div class="price"><div class="p" id="curp"></div><div class="c up" id="curc"></div></div>
+    </div>
+
+    <section class="pos" id="pos"></section>
+
+    <section class="chartsec">
+      <div class="charttop">
+        <div class="legend">
+          <span><i class="ln"></i> Kurs</span>
+          <span><i class="gav"></i> Din GAV</span>
+          <span><b class="buy">▲</b> Köp</span>
+          <span><b class="sell">▼</b> Sälj</span>
+        </div>
+        <div class="range" id="range">
+          <button data-n="6">6M</button><button data-n="12">1Å</button><button class="on" data-n="18">Allt</button>
+        </div>
+      </div>
+      <div class="chartbox"><svg id="chart" viewBox="0 0 820 280" preserveAspectRatio="none"></svg></div>
+    </section>
+
+    <div class="grid">
+      <div>
+        <div class="sech">Dina affärer (<span id="tcnt"></span>)</div>
+        <ul class="trades" id="trades"></ul>
+      </div>
+      <div>
+        <div class="form">
+          <div class="fh">Lägg till affär</div>
+          <div class="seg" id="seg">
+            <button class="on buy" data-s="buy">Köp</button>
+            <button data-s="sell">Sälj</button>
+          </div>
+          <div class="frow"><label>Månad</label><select id="f-month"></select></div>
+          <div class="frow2">
+            <div class="frow"><label>Antal</label><input id="f-qty" inputmode="decimal" placeholder="t.ex. 120"></div>
+            <div class="frow"><label>Kurs</label><input id="f-price" inputmode="decimal" placeholder="t.ex. 112"></div>
+          </div>
+          <button class="addbtn" id="add">Lägg till affär</button>
+          <div class="fhint">Lägg in dina köp och sälj, så räknar vi ut din GAV och avkastning automatiskt. Du behöver inte veta din snittkurs.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer><div class="wrap">Prototyp, fiktivt bolag och illustrativa tal (står in för ett riktigt innehav som Sivers). Utbildningssyfte, aldrig köp- eller säljråd.</div></footer>
+</div>
+
+<script>
+const MONTHS=['2025-03','2025-04','2025-05','2025-06','2025-07','2025-08','2025-09','2025-10','2025-11','2025-12','2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08'];
+const SERIES=[78,82,85,88,84,90,95,92,99,101,98,106,108,112,109,114,116,118.5];
+const DAYCH=1.2;
+let side='buy';
+let trades=[
+  {i:2, s:'buy', q:200, p:85},
+  {i:5, s:'buy', q:160, p:90},
+  {i:10,s:'sell',q:80, p:98},
+  {i:13,s:'buy', q:120,p:112},
+];
+let rangeN=18;
+
+const fmt=(n,d=0)=>Number(n).toLocaleString('sv-SE',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=n=>(n>0?'+':'')+Number(n).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
+
+// Genomsnittligt anskaffningsvärde (snittkostnadsmetoden): sälj sänker inte GAV.
+function position(){
+  let qty=0,cost=0;
+  [...trades].sort((a,b)=>a.i-b.i).forEach(t=>{
+    if(t.s==='buy'){ qty+=t.q; cost+=t.q*t.p; }
+    else { const avg=qty?cost/qty:0; qty-=t.q; cost-=t.q*avg; }
+  });
+  qty=Math.max(qty,0); cost=Math.max(cost,0);
+  const gav=qty?cost/qty:0, price=SERIES[SERIES.length-1];
+  const mv=qty*price, avk=mv-cost, avkPct=cost>0?(mv/cost-1)*100:0;
+  return {qty,gav,price,mv,ansk:cost,avk,avkPct};
+}
+
+function renderHead(){
+  const p=SERIES[SERIES.length-1];
+  document.getElementById('curp').textContent=fmt(p,2)+' kr';
+  document.getElementById('curc').textContent=pct(DAYCH)+' i dag';
+}
+
+function renderPos(){
+  const P=position(), up=P.avk>=0;
+  document.getElementById('pos').innerHTML=
+    '<div class="b"><div class="k">Marknadsvärde</div><div class="v">'+fmt(P.mv)+' kr</div></div>'+
+    '<div class="b"><div class="k">Antal</div><div class="v">'+fmt(P.qty)+' st</div></div>'+
+    '<div class="b"><div class="k">Din GAV (uträknad)</div><div class="v">'+fmt(P.gav,2)+' kr</div></div>'+
+    '<div class="b"><div class="k">Avkastning</div><div class="v '+(up?'up':'dn')+'">'+pct(P.avkPct)+'<span class="sub">'+(up?'+':'')+fmt(P.avk)+' kr</span></div></div>';
+}
+
+function renderChart(){
+  const W=820,H=280,padL=6,padR=6,padT=10,padB=20;
+  const start=SERIES.length-rangeN;
+  const arr=SERIES.slice(start);
+  const P=position();
+  const vals=arr.concat([P.gav]).concat(trades.filter(t=>t.i>=start).map(t=>t.p));
+  const mn=Math.min(...vals),mx=Math.max(...vals),rng=(mx-mn)||1;
+  const X=i=>padL+(i)*(W-padL-padR)/(rangeN-1);
+  const Y=v=>padT+(H-padT-padB)*(1-(v-mn)/rng);
+  const line=arr.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join(' ');
+  const area='M'+X(0)+' '+(H-padB)+' '+line.slice(1)+' L'+X(arr.length-1)+' '+(H-padB)+' Z';
+  let grid='';
+  for(let k=0;k<=3;k++){const y=padT+(H-padT-padB)*k/3;const val=mx-(mx-mn)*k/3;grid+='<line class="gl" x1="0" x2="'+W+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'"/><text class="glt" x="2" y="'+(y-3).toFixed(1)+'">'+fmt(val,0)+'</text>';}
+  // x-etiketter (gles)
+  let xl='';const step=Math.ceil(rangeN/6);
+  for(let i=0;i<arr.length;i+=step){xl+='<text class="xlt" x="'+X(i).toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle">'+MONTHS[start+i]+'</text>';}
+  // GAV-linje
+  const gy=Y(P.gav);
+  const gav=P.qty?'<line x1="0" x2="'+W+'" y1="'+gy.toFixed(1)+'" y2="'+gy.toFixed(1)+'" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="5 4"/><text class="glt" x="'+(W-4)+'" y="'+(gy-4).toFixed(1)+'" text-anchor="end" fill="var(--gold)">GAV '+fmt(P.gav,2)+'</text>':'';
+  // markörer
+  const marks=trades.filter(t=>t.i>=start).map(t=>{
+    const x=X(t.i-start),y=Y(t.p),buy=t.s==='buy',col=buy?'var(--good)':'var(--bad)';
+    const tri=buy?(x+' '+(y+11)+' '+(x-6)+' '+(y+20)+' '+(x+6)+' '+(y+20)):(x+' '+(y-11)+' '+(x-6)+' '+(y-20)+' '+(x+6)+' '+(y-20));
+    return '<g class="mk"><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3.5" fill="'+col+'"/><polygon points="'+tri+'" fill="'+col+'"><title>'+(buy?'Köp':'Sälj')+' '+t.q+' st @ '+fmt(t.p,2)+' kr · '+MONTHS[t.i]+'</title></polygon></g>';
+  }).join('');
+  document.getElementById('chart').innerHTML=
+    '<defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="rgba(44,86,70,.16)"/><stop offset="1" stop-color="rgba(44,86,70,0)"/></linearGradient></defs>'+
+    grid+xl+'<path d="'+area+'" fill="url(#g)"/><path d="'+line+'" fill="none" stroke="var(--oxblood)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>'+gav+marks;
+}
+
+function renderTrades(){
+  document.getElementById('tcnt').textContent=trades.length;
+  const sorted=[...trades].map((t,idx)=>({t,idx})).sort((a,b)=>b.t.i-a.t.i);
+  document.getElementById('trades').innerHTML=sorted.map(({t,idx})=>{
+    const buy=t.s==='buy';
+    return '<li><span class="tside '+(buy?'buy':'sell')+'">'+(buy?'Köp':'Sälj')+'</span>'+
+      '<div class="tmid"><div class="td">'+fmt(t.q)+' st @ '+fmt(t.p,2)+' kr</div><div class="tsub">'+MONTHS[t.i]+'</div></div>'+
+      '<div><div class="tamt">'+fmt(t.q*t.p)+' kr</div><button class="tdel" data-i="'+idx+'">Ta bort</button></div></li>';
+  }).join('');
+  document.querySelectorAll('.tdel').forEach(b=>b.addEventListener('click',()=>{trades.splice(+b.dataset.i,1);renderAll();}));
+}
+
+function fillMonths(){
+  document.getElementById('f-month').innerHTML=MONTHS.map((m,i)=>'<option value="'+i+'"'+(i===MONTHS.length-1?' selected':'')+'>'+m+'</option>').join('');
+}
+
+function renderAll(){ renderHead(); renderPos(); renderChart(); renderTrades(); }
+
+// wiring
+document.querySelectorAll('#seg button').forEach(b=>b.addEventListener('click',()=>{
+  side=b.dataset.s;
+  document.querySelectorAll('#seg button').forEach(x=>{x.classList.remove('on','buy','sell');});
+  b.classList.add('on',side);
+}));
+document.querySelectorAll('#range button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#range button').forEach(x=>x.classList.remove('on'));b.classList.add('on');rangeN=+b.dataset.n;renderChart();
+}));
+document.getElementById('add').addEventListener('click',()=>{
+  const i=+document.getElementById('f-month').value;
+  const q=parseFloat(String(document.getElementById('f-qty').value).replace(',','.'));
+  const p=parseFloat(String(document.getElementById('f-price').value).replace(',','.'));
+  if(!(q>0)||!(p>0)) return;
+  trades.push({i,s:side,q,p});
+  document.getElementById('f-qty').value='';document.getElementById('f-price').value='';
+  renderAll();
+});
+
+fillMonths(); renderAll();
+</script>
+</body>
+</html>

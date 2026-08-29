@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dina bolag · variant C (Ägarlugn) · mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Schibsted+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.14); --rule-strong:rgba(33,28,23,.40);
+    --oxblood:#2C5646; --gold:#B07C1E; --good:#2F7A55; --bad:#9B3A2E;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --label:"Schibsted Grotesk",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  .wrap{width:100%;max-width:920px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+  a{color:inherit}
+  .masthead{padding:28px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:12px}
+  .wordmark{font-family:"Zilla Slab",Georgia,serif;font-weight:700;font-size:clamp(24px,3.2vw,34px);letter-spacing:.03em;text-transform:uppercase;color:var(--oxblood);line-height:.9}
+  .edition{font-family:var(--label);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;line-height:1.6}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  .nav{display:flex;flex-wrap:wrap;gap:2px 22px;padding:6px 0;font-family:var(--label);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+  .nav a{color:var(--muted);text-decoration:none;padding:6px 0}
+  .nav a.here{color:var(--oxblood)}
+  main{flex:1;padding-bottom:70px}
+
+  /* Editorial rubrik */
+  .lede{margin:40px 0 8px}
+  .lede h1{font-family:var(--display);font-weight:300;font-size:clamp(30px,5vw,52px);line-height:1.05;letter-spacing:-.02em;max-width:16ch}
+  .lede h1 em{font-style:normal;color:var(--oxblood)}
+  .lede .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+  .ghost{font-family:var(--label);font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule-strong);padding:11px 17px;border-radius:99px;text-decoration:none;white-space:nowrap;transition:.2s}
+  .ghost:hover{border-color:var(--oxblood);color:var(--oxblood)}
+
+  /* Lugn värdelinje + tre tal */
+  .band{display:grid;grid-template-columns:1fr auto;gap:26px 44px;align-items:end;border-top:2px solid var(--rule-strong);border-bottom:1px solid var(--rule);margin:26px 0 4px;padding:22px 0 20px}
+  @media(max-width:640px){.band{grid-template-columns:1fr}}
+  .fig{display:flex;flex-wrap:wrap;gap:6px 44px;align-items:flex-end}
+  .fk{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .fv{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(26px,4vw,36px);font-weight:500;letter-spacing:-.01em;line-height:1}
+  .fv .kr{font-size:.42em;color:var(--muted);margin-left:5px}
+  .fv.avk{color:var(--good);font-size:clamp(20px,3vw,26px)}
+  .fv.avk .pct{font-size:.72em;margin-left:7px}
+  .fday{font-family:var(--num);font-size:12px;color:var(--faint);margin-top:8px}
+  .fday .v{color:var(--muted)}
+  .qline{width:min(300px,100%)}
+  .qline svg{width:100%;height:70px;display:block;overflow:visible}
+
+  /* Innehav som lugna ägar-rader */
+  .sectitle{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:32px 0 2px;display:flex;align-items:center;gap:14px}
+  .sectitle::after{content:"";flex:1;height:1px;background:var(--rule)}
+  .own{display:grid;grid-template-columns:auto 1fr auto;gap:4px 20px;align-items:baseline;padding:20px 4px;border-top:1px solid var(--rule);text-decoration:none;color:inherit;transition:background .15s}
+  .own:hover{background:var(--card)}
+  .state{width:9px;height:9px;border-radius:50%;position:relative;top:9px}
+  .state.ok{background:var(--good)} .state.watch{background:var(--gold)} .state.risk{background:var(--bad)}
+  .own .nm{font-family:var(--display);font-weight:500;font-size:21px;letter-spacing:-.01em}
+  .own .tk{font-family:var(--num);font-size:10px;color:var(--faint);margin-left:9px}
+  .own .why{font-family:var(--serif);font-style:italic;color:var(--ink-soft);font-size:16px;margin-top:5px;max-width:52ch}
+  .own .status{font-family:var(--label);font-size:11px;letter-spacing:.02em;color:var(--muted);margin-top:8px}
+  .own .status b{color:var(--good);font-weight:600}
+  .own .status b.w{color:var(--gold)}
+  .rt{text-align:right;white-space:nowrap}
+  .rt .val{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:16px;color:var(--ink)}
+  .rt .ret{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:13.5px;margin-top:5px}
+  .rt .ret.up{color:var(--good)} .rt .ret.dn{color:var(--bad)}
+  .rt .day{font-family:var(--num);font-size:10.5px;color:var(--faint);margin-top:5px}
+  @media(max-width:600px){
+    .own{grid-template-columns:auto 1fr}
+    .rt{grid-column:2;text-align:left;margin-top:8px}
+  }
+
+  footer{border-top:2px solid var(--rule-strong);margin-top:44px}
+  footer .wrap{padding:22px 0 40px;font-family:var(--label);font-size:11px;letter-spacing:.03em;color:var(--faint)}
+  .variants{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .variants a{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;border:1px solid var(--rule-strong);border-radius:99px;padding:7px 13px}
+  .variants a.on{background:var(--oxblood);color:var(--paper);border-color:var(--oxblood)}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .band,.own{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+  .own{animation-delay:calc(var(--i,0)*.05s + .1s)}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="mast-top"><span class="wordmark">Marginalen</span><span class="edition">Din del av bolagen<br>Dina bolag</span></div>
+    <div class="mast-rule"></div>
+    <nav class="nav"><a href="#">Brevet</a><a href="#" class="here">Dina bolag</a><a href="#">Upptäck</a><a href="#">Analysen</a><a href="#">Fråga</a><a href="#">Hävstång</a></nav>
+  </header>
+
+  <main>
+    <div class="lede">
+      <h1>Du äger en del av <em>sju bolag</em>.</h1>
+      <div class="actions"><a class="ghost" href="#">Importera innehav</a><a class="ghost" href="#">+ Lägg till bolag</a></div>
+    </div>
+
+    <section class="band">
+      <div class="fig">
+        <div><div class="fk">Din del är värd</div><div class="fv" id="tot"></div></div>
+        <div><div class="fk">Sedan du köpte</div><div class="fv avk" id="avk"></div>
+          <div class="fday" id="day"></div></div>
+      </div>
+      <div class="qline"><svg id="q" viewBox="0 0 300 70" preserveAspectRatio="none"></svg></div>
+    </section>
+
+    <div class="sectitle">Bolagen du äger</div>
+    <div id="rows"></div>
+  </main>
+
+  <footer><div class="wrap">
+    Prototyp, fiktiva bolag och påhittade siffror. Utbildningssyfte, aldrig köp- eller säljråd.
+    <div class="variants"><a href="/labs/mock-dina-bolag-a.html">A · Översikt</a><a href="/labs/mock-dina-bolag-b.html">B · Grafik</a><a class="on" href="/labs/mock-dina-bolag-c.html">C · Ägarlugn</a><a href="/labs/mock-dina-bolag-ac.html">A+C · Kombo</a></div>
+  </div></footer>
+</div>
+
+<script>
+const PF={
+  curve:[172,168,181,190,186,199,205,212,208,221,230,237.7],
+  holds:[
+    {n:'Norlux Industri',t:'NORL',q:480,gav:92,p:118.5,d:1.2,st:'ok',why:'Köper upp lönsamma småbolag och driver dem bättre.',status:'Tesen håller. <b>Alla tre vakter gröna.</b>'},
+    {n:'Sundby Verktyg',t:'SUND',q:95,gav:305,p:412,d:1.8,st:'ok',why:'Nischat verktygsbolag med prissättningsmakt.',status:'Tesen håller. <b>Marginalen steg i Q2.</b>'},
+    {n:'Brunna Hydro',t:'BRUN',q:640,gav:47,p:63.4,d:0.9,st:'ok',why:'Vattenkraft med lång kontrakterad intäkt.',status:'Tesen håller. <b>Lugnt kvartal.</b>'},
+    {n:'Almi Foods',t:'ALMI',q:180,gav:210,p:236,d:0.3,st:'ok',why:'Defensiv dagligvara, jämn kassako.',status:'Tesen håller. <b>Inget nytt att agera på.</b>'},
+    {n:'Kavex Medical',t:'KAVX',q:210,gav:88,p:143,d:0.6,st:'ok',why:'Medtech med återkommande förbrukningsintäkt.',status:'Tesen håller. <b>Stark orderingång.</b>'},
+    {n:'Telvio',t:'TELV',q:300,gav:61,p:54.2,d:-2.4,st:'watch',why:'Mjukvara som skulle skala med bruttomarginal.',status:'<b class="w">Vakt slog till: marginalen föll andra kvartalet i rad.</b>'},
+    {n:'Voltcell',t:'VOLT',q:1250,gav:12.4,p:9.85,d:-3.1,st:'watch',why:'Batteriteknik, förhoppning om första stororder.',status:'<b class="w">Vakt slog till: kapital trycks, utspädning på väg.</b>'},
+  ]};
+const fmt=(n,d=0)=>Number(n).toLocaleString('sv-SE',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=n=>(n>0?'+':'')+Number(n).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
+function lp(arr,w,h,pad){const mn=Math.min(...arr),mx=Math.max(...arr),r=(mx-mn)||1;return arr.map((v,i)=>{const x=pad+i*(w-2*pad)/(arr.length-1);const y=pad+(h-2*pad)*(1-(v-mn)/r);return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}).join(' ');}
+
+PF.holds.forEach(h=>{h.mv=h.q*h.p;h.ansk=h.q*h.gav;h.avk=h.mv-h.ansk;h.avkPct=(h.p/h.gav-1)*100;});
+const total=PF.holds.reduce((a,h)=>a+h.mv,0),ansk=PF.holds.reduce((a,h)=>a+h.ansk,0),avk=total-ansk,avkPct=(total/ansk-1)*100;
+const dayKr=PF.holds.reduce((a,h)=>a+h.mv*h.d/100,0),dayPct=dayKr/total*100;
+
+document.getElementById('tot').innerHTML=fmt(total)+'<span class="kr">kr</span>';
+document.getElementById('avk').innerHTML='+'+fmt(avk)+' kr<span class="pct">'+pct(avkPct)+'</span>';
+document.getElementById('day').innerHTML='I dag <span class="v">+'+fmt(dayKr)+' kr, '+pct(dayPct)+'</span>. Men det är inte i dag som räknas.';
+
+document.getElementById('q').innerHTML='<path d="'+lp(PF.curve,300,70,4)+'" fill="none" stroke="var(--oxblood)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>';
+
+document.getElementById('rows').innerHTML=PF.holds.map((h,i)=>{
+  const up=h.avk>=0,dup=h.d>=0;
+  return '<a class="own" href="#" style="--i:'+i+'">'+
+    '<span class="state '+h.st+'"></span>'+
+    '<div><div><span class="nm">'+h.n+'</span><span class="tk">'+h.t+'</span></div>'+
+      '<div class="why">'+h.why+'</div>'+
+      '<div class="status">'+h.status+'</div></div>'+
+    '<div class="rt"><div class="val">'+fmt(h.mv)+' kr</div>'+
+      '<div class="ret '+(up?'up':'dn')+'">'+pct(h.avkPct)+'</div>'+
+      '<div class="day">'+fmt(h.p,2)+' kr <span style="color:'+(dup?'var(--good)':'var(--bad)')+'">'+pct(h.d)+'</span></div></div></a>';
+}).join('');
+</script>
+</body>
+</html>
