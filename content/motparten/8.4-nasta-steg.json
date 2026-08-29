@@ -1,0 +1,127 @@
+{
+  "kapitel": 8,
+  "lektion": "8.4",
+  "titel": "Nästa steg",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "beslut.nastasteg",
+  "mal": "Efter lektionen lämnar eleven inget möte utan ett nästa steg som båda accepterat, kan skilja ett riktigt nästa steg från ett skenbart, och vet hur man föreslår ett utan att pressa.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "BESLUT OCH FRIKTION",
+      "titel": "Nästa steg",
+      "ingress": "Ett ja utan bokat nästa steg är ett nej som dröjer. Det är kapitlets enklaste lektion och den som flest ignorerar när mötet gått bra."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DET GLÖMS",
+      "lead": "Nästa steg glöms nästan alltid i de möten som gick bäst.",
+      "highlight": "de möten som gick bäst",
+      "brodtext": [
+        "Stämningen var god, ni pratade över tiden, och att avsluta med en administrativ fråga känns som att kyla ner något varmt. Så du säger att du hör av dig, kunden säger att det låter jättebra, och ni skiljs åt med en känsla av framsteg som inte finns i någon kalender.",
+        "Tre veckor senare mailar du. Inget svar. Du mailar igen. Kunden svarar att det varit mycket, vilket är sant, och att ni tar det efter sommaren, vilket är slutet. Ingenting gick fel i det mötet. Det som saknades var trettio sekunder i slutet."
+      ],
+      "takeaway": "Ju bättre mötet kändes, desto större risk att du går därifrån utan någonting."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD SOM RÄKNAS",
+      "titel": "Fyra krav på ett riktigt nästa steg",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Ett datum",
+            "text": "Inte i nästa vecka, utan tisdag den elfte klockan nio. Ett datum finns i två kalendrar. En tidsangivelse finns i ingen."
+          },
+          {
+            "rubrik": "Ett syfte",
+            "text": "Vad mötet ska avgöra, inte vad det ska handla om. Skillnaden mellan att gå igenom offerten och att avgöra om ni går vidare till pilot."
+          },
+          {
+            "rubrik": "Något från båda",
+            "text": "Du tar fram något, kunden tar reda på något. Ett steg där bara du gör arbetet är inget åtagande från kundens sida."
+          },
+          {
+            "rubrik": "Uttalat ja",
+            "text": "Kunden ska ha sagt ja högt, inte nickat medan du föreslog. Ett tyst medgivande håller inte när kalendern blir full."
+          }
+        ],
+        "figurtext": "Saknas ett av de fyra är det ett skenbart nästa steg."
+      },
+      "forklaring": "Det tredje kravet är det som oftast fattas och det som säger mest. En kund som går med på att ta reda på något till nästa gång har investerat, om än lite. En kund som bara tar emot har inte gjort något val alls, och kommer inte att känna sig bunden."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR DU FÖRESLÅR",
+      "lead": "Ett nästa steg föreslås bäst som en fråga om vad som är rimligt, inte som ett erbjudande om ett nytt möte.",
+      "highlight": "vad som är rimligt",
+      "brodtext": [
+        "Utifrån det vi pratat om, vad vore ett rimligt nästa steg för er? Den frågan låter kunden föreslå, och ett förslag från kunden är alltid starkare än ett från dig. Ofta blir förslaget mindre än du hoppats. Det är information, inte ett misslyckande.",
+        "Kommer inget förslag, föreslå själv och var konkret. Jag skulle vilja träffa dig och Anna den elfte för att avgöra om ni ska köra en pilot på lagret. Till dess tar jag fram ett upplägg, och du kollar om Anna har utrymme i mars. Fungerar det? Nu finns alla fyra kraven i en enda mening."
+      ],
+      "takeaway": "Låt kunden föreslå först. Ett litet steg som kunden hittat på slår ett stort som du hittat på."
+    },
+    {
+      "typ": "reading",
+      "kicker": "NÄR DET INTE GÅR",
+      "lead": "Ibland vill kunden inte boka något, och det svaret är också ett besked.",
+      "highlight": "det svaret är också ett besked",
+      "brodtext": [
+        "Att inte vilja binda upp sig ens vid ett kort möte om tre veckor betyder nästan alltid att frågan inte är prioriterad. Det är inte ovilja mot dig, och det ska inte mötas med övertalning, eftersom pressen då träffar en person som redan sagt vad läget är.",
+        "Säg i stället det du ser, vänligt och rakt. Jag hör att det inte är läge att sätta något i kalendern nu, och då gissar jag att det ligger en bit ner på listan. Vill du att jag hör av mig när något förändras, eller ska vi lägga det åt sidan? Frågan är ärlig, den ger kunden en väg ut, och den ger dig ett svar du kan planera efter."
+      ],
+      "takeaway": "En kund som inte vill boka har svarat. Att fortsätta jaga är att vägra höra det."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "När glöms nästa steg oftast?",
+          "alternativ": [
+            "I möten som gick trögt",
+            "I möten som gick bäst",
+            "I möten med flera deltagare"
+          ],
+          "ratt": [1],
+          "forklaring": "Stämningen var god och att avsluta med en administrativ fråga känns som att kyla ner något varmt. Det som saknades var trettio sekunder."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket av de fyra kraven fattas oftast?",
+          "alternativ": [
+            "Ett datum",
+            "Att båda parter gör något till nästa gång",
+            "Ett uttalat ja"
+          ],
+          "ratt": [1],
+          "forklaring": "En kund som bara tar emot har inte gjort något val och kommer inte att känna sig bunden."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur föreslår du nästa steg bäst?",
+          "alternativ": [
+            "Genom att fråga vad som vore ett rimligt nästa steg för dem",
+            "Genom att erbjuda ett nytt möte nästa vecka",
+            "Genom att skicka en kalenderinbjudan direkt efter mötet"
+          ],
+          "ratt": [0],
+          "forklaring": "Ett förslag från kunden är alltid starkare. Blir det mindre än du hoppats är det information, inte ett misslyckande."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad betyder det när kunden inte vill boka något alls?",
+          "alternativ": [
+            "Att du behöver ge ett starkare skäl",
+            "Att frågan inte är prioriterad, vilket är ett besked att planera efter",
+            "Att kunden vill jämföra med konkurrenter först"
+          ],
+          "ratt": [1],
+          "forklaring": "Att fortsätta jaga är att vägra höra svaret. Fråga i stället om du ska höra av dig när något förändras, eller lägga det åt sidan."
+        }
+      ]
+    }
+  ]
+}

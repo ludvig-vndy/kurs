@@ -1,0 +1,122 @@
+{
+  "kapitel": 8,
+  "lektion": "8.3",
+  "titel": "Friktion, det ingen berättar om",
+  "niva": "Avancerad",
+  "tid_min": 8,
+  "fardighet": "beslut.friktion",
+  "mal": "Efter lektionen kan eleven leta efter administrativ, teknisk och politisk friktion i en affär, och vet varför friktion nästan aldrig nämns spontant.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "BESLUT OCH FRIKTION",
+      "titel": "Friktion, det ingen berättar om",
+      "ingress": "Mellan ett ja och en underskrift ligger en rad små hinder som ingen tycker är värda att nämna. Tillsammans är de den vanligaste orsaken till att affärer glider."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DEN INTE NÄMNS",
+      "lead": "Friktion känns inte som ett skäl att avstå. Den känns som praktiska detaljer, och därför nämner ingen den.",
+      "highlight": "praktiska detaljer",
+      "brodtext": [
+        "Att avtalet måste förbi en jurist som har fyra veckors kö är inte en invändning mot din lösning. Att inköp kräver tre offerter är inte heller det. Att den som ska godkänna är föräldraledig till augusti hör inte hemma i ett säljmöte, tycker de flesta.",
+        "Men var och en av dem lägger på tid, och tid är det farligaste som finns för en affär. Under tiden byter folk jobb, budgetar låses om, och något mer akut dyker upp. En affär som glider ett kvartal dör oftare av något som hände under kvartalet än av att någon sa nej."
+      ],
+      "takeaway": "Friktion dödar inte affärer direkt. Den lägger på tid, och tiden gör resten."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE SORTER",
+      "titel": "Var friktionen brukar sitta",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Administrativ",
+            "text": "Jurist, inköp, upphandlingsregler, leverantörsregistrering, informationssäkerhetsgranskning. Förutsägbar, tidskrävande och den enda sorten som går att planera bort i förväg."
+          },
+          {
+            "rubrik": "Teknisk",
+            "text": "Integrationer, datamigrering, en gammal server, ett system som ingen längre kan. Upptäcks ofta sent, av någon som inte var med i säljprocessen."
+          },
+          {
+            "rubrik": "Politisk",
+            "text": "En avdelning som inte blev tillfrågad, ett tidigare projekt som gick illa, någon som väntar på sitt eget budgetbeslut. Nämns aldrig frivilligt och avgör oftast."
+          }
+        ],
+        "figurtext": "Den första går att fråga om. Den andra går att gissa. Den tredje måste förtjänas."
+      },
+      "forklaring": "Den administrativa friktionen är den enda du kan kartlägga med en rak fråga, och den ska du alltid ställa: vad behöver hända rent formellt hos er innan ett sådant här avtal kan skrivas. Svaret innehåller nästan alltid minst ett steg du inte visste om, och varje sådant steg har en ledtid."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN POLITISKA",
+      "lead": "Den friktion som avgör flest affärer är den som kräver att någon litar på dig för att över huvud taget nämnas.",
+      "highlight": "kräver att någon litar på dig",
+      "brodtext": [
+        "Ingen berättar för en leverantör i möte två att två chefer är osams, att förra projektet blev ett trauma, eller att den som ska godkänna har sagt nej till allt sedan omorganisationen. Det är intern smuts, och att dela den med en utomstående är en risk.",
+        "Det är därför kapitel 1 kommer före det här kapitlet. Den enda vägen till den informationen går genom att ha varit den som sa något obekvämt först, som höll små löften, och som inte bemötte den förra ärligheten med ett motargument. Det finns ingen fråga som ersätter det arbetet."
+      ],
+      "takeaway": "Politisk friktion är inte något du frågar fram. Det är något du blir betrodd med."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD DU GÖR MED DEN",
+      "titel": "Räkna in den i tiden, inte i hoppet",
+      "forklaring": "När du väl känner till friktionen är misstaget att hoppas att den går snabbare än den brukar. Lägg in den i planen i stället, öppet och med marginal.",
+      "brodtext": [
+        "Om juristgranskningen tar fyra veckor betyder det att avtalet behöver vara hos juristen i mars för att gälla i maj, vilket betyder att ni behöver vara överens i februari. Den räkningen bakåt är ofta det mest värdefulla du kan göra åt en kund, eftersom ingen internt har gjort den.",
+        "Och den gör något mer: den flyttar samtalet från om till när, utan att du pressat någon. Kunden räknar tillsammans med dig på en kalender, och en kalender är svårare att skjuta upp än en känsla."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför nämner kunder sällan friktion?",
+          "alternativ": [
+            "För att de vill dölja hinder",
+            "För att det känns som praktiska detaljer snarare än invändningar",
+            "För att de inte känner till den"
+          ],
+          "ratt": [1],
+          "forklaring": "Att juristen har fyra veckors kö är inte en invändning mot din lösning, så det hör inte hemma i ett säljmöte, tycker de flesta."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är friktion farlig?",
+          "alternativ": [
+            "Den gör kunden negativ till lösningen",
+            "Den lägger på tid, och under tiden byter folk jobb och budgetar låses om",
+            "Den ökar priset"
+          ],
+          "ratt": [1],
+          "forklaring": "En affär som glider ett kvartal dör oftare av något som hände under kvartalet än av att någon sa nej."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken sorts friktion går att kartlägga med en rak fråga?",
+          "alternativ": [
+            "Den administrativa",
+            "Den tekniska",
+            "Den politiska"
+          ],
+          "ratt": [0],
+          "forklaring": "Fråga vad som behöver hända rent formellt innan ett avtal kan skrivas. Svaret innehåller nästan alltid ett steg du inte visste om."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur får du reda på den politiska friktionen?",
+          "alternativ": [
+            "Genom att fråga rakt ut om interna konflikter",
+            "Genom att ha byggt tillräckligt förtroende för att bli betrodd med den",
+            "Genom att prata med flera personer separat"
+          ],
+          "ratt": [1],
+          "forklaring": "Att dela intern smuts med en utomstående är en risk. Det finns ingen fråga som ersätter arbetet i kapitel 1."
+        }
+      ]
+    }
+  ]
+}

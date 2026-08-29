@@ -1,0 +1,114 @@
+{
+  "kapitel": 8,
+  "lektion": "8.1",
+  "titel": "Att välja när man inte kan veta",
+  "niva": "Avancerad",
+  "tid_min": 9,
+  "fardighet": "beslut.osakerhet",
+  "mal": "Efter lektionen vet eleven hur människor väljer när fakta inte räcker, varför fler alternativ ibland gör det svårare och ibland inte, och varför den vanligaste responsen på osäkerhet är att skjuta upp.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "BESLUT OCH FRIKTION",
+      "titel": "Att välja när man inte kan veta",
+      "ingress": "Ingen kund kan veta om det kommer att fungera. Det är hela poängen med definitionen i kapitel 0, och det här kapitlet handlar om vad människor gör i det läget."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM ERSÄTTER FAKTA",
+      "lead": "När fakta inte räcker för att avgöra saken använder människor något annat, och det är sällan slumpen.",
+      "highlight": "använder människor något annat",
+      "brodtext": [
+        "De tittar på vad andra i liknande situation gjorde. De tittar på vem som står bakom påståendet och hur den personen betett sig hittills. De tittar på hur lätt det är att ändra sig efteråt. Och de tittar på vad som händer med dem själva om det går fel.",
+        "Inget av det är irrationellt. När informationen är otillräcklig är det rationellt att väga in vem som säger vad och hur reversibelt valet är. Det är därför hela kursens första del handlade om förtroende: när fakta tar slut är förtroendet det som är kvar att gå på."
+      ],
+      "takeaway": "Osäkerhet gör inte kunden ologisk. Den gör att andra saker än fakta börjar väga."
+    },
+    {
+      "typ": "concept",
+      "kicker": "OM ANTALET ALTERNATIV",
+      "titel": "Valparalys är verklig ibland, inte alltid",
+      "forklaring": "Den populära versionen säger att fler alternativ alltid leder till färre beslut, och stödjer sig på en välkänd studie där ett bord med sex marmelader gav tio gånger fler köp än ett bord med tjugofyra. Den studien är verklig. Men en meta-analys över femtio experiment och mer än femtusen deltagare fann en genomsnittlig effekt nära noll, med stor spridning: vissa studier visade motsatsen, de flesta ingenting.",
+      "brodtext": [
+        "Slutsatsen är inte att effekten är påhittad, utan att den är villkorad. Den verkar starkast när alternativen är svåra att jämföra, när insatsen känns hög och när den som väljer saknar egen sakkunskap. Det beskriver komplex försäljning ganska väl, vilket är skälet att den ändå är värd att känna till.",
+        "Praktiskt betyder det att du inte ska skära ner antalet alternativ som en regel, utan fråga vad som gör dem svåra att jämföra. Tre offerter som skiljer sig på en enda dimension är lätta att välja mellan. Två som skiljer sig på sju dimensioner är det inte."
+      ],
+      "evidens": {
+        "niva": "B",
+        "kalla": "K9",
+        "notering": "Iyengar och Lepper (2000) mot Scheibehenne, Greifeneder och Todd (2010). Effekten finns i vissa sammanhang och är nära noll i genomsnitt. Ska aldrig sägas som en naturlag."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN VANLIGASTE UTVÄGEN",
+      "lead": "Det vanligaste svaret på ett svårt val är inte att välja fel. Det är att inte välja.",
+      "highlight": "att inte välja",
+      "brodtext": [
+        "Att skjuta upp löser hela problemet för stunden. Osäkerheten kvarstår men behöver inte hanteras, ingen behöver försvara något, och det finns alltid ett rimligt skäl att hänvisa till. Kapitel 2 visade varför alternativet att inte göra något är så starkt. Här ser vi mekanismen inifrån: uppskjutandet är inte lathet, det är en fullt begriplig hantering av att inte kunna veta.",
+        "Därför är det sällan rätt att svara på tveksamhet med mer information. Mer information gör beslutet större, inte mindre osäkert, och ett större beslut skjuts hellre upp än ett litet."
+      ],
+      "takeaway": "Möt inte tveksamhet med mer underlag. Möt den med ett mindre beslut."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD SOM FAKTISKT HJÄLPER",
+      "titel": "Gör valet mindre, inte tydligare",
+      "forklaring": "Tre saker som sänker tröskeln, och som alla handlar om att minska vad som står på spel i just det här beslutet.",
+      "brodtext": [
+        "Dela beslutet. Ett ja till ett avgränsat första steg är ett annat beslut än ett ja till allt, även när det leder till samma ställe. Kapitel 2 gav villkoret: steget måste vara stort nog att ge ett ärligt svar.",
+        "Gör det reversibelt. En utvärderingspunkt eller en väg ut sänker insatsen utan att sänka priset, och gör att den som driver frågan kan säga att vi kan backa i mars.",
+        "Minska antalet dimensioner. Om två alternativ skiljer sig på sju sätt, hjälp kunden att avgöra vilka två som spelar roll. Det är inte manipulation, det är att göra jämförelsen möjlig, och kunden kan alltid säga att du valt fel två."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad väger tyngre när fakta inte räcker?",
+          "alternativ": [
+            "Priset",
+            "Vem som står bakom påståendet, och hur reversibelt valet är",
+            "Hur väl presentationen var gjord"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är rationellt att väga in avsändare och reversibilitet när informationen är otillräcklig. Därför är förtroendet det som är kvar när fakta tar slut."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gäller om valparalys?",
+          "alternativ": [
+            "Fler alternativ leder alltid till färre beslut",
+            "Effekten är villkorad och i genomsnitt nära noll, men starkare när alternativen är svåra att jämföra",
+            "Effekten är avfärdad av senare forskning"
+          ],
+          "ratt": [1],
+          "forklaring": "Meta-analysen över femtio experiment fann stor spridning. Villkoren beskriver komplex försäljning ganska väl, men det ska aldrig sägas som en naturlag."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är det vanligaste svaret på ett svårt val?",
+          "alternativ": [
+            "Att välja det billigaste",
+            "Att skjuta upp",
+            "Att be om fler alternativ"
+          ],
+          "ratt": [1],
+          "forklaring": "Osäkerheten kvarstår men behöver inte hanteras, ingen behöver försvara något, och det finns alltid ett rimligt skäl att hänvisa till."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är mer information sällan rätt svar på tveksamhet?",
+          "alternativ": [
+            "För att kunden inte hinner läsa den",
+            "För att det gör beslutet större, och större beslut skjuts hellre upp",
+            "För att den motsäger det du sagt tidigare"
+          ],
+          "ratt": [1],
+          "forklaring": "Möt tveksamhet med ett mindre beslut i stället: dela det, gör det reversibelt, eller minska antalet dimensioner."
+        }
+      ]
+    }
+  ]
+}

@@ -177,10 +177,10 @@
    ],
    "sebastian": "Jag har förlorat fler affärer i tystnaden efter mötet än i själva mötet. Alla var positiva, ingen sa nej, och sedan tog det slut. Det jag saknade var inte entusiasm, det var ett datum. Ett ja utan bokat nästa steg är ett nej som dröjer, och det tog mig alldeles för lång tid att lära mig.",
    "lektioner": [
-    { "lektion": "8.1", "titel": "Att välja när man inte kan veta", "niva": "Avancerad", "tid_min": 9, "status": "kommande", "fil": "8.1-valja-nar-man-inte-kan-veta.json" },
-    { "lektion": "8.2", "titel": "Intressenterna du inte träffat", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "8.2-intressenterna-du-inte-traffat.json" },
-    { "lektion": "8.3", "titel": "Friktion, det ingen berättar om", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "8.3-friktion.json" },
-    { "lektion": "8.4", "titel": "Nästa steg", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "8.4-nasta-steg.json" }
+    { "lektion": "8.1", "titel": "Att välja när man inte kan veta", "niva": "Avancerad", "tid_min": 9, "status": "klar", "fil": "8.1-valja-nar-man-inte-kan-veta.json" },
+    { "lektion": "8.2", "titel": "Intressenterna du inte träffat", "niva": "Avancerad", "tid_min": 8, "status": "klar", "fil": "8.2-intressenterna-du-inte-traffat.json" },
+    { "lektion": "8.3", "titel": "Friktion, det ingen berättar om", "niva": "Avancerad", "tid_min": 8, "status": "klar", "fil": "8.3-friktion.json" },
+    { "lektion": "8.4", "titel": "Nästa steg", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "8.4-nasta-steg.json" }
    ]
   },
   {

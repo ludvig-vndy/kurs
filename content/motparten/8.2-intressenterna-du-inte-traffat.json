@@ -1,0 +1,126 @@
+{
+  "kapitel": 8,
+  "lektion": "8.2",
+  "titel": "Intressenterna du inte träffat",
+  "niva": "Avancerad",
+  "tid_min": 8,
+  "fardighet": "beslut.intressenter",
+  "mal": "Efter lektionen kan eleven kartlägga vilka som påverkar ett beslut utan att sitta i rummet, känner igen de fyra rollerna, och vet hur man ber om tillträde utan att gå förbi sin kontakt.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "BESLUT OCH FRIKTION",
+      "titel": "Intressenterna du inte träffat",
+      "ingress": "Den vanligaste orsaken till att en affär dör är en person du aldrig träffade och ofta inte visste fanns."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA ROLLER",
+      "titel": "Vem som faktiskt påverkar",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Den som driver",
+            "text": "Din kontakt, oftast. Har mest att vinna och mest att förlora personligen. Den enda som arbetar för dig när du inte är där, och därmed den du ska utrusta."
+          },
+          {
+            "rubrik": "Den som betalar",
+            "text": "Har sällan en åsikt om lösningen och alltid en om priset i förhållande till allt annat. Blockerar sällan aktivt, men prioriterar ner tyst."
+          },
+          {
+            "rubrik": "Den som ska använda",
+            "text": "Får merarbetet vid införandet och märker om det blev bra. Kan inte säga ja, kan absolut säga nej, ofta i efterhand och ofta för sent för dig."
+          },
+          {
+            "rubrik": "Den som byggde det gamla",
+            "text": "Den farligaste och den som oftast glöms. Ett byte är en dom över något den personen en gång drev igenom, och sådant försvaras."
+          }
+        ],
+        "figurtext": "Fyra roller, inte fyra personer. En person kan ha två, och en roll kan bäras av tre."
+      },
+      "forklaring": "Den fjärde är värd särskild uppmärksamhet eftersom den sällan syns i något organisationsschema. Frågan som avslöjar den är vem som införde det ni har i dag, och jobbar den personen kvar. Svaret förklarar ofta ett motstånd som annars framstår som irrationellt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR DU FRÅGAR",
+      "lead": "Frågan om vilka som är inblandade ställs bäst som en fråga om process, inte om makt.",
+      "highlight": "en fråga om process, inte om makt",
+      "brodtext": [
+        "Vem beslutar om det här är en fråga som pekar ut en hierarki och som ofta besvaras med en halvsanning, eftersom ingen gärna säger att de själva inte bestämmer. Hur brukar ett sådant här beslut gå till hos er är en fråga om rutiner, och den besvaras nästan alltid ärligt eftersom svaret inte handlar om personen.",
+        "Följ upp med vem som brukar ha synpunkter, och vad brukar de synpunkterna handla om. Nu får du inte bara namn utan också invändningarna, i förväg, formulerade av någon som hört dem förut."
+      ],
+      "takeaway": "Fråga hur beslut brukar gå till, inte vem som bestämmer. Rutiner beskrivs ärligare än makt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "ATT BE OM TILLTRÄDE",
+      "lead": "Att be om att få träffa fler är riskabelt om det låter som att din kontakt inte räcker.",
+      "highlight": "låter som att din kontakt inte räcker",
+      "brodtext": [
+        "Den vanliga formuleringen, skulle jag kunna få träffa din chef, sätter din kontakt i en obekväm position: antingen erkänner personen att beslutet ligger någon annanstans, eller så säger personen nej för att skydda sin roll. Båda utfallen är sämre än att inte ha frågat.",
+        "Vänd på det så att tillträdet är en tjänst du gör. Om det är någon som kommer att få frågor om det här internt kan jag gärna ta det direkt med dem, så slipper du vara mellanhand. Nu är erbjudandet att avlasta, inte att gå förbi, och din kontakt kan tacka ja utan att förlora något."
+      ],
+      "takeaway": "Erbjud dig att avlasta, inte att gå förbi. Samma möte, helt annan innebörd."
+    },
+    {
+      "typ": "concept",
+      "kicker": "NÄR DU INTE FÅR TILLTRÄDE",
+      "titel": "Utrusta i stället",
+      "forklaring": "Ofta får du inte träffa dem, och det är inte alltid ett dåligt tecken. Då är hela din uppgift att göra din kontakt användbar på ett möte du inte är med på, vilket är samma sak som provet i lektion 7.3.",
+      "brodtext": [
+        "Fråga vad de personerna sannolikt kommer att invända. Gå igenom svaren tillsammans, kort och skriftligt. Se till att din kontakt har en mening per person, inte en broschyr, och att meningarna är kundens egna.",
+        "Och var ärlig om vad det innebär. En affär där du aldrig fått träffa den som ska betala är en affär du har mindre information om än du tror, och den ska prognostiseras därefter."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilken roll glöms oftast bort?",
+          "alternativ": [
+            "Den som ska använda lösningen",
+            "Den som byggde eller drev igenom det nuvarande",
+            "Den som betalar"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett byte är en dom över något den personen en gång drev igenom, och sådant försvaras. Rollen syns sällan i något organisationsschema."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur frågar du bäst om vilka som är inblandade?",
+          "alternativ": [
+            "Vem beslutar om det här?",
+            "Hur brukar ett sådant här beslut gå till hos er?",
+            "Har du mandat att skriva under?"
+          ],
+          "ratt": [1],
+          "forklaring": "Rutiner beskrivs ärligare än makt, eftersom svaret inte handlar om personen själv."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur ber du om att få träffa fler utan att pressa din kontakt?",
+          "alternativ": [
+            "Genom att erbjuda dig att avlasta, så att personen slipper vara mellanhand",
+            "Genom att förklara att beslutet kräver fler deltagare",
+            "Genom att kontakta dem direkt och informera i efterhand"
+          ],
+          "ratt": [0],
+          "forklaring": "Den vanliga formuleringen tvingar fram antingen ett erkännande eller ett nej, och båda är sämre än att inte ha frågat."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gör du när du inte får tillträde?",
+          "alternativ": [
+            "Avslutar affären",
+            "Utrustar din kontakt med en mening per person, i kundens egna ord",
+            "Skickar ett utförligare underlag"
+          ],
+          "ratt": [1],
+          "forklaring": "Samma sak som provet i 7.3. Och var ärlig om att du har mindre information än du tror, och prognostisera därefter."
+        }
+      ]
+    }
+  ]
+}
