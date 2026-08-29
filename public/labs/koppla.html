@@ -55,14 +55,15 @@
 <script>
 const CLIENT_ID = "b91c4551543a40dd8d3a830d7ac9e9cb"; // publik
 const REDIRECT = location.origin + "/labs/koppla";
-const SCOPE = "accounts:read,investments:read,user:read";
 
+// Investments-flodet (products=INVESTMENTS), exakt som Tink Console genererar det.
+// Det tidigare transactions/connect-accounts-flodet strippade investments-scopet.
 function tinkUrl(){
   const p = new URLSearchParams({
     client_id: CLIENT_ID, redirect_uri: REDIRECT,
-    market: "SE", locale: "sv_SE", scope: SCOPE, test: "true",
+    market: "SE", locale: "sv_SE", products: "INVESTMENTS",
   });
-  return "https://link.tink.com/1.0/transactions/connect-accounts?" + p.toString();
+  return "https://link.tink.com/1.0/products/connect-accounts/?" + p.toString();
 }
 
 document.getElementById("connect").onclick = (e)=>{ e.preventDefault(); location.href = tinkUrl(); };

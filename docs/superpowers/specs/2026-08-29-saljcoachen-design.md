@@ -140,6 +140,15 @@ här" är en funktion i en produkt vars hela poäng är att skilja belagt från 
 
 `inget_underlag` är inte samma sak som en fråga utanför sälj. Den senare avböjs kort.
 
+**Svagheten att hålla ögonen på:** en routermodell som får 42 lektioner och en fråga
+kommer nästan alltid att hitta något som ser besläktat ut. Risken är att
+`saknar_underlag` aldrig blir sant i praktiken, och att hela skyddet ovan blir teoretiskt.
+Det avgörs inte av den här texten utan av hur steg 1 beter sig, så routningslistan i
+avsnitt 10.2 ska innehålla frågor där rätt svar är att kursen inte behandlar saken
+(prissättningsmodeller, avtalsjuridik, hur man bygger en pipeline i ett CRM). Returnerar
+routern lektioner även där, är prompten för slapp och behöver ett uttryckligt krav på att
+lektionen ska besvara frågan och inte bara ligga i närheten.
+
 ### Steg 2, svaret
 
 Full text ur de valda lektionerna, ungefär 8 000 tokens, plus användarens text. Totalt
@@ -461,7 +470,11 @@ förväntade lektionerna finns bland kandidaterna:
 "Jag frågade budget direkt i första mötet"      -> minst en av [6.2, 6.4, 4.4]
 "Kunden svarar inte på mina mejl längre"        -> minst en av [10.1, 10.2, 10.3]
 "Hur vet jag om det här är värt att jobba på"   -> minst en av [6.4, 9.1]
+"Hur sätter jag rätt pris på min tjänst"        -> saknar_underlag
+"Vad ska stå i avtalet"                         -> saknar_underlag
 ```
+
+Fallen som ska ge `saknar_underlag` är de viktigaste i listan. Se avsnitt 3.
 
 Routningen är det som gör att hela konstruktionen fungerar. Går den sönder märks det annars
 bara som att svaren blir gradvis sämre, vilket ingen upptäcker.
