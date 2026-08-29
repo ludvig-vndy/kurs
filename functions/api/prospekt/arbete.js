@@ -3,7 +3,7 @@
    Sparar deltagarens status, värde och anteckning på en rad. En rad i taget,
    för sidan skickar när fältet ändras och inte i klump.
 
-   Body: { cfar, status?, varde?, anteckning? }
+   Body: { cfar, status?, varde?, anteckning?, kontaktresultat?, orsak?, listfel? }
 
    Arbetsstället måste förekomma i en lista deltagaren köpt, annars går det
    inte att skriva. Kontrollen görs mot databasen och inte mot något klienten
@@ -16,6 +16,16 @@ import { pilotAdress } from '../_pilot.js';
 import { supaConfig, supaGet, supaUpsert, supaDelete } from '../_supa.js';
 
 const STATUSAR = new Set(['ny', 'forsokt', 'pratat', 'intresse', 'nej']);
+
+// Tre oberoende dimensioner vid sidan av statusen. Ett bolag som aldrig
+// svarade är inget negativt exempel på listkvalitet, och en rad i fel bransch
+// är fel oavsett om någon ringde. Slås de ihop till ett enda "varför" tränar
+// man på flera olika saker samtidigt.
+const KODER = {
+  kontaktresultat: new Set(['inget_svar', 'fel_nummer', 'fel_person', 'natt_fram', 'ombedd_aterkomma']),
+  orsak: new Set(['har_leverantor', 'inget_behov', 'for_dyrt', 'fel_tajming', 'ingen_beslutsratt', 'annat']),
+  listfel: new Set(['fel_bransch', 'fel_storlek', 'fel_geografi', 'ar_kedja', 'nedlagt', 'dubblett']),
+};
 const MAX_ANTECKNING = 2000;
 const MAX_VARDE = 1e12;
 
@@ -47,6 +57,14 @@ export async function onRequestPost(context) {
     varde = n || null;
   }
 
+  const koder = {};
+  for (const [falt, tillatna] of Object.entries(KODER)) {
+    const v = body[falt];
+    if (v === undefined || v === null || v === '') { koder[falt] = null; continue; }
+    if (!tillatna.has(String(v))) return json({ error: 'ogiltig ' + falt }, 400);
+    koder[falt] = String(v);
+  }
+
   let anteckning = null;
   if (typeof body.anteckning === 'string' && body.anteckning.trim()) {
     anteckning = body.anteckning.slice(0, MAX_ANTECKNING);
@@ -65,7 +83,8 @@ export async function onRequestPost(context) {
     if (!Array.isArray(rader) || !rader.length) return json({ error: 'ingen atkomst' }, 403);
     const listaId = rader[0].lista_id;
 
-    const tomt = status === 'ny' && varde === null && anteckning === null;
+    const tomt = status === 'ny' && varde === null && anteckning === null &&
+      !koder.kontaktresultat && !koder.orsak && !koder.listfel;
     if (tomt) {
       await supaDelete(cfg,
         `prospekt_arbete?cfar=eq.${encodeURIComponent(cfar)}` +
@@ -80,6 +99,7 @@ export async function onRequestPost(context) {
       status,
       varde_kr: varde,
       anteckning,
+      ...koder,
     }], 'epost,cfar');
 
     return json({ ok: true, sparat: true });

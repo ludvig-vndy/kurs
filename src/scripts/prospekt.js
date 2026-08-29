@@ -17,6 +17,51 @@ const STATUSAR = [
 ];
 const ETIKETT = Object.fromEntries(STATUSAR);
 
+/* Fyra oberoende dimensioner, inte ett enda "varför".
+ *
+ * Ett bolag som aldrig svarade är inget negativt exempel på listkvalitet, och
+ * en rad i fel bransch är fel oavsett om någon ringde. Slås de ihop går det
+ * inte att skilja "vår lista var dålig" från "säljaren nådde inte fram".
+ *
+ * Statusen förblir fem enkla lägen. Följdfrågan ställs bara när den är
+ * relevant, och listfelet går att sätta på vilken rad som helst. */
+const KONTAKTRESULTAT = [
+  ['', 'Vad hände?'],
+  ['inget_svar', 'Inget svar'],
+  ['fel_nummer', 'Numret fungerade inte'],
+  ['fel_person', 'Fel person'],
+  ['natt_fram', 'Nådde fram'],
+  ['ombedd_aterkomma', 'Ombedd återkomma'],
+];
+const ORSAK = [
+  ['', 'Varför inte?'],
+  ['har_leverantor', 'Har redan leverantör'],
+  ['inget_behov', 'Inget behov'],
+  ['for_dyrt', 'För dyrt'],
+  ['fel_tajming', 'Fel tajming'],
+  ['ingen_beslutsratt', 'Ingen beslutsrätt'],
+  ['annat', 'Annat'],
+];
+const LISTFEL = [
+  ['', 'Fel i listan?'],
+  ['fel_bransch', 'Fel bransch'],
+  ['fel_storlek', 'Fel storlek'],
+  ['fel_geografi', 'Fel geografi'],
+  ['ar_kedja', 'Är kedja'],
+  ['nedlagt', 'Nedlagt'],
+  ['dubblett', 'Dubblett'],
+];
+
+// Vilken följdfråga hör till vilken status. Intresse behöver ingen.
+const FOLJDFRAGA = {
+  forsokt: ['kontaktresultat', KONTAKTRESULTAT],
+  pratat: ['kontaktresultat', KONTAKTRESULTAT],
+  nej: ['orsak', ORSAK],
+};
+
+const val = (lista, valt) => lista.map(([v, t]) =>
+  '<option value="' + v + '"' + (valt === v ? ' selected' : '') + '>' + esc(t) + '</option>').join('');
+
 /* Band ska läsas lågt till högt, inte i bokstavsordning. Utan det hamnar
    "15 till 50 Mkr" före "5 till 15 Mkr". Dimensioner som saknas här
    sorteras alfabetiskt, vilket är rätt för kommun och verksamhet. */
@@ -86,6 +131,9 @@ export async function startaProspekt() {
     r.st = a.status || 'ny';
     r.varde = a.varde || 0;
     r.anteckning = a.anteckning || '';
+    r.kontaktresultat = a.kontaktresultat || '';
+    r.orsak = a.orsak || '';
+    r.listfel = a.listfel || '';
   }
 
   /* ---------- huvud ---------- */
@@ -130,8 +178,10 @@ export async function startaProspekt() {
       if (r.telefon) lankar.push('<a href="' + esc(telHref(r.telefon)) + '">' + esc(r.telefon) + '</a>');
       if (r.epost) lankar.push('<a href="mailto:' + esc(r.epost) + '">' + esc(r.epost) + '</a>');
 
-      const val = STATUSAR.map(([v, t]) =>
+      const statusval = STATUSAR.map(([v, t]) =>
         '<option value="' + v + '"' + (r.st === v ? ' selected' : '') + '>' + esc(t) + '</option>').join('');
+      const folj = FOLJDFRAGA[r.st];
+      const foljVal = folj ? val(folj[1], r[folj[0]]) : '';
 
       const art = document.createElement('article');
       art.className = 'row' + (r.st === 'nej' ? ' avfard' : '');
@@ -148,10 +198,14 @@ export async function startaProspekt() {
         '<div class="contact">' +
         '<div class="rowtools' + (satt ? ' aktiv' : '') + '">' +
           '<select class="status-sel" data-set="' + (r.st !== 'ny' ? '1' : '0') +
-            '" aria-label="Status för ' + esc(r.foretag) + '">' + val + '</select>' +
+            '" aria-label="Status för ' + esc(r.foretag) + '">' + statusval + '</select>' +
+          '<select class="kod-sel" data-falt="' + (folj ? folj[0] : '') + '"' +
+            (folj ? '' : ' hidden') + ' aria-label="Följdfråga">' + foljVal + '</select>' +
           '<input class="amount" type="text" inputmode="numeric" placeholder="Värde kr" data-set="' +
             (r.varde ? '1' : '0') + '" aria-label="Värde för ' + esc(r.foretag) + '" value="' +
             (r.varde ? esc(kr(r.varde)) : '') + '">' +
+          '<select class="listfel-sel" data-set="' + (r.listfel ? '1' : '0') +
+            '" aria-label="Fel i listan">' + val(LISTFEL, r.listfel) + '</select>' +
         '</div>' +
         (r.vd ? '<p class="vd">' + esc(r.vd) + '<span>Verkställande direktör</span></p>' : '') +
         lankar.join('') +
@@ -280,6 +334,9 @@ export async function startaProspekt() {
             status: r.st,
             varde: r.varde || null,
             anteckning: r.anteckning || null,
+            kontaktresultat: r.kontaktresultat || null,
+            orsak: r.orsak || null,
+            listfel: r.listfel || null,
           }),
         });
         visaSpar(res.ok ? 'Sparat' : 'Kunde inte spara');
@@ -301,9 +358,41 @@ export async function startaProspekt() {
     el.querySelector('.dot').dataset.s = r.st;
     el.classList.toggle('avfard', r.st === 'nej');
     sel.dataset.set = r.st === 'ny' ? '0' : '1';
+    // Följdfrågan byts med statusen. Byter man bort från Nej ska den gamla
+    // orsaken inte ligga kvar och påstå något som inte längre gäller.
+    const folj = FOLJDFRAGA[r.st];
+    const kod = el.querySelector('.kod-sel');
+    for (const f of ['kontaktresultat', 'orsak']) {
+      if (!folj || folj[0] !== f) r[f] = '';
+    }
+    if (folj) {
+      kod.dataset.falt = folj[0];
+      kod.innerHTML = val(folj[1], r[folj[0]]);
+      kod.hidden = false;
+    } else {
+      kod.hidden = true;
+    }
     sel.closest('.rowtools').classList.toggle('aktiv', r.st !== 'ny' || Boolean(r.varde));
     spara(r);
     tillampa();
+  });
+
+  list.addEventListener('change', (e) => {
+    const kod = e.target.closest('.kod-sel');
+    if (kod) {
+      const r = radFor(kod);
+      r[kod.dataset.falt] = kod.value;
+      spara(r);
+      return;
+    }
+    const lf = e.target.closest('.listfel-sel');
+    if (lf) {
+      const r = radFor(lf);
+      r.listfel = lf.value;
+      lf.dataset.set = lf.value ? '1' : '0';
+      lf.closest('.rowtools').classList.toggle('aktiv', Boolean(r.st !== 'ny' || r.varde || r.listfel));
+      spara(r);
+    }
   });
 
   list.addEventListener('input', (e) => {

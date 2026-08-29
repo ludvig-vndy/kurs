@@ -16,6 +16,17 @@ create type prospekt_status as enum ('ny','forsokt','pratat','intresse','nej');
 create type prospekt_kop_kalla as enum ('pilot','stripe','manuell');
 create type prospekt_bestallning_status as enum ('ny','arbetas','klar','avvisad');
 
+-- Orsakskoder. Fyra oberoende dimensioner, inte en enda "varför blev det nej".
+-- Ett bolag som aldrig svarade är inget negativt exempel på listkvalitet, och
+-- ett bolag i fel bransch är fel oavsett om någon ringde. Slås de ihop tränar
+-- man på flera olika saker samtidigt och lär sig ingenting om någon av dem.
+create type prospekt_kontaktresultat as enum (
+  'inget_svar', 'fel_nummer', 'fel_person', 'natt_fram', 'ombedd_aterkomma');
+create type prospekt_orsak as enum (
+  'har_leverantor', 'inget_behov', 'for_dyrt', 'fel_tajming', 'ingen_beslutsratt', 'annat');
+create type prospekt_listfel as enum (
+  'fel_bransch', 'fel_storlek', 'fel_geografi', 'ar_kedja', 'nedlagt', 'dubblett');
+
 -- ── prospekt_lista (ett uttag, delat av alla som köpt det) ────────────
 create table prospekt_lista (
   id uuid primary key default gen_random_uuid(),
@@ -103,11 +114,25 @@ create table prospekt_arbete (
   status prospekt_status not null default 'ny',
   varde_kr bigint,
   anteckning text,
+
+  -- ── De fyra dimensionerna ───────────────────────────────────────────
+  -- Nabarhet och interaktion: kom vi fram, och till vem?
+  kontaktresultat prospekt_kontaktresultat,
+  -- Kommersiellt utfall: varfor blev det inget?
+  orsak prospekt_orsak,
+  -- Listkvalitet: var raden fel fran borjan? Satts oberoende av status,
+  -- eftersom en rad kan vara fel utan att nagon nagonsin ringt den. Det ar
+  -- den enda signalen som sager nagot om scrapern snarare an om saljaren.
+  listfel prospekt_listfel,
+
   updated_at timestamptz not null default now(),
   unique (epost, cfar)
 );
 alter table prospekt_arbete enable row level security;
 create index on prospekt_arbete (epost, lista_id);
+-- Analysen som gor det har vart besvaret: intressefrekvens per attribut.
+create index on prospekt_arbete (lista_id, status) where status <> 'ny';
+create index on prospekt_arbete (lista_id, listfel) where listfel is not null;
 
 -- Håll updated_at sann utan att förlita sig på klienten.
 create or replace function prospekt_arbete_touch()

@@ -57,14 +57,17 @@ export async function onRequestGet(context) {
     const cfars = (rader || []).map((r) => r.cfar).filter(Boolean);
     const arbete = cfars.length
       ? await supaGet(cfg,
-          `prospekt_arbete?select=cfar,status,varde_kr,anteckning` +
+          `prospekt_arbete?select=cfar,status,varde_kr,anteckning,kontaktresultat,orsak,listfel` +
           `&epost=eq.${encodeURIComponent(adress)}` +
           `&cfar=in.(${cfars.map((c) => '"' + c + '"').join(',')})&limit=5000`)
       : [];
 
     const minaRader = {};
     for (const a of arbete || []) {
-      minaRader[a.cfar] = { status: a.status, varde: a.varde_kr, anteckning: a.anteckning };
+      minaRader[a.cfar] = {
+        status: a.status, varde: a.varde_kr, anteckning: a.anteckning,
+        kontaktresultat: a.kontaktresultat, orsak: a.orsak, listfel: a.listfel,
+      };
     }
 
     return json({ lista, rader: rader || [], arbete: minaRader, adress });

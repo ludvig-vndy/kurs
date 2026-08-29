@@ -82,6 +82,20 @@
 .prospekt .contact { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; min-width: 0; }
 .prospekt .rowtools { display: flex; gap: 6px; margin: 0 0 9px; flex-wrap: wrap; opacity: 0; transition: opacity .15s; }
 .prospekt .row:hover .rowtools, .prospekt .rowtools:focus-within, .prospekt .rowtools.aktiv { opacity: 1; }
+/* Foljdfragan och listfelet. Listfelet ar den enda signalen som sager nagot
+   om scrapern och inte om saljaren, sa den far egen farg nar den ar satt. */
+.prospekt .kod-sel, .prospekt .listfel-sel {
+  font-family: var(--mp-sans, Jost, system-ui, sans-serif); font-size: 11px;
+  letter-spacing: .11em; text-transform: uppercase; background: transparent;
+  border: 1px solid var(--mp-line, #ded6c5); padding: 5px 7px;
+  color: var(--mp-muted, #847b6c); max-width: 100%;
+}
+.prospekt .listfel-sel[data-set='1'] {
+  color: var(--mp-flag, #8a4a30); border-color: var(--mp-flag, #8a4a30);
+}
+.prospekt .kod-sel:focus-visible, .prospekt .listfel-sel:focus-visible {
+  outline: 2px solid var(--mp-ink, #1e1b16); outline-offset: 2px;
+}
 .prospekt .status-sel, .prospekt .amount { font-family: var(--mp-sans, Jost, system-ui, sans-serif); font-size: 11px; letter-spacing: .11em; text-transform: uppercase; background: transparent; border: 1px solid var(--mp-line, #ded6c5); padding: 5px 7px; color: var(--mp-muted, #847b6c); }
 .prospekt .amount { width: 104px; text-align: right; font-variant-numeric: tabular-nums; }
 .prospekt .status-sel[data-set='1'], .prospekt .amount[data-set='1'] { color: var(--mp-ink, #1e1b16); border-color: var(--mp-muted, #847b6c); }
