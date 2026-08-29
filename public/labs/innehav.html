@@ -129,7 +129,7 @@
   "use strict";
 
   var HID = new URLSearchParams(location.search).get("id");
-  var holding = null, trades = [], side = "kop", PRICE = null, PRICE_DATE = null;
+  var holding = null, trades = [], side = "kop", PRICE = null, PRICE_DATE = null, HISTORY = null;
 
   var esc = function(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
   var fmt = function(n,d){ d=d||0; return Number(n).toLocaleString("sv-SE",{minimumFractionDigits:d,maximumFractionDigits:d}); };
@@ -177,6 +177,16 @@
   }
 
   function currentPrice(){ return PRICE && PRICE.p!=null ? Number(PRICE.p) : null; }
+
+  // Riktig daglig kurshistorik via vår Cloudflare-funktion (Yahoo server-side).
+  // Kräver att innehavet matchat ett companies.json-bolag (PRICE) för ticker+land.
+  function loadHistory(){
+    if(!PRICE || !PRICE.t || !PRICE.c) return Promise.resolve(null);
+    var u = "/api/kurshistorik?t="+encodeURIComponent(PRICE.t)+"&c="+encodeURIComponent(PRICE.c)+"&range=1y";
+    return fetch(u).then(function(r){ return r.ok?r.json():null; })
+      .then(function(d){ return (d && d.punkter && d.punkter.length) ? d : null; })
+      .catch(function(){ return null; });
+  }
 
   function render(){
     var root = byId("root");
@@ -237,7 +247,9 @@
       '<span><b class="sell">&#9660;</b> Sälj</span>'+
       '</div></div>'+
       '<div class="chartbox"><svg id="chart" viewBox="0 0 820 280" preserveAspectRatio="none"></svg></div>'+
-      '<div class="charthint">Kursbanan byggs upp när vi sparat daglig historik. Just nu ritar vi dina affärspriser och dagens kurs, med köp och sälj som markörer.</div>'+
+      '<div class="charthint">'+(HISTORY
+        ? 'Daglig kurs senaste året ('+esc(HISTORY.symbol)+'). Dina köp och sälj ligger inritade som markörer, den streckade guldlinjen är din GAV.'
+        : 'Kursbanan byggs upp när vi sparat daglig historik. Just nu ritar vi dina affärspriser och dagens kurs, med köp och sälj som markörer.')+'</div>'+
       '</section>';
 
     // Affärer + formulär
@@ -267,22 +279,36 @@
     var svg = byId("chart"); if(!svg) return;
     var px = currentPrice();
     var pos = trades.length ? positionFromTrades() : {gav:(holding.gav!=null?Number(holding.gav):null)};
-    // Punkter i tid: varje affär (datum, affärskurs) + dagens kurs sist.
-    var pts = trades.slice()
-      .filter(function(t){ return t.price!=null; })
-      .map(function(t){ return { t:new Date(t.decided_at).getTime(), v:Number(t.price), trade:t }; })
-      .sort(function(a,b){ return a.t-b.t; });
-    var now = Date.now();
-    if(px!=null) pts.push({ t:now, v:px, trade:null });
-    if(!pts.length){ svg.innerHTML=''; return; }
 
     var W=820,H=280,padT=12,padB=22,padL=6,padR=6;
-    var minT=pts[0].t, maxT=pts[pts.length-1].t; if(maxT===minT) maxT=minT+1;
-    var vals=pts.map(function(p){ return p.v; });
+    var DAY=86400000;
+
+    // Prisserien: riktig daglig historik om vi har den, annars gles fallback
+    // (affärspriser + dagens kurs).
+    var real = HISTORY && HISTORY.punkter && HISTORY.punkter.length;
+    var series = real
+      ? HISTORY.punkter.map(function(p){ return { t:new Date(p[0]+"T12:00:00Z").getTime(), v:Number(p[1]) }; })
+      : trades.slice().filter(function(t){ return t.price!=null; })
+          .map(function(t){ return { t:new Date(t.decided_at).getTime(), v:Number(t.price) }; })
+          .sort(function(a,b){ return a.t-b.t; });
+    if(!real && px!=null){ series.push({ t:Date.now(), v:px }); }
+    if(!series.length){ svg.innerHTML=''; return; }
+
+    var tradePts = trades.slice().filter(function(t){ return t.price!=null; })
+      .map(function(t){ return { t:new Date(t.decided_at).getTime(), v:Number(t.price), trade:t }; });
+
+    // Tidsspann: hela serien, men töj vänsterkanten om en affär är äldre.
+    var minT=series[0].t, maxT=series[series.length-1].t;
+    tradePts.forEach(function(p){ if(p.t<minT) minT=p.t; if(p.t>maxT) maxT=p.t; });
+    if(maxT<=minT) maxT=minT+DAY;
+
+    // Värdespann: serien + affärspriser + GAV.
+    var vals=series.map(function(p){ return p.v; });
+    tradePts.forEach(function(p){ vals.push(p.v); });
     if(pos.gav!=null) vals.push(pos.gav);
     var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals), rng=(mx-mn)||1;
-    // marginal så punkter inte klistrar i kant
     mn-=rng*0.08; mx+=rng*0.08; rng=mx-mn;
+
     var X=function(t){ return padL+(t-minT)/(maxT-minT)*(W-padL-padR); };
     var Y=function(v){ return padT+(H-padT-padB)*(1-(v-mn)/rng); };
 
@@ -290,14 +316,19 @@
     for(var k=0;k<=3;k++){ var y=padT+(H-padT-padB)*k/3; var val=mx-(mx-mn)*k/3;
       grid+='<line class="gl" x1="0" x2="'+W+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'"/><text class="glt" x="2" y="'+(y-3).toFixed(1)+'">'+fmt(val,1)+'</text>'; }
 
-    var line = pts.map(function(p,i){ return (i?'L':'M')+X(p.t).toFixed(1)+' '+Y(p.v).toFixed(1); }).join(' ');
+    var line = series.map(function(p,i){ return (i?'L':'M')+X(p.t).toFixed(1)+' '+Y(p.v).toFixed(1); }).join(' ');
+    // Fylld yta bara för den riktiga historiken (den glesa fallbacken fylls inte).
+    var area='';
+    if(real){
+      area='M'+X(series[0].t).toFixed(1)+' '+(H-padB)+' '+line.slice(1)+' L'+X(series[series.length-1].t).toFixed(1)+' '+(H-padB)+' Z';
+    }
 
     var gav='';
     if(pos.gav!=null){ var gy=Y(pos.gav);
       gav='<line x1="0" x2="'+W+'" y1="'+gy.toFixed(1)+'" y2="'+gy.toFixed(1)+'" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="5 4"/>'+
         '<text class="glt" x="'+(W-4)+'" y="'+(gy-4).toFixed(1)+'" text-anchor="end" fill="var(--gold)">GAV '+fmt(pos.gav,2)+'</text>'; }
 
-    var marks = pts.filter(function(p){ return p.trade; }).map(function(p){
+    var marks = tradePts.map(function(p){
       var x=X(p.t), y=Y(p.v), buy=p.trade.kind==="kop", col=buy?"var(--good)":"var(--bad)";
       var tri=buy?(x+' '+(y+11)+' '+(x-6)+' '+(y+20)+' '+(x+6)+' '+(y+20)):(x+' '+(y-11)+' '+(x-6)+' '+(y-20)+' '+(x+6)+' '+(y-20));
       var d=new Date(p.trade.decided_at).toISOString().slice(0,10);
@@ -305,12 +336,14 @@
         '<polygon points="'+tri+'" fill="'+col+'"><title>'+(buy?"Köp":"Sälj")+' '+fmt(p.trade.quantity)+' st @ '+fmt(p.trade.price,2)+' · '+d+'</title></polygon></g>';
     }).join('');
 
-    // datumetiketter (först + sist)
     var xl='<text class="xlt" x="'+X(minT).toFixed(1)+'" y="'+(H-6)+'" text-anchor="start">'+new Date(minT).toISOString().slice(0,7)+'</text>'+
       '<text class="xlt" x="'+X(maxT).toFixed(1)+'" y="'+(H-6)+'" text-anchor="end">'+new Date(maxT).toISOString().slice(0,7)+'</text>';
 
-    svg.innerHTML = grid + xl +
-      '<path d="'+line+'" fill="none" stroke="var(--oxblood)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="'+(pts.length>1?'2 5':'0')+'"/>'+
+    svg.innerHTML =
+      '<defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="rgba(44,86,70,.16)"/><stop offset="1" stop-color="rgba(44,86,70,0)"/></linearGradient></defs>'+
+      grid + xl +
+      (area?'<path d="'+area+'" fill="url(#g)"/>':'')+
+      '<path d="'+line+'" fill="none" stroke="var(--oxblood)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="'+(real?'0':(series.length>1?'2 5':'0'))+'"/>'+
       gav + marks;
   }
 
@@ -384,7 +417,10 @@
       return Promise.all([ window.AB.listDecisions(HID), loadPrice(h) ]);
     }).then(function(res){
       trades=res[0]||[]; PRICE=res[1];
-      render();
+      render();                    // rita direkt med kurs + affärer
+      return loadHistory();        // hämta historiken och rita om när den är klar
+    }).then(function(h){
+      if(h){ HISTORY=h; render(); }
     }).catch(function(e){
       byId("root").innerHTML = '<div class="msg">Kunde inte läsa innehavet: '+esc(e && e.message ? e.message : "okänt fel")+'. Är du inloggad? <a href="/logga-in">Logga in</a>.</div>';
     });
