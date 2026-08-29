@@ -1,0 +1,122 @@
+{
+  "kapitel": 7,
+  "lektion": "7.2",
+  "titel": "Att göra värdet konkret",
+  "niva": "Mellan",
+  "tid_min": 9,
+  "fardighet": "varde.konkretisering",
+  "mal": "Efter lektionen kan eleven göra ett påstått värde tillräckligt konkret för att någon ska våga räkna på det, och känner igen de tre vaghetsfällor som får värdepåståenden att kollapsa internt.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "VÄRDE",
+      "titel": "Att göra värdet konkret",
+      "ingress": "Ett värde som inte går att räkna på överlever inte det första interna mötet. Den här lektionen handlar om vad som skiljer ett påstående från något någon vågar sätta i ett underlag."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE FÄLLOR",
+      "titel": "Vaghet som låter bra",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Riktningen utan storleken",
+            "text": "Ni får bättre kontroll. Sant och obrukbart. Ingen kan avgöra om bättre är värt priset, och därmed kan ingen försvara beslutet."
+          },
+          {
+            "rubrik": "Storleken utan mottagaren",
+            "text": "Fyrtio timmar i månaden sparas. Hos vem? Om svaret är utspritt på nio personer är det ingen som märker det, och då finns besparingen bara i kalkylen."
+          },
+          {
+            "rubrik": "Mottagaren utan tidpunkten",
+            "text": "Ekonomiavdelningen slipper det här. När då? Ett värde som infaller efter tolv månader konkurrerar med saker som ger utslag i kvartalet, och förlorar."
+          }
+        ],
+        "figurtext": "Riktning, storlek, mottagare, tidpunkt. Saknas en av dem faller påståendet internt."
+      },
+      "forklaring": "De tre fällorna har gemensamt att de låter mer precisa än de är. Den som lyssnar i mötet nickar, eftersom meningen är begriplig. Den som ska räkna på den två dagar senare upptäcker att det saknas ett led, och då blir det inget underlag."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROVET PÅ KONKRETION",
+      "lead": "Ett värde är tillräckligt konkret när någon kan bli motsagd om det.",
+      "highlight": "när någon kan bli motsagd om det",
+      "brodtext": [
+        "Ni får bättre överblick går inte att motsäga, och därför inte att bekräfta heller. Månadsbokslutet blir klart den fjärde i stället för den nionde går att motsäga: någon kan säga att det inte stämmer, eller att det ändå inte spelar roll eftersom rapporten inte läses förrän den tolfte.",
+        "Den invändningen ser ut som ett bakslag och är en vinst. Nu vet ni båda att värdet låg någon annanstans, och ni fick reda på det i ett möte i stället för i en avslutad affär som inte förnyas."
+      ],
+      "takeaway": "Om ingen kan säga att du har fel har du inte sagt något."
+    },
+    {
+      "typ": "concept",
+      "kicker": "HUR DU GÖR DET",
+      "titel": "Sätt in det i kundens kalender",
+      "forklaring": "Det snabbaste sättet att göra ett värde konkret är att placera det i tid och hos en person. Inte i en kalkyl, utan i en vecka.",
+      "brodtext": [
+        "I stället för snabbare rapportering: den sista arbetsdagen i månaden slutar Anna klockan sjutton i stället för tjugo. I stället för färre fel: ni skulle sluta skicka de där kreditfakturorna som tar en halvtimme styck att reda ut. I stället för bättre beslutsunderlag: ledningsgruppen ser föregående månad på sitt möte i stället för månaden innan.",
+        "Alla tre går att pröva mot verkligheten av någon som var där. Det är hela poängen. Ett värde du inte kan placera hos en namngiven person i en namngiven vecka är oftast ett värde du gissat."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "OCH DÄR DET INTE GÅR",
+      "lead": "Vissa värden går inte att konkretisera, och de ska då sägas som det de är.",
+      "highlight": "sägas som det de är",
+      "brodtext": [
+        "Minskad risk för ett haveri som inte inträffat. Bättre förhandlingsläge om två år. Att slippa en oro som ingen mätt. Det är verkliga saker som spelar roll för människor, och de går inte att lägga i en kalkyl utan att bli fabricerade.",
+        "Säg dem då som omdömen och inte som siffror. Jag kan inte sätta ett belopp på det här, men min erfarenhet är att det är den delen kunder nämner efter ett år. Det är ärligt, det är svagare, och det klarar sig bättre än ett hittepåtal som någon internt kommer att peta hål på."
+      ],
+      "takeaway": "Ett ärligt omdöme håller längre än ett påhittat belopp. Blanda dem aldrig i samma tabell."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilka fyra delar behöver ett värdepåstående?",
+          "alternativ": [
+            "Riktning, storlek, mottagare och tidpunkt",
+            "Funktion, pris, referens och garanti",
+            "Problem, lösning, kostnad och avtalstid"
+          ],
+          "ratt": [0],
+          "forklaring": "Saknas en av dem faller påståendet när någon ska räkna på det två dagar senare, även om alla nickade i mötet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är provet på att ett värde är tillräckligt konkret?",
+          "alternativ": [
+            "Att det går att uttrycka i kronor",
+            "Att någon kan bli motsagd om det",
+            "Att kunden håller med"
+          ],
+          "ratt": [1],
+          "forklaring": "Går det inte att motsäga går det inte att bekräfta heller. Invändningen ser ut som ett bakslag och är en vinst."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur gör du ett värde konkret snabbast?",
+          "alternativ": [
+            "Genom att räkna om det till årsbelopp",
+            "Genom att placera det hos en namngiven person i en namngiven vecka",
+            "Genom att jämföra med en referenskund"
+          ],
+          "ratt": [1],
+          "forklaring": "Då går det att pröva mot verkligheten av någon som var där. Ett värde du inte kan placera så har du oftast gissat."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gör du med värden som inte går att konkretisera?",
+          "alternativ": [
+            "Utelämnar dem",
+            "Säger dem som omdömen, tydligt skilda från siffrorna",
+            "Uppskattar ett belopp och markerar det som osäkert"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett ärligt omdöme håller längre än ett påhittat belopp som någon internt kommer att peta hål på."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "kapitel": 7,
+  "lektion": "7.3",
+  "titel": "Provet: kan kunden förklara det själv",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "varde.vidarebefordran",
+  "mal": "Efter lektionen kan eleven pröva om värdet överlever utan säljaren i rummet, och vet vad som ska göras när provet misslyckas.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "VÄRDE",
+      "titel": "Provet: kan kunden förklara det själv",
+      "ingress": "Allt arbete i det här kapitlet avgörs på ett enda ställe: ett internt möte du inte är med på. Det finns ett sätt att ta reda på hur det mötet kommer att gå."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DÄR AFFÄREN AVGÖRS",
+      "lead": "Den som ska köpa av dig kommer att behöva sälja det internt, till någon som inte träffat dig.",
+      "highlight": "sälja det internt, till någon som inte träffat dig",
+      "brodtext": [
+        "På det mötet finns inte du, inte din presentation och inte dina svar på följdfrågor. Det finns en person som har ungefär tre minuter, en agenda med sex andra punkter, och en kollega som är skeptisk av vana. Det som avgör är om personen kan säga något som håller i de tre minuterna.",
+        "Din offert hjälper inte, eftersom ingen läser den högt. Din presentation hjälper inte heller. Det enda som fungerar är att personen har en egen förklaring, tillräckligt kort och tillräckligt konkret, och beredskap att stå för den."
+      ],
+      "takeaway": "Du säljer inte till kunden. Du utrustar kunden för ett möte du aldrig får se."
+    },
+    {
+      "typ": "concept",
+      "kicker": "PROVET",
+      "titel": "Be om förklaringen, och var tyst",
+      "forklaring": "Fråga rakt ut: hur skulle du beskriva det här för din chef? Och sedan gör du ingenting. Ingen hjälp, ingen ifyllnad, ingen bekräftande nick i förtid.",
+      "brodtext": [
+        "Svaret är en av de mest informationsrika sakerna du får i hela affären. Kommer det snabbt, kort och med rätt saker i rätt ordning är värdet förankrat och du kan gå vidare. Kommer det trevande, långt och med funktioner i stället för konsekvenser är det inte förankrat, hur positivt mötet än känts.",
+        "Var beredd på att svaret ofta är sämre än du hoppats. Det är inte ett tecken på att kunden är ointresserad. Det är ett tecken på att arbetet inte är klart, och det är bättre att veta nu."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "NÄR PROVET MISSLYCKAS",
+      "lead": "Frestelsen när förklaringen haltar är att ge kunden en bättre version. Gör inte det.",
+      "highlight": "att ge kunden en bättre version",
+      "brodtext": [
+        "En färdig formulering från dig är din, och den låter som en broschyr när den upprepas av någon annan. Dessutom har du då hoppat över det som gjorde provet värdefullt: du vet fortfarande inte varför förklaringen haltade.",
+        "Fråga i stället vad som är svårast att förklara. Svaret pekar direkt på var arbetet återstår. Ofta är det att konsekvensen inte är räknad, ibland att en invändning inte är behandlad, och ibland att kunden själv inte är övertygad men inte velat säga det. Alla tre är åtgärdbara. Ingen av dem åtgärdas av en bättre formulering från dig."
+      ],
+      "takeaway": "En haltande förklaring är en diagnos, inte ett tillfälle att prata mer."
+    },
+    {
+      "typ": "concept",
+      "kicker": "OM DEN SITTER",
+      "titel": "Skriv ner den och skicka tillbaka den",
+      "forklaring": "När kunden väl har gett en förklaring som håller ska du inte förbättra den. Du ska bevara den.",
+      "brodtext": [
+        "Skriv ner den nästan ordagrant och skicka den i uppföljningen som det den är: så här förstod jag att ni ser på det. Nu har personen sin egen formulering i skrift, klar att klistra in i ett mail till chefen, och den bär ingen leverantörston eftersom orden är kundens egna.",
+        "Det är den enskilt mest användbara sak du kan skicka efter ett möte, och den tar fem minuter. De flesta skickar i stället en sammanfattning av vad de själva sa, vilket ingen har användning för."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Var avgörs affären enligt lektionen?",
+          "alternativ": [
+            "I det sista mötet med dig",
+            "På ett internt möte du inte deltar i",
+            "När offerten läses"
+          ],
+          "ratt": [1],
+          "forklaring": "Där finns inte du, inte din presentation och inte dina svar. Det som avgör är om personen kan säga något som håller på tre minuter."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur genomför du provet?",
+          "alternativ": [
+            "Ber kunden beskriva det för sin chef, och är sedan tyst",
+            "Skickar ett underlag och frågar om det räcker",
+            "Erbjuder dig att delta i det interna mötet"
+          ],
+          "ratt": [0],
+          "forklaring": "Ingen hjälp, ingen ifyllnad. Svaret är en av de mest informationsrika sakerna du får i hela affären."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gör du när förklaringen haltar?",
+          "alternativ": [
+            "Ger kunden en bättre formulering",
+            "Frågar vad som är svårast att förklara",
+            "Bokar ett möte till med fler deltagare"
+          ],
+          "ratt": [1],
+          "forklaring": "Svaret pekar direkt på var arbetet återstår: oräknad konsekvens, obehandlad invändning, eller att kunden själv inte är övertygad."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad skickar du efter mötet när förklaringen sitter?",
+          "alternativ": [
+            "En sammanfattning av vad du presenterade",
+            "Kundens egen förklaring, nästan ordagrant",
+            "En uppdaterad offert"
+          ],
+          "ratt": [1],
+          "forklaring": "Den bär ingen leverantörston eftersom orden är kundens egna, och den går att klistra in i ett internt mail."
+        }
+      ]
+    }
+  ]
+}

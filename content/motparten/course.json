@@ -158,9 +158,9 @@
    ],
    "sebastian": "Jag har förklarat värde briljant för fel person. Den som satt framför mig förstod, blev entusiastisk och skulle ta det vidare. Sedan hände ingenting, för värdet kunde inte återberättas utan mig i rummet. Numera frågar jag hur kunden skulle beskriva det här för sin chef. Kommer det inte ut ur munnen på kunden har jag inte gjort mitt jobb.",
    "lektioner": [
-    { "lektion": "7.1", "titel": "Värdet är kundens, inte ditt", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "7.1-vardet-ar-kundens.json" },
-    { "lektion": "7.2", "titel": "Att göra värdet konkret", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "7.2-gora-vardet-konkret.json" },
-    { "lektion": "7.3", "titel": "Provet: kan kunden förklara det själv", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "7.3-provet.json" }
+    { "lektion": "7.1", "titel": "Värdet är kundens, inte ditt", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "7.1-vardet-ar-kundens.json" },
+    { "lektion": "7.2", "titel": "Att göra värdet konkret", "niva": "Mellan", "tid_min": 9, "status": "klar", "fil": "7.2-gora-vardet-konkret.json" },
+    { "lektion": "7.3", "titel": "Provet: kan kunden förklara det själv", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "7.3-provet.json" }
    ]
   },
   {

@@ -1,0 +1,122 @@
+{
+  "kapitel": 7,
+  "lektion": "7.1",
+  "titel": "Värdet är kundens, inte ditt",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "varde.agarskap",
+  "mal": "Efter lektionen kan eleven skilja produktens egenskaper från det värde en viss kund faktiskt får, och vet varför samma lösning är värd olika mycket för två personer i samma bolag.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "VÄRDE",
+      "titel": "Värdet är kundens, inte ditt",
+      "ingress": "Din produkt har inget värde. Den har egenskaper. Värde är vad de egenskaperna gör för en bestämd person i en bestämd situation, och det varierar mer än någon produktblad medger."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DÄRFÖR FALLER PRODUKTPRESENTATIONEN",
+      "lead": "En genomgång av vad lösningen kan är ett erbjudande om att kunden själv ska göra översättningen.",
+      "highlight": "kunden själv ska göra översättningen",
+      "brodtext": [
+        "Du berättar att systemet har automatisk avstämning. Kunden ska då själv räkna ut vad det betyder för just deras månadsbokslut, med deras bemanning, i deras process. Det är ett rimligt arbete att begära av någon som redan bestämt sig. Det är orimligt att begära av någon som håller på att bestämma sig och har tio andra saker på bordet.",
+        "Nästan alla gör det ändå, eftersom produktgenomgången är den del man kan bäst och den som känns tryggast att leverera. Den är också den enda delen som är identisk oavsett vem som sitter mittemot, vilket borde vara en varningssignal."
+      ],
+      "takeaway": "Egenskaper är samma för alla. Värde är det aldrig. Om din genomgång inte ändras mellan två kunder beskriver den inte värde."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SAMMA LÖSNING, OLIKA VÄRDE",
+      "titel": "Tre personer, tre affärer",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Ekonomichefen",
+            "text": "Värdet är att bokslutet blir klart innan styrelsemötet och att siffrorna inte ifrågasätts. Pengarna är sekundära, förutsägbarheten är allt."
+          },
+          {
+            "rubrik": "Redovisningsekonomen",
+            "text": "Värdet är att slippa tre kvällar i månaden. Personligt, konkret och det starkaste av de tre, men personen sitter sällan i beslutet."
+          },
+          {
+            "rubrik": "Vd",
+            "text": "Värdet är att det inte längre är en fråga som når skrivbordet. Ointresserad av funktioner, mycket intresserad av att slippa ämnet."
+          }
+        ],
+        "figurtext": "Samma system, samma pris, tre helt olika skäl att säga ja."
+      },
+      "forklaring": "Den vanliga missen är att välja en av de tre versionerna och köra den mot alla. Oftast blir det ekonomichefens, eftersom den låter mest professionell. Men den som ska driva frågan internt behöver kunna använda alla tre, en per person, och det är du som ska leverera dem."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR DU FÅR TAG PÅ DET",
+      "lead": "Du får inte reda på värdet genom att fråga vad som är viktigt för kunden.",
+      "highlight": "genom att fråga vad som är viktigt",
+      "brodtext": [
+        "Den frågan ger ett svar som låter bra och betyder lite: kvalitet, effektivitet, att det ska funka. Ingen ljuger, men ingen har heller tänkt igenom saken i den formen, så du får en efterhandskonstruktion.",
+        "Fråga i stället om vad som skulle förändras i vardagen. Vad skulle ni sluta göra. Vem märker det först. Vad skulle du kunna berätta för din chef om ett halvår. Alla tre handlar om konkreta förlopp, och de går att svara på utan att formulera en policy."
+      ],
+      "takeaway": "Fråga inte vad som är viktigt. Fråga vad som skulle bli annorlunda på en tisdag."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VARNINGEN",
+      "titel": "Värde du hittat på åt kunden",
+      "forklaring": "Det finns ett sätt att göra det här som ser rätt ut och som är sämre än produktgenomgången: att själv formulera vad kunden borde värdesätta och sedan presentera det som en insikt.",
+      "brodtext": [
+        "Ni skulle spara fyra dagar i månaden, vilket måste vara värt mycket för er. Kunden nickar. Ingen invänder mot en gåva. Men värdet är ditt, kunden har inte prövat det mot sin verklighet, och när frågan kommer upp internt finns det ingen som kan svara på om fyra dagar är mycket eller lite hos dem.",
+        "Det är samma mekanism som i kapitel 6: det kunden inte sagt högt går inte att upprepa. Skillnaden mellan att formulera åt och att hitta på åt är om kunden fick chansen att rätta dig."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är skillnaden mellan egenskap och värde?",
+          "alternativ": [
+            "Värde är egenskaper uttryckta i kronor",
+            "Egenskaper är samma för alla, värde är vad de gör för en bestämd person i en bestämd situation",
+            "Värde är egenskaper som kunden efterfrågat"
+          ],
+          "ratt": [1],
+          "forklaring": "Om din genomgång inte ändras mellan två kunder beskriver den inte värde. Det är en varningssignal, inte ett tecken på struktur."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför räcker det inte att välja en version av värdet?",
+          "alternativ": [
+            "För att den blir för lång",
+            "För att den som driver frågan internt behöver en version per person",
+            "För att olika versioner motsäger varandra"
+          ],
+          "ratt": [1],
+          "forklaring": "Samma system kan vara förutsägbarhet för en, sparade kvällar för en annan och att slippa ämnet för en tredje."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken fråga ger dig värdet?",
+          "alternativ": [
+            "Vad är viktigast för er i en sådan här lösning?",
+            "Vad skulle bli annorlunda i vardagen, och vem märker det först?",
+            "Vilken budget har ni avsatt?"
+          ],
+          "ratt": [1],
+          "forklaring": "Den första ger en efterhandskonstruktion som låter bra. Den andra handlar om konkreta förlopp som går att svara på."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är felet med att formulera värdet åt kunden utan att pröva det?",
+          "alternativ": [
+            "Det tar tid från annat",
+            "Värdet blir ditt, och ingen internt kan svara på om det stämmer hos dem",
+            "Kunden uppfattar det som påträngande"
+          ],
+          "ratt": [1],
+          "forklaring": "Ingen invänder mot en gåva. Skillnaden mellan att formulera åt och att hitta på åt är om kunden fick chansen att rätta dig."
+        }
+      ]
+    }
+  ]
+}
