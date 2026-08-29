@@ -107,9 +107,23 @@ async function verifyJwt(token) {
   }
 }
 
+/* Motparten deployas till ett eget Pages-projekt fran samma bygge. Pa den varden
+   ska roten visa saljkursen, inte Marginalens landningssida. Omskrivningen sker
+   pa vardnamn sa att samma bygge kan serva bada, och den galler aven en framtida
+   egen doman: allt som borjar med "motparten" raknas. */
+function motpartenVard(hostname) {
+  const h = (hostname || '').toLowerCase();
+  return h.startsWith('motparten.') || h.startsWith('motparten-');
+}
+
 export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
+
+  if (motpartenVard(url.hostname) && (url.pathname === '/' || url.pathname === '/hem' || url.pathname === '/hem/')) {
+    return Response.redirect(new URL('/motparten', url.origin).toString(), 302);
+  }
+
   if (isExempt(normalizePath(url.pathname))) return next();
 
   const token = getCookie(request, COOKIE);

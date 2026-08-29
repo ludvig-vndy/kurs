@@ -306,6 +306,34 @@ aktiekursen senare.
 
 ### Åtkomst
 
+### Deploy: två Pages-projekt, ett bygge
+
+Samma `dist` deployas till två Cloudflare Pages-projekt.
+
+- `kurs` till `kurs-7m8.pages.dev`, aktiekursen och Marginalen.
+- `motparten` till `motparten.pages.dev`, säljkursen. Skapat 2026-08-29.
+
+```
+npm run build
+wrangler pages deploy dist --project-name=kurs --branch=main
+wrangler pages deploy dist --project-name=motparten --branch=main
+```
+
+`--branch=main` är obligatoriskt på båda, annars hamnar bygget i preview.
+
+Mastheaden och innehållet väljs av routen, inte av värden, så båda projekten
+innehåller båda kurserna. Det som skiljer är rotens beteende: middlewaren
+omdirigerar `/` och `/hem` till `/motparten` när värdnamnet börjar med
+`motparten`, så en säljare som får länken landar i sin kurs och inte på
+Marginalens landningssida. Regeln matchar på värdnamn och gäller därför även en
+framtida egen domän.
+
+Projektet `motparten` har medvetet inga miljövariabler satta. Inloggningsgrinden
+behöver inga, eftersom den verifierar mot Supabases JWKS över en hårdkodad URL,
+men varje funktion under `/api/` returnerar 501 utan sina hemligheter. För en
+pilot är det rätt läge: sajten fungerar, och allt som rör betalning, konton och
+AI faller stängt.
+
 `/motparten/*` grindas redan av `functions/_middleware.js`, som släpper igenom endast en
 uttrycklig lista och därutöver `/api/`, `/_astro/` och `/bilder/`. Ingen kodändring krävs,
 bara verifiering. Deploy sker till samma Cloudflare Pages-projekt med
