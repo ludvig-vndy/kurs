@@ -1,0 +1,96 @@
+---
+/* Intern orderbok för prospektlistor. Bara vi ser den.
+   Deltagaren beskriver vad hen säljer, vi skriver in det, kör
+   scripts/bygg_prospektlista.py i scraper-repot och kopplar resultatet hit.
+   Samma tabell fylls senare av deltagaren själv. */
+import Broadsheet from '../../layouts/Broadsheet.astro';
+import { konfig } from '../../lib/kurs.mjs';
+import '../../styles/motparten.css';
+import '../../styles/bestallningar.css';
+
+const k = konfig('motparten');
+---
+
+<Broadsheet
+  title="Beställningar · Motparten"
+  description="Intern orderbok för prospektlistor."
+  bodyClass={k.bodyClass}
+  kurs={k}
+>
+  <div class="order" data-order>
+    <p class="lader" data-lader>Hämtar orderboken…</p>
+    <div class="fel" data-fel hidden><p data-felText></p></div>
+
+    <div data-innehall hidden>
+      <header class="ohuvud">
+        <p class="oeyebrow">Internt · syns inte för deltagarna</p>
+        <h1>Beställningar</h1>
+        <p class="ostandfirst">Skriv in vad deltagaren säljer och till vem. Kör sedan
+          <code>bygg_prospektlista.py</code> i scraper-repot och koppla listan hit.</p>
+      </header>
+
+      <section class="oform">
+        <h2>Ny beställning</h2>
+        <form data-form>
+          <div class="ograd">
+            <label>Beställarens mejl
+              <input name="bestallare_epost" type="email" required placeholder="deltagare@exempel.se" />
+            </label>
+            <label>Namn
+              <input name="bestallare_namn" type="text" placeholder="Förnamn Efternamn" />
+            </label>
+          </div>
+
+          <label>Vad säljer de?
+            <input name="saljer" type="text" placeholder="Arbetskläder och skyddsutrustning" />
+          </label>
+
+          <label>Till vem, i deras ord
+            <textarea name="malgrupp" rows="2" placeholder="Installatörer, gärna ägarledda, som köper direkt"></textarea>
+          </label>
+
+          <label>Vad gör en träff dålig?
+            <textarea name="diskvalificerar" rows="2" placeholder="Kedjor och dotterbolag, inköpet ligger centralt"></textarea>
+            <span class="ohint">Den här frågan avgör träffsäkerheten mer än någon annan. Lämna den inte tom.</span>
+          </label>
+
+          <div class="ograd">
+            <label>SNI-koder
+              <input name="sni_koder" type="text" required placeholder="43210, 43221" />
+            </label>
+            <label>Län
+              <input name="lan_koder" type="text" placeholder="14" />
+            </label>
+            <label>Storlek
+              <input name="storlek_koder" type="text" value="3,4,5" />
+              <span class="ohint">SCB:s koder. 3 = 5-9, 4 = 10-19, 5 = 20-49.</span>
+            </label>
+            <label>Önskat antal
+              <input name="antal_onskat" type="number" min="1" placeholder="150" />
+            </label>
+          </div>
+
+          <label>Notering, bara för oss
+            <textarea name="notering" rows="2"></textarea>
+          </label>
+
+          <div class="oknappar">
+            <button type="submit" class="oknapp">Spara beställning</button>
+            <span class="ostatus" data-formstatus aria-live="polite"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="olista">
+        <h2>Orderbok <span data-antal></span></h2>
+        <div data-rader></div>
+        <p class="otom" data-tom hidden>Inga beställningar än.</p>
+      </section>
+    </div>
+  </div>
+</Broadsheet>
+
+<script>
+  import { startaOrderbok } from '../../scripts/bestallningar.js';
+  startaOrderbok();
+</script>

@@ -40,9 +40,8 @@ if (!SECRET && !TORR) {
 
 const fil = arg('fil');
 const slug = arg('slug');
-const namn = arg('namn');
-if (!fil || !slug || !namn) {
-  console.error('Kräver --fil, --slug och --namn. Se kommentaren överst i filen.');
+if (!fil || !slug) {
+  console.error('Kräver --fil och --slug. --namn kan utelämnas om filen har meta.namn.');
   process.exit(1);
 }
 
@@ -66,6 +65,17 @@ async function sb(metod, path, body, prefer) {
 // ── Läs uttaget ───────────────────────────────────────────────────────
 const kalla = JSON.parse(readFileSync(fil, 'utf8'));
 const rader = Array.isArray(kalla) ? kalla : kalla.rows;
+// bygg_prospektlista.py skriver med sig urval, population och kallhanvisning.
+// De blir standardvarden har, sa man slipper skriva om dem for hand.
+const meta = (kalla && kalla.meta) || {};
+
+// --namn far komma fran filens meta, sa bygg_prospektlista.py och det har
+// verktyget kan kedjas utan att man skriver om samma sak.
+const namn = arg('namn') || meta.namn;
+if (!namn) {
+  console.error('Namn saknas. Ange --namn eller lagg meta.namn i filen.');
+  process.exit(1);
+}
 if (!Array.isArray(rader) || !rader.length) {
   console.error('Hittade inga rader i ' + fil);
   process.exit(1);
@@ -113,12 +123,12 @@ const till_rad = r => ({
 const listrad = {
   slug,
   namn,
-  ingress: arg('ingress') || null,
-  segment: arg('segment') || null,
-  geografi: arg('geografi') || null,
-  urval: arg('urval') || null,
-  population: arg('population') ? Number(arg('population')) : null,
-  kallhanvisning: arg('kalla') ||
+  ingress: arg('ingress') || meta.ingress || null,
+  segment: arg('segment') || meta.segment || null,
+  geografi: arg('geografi') || meta.geografi || null,
+  urval: arg('urval') || meta.urval || null,
+  population: arg('population') ? Number(arg('population')) : (meta.population ?? null),
+  kallhanvisning: arg('kalla') || meta.kallhanvisning ||
     'Källa: SCB, Statistiska centralbyrån, allmänna företagsregistret. Egen bearbetning.',
   uttag_datum: arg('datum') || new Date().toISOString().slice(0, 10),
   publicerad: arg('publicera') === true,
