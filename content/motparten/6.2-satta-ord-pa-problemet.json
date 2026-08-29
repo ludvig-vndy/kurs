@@ -1,0 +1,125 @@
+{
+  "kapitel": 6,
+  "lektion": "6.2",
+  "titel": "Att sätta ord på problemet",
+  "niva": "Mellan",
+  "tid_min": 9,
+  "fardighet": "problem.formulering",
+  "mal": "Efter lektionen kan eleven formulera kundens problem så att kunden tar över formuleringen och använder den internt, och vet varför det inte är samma sak som att tala om för kunden vad problemet är.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "PROBLEM OCH KONSEKVENS",
+      "titel": "Att sätta ord på problemet",
+      "ingress": "Den mest värdefulla meningen i hela en affär är den kunden upprepar för någon annan när du inte är i rummet. Den här lektionen handlar om hur den meningen blir till."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROBLEMET MED PROBLEMET",
+      "lead": "De flesta bolag har inte ett oformulerat problem, de har fem halvformulerade som ingen satt ihop.",
+      "highlight": "fem halvformulerade som ingen satt ihop",
+      "brodtext": [
+        "En person tycker att rapporteringen tar tid. En annan är trött på att siffrorna ifrågasätts på varje ledningsmöte. En tredje vet att den nya affärsmodellen kräver något annat. Ingen av dem är fel, ingen av dem är hel, och de har aldrig sagts i samma rum samtidigt.",
+        "Din möjlighet ligger där. Du träffar flera av dem, du har inget internt bagage, och du har hört samma sak hos tio andra bolag. Du kan alltså se en form som ingen inne i huset har haft anledning att se."
+      ],
+      "takeaway": "Du bidrar sällan med ny information. Du bidrar med en ordning på information de redan hade."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DEN VIKTIGA SKILLNADEN",
+      "titel": "Formulera åt, inte tala om för",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Tala om för",
+            "text": "Ert verkliga problem är att ni saknar ägarskap för datan. Sagt med auktoritet, ofta korrekt, och nästan alltid mött av ett artigt medhåll eller ett tyst motstånd. Kunden har fått en dom, inte en formulering."
+          },
+          {
+            "rubrik": "Formulera åt",
+            "text": "Om jag hör er rätt hänger de tre sakerna ihop: rapporterna tar tid, siffrorna ifrågasätts, och ingen vill äga tabellen. Är det så, eller ser ni det annorlunda? Samma innehåll, men kunden äger slutledningen."
+          }
+        ],
+        "figurtext": "Skillnaden är vem som får dra slutsatsen. Det avgör om formuleringen används internt eller glöms."
+      },
+      "forklaring": "Den populära versionen av den här lektionen säger att du ska lära kunden något nytt om den egna verksamheten. Den bygger på ett företagsägt material där topputövarna pekades ut av sina egna chefer, alltså inte på något som går att granska. Den version som har stöd pekar snarast åt motsatt håll: det är kundens eget prat om förändring som hänger ihop med utfall, medan säljarens argumenterande hänger ihop med sämre utfall. Din uppgift är alltså inte att ha rätt högt. Den är att göra det lätt för kunden att säga det själv.",
+      "evidens": {
+        "niva": "B",
+        "kalla": "K13",
+        "notering": "Magill med flera (2014) om motiverande samtal. Sambanden är svaga och materialet är beteendeförändring inom vård. Slutsatsen att detsamma gäller säljsamtal är kursens tolkning."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "SÅ BYGGS DEN",
+      "titel": "Fyra krav på en formulering som håller",
+      "forklaring": "En formulering som ska överleva utan dig i rummet behöver fyra saker, och de flesta försök missar minst två.",
+      "brodtext": [
+        "Den ska vara i kundens ord. Använder du dina branschtermer blir den din, och den som ska föra den vidare måste översätta den först, vilket ingen orkar.",
+        "Den ska koppla ihop minst två saker de redan sagt. Det är kopplingen som är ditt bidrag. En enskild observation kunde de gjort själva.",
+        "Den ska gå att säga på tjugo sekunder. Formuleringen ska överleva ett korridorsamtal, inte ett seminarium.",
+        "Och den ska kunna vara fel. En formulering som ingen kan invända mot är en truism, och truismer flyttar ingenting."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROVET",
+      "lead": "Du vet att formuleringen håller när den kommer tillbaka till dig, ändrad.",
+      "highlight": "kommer tillbaka till dig, ändrad",
+      "brodtext": [
+        "I nästa möte säger kunden något i stil med att vi pratade internt och landade i att det egentligen handlar om ägarskapet, inte om verktygen. Det är delvis din formulering, delvis deras, och det är exakt så det ska se ut. Att den ändrats är inget nederlag, det är beviset på att den använts.",
+        "Kommer den aldrig tillbaka har den inte använts, och då spelar det ingen roll hur bra den var. En formulering som bara existerar i ditt anteckningsblock har inte gjort något arbete alls."
+      ],
+      "takeaway": "Målet är inte att kunden ska hålla med. Målet är att kunden ska upprepa, i egen version, för någon du aldrig träffat."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är ditt egentliga bidrag när du formulerar kundens problem?",
+          "alternativ": [
+            "Ny information kunden saknade",
+            "En ordning på information de redan hade",
+            "En expertbedömning av situationen"
+          ],
+          "ratt": [1],
+          "forklaring": "De flesta bolag har fem halvformulerade problem som aldrig sagts i samma rum. Kopplingen är ditt bidrag."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför undviker kursen den populära versionen, att lära kunden något nytt om verksamheten?",
+          "alternativ": [
+            "För att den är oartig",
+            "För att den vilar på företagsägt material som inte går att granska, medan det som har stöd pekar åt motsatt håll",
+            "För att kunder redan vet allt om sin verksamhet"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är kundens eget prat om förändring som hänger ihop med utfall, medan säljarens argumenterande hänger ihop med sämre."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket är inte ett krav på en formulering som håller?",
+          "alternativ": [
+            "Att den går att säga på tjugo sekunder",
+            "Att den använder branschens fackuttryck",
+            "Att den kan vara fel"
+          ],
+          "ratt": [1],
+          "forklaring": "Dina termer gör formuleringen till din. Den som ska föra den vidare måste då översätta först, vilket ingen orkar."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur vet du att formuleringen håller?",
+          "alternativ": [
+            "Kunden håller med direkt i mötet",
+            "Den kommer tillbaka till dig i ändrad form",
+            "Kunden ber dig skicka den skriftligt"
+          ],
+          "ratt": [1],
+          "forklaring": "Att den ändrats är inget nederlag, det är beviset på att den använts. Kommer den aldrig tillbaka har den inte gjort något arbete."
+        }
+      ]
+    }
+  ]
+}

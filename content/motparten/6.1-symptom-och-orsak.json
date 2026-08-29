@@ -1,0 +1,108 @@
+{
+  "kapitel": 6,
+  "lektion": "6.1",
+  "titel": "Symptom och orsak",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "problem.orsak",
+  "mal": "Efter lektionen kan eleven skilja det kunden först beskriver från det som orsakar det, veta varför den första beskrivningen nästan alltid är ett symptom, och ta sig ett steg djupare utan att verka ifrågasättande.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "PROBLEM OCH KONSEKVENS",
+      "titel": "Symptom och orsak",
+      "ingress": "Det kunden säger först är sällan problemet. Det är det som märks av problemet, och skillnaden avgör om din lösning håller efter månad tre."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DET FÖRSTA ÄR ETT SYMPTOM",
+      "lead": "Kunden beskriver det som syns, eftersom det är det som gör ont just nu.",
+      "highlight": "det som syns",
+      "brodtext": [
+        "Rapporterna tar för lång tid. Vi missar leveranser. Säljarna hittar inte informationen. Alla tre är sanna observationer och ingen av dem är en orsak. De är ställen där något annat blir synligt, och det andra är oftast obekvämare att prata om: en process ingen äger, två system som inte pratar med varandra, eller att någon slutade och tog kunskapen med sig.",
+        "Ingen undanhåller det medvetet. Man beskriver det man ser i sin vardag, och man har oftast slutat undra varför det ser ut så, eftersom det gjort det länge."
+      ],
+      "takeaway": "Den första beskrivningen är sann och otillräcklig. Behandla den som en startpunkt, inte som ett svar."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VARFÖR DET SPELAR ROLL",
+      "titel": "En lösning på ett symptom håller i ett kvartal",
+      "forklaring": "Säljer du mot symptomet levererar du något som fungerar tills orsaken producerar nästa symptom. Rapporterna går snabbare, och tre månader senare är problemet att siffrorna inte stämmer, eftersom det som verkligen saknades var att någon ägde datan.",
+      "brodtext": [
+        "Kunden kommer inte att säga att lösningen var fel. Hen kommer att säga att det inte blev riktigt som vi tänkt, vilket är samma sak fast otydligare, och det landar på din relation snarare än på din produkt.",
+        "Det är också därför affärer sålda mot symptom är svåra att förnya. Ingen kan peka på vad de gav, eftersom det som gjorde ont fortfarande gör ont, om än på ett annat ställe."
+      ]
+    },
+    {
+      "typ": "concept",
+      "kicker": "HUR DU TAR DIG DJUPARE",
+      "titel": "Fråga om historien, inte om orsaken",
+      "forklaring": "Den direkta frågan varför är det så fungerar dåligt. Den låter utredande, den bjuder in ett försvar, och kunden har oftast inget färdigt svar. Fråga i stället om förloppet, eftersom förlopp går att minnas.",
+      "brodtext": [
+        "När märkte ni det första gången. Vad gjorde ni då. Vad hände med det. Har ni provat att lösa det tidigare, och vad tog stopp. Fyra frågor som handlar om vad som hänt snarare än om vad som är fel, och som nästan alltid ger dig orsaken utan att någon behövt erkänna den.",
+        "Den fjärde är den mest värdefulla. Ett tidigare misslyckat försök innehåller nästan alltid orsaken, eftersom det var det som fick försöket att fastna. Och kunden minns det försöket väl, till skillnad från processen som aldrig fanns."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "NÄR DU SKA STANNA",
+      "lead": "Det går att gräva för djupt, och det ser ut som grundlighet ända tills affären försvinner.",
+      "highlight": "gräva för djupt",
+      "brodtext": [
+        "Nästan varje orsak har en orsak. Rapporterna tar tid för att datan är spretig, som beror på att två system inte pratar, som beror på ett förvärv 2019, som beror på en strategi du inte kan påverka. Fortsätter du dit har du bevisat att problemet är olösligt och att din lösning är otillräcklig, vilket ingen bad dig om.",
+        "Rätt djup är det sista steget som ni tillsammans kan göra något åt. Ett steg längre och du säljer mot ett symptom. Två steg längre och du säljer inte alls."
+      ],
+      "takeaway": "Gräv tills du når det djupaste lager ni kan påverka. Sedan slutar du gräva."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför beskriver kunden ett symptom först?",
+          "alternativ": [
+            "För att undanhålla det verkliga problemet",
+            "För att det är det som syns i vardagen och gör ont just nu",
+            "För att kunden vill testa din kompetens"
+          ],
+          "ratt": [1],
+          "forklaring": "Man har oftast slutat undra varför det ser ut så, eftersom det gjort det länge. Det är inte undanhållande."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad händer med en lösning som säljs mot ett symptom?",
+          "alternativ": [
+            "Den fungerar tills orsaken producerar nästa symptom",
+            "Den fungerar men blir dyrare än beräknat",
+            "Den avvisas oftast redan vid införandet"
+          ],
+          "ratt": [0],
+          "forklaring": "Kunden säger inte att lösningen var fel, utan att det inte blev riktigt som vi tänkt. Det landar på relationen snarare än på produkten."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken fråga tar dig djupare utan att låta utredande?",
+          "alternativ": [
+            "Varför är det så hos er?",
+            "Har ni provat att lösa det tidigare, och vad tog stopp?",
+            "Vem är ansvarig för det här området?"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett tidigare misslyckat försök innehåller nästan alltid orsaken, eftersom det var det som fick försöket att fastna. Och kunden minns det försöket väl."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur djupt ska du gräva?",
+          "alternativ": [
+            "Till den yttersta grundorsaken",
+            "Till det djupaste lager ni tillsammans kan påverka",
+            "Bara så djupt att din lösning framstår som rätt"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett steg längre och du säljer mot ett symptom. Två steg längre och du har bevisat att problemet är olösligt."
+        }
+      ]
+    }
+  ]
+}

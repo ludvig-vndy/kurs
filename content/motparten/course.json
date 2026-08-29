@@ -139,10 +139,10 @@
    ],
    "sebastian": "Den bästa återkoppling jag fått från en kund var att hon sa att jag beskrev deras situation bättre än de själva gjorde. Jag hade inte berättat något nytt för dem. Jag hade satt ihop tre saker de redan sagt, i en ordning ingen internt hade orkat sätta ihop. Två veckor senare använde deras vd min formulering i sin styrelse, och då var affären egentligen redan klar.",
    "lektioner": [
-    { "lektion": "6.1", "titel": "Symptom och orsak", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "6.1-symptom-och-orsak.json" },
-    { "lektion": "6.2", "titel": "Att sätta ord på problemet", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "6.2-satta-ord-pa-problemet.json" },
-    { "lektion": "6.3", "titel": "Att sätta pris på ett problem", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "6.3-satta-pris-pa-ett-problem.json" },
-    { "lektion": "6.4", "titel": "När problemet inte är värt att lösa", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "6.4-nar-problemet-inte-ar-vart-att-losa.json" }
+    { "lektion": "6.1", "titel": "Symptom och orsak", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "6.1-symptom-och-orsak.json" },
+    { "lektion": "6.2", "titel": "Att sätta ord på problemet", "niva": "Mellan", "tid_min": 9, "status": "klar", "fil": "6.2-satta-ord-pa-problemet.json" },
+    { "lektion": "6.3", "titel": "Att sätta pris på ett problem", "niva": "Mellan", "tid_min": 10, "status": "klar", "fil": "6.3-satta-pris-pa-ett-problem.json" },
+    { "lektion": "6.4", "titel": "När problemet inte är värt att lösa", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "6.4-nar-problemet-inte-ar-vart-att-losa.json" }
    ]
   },
   {

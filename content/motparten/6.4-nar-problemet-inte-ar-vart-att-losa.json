@@ -1,0 +1,122 @@
+{
+  "kapitel": 6,
+  "lektion": "6.4",
+  "titel": "När problemet inte är värt att lösa",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "problem.avgransning",
+  "mal": "Efter lektionen kan eleven avgöra om ett problem är stort nog att bära en affär, känner igen tre tecken på att det inte är det, och vet varför den insikten är värd mer tidigt än sent.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "PROBLEM OCH KONSEKVENS",
+      "titel": "När problemet inte är värt att lösa",
+      "ingress": "Det finns riktiga problem som ändå inte ska lösas. Att se skillnaden tidigt är den mest lönsamma färdigheten i kapitlet, och den känns hela tiden som att ge upp."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROBLEMET MED SMÅ PROBLEM",
+      "lead": "Ett problem kan vara verkligt, mätt och erkänt, och ändå aldrig bli en affär.",
+      "highlight": "verkligt, mätt och erkänt",
+      "brodtext": [
+        "Kravet är inte att det finns. Kravet är att det är större än summan av allt kunden måste göra för att lösa det: pengarna, tiden, införandet, det interna bråket, och risken för den som driver frågan. Räknar man ihop den summan är den nästan alltid större än man tror, och den jämförs med ett problem som nästan alltid är mindre än det lät.",
+        "Därför dör många affärer där alla var överens om att problemet existerade. Ingen ljög. Det var bara inte tillräckligt dyrt att ha kvar."
+      ],
+      "takeaway": "Frågan är aldrig om problemet finns. Frågan är om det är dyrare än besväret att bli av med det."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE TECKEN",
+      "titel": "Att det inte bär",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Ingen har försökt",
+            "text": "Problemet har funnits i fyra år och ingen har gjort ett seriöst försök att lösa det. Det starkaste tecknet av alla. Saker som verkligen kostar får någon att försöka något, även om försöket misslyckas."
+          },
+          {
+            "rubrik": "Alla tycker, ingen äger",
+            "text": "Många beskriver problemet, ingen har det på sin lista. Utan en ägare finns ingen som tar strid för budgeten när det blir motstånd, och motstånd kommer alltid."
+          },
+          {
+            "rubrik": "Siffran krymper",
+            "text": "När ni räknar tillsammans blir beloppet mindre för varje antagande som prövas. En kostnad som bara är imponerande så länge ingen räknar är inte en kostnad."
+          }
+        ],
+        "figurtext": "Ett tecken kan vara en tillfällighet. Två är ett besked."
+      },
+      "forklaring": "Det första tecknet är det mest användbara, och det tar tio sekunder att kontrollera. Fråga vad de gjort åt saken hittills. Ett bolag som beskriver ett dyrt problem men aldrig avsatt en enda timme åt det har svarat på din fråga utan att veta om det."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR TIDIGT ÄR ALLT",
+      "lead": "Samma insikt är värd väldigt olika mycket beroende på när du får den.",
+      "highlight": "beroende på när du får den",
+      "brodtext": [
+        "I möte ett kostar den dig ingenting och sparar dig tre månader. I månad fyra, efter en offert, två interna presentationer och en referenskund du besvärat, kostar den dig allt det arbetet plus något du inte tänker på: den tid du inte lade på de andra affärerna under tiden.",
+        "Ändå väntar de flesta. Skälet är samma som i lektionen om den obekväma frågan. Så länge du inte prövat kan affären fortfarande finnas, och en pipeline med tvivelaktiga affärer ser bättre ut på ett måndagsmöte än en pipeline med tre riktiga."
+      ],
+      "takeaway": "En affär du dödar i vecka ett är gratis. En du dödar i månad fyra har du betalat för i tre månader."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD DU SÄGER",
+      "titel": "Att avsluta utan att bränna",
+      "forklaring": "Slutsatsen att problemet inte bär ska sägas rakt, och den ska sägas som en bedömning och inte som en dom över kunden.",
+      "brodtext": [
+        "Utifrån det vi räknat på tror jag inte att det här är värt besväret för er just nu. Ni skulle lägga fyra månader på något som sparar mindre än det kostar att införa. Jag hör gärna av mig när ni ser att det växer, eller om något annat blir aktuellt.",
+        "Det är obekvämt att säga och nästan alltid mottaget väl, av skäl vi går igenom i kapitel 9. Det är också den enda handlingen i kursen som med säkerhet kostar dig något på kort sikt, vilket är precis varför den bär så mycket vikt när du senare säger att något är värt att göra."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är kravet för att ett problem ska bära en affär?",
+          "alternativ": [
+            "Att kunden erkänner att det finns",
+            "Att det är dyrare än summan av allt kunden måste göra för att lösa det",
+            "Att det går att mäta i kronor"
+          ],
+          "ratt": [1],
+          "forklaring": "Summan inkluderar pengar, tid, införande, internt motstånd och risken för den som driver frågan. Den är nästan alltid större än man tror."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket är det starkaste tecknet på att ett problem inte bär?",
+          "alternativ": [
+            "Att ingen gjort ett seriöst försök att lösa det på flera år",
+            "Att kunden inte vill uppge en budget",
+            "Att flera leverantörer är inblandade"
+          ],
+          "ratt": [0],
+          "forklaring": "Saker som verkligen kostar får någon att försöka något, även om försöket misslyckas. Det tar tio sekunder att kontrollera."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför väntar de flesta säljare med den här bedömningen?",
+          "alternativ": [
+            "För att det krävs mycket information",
+            "För att affären fortfarande kan finnas så länge man inte prövat, och pipen ser bättre ut",
+            "För att kunden blir besviken"
+          ],
+          "ratt": [1],
+          "forklaring": "Samma mekanism som med den obekväma frågan. Kostnaden är de tre månaderna och de affärer du inte arbetade med under tiden."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur ska slutsatsen sägas?",
+          "alternativ": [
+            "Som en bedömning, med skälet utskrivet och dörren öppen",
+            "Som en fråga, så att kunden själv kommer fram till den",
+            "Skriftligt, för att undvika diskussion"
+          ],
+          "ratt": [0],
+          "forklaring": "Den är obekväm att säga och nästan alltid mottagen väl. Den kostar dig något på kort sikt, vilket är varför den väger senare."
+        }
+      ]
+    }
+  ]
+}

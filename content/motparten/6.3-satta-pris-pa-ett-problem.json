@@ -1,0 +1,122 @@
+{
+  "kapitel": 6,
+  "lektion": "6.3",
+  "titel": "Att sätta pris på ett problem",
+  "niva": "Mellan",
+  "tid_min": 10,
+  "fardighet": "problem.konsekvens",
+  "mal": "Efter lektionen kan eleven räkna på vad ett problem kostar tillsammans med kunden, med kundens siffror, och vet varför en försiktig siffra som kunden satt är värd mer än en imponerande som säljaren satt.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "PROBLEM OCH KONSEKVENS",
+      "titel": "Att sätta pris på ett problem",
+      "ingress": "Ett problem utan konsekvens är en iakttagelse. Den här lektionen handlar om hur en iakttagelse blir ett belopp, och om vem som måste hålla i pennan."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DET BEHÖVS",
+      "lead": "Ett problem som ingen räknat på förlorar alltid mot ett problem som någon räknat på.",
+      "highlight": "förlorar alltid mot ett problem som någon räknat på",
+      "brodtext": [
+        "Internt konkurrerar din fråga med tio andra om samma budget och samma uppmärksamhet. De andra kommer ofta med siffror, inte för att de är viktigare utan för att någon orkade räkna. Den som ska driva din fråga behöver något att lägga på bordet, och beskrivningar räcker inte i det sällskapet.",
+        "Det är också det enda sättet att göra alternativet att inte göra något jämförbart. Utan ett belopp per månad kostar väntan noll, och noll vinner."
+      ],
+      "takeaway": "En siffra är inte till för att övertyga dig. Den är till för mötet du inte deltar i."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VEM SOM RÄKNAR",
+      "titel": "Kundens siffror, kundens penna",
+      "forklaring": "Räknar du åt kunden får du en snygg kalkyl som ingen tror på. Din siffra bär samma avdrag som allt annat du säger, och den blir dessutom lätt att avfärda: den bygger ju på dina antaganden.",
+      "brodtext": [
+        "Räkna i stället tillsammans, och låt kunden sätta varje ingångsvärde. Hur många gånger i månaden händer det. Ungefär hur lång tid tar det då. Vem är det som lägger tiden. Du bidrar bara med strukturen och med multiplikationen, aldrig med talen.",
+        "Effekten är dubbel. Siffran blir försvarbar internt, eftersom kunden kan redogöra för varje antagande. Och kunden har sagt konsekvensen högt, med egna ord, vilket är det som gör att den finns kvar nästa vecka."
+      ]
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE SORTERS KOSTNAD",
+      "titel": "Vad du räknar på",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Tid som går åt",
+            "text": "Lättast att räkna, minst övertygande. Sparad tid blir sällan pengar om ingen slutar, och den invändningen kommer garanterat internt. Använd den, men luta dig inte mot den."
+          },
+          {
+            "rubrik": "Pengar som läcker",
+            "text": "Felaktiga fakturor, dubbelarbete, missade leveranser, förlorade kunder. Svårare att uppskatta och betydligt tyngre, eftersom det är belopp någon redan saknar."
+          },
+          {
+            "rubrik": "Det som inte blir av",
+            "text": "Affärer ni inte hann med, marknader ni sköt upp. Störst av de tre och svagast som argument, eftersom den bygger på något som inte hänt. Nämn den, räkna inte på den."
+          }
+        ],
+        "figurtext": "Ta den mellersta om du bara får ta en. Den är trovärdig och tung på samma gång."
+      },
+      "forklaring": "Den vanligaste missen är att bygga hela kalkylen på sparad tid, eftersom den är enklast att få fram i ett möte. Men den som ska försvara investeringen internt kommer att få frågan om ni tänker minska personalen, och när svaret är nej faller kalkylen. Läckande pengar tål den frågan."
+    },
+    {
+      "typ": "reading",
+      "kicker": "RÄKNA FÖR LÅGT",
+      "lead": "Frestelsen är att sträcka på siffran. Gör tvärtom, och gör det synligt.",
+      "highlight": "Gör tvärtom, och gör det synligt",
+      "brodtext": [
+        "Säg att ni tar det försiktiga antagandet, och räkna med den lägre siffran kunden nämnde. En kalkyl som uppenbart är i underkant är svår att argumentera emot och lätt att föra vidare. En kalkyl som är i överkant blir en förhandling om metoden i stället för ett beslut om saken.",
+        "Det finns en praktisk vinst också. När kunden internt får frågan om siffran är rimlig går det att svara att den är i underkant, vilket är ett mycket starkare läge än att behöva försvara ett optimistiskt antagande som en leverantör bidragit med."
+      ],
+      "takeaway": "En försiktig siffra kunden själv satt slår en imponerande siffra du satt. Varje gång."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vem ska sätta talen i kalkylen?",
+          "alternativ": [
+            "Du, eftersom du har erfarenhet från liknande bolag",
+            "Kunden, medan du bidrar med struktur och multiplikation",
+            "Ni tillsammans, med ett genomsnitt av era uppskattningar"
+          ],
+          "ratt": [1],
+          "forklaring": "Din siffra bär samma avdrag som allt annat du säger och avfärdas lätt som byggd på dina antaganden."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken sorts kostnad bär bäst i en intern diskussion?",
+          "alternativ": [
+            "Tid som går åt",
+            "Pengar som läcker",
+            "Affärer ni inte hann med"
+          ],
+          "ratt": [1],
+          "forklaring": "Sparad tid blir sällan pengar om ingen slutar, och den invändningen kommer garanterat. Läckande pengar tål frågan."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför ska du räkna i underkant?",
+          "alternativ": [
+            "För att verka ödmjuk",
+            "För att en kalkyl i underkant är svår att argumentera emot och lätt att föra vidare",
+            "För att kunder alltid överdriver sina problem"
+          ],
+          "ratt": [1],
+          "forklaring": "En kalkyl i överkant blir en förhandling om metoden i stället för ett beslut om saken."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är siffrans egentliga syfte?",
+          "alternativ": [
+            "Att övertyga dig om att affären är värd din tid",
+            "Att fungera på det interna mötet du inte deltar i",
+            "Att motivera ditt pris"
+          ],
+          "ratt": [1],
+          "forklaring": "Din fråga konkurrerar med tio andra om samma budget, och de andra kommer ofta med siffror."
+        }
+      ]
+    }
+  ]
+}
