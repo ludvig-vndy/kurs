@@ -1,0 +1,41 @@
+---
+/* Ett steg som ställer ett spritt påstående mot vad som faktiskt gäller.
+   Kapitel 0 i Motparten är byggt kring den här formen. */
+interface Props {
+  pastaende: string;
+  varifran: string;
+  vad_som_galler: string;
+  kalla: string;
+}
+const { pastaende, varifran, vad_som_galler, kalla } = Astro.props;
+---
+
+<div class="myt">
+  <div class="myt__block myt__block--pastaende">
+    <div class="myt__lbl">Påståendet</div>
+    <p class="myt__pastaende">{pastaende}</p>
+    <p class="myt__varifran">{varifran}</p>
+  </div>
+  <div class="myt__block myt__block--galler">
+    <div class="myt__lbl">Vad som gäller</div>
+    <p class="myt__galler">{vad_som_galler}</p>
+    <div class="myt__kalla">Källa {kalla}</div>
+  </div>
+</div>
+
+<style>
+  .myt { display: grid; gap: 0; border: 1px solid var(--rule); background: var(--card); margin: 8px 0; }
+  .myt__block { padding: 22px 24px; }
+  .myt__block--pastaende { border-bottom: 1px solid var(--rule); }
+  .myt__block--galler { border-top: 2px solid var(--oxblood); }
+  .myt__lbl { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .myt__pastaende { font-family: var(--display); font-weight: 300; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.3; color: var(--ink-soft); margin: 0; text-decoration: line-through; text-decoration-color: var(--faint); text-decoration-thickness: 1px; }
+  .myt__varifran { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: var(--muted); margin: 12px 0 0; }
+  .myt__galler { font-family: var(--serif); font-size: 18px; line-height: 1.55; color: var(--ink); margin: 0; }
+  .myt__kalla { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--muted); margin-top: 14px; }
+  @media (min-width: 900px) {
+    .myt { grid-template-columns: 1fr 1fr; }
+    .myt__block--pastaende { border-bottom: none; border-right: 1px solid var(--rule); }
+    .myt__block--galler { border-top: none; border-left: 2px solid var(--oxblood); }
+  }
+</style>

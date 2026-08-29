@@ -9,16 +9,20 @@ import Stapeldiagram from '../fokus/Stapeldiagram.astro';
 import Flode from '../fokus/Flode.astro';
 import Andel from '../fokus/Andel.astro';
 import FokusQuiz from '../fokus/FokusQuiz.astro';
+import Evidens from '../fokus/Evidens.astro';
+import Myt from '../fokus/Myt.astro';
 import { konfig, laddaKurs } from '../../lib/kurs.mjs';
 
 // ── Types ──────────────────────────────────────────────────────────────────
-type StegTyp = 'intro' | 'reading' | 'concept' | 'dataviz' | 'quiz';
+type StegTyp = 'intro' | 'reading' | 'concept' | 'dataviz' | 'quiz' | 'myt';
 interface VisualObj { typ: string; figurtext: string; [key: string]: unknown }
 interface Fraga { typ: 'single' | 'multi'; fraga: string; underrubrik?: string; alternativ: string[]; ratt: number[]; forklaring: string }
 interface Steg {
   typ: StegTyp; kicker?: string; titel?: string; ingress?: string; lead?: string; highlight?: string;
   brodtext?: string[]; takeaway?: string; visual?: VisualObj; forklaring?: string; underrubrik?: string;
   slutsats?: string; fragor?: Fraga[]; rost?: string;
+  evidens?: { niva: 'A' | 'B' | 'C'; kalla?: string; notering?: string };
+  pastaende?: string; varifran?: string; vad_som_galler?: string; kalla?: string;
 }
 interface LessonJson { kapitel: number; lektion: string; titel: string; niva: string; tid_min: number; mal: string; steg: Steg[] }
 
@@ -148,10 +152,10 @@ function visualEl(v: VisualObj) {
             const hasGloss = gloss.length > 0;
             // Plain takeaways move to the right margin (when it's free of glosses)
             // so they read as a side pull-quote, not an identical box at every step.
-            const sideTake = s.typ === 'reading' && !!s.takeaway && s.rost !== 'sebastian' && !hasGloss;
+            const sideTake = s.typ === 'reading' && !!s.takeaway && s.rost !== 'sebastian' && !hasGloss && !s.evidens;
             return (
               <section
-                class:list={['step', { 'has-gloss': hasGloss, 'has-aside': sideTake, 'step--intro': s.typ === 'intro' }]}
+                class:list={['step', { 'has-gloss': hasGloss || !!s.evidens, 'has-aside': sideTake, 'step--intro': s.typ === 'intro' }]}
                 data-step
                 data-typ={s.typ}
                 aria-label={`Steg ${i + 1}`}
@@ -229,8 +233,22 @@ function visualEl(v: VisualObj) {
                   <div class="s-col"><FokusQuiz fragor={s.fragor ?? []} lektionId={lesson.lektion} quizId={`${lesson.lektion}.s${i}`} /></div>
                 )}
 
-                {hasGloss && (
-                  <aside class="gloss" aria-label="Ordforklaringar">
+                {s.typ === 'myt' && (
+                  <div class="s-col">
+                    {s.kicker && <div class="kicker">{s.kicker}</div>}
+                    {s.titel && <h2 class="s-ctitle">{s.titel}</h2>}
+                    <Myt
+                      pastaende={s.pastaende ?? ''}
+                      varifran={s.varifran ?? ''}
+                      vad_som_galler={s.vad_som_galler ?? ''}
+                      kalla={s.kalla ?? ''}
+                    />
+                  </div>
+                )}
+
+                {(hasGloss || s.evidens) && (
+                  <aside class="gloss" aria-label={s.evidens ? 'Marginalanteckningar' : 'Ordforklaringar'}>
+                    {s.evidens && <Evidens evidens={s.evidens} />}
                     {gloss.map((g) => (
                       <div class="gloss__item">
                         <div class="gloss__term">{g.term}</div>

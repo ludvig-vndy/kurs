@@ -1,0 +1,31 @@
+---
+/* Marginalnotis som märker ett stegs evidensnivå. Delar marginalspalt med
+   ordlisteglosorna och renderas före dem. */
+interface Props {
+  evidens: { niva: 'A' | 'B' | 'C'; kalla?: string; notering?: string };
+}
+const { evidens } = Astro.props;
+
+const ETIKETT: Record<string, string> = {
+  A: 'Robust forskning',
+  B: 'Omdiskuterat',
+  C: 'Hantverk, inte forskning',
+};
+const etikett = ETIKETT[evidens.niva] ?? 'Okänd nivå';
+---
+
+<div class:list={['evid', `evid--${evidens.niva.toLowerCase()}`]}>
+  <div class="evid__niva">{etikett}</div>
+  {evidens.kalla && <div class="evid__kalla">Källa {evidens.kalla}</div>}
+  {evidens.notering && <p class="evid__not">{evidens.notering}</p>}
+</div>
+
+<style>
+  .evid { border-left: 2px solid var(--rule-strong); padding: 2px 0 2px 12px; margin-bottom: 18px; }
+  .evid--a { border-left-color: var(--oxblood); }
+  .evid--b { border-left-color: var(--gold); }
+  .evid--c { border-left-color: var(--faint); }
+  .evid__niva { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .evid__kalla { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--muted); margin-top: 3px; }
+  .evid__not { font-family: var(--serif); font-size: 14px; line-height: 1.45; color: var(--ink-soft); margin: 8px 0 0; }
+</style>
