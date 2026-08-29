@@ -354,17 +354,31 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
     var rows=Object.keys(perBolag).map(function(co){
       return '<div class="srow"><span class="dot gold"></span><div><b>'+esc(co)+'</b> <span>· '+perBolag[co]+(perBolag[co]===1?' händelse':' händelser')+'</span></div></div>';
     });
-    lugna.forEach(function(co){ rows.push('<div class="srow"><span class="dot calm"></span><div><b>'+esc(co)+'</b> <span>· lugnt, inget nytt</span></div></div>'); });
+    lugna.filter(function(co){ return !perBolag[co]; }).forEach(function(co){ rows.push('<div class="srow"><span class="dot calm"></span><div><b>'+esc(co)+'</b> <span>· lugnt, inget nytt</span></div></div>'); });
     summ.innerHTML = rows.join('') || '<div class="srow"><span class="dot calm"></span><div><b>Lugnt</b> <span>· inget rörde dina bolag</span></div></div>';
-    // Berättelser: en per händelse.
+    // Berättelser: ett skrivet stycke per bolag, med faktalistan under.
     var st=document.getElementById('brev-stories');
-    st.innerHTML = poster.map(function(p){
-      var dot=TYPKLASS[p.typ]||'calm';
+    var order=[], grouped={};
+    poster.forEach(function(p){ if(!grouped[p.bolag]){grouped[p.bolag]=[];order.push(p.bolag);} grouped[p.bolag].push(p); });
+    var bt=b.brodtext||{};
+    var factWrap='margin-top:14px;border-top:1px solid var(--rule,rgba(33,28,23,.12));padding-top:12px';
+    var factH='font-family:var(--mono,ui-monospace,monospace);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted,#6E6456);margin-bottom:9px';
+    var factRow='font-size:13px;color:var(--ink-soft,#4A4239);line-height:1.5;margin-bottom:9px';
+    var factTyp='font-family:var(--mono,ui-monospace,monospace);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#6E6456);border:1px solid var(--rule,rgba(33,28,23,.18));border-radius:99px;padding:1px 7px;margin-right:8px;white-space:nowrap';
+    var factNum='font-family:var(--mono,ui-monospace,monospace);color:var(--ink,#211C17)';
+    var leadHtml = b.lead ? '<p style="font-family:var(--serif,Georgia,serif);font-size:19px;line-height:1.62;color:var(--ink,#211C17);margin:0 0 24px;padding-bottom:22px;border-bottom:1px solid var(--rule,rgba(33,28,23,.14))">'+esc(b.lead)+'</p>' : '';
+    st.innerHTML = leadHtml + order.map(function(co){
+      var evs=grouped[co], dot=TYPKLASS[evs[0].typ]||'calm';
+      var prose=bt[co]?'<p>'+esc(bt[co])+'</p>':'';
+      var rows=evs.map(function(p){
+        return '<div style="'+factRow+'"><span style="'+factTyp+'">'+esc(p.typnamn||p.typ)+'</span>'+
+          esc(p.rubrik)+(p.fakta?'<br><span style="'+factNum+'">'+esc(p.fakta)+'</span>':'')+
+          (p.url?' <a href="'+esc(p.url)+'" style="white-space:nowrap">källa →</a>':'')+'</div>';
+      }).join('');
       return '<section class="story">'+
-        '<div class="slug"><span class="dot '+dot+'"></span><span class="co">'+esc(p.bolag)+'</span><span class="sep">/</span><span>'+esc(p.typnamn||p.typ)+'</span></div>'+
-        '<h2>'+esc(p.rubrik)+'</h2>'+
-        (p.fakta?'<p>'+esc(p.fakta)+'</p>':'')+
-        '<div class="srcs">'+(p.url?'<a href="'+esc(p.url)+'">Källdokumentet →</a>':'')+'</div>'+
+        '<div class="slug"><span class="dot '+dot+'"></span><span class="co">'+esc(co)+'</span></div>'+
+        prose +
+        '<div style="'+factWrap+'"><div style="'+factH+'">Siffrorna bakom</div>'+rows+'</div>'+
         '</section>';
     }).join('');
   }

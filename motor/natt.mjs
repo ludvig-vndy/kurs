@@ -18,6 +18,8 @@ import { hamtaInsyn } from './hamta-insyn.mjs';
 import { hamtaBlankning } from './hamta-blankning.mjs';
 import { skicka } from './skicka.mjs';
 import { byggBevakning } from './bevakningslista.mjs';
+import { narreraBrev } from './narrera-brev.mjs';
+import { nyckelFinns } from './llm.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
@@ -254,6 +256,14 @@ const brevData = {
   })),
   lugna,
 };
+// Narrera brevet till skriven text (ingress + stycke per bolag), grundat i
+// fakta ovan. Utan LLM-nyckel sparas faktaformen som den är.
+if (brevData.poster.length && nyckelFinns(MODELL)) {
+  try {
+    await narreraBrev(brevData, MODELL);
+    console.log(`Brevet narrerat (ingress + ${Object.keys(brevData.brodtext || {}).length} bolagsstycken).`);
+  } catch (e) { console.log(`Narration hoppades över: ${e.message.slice(0, 120)}`); }
+}
 const brevJsonFil = p(`./out/brev-latest.json`);
 writeFileSync(brevJsonFil, JSON.stringify(brevData, null, 2), 'utf8');
 console.log(`Brev-JSON: ${brevJsonFil}`);
