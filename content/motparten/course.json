@@ -24,7 +24,7 @@
    ],
    "sebastian": "Det svåra med försäljning är inte kunden. Det är att ni båda bär på ett gammalt system, byggt för små grupper där den som ville något av dig ofta ville det på din bekostnad. Vi litar sämre på den som verkar behöva något. Det höll folk vid liv en gång, nu sitter det kvar i ett mötesrum där ingen riskerar mer än sitt anseende. Jag har förlorat fler affärer på att jag verkade behövande än på fel pris.",
    "lektioner": [
-    { "lektion": "0.1", "titel": "Vad du blivit lärd, och varifrån det kom", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "0.1-vad-du-blivit-lard.json" },
+    { "lektion": "0.1", "titel": "Vad du blivit lärd, och varifrån det kom", "niva": "Nybörjare", "tid_min": 7, "status": "klar", "fil": "0.1-vad-du-blivit-lard.json" },
     { "lektion": "0.2", "titel": "Myterna som inte håller", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "0.2-myterna-som-inte-haller.json" },
     { "lektion": "0.3", "titel": "Egot i vägen", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "0.3-egot-i-vagen.json" },
     { "lektion": "0.4", "titel": "Vad försäljning faktiskt är", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "0.4-vad-forsaljning-faktiskt-ar.json" },

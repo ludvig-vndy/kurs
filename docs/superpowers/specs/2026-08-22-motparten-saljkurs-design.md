@@ -248,6 +248,11 @@ finns. Det är hela kopplingen mellan produkterna, och den kostar ingenting nu.
 konkreta och kroppsliga bilder, intervall i ord, ojämn rytm, inget metaprat, inga tretal som
 manér, inga em-dashes eller en-dashes.
 
+Etablerade engelska facktermer skrivs på engelska, inte i påhittad svensk översättning.
+Alltså always be closing, inte "alltid avsluta". Discovery, inte "upptäcktsfas". Regeln
+gäller termer som verkligen heter så i yrket; den är inte en ursäkt för svengelska i
+löptext, och lånord böjs fortfarande inte.
+
 Mentorbilden byter yrke: en erfaren säljare som lär upp någon på väg att bli riktigt bra,
 i stället för en erfaren investerare som lär upp en yngre analytiker. Kalibrering sker mot
 Sebastian-stycket i hus-stilen, som är den största spaken. `granska_rost.py` körs på utfallet.

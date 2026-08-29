@@ -15,13 +15,17 @@ const REGISTER = join(HERE, '..', 'docs', 'kallor', 'motparten-kallregister.md')
 
 /* Fraser ur röda listan. Träff utanför ett myt-steg betyder att kursen påstår
    något den själv har avfärdat. Skrivs både med och utan diakriter, eftersom
-   texten är svensk men grinden ska fälla även slarvig stavning. */
+   texten är svensk men grinden ska fälla även slarvig stavning.
+
+   Listan innehåller bara påståenden som kursen aldrig har anledning att skriva
+   utanför ett myt-steg. R5, always be closing, står medvetet inte här: den
+   måste gå att namna historiskt i löptext, till exempel i 0.1. Att kursen inte
+   förespråkar den är en granskningsfråga, inte något en regex kan avgöra. */
 const RODA = [
   /7\s*procent av kommunikationen/i,
   /kroppsspraket star for|kroppsspråket står för/i,
   /koper pa kansla|köper på känsla/i,
   /spegla.{0,20}kroppssprak|spegla.{0,20}kroppsspråk/i,
-  /always be closing/i,
 ];
 
 /** Källids ur registret: rubriker som "### K1." eller "### R3." */

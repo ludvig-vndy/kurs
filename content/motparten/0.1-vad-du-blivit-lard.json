@@ -1,0 +1,139 @@
+{
+  "kapitel": 0,
+  "lektion": "0.1",
+  "titel": "Vad du blivit lärd, och varifrån det kom",
+  "niva": "Nybörjare",
+  "tid_min": 7,
+  "fardighet": "grund.avlarning",
+  "mal": "Efter lektionen vet eleven var den traditionella säljskolan kom ifrån, vilket problem den löste, och varför samma verktyg fungerar sämre i dag. Eleven kan skilja på ambitionen att sälja bra och de verktyg som en gång skulle bära den.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "AVLÄRNING",
+      "titel": "Vad du blivit lärd, och varifrån det kom",
+      "ingress": "Innan vi bygger något nytt måste vi titta på vad som redan står där. Det mesta du hört om försäljning uppfanns för en annan värld än den du arbetar i."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DÄR DET KOM IFRÅN",
+      "lead": "Den säljskola du har hört talas om byggdes för en värld där säljaren satt på informationen.",
+      "highlight": "säljaren satt på informationen",
+      "brodtext": [
+        "En representant knackade på, öppnade väskan och visade något kunden aldrig sett. Priset fanns i hans huvud. Konkurrentens pris fanns i en annan stad. Vad tidigare köpare tyckte gick inte att ta reda på. Ville du veta något om produkten fanns det en enda källa i rummet, och den källan levde på att du sa ja.",
+        "I det läget är manus rationellt. Om säljaren är kundens enda informationskälla lönar det sig att den informationen levereras i rätt ordning, varje gång. Avslutstekniker är också rationella, för kunden kan inte gå hem och jämföra. Antingen bestämmer hon sig medan du står där, eller så blir det inget. Invändningshantering blir ett hantverk i sig, eftersom en invändning oftast var okunskap och inte oenighet."
+      ],
+      "takeaway": "Teknikerna var inte dumma. De var svar på ett problem som inte finns kvar."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD SOM FÖRÄNDRATS",
+      "titel": "Informationen bytte sida",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Säljaren visste mest",
+            "text": "Priset, konkurrenterna, kvaliteten och andras erfarenheter fanns hos säljaren. Kunden kunde inte kontrollera något innan mötet, och sällan efteråt heller. Övertaget låg på din sida av bordet."
+          },
+          {
+            "rubrik": "Kunden vet mest",
+            "text": "Priser, recensioner, jämförelser och tidigare kunders klagomål ligger i kundens telefon innan du ringer. Ofta har hon läst mer om din bransch den här veckan än du har hunnit den här månaden."
+          }
+        ],
+        "figurtext": "Samma yrke, omvänt informationsläge. Verktygen konstruerades för kolumnen till vänster."
+      },
+      "forklaring": "En modern köpare har gjort en stor del av arbetet innan du är med i bilden. Hon har läst, jämfört och pratat med någon som redan köpt. När du börjar prata är hon inte tom på information, hon är full av den, och en del av det hon tror sig veta är fel. Det förändrar vad du är till för. Du är inte längre kanalen som informationen kommer genom. Du är personen som hjälper till att sortera den, och som ska visa sig värd att lita på trots att du tjänar på ett visst svar."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR PRESSEN KÄNNS EFFEKTIV",
+      "lead": "Ett pressat avslut känns kraftfullt för den som utför det, och det är precis därför det överlever.",
+      "highlight": "känns kraftfullt för den som utför det",
+      "brodtext": [
+        "Du gör något aktivt. Du tar tag i samtalet. Efteråt minns du de gånger det fungerade, eftersom de slutade i en affär du kunde peka på. De gånger kunden drog sig ur en vecka senare, eller aldrig svarade igen, hamnar inte i samma minne. Ingen ringer och berättar att de tackade nej för att du pressade.",
+        "Reaktansforskningen beskriver vad som händer på andra sidan. Upplever en människa att hennes valfrihet hotas uppstår en motreaktion som driver henne att göra tvärtom, och den reaktionen har en tydlig ilskekomponent. Sista chansen, erbjudandet som går ut i kväll och frågan som bara har ett rimligt svar är alla hot mot valfriheten. De skapar ett tryck, och trycket riktas mot dig."
+      ],
+      "takeaway": "Det du upplever som handlingskraft upplever kunden som att bli trängd. Ni är i samma samtal men mäter olika saker.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K8",
+        "notering": "Brehms reaktansteori, med Dillard och Shen om ilskekomponenten. Beskriver mekanismen, inte hur mycket den kostar dig i en enskild affär."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "DET OBEKVÄMA FYNDET",
+      "titel": "Starkast stöd finns för det du ska sluta göra",
+      "forklaring": "Motiverande samtal är den bäst undersökta metoden för att hjälpa någon fatta ett svårt beslut. En meta-analys prövade dess egen förklaringsmodell och hittade något obekvämt. Att samtalsledaren gjorde rätt hängde ihop med att klienten själv pratade om förändring, men klientens förändringsprat förutsade inte utfallet särskilt väl. Det som däremot förutsade sämre utfall var klientens motståndsprat, och samtalsledarens egna felsteg, alltså att argumentera, övertala och konfrontera.",
+      "brodtext": [
+        "Läs den slutsatsen långsamt, för den går emot hur säljutbildningar brukar byggas. Den starkaste kunskapen vi har handlar inte om vilken teknik du ska lägga till. Den handlar om vad du ska sluta göra.",
+        "Det är också skälet till att den här kursen börjar med ett kapitel som river i stället för att bygga. Inte som attityd, utan för att det är där stödet finns."
+      ],
+      "evidens": {
+        "niva": "B",
+        "kalla": "K13",
+        "notering": "Magill med flera (2014). Studerad på beteendeförändring inom vård, inte på köpbeslut. Överföringen till säljsamtal är rimlig men oprövad."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM SKA BORT",
+      "lead": "Det som ska bort är inte ambitionen, det är verktygen som en gång skulle bära den.",
+      "highlight": "inte ambitionen, det är verktygen",
+      "brodtext": [
+        "Säljaren som lärde sig manus, always be closing och tjugo svar på tjugo invändningar var inte en sämre människa än du. Hon ville samma sak som du vill: att kunden skulle säga ja, och att det skulle bli bra. Skillnaden är att hennes verktyg passade hennes marknad och passar sämre på din.",
+        "Så var inte generös mot teknikerna för att de är gamla, och var inte hård mot dem heller. Fråga bara vad de var till för. Nästan varje gång var svaret att kunden inte kunde kontrollera dig. Nu kan hon det, innan ni ens talats vid, och då blir varje teknik som förutsätter hennes okunskap en risk i stället för en fördel."
+      ],
+      "takeaway": "Du behåller viljan att stänga affären. Du byter ut allt som byggde på att kunden visste mindre än du."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilket problem löste den traditionella säljskolans tekniker?",
+          "alternativ": [
+            "Att kunden inte kunde kontrollera säljarens uppgifter",
+            "Att kunderna var mindre intelligenta förr",
+            "Att produkterna var sämre och behövde säljas hårdare"
+          ],
+          "ratt": [0],
+          "forklaring": "Säljaren var kundens enda informationskälla. Manus, avslutstekniker och invändningshantering är alla rimliga svar på det läget. När informationen bytte sida försvann problemet de löste."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför överlever pressade avslut trots att de fungerar sämre?",
+          "alternativ": [
+            "För att de fungerar bra på de flesta kunder",
+            "För att de känns kraftfulla för säljaren, och misslyckandena syns inte",
+            "För att forskningen stöder dem men praktiken inte hunnit ikapp"
+          ],
+          "ratt": [1],
+          "forklaring": "Vinsterna hamnar i minnet som affärer man kan peka på. Kunden som drog sig ur eller aldrig svarade igen berättar sällan varför. Återkopplingen är alltså systematiskt skev."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad visade meta-analysen av motiverande samtal starkast stöd för?",
+          "alternativ": [
+            "Att rätt frågeteknik driver kunden mot ett beslut",
+            "Att kundens eget förändringsprat garanterar ett bra utfall",
+            "Att samtalsledarens argumenterande och övertalande hänger ihop med sämre utfall"
+          ],
+          "ratt": [2],
+          "forklaring": "Förändringspratet i sig förutsade utfallet svagt. Det som hängde ihop med sämre utfall var motståndsprat och samtalsledarens egna felsteg. Kunskapen är alltså tydligast om vad man ska sluta göra."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är rätt sätt att se på den gamla säljskolan enligt lektionen?",
+          "alternativ": [
+            "Den var oärlig och byggde på att lura kunden",
+            "Den var rationell i sin tid, och dess verktyg förutsatte ett informationsövertag som inte finns kvar",
+            "Den fungerar fortfarande, men bara i vissa branscher"
+          ],
+          "ratt": [1],
+          "forklaring": "Lektionen dömer inte ut ambitionen. Den placerar teknikerna i sin tid och visar att de förutsatte något som inte längre gäller."
+        }
+      ]
+    }
+  ]
+}
