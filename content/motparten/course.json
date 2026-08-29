@@ -64,9 +64,9 @@
    ],
    "sebastian": "Jag trodde länge att prisinvändningar handlade om pris. Sedan förlorade jag en affär där vi var billigast. Kunden sa rakt ut att beslutet var för svårt att försvara internt om det gick fel. Sedan dess frågar jag tidigt vad som händer med den som skriver under om vi inte levererar. Det svaret säger mer än budgeten gör.",
    "lektioner": [
-    { "lektion": "2.1", "titel": "Vad kunden faktiskt riskerar", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "2.1-vad-kunden-riskerar.json" },
-    { "lektion": "2.2", "titel": "Att göra ingenting, din verkliga konkurrent", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "2.2-att-gora-ingenting.json" },
-    { "lektion": "2.3", "titel": "Sänka risk utan att sänka pris", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "2.3-sanka-risk-inte-pris.json" }
+    { "lektion": "2.1", "titel": "Vad kunden faktiskt riskerar", "niva": "Nybörjare", "tid_min": 8, "status": "klar", "fil": "2.1-vad-kunden-riskerar.json" },
+    { "lektion": "2.2", "titel": "Att göra ingenting, din verkliga konkurrent", "niva": "Nybörjare", "tid_min": 9, "status": "klar", "fil": "2.2-att-gora-ingenting.json" },
+    { "lektion": "2.3", "titel": "Sänka risk utan att sänka pris", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "2.3-sanka-risk-inte-pris.json" }
    ]
   },
   {

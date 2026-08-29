@@ -1,0 +1,120 @@
+{
+  "kapitel": 2,
+  "lektion": "2.2",
+  "titel": "Att göra ingenting, din verkliga konkurrent",
+  "niva": "Nybörjare",
+  "tid_min": 9,
+  "fardighet": "trygghet.statusquo",
+  "mal": "Efter lektionen kan eleven förklara varför alternativet att inte göra något vinner oftare än det borde, känna igen de tre former det tar i en pipeline, och beskriva vad som krävs för att göra det synligt och kostnadssatt.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "TRYGGHET OCH RISK",
+      "titel": "Att göra ingenting, din verkliga konkurrent",
+      "ingress": "Den vanligaste förloraren i din pipeline heter inte något. Den syns inte i offertjämförelsen, den ringer aldrig tillbaka, och den vinner ändå flest gånger."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DEN VINNER",
+      "lead": "Att behålla det man har kräver inget beslut, och det som inte kräver ett beslut behöver ingen försvara.",
+      "highlight": "det som inte kräver ett beslut behöver ingen försvara",
+      "brodtext": [
+        "Människor väljer oproportionerligt ofta att stanna kvar. Det är visat både i experiment och i verkliga val, bland annat när anställda erbjuds byta pensions- eller sjukvårdsplan och låter bli trots att bytet vore bättre för dem. Tendensen är stark, den förklaras delvis av ånger man vill undvika och delvis av tidigare beslut man inte vill motsäga, och den är inte ett tecken på lättja.",
+        "Ovanpå det ligger organisationens egen asymmetri. Ingen får sparken för att allt fortsatte som förut ett kvartal till. Många har fått ta ansvar för ett projekt som drogs igång och inte landade. Att inte göra något är alltså både psykologiskt bekvämt och karriärmässigt billigt, vilket är en tuff kombination att konkurrera mot."
+      ],
+      "takeaway": "Ditt förslag jämförs inte bara med konkurrentens. Det jämförs med att slippa besluta.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K6",
+        "notering": "Samuelson och Zeckhauser (1988). Visar att tendensen finns och är stark. Kopplingen till organisatorisk skuldfördelning är kursens tillägg."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE FÖRKLÄDNADER",
+      "titel": "Hur det ser ut i din pipeline",
+      "forklaring": "Alternativet att inte göra något säger sällan sitt namn. Det kommer förklätt, och de tre vanligaste förklädnaderna är lätta att missta för framsteg.",
+      "brodtext": [
+        "Den första är att skjuta upp. Vi tar det efter sommaren. Vi väntar in budgetprocessen. Vi vill se hur det första kvartalet går. Varje skäl är i sig rimligt, och den som accepterar dem utan att fråga vad som ska vara annorlunda då har accepterat ett nej med fördröjning.",
+        "Den andra är att utreda mer. Ytterligare en referens, ytterligare ett möte, ytterligare en jämförelse. Utredning känns som rörelse och kostar ingen någonting att beställa, vilket är exakt varför den är så bekväm.",
+        "Den tredje är att lösa det själv. Vi bygger nog något internt. Vi ser om vi kan få ut mer av det vi redan har. Ibland stämmer det. Ofta är det ett sätt att slippa besluta utan att behöva säga nej."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM INTE FUNGERAR",
+      "lead": "Instinkten när en affär somnar är att göra erbjudandet mer attraktivt, och det är sällan där problemet sitter.",
+      "highlight": "göra erbjudandet mer attraktivt",
+      "brodtext": [
+        "Fler funktioner, ett bättre case, en rabatt. Allt det höjer den ena sidan av kundens vågskål. Men om det som stoppar beslutet är att ingen vill äga det, så väger du fel skål. Ett mer attraktivt erbjudande som fortfarande kräver ett obekvämt beslut är fortfarande ett obekvämt beslut.",
+        "Ett tidsbegränsat erbjudande gör dessutom saken sämre. Det är ett hot mot valfriheten, och sådana möts av en motreaktion. Kunden som redan tvekar får nu ett skäl att tveka som är socialt gångbart: jag gillar inte att bli pressad."
+      ],
+      "takeaway": "Att göra ett svårt beslut mer lockande hjälper inte. Du måste göra det mindre svårt.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K8",
+        "notering": "Reaktansteorin. Att tidsbegränsade erbjudanden utlöser den i säljsammanhang är kursens tillämpning."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "GÖR DET SYNLIGT",
+      "lead": "Det första steget är att flytta upp alternativet att inte göra något på bordet, som ett alternativ bland andra.",
+      "highlight": "som ett alternativ bland andra",
+      "brodtext": [
+        "Så länge det är osynligt är det gratis. Det står inte med i någon jämförelse, det har ingen prislapp, och därför framstår det som noll. Men det är inte noll. Det har en kostnad som löper varje månad, och den kostnaden är den enda siffra som gör din offert jämförbar med ingenting.",
+        "Räkna den tillsammans med kunden, med kundens siffror, och räkna hellre för lågt än för högt. En försiktig siffra som kunden själv satt är mer användbar än en imponerande siffra som du satt, eftersom den första går att upprepa internt utan dig i rummet."
+      ],
+      "takeaway": "Ge alternativet att inte göra något en prislapp per månad. Först då tävlar det på samma villkor som du."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför är alternativet att inte göra något så starkt?",
+          "alternativ": [
+            "För att kunder är obeslutsamma av naturen",
+            "För att det inte kräver något beslut, och därmed inte behöver försvaras av någon",
+            "För att befintliga leverantörer sänker priset när de hotas"
+          ],
+          "ratt": [1],
+          "forklaring": "Tendensen att stanna kvar är väl belagd, och ovanpå den ligger organisationens asymmetri: ingen får sparken för att allt fortsatte som förut."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken av dessa är en förklädnad för att inte göra något?",
+          "alternativ": [
+            "Kunden ber om ett möte med sin tekniska chef",
+            "Kunden vill utreda ytterligare en referens innan beslut",
+            "Kunden ifrågasätter en specifik del av lösningen"
+          ],
+          "ratt": [1],
+          "forklaring": "Utredning känns som rörelse och kostar ingen något att beställa. Det är därför den är så bekväm att välja i stället för att bestämma sig."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför gör ett tidsbegränsat erbjudande ofta saken sämre?",
+          "alternativ": [
+            "För att kunden hinner jämföra med konkurrenter under tiden",
+            "För att det är ett hot mot valfriheten och möts av en motreaktion",
+            "För att rabatten signalerar att produkten är svårsåld"
+          ],
+          "ratt": [1],
+          "forklaring": "Kunden som redan tvekar får dessutom ett socialt gångbart skäl att tveka: jag gillar inte att bli pressad."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad krävs för att alternativet att inte göra något ska tävla på samma villkor?",
+          "alternativ": [
+            "Att du gör ditt erbjudande mer attraktivt",
+            "Att det får en kostnad per månad, räknad med kundens egna siffror",
+            "Att du sätter en deadline för beslutet"
+          ],
+          "ratt": [1],
+          "forklaring": "Så länge det är osynligt framstår det som noll. En försiktig siffra som kunden själv satt går dessutom att upprepa internt utan dig."
+        }
+      ]
+    }
+  ]
+}

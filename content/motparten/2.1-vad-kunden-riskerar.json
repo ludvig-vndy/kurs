@@ -1,0 +1,130 @@
+{
+  "kapitel": 2,
+  "lektion": "2.1",
+  "titel": "Vad kunden faktiskt riskerar",
+  "niva": "Nybörjare",
+  "tid_min": 8,
+  "fardighet": "trygghet.risk",
+  "mal": "Efter lektionen kan eleven namnge fyra risker en kund bär vid ett köpbeslut, veta vilken av dem som väger tyngst och sällan nämns, och ställa frågan som gör den synlig.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "TRYGGHET OCH RISK",
+      "titel": "Vad kunden faktiskt riskerar",
+      "ingress": "Kunden räknar på fyra saker samtidigt. Tre av dem står i offerten. Den fjärde nämns nästan aldrig, och det är den som avgör."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA POSTER",
+      "titel": "Det som står på spel",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Pengarna",
+            "text": "Den enda risken som står i offerten. Också den enda som går att förhandla om, vilket är skälet till att samtalet dras dit även när det inte är där problemet sitter."
+          },
+          {
+            "rubrik": "Tiden",
+            "text": "Införandet tar kundens folk i anspråk under veckor. Den kostnaden syns inte i priset och drabbar ofta andra personer än den som skriver under."
+          },
+          {
+            "rubrik": "Låsningen",
+            "text": "Att välja er är också att inte välja någon annan, och att sitta med valet i tre år. Ju svårare det är att backa, desto längre dröjer beslutet."
+          },
+          {
+            "rubrik": "Anseendet",
+            "text": "Den som drev igenom det här internt får äga utfallet. Går det illa är det inte bolaget som får skulden i korridoren, det är en person med namn."
+          }
+        ],
+        "figurtext": "De tre första drabbar bolaget. Den fjärde drabbar den du sitter mittemot."
+      },
+      "forklaring": "De tre första skiljer sig från den fjärde på ett avgörande sätt. Pengar, tid och låsning är bolagets risker, och de går att räkna på i ett kalkylark. Anseendet är personligt, det står inte i något dokument, och det är den enda av de fyra som ingen kommer att nämna i ett möte."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN SOM AVGÖR",
+      "lead": "En kund kan tycka att din lösning är bäst för bolaget och ändå låta bli, eftersom den inte är bäst för henne.",
+      "highlight": "bäst för bolaget och ändå låta bli",
+      "brodtext": [
+        "Det är inte cynism, det är hur organisationer fungerar. Den som föreslår en förändring äger den. Går det bra delas beröm brett. Går det illa vet alla vem som drev frågan. Utfallen är alltså osymmetriska på ett sätt som gör försiktighet rationell även när den ser irrationell ut utifrån.",
+        "Därför kan du vinna varje argument om produkten och ändå förlora. Argumenten handlade om bolagets tre risker. Beslutet hängde på den fjärde, och den fanns aldrig med i samtalet."
+      ],
+      "takeaway": "Räkna alltid ut vem som får äga beslutet om det går fel. Den personens risk är den du faktiskt arbetar mot."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR PRISET FÅR BÄRA ALLT",
+      "lead": "När en kund säger att det är för dyrt betyder det ibland precis det, och ofta något annat.",
+      "highlight": "ibland precis det, och ofta något annat",
+      "brodtext": [
+        "Priset är den enda av de fyra riskerna som är socialt accepterad att uttala. Att säga att det är för dyrt är begripligt och kräver ingen förklaring. Att säga att jag vågar inte stå för det här inför min chef är sant men går inte att säga högt, särskilt inte till en säljare.",
+        "Följden är att prisinvändningen blir en behållare för allt annat. Sänker du priset mot en invändning som egentligen handlade om anseende har du gjort två saker: du har bekräftat att priset var påhittat från början, och du har lämnat den verkliga risken orörd. Affären står stilla ändå, nu till lägre marginal."
+      ],
+      "takeaway": "Behandla den första prisinvändningen som en fråga, inte som ett besked. Du vet ännu inte vad den bär."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FRÅGAN SOM GÖR DEN SYNLIG",
+      "titel": "Vem får svara för det här om ett år",
+      "forklaring": "Det finns ingen formulering som får någon att erkänna en karriärrisk. Men det finns en fråga som gör det legitimt att prata om den, och den handlar om organisationen snarare än om personen.",
+      "brodtext": [
+        "Fråga vem som kommer att få frågan om ett år om det inte blev som ni tänkt. Den frågan är obekväm nog att bära information och opersonlig nog att gå att besvara. Ofta får du ett namn, ibland kundens eget, och nästan alltid får du veta något om hur beslutet ska försvaras internt.",
+        "Sedan är arbetet inte att övertyga om att risken är liten. Det är att göra försvaret enklare: vad kan personen visa upp efter tre månader som bevisar att beslutet var rimligt även om resten går trögt. Ett svar på den frågan är värt mer än tio procent i rabatt."
+      ],
+      "evidens": {
+        "niva": "C",
+        "notering": "Hantverk. Följer av att beslut ska försvaras internt, men jag har inte hittat någon studie som mätt effekten av just den här frågan i säljsamtal."
+      }
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vilken av kundens fyra risker nämns nästan aldrig i ett möte?",
+          "alternativ": [
+            "Tidsåtgången vid införandet",
+            "Anseendet hos den som drev igenom beslutet",
+            "Låsningen till en leverantör"
+          ],
+          "ratt": [1],
+          "forklaring": "De tre första är bolagets och går att räkna på. Den fjärde är personlig, står inte i något dokument, och är den enda ingen uttalar."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför kan en kund avstå från något som är bäst för bolaget?",
+          "alternativ": [
+            "För att kunder ofta saknar mandat att fatta beslut",
+            "För att utfallen är osymmetriska: beröm delas brett medan skulden får ett namn",
+            "För att bolagets och individens intressen alltid står i konflikt"
+          ],
+          "ratt": [1],
+          "forklaring": "Försiktighet blir rationell för individen även när den ser irrationell ut utifrån. Det är hur organisationer fungerar, inte cynism."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad händer om du sänker priset mot en invändning som egentligen gällde anseende?",
+          "alternativ": [
+            "Affären går igenom, men med lägre marginal",
+            "Du bekräftar att priset var påhittat och lämnar den verkliga risken orörd",
+            "Kunden uppfattar dig som mer tillmötesgående och beslutet påskyndas"
+          ],
+          "ratt": [1],
+          "forklaring": "Priset är den enda socialt accepterade invändningen, så den blir en behållare för allt annat. Sänkningen träffar därför fel risk."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är arbetet när du väl vet vem som äger beslutet?",
+          "alternativ": [
+            "Att övertyga personen om att risken är liten",
+            "Att göra det enklare att försvara beslutet internt",
+            "Att gå förbi personen till någon med mer mandat"
+          ],
+          "ratt": [1],
+          "forklaring": "Vad kan personen visa upp efter tre månader som bevisar att beslutet var rimligt. Ett svar på den frågan är värt mer än rabatt."
+        }
+      ]
+    }
+  ]
+}

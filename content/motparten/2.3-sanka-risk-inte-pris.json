@@ -1,0 +1,127 @@
+{
+  "kapitel": 2,
+  "lektion": "2.3",
+  "titel": "Sänka risk utan att sänka pris",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "trygghet.sankarisk",
+  "mal": "Efter lektionen kan eleven skilja åtgärder som sänker kundens upplevda risk från åtgärder som bara sänker priset, känna till varför rabatten är den sämsta av dem, och välja instrument efter vilken av kundens risker som är den bindande.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "TRYGGHET OCH RISK",
+      "titel": "Sänka risk utan att sänka pris",
+      "ingress": "Den som lärt sig att risk blockerar oftare än värde behöver något att göra åt saken. Här är verktygen, och här är det verktyg du ska sluta använda."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR RABATTEN ÄR SÄMST",
+      "lead": "En rabatt är det enda av dina verktyg som gör skada på vägen mot ett ja.",
+      "highlight": "gör skada på vägen mot ett ja",
+      "brodtext": [
+        "Den säger tre saker du inte vill säga. Att det första priset inte var det riktiga, vilket kastar tvivel bakåt över allt annat du sagt. Att det finns mer att hämta, vilket flyttar samtalet till förhandling i stället för till beslut. Och att du behöver affären, vilket är den signal som kostar mest av alla.",
+        "Den sänker inte heller den risk kunden faktiskt bär. Pengarna var en av fyra poster, och sällan den bindande. Efter rabatten är tidsåtgången densamma, låsningen densamma, och den som skulle äga beslutet är lika utsatt som förut. Du har bara gjort samma svåra beslut något billigare."
+      ],
+      "takeaway": "Rabatt är inte riskreduktion. Det är en betalning för att slippa ta reda på var risken sitter."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VERKTYGEN",
+      "titel": "Fyra sätt som faktiskt sänker risk",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Mindre första steg",
+            "text": "En avgränsad del, en avdelning, ett kvartal. Sänker allt på en gång: mindre pengar, mindre tid, svagare låsning, och ett beslut som går att försvara som ett försök."
+          },
+          {
+            "rubrik": "Väg ut",
+            "text": "En uppsägningsklausul, en utvärderingspunkt, ett datum då båda får tänka om. Låsningen är ofta den tysta blockeraren, och den här tar bort den nästan gratis."
+          },
+          {
+            "rubrik": "Bevis från någon annan",
+            "text": "En referens som liknar kunden, helst en som säger något negativt också. Sänker osäkerheten om att det fungerar, och kostar dig kontrollen över samtalet, vilket är varför den väger."
+          },
+          {
+            "rubrik": "Ett tidigt kvitto",
+            "text": "Något konkret som går att visa upp internt efter en månad. Riktar sig mot anseenderisken, alltså den enda av de fyra som ingen nämner högt."
+          }
+        ],
+        "figurtext": "Fyra instrument, olika mål. Rabatten finns inte med, eftersom den inte träffar någon av riskerna."
+      },
+      "forklaring": "Alla fyra har en sak gemensamt: de kostar dig något. Ett mindre första steg är en mindre order. En väg ut är en risk du tar tillbaka. En referens som får säga något negativt är kontroll du släpper. Det är därför de bär vikt, och det är också därför de inte går att göra på låtsas."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VÄLJ EFTER RÄTT RISK",
+      "lead": "Instrumenten är inte utbytbara. Ett litet första steg mot en anseenderisk gör ingen nytta alls.",
+      "highlight": "inte utbytbara",
+      "brodtext": [
+        "Är det pengarna som binder, hjälper ett mindre första steg. Är det tiden, hjälper det att flytta arbete från kundens folk till ert. Är det låsningen, hjälper en väg ut. Är det anseendet, hjälper bara ett tidigt kvitto som personen kan visa upp.",
+        "Att välja fel instrument ser ut som handlingskraft och är i praktiken en gratis eftergift. Du har gett bort något utan att flytta beslutet, och nästa gång du ger bort något är det värt mindre."
+      ],
+      "takeaway": "Ta reda på vilken av de fyra riskerna som binder innan du erbjuder något. Annars betalar du för fel sak."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EN VARNING",
+      "lead": "Ett litet första steg är inte alltid rätt, och det säljs ofta som om det vore gratis.",
+      "highlight": "inte alltid rätt",
+      "brodtext": [
+        "Det finns lösningar som inte fungerar i liten skala. Ger du kunden en pilot som är för liten för att visa värdet har du köpt ett beslut nu och en förlust senare, och den förlusten kommer med bevis: vi provade, det gav inget. Då har du inte sänkt risken, du har flyttat den till en punkt där du inte längre kan påverka den.",
+        "Regeln är enkel och obekväm: erbjud bara ett mindre första steg som är tillräckligt stort för att ge ett ärligt svar. Kan du inte konstruera ett sådant är det bättre att säga det rakt ut, och det säger i sin tur något om er lösning som är värt att veta."
+      ],
+      "takeaway": "En pilot som inte kan misslyckas kan inte heller övertyga. Gör den liten nog att våga och stor nog att svara."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför är rabatt det sämsta riskverktyget?",
+          "alternativ": [
+            "För att det kostar dig marginal",
+            "För att det säger att första priset var påhittat, att det finns mer att hämta, och att du behöver affären",
+            "För att kunder sällan bryr sig om pris"
+          ],
+          "ratt": [1],
+          "forklaring": "Den sänker inte heller den risk kunden faktiskt bär. Tid, låsning och anseende står kvar oförändrade efter rabatten."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad har de fyra fungerande instrumenten gemensamt?",
+          "alternativ": [
+            "De kostar dig något",
+            "De går snabbt att erbjuda",
+            "De kräver godkännande från din chef"
+          ],
+          "ratt": [0],
+          "forklaring": "Mindre order, risk du tar tillbaka, kontroll du släpper. Det är därför de bär vikt, och därför de inte går att göra på låtsas."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket instrument träffar anseenderisken?",
+          "alternativ": [
+            "En uppsägningsklausul",
+            "Ett tidigt kvitto som går att visa upp internt",
+            "Ett mindre första steg"
+          ],
+          "ratt": [1],
+          "forklaring": "Anseenderisken bärs av en person som ska försvara beslutet. Det som hjälper är något konkret att visa upp tidigt, inte lägre pris eller mindre omfattning."
+        },
+        {
+          "typ": "single",
+          "fraga": "När ska du avstå från att erbjuda ett mindre första steg?",
+          "alternativ": [
+            "När kunden är stor nog att köpa allt direkt",
+            "När steget är för litet för att ge ett ärligt svar om värdet",
+            "När konkurrenterna erbjuder samma sak"
+          ],
+          "ratt": [1],
+          "forklaring": "En pilot som inte kan visa värdet ger en förlust med bevis: vi provade, det gav inget. Risken flyttas då till en punkt där du inte längre kan påverka den."
+        }
+      ]
+    }
+  ]
+}
