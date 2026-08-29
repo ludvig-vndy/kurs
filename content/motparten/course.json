@@ -4,7 +4,10 @@
  "beskrivning": "En kurs i försäljning som handlar om att förstå människor, inte om att bli bättre på att prata. Byggd på forskning där det finns, och märkt som hantverk där det inte gör det.",
  "delar": [
   { "n": 1, "titel": "Avlärning", "sub": "Göra plats innan något nytt får fäste", "kapitel": [0] },
-  { "n": 2, "titel": "Personen", "sub": "Förtroende, trygghet och nyfikenhet", "kapitel": [1] }
+  { "n": 2, "titel": "Personen", "sub": "Förtroende, trygghet och nyfikenhet", "kapitel": [1, 2, 3] },
+  { "n": 3, "titel": "Samtalet", "sub": "Frågor, lyssnande och det verkliga problemet", "kapitel": [4, 5, 6] },
+  { "n": 4, "titel": "Beslutet", "sub": "Värde, friktion och att våga säga nej", "kapitel": [7, 8, 9] },
+  { "n": 5, "titel": "Yrket", "sub": "Uppföljning och att se sina egna mönster", "kapitel": [10, 11] }
  ],
  "kapitel": [
   {
@@ -46,6 +49,180 @@
     { "lektion": "1.2", "titel": "Varför du är diskonterad från start", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "1.2-diskonterad-fran-start.json" },
     { "lektion": "1.3", "titel": "Hur förtroende rivs", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "1.3-hur-fortroende-rivs.json" },
     { "lektion": "1.4", "titel": "Vad du faktiskt kan göra", "niva": "Mellan", "tid_min": 7, "status": "kommande", "fil": "1.4-vad-du-faktiskt-kan-gora.json" }
+   ]
+  },
+  {
+   "nummer": 2,
+   "titel": "Trygghet och risk",
+   "niva": "Nybörjare",
+   "tid_min": 25,
+   "blurb": "Folk säger sällan nej för att de inte förstår värdet. De säger nej för att de inte vågar ha fel. Kapitlet handlar om vad kunden faktiskt riskerar, varför den farligaste konkurrenten är att göra ingenting, och hur du sänker risk utan att sänka priset.",
+   "outcomes": [
+    "Kunna namnge de fyra riskerna kunden bär: pengar, tid, anseende och att välja fel",
+    "Veta varför att behålla det man har vinner oftare än det borde",
+    "Kunna sänka upplevd risk med något som kostar dig, inte kunden"
+   ],
+   "lektioner": [
+    { "lektion": "2.1", "titel": "Vad kunden faktiskt riskerar", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "2.1-vad-kunden-riskerar.json" },
+    { "lektion": "2.2", "titel": "Att göra ingenting, din verkliga konkurrent", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "2.2-att-gora-ingenting.json" },
+    { "lektion": "2.3", "titel": "Sänka risk utan att sänka pris", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "2.3-sanka-risk-inte-pris.json" }
+   ]
+  },
+  {
+   "nummer": 3,
+   "titel": "Nyfikenhet",
+   "niva": "Nybörjare",
+   "tid_min": 23,
+   "blurb": "Alla säljkurser säger att du ska vara intresserad av kunden. Ingen säger hur du blir det när du inte är det. Kapitlet handlar om varför spelat intresse syns, vad äkta nyfikenhet faktiskt riktas mot, och hur förberedelse gör den möjlig.",
+   "outcomes": [
+    "Veta varför spelat intresse läcker och vad kunden reagerar på",
+    "Kunna rikta nyfikenheten mot något som faktiskt är intressant i varje affär",
+    "Ha en förberedelse som ger dig något att vara nyfiken på innan mötet börjar"
+   ],
+   "lektioner": [
+    { "lektion": "3.1", "titel": "Varför intresse inte går att spela", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "3.1-intresse-gar-inte-att-spela.json" },
+    { "lektion": "3.2", "titel": "Att bli nyfiken på riktigt", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "3.2-bli-nyfiken-pa-riktigt.json" },
+    { "lektion": "3.3", "titel": "Förberedelsen som gör nyfikenhet möjlig", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "3.3-forberedelsen.json" }
+   ]
+  },
+  {
+   "nummer": 4,
+   "titel": "Frågor",
+   "niva": "Mellan",
+   "tid_min": 32,
+   "blurb": "Frågan är säljarens enda verkligt kraftfulla verktyg, och de flesta frågor som ställs är påståenden i förklädnad. Kapitlet handlar om skillnaden, om vad olika frågetyper faktiskt gör, och om den obekväma frågan som sparar månader.",
+   "outcomes": [
+    "Kunna höra när din egen fråga är ett påstående med frågetecken",
+    "Veta vad öppna, prövande och konsekvensfrågor gör olika",
+    "Våga ställa den fråga du helst hoppar över, och veta varför den lönar sig",
+    "Kunna vara tyst tillräckligt länge för att svaret ska bli sant"
+   ],
+   "lektioner": [
+    { "lektion": "4.1", "titel": "Frågan som egentligen är ett påstående", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "4.1-fragan-som-ar-ett-pastaende.json" },
+    { "lektion": "4.2", "titel": "Vad olika frågor gör", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "4.2-vad-olika-fragor-gor.json" },
+    { "lektion": "4.3", "titel": "Den obekväma frågan", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "4.3-den-obekvama-fragan.json" },
+    { "lektion": "4.4", "titel": "Tystnaden efter frågan", "niva": "Mellan", "tid_min": 7, "status": "kommande", "fil": "4.4-tystnaden-efter-fragan.json" }
+   ]
+  },
+  {
+   "nummer": 5,
+   "titel": "Lyssnande",
+   "niva": "Mellan",
+   "tid_min": 25,
+   "blurb": "Att lyssna är inte att vara tyst. Det är att kunna beskriva kundens läge bättre än kunden själv gjorde. Kapitlet handlar om nivåerna av lyssnande, om återgivningen som prov på att du förstått, och om det som aldrig sägs högt.",
+   "outcomes": [
+    "Kunna skilja på att vänta på din tur, höra orden, och förstå situationen",
+    "Kunna återge kundens läge så att kunden känner igen sig och fyller i",
+    "Märka när det viktiga ligger i det som undviks"
+   ],
+   "lektioner": [
+    { "lektion": "5.1", "titel": "Tre nivåer av lyssnande", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "5.1-tre-nivaer-av-lyssnande.json" },
+    { "lektion": "5.2", "titel": "Återgivningen som prov", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "5.2-atergivningen-som-prov.json" },
+    { "lektion": "5.3", "titel": "Det som inte sägs", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "5.3-det-som-inte-sags.json" }
+   ]
+  },
+  {
+   "nummer": 6,
+   "titel": "Problem och konsekvens",
+   "niva": "Mellan",
+   "tid_min": 26,
+   "blurb": "Ett problem utan konsekvens är ingen affär, det är en iakttagelse. Kapitlet handlar om att hitta orsaken bakom symptomet, om att sätta pris på ett problem tillsammans med kunden, och om att våga se när problemet inte är värt att lösa.",
+   "outcomes": [
+    "Kunna skilja symptom från orsak i en kunds egen beskrivning",
+    "Kunna räkna på vad problemet kostar, med kundens siffror och inte dina",
+    "Kunna avgöra när ett problem är för litet för att bära en affär"
+   ],
+   "lektioner": [
+    { "lektion": "6.1", "titel": "Symptom och orsak", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "6.1-symptom-och-orsak.json" },
+    { "lektion": "6.2", "titel": "Att sätta pris på ett problem", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "6.2-satta-pris-pa-ett-problem.json" },
+    { "lektion": "6.3", "titel": "När problemet inte är värt att lösa", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "6.3-nar-problemet-inte-ar-vart-att-losa.json" }
+   ]
+  },
+  {
+   "nummer": 7,
+   "titel": "Värde",
+   "niva": "Mellan",
+   "tid_min": 25,
+   "blurb": "Värde som kunden inte kan formulera för en kollega existerar inte. Kapitlet handlar om att värdet är kundens och inte ditt, om hur det blir konkret, och om provet som avgör om du lyckats.",
+   "outcomes": [
+    "Kunna beskriva värdet i kundens ord, i kundens situation",
+    "Kunna göra ett påstått värde konkret nog att någon vågar räkna på det",
+    "Kunna pröva om kunden kan föra värdet vidare utan dig i rummet"
+   ],
+   "lektioner": [
+    { "lektion": "7.1", "titel": "Värdet är kundens, inte ditt", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "7.1-vardet-ar-kundens.json" },
+    { "lektion": "7.2", "titel": "Att göra värdet konkret", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "7.2-gora-vardet-konkret.json" },
+    { "lektion": "7.3", "titel": "Provet: kan kunden förklara det själv", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "7.3-provet.json" }
+   ]
+  },
+  {
+   "nummer": 8,
+   "titel": "Beslut och friktion",
+   "niva": "Avancerad",
+   "tid_min": 33,
+   "blurb": "Mellan ett ja och en underskrift ligger allt som gör det svårt att bestämma sig. Kapitlet handlar om hur människor väljer under osäkerhet, om intressenterna du aldrig träffat, om friktionen ingen berättar om, och om nästa steg som avgör om affären lever.",
+   "outcomes": [
+    "Veta hur människor väljer när de inte kan veta, och vad det betyder för din offert",
+    "Kunna kartlägga vilka som påverkar beslutet utan att sitta i rummet",
+    "Kunna hitta och ta bort friktion i stället för att pressa",
+    "Aldrig lämna ett möte utan ett nästa steg som båda accepterat"
+   ],
+   "lektioner": [
+    { "lektion": "8.1", "titel": "Att välja när man inte kan veta", "niva": "Avancerad", "tid_min": 9, "status": "kommande", "fil": "8.1-valja-nar-man-inte-kan-veta.json" },
+    { "lektion": "8.2", "titel": "Intressenterna du inte träffat", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "8.2-intressenterna-du-inte-traffat.json" },
+    { "lektion": "8.3", "titel": "Friktion, det ingen berättar om", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "8.3-friktion.json" },
+    { "lektion": "8.4", "titel": "Nästa steg", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "8.4-nasta-steg.json" }
+   ]
+  },
+  {
+   "nummer": 9,
+   "titel": "Integritet",
+   "niva": "Mellan",
+   "tid_min": 24,
+   "blurb": "Att rekommendera bort en kund är den dyraste och mest lönsamma handlingen i yrket. Kapitlet handlar om när du ska säga nej, vad det kostar och ger, och var gränsen går mellan att påverka och att manipulera.",
+   "outcomes": [
+    "Kunna avgöra när din lösning faktiskt inte passar, innan kunden gör det",
+    "Veta vad ett nej kostar i kvartalet och ger över åren",
+    "Kunna dra gränsen mellan påverkan och manipulation i ditt eget beteende"
+   ],
+   "lektioner": [
+    { "lektion": "9.1", "titel": "När du ska säga nej", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "9.1-nar-du-ska-saga-nej.json" },
+    { "lektion": "9.2", "titel": "Vad ett nej kostar och ger", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "9.2-vad-ett-nej-kostar.json" },
+    { "lektion": "9.3", "titel": "Påverkan och manipulation", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "9.3-paverkan-och-manipulation.json" }
+   ]
+  },
+  {
+   "nummer": 10,
+   "titel": "Uppföljning",
+   "niva": "Nybörjare",
+   "tid_min": 22,
+   "blurb": "Uppföljning som inte tillför något är inte uthållighet, det är en avgift du tar ut på relationen. Kapitlet handlar om att höra av sig med något eget, om vad den långa tystnaden betyder, och om när du ska släppa.",
+   "outcomes": [
+    "Kunna följa upp med något kunden har nytta av även om affären dör",
+    "Kunna tolka tystnad utan att fylla den med egna antaganden",
+    "Kunna avsluta en affär som inte blir av, utan att bränna relationen"
+   ],
+   "lektioner": [
+    { "lektion": "10.1", "titel": "Uppföljning som tillför något", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "10.1-uppfoljning-som-tillfor.json" },
+    { "lektion": "10.2", "titel": "Den långa tystnaden", "niva": "Mellan", "tid_min": 7, "status": "kommande", "fil": "10.2-den-langa-tystnaden.json" },
+    { "lektion": "10.3", "titel": "När du ska släppa", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "10.3-nar-du-ska-slappa.json" }
+   ]
+  },
+  {
+   "nummer": 11,
+   "titel": "Självinsikt",
+   "niva": "Avancerad",
+   "tid_min": 25,
+   "blurb": "Den som inte ser sina egna mönster upprepar dem i tjugo år och kallar det erfarenhet. Kapitlet handlar om att hitta det du gör om och om igen, om att mäta det som betyder något, och om att bygga en process du faktiskt följer.",
+   "outcomes": [
+    "Kunna se ett återkommande mönster i dina egna förlorade affärer",
+    "Veta vilka mått som säger något om hantverket och vilka som bara mäter aktivitet",
+    "Ha en egen process som håller när du har bråttom"
+   ],
+   "lektioner": [
+    { "lektion": "11.1", "titel": "Se dina egna mönster", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "11.1-se-dina-egna-monster.json" },
+    { "lektion": "11.2", "titel": "Mäta det som betyder något", "niva": "Avancerad", "tid_min": 9, "status": "kommande", "fil": "11.2-mata-det-som-betyder-nagot.json" },
+    { "lektion": "11.3", "titel": "Syntes: din egen process", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "11.3-din-egen-process.json" }
    ]
   }
  ]

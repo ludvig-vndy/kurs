@@ -5,9 +5,52 @@
     "grund.sjalvinsikt",
     "grund.definition",
     "grund.kontrakt",
+
     "fortroende.grund",
     "fortroende.varme",
     "fortroende.reparation",
-    "fortroende.handling"
+    "fortroende.handling",
+
+    "trygghet.risk",
+    "trygghet.statusquo",
+    "trygghet.sankarisk",
+
+    "nyfikenhet.akta",
+    "nyfikenhet.riktning",
+    "nyfikenhet.forberedelse",
+
+    "fragor.pastaende",
+    "fragor.typer",
+    "fragor.obekvama",
+    "fragor.tystnad",
+
+    "lyssnande.nivaer",
+    "lyssnande.atergivning",
+    "lyssnande.osagt",
+
+    "problem.orsak",
+    "problem.konsekvens",
+    "problem.avgransning",
+
+    "varde.agarskap",
+    "varde.konkretisering",
+    "varde.vidarebefordran",
+
+    "beslut.osakerhet",
+    "beslut.intressenter",
+    "beslut.friktion",
+    "beslut.nastasteg",
+
+    "integritet.nej",
+    "integritet.rekommenderabort",
+    "integritet.paverkan",
+
+    "uppfoljning.varde",
+    "uppfoljning.tystnad",
+    "uppfoljning.slappa",
+
+    "sjalvinsikt.monster",
+    "sjalvinsikt.matning",
+    "sjalvinsikt.process"
   ]
 }
