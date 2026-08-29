@@ -1,0 +1,114 @@
+{
+  "kapitel": 9,
+  "lektion": "9.2",
+  "titel": "Vad ett nej kostar och ger",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "integritet.rekommenderabort",
+  "mal": "Efter lektionen kan eleven redogöra för vad ett avrådande kostar i kvartalet och vad det kan ge över åren, och vet varför argumentet inte ska framställas som en säker investering.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "INTEGRITET",
+      "titel": "Vad ett nej kostar och ger",
+      "ingress": "Kursens tionde princip säger att avråda är den dyraste och mest lönsamma handlingen i yrket. Den här lektionen prövar om det stämmer, och är ärlig med var beviset tar slut."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KOSTNADEN ÄR SÄKER",
+      "lead": "Vad ett nej kostar är det enda i den här lektionen som går att räkna ut exakt.",
+      "highlight": "det enda som går att räkna ut exakt",
+      "brodtext": [
+        "Affären, provisionen, prognosen, och samtalet med chefen om varför siffran ändrades. Allt det är omedelbart, konkret och drabbar dig ensam. Ingen intern belöningsstruktur premierar en avrådd affär, och de flesta bolag har inte ens en ruta att bokföra den i.",
+        "Det är därför den här handlingen är sällsynt, och det är också därför den betyder något. Om den vore gratis skulle alla göra den, och då hade den inte burit någon information."
+      ],
+      "takeaway": "Ett nej kostar dig något säkert i utbyte mot något osäkert. Det är hela dess värde och hela dess risk."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VINSTEN ÄR SANNOLIK, INTE SÄKER",
+      "titel": "Fyra saker som brukar hända",
+      "forklaring": "Det finns inget mätunderlag som visar avkastningen på att avråda. Det som finns är erfarenhet, och den pekar åt fyra håll som alla är rimliga men inte bevisade.",
+      "brodtext": [
+        "Kunden kommer tillbaka när läget ändrats, ofta med något större. De minns vem som sa nej, eftersom nästan ingen gör det.",
+        "Kunden rekommenderar dig till andra, ibland samma vecka. Ett avrådande är den enda historia om en leverantör som folk gärna återberättar.",
+        "Dina ja väger tyngre efteråt. Den som avstått en gång har visat att rekommendationen inte är automatisk, och nästa gång du säger att något passar finns det skäl att tro dig.",
+        "Och du slipper en dålig leverans, en missnöjd referens och tre månaders eftersläckning som du annars hade ägt."
+      ],
+      "evidens": {
+        "niva": "C",
+        "notering": "Hantverk. Alla fyra är vanliga observationer bland erfarna säljare, och den tredje följer logiskt av att kostsamma signaler bär information. Ingen av dem är mätt."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN VIKTIGA BRASKLAPPEN",
+      "lead": "Argumentet får inte framställas som en säker investering, för då blir det en teknik.",
+      "highlight": "då blir det en teknik",
+      "brodtext": [
+        "Om du avråder därför att det ger mer på sikt har du inte avrått, du har gjort ett drag. Och drag som är beräknade märks förr eller senare, inte minst av dig själv, eftersom du kommer att börja väga när det lönar sig att vara ärlig.",
+        "Det ärliga skälet är enklare. Du avråder därför att du vet något kunden inte vet, och att sälja ändå är att använda det övertaget mot personen som litar på dig. Att det dessutom brukar löna sig är en trevlig bieffekt, inte motivet."
+      ],
+      "takeaway": "Avråd för att det är rätt. Räkna inte med vinsten, och räkna aldrig med den i förväg."
+    },
+    {
+      "typ": "concept",
+      "kicker": "OM DU HAR EN CHEF",
+      "titel": "Hur du förklarar det uppåt",
+      "forklaring": "En avrådd affär ser i en rapport ut precis som en förlorad affär, och det är ett verkligt problem som ingen kurs kan trolla bort.",
+      "brodtext": [
+        "Det som hjälper är att göra den synlig i förväg i stället för i efterhand. Säg tidigt att du är tveksam och varför, med de villkor du skrev ner i förra lektionen. Då blir avrådandet ett beslut ni fattat tillsammans, i stället för en förlust du redovisar i efterhand.",
+        "Och var beredd på att det ibland inte räcker. Det finns arbetsplatser där det här är dyrt att göra rätt, och det är värd information om arbetsplatsen. Den som tvingas sälja mot bättre vetande varje kvartal har inte ett säljproblem, utan ett arbetsgivarproblem."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är säkert med ett avrådande?",
+          "alternativ": [
+            "Vinsten på lång sikt",
+            "Kostnaden på kort sikt",
+            "Att kunden återkommer"
+          ],
+          "ratt": [1],
+          "forklaring": "Affären, provisionen och prognosen är omedelbara och drabbar dig ensam. Det är därför handlingen är sällsynt och därför den betyder något."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken status har de fyra vinsterna?",
+          "alternativ": [
+            "Robust forskning",
+            "Hantverk, alltså vanliga observationer utan mätunderlag",
+            "Avfärdade av forskningen"
+          ],
+          "ratt": [1],
+          "forklaring": "Alla fyra är rimliga och ingen är mätt. Kursen märker dem därför som hantverk i stället för att låta dem låta som evidens."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför får du inte avråda för att det lönar sig?",
+          "alternativ": [
+            "För att det sällan gör det",
+            "För att det då är ett drag, och du börjar väga när det lönar sig att vara ärlig",
+            "För att kunden märker beräkningen direkt"
+          ],
+          "ratt": [1],
+          "forklaring": "Det ärliga skälet är att sälja ändå vore att använda ditt informationsövertag mot någon som litar på dig. Vinsten är en bieffekt."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur hanterar du en avrådd affär mot en chef?",
+          "alternativ": [
+            "Redovisar den som förlorad",
+            "Gör tveksamheten synlig tidigt, med villkoren utskrivna",
+            "Undviker att ta upp den"
+          ],
+          "ratt": [1],
+          "forklaring": "Då blir det ett beslut ni fattat tillsammans i stället för en förlust i efterhand. Räcker det inte är det information om arbetsplatsen."
+        }
+      ]
+    }
+  ]
+}

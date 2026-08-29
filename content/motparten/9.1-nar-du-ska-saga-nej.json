@@ -1,0 +1,126 @@
+{
+  "kapitel": 9,
+  "lektion": "9.1",
+  "titel": "När du ska säga nej",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "integritet.nej",
+  "mal": "Efter lektionen kan eleven avgöra när en lösning inte passar innan kunden gör det, känner igen de fyra lägen där ett nej är rätt, och vet varför gränsdragningen måste göras i förväg.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "INTEGRITET",
+      "titel": "När du ska säga nej",
+      "ingress": "Den svåraste färdigheten i yrket har ingen teknik. Den handlar om att avgöra något innan trycket kommer, och att sedan hålla sig till det."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROBLEMET MED ATT AVGÖRA I STUNDEN",
+      "lead": "Beslutet att avråda fattas alltid i det sämsta möjliga ögonblicket.",
+      "highlight": "det sämsta möjliga ögonblicket",
+      "brodtext": [
+        "Det är sista veckan i kvartalet. Affären ligger i prognosen. Din chef har frågat om den två gånger. Kunden är entusiastisk och vill skriva. Och någonstans i bakhuvudet finns en sak du sett men inte tagit tag i: att de sannolikt inte kommer att få ut det de tror.",
+        "I det läget är omdömet inte fritt. Allt trycker åt ett håll, och de skäl som talar för att gå vidare kommer att låta bra, eftersom du behöver att de gör det. Det är inte karaktärssvaghet, det är hur beslut under press fungerar."
+      ],
+      "takeaway": "Bestäm var gränsen går när det inte kostar något. Annars bestämmer situationen åt dig."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA LÄGEN",
+      "titel": "När svaret ska vara nej",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Fel problem",
+            "text": "Din lösning löser något annat än det som gör ont. Kunden kommer att få det den beställde och ändå bli besviken, och besvikelsen kommer att ha ditt namn på sig."
+          },
+          {
+            "rubrik": "För litet problem",
+            "text": "Kapitel 6.4. Kostnaden att lösa det är större än kostnaden att ha kvar det. Affären går att stänga och kommer inte att förnyas."
+          },
+          {
+            "rubrik": "Saknade förutsättningar",
+            "text": "Lösningen kräver något kunden inte har: data, en ägare, tid, eller en organisation som orkar. Att sälja ändå är att sälja ett misslyckande i två delar."
+          },
+          {
+            "rubrik": "Fel förväntan",
+            "text": "Kunden tror att det ska ge något det inte ger, och har hört det från någon annan, från er marknadsföring eller av sig själv. Rätta det före avtalet eller aldrig."
+          }
+        ],
+        "figurtext": "Fyra lägen, en gemensam nämnare: du vet redan, och kunden får veta senare."
+      },
+      "forklaring": "Gemensamt för alla fyra är att du sitter på informationen. Kunden kan inte upptäcka något av det förrän efter köpet. Det är precis den asymmetri som gör att ditt ord väger lätt i normala lägen, och det är också det som gör att ett nej väger så tungt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "GRÄNSEN DRAS I FÖRVÄG",
+      "lead": "Den som vill kunna säga nej i kvartalets sista vecka måste ha bestämt sig i vecka ett.",
+      "highlight": "måste ha bestämt sig i vecka ett",
+      "brodtext": [
+        "Skriv ner, för din egen del, vilka tre eller fyra saker som gör att du avråder. De ska vara konkreta nog att kännas igen: om de inte har någon som äger datan, om problemet kostar mindre än hundra tusen om året, om de förväntar sig att det ska ersätta en person. Ju mer specifik listan är, desto svårare är den att prata bort för sig själv.",
+        "Det låter byråkratiskt för något som handlar om heder. Men heder under press är inte en känsla, det är en regel man bestämt i förväg. Alla som arbetat länge nog har en gång sålt något de inte borde, och nästan alla beskriver det likadant efteråt: det fanns aldrig ett ögonblick där det kändes som ett beslut."
+      ],
+      "takeaway": "Integritet i stunden är otillförlitlig. Integritet i förväg är en lista."
+    },
+    {
+      "typ": "concept",
+      "kicker": "OCH DEN GRÅA ZONEN",
+      "titel": "När du inte vet",
+      "forklaring": "De flesta fall är inte tydliga. Du misstänker att det blir svårt men vet inte, och att avråda på en misstanke är att fatta kundens beslut åt dem.",
+      "brodtext": [
+        "Då är svaret inte nej och inte tystnad, utan att säga vad du ser och låta kunden avgöra. Jag ska vara ärlig med att jag är osäker på om ni har utrymme att driva det här internt, och det är den delen som brukar avgöra om sådana här projekt landar. Hur ser du på det?",
+        "Det är obekvämt, det saktar ner affären, och det är den enskilt bästa sak du kan göra för din trovärdighet. Kunden får information ingen annan leverantör kommer att ge, och du får veta om oron var befogad. Båda utfallen är bättre än att gissa i tysthet."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför är det svårt att avgöra i stunden om man ska avråda?",
+          "alternativ": [
+            "För att informationen saknas",
+            "För att beslutet fattas under press, när allt trycker åt ett håll",
+            "För att kunden blir upprörd"
+          ],
+          "ratt": [1],
+          "forklaring": "De skäl som talar för att gå vidare kommer att låta bra, eftersom du behöver att de gör det. Det är inte karaktärssvaghet."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad har de fyra lägena gemensamt?",
+          "alternativ": [
+            "Att kunden redan tvivlar",
+            "Att du sitter på informationen och kunden får veta först efter köpet",
+            "Att priset är för högt"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är samma asymmetri som gör att ditt ord väger lätt i normala lägen, och som gör att ett nej väger tungt."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur gör du gränsen hållbar?",
+          "alternativ": [
+            "Genom att skriva ner tre eller fyra konkreta villkor i förväg",
+            "Genom att alltid rådfråga din chef",
+            "Genom att lita på magkänslan i mötet"
+          ],
+          "ratt": [0],
+          "forklaring": "Heder under press är inte en känsla, det är en regel man bestämt i förväg. Ju mer specifik listan är, desto svårare är den att prata bort."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad gör du när du misstänker men inte vet?",
+          "alternativ": [
+            "Avråder, för säkerhets skull",
+            "Säger vad du ser och låter kunden avgöra",
+            "Väntar tills du vet mer"
+          ],
+          "ratt": [1],
+          "forklaring": "Att avråda på en misstanke är att fatta kundens beslut åt dem. Kunden får information ingen annan ger, och du får veta om oron var befogad."
+        }
+      ]
+    }
+  ]
+}

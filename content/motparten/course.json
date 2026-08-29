@@ -196,9 +196,9 @@
    ],
    "sebastian": "Den affär jag är mest stolt över är en jag sa nej till. Vi hade kunnat leverera, men inte det de faktiskt behövde. Jag sa det, tipsade om en konkurrent och åkte hem med noll. Två år senare kom de tillbaka med något tre gånger större, och då hade de redan berättat om mig för två andra bolag.",
    "lektioner": [
-    { "lektion": "9.1", "titel": "När du ska säga nej", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "9.1-nar-du-ska-saga-nej.json" },
-    { "lektion": "9.2", "titel": "Vad ett nej kostar och ger", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "9.2-vad-ett-nej-kostar.json" },
-    { "lektion": "9.3", "titel": "Påverkan och manipulation", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "9.3-paverkan-och-manipulation.json" }
+    { "lektion": "9.1", "titel": "När du ska säga nej", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "9.1-nar-du-ska-saga-nej.json" },
+    { "lektion": "9.2", "titel": "Vad ett nej kostar och ger", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "9.2-vad-ett-nej-kostar.json" },
+    { "lektion": "9.3", "titel": "Påverkan och manipulation", "niva": "Avancerad", "tid_min": 8, "status": "klar", "fil": "9.3-paverkan-och-manipulation.json" }
    ]
   },
   {

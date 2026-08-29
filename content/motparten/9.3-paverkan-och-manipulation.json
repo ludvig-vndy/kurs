@@ -1,0 +1,114 @@
+{
+  "kapitel": 9,
+  "lektion": "9.3",
+  "titel": "Påverkan och manipulation",
+  "niva": "Avancerad",
+  "tid_min": 8,
+  "fardighet": "integritet.paverkan",
+  "mal": "Efter lektionen kan eleven dra gränsen mellan påverkan och manipulation med ett prov som fungerar i stunden, och känner till varför influensprinciperna beskriver hur påverkan fungerar utan att vara en verktygslåda kursen lär ut.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "INTEGRITET",
+      "titel": "Påverkan och manipulation",
+      "ingress": "All försäljning är påverkan. Ingen kurs kan påstå något annat utan att ljuga. Frågan är var gränsen går, och den går att dra skarpare än man tror."
+    },
+    {
+      "typ": "reading",
+      "kicker": "INTE EN GRADSKILLNAD",
+      "lead": "Skillnaden mellan påverkan och manipulation är inte hur hårt du trycker, utan vad du gör med kundens förmåga att bedöma.",
+      "highlight": "vad du gör med kundens förmåga att bedöma",
+      "brodtext": [
+        "Påverkan tillför något kunden kan använda: information, en formulering, en jämförelse, en erfarenhet från andra. Kunden blir bättre rustad att avgöra saken, även om slutsatsen blir att avstå.",
+        "Manipulation gör tvärtom. Den utnyttjar något i hur människor fungerar för att få ett svar som inte hade kommit med full information: en påhittad tidsgräns, en skapad känsla av skuld, en jämförelse som är riggad. Kunden blir sämre rustad, och effekten försvinner om personen genomskådar den."
+      ],
+      "takeaway": "Påverkan tål att förklaras. Manipulation slutar fungera i samma stund den beskrivs."
+    },
+    {
+      "typ": "concept",
+      "kicker": "PROVET",
+      "titel": "Skulle du berätta vad du gör",
+      "forklaring": "Det finns ett prov som går att köra i huvudet mitt i ett möte: skulle det här fungera lika bra om jag berättade för kunden vad jag gör och varför?",
+      "brodtext": [
+        "Jag har räknat på vad det kostar er att vänta, och jag visar det för att jag tror att det är det som avgör. Det tål att sägas högt. Kunden kan höra det och ändå tycka att kalkylen är relevant.",
+        "Erbjudandet gäller bara till fredag, och jag sa det för att skapa tidspress. Det tål inte att sägas högt, och därför vet du vad det är. Provet kräver ingen etisk teori och tar två sekunder."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "OM INFLUENSPRINCIPERNA",
+      "lead": "De mest citerade principerna för påverkan beskriver hur människor fungerar. Kursen lär inte ut dem som verktyg, och det är ett medvetet val.",
+      "highlight": "lär inte ut dem som verktyg",
+      "brodtext": [
+        "Principerna har klarat replikering bättre än mycket annan socialpsykologi, men ojämnt. Social bevisning har starkast stöd. Reciprocitet varierar, och för en av dess klassiska tillämpningar visar meta-analys att den ökar verbalt medgivande medan effekten på faktiskt beteende är svag. Konsistensprincipen har svagare underlag än sitt rykte.",
+        "Men huvudskälet att inte lära ut dem som teknik är inte evidensläget. Det är att nästan varje säljtillämpning av dem faller på provet ovan. Gåvan som skapar återgäldningsskuld, den påhittade knappheten, det lilla ja som ska binda till ett stort. Ingen av dem tål att förklaras för mottagaren, och det är därför de inte finns i den här kursen."
+      ],
+      "takeaway": "Att veta hur påverkan fungerar är nödvändigt. Att bygga sitt hantverk på det är något annat.",
+      "evidens": {
+        "niva": "B",
+        "kalla": "K16",
+        "notering": "Cialdinis principer. Replikeringen är ojämn mellan principerna. Kursens skäl att inte lära ut dem som teknik är etiskt, inte i första hand empiriskt."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "GRÅZONEN",
+      "titel": "Tre fall som inte är självklara",
+      "forklaring": "Provet är skarpt men löser inte allt. Tre återkommande fall där rimliga personer landar olika.",
+      "brodtext": [
+        "Verklig knapphet. Priset går faktiskt upp vid årsskiftet. Att nämna det är information. Att nämna det tre gånger i samma möte är något annat, och gränsen går ungefär där du börjar upprepa dig.",
+        "Att prata med den som är lättast att övertyga. Att söka den mest mottagliga personen är normalt och rimligt. Att medvetet undvika den som skulle ställa de svåra frågorna är att arrangera bort kundens egen granskning.",
+        "Att inte nämna en svaghet ingen frågat om. Ingen kräver att du redovisar allt oombett. Men om svagheten är sådan att kunden hade valt annorlunda med kännedom om den, är tystnaden ett aktivt val och faller på provet."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är skillnaden mellan påverkan och manipulation?",
+          "alternativ": [
+            "Hur hårt du trycker",
+            "Vad du gör med kundens förmåga att bedöma saken",
+            "Om kunden blir nöjd efteråt"
+          ],
+          "ratt": [1],
+          "forklaring": "Påverkan tillför något kunden kan använda. Manipulation utnyttjar något i hur människor fungerar för att få ett svar som inte hade kommit med full information."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är provet?",
+          "alternativ": [
+            "Om handlingen är laglig",
+            "Om det skulle fungera lika bra om du berättade vad du gör och varför",
+            "Om du själv hade blivit övertygad"
+          ],
+          "ratt": [1],
+          "forklaring": "Påverkan tål att förklaras. Manipulation slutar fungera i samma stund den beskrivs, och det kräver ingen etisk teori."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför lär kursen inte ut influensprinciperna som verktyg?",
+          "alternativ": [
+            "För att de saknar allt vetenskapligt stöd",
+            "För att nästan varje säljtillämpning av dem faller på provet",
+            "För att de är för svåra att använda korrekt"
+          ],
+          "ratt": [1],
+          "forklaring": "Stödet är ojämnt men finns. Huvudskälet är att gåvan som skapar skuld, den påhittade knappheten och det bindande lilla jat inte tål att förklaras."
+        },
+        {
+          "typ": "single",
+          "fraga": "När blir det problematiskt att inte nämna en svaghet?",
+          "alternativ": [
+            "Alltid, du måste redovisa allt oombett",
+            "När svagheten är sådan att kunden hade valt annorlunda med kännedom om den",
+            "Bara om kunden uttryckligen frågar"
+          ],
+          "ratt": [1],
+          "forklaring": "Då är tystnaden ett aktivt val och faller på provet, även om ingen ställde frågan."
+        }
+      ]
+    }
+  ]
+}
