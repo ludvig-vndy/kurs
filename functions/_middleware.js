@@ -8,6 +8,8 @@
    statiska tillgangar och /api/* (funktionerna gor sin egen auth). Ovrigt
    kraver en giltig session, annars -> /logga-in. */
 
+import { verifieraPilot } from './api/_lib.js';
+
 const COOKIE = 'da_session';
 const JWKS_URL = 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1/.well-known/jwks.json';
 
@@ -119,39 +121,6 @@ async function verifyJwt(token) {
 function motpartenVard(hostname) {
   const h = (hostname || '').toLowerCase();
   return h.startsWith('motparten.') || h.startsWith('motparten-');
-}
-
-/* Pilotsession for Motparten. En egen, host-scopad cookie som INTE ar en
-   Supabase-session: den oppnar bara den har varden och ger ingen tillgang till
-   Marginalen, portfoljen eller nagot API. Utfardas av functions/api/pilot-login.js
-   till en kort namnlista. Tas bort nar piloten ar over, se LAUNCH.md. */
-const PILOT_COOKIE = 'motparten_pilot';
-
-async function verifieraPilot(request, secret) {
-  if (!secret) return false;
-  const raw = getCookie(request, PILOT_COOKIE);
-  if (!raw) return false;
-  const delar = decodeURIComponent(raw).split('|');
-  if (delar.length !== 3) return false;
-  const [mejl, utgang, sig] = delar;
-  if (!/^\d+$/.test(utgang) || Number(utgang) < Math.floor(Date.now() / 1000)) return false;
-  try {
-    const key = await crypto.subtle.importKey(
-      'raw', new TextEncoder().encode(secret),
-      { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-    );
-    const bytes = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${mejl}|${utgang}`));
-    let b = '';
-    for (const x of new Uint8Array(bytes)) b += String.fromCharCode(x);
-    const vantad = btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    // Jamforelse i konstant tid sa signaturen inte gar att gissa fram tecken for tecken.
-    if (vantad.length !== sig.length) return false;
-    let diff = 0;
-    for (let i = 0; i < vantad.length; i++) diff |= vantad.charCodeAt(i) ^ sig.charCodeAt(i);
-    return diff === 0;
-  } catch {
-    return false;
-  }
 }
 
 export async function onRequest(context) {
