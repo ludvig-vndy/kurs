@@ -61,6 +61,10 @@
   .legend .gav{width:16px;height:0;border-top:2px dashed var(--gold);display:inline-block}
   .legend .buy{color:var(--good);font-weight:700}
   .legend .sell{color:var(--bad);font-weight:700}
+  .range{display:flex;gap:4px;background:var(--paper-2);border-radius:99px;padding:4px}
+  .range button{font-family:var(--label);font-size:11px;font-weight:600;border:none;background:none;color:var(--muted);padding:6px 12px;border-radius:99px;cursor:pointer}
+  .range button.on{background:var(--card);color:var(--oxblood);box-shadow:0 1px 3px rgba(33,28,23,.12)}
+  .range button[disabled]{opacity:.5;cursor:default}
   .chartbox{border:1px solid var(--rule);border-radius:6px;background:var(--card);padding:12px 10px 6px}
   .chartbox svg{width:100%;height:280px;display:block;overflow:visible}
   .gl{stroke:var(--rule);stroke-width:1}
@@ -130,6 +134,8 @@
 
   var HID = new URLSearchParams(location.search).get("id");
   var holding = null, trades = [], side = "kop", PRICE = null, PRICE_DATE = null, HISTORY = null;
+  var RANGES = [{v:"6mo",lbl:"6M"},{v:"1y",lbl:"1Å"},{v:"5y",lbl:"5Å"}];
+  var RANGE = "1y", HCACHE = {};
 
   var esc = function(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
   var fmt = function(n,d){ d=d||0; return Number(n).toLocaleString("sv-SE",{minimumFractionDigits:d,maximumFractionDigits:d}); };
@@ -180,12 +186,39 @@
 
   // Riktig daglig kurshistorik via vår Cloudflare-funktion (Yahoo server-side).
   // Kräver att innehavet matchat ett companies.json-bolag (PRICE) för ticker+land.
-  function loadHistory(){
+  // Cachas per range i minnet så pill-växling inte hämtar om.
+  function loadHistory(range){
+    range = range || RANGE;
     if(!PRICE || !PRICE.t || !PRICE.c) return Promise.resolve(null);
-    var u = "/api/kurshistorik?t="+encodeURIComponent(PRICE.t)+"&c="+encodeURIComponent(PRICE.c)+"&range=1y";
+    if(HCACHE[range]) return Promise.resolve(HCACHE[range]);
+    var u = "/api/kurshistorik?t="+encodeURIComponent(PRICE.t)+"&c="+encodeURIComponent(PRICE.c)+"&range="+range;
     return fetch(u).then(function(r){ return r.ok?r.json():null; })
-      .then(function(d){ return (d && d.punkter && d.punkter.length) ? d : null; })
+      .then(function(d){ var ok=(d && d.punkter && d.punkter.length) ? d : null; if(ok) HCACHE[range]=ok; return ok; })
       .catch(function(){ return null; });
+  }
+
+  function chartHint(){
+    var span = { "6mo":"sex månader", "1y":"året", "5y":"fem åren" }[RANGE] || "året";
+    return HISTORY
+      ? "Daglig kurs senaste "+span+" ("+esc(HISTORY.symbol)+"). Dina köp och sälj ligger inritade som markörer, den streckade guldlinjen är din GAV."
+      : "Kursbanan byggs upp när vi sparat daglig historik. Just nu ritar vi dina affärspriser och dagens kurs, med köp och sälj som markörer.";
+  }
+
+  // Byt tidsspann: hämta (eller läs ur cache), rita om bara grafen + hint + piller.
+  function setRange(r){
+    if(r===RANGE && HISTORY) return;
+    RANGE = r;
+    var box = byId("range");
+    if(box) Array.prototype.forEach.call(box.querySelectorAll("button"), function(b){
+      b.className = b.getAttribute("data-r")===RANGE ? "on" : "";
+      b.disabled = true;
+    });
+    loadHistory(RANGE).then(function(h){
+      HISTORY = h; // null -> fallback-linjen
+      renderChart();
+      var hint = byId("charthint"); if(hint) hint.textContent = chartHint();
+      if(box) Array.prototype.forEach.call(box.querySelectorAll("button"), function(b){ b.disabled=false; });
+    });
   }
 
   function render(){
@@ -245,11 +278,13 @@
       '<span><i class="gav"></i> Din GAV</span>'+
       '<span><b class="buy">&#9650;</b> Köp</span>'+
       '<span><b class="sell">&#9660;</b> Sälj</span>'+
-      '</div></div>'+
+      '</div>'+
+      '<div class="range" id="range">'+RANGES.map(function(r){
+        return '<button data-r="'+r.v+'"'+(r.v===RANGE?' class="on"':'')+'>'+r.lbl+'</button>';
+      }).join('')+'</div>'+
+      '</div>'+
       '<div class="chartbox"><svg id="chart" viewBox="0 0 820 280" preserveAspectRatio="none"></svg></div>'+
-      '<div class="charthint">'+(HISTORY
-        ? 'Daglig kurs senaste året ('+esc(HISTORY.symbol)+'). Dina köp och sälj ligger inritade som markörer, den streckade guldlinjen är din GAV.'
-        : 'Kursbanan byggs upp när vi sparat daglig historik. Just nu ritar vi dina affärspriser och dagens kurs, med köp och sälj som markörer.')+'</div>'+
+      '<div class="charthint" id="charthint">'+chartHint()+'</div>'+
       '</section>';
 
     // Affärer + formulär
@@ -373,6 +408,10 @@
     });
     var dt = byId("f-date"); if(dt) dt.value = new Date().toISOString().slice(0,10);
     byId("add").addEventListener("click", addTrade);
+    var box = byId("range");
+    if(box) Array.prototype.forEach.call(box.querySelectorAll("button"), function(b){
+      b.addEventListener("click", function(){ setRange(b.getAttribute("data-r")); });
+    });
   }
 
   function addTrade(){
