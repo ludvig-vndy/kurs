@@ -54,18 +54,6 @@ läses som en egenskap.
 Visar inte att du ska förneka dig ur integritetsbrott du faktiskt begått. Studien mäter hur
 mottagaren reagerar, inte vad som är rätt att göra. Används i 1.3.
 
-### K4. Huang, Yeomans, Brooks, Minson och Gino (2017), It Doesn't Hurt to Ask
-Journal of Personality and Social Psychology 113, 430 till 452.
-
-Tre studier av verkliga samtal mellan två personer. Den som ställer fler frågor, särskilt
-följdfrågor, blir mer omtyckt. Mekanismen är upplevd lyhördhet.
-
-Att kontrollera: en korrigering publicerades i JPSP i mars 2025, doi 10.1037/pspi0000491. Vad
-den gäller har jag inte verifierat. Ska klaras ut innan 1.4 skrivs.
-
-Visar inte att fler frågor säljer mer. Studierna mäter sympati, inte affärsutfall. Används i
-1.4 och senare i kapitel 4.
-
 ### K5. Brooks, Gino och Schweitzer (2015), Smart People Ask for (My) Advice
 Management Science 61, 1421 till 1435.
 
@@ -183,6 +171,21 @@ slutsatser om människors faktiska egenskaper från ansikten.
 
 Slutsats för kursen: första intrycket bildas snabbt och är trögt att flytta. Det är en
 beskrivning av motpartens bias, inte ett skäl att optimera sitt utseende. Används i 1.2.
+
+### K4. Huang, Yeomans, Brooks, Minson och Gino (2017), It Doesn't Hurt to Ask
+Journal of Personality and Social Psychology 113, 430 till 452.
+
+Tre studier av verkliga samtal mellan två personer. Den som ställer fler frågor, särskilt
+följdfrågor, blir mer omtyckt. Mekanismen är upplevd lyhördhet.
+
+Nedflyttad från nivå A till B 2026-08-29. En korrigering publicerades i JPSP i mars 2025,
+volym 128 nummer 3 sidan 669, doi 10.1037/pspi0000491. Korrigeringens innehåll ligger bakom
+betalvägg och jag har inte kunnat läsa den, alltså vet jag inte om den rör huvudfyndet eller
+något perifert. Registrets regel gäller: det som inte går att verifiera framställs inte som
+robust. Går korrigeringen att läsa senare flyttas källan tillbaka upp eller ut.
+
+Visar inte att fler frågor säljer mer. Studierna mäter sympati, inte affärsutfall. Används i
+1.4 och senare i kapitel 4.
 
 ### K16. Cialdini, influensprinciperna
 Principerna har klarat sig bättre än mycket annan socialpsykologi, men inte jämnt. Social

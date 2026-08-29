@@ -1,0 +1,132 @@
+{
+  "kapitel": 1,
+  "lektion": "1.1",
+  "titel": "Vad förtroende faktiskt är",
+  "niva": "Nybörjare",
+  "tid_min": 8,
+  "fardighet": "fortroende.grund",
+  "mal": "Efter lektionen kan eleven definiera förtroende som viljan att göra sig sårbar, dela upp trovärdighet i förmåga, välvilja och integritet, och förklara varför en kund kan tycka om en säljare utan att köpa av honom.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FÖRTROENDE",
+      "titel": "Vad förtroende faktiskt är",
+      "ingress": "Ordet används så ofta i säljsammanhang att det tappat form. Den här lektionen ger det tillbaka en, och den är mer användbar än den låter."
+    },
+    {
+      "typ": "reading",
+      "kicker": "INTE EN KÄNSLA",
+      "lead": "Förtroende är inte en varm känsla mellan två personer. Det är att någon går med på att göra sig sårbar inför dig.",
+      "highlight": "göra sig sårbar inför dig",
+      "brodtext": [
+        "Definitionen kommer från förtroendeforskningen och den är avsiktligt kall. Att lita på någon betyder att man accepterar att kunna skadas av vad den personen gör, utan att kunna kontrollera det. Utan sårbarhet finns inget förtroende, bara ett förhållande där ingenting står på spel.",
+        "Det förklarar varför trevlighet inte räcker. En kund som skriver under ett avtal med dig lägger sitt anseende, sin budget och en del av sitt år i dina händer. Att hon tyckte att mötet var trevligt påverkar den kalkylen mindre än man vill tro."
+      ],
+      "takeaway": "Fråga dig inte om kunden gillar dig. Fråga vad hon riskerar genom att lita på dig, och om hon vet det.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K1",
+        "notering": "Mayer, Davis och Schoorman (1995). Modellen beskriver hur förtroende uppstår, den föreskriver inte hur du bygger det."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE SEPARATA BEDÖMNINGAR",
+      "titel": "Förmåga, välvilja, integritet",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Förmåga",
+            "text": "Kan du det här. Saknas den spelar det ingen roll hur mycket kunden gillar dig. Hon rekommenderar dig gärna till någon annan och köper själv av den som kan."
+          },
+          {
+            "rubrik": "Välvilja",
+            "text": "Vill du mig väl. Saknas den läser kunden varje råd som en dold rekommendation i din egen favör, även när rådet är korrekt."
+          },
+          {
+            "rubrik": "Integritet",
+            "text": "Håller du dig till det du säger, även när det kostar. Saknas den hjälper varken kompetens eller vänlighet, för då vet kunden inte vilken version av dig som dyker upp i november."
+          }
+        ],
+        "figurtext": "Tre bedömningar som görs var för sig. Alla tre måste vara på plats, och det är alltid den svagaste som avgör."
+      },
+      "forklaring": "Det praktiska värdet ligger i att de bedöms separat. När en affär står stilla är standardsvaret att bygga mer relation, alltså att arbeta på välviljan. Men om det som saknas är förmåga hjälper ingen lunch i världen, och om det som saknas är integritet gör lunchen skada, eftersom den ser ut som ett försök att kompensera. Ta reda på vilken av de tre som är svag innan du väljer vad du gör."
+    },
+    {
+      "typ": "reading",
+      "kicker": "ORDNINGEN SPELAR ROLL",
+      "lead": "Människor bedömer inte de tre samtidigt. Frågan om du vill dem väl kommer först, och väger tyngst.",
+      "highlight": "Frågan om du vill dem väl kommer först",
+      "brodtext": [
+        "Social bedömning organiseras längs två dimensioner som återkommer i studie efter studie: värme, alltså vad du har för avsikter, och kompetens, alltså om du kan genomföra dem. Värmen bedöms först och får större vikt i helhetsomdömet. Det finns en rimlig förklaring: den som vill dig illa och kan mycket är farligare än den som vill dig illa och inte kan något, så det är avsikten som måste avgöras först.",
+        "För en säljare betyder det att ordningen på dina första femton minuter är fel i de flesta möten. Kompetensen kommer ut först, eftersom den är förberedd och känns trygg att leverera. Men det är inte den frågan kunden ställer sig medan du pratar."
+      ],
+      "takeaway": "Kompetens utan värme läses inte som styrka. Den läses som en risk som vet vad den gör.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K2",
+        "notering": "Fiske, Cuddy och Glick (2007). Gäller social bedömning i allmänhet. Att just säljmötet följer samma ordning är kursens tolkning."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "DEN VANLIGASTE MISSEN",
+      "titel": "Omtyckt och obetrodd på samma gång",
+      "forklaring": "Kombinationen hög värme och låg kompetens är den farligaste för en säljare, eftersom den känns bra ända in i slutet. Kunden är varm, mötena är trevliga, någon säger att det är kul att ha dig här. Och sedan går affären till någon annan.",
+      "brodtext": [
+        "Forskningen på de två dimensionerna beskriver den kombinationen som den som väcker medlidande snarare än respekt. Det låter hårt, men det stämmer med hur det ser ut i en pipeline: affärer som ingen vill döda och ingen vill genomföra.",
+        "Motmedlet är inte att bli kylig. Det är att kontrollera att kompetensen kommit fram, vilket den ofta inte har. Att du kan ditt område bevisas sällan av att du berättar om det. Det bevisas av att du säger något om kundens situation som hon inte hade tänkt på, eller ställer en fråga som avslöjar att du förstått branschen."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Hur definieras förtroende i forskningen som kursen bygger på?",
+          "alternativ": [
+            "En positiv känsla för en annan person",
+            "Viljan att göra sig sårbar inför någon annan",
+            "Övertygelsen om att någon är kompetent"
+          ],
+          "ratt": [1],
+          "forklaring": "Utan sårbarhet finns inget förtroende, bara ett förhållande där ingenting står på spel. Definitionen är avsiktligt kall och därför användbar."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilka tre bedömningar bygger trovärdighet på?",
+          "alternativ": [
+            "Erfarenhet, pris och referenser",
+            "Förmåga, välvilja och integritet",
+            "Kunskap, entusiasm och uthållighet"
+          ],
+          "ratt": [1],
+          "forklaring": "De bedöms var för sig, och det är alltid den svagaste som avgör. Därför måste du veta vilken av dem som är svag innan du väljer vad du gör åt saken."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad händer om du bygger mer relation när det egentligen är integriteten som ifrågasätts?",
+          "alternativ": [
+            "Det hjälper, eftersom relation kompenserar för allt annat",
+            "Det gör skada, eftersom det ser ut som ett försök att kompensera",
+            "Det har ingen effekt alls"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett vänlighetsförsök mot ett integritetstvivel läses som ett köpförsök. Åtgärden måste träffa den dimension som är svag."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför bedöms värme före kompetens?",
+          "alternativ": [
+            "För att människor är mer känslostyrda än de tror",
+            "För att avsikten avgör om kompetensen är ett hot eller en tillgång",
+            "För att kompetens är svårare att bedöma och därför skjuts upp"
+          ],
+          "ratt": [1],
+          "forklaring": "Den som vill dig illa och kan mycket är farligare än den som vill dig illa och inte kan något. Därför måste avsikten avgöras först."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "kapitel": 1,
+  "lektion": "1.2",
+  "titel": "Varför du är diskonterad från start",
+  "niva": "Nybörjare",
+  "tid_min": 8,
+  "fardighet": "fortroende.varme",
+  "mal": "Efter lektionen förstår eleven varför kundens utgångsläge är rimlig misstänksamhet snarare än fientlighet, vet att första intrycket bildas snabbt och sitter hårt, och kan namnge tre handlingar som höjer trovärdighet genom att kosta säljaren något.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FÖRTROENDE",
+      "titel": "Varför du är diskonterad från start",
+      "ingress": "Kunden drar av på allt du säger innan du sagt det. Det är inte personligt, och det går inte att prata bort. Men det går att arbeta med."
+    },
+    {
+      "typ": "reading",
+      "kicker": "UTGÅNGSLÄGET",
+      "lead": "Misstänksamheten mot en säljare är inte en fördom, den är en rimlig uppskattning av läget.",
+      "highlight": "en rimlig uppskattning av läget",
+      "brodtext": [
+        "Kunden vet tre saker om dig innan ni träffas. Du tjänar på ett visst utfall. Du kan mer om din produkt än hon gör. Och du kommer att välja vad du berättar. Med den informationen vore det oklokt att ta dina påståenden till fullt värde, och kunden är inte oklok.",
+        "Därav den obehagliga konsekvensen: dina bästa argument drabbas hårdast av avdraget. Ett svagt argument från en part är bara svagt. Ett starkt argument från en part väcker frågan varför det låter så bra, och den frågan har kunden lärt sig ställa av alla som stod där före dig."
+      ],
+      "takeaway": "Du börjar inte på noll. Du börjar på minus, och avdraget är kundens sätt att skydda sig, inte att förolämpa dig."
+    },
+    {
+      "typ": "concept",
+      "kicker": "OCH DET GÅR FORT",
+      "titel": "Bedömningen är gjord innan du hunnit fram till bordet",
+      "forklaring": "Bedömningar av hur pålitlig någon ser ut bildas på tiondelar av en sekund. I en klassisk studie visades ansikten i hundra millisekunder, och omdömena stämde nära överens med dem som gjordes helt utan tidspress. Mer tid ökade främst deltagarnas självsäkerhet i sitt omdöme, inte omdömets innehåll.",
+      "brodtext": [
+        "Två saker måste sägas om det fyndet, för det missbrukas ofta. Det första är att snabba omdömen inte är korrekta. Studien visar att de bildas fort och sitter kvar, inte att de träffar rätt. Forskaren bakom den har senare uttryckligen varnat för att dra slutsatser om människors faktiska egenskaper från deras ansikten.",
+        "Det andra är vad det betyder för dig. Inte att optimera ditt utseende, utan att veta att du kommer in i mötet med en position som redan är satt och som är trög att flytta. Den flyttas inte av att du beskriver dig själv annorlunda, eftersom beskrivningar är vad avdraget gäller."
+      ],
+      "evidens": {
+        "niva": "B",
+        "kalla": "K15",
+        "notering": "Willis och Todorov (2006). Visar hur snabbt intryck bildas, inte att de är träffsäkra. Todorov har senare varnat för slutsatser om faktiska egenskaper."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "DET SOM FAKTISKT FLYTTAR",
+      "lead": "Det enda som tar sig igenom avdraget är sådant som hade varit dumt att säga om det inte var sant.",
+      "highlight": "hade varit dumt att säga om det inte var sant",
+      "brodtext": [
+        "Tänk på det som kundens filter. Allt som gynnar dig sorteras bort, eftersom du hade sagt det ändå. Kvar blir det som går emot dina intressen, för det finns ingen anledning att säga sådant om det inte stämmer. Ett påstående som kostar dig något bär alltså information på ett sätt som ett påstående som gynnar dig aldrig gör.",
+        "Det är också skälet till att den här lektionen inte innehåller några formuleringar. En mening som är konstruerad för att se kostsam ut är gratis, och den sortens sak genomskådas snabbare än man tror. Handlingen måste kosta på riktigt, annars är den bara en till teknik."
+      ],
+      "takeaway": "Du köper trovärdighet med något du avstår. Priset är poängen, inte en bieffekt."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE SOM KOSTAR",
+      "titel": "Vad det ser ut som i praktiken",
+      "forklaring": "Tre handlingar som säljare undviker, och som gör mer för trovärdigheten än en presentation till.",
+      "brodtext": [
+        "Att säga att en del av lösningen inte passar. Nästan varje produkt har en svaghet som kunden kommer att upptäcka i månad fyra. Att nämna den i månad noll kostar dig ett litet försprång och köper något större: nästa gång du säger att något fungerar bra finns det skäl att tro dig.",
+        "Att säga att du inte vet. Följt av när du återkommer, och sedan göra det. Den som alltid har ett svar har antingen memorerat eller gissar, och kunden vet inte vilket. Den som ibland saknar svar visar var gränsen går, och då blir allt innanför gränsen mer värt.",
+        "Att lämna en invändning oemotsagd när den stämmer. Om kunden säger att implementationen låter tung, och den är tung, är det enda kloka att hålla med och gå vidare till vad ni gör åt det. Att bemöta en riktig invändning bevisar bara att du bemöter allt."
+      ],
+      "evidens": {
+        "niva": "C",
+        "notering": "Hantverk. Följer logiskt av att du är part och att kostsamma signaler bär information, men jag har inte hittat någon studie som mätt just de här tre handlingarna i säljsamtal."
+      }
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför diskonterar kunden det du säger?",
+          "alternativ": [
+            "För att säljare har dåligt rykte som yrkesgrupp",
+            "För att du tjänar på ett visst utfall och väljer vad du berättar",
+            "För att kunden vill förhandla ner priset"
+          ],
+          "ratt": [1],
+          "forklaring": "Avdraget är en rimlig uppskattning av läget, inte en fördom. Det går inte att prata bort, eftersom prat är det avdraget gäller."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad visar studien om intryck som bildas på hundra millisekunder?",
+          "alternativ": [
+            "Att snabba omdömen om pålitlighet oftast är korrekta",
+            "Att omdömen bildas mycket snabbt och sitter kvar, utan att det säger något om deras träffsäkerhet",
+            "Att mer tid ger tydligt bättre omdömen"
+          ],
+          "ratt": [1],
+          "forklaring": "Mer tid ökade främst självsäkerheten i omdömet. Fyndet beskriver motpartens bias, det är inget skäl att optimera sitt utseende."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad tar sig igenom kundens filter?",
+          "alternativ": [
+            "Påståenden som är väl underbyggda med data",
+            "Påståenden som går emot dina egna intressen",
+            "Påståenden som upprepas tillräckligt ofta"
+          ],
+          "ratt": [1],
+          "forklaring": "Allt som gynnar dig sorteras bort, eftersom du hade sagt det ändå. Det som kostar dig något bär information på ett sätt som det gratis aldrig gör."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad ska du göra när kunden framför en invändning som stämmer?",
+          "alternativ": [
+            "Bemöta den, annars växer den",
+            "Hålla med och gå vidare till vad ni gör åt saken",
+            "Byta ämne tills den glöms bort"
+          ],
+          "ratt": [1],
+          "forklaring": "Att bemöta en riktig invändning bevisar bara att du bemöter allt, och då blir dina bemötanden värdelösa även när de är befogade."
+        }
+      ]
+    }
+  ]
+}

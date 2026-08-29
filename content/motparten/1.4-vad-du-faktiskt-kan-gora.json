@@ -1,0 +1,133 @@
+{
+  "kapitel": 1,
+  "lektion": "1.4",
+  "titel": "Vad du faktiskt kan göra",
+  "niva": "Mellan",
+  "tid_min": 7,
+  "fardighet": "fortroende.handling",
+  "mal": "Efter lektionen har eleven tre beteenden som höjer förtroende, vet varför vart och ett fungerar, och har ett prov för att avgöra om det gör det. Eleven vet också varför beteendena slutar fungera i samma stund de blir tekniker.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FÖRTROENDE",
+      "titel": "Vad du faktiskt kan göra",
+      "ingress": "Kapitlets sista lektion, och den lättaste att förstöra. Ett kapitel om förtroende som slutar i en verktygslåda har motsagt sig självt på vägen."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FÄLLAN",
+      "lead": "Så fort ett beteende blir en teknik slutar det bära den information som gjorde det värdefullt.",
+      "highlight": "slutar det bära den information",
+      "brodtext": [
+        "Vi har sett mekanismen genom hela kapitlet. Det som tar sig igenom kundens avdrag är sådant som hade varit dumt att göra om det inte var uppriktigt. En fråga som ställs för att bygga förtroende är inte en fråga, det är ett drag, och drag känns igen. Inte alltid medvetet, men tillräckligt ofta för att kosta.",
+        "Så läs de tre beteendena nedan som beskrivningar av vad en person som beter sig på ett visst sätt gör, inte som instruktioner. Skillnaden är hela lektionen, och den går inte att komma runt med bättre formuleringar."
+      ],
+      "takeaway": "Det finns inget sätt att låtsas göra det här som fungerar bättre än att göra det."
+    },
+    {
+      "typ": "concept",
+      "kicker": "BETEENDE ETT",
+      "titel": "Frågan, och frågan efter den",
+      "forklaring": "Studier på verkliga samtal mellan två personer visar att den som ställer fler frågor, särskilt följdfrågor, blir mer omtyckt av sin motpart. Mekanismen som föreslås är upplevd lyhördhet, alltså att frågan visar att du lyssnade och brydde dig om svaret. Följdfrågan gör det tydligare än den första frågan, eftersom den bevisar att du hörde vad som sades.",
+      "brodtext": [
+        "Två invändningar hör till bilden. Studierna mäter sympati, inte affärer, och kapitlet har redan visat att sympati och förtroende inte är samma sak. Och en korrigering till artikeln publicerades 2025 som jag inte kunnat läsa, vilket är skälet till att märket bredvid säger omdiskuterat och inte robust.",
+        "Det praktiska rådet är ändå tryggt, eftersom det pekar åt samma håll som allt annat i kapitlet: en följdfråga kostar dig utrymme du kunde använt till att prata om din lösning. Den är alltså en liten uppoffring, och det är därför den syns."
+      ],
+      "evidens": {
+        "niva": "B",
+        "kalla": "K4",
+        "notering": "Huang med flera (2017). Nedflyttad till B eftersom en korrigering publicerades 2025 vars innehåll ligger bakom betalvägg. Mäter dessutom sympati, inte affärsutfall."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "BETEENDE TVÅ",
+      "titel": "Gör det billigt att säga det obekväma",
+      "forklaring": "Forskningen på psykologisk trygghet gäller arbetsgrupper: när människor upplever att det är riskfritt att ta interpersonella risker säger de saker som är obekväma att säga, alltså erkänner misstag, ber om hjälp och pekar på problem. När tryggheten saknas tiger de, och gruppen lär sig ingenting.",
+      "brodtext": [
+        "Överföringen till ett kundmöte är kursens tolkning, inte något studien mätt, men den är svår att komma ifrån. Det du behöver veta i en affär är nästan alltid sådant som är obekvämt för kunden att säga högt. Att budgeten inte är beslutad. Att den förra leverantören valdes av en chef som fortfarande sitter kvar. Att ingen egentligen äger frågan internt.",
+        "Det som gör det billigare att säga är enkelt och obekvämt: du säger något obekvämt först. Att en del av lösningen inte passar. Att du sett liknande projekt fastna av interna skäl. Då har du visat att sådant får sägas i det här rummet, och du har betalat först."
+      ],
+      "evidens": {
+        "niva": "A",
+        "kalla": "K7",
+        "notering": "Edmondson (1999). Studerad på arbetsgrupper, inte på kund och säljare. Överföringen är kursens tolkning och märks som sådan."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "BETEENDE TRE",
+      "lead": "Det tredje är det tråkigaste och det som skiljer mest: gör det du sa att du skulle göra, i tid, varje gång.",
+      "highlight": "gör det du sa att du skulle göra",
+      "brodtext": [
+        "Sa du att du skickar det på torsdag, skicka det på torsdag. Sa du att du skulle ta reda på en sak, återkom även när svaret är obekvämt eller när kunden verkar ha glömt frågan. Sa du att du skulle höra av dig om två veckor, hör av dig om två veckor.",
+        "Det låter som en självklarhet, och det är det på papperet. I praktiken är det ovanligt, och det är därför det fungerar. Varje litet löfte du håller är ett test kunden inte behövde konstruera, och som du klarade. Det är också det enda av de tre beteendena som bygger integritet, alltså den dimension som inte går att reparera i efterhand."
+      ],
+      "takeaway": "Små löften är billiga att ge och dyra att bryta. Ge färre och håll alla.",
+      "evidens": {
+        "niva": "C",
+        "notering": "Hantverk. Följer av kapitlets modell och av att integritetsbrott inte repareras, men jag har inte hittat någon studie som mätt effekten av små hållna löften i säljrelationer."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROVET",
+      "lead": "Du märker att det börjat fungera på en enda sak, och det är inte att kunden verkar gladare.",
+      "highlight": "inte att kunden verkar gladare",
+      "brodtext": [
+        "Det är att hon börjar berätta saker du inte frågat om. Att upphandlingen egentligen är styrd av en chef du inte träffat. Att förra året gick åt till ett projekt som havererade. Att hon själv är tveksam men behöver visa framfötterna.",
+        "Den sortens information är dyr för kunden att lämna ifrån sig, och därför är den ett kvitto. Får du den har du blivit tillräckligt trygg att prata med. Får du den inte spelar det ingen roll hur trevliga mötena är, för då sitter du utanför och det är kompetensen, välviljan eller integriteten som ännu inte är på plats."
+      ],
+      "takeaway": "Mät förtroende i vad kunden berättar utan att du frågat. Allt annat är gissningar om stämning."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför slutar ett förtroendebeteende fungera när det blir en teknik?",
+          "alternativ": [
+            "För att tekniker är svårare att utföra korrekt",
+            "För att det som bär information är sådant som hade varit dumt att göra om det inte var uppriktigt",
+            "För att kunder är tränade att känna igen alla säljtekniker"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett drag som utförs för effektens skull kostar dig ingenting, och det som inte kostar något passerar inte kundens avdrag."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är källan om frågor och sympati märkt omdiskuterad och inte robust?",
+          "alternativ": [
+            "För att studien inte är publicerad i en granskad tidskrift",
+            "För att en korrigering publicerades 2025 vars innehåll inte gått att läsa, och för att studierna mäter sympati och inte affärer",
+            "För att resultatet motsägs av senare forskning"
+          ],
+          "ratt": [1],
+          "forklaring": "Registrets regel är att det som inte går att verifiera inte framställs som robust. Går korrigeringen att läsa senare flyttas källan tillbaka upp eller ut."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur gör du det billigare för kunden att säga något obekvämt?",
+          "alternativ": [
+            "Genom att fråga rakt ut och vänta ut tystnaden",
+            "Genom att säga något obekvämt själv först",
+            "Genom att lova att informationen stannar mellan er"
+          ],
+          "ratt": [1],
+          "forklaring": "Du visar att sådant får sägas i det här rummet, och du betalar först. Ett löfte om diskretion kostar dig ingenting och bär därför ingen information."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är provet på att förtroendet börjat fungera?",
+          "alternativ": [
+            "Att kunden verkar gladare och mötena flyter lättare",
+            "Att kunden berättar saker du inte frågat om",
+            "Att kunden svarar snabbare på mail"
+          ],
+          "ratt": [1],
+          "forklaring": "Sådan information är dyr för kunden att lämna ifrån sig, och därför är den ett kvitto. Stämning är en gissning."
+        }
+      ]
+    }
+  ]
+}

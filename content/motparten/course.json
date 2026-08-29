@@ -45,10 +45,10 @@
    ],
    "sebastian": "Jag har missat leveranser, räknat fel och lovat saker verksamheten inte klarade, och fått behålla kunderna ändå. En gång sa jag något jag visste inte stämde, för att affären satt löst. Den kunden hörde jag aldrig av igen. Det tog mig år att förstå varför just den gången var annorlunda: ett misstag är något du gjorde, ett brutet löfte är någon du är.",
    "lektioner": [
-    { "lektion": "1.1", "titel": "Vad förtroende faktiskt är", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "1.1-vad-fortroende-faktiskt-ar.json" },
-    { "lektion": "1.2", "titel": "Varför du är diskonterad från start", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "1.2-diskonterad-fran-start.json" },
-    { "lektion": "1.3", "titel": "Hur förtroende rivs", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "1.3-hur-fortroende-rivs.json" },
-    { "lektion": "1.4", "titel": "Vad du faktiskt kan göra", "niva": "Mellan", "tid_min": 7, "status": "kommande", "fil": "1.4-vad-du-faktiskt-kan-gora.json" }
+    { "lektion": "1.1", "titel": "Vad förtroende faktiskt är", "niva": "Nybörjare", "tid_min": 8, "status": "klar", "fil": "1.1-vad-fortroende-faktiskt-ar.json" },
+    { "lektion": "1.2", "titel": "Varför du är diskonterad från start", "niva": "Nybörjare", "tid_min": 8, "status": "klar", "fil": "1.2-diskonterad-fran-start.json" },
+    { "lektion": "1.3", "titel": "Hur förtroende rivs", "niva": "Mellan", "tid_min": 9, "status": "klar", "fil": "1.3-hur-fortroende-rivs.json" },
+    { "lektion": "1.4", "titel": "Vad du faktiskt kan göra", "niva": "Mellan", "tid_min": 7, "status": "klar", "fil": "1.4-vad-du-faktiskt-kan-gora.json" }
    ]
   },
   {

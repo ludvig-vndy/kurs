@@ -1,0 +1,124 @@
+{
+  "kapitel": 1,
+  "lektion": "1.3",
+  "titel": "Hur förtroende rivs",
+  "niva": "Mellan",
+  "tid_min": 9,
+  "fardighet": "fortroende.reparation",
+  "mal": "Efter lektionen kan eleven skilja ett kompetensbrott från ett integritetsbrott, förklara varför en ursäkt reparerar det ena men bekräftar det andra, och dra den praktiska slutsatsen att integritetsbrott hanteras genom att inte begås.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "FÖRTROENDE",
+      "titel": "Hur förtroende rivs",
+      "ingress": "Kapitlets viktigaste lektion, och den mest obekväma. Två sorters misstag ser lika illa ut i stunden och beter sig helt olika efteråt."
+    },
+    {
+      "typ": "reading",
+      "kicker": "TVÅ SORTERS MISSTAG",
+      "lead": "Alla som arbetat några år har både levererat sämre än utlovat och lovat något de inte skulle ha lovat. Det första har du överlevt.",
+      "highlight": "Det första har du överlevt",
+      "brodtext": [
+        "Tänk efter på dina egna kunder. Antagligen finns det någon som fick en försenad leverans, ett fel i en faktura eller ett projekt som blev dyrare än sagt, och som är kvar. Antagligen finns det också någon som försvann utan riktig förklaring efter något mycket mindre, en sak du sa som visade sig inte stämma.",
+        "Skillnaden känns godtycklig, som om vissa kunder är mer förlåtande än andra. Den är den inte. Den följer ett mönster som går att förutsäga, och det handlar om vad kunden drar för slutsats om dig."
+      ],
+      "takeaway": "Storleken på misstaget avgör inte hur mycket det kostar dig. Sorten gör det."
+    },
+    {
+      "typ": "concept",
+      "kicker": "SÅ FUNGERAR DET",
+      "titel": "En händelse eller en egenskap",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Kompetensbrott",
+            "text": "Du klarade inte det du skulle. Kunden drar slutsatsen att det här gick fel den här gången. Det är information om en händelse, och nästa gång kan bli annorlunda, särskilt om du visar vad du ändrat."
+          },
+          {
+            "rubrik": "Integritetsbrott",
+            "text": "Du sa något du visste inte stämde, eller bröt ett löfte du kunde hållit. Kunden drar slutsatsen att du är den sortens person. Det är information om en egenskap, och egenskaper antas följa med till nästa gång."
+          }
+        ],
+        "figurtext": "Samma händelse på ytan, två helt olika slutsatser. Det är slutsatsen som avgör vad som händer sedan."
+      },
+      "forklaring": "Ett experiment prövade det här genom att låta människor bedöma någon som anklagats för antingen bristande kompetens eller bristande integritet, och sedan variera om personen bad om ursäkt eller förnekade. Utfallet var inte symmetriskt. Förtroendet reparerades bäst av en ursäkt när anklagelsen gällde kompetens, medan en ursäkt vid en integritetsanklagelse gjorde saken sämre, eftersom ursäkten bekräftar att man är den sortens människa.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K3",
+        "notering": "Kim, Ferrin, Cooper och Dirks (2004). Mäter hur mottagaren reagerar, inte vad som är rätt att göra."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR URSÄKTEN BETER SIG OLIKA",
+      "lead": "En ursäkt är ett erkännande, och vad du erkänner beror på vilken sorts anklagelse som ligger på bordet.",
+      "highlight": "vad du erkänner beror på vilken sorts anklagelse",
+      "brodtext": [
+        "Vid ett kompetensbrott erkänner du en händelse. Det stänger frågan, och den lämnar utrymme för att nästa gång blir bättre. Därför fungerar den, och därför är den korta ursäkten följd av en konkret ändring en av de mest underskattade handlingarna i yrket.",
+        "Vid ett integritetsbrott erkänner du något om dig själv. Kunden hade en misstanke om vilken sorts motpart du är, och du har just bekräftat den. Det finns ingen version av den meningen som gör saken bättre, för problemet är inte att kunden är osäker på vad som hände. Problemet är att kunden nu vet något om dig."
+      ],
+      "takeaway": "Ursäkta dig snabbt när du inte klarade något. Var mycket försiktigare med vad du lovar, eftersom det inte finns någon motsvarande utväg."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN OBEKVÄMA SLUTSATSEN",
+      "lead": "Studien säger vad som fungerar på mottagaren. Den säger ingenting om vad som är rätt, och de två sammanfaller inte alltid.",
+      "highlight": "de två sammanfaller inte alltid",
+      "brodtext": [
+        "Läser man resultatet slarvigt kan man dra slutsatsen att man ska förneka sig ur integritetsanklagelser. Kursen drar inte den slutsatsen. Att förneka något man gjort är ett nytt integritetsbrott ovanpå det första, med skillnaden att det andra upptäcks senare och kostar mer.",
+        "Den slutsats som faktiskt följer är tråkigare och mer användbar. Kompetensbrott går att reparera, alltså tål de att man tar risker och ibland misslyckas. Integritetsbrott går inte att reparera, alltså är den enda hanteringen att inte begå dem. I praktiken betyder det att vara försiktig med vad du lovar, särskilt sent i en affär när trycket är som störst och löftet känns litet."
+      ],
+      "takeaway": "Det finns ingen teknik för det här. Det finns bara att låta bli, och att veta att det är dyrare än det ser ut när du står där."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad avgör hur mycket ett misstag kostar dig i förtroende?",
+          "alternativ": [
+            "Hur stort misstaget var i kronor",
+            "Vilken sorts slutsats kunden drar om dig",
+            "Hur snabbt du upptäckte det"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett kompetensbrott läses som en händelse, ett integritetsbrott som en egenskap. Egenskaper antas följa med till nästa gång, och det är därför de kostar mer."
+        },
+        {
+          "typ": "single",
+          "fraga": "När fungerar en ursäkt bäst?",
+          "alternativ": [
+            "Vid ett kompetensbrott, alltså när du inte klarade det du skulle",
+            "Vid ett integritetsbrott, alltså när du brutit ett löfte",
+            "Lika bra i båda fallen, om den kommer snabbt"
+          ],
+          "ratt": [0],
+          "forklaring": "Vid kompetensbrott erkänner ursäkten en händelse och stänger frågan. Vid integritetsbrott bekräftar den att du är den sortens person, och gör därmed saken sämre."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken slutsats drar kursen av att förnekande fungerade bättre vid integritetsanklagelser?",
+          "alternativ": [
+            "Att man ska förneka integritetsbrott",
+            "Att studien mäter mottagarens reaktion, och att förneka något man gjort är ett nytt brott ovanpå det första",
+            "Att integritet spelar mindre roll än man tror"
+          ],
+          "ratt": [1],
+          "forklaring": "Studien beskriver hur människor reagerar, inte vad som är rätt att göra. Ett förnekande upptäcks senare och kostar mer."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är den praktiska konsekvensen av lektionen?",
+          "alternativ": [
+            "Var försiktig med allt du gör, eftersom alla misstag är lika farliga",
+            "Kompetensbrott tål risktagande, integritetsbrott hanteras genom att inte begås",
+            "Bygg tillräckligt med relation i förväg så tål förtroendet mer"
+          ],
+          "ratt": [1],
+          "forklaring": "Eftersom kompetensbrott går att reparera kan du våga misslyckas. Eftersom integritetsbrott inte går att reparera måste du vara försiktig med vad du lovar, särskilt när trycket är stort."
+        }
+      ]
+    }
+  ]
+}
