@@ -164,6 +164,12 @@
       list.forEach(function(o){ if(o.t) byT[String(o.t).toUpperCase()]=o; if(o.n) byN[String(o.n).toLowerCase().trim()]=o; });
       if(h.ticker && byT[String(h.ticker).toUpperCase()]) return byT[String(h.ticker).toUpperCase()];
       if(h.name && byN[String(h.name).toLowerCase().trim()]) return byN[String(h.name).toLowerCase().trim()];
+      // Bevakat bolag utan lagrad/matchande ticker: alias namn -> ticker, så kurs
+      // och historik laddar även utan affärer (samma alias som Dina bolag).
+      var WATCH=[{n:'unibap space solutions',t:'UNIBAP'},{n:'lifco',t:'LIFCO.B'},{n:'evolution',t:'EVO'},{n:'telia company',t:'TELIA'},{n:'sectra',t:'SECT.B'},{n:'axfood',t:'AXFO'},{n:'sivers',t:'SIVE'}];
+      var nm=String(h.name||'').toLowerCase().trim();
+      var w=nm && WATCH.filter(function(x){ return nm===x.n || nm.indexOf(x.n)===0; }).sort(function(a,z){return z.n.length-a.n.length;})[0];
+      if(w && byT[w.t]) return byT[w.t];
       return null;
     }).catch(function(){ return null; });
   }

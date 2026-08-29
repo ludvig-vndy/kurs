@@ -306,6 +306,41 @@ document.getElementById('askx').addEventListener('click',cl);
 document.getElementById('askform').addEventListener('submit',function(e){e.preventDefault();ansv((inp.value||'').trim()||SEEDS[0]);});
 inp.addEventListener('focus',op);
 document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();op();}if(e.key==='Escape')cl();});})();</script>
+<style>
+  /* Redaktionell broadsheet-behandling av morgonbrevet. */
+  #brev-summ{margin:0 0 8px}
+  .korthet{border-top:1px solid var(--rule,rgba(33,28,23,.14));border-bottom:1px solid var(--rule,rgba(33,28,23,.14));margin:0 0 34px}
+  .kh-row{display:flex;align-items:baseline;gap:14px;padding:10px 2px;border-top:1px solid var(--rule,rgba(33,28,23,.1))}
+  .kh-row:first-child{border-top:none}
+  .kh-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;position:relative;top:-1px}
+  .kh-dot.rapport,.kh-dot.forvarv,.kh-dot.emission,.kh-dot.kallelse{background:var(--gold,#B07C1E)}
+  .kh-dot.insyn{background:var(--oxblood,#2C5646)}
+  .kh-dot.avvikelse,.kh-dot.omvarld{background:var(--faint,#C7BBA6)}
+  .kh-dot.calm{background:var(--faint,#C7BBA6);opacity:.6}
+  .kh-co{font-family:var(--display,system-ui,sans-serif);font-weight:600;font-size:15px;color:var(--ink,#211C17)}
+  .kh-types{font-family:var(--mono,ui-monospace,monospace);font-size:10.5px;letter-spacing:.03em;color:var(--muted,#6E6456);margin-left:auto;white-space:nowrap}
+  .kh-n{font-family:var(--mono,ui-monospace,monospace);font-size:11px;color:var(--faint,#C7BBA6);min-width:64px;text-align:right}
+
+  .brev-body{max-width:64ch}
+  .brev-body p{font-family:var(--serif,Georgia,serif);font-size:18.5px;line-height:1.78;color:var(--ink,#211C17);margin:0 0 22px}
+  .brev-body p:first-of-type::first-letter{float:left;font-family:var(--display,Georgia,serif);font-weight:500;font-size:70px;line-height:.72;padding:7px 12px 2px 0;color:var(--oxblood,#2C5646)}
+  .brev-body p:last-of-type{font-style:italic;color:var(--ink-soft,#4A4239)}
+  .brev-co{font-weight:600;color:var(--oxblood,#2C5646);white-space:nowrap}
+
+  .bakom{margin-top:44px;border-top:2px solid var(--rule-strong,rgba(33,28,23,.4));padding-top:8px}
+  .bakom-h{font-family:var(--mono,ui-monospace,monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted,#6E6456);margin:18px 0 18px;display:flex;align-items:center;gap:12px}
+  .bakom-h::after{content:"";flex:1;height:1px;background:var(--gold,#B07C1E);opacity:.5}
+  .bakom-co{margin-bottom:22px}
+  .bakom-co-n{font-family:var(--display,system-ui,sans-serif);font-weight:600;font-size:14px;color:var(--ink,#211C17);margin-bottom:4px;letter-spacing:.01em}
+  .bakom-row{padding:11px 0;border-top:1px solid var(--rule,rgba(33,28,23,.12))}
+  .bc-top{display:flex;align-items:baseline;gap:10px}
+  .bc-typ{font-family:var(--mono,ui-monospace,monospace);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted,#6E6456);white-space:nowrap;min-width:74px}
+  .bc-rub{font-size:13px;color:var(--ink,#211C17);line-height:1.45;flex:1}
+  .bc-k{font-family:var(--mono,ui-monospace,monospace);font-size:10px;letter-spacing:.04em;color:var(--oxblood,#2C5646);text-decoration:none;white-space:nowrap}
+  .bc-k:hover{text-decoration:underline}
+  .bc-num{font-family:var(--mono,ui-monospace,monospace);font-size:12px;color:var(--ink-soft,#4A4239);margin:5px 0 0 84px;display:block;font-variant-numeric:tabular-nums}
+  @media(max-width:520px){.bc-num{margin-left:0}}
+</style>
 <script>
 /* Av-mockad: brevet renderas ur en brief-payload (motor/vigilans/brief-build.mjs),
    samma slags data som tidslinjen. Inga hardkodade bolag. */
@@ -348,37 +383,58 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
       ? 'God morgon.<br>'+n+(n===1?' händelse':' händelser')+' i dina bolag i natt.'
       : 'God morgon.<br>Inget nytt i dina bolag i dag.';
     document.getElementById('brev-sub').textContent='Vi läste '+(c.reports||0)+' rapporter, '+(c.filings||0)+' pressmeddelanden och '+(c.insiders||0)+' insynsanmälningar i natt. '+(n?'Det här rörde dina bolag, resten var brus.':'Inga trådar korsades, allt låg still.');
-    // Sammanfattningsband: ett bolag per rad med antal händelser, plus lugna.
-    var perBolag={}; poster.forEach(function(p){ perBolag[p.bolag]=(perBolag[p.bolag]||0)+1; });
-    var summ=document.getElementById('brev-summ');
-    var rows=Object.keys(perBolag).map(function(co){
-      return '<div class="srow"><span class="dot gold"></span><div><b>'+esc(co)+'</b> <span>· '+perBolag[co]+(perBolag[co]===1?' händelse':' händelser')+'</span></div></div>';
-    });
-    lugna.filter(function(co){ return !perBolag[co]; }).forEach(function(co){ rows.push('<div class="srow"><span class="dot calm"></span><div><b>'+esc(co)+'</b> <span>· lugnt, inget nytt</span></div></div>'); });
-    summ.innerHTML = rows.join('') || '<div class="srow"><span class="dot calm"></span><div><b>Lugnt</b> <span>· inget rörde dina bolag</span></div></div>';
-    // Det sammanhållna, skrivna brevet överst; alla siffror samlade längst ner.
-    var st=document.getElementById('brev-stories');
+    // Gruppera per bolag i den ordning de först dyker upp.
     var order=[], grouped={};
     poster.forEach(function(p){ if(!grouped[p.bolag]){grouped[p.bolag]=[];order.push(p.bolag);} grouped[p.bolag].push(p); });
 
-    var paraS='font-family:var(--serif,Georgia,serif);font-size:18px;line-height:1.72;color:var(--ink,#211C17);margin:0 0 18px';
-    var letter = (b.brev && b.brev.length)
-      ? b.brev.map(function(para){ return '<p style="'+paraS+'">'+esc(para)+'</p>'; }).join('')
-      : (b.lead ? '<p style="'+paraS+'">'+esc(b.lead)+'</p>' : '');
+    // I korthet: en liggare, prick färgad efter dominant händelsetyp.
+    var summ=document.getElementById('brev-summ');
+    summ.className='korthet';
+    var khRows=order.map(function(co){
+      var evs=grouped[co], types=[];
+      evs.forEach(function(p){ if(types.indexOf(p.typnamn)<0) types.push(p.typnamn); });
+      return '<div class="kh-row"><span class="kh-dot '+esc(evs[0].typ)+'"></span>'+
+        '<span class="kh-co">'+esc(co)+'</span>'+
+        '<span class="kh-types">'+esc(types.join(' · '))+'</span>'+
+        '<span class="kh-n">'+evs.length+(evs.length===1?' post':' poster')+'</span></div>';
+    });
+    (lugna||[]).filter(function(co){ return !grouped[co]; }).forEach(function(co){
+      khRows.push('<div class="kh-row"><span class="kh-dot calm"></span><span class="kh-co">'+esc(co)+'</span><span class="kh-types">lugnt</span><span class="kh-n">stilla</span></div>');
+    });
+    summ.innerHTML = khRows.join('') || '<div class="kh-row"><span class="kh-dot calm"></span><span class="kh-co">Inget rörde dina bolag</span></div>';
 
-    var bakomTyp='font-family:var(--mono,ui-monospace,monospace);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#6E6456);border:1px solid var(--rule,rgba(33,28,23,.18));border-radius:99px;padding:1px 7px;margin-right:8px;white-space:nowrap';
-    var bakomNum='font-family:var(--mono,ui-monospace,monospace);color:var(--ink,#211C17)';
-    var bakom = '<section style="margin-top:38px;border-top:2px solid var(--rule-strong,rgba(33,28,23,.4));padding-top:22px">'+
-      '<div style="font-family:var(--mono,ui-monospace,monospace);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted,#6E6456);margin-bottom:20px">Siffrorna bakom</div>'+
+    // Markera bolagsnamnen (första förekomsten) i en brevmening, som ankare.
+    function markera(text){
+      var out=esc(text);
+      order.forEach(function(co){
+        var vars=[co]; var kort=co.replace(/\s+AB\b.*$/i,'').replace(/\s*\(publ\.?\)\s*$/i,'').trim();
+        if(kort && kort!==co) vars.push(kort);
+        vars.sort(function(a,z){ return z.length-a.length; });
+        for(var i=0;i<vars.length;i++){
+          var e=esc(vars[i]).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+          var re=new RegExp('(^|[^>\\w])('+e+')(?![\\w])');
+          if(re.test(out)){ out=out.replace(re,'$1<span class="brev-co">$2</span>'); break; }
+        }
+      });
+      return out;
+    }
+
+    // Brevet: flödande prosa med anfang; bolagsnamn markerade.
+    var st=document.getElementById('brev-stories');
+    var letter='<div class="brev-body">'+
+      ((b.brev&&b.brev.length) ? b.brev.map(function(para){ return '<p>'+markera(para)+'</p>'; }).join('')
+        : (b.lead ? '<p>'+markera(b.lead)+'</p>' : ''))+'</div>';
+
+    // Siffrorna bakom: redaktionell liggare, grupperad per bolag.
+    var bakom='<section class="bakom"><div class="bakom-h">Siffrorna bakom</div>'+
       order.map(function(co){
-        var evs=grouped[co];
-        return '<div style="margin-bottom:20px">'+
-          '<div style="font-family:var(--display,system-ui,sans-serif);font-weight:600;font-size:15px;color:var(--ink,#211C17);margin-bottom:9px">'+esc(co)+'</div>'+
-          evs.map(function(p){
-            return '<div style="font-size:12.5px;color:var(--ink-soft,#4A4239);line-height:1.5;margin-bottom:8px">'+
-              '<span style="'+bakomTyp+'">'+esc(p.typnamn||p.typ)+'</span>'+esc(p.rubrik)+
-              (p.fakta?'<br><span style="'+bakomNum+'">'+esc(p.fakta)+'</span>':'')+
-              (p.url?' <a href="'+esc(p.url)+'" style="white-space:nowrap">källa →</a>':'')+'</div>';
+        return '<div class="bakom-co"><div class="bakom-co-n">'+esc(co)+'</div>'+
+          grouped[co].map(function(p){
+            return '<div class="bakom-row"><div class="bc-top">'+
+              '<span class="bc-typ">'+esc(p.typnamn||p.typ)+'</span>'+
+              '<span class="bc-rub">'+esc(p.rubrik)+'</span>'+
+              (p.url?'<a class="bc-k" href="'+esc(p.url)+'">källa →</a>':'')+'</div>'+
+              (p.fakta?'<span class="bc-num">'+esc(p.fakta)+'</span>':'')+'</div>';
           }).join('')+'</div>';
       }).join('')+'</section>';
 
