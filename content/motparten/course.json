@@ -120,9 +120,9 @@
    ],
    "sebastian": "Jag brukade lyssna för att hitta ingången till det jag ville säga. Det är inte lyssnande, det är att vänta på sin tur. Provet jag använder nu är enkelt: kan jag beskriva kundens läge så att kunden fyller i och rättar mig? Gör kunden det har jag förstått. Annars satt jag bara tyst.",
    "lektioner": [
-    { "lektion": "5.1", "titel": "Tre nivåer av lyssnande", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "5.1-tre-nivaer-av-lyssnande.json" },
-    { "lektion": "5.2", "titel": "Återgivningen som prov", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "5.2-atergivningen-som-prov.json" },
-    { "lektion": "5.3", "titel": "Det som inte sägs", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "5.3-det-som-inte-sags.json" }
+    { "lektion": "5.1", "titel": "Tre nivåer av lyssnande", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "5.1-tre-nivaer-av-lyssnande.json" },
+    { "lektion": "5.2", "titel": "Återgivningen som prov", "niva": "Mellan", "tid_min": 9, "status": "klar", "fil": "5.2-atergivningen-som-prov.json" },
+    { "lektion": "5.3", "titel": "Det som inte sägs", "niva": "Avancerad", "tid_min": 8, "status": "klar", "fil": "5.3-det-som-inte-sags.json" }
    ]
   },
   {

@@ -1,0 +1,128 @@
+{
+  "kapitel": 5,
+  "lektion": "5.1",
+  "titel": "Tre nivåer av lyssnande",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "lyssnande.nivaer",
+  "mal": "Efter lektionen kan eleven skilja på att vänta på sin tur, höra orden och förstå situationen, och vet vilket beteende som avslöjar vilken nivå man befinner sig på.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LYSSNANDE",
+      "titel": "Tre nivåer av lyssnande",
+      "ingress": "Alla tror sig lyssna. Skillnaden mellan de tre nivåerna syns inte i mötet, den syns i vad du kan säga om kunden dagen efter."
+    },
+    {
+      "typ": "concept",
+      "kicker": "TRE LÄGEN",
+      "titel": "Var du befinner dig",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Vänta på sin tur",
+            "text": "Du hör tillräckligt för att veta när det är din tur. Under tiden bygger du ditt svar. Känns som lyssnande inifrån, eftersom du är tyst och koncentrerad, men koncentrationen är riktad mot dig själv."
+          },
+          {
+            "rubrik": "Höra orden",
+            "text": "Du följer med i vad som sägs och kan återge det. Bra nog för de flesta samtal och för mötesanteckningar. Missar det som ligger under, eftersom du tar innehållet som färdigt."
+          },
+          {
+            "rubrik": "Förstå situationen",
+            "text": "Du bygger en bild av vad som pågår hos kunden, inklusive det som inte sagts, och märker när något inte går ihop. Det är här affärer avgörs, och det är ansträngande."
+          }
+        ],
+        "figurtext": "De två första går att göra samtidigt med annat. Den tredje gör det inte."
+      },
+      "forklaring": "Nivåerna är inte grader av artighet utan grader av arbete. Den tredje kräver att du håller flera saker i huvudet samtidigt: vad kunden säger, vad det innebär, vad det inte stämmer med, och vad du behöver fråga härnäst. Det är därför den inte går att göra medan du planerar din nästa mening."
+    },
+    {
+      "typ": "reading",
+      "kicker": "PROVET",
+      "lead": "Du märker vilken nivå du var på genom att pröva att beskriva kundens situation dagen efter, utan anteckningar.",
+      "highlight": "dagen efter, utan anteckningar",
+      "brodtext": [
+        "Var du på första nivån minns du dina egna repliker och ungefär vad kunden svarade. Var du på andra nivån minns du innehållet, och kan återge det som en sammanfattning. Var du på tredje nivån kan du svara på frågor ingen ställde i mötet: vem verkar egentligen driva det här, vad är personen orolig för, vad skulle få det att stanna av.",
+        "Provet är obekvämt att göra ärligt, eftersom nästan alla överskattar sig själva här. Gör det ändå några gånger. De flesta upptäcker att de ligger på nivå två i möten de tyckte gick bra."
+      ],
+      "takeaway": "Lyssnande mäts inte i tystnad. Det mäts i vad du kan säga om kunden när kunden inte är i rummet."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VAD SOM DRAR NER DIG",
+      "titel": "Tre saker som gör dig till en väntande",
+      "forklaring": "Ingen väljer första nivån medvetet. Man hamnar där, och nästan alltid av samma tre skäl.",
+      "brodtext": [
+        "En förberedd agenda du är rädd att missa. Så länge du bevakar en lista lyssnar du efter var i listan ni är, inte efter vad som sägs. Det är samma mekanism som gjorde frågelistan skadlig i kapitel 3.",
+        "En invändning du redan hört och har ett svar på. I samma stund du känner igen den slutar du lyssna, för du vet redan hur det slutar. Ofta har den här kunden en annan variant av invändningen som du missar.",
+        "Ett behov av att komma till din del. Har du bråttom till lösningen hör du bara det som är biljett dit. Det är det tydligaste sambandet mellan det här kapitlet och kapitlet om egot: den som behöver något av samtalet kan inte höra det."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD FORSKNINGEN SÄGER, OCH INTE",
+      "lead": "Att bli lyssnad på gör något med den som talar, men studierna handlar inte om att sälja.",
+      "highlight": "studierna handlar inte om att sälja",
+      "brodtext": [
+        "Experiment på lyssnande som upplevs uppmärksamt, empatiskt och icke-dömande visar att talaren blir mindre socialt orolig och tänker mer nyanserat, samtidigt som den egna hållningen blir tydligare för talaren själv. Effekterna är mätta på attityder i labbmiljö och i vissa arbetslivsstudier.",
+        "Överföringen hit är rimlig men oprövad. Ingen har visat att bättre lyssnande i ett säljmöte ger fler affärer. Det kursen påstår är svagare och tryggare: du får bättre information, och kunden formulerar sin egen situation tydligare för sig själv. Vad det ger i utfall vet vi inte."
+      ],
+      "takeaway": "Lyssna inte för att det ska sälja. Lyssna för att du annars fattar beslut på fel underlag.",
+      "evidens": {
+        "niva": "B",
+        "kalla": "K14",
+        "notering": "Itzchakov, DeMarree, Kluger med flera. Experiment på attityder, inte på köpbeslut. Överföringen till säljsamtal är kursens tolkning."
+      }
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad kännetecknar den första nivån av lyssnande?",
+          "alternativ": [
+            "Att du avbryter ofta",
+            "Att du hör tillräckligt för att veta när det är din tur, medan du bygger ditt svar",
+            "Att du inte förstår ämnet"
+          ],
+          "ratt": [1],
+          "forklaring": "Den känns som lyssnande inifrån, eftersom du är tyst och koncentrerad. Koncentrationen är bara riktad mot dig själv."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur prövar du vilken nivå du var på?",
+          "alternativ": [
+            "Genom att fråga kunden om mötet kändes bra",
+            "Genom att dagen efter beskriva kundens situation utan anteckningar",
+            "Genom att räkna hur mycket du pratade"
+          ],
+          "ratt": [1],
+          "forklaring": "På tredje nivån kan du svara på frågor ingen ställde i mötet: vem driver det här, vad är personen orolig för, vad skulle få det att stanna av."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket av dessa drar ner dig till första nivån?",
+          "alternativ": [
+            "En invändning du redan hört och har ett svar på",
+            "Att kunden pratar länge",
+            "Att mötet hålls på distans"
+          ],
+          "ratt": [0],
+          "forklaring": "I samma stund du känner igen den slutar du lyssna, och missar att den här kunden ofta har en annan variant av invändningen."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad påstår kursen om lyssnande och affärsutfall?",
+          "alternativ": [
+            "Att bättre lyssnande bevisligen ger fler affärer",
+            "Att sambandet inte är visat, men att du annars fattar beslut på fel underlag",
+            "Att lyssnande främst handlar om att kunden ska trivas"
+          ],
+          "ratt": [1],
+          "forklaring": "Studierna är gjorda på attityder i labbmiljö, inte på köpbeslut. Kursen påstår därför det svagare och tryggare."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "kapitel": 5,
+  "lektion": "5.2",
+  "titel": "Återgivningen som prov",
+  "niva": "Mellan",
+  "tid_min": 9,
+  "fardighet": "lyssnande.atergivning",
+  "mal": "Efter lektionen kan eleven återge en kunds situation så att kunden fyller i och rättar, vet varför rättelsen är det värdefulla, och kan skilja återgivning från papegojtricket.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LYSSNANDE",
+      "titel": "Återgivningen som prov",
+      "ingress": "Det finns ett enda sätt att veta om du förstått, och det är att säga det du tror du förstått och se vad som händer."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD DET ÄR",
+      "lead": "Återgivning är att beskriva kundens läge med dina ord och sedan lämna över för rättelse.",
+      "highlight": "lämna över för rättelse",
+      "brodtext": [
+        "Inte en sammanfattning av vad som sagts, för den bevisar bara att du antecknat. En återgivning innehåller något kunden inte sa rakt ut men som följer av det som sagts: att de två avdelningarna verkar dra åt olika håll, att bytet egentligen hänger på om den nya ekonomichefen prioriterar det, att förra försöket sitter kvar i väggarna.",
+        "Sedan avslutar du inte med en fråga. Du är tyst, eller säger något i stil med rätta mig där jag har fel. Det är inbjudan som gör konstruktionen till ett prov i stället för en föreläsning."
+      ],
+      "takeaway": "Sammanfattningen visar att du hörde. Återgivningen visar om du förstod, och det är bara kunden som kan avgöra."
+    },
+    {
+      "typ": "concept",
+      "kicker": "VARFÖR RÄTTELSEN ÄR MÅLET",
+      "titel": "Du vill ha fel på rätt ställe",
+      "forklaring": "En återgivning som möts av ja, precis så, är trevlig och nästan värdelös. Den som möts av nja, det är snarare så att ekonomichefen inte tycker att det är brådskande är värd hela mötet. Rättelsen ger dig tre saker: den korrekta bilden, en signal om vad kunden bryr sig om att få rätt, och kundens egna ord om det som är känsligt.",
+      "brodtext": [
+        "Det finns också en mekanism under. Det är kundens egna formuleringar som lever vidare internt, inte dina. När kunden rättar dig produceras exakt den sortens formulering, oombedd och med egen övertygelse bakom.",
+        "Så gör återgivningen tillräckligt bestämd för att kunna vara fel. En försiktig, hedgad återgivning som inte går att invända mot ger ingen rättelse, och därmed ingenting."
+      ],
+      "evidens": {
+        "niva": "B",
+        "kalla": "K13",
+        "notering": "Att kundens eget prat om förändring hänger ihop med utfall kommer från meta-analysen på motiverande samtal. Sambandet är svagt i den studien, och överföringen till säljsamtal är kursens tolkning."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "INTE DETTA",
+      "titel": "Papegojan",
+      "forklaring": "Den vanligaste förvrängningen av tekniken är att upprepa kundens sista mening med andra ord. Så du känner att införandet blir tungt. Det är inte återgivning, det är en spegel, och den slutar fungera i samma stund kunden märker mönstret.",
+      "brodtext": [
+        "Skillnaden är riktningen. Papegojan går bakåt och upprepar. Återgivningen går framåt och drar en slutsats som kunden inte uttalat, vilket är just det som gör den prövbar och därmed användbar.",
+        "En bra tumregel: om din mening kan sägas utan att du förstått branschen är den en papegoja. Om den kräver att du satt ihop två saker kunden sa vid olika tillfällen är den en återgivning."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "NÄR DEN ANVÄNDS BÄST",
+      "lead": "Återgivningen hör hemma i slutet av ett samtalsavsnitt, inte som en löpande kommentar.",
+      "highlight": "i slutet av ett samtalsavsnitt",
+      "brodtext": [
+        "Gör den för ofta blir den ett manér och samtalet hackigt. En gång efter genomgången av nuläget, en gång innan ni går över till vad ni skulle kunna göra, och en gång i slutet av mötet räcker långt.",
+        "Den sista är dessutom den nyttigaste, eftersom den blir kundens sammanfattning av mötet i stället för din. Skriver du sedan uppföljningsmailet med kundens rättade version i stället för din egen får du något ovanligt: ett mail som kunden kan vidarebefordra internt utan att skriva om det."
+      ],
+      "takeaway": "Avsluta mötet med en återgivning som kunden får rätta. Då skriver kunden ditt uppföljningsmail åt dig."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad skiljer en återgivning från en sammanfattning?",
+          "alternativ": [
+            "Återgivningen är kortare",
+            "Återgivningen innehåller något kunden inte sa rakt ut men som följer av det sagda",
+            "Återgivningen görs i skrift"
+          ],
+          "ratt": [1],
+          "forklaring": "Sammanfattningen bevisar att du antecknat. Återgivningen prövar om du förstått, och bara kunden kan avgöra det."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilket svar på en återgivning är mest värdefullt?",
+          "alternativ": [
+            "Ja, precis så",
+            "En rättelse",
+            "En följdfråga från kunden"
+          ],
+          "ratt": [1],
+          "forklaring": "Rättelsen ger den korrekta bilden, en signal om vad kunden bryr sig om, och kundens egna ord om det känsliga."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur skiljer du papegojan från återgivningen?",
+          "alternativ": [
+            "Papegojan går bakåt och upprepar, återgivningen drar en slutsats kunden inte uttalat",
+            "Papegojan används tidigt i mötet",
+            "Papegojan innehåller fler ord"
+          ],
+          "ratt": [0],
+          "forklaring": "Tumregeln: kan meningen sägas utan att du förstått branschen är den en papegoja."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför är återgivningen i slutet av mötet särskilt nyttig?",
+          "alternativ": [
+            "För att kunden är mer avslappnad då",
+            "För att den blir kundens sammanfattning i stället för din, och kan användas i uppföljningsmailet",
+            "För att den sparar tid"
+          ],
+          "ratt": [1],
+          "forklaring": "Ett mail skrivet i kundens rättade version går att vidarebefordra internt utan att skrivas om."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "kapitel": 5,
+  "lektion": "5.3",
+  "titel": "Det som inte sägs",
+  "niva": "Avancerad",
+  "tid_min": 8,
+  "fardighet": "lyssnande.osagt",
+  "mal": "Efter lektionen kan eleven märka fyra sorters frånvaro i ett kundsamtal, veta varför de är svaga signaler och inte bevis, och pröva dem utan att anklaga.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "LYSSNANDE",
+      "titel": "Det som inte sägs",
+      "ingress": "Den sista nivån av lyssnande handlar om frånvaro. Vilket namn som aldrig nämns, vilken siffra som aldrig kommer, vilken fråga kunden inte ställer."
+    },
+    {
+      "typ": "reading",
+      "kicker": "EN VARNING FÖRST",
+      "lead": "Det här är kapitlets mest missbrukade idé, och den ska bäras försiktigt.",
+      "highlight": "mest missbrukade idé",
+      "brodtext": [
+        "Att läsa mellan raderna låter avancerat och lockar fram amatörpsykologi. Vi har redan sett att människor ligger nära slumpen när de ska avgöra om någon undanhåller något, så din magkänsla om vad kundens tystnad betyder är sannolikt inte bättre än ett mynt.",
+        "Det som ändå går att göra är mycket enklare och mer mekaniskt: notera vad som borde ha nämnts och inte gjorde det. Det är inte tankeläsning, det är bokföring. Och det ska alltid prövas med en fråga, aldrig antas."
+      ],
+      "takeaway": "Frånvaro är en anledning att fråga, aldrig en slutsats att dra.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K17",
+        "notering": "Bond och DePaulo (2006) om hur dåligt människor avgör om någon undanhåller något. Slutsatsen för kursen är att frånvaro ska prövas med frågor, inte tolkas."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA FRÅNVARON",
+      "titel": "Det som borde ha varit där",
+      "visual": {
+        "typ": "jamforelse",
+        "element": [
+          {
+            "rubrik": "Namnet",
+            "text": "Ingen nämner den som ska betala, eller den som byggde det nuvarande. Ofta för att relationen till personen är komplicerad, ibland för att kunden inte vet."
+          },
+          {
+            "rubrik": "Siffran",
+            "text": "Problemet beskrivs utförligt men aldrig i kronor eller timmar. Antingen är det inte mätt, eller så är siffran mindre imponerande än berättelsen."
+          },
+          {
+            "rubrik": "Frågan",
+            "text": "Kunden frågar ingenting om införandet, priset eller avtalstiden. Den som verkligen överväger något frågar om det praktiska. Frånvaron av sådana frågor är den tydligaste av de fyra."
+          },
+          {
+            "rubrik": "Tidpunkten",
+            "text": "Ingen säger när det ska vara på plats. Utan ett datum finns det ingen drivkraft, och utan drivkraft väntar beslutet på nästa sak som händer."
+          }
+        ],
+        "figurtext": "Fyra saker som brukar dyka upp av sig själva när en affär är verklig."
+      },
+      "forklaring": "Ingen av dem betyder något ensam. Ett möte där kunden inte frågade om priset kan vara ett möte där kunden hade bråttom. Två eller tre av dem tillsammans är däremot ett mönster som är värt att ta upp, och det ska tas upp öppet."
+    },
+    {
+      "typ": "reading",
+      "kicker": "HUR DU PRÖVAR",
+      "lead": "Säg vad du märkt, inte vad du tror att det betyder.",
+      "highlight": "inte vad du tror att det betyder",
+      "brodtext": [
+        "Jag märker att vi inte pratat om vad det här skulle kosta er i dag. Är det något ni mätt, eller är det mest en känsla? Den formuleringen påstår ingenting om kunden. Den konstaterar en frånvaro och lämnar två utvägar, varav den ena är helt oskyldig.",
+        "Jämför med den anklagande varianten: jag får känslan av att det här inte är prioriterat hos er. Nu har du gissat om kundens inre liv, gissningen är sannolikt fel, och kunden måste antingen försvara sig eller bekräfta något som kanske inte stämde. Du har bytt information mot en obekväm stämning."
+      ],
+      "takeaway": "Beskriv frånvaron. Låt kunden fylla i vad den betyder."
+    },
+    {
+      "typ": "concept",
+      "kicker": "DEN VIKTIGASTE",
+      "titel": "Frågorna som aldrig kom",
+      "forklaring": "Av de fyra är den uteblivna frågan den mest pålitliga. En kund som seriöst överväger att köpa något börjar förr eller senare tänka på hur det ska gå till, och de tankarna kommer ut som frågor: hur lång tid tar det, vem hos oss behöver vara med, vad händer om vi vill avsluta.",
+      "brodtext": [
+        "Ett möte där du fick berätta ostört och kunden var positiv men inte frågade något praktiskt är inte ett bra möte. Det är ett artigt möte, och de två är lätta att förväxla eftersom båda känns bra när man går därifrån.",
+        "Så räkna kundens frågor, inte dina. Det är det enda mått på engagemang som inte går att missta för entusiasm, och det kostar dig ingenting att börja med i morgon."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför ska du vara försiktig med att tolka det som inte sägs?",
+          "alternativ": [
+            "För att kunden kan bli kränkt",
+            "För att människor ligger nära slumpen när de ska avgöra om någon undanhåller något",
+            "För att det tar tid från agendan"
+          ],
+          "ratt": [1],
+          "forklaring": "Din magkänsla om vad tystnaden betyder är sannolikt inte bättre än ett mynt. Notera frånvaron, dra inte slutsatsen."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken av de fyra frånvarona är mest pålitlig?",
+          "alternativ": [
+            "Att ingen siffra nämns",
+            "Att kunden inte ställer praktiska frågor",
+            "Att ingen tidpunkt nämns"
+          ],
+          "ratt": [1],
+          "forklaring": "Den som seriöst överväger något börjar tänka på hur det ska gå till, och de tankarna kommer ut som frågor om det praktiska."
+        },
+        {
+          "typ": "single",
+          "fraga": "Hur tar du upp en frånvaro?",
+          "alternativ": [
+            "Genom att beskriva vad du märkt och lämna två utvägar",
+            "Genom att säga vilken känsla du får",
+            "Genom att vänta tills kunden själv tar upp det"
+          ],
+          "ratt": [0],
+          "forklaring": "Den anklagande varianten gissar om kundens inre liv, gissningen är sannolikt fel, och du byter information mot en obekväm stämning."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad skiljer ett bra möte från ett artigt möte?",
+          "alternativ": [
+            "Hur länge det varade",
+            "Om kunden ställde praktiska frågor eller bara var positiv",
+            "Om kunden bad om en offert"
+          ],
+          "ratt": [1],
+          "forklaring": "Båda känns bra när man går därifrån. Räkna kundens frågor, inte dina, så blir skillnaden synlig."
+        }
+      ]
+    }
+  ]
+}
