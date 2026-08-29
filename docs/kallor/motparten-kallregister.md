@@ -155,7 +155,16 @@ och MI-oförenligt beteende hos samtalsledaren hängde ihop med sämre utfall.
 
 Slutsats för kursen: det starkaste stödet gäller vad du ska sluta göra, alltså argumentera,
 övertala och konfrontera, inte vad du ska börja göra. Obekvämt, men det ska sägas rakt.
-Används i 0.1, 0.4 och kapitel 4 och 5.
+
+Det här är också grunden för lektion 6.2, att sätta ord på problemet. Den populära
+versionen av den lektionen är Challengers reframe, alltså att lära kunden något nytt om
+den egna verksamheten, och den vilar på CEB:s eget material, se R6. Den version som har
+stöd pekar åt nästan motsatt håll: det är kundens eget förändringsprat som hänger ihop med
+utfall, och säljarens argumenterande som hänger ihop med sämre. Lektionen lär därför ut att
+formulera problemet så att kunden kan ta över formuleringen, inte att tala om för kunden
+vad problemet är.
+
+Används i 0.1, 0.4, 6.2 och kapitel 4 och 5.
 
 ### K14. Itzchakov, DeMarree, Kluger med flera (2017, 2018, 2023), högkvalitativt lyssnande
 Lyssnande som upplevs uppmärksamt, empatiskt och icke-dömande sänker talarens sociala oro,
