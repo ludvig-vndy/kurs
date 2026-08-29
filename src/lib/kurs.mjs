@@ -57,7 +57,7 @@ export const KURSER = {
     bodyClass: 'kurs-motparten',
     varumarke: 'Motparten',
     fin: 'en kurs i försäljning. I utbildningssyfte.',
-    plate: 'tryck',
+    plate: 'foto',
     wordmark: 'Motparten',
     edition1: 'En kurs i försäljning',
     hem: '/motparten',

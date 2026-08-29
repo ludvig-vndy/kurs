@@ -52,7 +52,7 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
 // ingen ram ar den andra lik. Motparten har inga foton alls utan ett graverat
 // marke som ritas ur kapitelnumret, se KapitelPlate.astro.
 const harFoto = k.plate === 'foto';
-const plateImg = `/bilder/kapitel-${kap.nummer}.jpg`;
+const plateImg = `/bilder/${k.nyckel === 'fundamental-aktieanalys' ? '' : k.nyckel + '-'}kapitel-${kap.nummer}.jpg`;
 const plateX = 12 + ((kap.nummer * 37) % 64);
 const plateY = 18 + ((kap.nummer * 53) % 46);
 const headStyle = harFoto
