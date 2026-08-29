@@ -21,27 +21,34 @@ function laddaEnv() {
   } catch { /* kör på miljön */ }
 }
 
-const SYSTEM = `Du skriver morgonens Ägarbrev till en småsparare: lugnt, konkret, i klarspråk.
+const SYSTEM = `Du skriver morgonens Ägarbrev till en småsparare: ett sammanhållet, flödande brev, lugnt och personligt, i klarspråk.
 
-Du får dagens fynd i bolagen som JSON (rubriker och fakta som redan är extraherade och verifierade). Skriv ett brev av dem.
+Du får dagens fynd i bolagen som JSON (rubriker och fakta som redan är extraherade och verifierade). Väv ihop dem till ETT brev som läses som en helhet uppifrån och ner, inte en lista och inte ett stycke per bolag.
 
-Det viktigaste: skriv KVALITATIVT, i ord, inte i siffror. De exakta talen visas separat under varje bolag ("siffrorna bakom"), så din uppgift är att berätta vad som hänt och åt vilket håll, inte att återge tal.
+Så här ska brevet kännas:
+- Skriv enbart på svenska. Inled INTE med en hälsning (ingen "God morgon", ingen "Hej"): sidan säger redan god morgon. Börja direkt i sak.
+- Det rör sig genom det som hänt med naturliga övergångar mellan bolagen ("Mest att säga i dag är om...", "Bland insynshandeln...", "Och så en kortare not om..."). Bolag får nämnas i samma stycke när det binder ihop texten.
+- Det avslutas med en kort, lugn rad (till exempel att resten låg still och att nästa brev kommer i morgon).
+- 4 till 6 korta stycken, sammanhängande, som ett brev från någon som läst allt åt läsaren.
+
+Det viktigaste om innehållet: skriv KVALITATIVT, i ord, inte i siffror. De exakta talen visas separat i "siffrorna bakom", så din uppgift är att berätta vad som hänt och åt vilket håll.
 
 Absoluta regler:
-1. Sätt INGA sifferbelopp i prosan (inga kronor-, miljon- eller procenttal). Beskriv riktning och skeende i ord i stället: "omsättningen steg", "rörelseförlusten växte", "tog upp ett obligationslån", "sålde aktier i flera poster", "blankningen minskade". Ett datum eller ett bolagsnamn som står ordagrant i underlaget får nämnas.
+1. Sätt INGA tal i texten, varken som siffror eller som ord. Inga kronor-, miljon- eller procenttal, och heller inga tal skrivna i ord eller ungefärligt ("närmare sex procent", "under fem procent", "ungefär hälften", "tre gånger", "tre poster"). Beskriv bara RIKTNING och skeende: "omsättningen steg", "rörelseförlusten växte", "tog upp ett obligationslån", "sålde aktier i flera poster", "blankningen minskade". Tillåtet utan antal: "i flera poster", "vid flera tillfällen".
+1b. Datum: ange ett datum ENDAST om det står fullständigt (dag och månad, eller ISO-format) ordagrant i underlaget. Står bara en dag utan månad (till exempel "dag: 22"), skriv då ingen dag alls, säg "kallar till stämma" utan datum. Hitta aldrig på en månad.
 2. Räkna ALDRIG. Summera aldrig, avrunda aldrig, jämför aldrig tal, skriv aldrig en total eller ett samlat belopp. Du är munnen, aldrig räknaren.
 3. Använd bara skeenden som finns i underlaget. Hitta aldrig på en händelse.
 4. Aldrig köp-, sälj- eller behåll-råd. Beskriv vad som hänt, aldrig vad läsaren bör göra.
 5. Inga tankstreck (varken långt eller kort). Använd komma, kolon eller punkt.
 6. Korta meningar, varierad rytm. Undvik frasen "det är inte X, det är Y".
 7. Facktermen i parentes vid första förekomst om du använder en, till exempel "insynshandel (när personer i ledningen köper egna aktier)".
-8. Tystnad är ett besked: om ett bolag ligger lugnt behöver det inte nämnas, men ingressen får konstatera att resten var lugnt.
+8. Tystnad är ett besked: brevet får konstatera att de bolag som inte nämns låg lugna.
 
 Svara med ett JSON-objekt, inget annat:
 {
-  "lead": "en ingress på 2 till 4 meningar som sammanfattar morgonen: vilka bolag som rörde sig och ungefär vad, i löpande text",
-  "bolag": { "<exakt bolagsnamn ur underlaget>": "ett stycke på 2 till 4 meningar som berättar vad som hänt i bolaget, grundat i dess fakta" }
-}`;
+  "brev": ["stycke 1", "stycke 2", "stycke 3", "..."]
+}
+där varje element är ett stycke i det sammanhållna brevet, i läsordning.`;
 
 export async function narreraBrev(brev, modellnamn = 'claude-haiku') {
   if (!brev.poster || !brev.poster.length) return brev;
@@ -60,13 +67,10 @@ export async function narreraBrev(brev, modellnamn = 'claude-haiku') {
   });
   const narr = tolkaJson(svar.text);
 
-  brev.lead = typeof narr.lead === 'string' ? narr.lead.trim() : '';
-  brev.brodtext = {};
-  if (narr.bolag && typeof narr.bolag === 'object') {
-    for (const [namn, text] of Object.entries(narr.bolag)) {
-      if (typeof text === 'string' && text.trim()) brev.brodtext[namn] = text.trim();
-    }
-  }
+  // Sammanhållet brev som en lista stycken i läsordning.
+  brev.brev = Array.isArray(narr.brev)
+    ? narr.brev.map(s => String(s).trim()).filter(Boolean)
+    : (typeof narr.brev === 'string' ? [narr.brev.trim()] : []);
   brev.narration_kostnad_usd = svar.kostnad_usd;
   return brev;
 }
@@ -80,7 +84,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const brev = JSON.parse(readFileSync(fil, 'utf8'));
   const ut = await narreraBrev(brev);
   writeFileSync(fil, JSON.stringify(ut, null, 2), 'utf8');
-  console.log(`Narrerat: ingress + ${Object.keys(ut.brodtext || {}).length} bolagsstycken · kostnad $${(ut.narration_kostnad_usd || 0).toFixed(4)}`);
-  console.log(`\nIngress: ${ut.lead}\n`);
-  for (const [namn, text] of Object.entries(ut.brodtext || {})) console.log(`  ${namn}: ${text.slice(0, 120)}...`);
+  console.log(`Narrerat: ${ (ut.brev || []).length } stycken · kostnad $${(ut.narration_kostnad_usd || 0).toFixed(4)}\n`);
+  (ut.brev || []).forEach(s => console.log(s + '\n'));
 }
