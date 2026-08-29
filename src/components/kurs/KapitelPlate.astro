@@ -1,0 +1,74 @@
+---
+/* Graverat tryckmärke bakom kapitelhuvudet, i stället för fotografi.
+
+   Ett fält av parallella linjer som böjer sig runt en tyngdpunkt, som i en
+   sedelgravyr. Täthet, lutning, tyngdpunkt och böjning härleds ur
+   kapitelnumret, så varje kapitel får sitt eget märke medan hela kursen
+   behåller samma hand. Linjerna ärver kursens accentfärg genom var(--oxblood),
+   alltså byter märket färg med kursen utan att den här filen vet om det. */
+
+interface Props {
+  nr: number;
+}
+const { nr } = Astro.props;
+
+const W = 600;
+const H = 420;
+
+// Deterministisk pseudoslump ur kapitelnumret. Samma kapitel ger alltid samma
+// märke, vilket är poängen: det ska kännas satt, inte slumpat vid varje bygge.
+function frö(i: number): number {
+  const x = Math.sin((nr + 1) * 12.9898 + i * 78.233) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+const antal = 44 + Math.round(frö(1) * 20);
+const lutning = -26 + frö(2) * 52;
+const tyngdX = 0.38 + frö(3) * 0.34;
+const tyngdY = 0.3 + frö(4) * 0.36;
+const bojning = 52 + frö(5) * 62;
+const spridning = 0.018 + frö(6) * 0.022;
+
+const dy = Math.tan((lutning * Math.PI) / 180) * W;
+
+const linjer = Array.from({ length: antal }, (_, i) => {
+  const t = i / (antal - 1);
+  const y = -H * 0.35 + t * H * 1.7;
+  const avstand = t - tyngdY;
+  const narhet = Math.exp(-(avstand * avstand) / spridning);
+  const knuff = bojning * narhet;
+  return {
+    d: `M ${-40} ${y.toFixed(1)} Q ${(tyngdX * W).toFixed(1)} ${(y + dy * tyngdX - knuff).toFixed(1)} ${W + 40} ${(y + dy).toFixed(1)}`,
+    bredd: (0.55 + 1.9 * narhet).toFixed(2),
+    opacitet: (0.22 + 0.5 * narhet).toFixed(2),
+  };
+});
+---
+
+<svg
+  class="plate"
+  viewBox={`0 0 ${W} ${H}`}
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  {linjer.map((l) => (
+    <path d={l.d} fill="none" stroke="currentColor" stroke-width={l.bredd} opacity={l.opacitet} />
+  ))}
+</svg>
+
+<style>
+  /* Samma placering och pappersfade som fotoplattan hade: märket lever i den
+     högra, textfria halvan och tonar ut innan kapitlets första rubriklinje. */
+  .plate {
+    position: absolute;
+    z-index: -1;
+    inset: -12px -14px 0;
+    width: calc(100% + 28px);
+    height: calc(100% + 12px);
+    color: var(--oxblood);
+    pointer-events: none;
+    -webkit-mask: linear-gradient(180deg, #000 0%, #000 58%, transparent 96%);
+    mask: linear-gradient(180deg, #000 0%, #000 58%, transparent 96%);
+  }
+</style>

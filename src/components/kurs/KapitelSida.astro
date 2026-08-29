@@ -1,5 +1,6 @@
 ---
 import Broadsheet from '../../layouts/Broadsheet.astro';
+import KapitelPlate from './KapitelPlate.astro';
 import { konfig, laddaKurs, delFor } from '../../lib/kurs.mjs';
 
 // ── Types ────────────────────────────────────────────────────────────────
@@ -46,12 +47,17 @@ const metaText = `${formatTime(kap.tid_min)} · ${kap.niva} · ${lessonCount} le
 // Order of lesson-ids in this chapter (for client-side "nästa" computation)
 const chapterOrder = kap.lektioner.map((l) => l.lektion);
 
-// En egen paperstvattad bild per kapitel (0-18) i /bilder/kapitel-N.jpg,
-// inramad som en leadprint-plate (samma behandling som /hem och /fokus).
-// Crop-forskjutningen nedan varierar per kapitelnummer sa ingen ram ar den andra lik.
-const plateImg = `/bilder/${k.nyckel === 'fundamental-aktieanalys' ? '' : k.nyckel + '-'}kapitel-${kap.nummer}.jpg`;
+// Kapitelhuvudets bakgrund. Aktiekursen har en paperstvattad bild per kapitel
+// i /bilder/kapitel-N.jpg, med en crop-forskjutning som varierar per kapitel sa
+// ingen ram ar den andra lik. Motparten har inga foton alls utan ett graverat
+// marke som ritas ur kapitelnumret, se KapitelPlate.astro.
+const harFoto = k.plate === 'foto';
+const plateImg = `/bilder/kapitel-${kap.nummer}.jpg`;
 const plateX = 12 + ((kap.nummer * 37) % 64);
 const plateY = 18 + ((kap.nummer * 53) % 46);
+const headStyle = harFoto
+  ? `--plate:url('${plateImg}'); --plate-pos:${plateX}% ${plateY}%`
+  : undefined;
 ---
 
 <Broadsheet title={`Kapitel ${kap.nummer}: ${kap.titel}`} active="kurs" nav="app" editionLine2={`Kapitel ${kap.nummer}`} bodyClass={k.bodyClass} kurs={k}>
@@ -67,7 +73,8 @@ const plateY = 18 + ((kap.nummer * 53) % 46);
 
     <!-- Header: one bold chapter numeral is the single anchor. The chapter
          number is not repeated in the kicker (the breadcrumb already states it). -->
-    <header class="chead" style={`--plate:url('${plateImg}'); --plate-pos:${plateX}% ${plateY}%`}>
+    <header class:list={['chead', { 'chead--tryck': !harFoto }]} style={headStyle}>
+      {!harFoto && <KapitelPlate nr={kap.nummer} />}
       <div class="chead__num" aria-hidden="true">{kap.nummer}</div>
       <div class="chead__body">
         <div class="kicker">{del.titel}</div>
@@ -157,6 +164,8 @@ const plateY = 18 + ((kap.nummer * 53) % 46);
     mask: linear-gradient(180deg, #000 0%, #000 60%, transparent 98%); }
   .chead::after { content: ""; position: absolute; z-index: -1; inset: -12px -14px 0; pointer-events: none;
     background: linear-gradient(90deg, var(--paper) 0%, var(--paper) 30%, rgba(246,244,239,.55) 56%, rgba(246,244,239,0) 82%); }
+  /* Det graverade market ritas som ett eget element, sa fotoplattan stangs av. */
+  .chead--tryck::before { content: none; }
   .chead__body { min-width: 0; padding-top: clamp(4px, 1.2vw, 12px); }
   .chead__meta { display: flex; align-items: center; gap: 14px 22px; flex-wrap: wrap; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
   .chead__prog { display: flex; align-items: center; gap: 12px; margin-left: auto; }

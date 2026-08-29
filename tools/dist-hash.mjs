@@ -67,6 +67,9 @@ if (!rot) {
   process.exit(2);
 }
 for (const f of filer(rot).sort()) {
-  const { dom, css } = dela(normalisera(readFileSync(f, 'utf8')));
-  console.log(`${kort(dom)} ${kort(css)}  ${relative(rot, f).replace(/\\/g, '/')}`);
+  // Dela först, normalisera sedan var del för sig. Kör normaliseringen på hela
+  // filen numreras scope-id om i en ordning som style-blocken påverkar, och då
+  // ser DOM ändrad ut så fort en CSS-regel läggs till.
+  const { dom, css } = dela(readFileSync(f, 'utf8'));
+  console.log(`${kort(normalisera(dom))} ${kort(normalisera(css))}  ${relative(rot, f).replace(/\\/g, '/')}`);
 }

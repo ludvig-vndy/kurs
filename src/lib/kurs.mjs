@@ -15,6 +15,7 @@ import path from 'node:path';
  * @property {string} bodyClass    Klass som sätter färgtokens, tom sträng för standard
  * @property {string} varumarke    Namnet i spelarens löprubrik och sidfot
  * @property {string} fin          Sidfotens finstilta, efter varumärkesnamnet
+ * @property {'foto'|'tryck'} plate  Kapitelhuvudets bakgrund: fotoplatta eller graverat märke
  */
 
 /** @type {Record<string, KursKonfig>} */
@@ -28,6 +29,7 @@ export const KURSER = {
     bodyClass: '',
     varumarke: 'Delägaren',
     fin: 'fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.',
+    plate: 'foto',
   },
   motparten: {
     nyckel: 'motparten',
@@ -38,6 +40,7 @@ export const KURSER = {
     bodyClass: 'kurs-motparten',
     varumarke: 'Motparten',
     fin: 'en kurs i försäljning. I utbildningssyfte.',
+    plate: 'tryck',
   },
 };
 
