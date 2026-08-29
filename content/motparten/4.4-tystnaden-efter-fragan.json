@@ -20,7 +20,7 @@
       "highlight": "du hjälper till",
       "brodtext": [
         "Hjälpen kommer i tre former. Du förtydligar frågan, som om tystnaden betydde att den var oklar. Du erbjuder ett svarsalternativ, alltså är det till exempel att systemet är gammalt. Eller du byter fråga helt, eftersom den första uppenbarligen inte fungerade.",
-        "Alla tre gör samma sak: de tar tillbaka frågan innan den hunnit arbeta. Och den fråga som var värd att ställa var just den som krävde betänketid, eftersom svaret inte låg färdigt."
+        "Alla tre gör samma sak: de tar tillbaka frågan innan den hunnit arbeta. Och den fråga som var värd att ställa var den som krävde betänketid, eftersom svaret inte låg färdigt."
       ],
       "takeaway": "Tystnad efter en fråga betyder oftast att frågan var bra. Det är det enda tillfälle du inte ska ingripa."
     },
@@ -71,7 +71,7 @@
             "Att kunden inte vill svara"
           ],
           "ratt": [1],
-          "forklaring": "Den fråga som var värd att ställa är just den som kräver betänketid. Att förtydliga eller byta fråga tar tillbaka den innan den hunnit arbeta."
+          "forklaring": "Den fråga som var värd att ställa är den som kräver betänketid. Att förtydliga eller byta fråga tar tillbaka den innan den hunnit arbeta."
         },
         {
           "typ": "single",
