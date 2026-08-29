@@ -153,23 +153,26 @@ async function verifieraPilot(request, secret) {
 export async function onRequest(context) {
   const { request, next, env } = context;
   const url = new URL(request.url);
+  const motparten = motpartenVard(url.hostname);
 
-  if (motpartenVard(url.hostname) && (url.pathname === '/' || url.pathname === '/hem' || url.pathname === '/hem/')) {
+  if (motparten && (url.pathname === '/' || url.pathname === '/hem' || url.pathname === '/hem/')) {
     return Response.redirect(new URL('/motparten', url.origin).toString(), 302);
   }
 
   if (isExempt(normalizePath(url.pathname))) return next();
 
+  // Delagaren och Motparten ar skilda produkter och delar darfor ingen session.
+  // Pa motparten-varden slapper Delagarens Supabase-JWT INTE in, bara pilotens
+  // egen cookie. Pa Marginalens varder galler bara JWT:n, aldrig piloten. Vem som
+  // far kopa vilken kurs ar en senare fraga (se LAUNCH.md), men skiljelinjen mellan
+  // produkterna gar att halla redan nu, och den halls har.
+  if (motparten) {
+    if (await verifieraPilot(request, env && env.PILOT_SECRET)) return next();
+    return Response.redirect(new URL('/pilot', url.origin).toString(), 302);
+  }
+
   const token = getCookie(request, COOKIE);
   if (token && (await verifyJwt(token))) return next();
 
-  // Pilotsessionen galler bara pa motparten-varden, aldrig pa Marginalen.
-  if (motpartenVard(url.hostname) && (await verifieraPilot(request, env && env.PILOT_SECRET))) {
-    return next();
-  }
-
-  // Ingen giltig session -> till inloggningen. Pa motparten-varden finns ingen
-  // Marginalen-inloggning att visa, sa piloten far sin egen sida.
-  const mal = motpartenVard(url.hostname) ? '/pilot' : '/logga-in';
-  return Response.redirect(new URL(mal, url.origin).toString(), 302);
+  return Response.redirect(new URL('/logga-in', url.origin).toString(), 302);
 }
