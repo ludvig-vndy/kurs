@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Innehav · Delägaren</title>
+<meta name="description" content="Bolagssidan för ett innehav: dagens kurs, dina köp och sälj på grafen, och en GAV som räknas ut åt dig ur affärshistoriken.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF; --paper-2:#EBE6DD; --card:#FCFAF4;
+    --ink:#211C17; --ink-soft:#4A4239; --muted:#6E6456; --faint:#C7BBA6;
+    --rule:rgba(33,28,23,.14); --rule-strong:rgba(33,28,23,.40);
+    --oxblood:#2C5646; --gold:#B07C1E; --good:#2F7A55; --bad:#9B3A2E;
+    --serif:"Spectral",Georgia,serif; --display:"Outfit",system-ui,sans-serif;
+    --label:"Schibsted Grotesk",system-ui,sans-serif; --num:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{overflow-x:clip;-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  .wrap{width:100%;max-width:940px;margin:0 auto;padding:0 clamp(20px,5vw,52px)}
+  a{color:inherit}
+  .masthead{padding:26px 0 0}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:12px}
+  .wordmark{font-family:"Zilla Slab",Georgia,serif;font-weight:700;font-size:clamp(22px,3vw,32px);letter-spacing:.03em;text-transform:uppercase;color:var(--oxblood);line-height:.9}
+  .edition{font-family:var(--label);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;line-height:1.6}
+  .mast-rule{height:2px;background:var(--rule-strong)}
+  main{flex:1;padding-bottom:60px}
+  .back{display:inline-block;font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin:20px 0 0}
+  .back:hover{color:var(--oxblood)}
+
+  .msg{font-family:var(--serif);font-size:18px;color:var(--ink-soft);padding:40px 0}
+  .msg a{color:var(--oxblood)}
+
+  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:10px 0 0}
+  .head h1{font-family:var(--display);font-weight:300;font-size:clamp(30px,4.6vw,48px);line-height:1;letter-spacing:-.02em}
+  .head .tk{font-family:var(--num);font-size:13px;color:var(--faint);margin-left:12px;letter-spacing:.04em}
+  .head .tag{font-family:var(--label);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid var(--oxblood);color:var(--oxblood);margin-left:10px;vertical-align:middle}
+  .head .tag.foljer{border-color:var(--gold);color:var(--gold)}
+  .price{text-align:right}
+  .price .p{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:clamp(24px,3.6vw,32px);font-weight:500}
+  .price .c{font-family:var(--num);font-size:14px;margin-top:2px}
+  .price .c.up{color:var(--good)} .price .c.dn{color:var(--bad)}
+  .price .nn{font-family:var(--label);font-size:11px;color:var(--muted)}
+
+  .pos{display:flex;flex-wrap:wrap;gap:16px 40px;border-top:2px solid var(--rule-strong);border-bottom:1px solid var(--rule);margin:18px 0 0;padding:18px 0}
+  .pos .b{min-width:0}
+  .pos .k{font-family:var(--label);font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .pos .v{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:20px;font-weight:500}
+  .pos .v small{font-family:var(--label);font-size:11px;color:var(--muted);margin-left:6px;font-weight:400}
+  .pos .v.up{color:var(--good)} .pos .v.dn{color:var(--bad)}
+  .pos .v .sub{font-size:13px;color:var(--muted);margin-left:7px}
+
+  .chartsec{margin:24px 0 0}
+  .charttop{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--label);font-size:10.5px;letter-spacing:.02em;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend .ln{width:16px;height:2px;background:var(--oxblood);display:inline-block}
+  .legend .gav{width:16px;height:0;border-top:2px dashed var(--gold);display:inline-block}
+  .legend .buy{color:var(--good);font-weight:700}
+  .legend .sell{color:var(--bad);font-weight:700}
+  .chartbox{border:1px solid var(--rule);border-radius:6px;background:var(--card);padding:12px 10px 6px}
+  .chartbox svg{width:100%;height:280px;display:block;overflow:visible}
+  .gl{stroke:var(--rule);stroke-width:1}
+  .glt{font-family:var(--num);font-size:9.5px;fill:var(--faint)}
+  .xlt{font-family:var(--num);font-size:9px;fill:var(--faint)}
+  .charthint{font-family:var(--label);font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
+
+  .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:34px;margin:30px 0 0;align-items:start}
+  @media(max-width:720px){.grid{grid-template-columns:1fr;gap:26px}}
+  .sech{font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .trades{list-style:none}
+  .trades li{display:grid;grid-template-columns:auto 1fr auto;gap:3px 14px;align-items:center;padding:12px 2px;border-top:1px solid var(--rule)}
+  .trades li:first-child{border-top:none}
+  .trades .empty{grid-column:1/-1;font-family:var(--label);font-size:13px;color:var(--muted);padding:14px 0}
+  .tside{font-family:var(--label);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:99px}
+  .tside.buy{color:var(--good);border:1px solid var(--good)} .tside.sell{color:var(--bad);border:1px solid var(--bad)}
+  .tmid .td{font-family:var(--display);font-weight:500;font-size:15px}
+  .tmid .tsub{font-family:var(--num);font-size:11.5px;color:var(--muted)}
+  .tamt{font-family:var(--num);font-variant-numeric:tabular-nums;font-size:14.5px;text-align:right;white-space:nowrap}
+  .tdel{background:none;border:none;color:var(--faint);cursor:pointer;font-family:var(--label);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 4px}
+  .tdel:hover{color:var(--bad)}
+
+  .form{background:var(--card);border:1px solid var(--rule-strong);border-radius:8px;padding:18px}
+  .form .fh{font-family:var(--display);font-weight:600;font-size:16px;margin-bottom:14px}
+  .seg{display:flex;border:1px solid var(--rule-strong);border-radius:8px;overflow:hidden;margin-bottom:12px}
+  .seg button{flex:1;font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.04em;border:none;background:var(--paper);color:var(--muted);padding:10px;cursor:pointer}
+  .seg button.on.buy{background:var(--good);color:#fff} .seg button.on.sell{background:var(--bad);color:#fff}
+  .frow{margin-bottom:11px}
+  .frow label{font-family:var(--label);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+  .frow input,.frow select{width:100%;background:var(--paper);border:1px solid var(--rule-strong);border-radius:7px;font-family:var(--num);font-size:15px;color:var(--ink);padding:10px 12px;outline:none}
+  .frow input:focus,.frow select:focus{border-color:var(--oxblood)}
+  .frow2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .addbtn{width:100%;font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--oxblood);color:var(--paper);border:none;border-radius:99px;padding:13px;cursor:pointer;margin-top:4px}
+  .addbtn:hover{background:#24493b}
+  .addbtn[disabled]{opacity:.55;cursor:default}
+  .fhint{font-family:var(--label);font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
+  .ferr{font-family:var(--label);font-size:12px;color:var(--bad);margin-top:10px;min-height:1em}
+
+  footer{border-top:2px solid var(--rule-strong);margin-top:40px}
+  footer .wrap{padding:22px 0 40px;font-family:var(--label);font-size:11px;letter-spacing:.03em;color:var(--faint);line-height:1.6}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .fade{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="mast-top"><span class="wordmark">Marginalen</span><span class="edition">Din del av bolagen<br>Bolagssida</span></div>
+    <div class="mast-rule"></div>
+  </header>
+
+  <main>
+    <a class="back" href="/labs/dina-bolag.html">&larr; Dina bolag</a>
+    <div id="root"><div class="msg">Laddar innehavet&hellip;</div></div>
+  </main>
+
+  <footer><div class="wrap" id="foot">Lägg in dina köp och sälj, så räknar Delägaren ut din GAV och avkastning ur historiken. Utbildningssyfte, aldrig köp- eller säljråd.</div></footer>
+</div>
+
+<script defer src="/vendor/supabase-js-2.110.2.min.js"></script>
+<script defer src="/labs/agarbrevet-supabase.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var HID = new URLSearchParams(location.search).get("id");
+  var holding = null, trades = [], side = "kop", PRICE = null, PRICE_DATE = null;
+
+  var esc = function(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
+  var fmt = function(n,d){ d=d||0; return Number(n).toLocaleString("sv-SE",{minimumFractionDigits:d,maximumFractionDigits:d}); };
+  var pct = function(n){ return (n>0?"+":"")+Number(n).toLocaleString("sv-SE",{minimumFractionDigits:1,maximumFractionDigits:1})+" %"; };
+  var cur = function(cc){ return cc==="FI" ? "€" : "kr"; };
+  var num = function(v){ var n=parseFloat(String(v).replace(",",".")); return isNaN(n)?null:n; };
+  var byId = function(id){ return document.getElementById(id); };
+
+  function whenAB(cb){
+    var t=0;
+    (function poll(){
+      if(window.AB && window.AB.ready) return cb();
+      if(window.AB && window.AB.ready===false) return cb(); // laddade men fel
+      if((t+=60) > 8000) return cb();
+      setTimeout(poll, 60);
+    })();
+  }
+
+  // Kurssnapshot: samma companies.json som Dina bolag och söket.
+  function loadPrice(h){
+    return fetch("/labs/data/companies.json").then(function(r){ return r.ok?r.json():null; }).then(function(d){
+      if(!d) return null;
+      PRICE_DATE = d.uppdaterad || null;
+      var list = Array.isArray(d)?d:(d.bolag||[]);
+      var byT = {}, byN = {};
+      list.forEach(function(o){ if(o.t) byT[String(o.t).toUpperCase()]=o; if(o.n) byN[String(o.n).toLowerCase().trim()]=o; });
+      if(h.ticker && byT[String(h.ticker).toUpperCase()]) return byT[String(h.ticker).toUpperCase()];
+      if(h.name && byN[String(h.name).toLowerCase().trim()]) return byN[String(h.name).toLowerCase().trim()];
+      return null;
+    }).catch(function(){ return null; });
+  }
+
+  // Position ur affärerna (snittkostnad) - spegling av DB-triggern, för
+  // affärer som ännu inte hunnit skrivas. Har innehavet redan quantity/gav
+  // från servern använder vi dem (triggerns sanning); annars räknar vi här.
+  function positionFromTrades(){
+    var qty=0, cost=0;
+    trades.slice().sort(function(a,b){ return new Date(a.decided_at)-new Date(b.decided_at); }).forEach(function(t){
+      var q=Number(t.quantity)||0, p=Number(t.price)||0;
+      if(t.kind==="kop"){ qty+=q; cost+=q*p; }
+      else { var avg=qty?cost/qty:0; qty-=q; cost-=q*avg; }
+    });
+    qty=Math.max(qty,0); cost=Math.max(cost,0);
+    return { qty:qty, gav:qty?cost/qty:null, ansk:cost };
+  }
+
+  function currentPrice(){ return PRICE && PRICE.p!=null ? Number(PRICE.p) : null; }
+
+  function render(){
+    var root = byId("root");
+    if(!holding){ root.innerHTML = '<div class="msg">Innehavet hittades inte, eller så är det inte ditt. <a href="/labs/dina-bolag.html">Tillbaka till Dina bolag</a>.</div>'; return; }
+
+    var hasTrades = trades.length>0;
+    // Sanningskälla för antal/GAV: triggern (holding.quantity/gav) om affärer finns,
+    // annars den manuellt inmatade positionen på innehavet.
+    var qty = holding.quantity!=null ? Number(holding.quantity) : (hasTrades ? positionFromTrades().qty : null);
+    var gav = holding.gav!=null ? Number(holding.gav) : (hasTrades ? positionFromTrades().gav : null);
+    var gavKalla = hasTrades ? "uträknad" : "inmatad";
+    var px = currentPrice();
+    var cc = PRICE ? PRICE.c : null, c = cur(cc);
+    var foljer = holding.relation==="foljer";
+
+    var ansk = (qty!=null && gav!=null) ? qty*gav : null;
+    var mv = (qty!=null && px!=null) ? qty*px : null;
+    var avk = (mv!=null && ansk!=null) ? mv-ansk : null;
+    var avkPct = (avk!=null && ansk>0) ? (mv/ansk-1)*100 : null;
+
+    var html = '<div class="fade">';
+
+    // Rubrik + dagens kurs
+    html += '<div class="head"><div><h1>'+esc(holding.name)+
+      (holding.ticker?'<span class="tk">'+esc(holding.ticker)+'</span>':'')+
+      '<span class="tag'+(foljer?' foljer':'')+'">'+(foljer?'Följer':'Äger')+'</span></h1></div>';
+    if(px!=null){
+      var dc = PRICE.ch;
+      html += '<div class="price"><div class="p">'+fmt(px,2)+' '+c+'</div>'+
+        '<div class="c '+(dc>=0?'up':'dn')+'">'+pct(dc)+' i dag</div></div>';
+    } else {
+      html += '<div class="price"><div class="nn">Ingen kurs i snapshoten</div></div>';
+    }
+    html += '</div>';
+
+    // Positionsband
+    html += '<section class="pos">';
+    if(mv!=null){
+      html += '<div class="b"><div class="k">Marknadsvärde</div><div class="v">'+fmt(mv)+' '+c+'</div></div>';
+    } else if(ansk!=null){
+      html += '<div class="b"><div class="k">Anskaffningsvärde</div><div class="v">'+fmt(ansk)+' '+c+'</div></div>';
+    }
+    if(qty!=null) html += '<div class="b"><div class="k">Antal</div><div class="v">'+fmt(qty)+' <small>st</small></div></div>';
+    if(gav!=null) html += '<div class="b"><div class="k">Din GAV ('+gavKalla+')</div><div class="v">'+fmt(gav,2)+' '+c+'</div></div>';
+    if(avkPct!=null){
+      var up=avk>=0;
+      html += '<div class="b"><div class="k">Avkastning</div><div class="v '+(up?"up":"dn")+'">'+pct(avkPct)+
+        '<span class="sub">'+(up?"+":"")+fmt(avk)+' '+c+'</span></div></div>';
+    }
+    if(qty==null && !hasTrades) html += '<div class="b"><div class="k">Position</div><div class="v" style="font-family:var(--serif);font-size:16px;color:var(--muted)">Lägg in en affär nedan</div></div>';
+    html += '</section>';
+
+    // Kursgraf: affärspriser + dagens kurs (kursbana byggs upp när vi sparat historik)
+    html += '<section class="chartsec"><div class="charttop"><div class="legend">'+
+      '<span><i class="ln"></i> Kurs/affärer</span>'+
+      '<span><i class="gav"></i> Din GAV</span>'+
+      '<span><b class="buy">&#9650;</b> Köp</span>'+
+      '<span><b class="sell">&#9660;</b> Sälj</span>'+
+      '</div></div>'+
+      '<div class="chartbox"><svg id="chart" viewBox="0 0 820 280" preserveAspectRatio="none"></svg></div>'+
+      '<div class="charthint">Kursbanan byggs upp när vi sparat daglig historik. Just nu ritar vi dina affärspriser och dagens kurs, med köp och sälj som markörer.</div>'+
+      '</section>';
+
+    // Affärer + formulär
+    html += '<div class="grid"><div>'+
+      '<div class="sech">Dina affärer ('+trades.length+')</div>'+
+      '<ul class="trades" id="tlist"></ul></div>'+
+      '<div><div class="form">'+
+        '<div class="fh">Lägg till affär</div>'+
+        '<div class="seg" id="seg"><button class="on buy" data-s="kop">Köp</button><button data-s="salj">Sälj</button></div>'+
+        '<div class="frow"><label>Datum</label><input id="f-date" type="date"></div>'+
+        '<div class="frow2"><div class="frow"><label>Antal</label><input id="f-qty" inputmode="decimal" placeholder="t.ex. 1119"></div>'+
+        '<div class="frow"><label>Kurs</label><input id="f-price" inputmode="decimal" placeholder="t.ex. 4,34"></div></div>'+
+        '<button class="addbtn" id="add">Lägg till affär</button>'+
+        '<div class="ferr" id="ferr"></div>'+
+        '<div class="fhint">Lägg in dina köp och sälj, så räknar vi ut din GAV och avkastning automatiskt. Du behöver inte veta din snittkurs.</div>'+
+      '</div></div></div>';
+
+    html += '</div>';
+    root.innerHTML = html;
+
+    renderChart();
+    renderTrades();
+    wireForm();
+  }
+
+  function renderChart(){
+    var svg = byId("chart"); if(!svg) return;
+    var px = currentPrice();
+    var pos = trades.length ? positionFromTrades() : {gav:(holding.gav!=null?Number(holding.gav):null)};
+    // Punkter i tid: varje affär (datum, affärskurs) + dagens kurs sist.
+    var pts = trades.slice()
+      .filter(function(t){ return t.price!=null; })
+      .map(function(t){ return { t:new Date(t.decided_at).getTime(), v:Number(t.price), trade:t }; })
+      .sort(function(a,b){ return a.t-b.t; });
+    var now = Date.now();
+    if(px!=null) pts.push({ t:now, v:px, trade:null });
+    if(!pts.length){ svg.innerHTML=''; return; }
+
+    var W=820,H=280,padT=12,padB=22,padL=6,padR=6;
+    var minT=pts[0].t, maxT=pts[pts.length-1].t; if(maxT===minT) maxT=minT+1;
+    var vals=pts.map(function(p){ return p.v; });
+    if(pos.gav!=null) vals.push(pos.gav);
+    var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals), rng=(mx-mn)||1;
+    // marginal så punkter inte klistrar i kant
+    mn-=rng*0.08; mx+=rng*0.08; rng=mx-mn;
+    var X=function(t){ return padL+(t-minT)/(maxT-minT)*(W-padL-padR); };
+    var Y=function(v){ return padT+(H-padT-padB)*(1-(v-mn)/rng); };
+
+    var grid='';
+    for(var k=0;k<=3;k++){ var y=padT+(H-padT-padB)*k/3; var val=mx-(mx-mn)*k/3;
+      grid+='<line class="gl" x1="0" x2="'+W+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'"/><text class="glt" x="2" y="'+(y-3).toFixed(1)+'">'+fmt(val,1)+'</text>'; }
+
+    var line = pts.map(function(p,i){ return (i?'L':'M')+X(p.t).toFixed(1)+' '+Y(p.v).toFixed(1); }).join(' ');
+
+    var gav='';
+    if(pos.gav!=null){ var gy=Y(pos.gav);
+      gav='<line x1="0" x2="'+W+'" y1="'+gy.toFixed(1)+'" y2="'+gy.toFixed(1)+'" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="5 4"/>'+
+        '<text class="glt" x="'+(W-4)+'" y="'+(gy-4).toFixed(1)+'" text-anchor="end" fill="var(--gold)">GAV '+fmt(pos.gav,2)+'</text>'; }
+
+    var marks = pts.filter(function(p){ return p.trade; }).map(function(p){
+      var x=X(p.t), y=Y(p.v), buy=p.trade.kind==="kop", col=buy?"var(--good)":"var(--bad)";
+      var tri=buy?(x+' '+(y+11)+' '+(x-6)+' '+(y+20)+' '+(x+6)+' '+(y+20)):(x+' '+(y-11)+' '+(x-6)+' '+(y-20)+' '+(x+6)+' '+(y-20));
+      var d=new Date(p.trade.decided_at).toISOString().slice(0,10);
+      return '<g><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3.5" fill="'+col+'"/>'+
+        '<polygon points="'+tri+'" fill="'+col+'"><title>'+(buy?"Köp":"Sälj")+' '+fmt(p.trade.quantity)+' st @ '+fmt(p.trade.price,2)+' · '+d+'</title></polygon></g>';
+    }).join('');
+
+    // datumetiketter (först + sist)
+    var xl='<text class="xlt" x="'+X(minT).toFixed(1)+'" y="'+(H-6)+'" text-anchor="start">'+new Date(minT).toISOString().slice(0,7)+'</text>'+
+      '<text class="xlt" x="'+X(maxT).toFixed(1)+'" y="'+(H-6)+'" text-anchor="end">'+new Date(maxT).toISOString().slice(0,7)+'</text>';
+
+    svg.innerHTML = grid + xl +
+      '<path d="'+line+'" fill="none" stroke="var(--oxblood)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="'+(pts.length>1?'2 5':'0')+'"/>'+
+      gav + marks;
+  }
+
+  function renderTrades(){
+    var ul = byId("tlist"); if(!ul) return;
+    if(!trades.length){ ul.innerHTML='<li class="empty">Inga affärer än. Lägg in ditt första köp till höger.</li>'; return; }
+    var sorted = trades.slice().sort(function(a,b){ return new Date(b.decided_at)-new Date(a.decided_at); });
+    var cc = PRICE ? PRICE.c : null, c = cur(cc);
+    ul.innerHTML = sorted.map(function(t){
+      var buy=t.kind==="kop", d=new Date(t.decided_at).toISOString().slice(0,10);
+      return '<li><span class="tside '+(buy?"buy":"sell")+'">'+(buy?"Köp":"Sälj")+'</span>'+
+        '<div class="tmid"><div class="td">'+fmt(t.quantity)+' st @ '+fmt(t.price,2)+' '+c+'</div><div class="tsub">'+d+'</div></div>'+
+        '<div><div class="tamt">'+fmt(t.quantity*t.price)+' '+c+'</div><button class="tdel" data-id="'+t.id+'">Ta bort</button></div></li>';
+    }).join('');
+    Array.prototype.forEach.call(ul.querySelectorAll(".tdel"), function(b){
+      b.addEventListener("click", function(){ removeTrade(b.getAttribute("data-id"), b); });
+    });
+  }
+
+  function wireForm(){
+    Array.prototype.forEach.call(document.querySelectorAll("#seg button"), function(b){
+      b.addEventListener("click", function(){
+        side=b.getAttribute("data-s");
+        Array.prototype.forEach.call(document.querySelectorAll("#seg button"), function(x){ x.className=""; });
+        b.className = "on "+(side==="kop"?"buy":"sell");
+      });
+    });
+    var dt = byId("f-date"); if(dt) dt.value = new Date().toISOString().slice(0,10);
+    byId("add").addEventListener("click", addTrade);
+  }
+
+  function addTrade(){
+    var q=num(byId("f-qty").value), p=num(byId("f-price").value), d=byId("f-date").value;
+    var err=byId("ferr"); err.textContent="";
+    if(!(q>0)||!(p>0)){ err.textContent="Fyll i både antal och kurs (större än noll)."; return; }
+    var btn=byId("add"); btn.disabled=true; btn.textContent="Sparar…";
+    var payload={ holding_id:HID, kind:side, quantity:q, price:p };
+    if(d) payload.decided_at = new Date(d+"T12:00:00").toISOString();
+    window.AB.addDecision(payload).then(function(){
+      return reload();
+    }).then(function(){
+      // render() har byggt om formuläret; inget mer att nolla
+    }).catch(function(e){
+      btn.disabled=false; btn.textContent="Lägg till affär";
+      byId("ferr").textContent = "Kunde inte spara: "+(e && e.message ? e.message : "okänt fel")+".";
+    });
+  }
+
+  function removeTrade(id, btn){
+    btn.disabled=true; btn.textContent="Tar bort…";
+    window.AB.deleteDecision(id).then(function(){ return reload(); }).catch(function(e){
+      btn.disabled=false; btn.textContent="Ta bort";
+      alert("Kunde inte ta bort affären: "+(e && e.message ? e.message : "okänt fel"));
+    });
+  }
+
+  // Hämtar om innehavet (triggerns uträknade position) + affärerna, och ritar om.
+  function reload(){
+    return Promise.all([ window.AB.getHolding(HID), window.AB.listDecisions(HID) ])
+      .then(function(res){ holding=res[0]; trades=res[1]||[]; render(); })
+      .catch(function(e){
+        byId("root").innerHTML = '<div class="msg">Kunde inte läsa innehavet: '+esc(e && e.message ? e.message : "okänt fel")+'. <a href="/labs/dina-bolag.html">Tillbaka</a>.</div>';
+      });
+  }
+
+  function start(){
+    if(!HID){ byId("root").innerHTML='<div class="msg">Inget innehav valt. <a href="/labs/dina-bolag.html">Gå till Dina bolag</a> och öppna ett bolag.</div>'; return; }
+    if(!window.AB || !window.AB.ready){ byId("root").innerHTML='<div class="msg">Kunde inte ladda kontot. Ladda om sidan, eller <a href="/logga-in">logga in</a>.</div>'; return; }
+    window.AB.getHolding(HID).then(function(h){
+      holding=h;
+      return Promise.all([ window.AB.listDecisions(HID), loadPrice(h) ]);
+    }).then(function(res){
+      trades=res[0]||[]; PRICE=res[1];
+      render();
+    }).catch(function(e){
+      byId("root").innerHTML = '<div class="msg">Kunde inte läsa innehavet: '+esc(e && e.message ? e.message : "okänt fel")+'. Är du inloggad? <a href="/logga-in">Logga in</a>.</div>';
+    });
+  }
+
+  whenAB(start);
+})();
+</script>
+</body>
+</html>

@@ -434,11 +434,16 @@ function realRow(h){
     ln='Bevakning startar när motorn körts på bolaget.';
   }
 
-  return '<div class="hold" aria-disabled="true">'+
+  const href = h.id ? '/labs/innehav.html?id='+encodeURIComponent(h.id) : null;
+  const inner =
     '<span class="dot '+dot+'"></span>'+
     '<div><div><span class="nm">'+esc(h.name)+'</span>'+(h.ticker?'<span class="tk">'+esc(h.ticker)+'</span>':'')+tag+'</div>'+
-    (ln?'<div class="ln">'+ln+'</div>':'')+'</div>'+
-    '<div class="rt">'+rt+'</div></div>';
+    (ln?'<div class="ln">'+ln+'</div>':'')+
+    (href?'<div class="go">Öppna bolagssidan &rarr;</div>':'')+'</div>'+
+    '<div class="rt">'+rt+'</div>';
+  return href
+    ? '<a class="hold" href="'+href+'">'+inner+'</a>'
+    : '<div class="hold" aria-disabled="true">'+inner+'</div>';
 }
 
 function pageHeader(){

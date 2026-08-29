@@ -126,6 +126,58 @@
     return true;
   }
 
+  // ── Affärer (decisions som huvudbok) ────────────────────────────────────
+  // Ett innehav och dess köp/sälj. Positionen (quantity, gav) räknas om
+  // server-side av triggern trg_decisions_recalc, så efter varje skrivning
+  // hämtar sidan om innehavet för att visa den uträknade positionen.
+  async function getHolding(id) {
+    var res = await sb
+      .from("holdings")
+      .select("id,name,ticker,isin,quantity,gav,relation,source,created_at")
+      .eq("id", id)
+      .single();
+    if (res.error) throw res.error;
+    return res.data || null;
+  }
+
+  // Köp/sälj för ett innehav, äldst först (som huvudboken läses).
+  async function listDecisions(holdingId) {
+    var res = await sb
+      .from("decisions")
+      .select("id,kind,quantity,price,reason,decided_at")
+      .eq("holding_id", holdingId)
+      .in("kind", ["kop", "salj"])
+      .order("decided_at", { ascending: true })
+      .order("created_at", { ascending: true });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
+  // d: { holding_id, kind:'kop'|'salj', quantity, price, decided_at?, reason? }
+  // user_id sätts explicit så insert:en matchar RLS-policyn "egna beslut".
+  async function addDecision(d) {
+    var user = await getUser();
+    if (!user) throw new Error("Inte inloggad.");
+    var row = {
+      user_id: user.id,
+      holding_id: d.holding_id,
+      kind: d.kind === "salj" ? "salj" : "kop",
+      quantity: d.quantity == null ? null : d.quantity,
+      price: d.price == null ? null : d.price,
+      reason: d.reason || null
+    };
+    if (d.decided_at) row.decided_at = d.decided_at; // annars default now()
+    var res = await sb.from("decisions").insert(row).select("id").single();
+    if (res.error) throw res.error;
+    return res.data;
+  }
+
+  async function deleteDecision(id) {
+    var res = await sb.from("decisions").delete().eq("id", id);
+    if (res.error) throw res.error;
+    return true;
+  }
+
   // ── Inbjudningar ───────────────────────────────────────────────────────
   async function acceptInvite(token) {
     var user = await getUser();
@@ -147,6 +199,10 @@
     listHoldings: listHoldings,
     insertHoldings: insertHoldings,
     deleteAllHoldings: deleteAllHoldings,
+    getHolding: getHolding,
+    listDecisions: listDecisions,
+    addDecision: addDecision,
+    deleteDecision: deleteDecision,
     acceptInvite: acceptInvite,
     mountUserChip: mountUserChip,
     onAuthChange: function (cb) { return sb.auth.onAuthStateChange(cb); }
