@@ -29,7 +29,7 @@ Så här ska brevet kännas:
 - Skriv enbart på svenska. Inled INTE med en hälsning (ingen "God morgon", ingen "Hej"): sidan säger redan god morgon. Börja direkt i sak.
 - Det rör sig genom det som hänt med naturliga övergångar mellan bolagen ("Mest att säga i dag är om...", "Bland insynshandeln...", "Och så en kortare not om..."). Bolag får nämnas i samma stycke när det binder ihop texten.
 - Det avslutas med en kort, lugn rad (till exempel att resten låg still och att nästa brev kommer i morgon).
-- 4 till 6 korta stycken, sammanhängande, som ett brev från någon som läst allt åt läsaren.
+- 6 till 8 stycken, sammanhängande, som ett brev från någon som läst allt åt läsaren. Ge gärna varje bolag lite mer sammanhang: vad slags händelse det är, och varför den är värd att notera för en ägare (utan att ge råd och utan tal). Ett förvärv, en emission, en insynsförsäljning och en kallelse betyder olika saker, säg kort vad.
 
 Det viktigaste om innehållet: skriv KVALITATIVT, i ord, inte i siffror. De exakta talen visas separat i "siffrorna bakom", så din uppgift är att berätta vad som hänt och åt vilket håll.
 

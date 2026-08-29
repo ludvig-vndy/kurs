@@ -231,8 +231,8 @@
         <h2>Du är uppdaterad.</h2>
         <p>Nästa brev kommer i morgon bitti. Passeras en av dina gränser dessförinnan säger vi till direkt. Varje siffra ovan är spårad till sin källa innan brevet skickades.</p>
         <p class="fine">
-          <span class="tag">Prototyp · exempeldata</span><br>
-          Ägarbrevet · av Marginalen. Arbetsnamn, fiktiva bolag, påhittade siffror. Information i utbildningssyfte, aldrig köp- eller säljråd. Maskinläst, mänskligt ogranskad.
+          <span class="tag">Skarp data · maskinläst</span><br>
+          Ägarbrevet · av Marginalen. Arbetsnamn. Siffrorna är hämtade ur bolagens egna pressmeddelanden och FI:s register, spårade till källan. Den skrivna texten beskriver skeenden i ord, aldrig egna tal. Information i utbildningssyfte, aldrig köp- eller säljråd. Maskinläst, mänskligt ogranskad.
         </p>
       </section>
 
@@ -340,6 +340,18 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
   .bc-k:hover{text-decoration:underline}
   .bc-num{font-family:var(--mono,ui-monospace,monospace);font-size:12px;color:var(--ink-soft,#4A4239);margin:5px 0 0 84px;display:block;font-variant-numeric:tabular-nums}
   @media(max-width:520px){.bc-num{margin-left:0}}
+
+  /* Tvåspalt: brevet som huvudkolumn, "I korthet" som högersidebar (broadsheet). */
+  .brev-grid{display:grid;grid-template-columns:1fr 290px;gap:clamp(30px,4.5vw,58px);align-items:start;margin-bottom:6px}
+  .brev-grid .brev-body{max-width:none}
+  @media(max-width:860px){.brev-grid{grid-template-columns:1fr;gap:26px}.brev-rail{order:-1}}
+  .brev-rail{position:sticky;top:18px}
+  .brev-rail .rail-h{font-family:var(--mono,ui-monospace,monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted,#6E6456);margin-bottom:6px;padding-bottom:10px;border-bottom:2px solid var(--rule-strong,rgba(33,28,23,.4))}
+  .brev-rail .korthet{border:none;margin:0}
+  .brev-rail .kh-row{flex-wrap:wrap;padding:11px 0}
+  .brev-rail .kh-co{font-size:14px}
+  .brev-rail .kh-n{margin-left:auto;min-width:0;font-size:10px}
+  .brev-rail .kh-types{flex-basis:100%;margin:3px 0 0 17px;font-size:9.5px}
 </style>
 <script>
 /* Av-mockad: brevet renderas ur en brief-payload (motor/vigilans/brief-build.mjs),
@@ -387,9 +399,8 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
     var order=[], grouped={};
     poster.forEach(function(p){ if(!grouped[p.bolag]){grouped[p.bolag]=[];order.push(p.bolag);} grouped[p.bolag].push(p); });
 
-    // I korthet: en liggare, prick färgad efter dominant händelsetyp.
-    var summ=document.getElementById('brev-summ');
-    summ.className='korthet';
+    // I korthet: liggare i högersidebaren (gamla toppsektionen döljs).
+    var summSec=document.querySelector('.summ'); if(summSec) summSec.style.display='none';
     var khRows=order.map(function(co){
       var evs=grouped[co], types=[];
       evs.forEach(function(p){ if(types.indexOf(p.typnamn)<0) types.push(p.typnamn); });
@@ -401,7 +412,7 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
     (lugna||[]).filter(function(co){ return !grouped[co]; }).forEach(function(co){
       khRows.push('<div class="kh-row"><span class="kh-dot calm"></span><span class="kh-co">'+esc(co)+'</span><span class="kh-types">lugnt</span><span class="kh-n">stilla</span></div>');
     });
-    summ.innerHTML = khRows.join('') || '<div class="kh-row"><span class="kh-dot calm"></span><span class="kh-co">Inget rörde dina bolag</span></div>';
+    var khHtml = khRows.join('') || '<div class="kh-row"><span class="kh-dot calm"></span><span class="kh-co">Inget rörde dina bolag</span></div>';
 
     // Markera bolagsnamnen (första förekomsten) i en brevmening, som ankare.
     function markera(text){
@@ -438,7 +449,8 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
           }).join('')+'</div>';
       }).join('')+'</section>';
 
-    st.innerHTML = letter + bakom;
+    st.innerHTML = '<div class="brev-grid"><div class="brev-main">'+letter+'</div>'+
+      '<aside class="brev-rail"><div class="rail-h">I korthet</div><div class="korthet">'+khHtml+'</div></aside></div>' + bakom;
   }
   // Primärt: riktigt brev ur KV (/api/brev). Fallback: exempeldatan (vakt-formen).
   fetch('/api/brev').then(function(r){return r.ok?r.json():null;}).then(function(b){
