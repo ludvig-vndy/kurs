@@ -10,9 +10,9 @@
  *     --namn "Installatörer i Väst" \
  *     [--publicera] [--kop ludvig@vndy.se,sebastian@vndy.se]
  *
- * Idempotent: samma slug uppdaterar listan och ersätter dess rader.
- * Deltagarnas arbete hänger på rad-id, så rader raderas ALDRIG när listan
- * redan är publicerad. Vill man byta ut raderna får man skapa en ny slug.
+ * Idempotent: samma slug uppdaterar listan, och raderna matchas på cfar.
+ * Deltagarnas arbete hänger på cfar och inte på radens uuid, så ett omkört
+ * uttag behåller anteckningarna även när rader tillkommer eller försvinner.
  */
 
 import { readFileSync } from 'node:fs';
@@ -72,9 +72,19 @@ if (!Array.isArray(rader) || !rader.length) {
 }
 console.log(`Läste ${rader.length} rader ur ${fil}`);
 
+// cfar ar nyckeln som barer deltagarnas arbete over ett omkort uttag.
+// Saknas den nagonstans stannar vi hellre an skapar rader utan stabil nyckel.
+const utanCfar = rader.filter(r => !String(r.CFAR || '').trim());
+if (utanCfar.length) {
+  console.error(`${utanCfar.length} rader saknar CFAR. Avbryter.`);
+  console.error('Exempel: ' + utanCfar.slice(0, 3).map(r => r['Företag']).join(', '));
+  process.exit(1);
+}
+
 const STATUS_TILL_BAND = r => r['Anställdaband'] || null;
 
 const till_rad = r => ({
+  cfar: String(r.CFAR || '').trim(),
   nr: r.Nr,
   prio: r.Prio,
   foretag: r['Företag'],
@@ -138,8 +148,8 @@ console.log(`Lista ${slug} -> ${lista.id} (publicerad: ${lista.publicerad})`);
 // ── Rader ─────────────────────────────────────────────────────────────
 const befintliga = await sb('GET', `prospekt_rad?select=id&lista_id=eq.${lista.id}&limit=1`);
 if (befintliga.length && lista.publicerad) {
-  console.log('Listan är publicerad och har redan rader. Uppdaterar utan att radera,');
-  console.log('så deltagarnas arbete inte tappar sina rad-id.');
+  console.log('Listan är publicerad och har redan rader. Uppdaterar på cfar,');
+  console.log('så befintligt arbete följer med.');
 }
 
 const paket = [];
@@ -148,7 +158,7 @@ for (let i = 0; i < rader.length; i += 200) {
 }
 let n = 0;
 for (const p of paket) {
-  await sb('POST', 'prospekt_rad?on_conflict=lista_id,nr', p,
+  await sb('POST', 'prospekt_rad?on_conflict=lista_id,cfar', p,
     'resolution=merge-duplicates,return=minimal');
   n += p.length;
   console.log(`  ... ${n}/${rader.length}`);

@@ -3,11 +3,11 @@
    Sparar deltagarens status, värde och anteckning på en rad. En rad i taget,
    för sidan skickar när fältet ändras och inte i klump.
 
-   Body: { rad_id, status?, varde?, anteckning? }
+   Body: { cfar, status?, varde?, anteckning? }
 
-   Raden måste tillhöra en lista deltagaren köpt, annars går det inte att
-   skriva. Kontrollen görs mot databasen och inte mot något klienten skickar,
-   så ett gissat rad_id leder ingenstans.
+   Arbetsstället måste förekomma i en lista deltagaren köpt, annars går det
+   inte att skriva. Kontrollen görs mot databasen och inte mot något klienten
+   skickar, så ett gissat cfar leder ingenstans.
 
    Är allt tomt igen raderas raden i stället för att ligga kvar som skräp. */
 
@@ -34,8 +34,8 @@ export async function onRequestPost(context) {
   let body;
   try { body = await request.json(); } catch (e) { return json({ error: 'ogiltig json' }, 400); }
 
-  const radId = String(body.rad_id || '').trim();
-  if (!/^[0-9a-f-]{36}$/i.test(radId)) return json({ error: 'ogiltigt rad_id' }, 400);
+  const cfar = String(body.cfar || '').trim();
+  if (!/^[0-9]{1,20}$/.test(cfar)) return json({ error: 'ogiltigt cfar' }, 400);
 
   const status = String(body.status || 'ny').toLowerCase();
   if (!STATUSAR.has(status)) return json({ error: 'ogiltig status' }, 400);
@@ -53,30 +53,34 @@ export async function onRequestPost(context) {
   }
 
   try {
-    // Vilken lista tillhör raden, och har adressen köpt den?
-    const rader = await supaGet(cfg, `prospekt_rad?select=lista_id&id=eq.${radId}`);
+    // Finns arbetsstället i någon lista adressen köpt?
+    const kopta = await supaGet(cfg,
+      `prospekt_kop?select=lista_id&epost=eq.${encodeURIComponent(adress)}`);
+    if (!Array.isArray(kopta) || !kopta.length) return json({ error: 'ingen atkomst' }, 403);
+    const listor = kopta.map((k) => k.lista_id);
+
+    const rader = await supaGet(cfg,
+      `prospekt_rad?select=lista_id&cfar=eq.${encodeURIComponent(cfar)}` +
+      `&lista_id=in.(${listor.join(',')})&limit=1`);
     if (!Array.isArray(rader) || !rader.length) return json({ error: 'ingen atkomst' }, 403);
     const listaId = rader[0].lista_id;
-
-    const kop = await supaGet(cfg,
-      `prospekt_kop?select=id&lista_id=eq.${listaId}&epost=eq.${encodeURIComponent(adress)}`);
-    if (!Array.isArray(kop) || !kop.length) return json({ error: 'ingen atkomst' }, 403);
 
     const tomt = status === 'ny' && varde === null && anteckning === null;
     if (tomt) {
       await supaDelete(cfg,
-        `prospekt_arbete?rad_id=eq.${radId}&epost=eq.${encodeURIComponent(adress)}`);
+        `prospekt_arbete?cfar=eq.${encodeURIComponent(cfar)}` +
+        `&epost=eq.${encodeURIComponent(adress)}`);
       return json({ ok: true, sparat: false });
     }
 
     await supaUpsert(cfg, 'prospekt_arbete', [{
-      rad_id: radId,
+      cfar,
       lista_id: listaId,
       epost: adress,
       status,
       varde_kr: varde,
       anteckning,
-    }], 'rad_id,epost');
+    }], 'epost,cfar');
 
     return json({ ok: true, sparat: true });
   } catch (e) {

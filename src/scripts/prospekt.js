@@ -77,11 +77,12 @@ export async function startaProspekt() {
   lader.hidden = true;
   innehall.hidden = false;
 
-  // Arbetet läggs på raderna, så filter och facetter kan behandla status
-  // som vilken dimension som helst.
-  const arbeteFor = (id) => arbete[id] || {};
+  // Arbetet läggs på raderna, så filter och facetter kan behandla status som
+  // vilken dimension som helst. Nyckeln är cfar, arbetsställets stabila id
+  // hos SCB, inte radens uuid som byts när uttaget körs om.
+  const arbeteFor = (cfar) => arbete[cfar] || {};
   for (const r of rader) {
-    const a = arbeteFor(r.id);
+    const a = arbeteFor(r.cfar);
     r.st = a.status || 'ny';
     r.varde = a.varde || 0;
     r.anteckning = a.anteckning || '';
@@ -275,7 +276,7 @@ export async function startaProspekt() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            rad_id: r.id,
+            cfar: r.cfar,
             status: r.st,
             varde: r.varde || null,
             anteckning: r.anteckning || null,

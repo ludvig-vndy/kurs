@@ -12,7 +12,7 @@ import { pilotAdress } from '../_pilot.js';
 import { supaConfig, supaGet } from '../_supa.js';
 
 const RAD_FALT = [
-  'id', 'nr', 'prio', 'foretag', 'orgnr', 'kommun', 'ort', 'postnr', 'adress',
+  'id', 'cfar', 'nr', 'prio', 'foretag', 'orgnr', 'kommun', 'ort', 'postnr', 'adress',
   'verksamhet', 'anstallda_bolag', 'anstallda_arbetsstalle', 'anstallda_band',
   'omsattning_tkr', 'omsattning_ar', 'omsattning_band', 'koncernlage',
   'moderbolag', 'vd', 'telefon', 'epost', 'kanaler', 'notering',
@@ -52,13 +52,19 @@ export async function onRequestGet(context) {
     const rader = await supaGet(cfg,
       `prospekt_rad?select=${RAD_FALT}&lista_id=eq.${lista.id}&order=nr.asc&limit=5000`);
 
-    const arbete = await supaGet(cfg,
-      `prospekt_arbete?select=rad_id,status,varde_kr,anteckning` +
-      `&lista_id=eq.${lista.id}&epost=eq.${encodeURIComponent(adress)}&limit=5000`);
+    // Arbetet hämtas på cfar, inte på lista. Har deltagaren pratat med ett
+    // bolag i en annan lista följer anteckningen med hit.
+    const cfars = (rader || []).map((r) => r.cfar).filter(Boolean);
+    const arbete = cfars.length
+      ? await supaGet(cfg,
+          `prospekt_arbete?select=cfar,status,varde_kr,anteckning` +
+          `&epost=eq.${encodeURIComponent(adress)}` +
+          `&cfar=in.(${cfars.map((c) => '"' + c + '"').join(',')})&limit=5000`)
+      : [];
 
     const minaRader = {};
     for (const a of arbete || []) {
-      minaRader[a.rad_id] = { status: a.status, varde: a.varde_kr, anteckning: a.anteckning };
+      minaRader[a.cfar] = { status: a.status, varde: a.varde_kr, anteckning: a.anteckning };
     }
 
     return json({ lista, rader: rader || [], arbete: minaRader, adress });

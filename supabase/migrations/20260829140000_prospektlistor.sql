@@ -14,6 +14,7 @@
 -- ── Enums ─────────────────────────────────────────────────────────────
 create type prospekt_status as enum ('ny','forsokt','pratat','intresse','nej');
 create type prospekt_kop_kalla as enum ('pilot','stripe','manuell');
+create type prospekt_bestallning_status as enum ('ny','arbetas','klar','avvisad');
 
 -- ── prospekt_lista (ett uttag, delat av alla som köpt det) ────────────
 create table prospekt_lista (
@@ -33,9 +34,14 @@ create table prospekt_lista (
 alter table prospekt_lista enable row level security;
 
 -- ── prospekt_rad (företagsdatan, en gång, delad) ──────────────────────
+--
+-- cfar är SCB:s identifierare per arbetsställe och den enda nyckeln här som
+-- är stabil över tid. Radens uuid byts när ett uttag körs om, cfar gör det
+-- inte, och därför hänger deltagarnas arbete på cfar och inte på rad_id.
 create table prospekt_rad (
   id uuid primary key default gen_random_uuid(),
   lista_id uuid not null references prospekt_lista(id) on delete cascade,
+  cfar text not null,
   nr int not null,
   prio text not null,                           -- 'A' | 'B' | 'C'
   foretag text not null,
@@ -44,7 +50,7 @@ create table prospekt_rad (
   ort text,
   postnr text,
   adress text,
-  verksamhet text,                              -- 'El' | 'VVS'
+  verksamhet text,
   anstallda_bolag int,                          -- hela bolaget
   anstallda_arbetsstalle text,                  -- SCB:s storleksklass för kontoret
   anstallda_band text,
@@ -58,10 +64,12 @@ create table prospekt_rad (
   epost text,
   kanaler text not null,                        -- reklamspärr i klartext, får inte tappas bort
   notering text,
+  unique (lista_id, cfar),
   unique (lista_id, nr)
 );
 alter table prospekt_rad enable row level security;
 create index on prospekt_rad (lista_id);
+create index on prospekt_rad (cfar);
 
 -- ── prospekt_kop (vem som får se vilken lista) ────────────────────────
 create table prospekt_kop (
@@ -78,20 +86,28 @@ alter table prospekt_kop enable row level security;
 create index on prospekt_kop (epost);
 
 -- ── prospekt_arbete (det enda som är personligt) ──────────────────────
+--
+-- Nyckeln är (epost, cfar), alltså personen och arbetsstället. Två följder,
+-- båda avsiktliga:
+--   1. Ett omkört uttag tappar inte anteckningarna, för cfar består.
+--   2. Dyker samma bolag upp i en annan lista samma person köpt följer
+--      anteckningen med. Har man redan pratat med dem är det sant oavsett
+--      vilken lista man tittar på.
+-- lista_id är därför bara "senast sedd i", inte en del av nyckeln.
 create table prospekt_arbete (
   id uuid primary key default gen_random_uuid(),
-  rad_id uuid not null references prospekt_rad(id) on delete cascade,
-  lista_id uuid not null references prospekt_lista(id) on delete cascade,
   epost text not null,
+  cfar text not null,
+  lista_id uuid references prospekt_lista(id) on delete set null,
   user_id uuid references profiles(id) on delete cascade,
   status prospekt_status not null default 'ny',
   varde_kr bigint,
   anteckning text,
   updated_at timestamptz not null default now(),
-  unique (rad_id, epost)
+  unique (epost, cfar)
 );
 alter table prospekt_arbete enable row level security;
-create index on prospekt_arbete (lista_id, epost);
+create index on prospekt_arbete (epost, lista_id);
 
 -- Håll updated_at sann utan att förlita sig på klienten.
 create or replace function prospekt_arbete_touch()
@@ -104,6 +120,38 @@ create trigger prospekt_arbete_updated
   before update on prospekt_arbete
   for each row execute function prospekt_arbete_touch();
 
+-- ── prospekt_bestallning (en order, oavsett vem som skrev in den) ─────
+--
+-- Samma tabell för båda lägena: i dag skriver vi in beställningen åt
+-- deltagaren, senare skriver deltagaren in den själv. Skillnaden blir vem
+-- som står i skapad_av, inte en ny modell.
+create table prospekt_bestallning (
+  id uuid primary key default gen_random_uuid(),
+  bestallare_epost text not null,               -- den som ska få listan
+  bestallare_namn text,
+  saljer text,                                  -- vad beställaren säljer, styr klassningen
+  malgrupp text,                                -- fritext från intaget
+  diskvalificerar text,                         -- vad som gör en träff dålig, viktigaste fältet
+  sni_koder text[] not null,
+  lan_koder text[],
+  storlek_koder text[],                         -- SCB:s Anställda-koder
+  extra_filter jsonb,
+  antal_onskat int,
+  status prospekt_bestallning_status not null default 'ny',
+  lista_id uuid references prospekt_lista(id) on delete set null,
+  notering text,                                -- vår egen, syns inte för beställaren
+  skapad_av text,                               -- 'vndy:ludvig@vndy.se' eller 'sjalv'
+  created_at timestamptz not null default now(),
+  uppdaterad timestamptz not null default now()
+);
+alter table prospekt_bestallning enable row level security;
+create index on prospekt_bestallning (status);
+create index on prospekt_bestallning (bestallare_epost);
+
+create trigger prospekt_bestallning_updated
+  before update on prospekt_bestallning
+  for each row execute function prospekt_arbete_touch();
+
 -- Gallring: en deltagares anteckningar är uppgifter om tredje part.
 -- Radera allt arbete för en adress i ett svep när någon begär det.
 create or replace function prospekt_glom(p_epost text)
@@ -113,5 +161,7 @@ begin
   delete from prospekt_arbete where epost = lower(p_epost);
   get diagnostics n = row_count;
   delete from prospekt_kop where epost = lower(p_epost);
+  update prospekt_bestallning set bestallare_epost = '(raderad)', bestallare_namn = null
+   where bestallare_epost = lower(p_epost);
   return n;
 end; $$;
