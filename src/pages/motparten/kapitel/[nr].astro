@@ -1,0 +1,14 @@
+---
+import KapitelSida from '../../../components/kurs/KapitelSida.astro';
+import { laddaKurs } from '../../../lib/kurs.mjs';
+import '../../../styles/motparten.css';
+
+export async function getStaticPaths() {
+  const kurs = laddaKurs('motparten');
+  return kurs.kapitel.map((kap) => ({ params: { nr: String(kap.nummer) }, props: { kap } }));
+}
+
+const { kap } = Astro.props;
+---
+
+<KapitelSida kursnyckel="motparten" kap={kap} />

@@ -66,7 +66,7 @@ function chapterData(kap: Kapitel) {
 const totalLessons = kurs.kapitel.reduce((sum, k) => sum + k.lektioner.length, 0);
 ---
 
-<Broadsheet title={kurs.titel} active="kurs" nav="app" bodyClass={k.bodyClass}>
+<Broadsheet title={kurs.titel} active="kurs" nav="app" bodyClass={k.bodyClass} kurs={k}>
   <main class="wrap" style="flex:1; padding-top:8px">
     <div class="fokus-cover leadprint">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap">

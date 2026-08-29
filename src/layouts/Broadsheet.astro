@@ -14,6 +14,8 @@ interface Props {
   editionLine2?: string;
   /** klass pa body som satter om fargtokens for en annan kurs */
   bodyClass?: string;
+  /** kursen sidan tillhor, styr edition-rad, nav-lank och sidfot */
+  kurs?: { titel: string; bas: string; varumarke: string; fin: string };
 }
 
 const {
@@ -24,6 +26,12 @@ const {
   chrome = 'masthead',
   editionLine2,
   bodyClass = '',
+  kurs = {
+    titel: 'Fundamental aktieanalys',
+    bas: '/fokus',
+    varumarke: 'Delägaren',
+    fin: 'fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.',
+  },
   /** open=true => publik sida (ingen inloggningsgrind): landning, logga-in */
   open = false,
 } = Astro.props;
@@ -83,13 +91,13 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
           <div class="mast-rule mast-rule--top"></div>
           <div class="mast-top">
             <a class="wordmark" href={wordmarkHref}>Marginalen</a>
-            <div class="edition">Fundamental aktieanalys<br />{editionSub}</div>
+            <div class="edition">{kurs.titel}<br />{editionSub}</div>
           </div>
           <div class="mast-rule"></div>
           {nav === 'app' && (
             <nav class="nav">
               <a href="/hem" class:list={[{ here: active === 'hem' }]} aria-current={active === 'hem' ? 'page' : undefined}>Hem</a>
-              <a href="/fokus" class:list={[{ here: active === 'kurs' }]} aria-current={active === 'kurs' ? 'page' : undefined}>Kursöversikt</a>
+              <a href={kurs.bas} class:list={[{ here: active === 'kurs' }]} aria-current={active === 'kurs' ? 'page' : undefined}>Kursöversikt</a>
               <a href="/verktyg" class:list={[{ here: active === 'verktyg' }]} aria-current={active === 'verktyg' ? 'page' : undefined}>Analysverktyg</a>
               <a href="/ordlista" class:list={[{ here: active === 'ordlista' }]} aria-current={active === 'ordlista' ? 'page' : undefined}>Ordlista</a>
               <span class="nav-div" aria-hidden="true"></span>
@@ -119,13 +127,13 @@ const wordmarkHref = nav === 'landing' ? '/' : '/hem';
             <Seal size="sm" href="/hem" />
             <nav class="site-foot__nav">
               <a href="/hem">Hem</a>
-              <a href="/fokus">Kursöversikt</a>
+              <a href={kurs.bas}>Kursöversikt</a>
               <a href="/verktyg">Analysverktyg</a>
               <a href="/ordlista">Ordlista</a>
               <a href="/labs/agarbrevet.html">Ägarbrevet</a>
             </nav>
           </div>
-          <p class="site-foot__fine"><span class="brandname">Delägaren</span>, fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.</p>
+          <p class="site-foot__fine"><span class="brandname">{kurs.varumarke}</span>, {kurs.fin}</p>
         </div>
       </footer>
     )}

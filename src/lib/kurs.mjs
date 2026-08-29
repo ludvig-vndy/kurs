@@ -13,7 +13,8 @@ import path from 'node:path';
  * @property {string} katalog      Innehållskatalog relativt projektroten
  * @property {string} ordlista     Sökväg till ordlistan för marginalglosor
  * @property {string} bodyClass    Klass som sätter färgtokens, tom sträng för standard
- * @property {string} varumarke    Namnet i spelarens löprubrik
+ * @property {string} varumarke    Namnet i spelarens löprubrik och sidfot
+ * @property {string} fin          Sidfotens finstilta, efter varumärkesnamnet
  */
 
 /** @type {Record<string, KursKonfig>} */
@@ -26,6 +27,7 @@ export const KURSER = {
     ordlista: 'src/data/ordlista.json',
     bodyClass: '',
     varumarke: 'Delägaren',
+    fin: 'fundamental aktieanalys. I utbildningssyfte, inte finansiell rådgivning.',
   },
   motparten: {
     nyckel: 'motparten',
@@ -35,6 +37,7 @@ export const KURSER = {
     ordlista: 'src/data/ordlista-motparten.json',
     bodyClass: 'kurs-motparten',
     varumarke: 'Motparten',
+    fin: 'en kurs i försäljning. I utbildningssyfte.',
   },
 };
 

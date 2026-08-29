@@ -1,0 +1,8 @@
+{
+  "discovery": { "forklaring": "Den del av säljarbetet där du tar reda på hur kundens situation faktiskt ser ut, innan du föreslår något.", "lektion": "0.4" },
+  "pipeline": { "forklaring": "Samlingen av pågående affärer, ofta indelad i steg efter hur långt de kommit." },
+  "ICP": { "forklaring": "Ideal customer profile, beskrivningen av vilken sorts kund din lösning faktiskt passar." },
+  "intressent": { "forklaring": "En person som påverkar eller påverkas av köpbeslutet, även när det inte är hen som skriver under." },
+  "reaktans": { "forklaring": "Motreaktionen som uppstår när en människa upplever att hennes valfrihet hotas. Får folk att göra tvärtom.", "lektion": "0.1" },
+  "status quo-bias": { "forklaring": "Tendensen att välja att behålla det man redan har, även när ett byte vore bättre.", "lektion": "0.4" }
+}

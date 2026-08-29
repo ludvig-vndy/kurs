@@ -1,0 +1,25 @@
+---
+import Spelare from '../../components/kurs/Spelare.astro';
+import { byggLektionsvagar } from '../../lib/kurs.mjs';
+import '../../styles/motparten.css';
+
+export async function getStaticPaths() {
+  return byggLektionsvagar('motparten').map((v) => ({
+    params: { lektion: v.lektion },
+    props: {
+      lesson: v.data,
+      prevHref: v.prevHref,
+      nextHref: v.nextHref,
+      nextLektion: v.nextLektion,
+      nextIsChapter: v.nextIsChapter,
+      nextKapitel: v.nextKapitel,
+      chapterIds: v.chapterIds,
+      courseIds: v.courseIds,
+      kapitelTitel: v.kapitelTitel,
+    },
+  }));
+}
+const p = Astro.props;
+---
+
+<Spelare kursnyckel="motparten" {...p} />

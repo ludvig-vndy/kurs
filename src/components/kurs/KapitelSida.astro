@@ -54,7 +54,7 @@ const plateX = 12 + ((kap.nummer * 37) % 64);
 const plateY = 18 + ((kap.nummer * 53) % 46);
 ---
 
-<Broadsheet title={`Kapitel ${kap.nummer}: ${kap.titel}`} active="kurs" nav="app" editionLine2={`Kapitel ${kap.nummer}`} bodyClass={k.bodyClass}>
+<Broadsheet title={`Kapitel ${kap.nummer}: ${kap.titel}`} active="kurs" nav="app" editionLine2={`Kapitel ${kap.nummer}`} bodyClass={k.bodyClass} kurs={k}>
   <main class="wrap" style="flex:1; padding-top:8px">
     <script type="application/json" data-chapter-order set:html={JSON.stringify(chapterOrder)} />
 

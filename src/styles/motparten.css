@@ -1,0 +1,8 @@
+/* Motparten ärver hela broadsheet-formspråket och byter bara accentfärgerna.
+   Tokens sätts på body, inte :root, så att aktiekursen är helt orörd.
+   Stilarket importeras av Motpartens egna routes, inte av layouten, annars
+   hade reglerna hamnat i den delade bundle som varje aktiekurssida laddar. */
+body.kurs-motparten {
+  --oxblood: #234B5E;   /* petrolblå, kursens accent */
+  --gold: #7A6A2E;      /* dämpad mässing, sekundär */
+}
