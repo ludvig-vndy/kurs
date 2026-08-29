@@ -34,3 +34,5 @@ motor/in/
 # TTS-rostprov (prototyp): venv + genererat ljud
 .venv-tts/
 public/labs/data/audio/
+baseline-fokus.txt
+efter-fokus.txt
