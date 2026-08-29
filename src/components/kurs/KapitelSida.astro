@@ -1,5 +1,7 @@
 ---
 import Broadsheet from '../../layouts/Broadsheet.astro';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import KapitelPlate from './KapitelPlate.astro';
 import { konfig, laddaKurs, delFor } from '../../lib/kurs.mjs';
 
@@ -51,8 +53,11 @@ const chapterOrder = kap.lektioner.map((l) => l.lektion);
 // i /bilder/kapitel-N.jpg, med en crop-forskjutning som varierar per kapitel sa
 // ingen ram ar den andra lik. Motparten har inga foton alls utan ett graverat
 // marke som ritas ur kapitelnumret, se KapitelPlate.astro.
-const harFoto = k.plate === 'foto';
+// Foto om kursen kor foto OCH bilden faktiskt finns. Saknas den ritas det
+// graverade market i stallet, sa ett kapitel aldrig star med tom bakgrund
+// medan man letar bild till det.
 const plateImg = `/bilder/${k.nyckel === 'fundamental-aktieanalys' ? '' : k.nyckel + '-'}kapitel-${kap.nummer}.jpg`;
+const harFoto = k.plate === 'foto' && existsSync(path.resolve('public' + plateImg));
 const plateX = 12 + ((kap.nummer * 37) % 64);
 const plateY = 18 + ((kap.nummer * 53) % 46);
 const headStyle = harFoto

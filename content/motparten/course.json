@@ -62,6 +62,7 @@
     "Veta varför att behålla det man har vinner oftare än det borde",
     "Kunna sänka upplevd risk med något som kostar dig, inte kunden"
    ],
+   "sebastian": "Jag trodde länge att prisinvändningar handlade om pris. Sedan förlorade jag en affär där vi var billigast. Kunden sa rakt ut att beslutet var för svårt att försvara internt om det gick fel. Sedan dess frågar jag tidigt vad som händer med den som skriver under om vi inte levererar. Det svaret säger mer än budgeten gör.",
    "lektioner": [
     { "lektion": "2.1", "titel": "Vad kunden faktiskt riskerar", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "2.1-vad-kunden-riskerar.json" },
     { "lektion": "2.2", "titel": "Att göra ingenting, din verkliga konkurrent", "niva": "Nybörjare", "tid_min": 9, "status": "kommande", "fil": "2.2-att-gora-ingenting.json" },
@@ -79,6 +80,7 @@
     "Kunna rikta nyfikenheten mot något som faktiskt är intressant i varje affär",
     "Ha en förberedelse som ger dig något att vara nyfiken på innan mötet börjar"
    ],
+   "sebastian": "Jag har gjort hundratals möten där jag ställde frågor jag redan visste svaret på. De lät bra och gav ingenting. Det som ändrade mig var att sluta förbereda frågor och börja förbereda gissningar: skriv ner vad du tror pågår hos kunden, och gå in i mötet för att se om du hade fel. Då blir du nyfiken utan att behöva spela det.",
    "lektioner": [
     { "lektion": "3.1", "titel": "Varför intresse inte går att spela", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "3.1-intresse-gar-inte-att-spela.json" },
     { "lektion": "3.2", "titel": "Att bli nyfiken på riktigt", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "3.2-bli-nyfiken-pa-riktigt.json" },
@@ -97,6 +99,7 @@
     "Våga ställa den fråga du helst hoppar över, och veta varför den lönar sig",
     "Kunna vara tyst tillräckligt länge för att svaret ska bli sant"
    ],
+   "sebastian": "Den svåraste frågan jag lärt mig ställa är vad som talar emot att göra det här. Första gången var jag säker på att jag sabbade affären. Kunden räknade upp tre saker jag inte visste om, vi löste två av dem, och den tredje hade dödat projektet ett halvår senare. Frågan kostar tio sekunders obehag och sparar månader.",
    "lektioner": [
     { "lektion": "4.1", "titel": "Frågan som egentligen är ett påstående", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "4.1-fragan-som-ar-ett-pastaende.json" },
     { "lektion": "4.2", "titel": "Vad olika frågor gör", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "4.2-vad-olika-fragor-gor.json" },
@@ -115,6 +118,7 @@
     "Kunna återge kundens läge så att kunden känner igen sig och fyller i",
     "Märka när det viktiga ligger i det som undviks"
    ],
+   "sebastian": "Jag brukade lyssna för att hitta ingången till det jag ville säga. Det är inte lyssnande, det är att vänta på sin tur. Provet jag använder nu är enkelt: kan jag beskriva kundens läge så att kunden fyller i och rättar mig? Gör kunden det har jag förstått. Annars satt jag bara tyst.",
    "lektioner": [
     { "lektion": "5.1", "titel": "Tre nivåer av lyssnande", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "5.1-tre-nivaer-av-lyssnande.json" },
     { "lektion": "5.2", "titel": "Återgivningen som prov", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "5.2-atergivningen-som-prov.json" },
@@ -132,6 +136,7 @@
     "Kunna räkna på vad problemet kostar, med kundens siffror och inte dina",
     "Kunna avgöra när ett problem är för litet för att bära en affär"
    ],
+   "sebastian": "Den dyraste vanan jag haft var att skicka offert på ett problem ingen räknat på. Det känns effektivt att komma vidare. Men ett problem som inte kostar något att ha kvar blir aldrig prioriterat, hur bra din lösning än är. Numera skickar jag ingenting förrän kunden själv sagt vad det kostar att låta bli.",
    "lektioner": [
     { "lektion": "6.1", "titel": "Symptom och orsak", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "6.1-symptom-och-orsak.json" },
     { "lektion": "6.2", "titel": "Att sätta pris på ett problem", "niva": "Mellan", "tid_min": 10, "status": "kommande", "fil": "6.2-satta-pris-pa-ett-problem.json" },
@@ -149,6 +154,7 @@
     "Kunna göra ett påstått värde konkret nog att någon vågar räkna på det",
     "Kunna pröva om kunden kan föra värdet vidare utan dig i rummet"
    ],
+   "sebastian": "Jag har förklarat värde briljant för fel person. Den som satt framför mig förstod, blev entusiastisk och skulle ta det vidare. Sedan hände ingenting, för värdet kunde inte återberättas utan mig i rummet. Numera frågar jag hur kunden skulle beskriva det här för sin chef. Kommer det inte ut ur munnen på kunden har jag inte gjort mitt jobb.",
    "lektioner": [
     { "lektion": "7.1", "titel": "Värdet är kundens, inte ditt", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "7.1-vardet-ar-kundens.json" },
     { "lektion": "7.2", "titel": "Att göra värdet konkret", "niva": "Mellan", "tid_min": 9, "status": "kommande", "fil": "7.2-gora-vardet-konkret.json" },
@@ -167,6 +173,7 @@
     "Kunna hitta och ta bort friktion i stället för att pressa",
     "Aldrig lämna ett möte utan ett nästa steg som båda accepterat"
    ],
+   "sebastian": "Jag har förlorat fler affärer i tystnaden efter mötet än i själva mötet. Alla var positiva, ingen sa nej, och sedan tog det slut. Det jag saknade var inte entusiasm, det var ett datum. Ett ja utan bokat nästa steg är ett nej som dröjer, och det tog mig alldeles för lång tid att lära mig.",
    "lektioner": [
     { "lektion": "8.1", "titel": "Att välja när man inte kan veta", "niva": "Avancerad", "tid_min": 9, "status": "kommande", "fil": "8.1-valja-nar-man-inte-kan-veta.json" },
     { "lektion": "8.2", "titel": "Intressenterna du inte träffat", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "8.2-intressenterna-du-inte-traffat.json" },
@@ -185,6 +192,7 @@
     "Veta vad ett nej kostar i kvartalet och ger över åren",
     "Kunna dra gränsen mellan påverkan och manipulation i ditt eget beteende"
    ],
+   "sebastian": "Den affär jag är mest stolt över är en jag sa nej till. Vi hade kunnat leverera, men inte det de faktiskt behövde. Jag sa det, tipsade om en konkurrent och åkte hem med noll. Två år senare kom de tillbaka med något tre gånger större, och då hade de redan berättat om mig för två andra bolag.",
    "lektioner": [
     { "lektion": "9.1", "titel": "När du ska säga nej", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "9.1-nar-du-ska-saga-nej.json" },
     { "lektion": "9.2", "titel": "Vad ett nej kostar och ger", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "9.2-vad-ett-nej-kostar.json" },
@@ -202,6 +210,7 @@
     "Kunna tolka tystnad utan att fylla den med egna antaganden",
     "Kunna avsluta en affär som inte blir av, utan att bränna relationen"
    ],
+   "sebastian": "Jag har skrivit hundra mail som bara sa att jag hörde av mig igen. Inget av dem gjorde nytta och några gjorde skada. Regeln jag har nu är att jag inte hör av mig utan att ha något med mig: en siffra, en artikel, ett svar på något de undrade över. Har jag inget att komma med väntar jag.",
    "lektioner": [
     { "lektion": "10.1", "titel": "Uppföljning som tillför något", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "10.1-uppfoljning-som-tillfor.json" },
     { "lektion": "10.2", "titel": "Den långa tystnaden", "niva": "Mellan", "tid_min": 7, "status": "kommande", "fil": "10.2-den-langa-tystnaden.json" },
@@ -219,6 +228,7 @@
     "Veta vilka mått som säger något om hantverket och vilka som bara mäter aktivitet",
     "Ha en egen process som håller när du har bråttom"
    ],
+   "sebastian": "Jag hade tolv år i yrket innan jag första gången gick igenom mina förlorade affärer i följd. Mönstret var pinsamt tydligt: jag pratade om lösningen för tidigt, nästan varje gång. Ingen hade sagt det till mig, för ingen såg alla mina möten. Det gjorde inte jag heller, förrän jag satte mig ner och tittade.",
    "lektioner": [
     { "lektion": "11.1", "titel": "Se dina egna mönster", "niva": "Avancerad", "tid_min": 8, "status": "kommande", "fil": "11.1-se-dina-egna-monster.json" },
     { "lektion": "11.2", "titel": "Mäta det som betyder något", "niva": "Avancerad", "tid_min": 9, "status": "kommande", "fil": "11.2-mata-det-som-betyder-nagot.json" },
