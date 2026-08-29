@@ -1,0 +1,16 @@
+# Schemalagd Worker för Upptäcks insynsdata. Skild från Pages-projektet "kurs":
+# Pages Functions kan inte cron-triggas, det kan bara en fristående Worker.
+# Delar KV-namespace "upptack-data" med Pages (samma id), så /api/upptack-insyn
+# läser det Workern skriver.
+name = "upptack-cron"
+main = "index.js"
+compatibility_date = "2026-01-01"
+
+[triggers]
+crons = ["0 5 * * *"]   # 05:00 UTC dagligen (~07:00 svensk sommartid)
+
+# REFRESH_TOKEN sätts som secret (wrangler secret put REFRESH_TOKEN), aldrig här.
+
+[[kv_namespaces]]
+binding = "DATA"
+id = "f155742e0cb14bb390fced9aea5ca641"

@@ -737,9 +737,16 @@ document.querySelectorAll('#mfilters .fchip').forEach(c => c.addEventListener('c
 }));
 renderDigest();
 renderFeed();
-// Ladda riktig insynsdata och rita om digest + flode.
-fetch('/labs/data/upptack-insyn.json').then(r => r.ok ? r.json() : null)
-  .then(d => { if(d){ INSYN_REAL = d; renderDigest(); renderFeed(); } }).catch(()=>{});
+// Ladda riktig insynsdata och rita om digest + flode. Primärt ur KV (uppdateras
+// dagligen av upptack-cron-workern via /api/upptack-insyn); faller tillbaka på
+// den statiska filen om endpointen inte svarar.
+(function loadInsyn(){
+  const use = d => { if(d){ INSYN_REAL = d; renderDigest(); renderFeed(); } };
+  fetch('/api/upptack-insyn').then(r => r.ok ? r.json() : null)
+    .then(d => { if(d && d.bolag){ use(d); return; }
+      return fetch('/labs/data/upptack-insyn.json').then(r => r.ok ? r.json() : null).then(use); })
+    .catch(() => { fetch('/labs/data/upptack-insyn.json').then(r => r.ok ? r.json() : null).then(use).catch(()=>{}); });
+})();
 
 /* ---------- SCREENER: träffar (illustrativ, fiktiva bolag) ----------
    krit-flaggor: 'yes' matchar, 'part' matchar delvis, 'no' matchar ej.
