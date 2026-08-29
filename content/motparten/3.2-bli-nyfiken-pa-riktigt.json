@@ -1,0 +1,108 @@
+{
+  "kapitel": 3,
+  "lektion": "3.2",
+  "titel": "Att bli nyfiken på riktigt",
+  "niva": "Nybörjare",
+  "tid_min": 8,
+  "fardighet": "nyfikenhet.riktning",
+  "mal": "Efter lektionen kan eleven rikta sin nyfikenhet mot något som faktiskt är intressant i varje affär, även när personen och branschen inte är det, och känner igen den fråga som alltid har ett intressant svar.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "NYFIKENHET",
+      "titel": "Att bli nyfiken på riktigt",
+      "ingress": "Rådet att vara nyfiken är lika användbart som rådet att vara avslappnad. Den här lektionen handlar om var man riktar nyfikenheten när den inte kommer av sig själv."
+    },
+    {
+      "typ": "reading",
+      "kicker": "FEL ADRESS",
+      "lead": "Problemet med rådet är att det pekar mot personen, och personer går inte att bli intresserad av på beställning.",
+      "highlight": "går inte att bli intresserad av på beställning",
+      "brodtext": [
+        "Du sitter mittemot en inköpschef på ett bolag som tillverkar förpackningsmaterial, och som jobbat där i nio år. Ingenting i det är i sig fascinerande för dig, och att intala dig att det är det blir den sortens ansträngning som förra lektionen visade läcker.",
+        "Men det finns något i varje affär som är svårt att förstå, och som du inte redan vet svaret på. Det är dit nyfikenheten ska. Inte mot människan som artighet, utan mot situationen som gåta."
+      ],
+      "takeaway": "Rikta inte nyfikenheten mot personen. Rikta den mot det i situationen du inte begriper."
+    },
+    {
+      "typ": "concept",
+      "kicker": "GÅTAN SOM ALLTID FINNS",
+      "titel": "Varför gör de fortfarande så här",
+      "forklaring": "I nästan varje affär finns ett förhållande som ser irrationellt ut utifrån. Bolaget gör något dyrt, långsamt eller riskabelt, och de har gjort det i flera år trots att alla ser det. Din instinkt säger att de inte tänkt på saken. Den instinkten har fel, nästan alltid.",
+      "brodtext": [
+        "Det finns ett skäl, och skälet är oftast intressant. En chef som drev igenom det gamla systemet sitter kvar. Ett tidigare byte gick illa och kostade någon jobbet. Två avdelningar är oense och den nuvarande lösningen är kompromissen som gjorde att bråket tog slut. Ett avtal löper till 2028 och ingen vill ta striden om att bryta det.",
+        "Ingen av de sakerna står i någon offertförfrågan. Alla avgör om din affär går igenom. Och till skillnad från branschen och personen är de intressanta, för de handlar om varför människor gör saker som ser fel ut utifrån, vilket är det enda ämnet som aldrig blir tråkigt."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD DET GÖR MED SAMTALET",
+      "lead": "Frågan varför gör ni fortfarande så här kan ställas nedlåtande eller nyfiket, och skillnaden avgör vad du får veta.",
+      "highlight": "nedlåtande eller nyfiket",
+      "brodtext": [
+        "Den nedlåtande varianten antyder att svaret är dumhet, och då får du ett försvar. Den nyfikna varianten utgår från att det finns ett skäl du inte känner till, och då får du skälet. Formuleringen skiljer sig knappt. Utgångspunkten skiljer sig helt, och det är utgångspunkten som styr vilken följdfråga du kommer på.",
+        "Det är också därför det inte går att lösa med en fras. Går du in i mötet med tesen att kunden är efter, kommer dina frågor att bära den tesen även när orden är artiga. Går du in med tesen att det finns ett skäl, ställer du frågor som letar efter det."
+      ],
+      "takeaway": "Anta att det finns ett skäl. Det är sant oftare än du tror, och det gör dina frågor bättre även när du har fel."
+    },
+    {
+      "typ": "concept",
+      "kicker": "OM DET ÄNDÅ INTE KOMMER",
+      "titel": "När nyfikenheten uteblir",
+      "forklaring": "Ibland hittar du ingen gåta. Affären är enkel, kunden vet vad hon vill, och det finns inget mysterium att lösa. Då ska du inte spela nyfiken, för det gör dig sämre av skäl vi redan gått igenom.",
+      "brodtext": [
+        "Gör i stället det enkla: var snabb, tydlig och lätt att ha att göra med. En kund som vet vad hon vill behöver ingen utforskande dialog. Hon behöver ett rakt svar och att du inte slösar hennes tid. Att pressa in discovery i en affär som inte kräver det är inte hantverk, det är ett manér.",
+        "Och var ärlig med dig själv om vilket av de två lägena du är i. Den vanligaste feldiagnosen är att kalla en affär enkel för att man inte orkat leta efter gåtan. Provet är om du kan svara på varför bolaget inte redan löst det här på egen hand. Kan du inte det har du inte letat."
+      ]
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Varför fungerar inte rådet att vara nyfiken på kunden?",
+          "alternativ": [
+            "För att kunder inte vill bli utfrågade",
+            "För att det pekar mot personen, och intresse för personer går inte att beställa fram",
+            "För att nyfikenhet uppfattas som oprofessionellt"
+          ],
+          "ratt": [1],
+          "forklaring": "Att intala sig att en okänd persons yrke är fascinerande blir den ansträngning som läcker. Nyfikenheten behöver en annan adress."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken gåta finns i nästan varje affär?",
+          "alternativ": [
+            "Varför bolaget fortfarande gör något som ser irrationellt ut utifrån",
+            "Vem som har den formella beslutsrätten",
+            "Vilken konkurrent som ligger bäst till"
+          ],
+          "ratt": [0],
+          "forklaring": "Det finns nästan alltid ett skäl, och skälet står inte i någon offertförfrågan men avgör ofta affären."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad avgör om frågan varför gör ni fortfarande så här ger ett svar eller ett försvar?",
+          "alternativ": [
+            "Tonläget i rösten",
+            "Vilken utgångspunkt du har, alltså om du antar dumhet eller ett skäl du inte känner till",
+            "Hur tidigt i processen den ställs"
+          ],
+          "ratt": [1],
+          "forklaring": "Utgångspunkten styr vilken följdfråga du kommer på, och den går inte att dölja bakom en artig formulering."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad ska du göra i en affär där det inte finns någon gåta?",
+          "alternativ": [
+            "Leta vidare tills du hittar en, det finns alltid en",
+            "Vara snabb och tydlig i stället, och slippa spela nyfiken",
+            "Ställa fler frågor för att bygga relation"
+          ],
+          "ratt": [1],
+          "forklaring": "Att pressa in utforskande dialog i en affär som inte kräver det är ett manér. Kontrollen är om du kan svara på varför bolaget inte löst det själv."
+        }
+      ]
+    }
+  ]
+}

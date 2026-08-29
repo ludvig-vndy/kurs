@@ -1,0 +1,119 @@
+{
+  "kapitel": 3,
+  "lektion": "3.3",
+  "titel": "Förberedelsen som gör nyfikenhet möjlig",
+  "niva": "Mellan",
+  "tid_min": 8,
+  "fardighet": "nyfikenhet.forberedelse",
+  "mal": "Efter lektionen förbereder eleven gissningar i stället för frågor inför ett möte, vet varför det gör nyfikenheten äkta i stället för spelad, och kan göra det på en kvart.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "NYFIKENHET",
+      "titel": "Förberedelsen som gör nyfikenhet möjlig",
+      "ingress": "Nyfikenhet i mötet avgörs oftast kvällen innan. Inte av hur mycket du läst, utan av vad du gjorde med det du läste."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DEN VANLIGA FÖRBEREDELSEN",
+      "lead": "De flesta förbereder frågor, och det är den förberedelsen som gör mötet tomt.",
+      "highlight": "den förberedelsen som gör mötet tomt",
+      "brodtext": [
+        "En lista med frågor blir en lista att beta av. Du ställer fråga fyra medan du tänker på fråga fem, och när kunden säger något oväntat i svaret på fråga fyra går du ändå vidare, eftersom listan är ditt manus. Det är inte discovery, det är en enkät.",
+        "Värre: förberedda frågor har oftast ett förväntat svar. Du vet ungefär vad du vill höra och lyssnar efter det. Då är du inte nyfiken, du är på jakt efter en bekräftelse, och den skillnaden hörs i vilka följdfrågor du kommer på."
+      ],
+      "takeaway": "En frågelista gör dig strukturerad och ointresserad. De två går ihop lättare än man tror."
+    },
+    {
+      "typ": "concept",
+      "kicker": "GÖR SÅ HÄR I STÄLLET",
+      "titel": "Förbered gissningar, inte frågor",
+      "forklaring": "Skriv ner tre till fem påståenden om vad du tror pågår hos kunden, innan mötet. Inte frågor, påståenden. De ska vara tillräckligt bestämda för att kunna vara fel.",
+      "brodtext": [
+        "Exempel på gissningar som duger: de har provat att lösa det här internt en gång och det rann ut i sanden. Beslutet ligger egentligen hos ekonomichefen och inte hos den vi träffar. De har inte råd att göra ingenting i mer än ett år till. Den som kallade till mötet vill ha ett underlag till något som redan är bestämt.",
+        "Sedan går du in i mötet för att ta reda på vilka av dem som stämmer. Det förändrar din uppmärksamhet på ett sätt som ingen frågelista gör, eftersom du nu har något att förlora. Du sitter inte och samlar information, du prövar en tes, och du märker direkt när något inte går ihop."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "VARFÖR DET FUNGERAR",
+      "lead": "Nyfikenhet är inte ett humör, det är vad som händer när du har en fråga du inte vet svaret på och något som hänger på svaret.",
+      "highlight": "en fråga du inte vet svaret på",
+      "brodtext": [
+        "Gissningen skapar båda delarna åt dig. Du vet inte om den stämmer, och du har satt din bedömning på spel genom att skriva ner den. Det räcker för att uppmärksamheten ska ändra karaktär. Du börjar höra det som avviker i stället för det som passar in.",
+        "Det löser också problemet från förra lektionen. Du behöver inte tvinga fram intresse för en person eller en bransch. Intresset uppstår ur att du gjort en förutsägelse och vill veta om du hade rätt, vilket är samma mekanism som gör att man inte kan sluta läsa en deckare man börjat gissa i."
+      ],
+      "takeaway": "Skriv ner vad du tror. Sedan blir mötet ett svar i stället för en insamling."
+    },
+    {
+      "typ": "concept",
+      "kicker": "PÅ EN KVART",
+      "titel": "Vad som faktiskt behöver läsas",
+      "forklaring": "Förberedelsen ska vara kort, annars görs den inte. En kvart räcker, och det mesta av den tiden ska inte gå åt till att läsa om produkten.",
+      "brodtext": [
+        "Läs det senaste bokslutet eller kvartalsrapporten om bolaget är noterat, men bara ledningens egna ord om vad som är svårt. Läs vad bolaget själv skriver om sig på sin sajt, och notera vad de inte skriver om. Titta på vilka roller de rekryterar just nu, för det säger mer om vart de är på väg än någon pressrelease.",
+        "Skriv sedan dina tre till fem gissningar och stäng datorn. Att läsa mer än så ger sällan bättre gissningar, och det ger dig en känsla av att vara påläst som lätt blir den ansträngning att imponera som kostar dig trovärdighet."
+      ]
+    },
+    {
+      "typ": "reading",
+      "kicker": "OCH EFTERÅT",
+      "lead": "Den verkliga vinsten kommer först om du går tillbaka till gissningarna efter mötet.",
+      "highlight": "går tillbaka till gissningarna efter mötet",
+      "brodtext": [
+        "Kryssa av vilka som stämde. Det tar två minuter och det gör två saker. Du ser vilka slutsatser du drar för snabbt, alltså var din egen bias sitter, och du bygger en kalibrering som gör nästa gissning bättre. Efter tjugo möten vet du om du systematiskt överskattar hur mycket kunder redan bestämt sig, eller underskattar hur många som är inblandade.",
+        "Det är också den enda delen av det här kapitlet som fortsätter ge efter ett år. Nyfikenhet i ett möte hjälper det mötet. Kalibrering hjälper alla framtida."
+      ],
+      "takeaway": "Två minuter efter mötet är värda mer än en timme före nästa."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är problemet med att förbereda en lista med frågor?",
+          "alternativ": [
+            "Den blir för lång för mötets längd",
+            "Den blir ett manus att beta av, och frågorna har oftast ett förväntat svar",
+            "Kunden märker att frågorna är förberedda"
+          ],
+          "ratt": [1],
+          "forklaring": "Du lyssnar efter bekräftelse i stället för efter avvikelser, och det hörs i vilka följdfrågor du kommer på."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad ska förberedas i stället?",
+          "alternativ": [
+            "Tre till fem gissningar om vad som pågår, tillräckligt bestämda för att kunna vara fel",
+            "En sammanfattning av bolagets senaste årsredovisning",
+            "En presentation anpassad efter kundens bransch"
+          ],
+          "ratt": [0],
+          "forklaring": "Gissningen ger dig något att förlora. Du prövar en tes i stället för att samla information, och märker direkt när något inte går ihop."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför skapar en gissning äkta nyfikenhet?",
+          "alternativ": [
+            "För att den gör dig mer påläst än kunden",
+            "För att du har en fråga du inte vet svaret på och har satt din bedömning på spel",
+            "För att den ger dig fler samtalsämnen"
+          ],
+          "ratt": [1],
+          "forklaring": "Intresset uppstår ur att du gjort en förutsägelse och vill veta om du hade rätt. Det behöver inte tvingas fram."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vilken del av förberedelsen ger mest på ett års sikt?",
+          "alternativ": [
+            "Att läsa mer om kundens bransch",
+            "Att kryssa av gissningarna efter mötet",
+            "Att skriva fler gissningar per möte"
+          ],
+          "ratt": [1],
+          "forklaring": "Avkryssningen visar var du drar slutsatser för snabbt och kalibrerar nästa gissning. Nyfikenhet hjälper ett möte, kalibrering hjälper alla."
+        }
+      ]
+    }
+  ]
+}

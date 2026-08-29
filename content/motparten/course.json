@@ -82,9 +82,9 @@
    ],
    "sebastian": "Jag har gjort hundratals möten där jag ställde frågor jag redan visste svaret på. De lät bra och gav ingenting. Det som ändrade mig var att sluta förbereda frågor och börja förbereda gissningar: skriv ner vad du tror pågår hos kunden, och gå in i mötet för att se om du hade fel. Då blir du nyfiken utan att behöva spela det.",
    "lektioner": [
-    { "lektion": "3.1", "titel": "Varför intresse inte går att spela", "niva": "Nybörjare", "tid_min": 7, "status": "kommande", "fil": "3.1-intresse-gar-inte-att-spela.json" },
-    { "lektion": "3.2", "titel": "Att bli nyfiken på riktigt", "niva": "Nybörjare", "tid_min": 8, "status": "kommande", "fil": "3.2-bli-nyfiken-pa-riktigt.json" },
-    { "lektion": "3.3", "titel": "Förberedelsen som gör nyfikenhet möjlig", "niva": "Mellan", "tid_min": 8, "status": "kommande", "fil": "3.3-forberedelsen.json" }
+    { "lektion": "3.1", "titel": "Varför intresse inte går att spela", "niva": "Nybörjare", "tid_min": 7, "status": "klar", "fil": "3.1-intresse-gar-inte-att-spela.json" },
+    { "lektion": "3.2", "titel": "Att bli nyfiken på riktigt", "niva": "Nybörjare", "tid_min": 8, "status": "klar", "fil": "3.2-bli-nyfiken-pa-riktigt.json" },
+    { "lektion": "3.3", "titel": "Förberedelsen som gör nyfikenhet möjlig", "niva": "Mellan", "tid_min": 8, "status": "klar", "fil": "3.3-forberedelsen.json" }
    ]
   },
   {

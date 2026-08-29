@@ -1,0 +1,108 @@
+{
+  "kapitel": 3,
+  "lektion": "3.1",
+  "titel": "Varför intresse inte går att spela",
+  "niva": "Nybörjare",
+  "tid_min": 7,
+  "fardighet": "nyfikenhet.akta",
+  "mal": "Efter lektionen vet eleven att människor är dåliga på att avslöja spelat beteende, och därför att skälet att inte spela inte är risken att åka fast. Skälet är att spelat intresse utför sämre arbete och ger sämre information.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "NYFIKENHET",
+      "titel": "Varför intresse inte går att spela",
+      "ingress": "Alla säljkurser säger att du ska vara genuint intresserad. Nästan alla motiverar det med att kunden annars ser igenom dig. Den motiveringen håller inte, och den riktiga är intressantare."
+    },
+    {
+      "typ": "reading",
+      "kicker": "DET VANLIGA ARGUMENTET",
+      "lead": "Påståendet att kunden genomskådar spelat intresse är tröstande, vanligt och svagt underbyggt.",
+      "highlight": "tröstande, vanligt och svagt underbyggt",
+      "brodtext": [
+        "En meta-analys över 206 arbeten och drygt 24 000 bedömare visar att människor har rätt i 54 procent av fallen när de ska avgöra om någon ljuger eller talar sanning. Det är knappt över slumpen. Vi klassar dessutom sanningar rätt oftare än lögner, vilket betyder att vi lutar åt att tro på det vi hör.",
+        "Räkna alltså inte med att bli avslöjad, och räkna inte heller med att avslöja. Säljare som litar på sin magkänsla om vem som ljuger i ett möte har ungefär lika mycket att gå på som ett mynt. Argument som bygger på att kunden ser igenom dig ska du vara skeptisk mot, även när de kommer från en kurs som den här."
+      ],
+      "takeaway": "Skälet att inte spela är inte att du åker fast. Sannolikt gör du inte det.",
+      "evidens": {
+        "niva": "A",
+        "kalla": "K17",
+        "notering": "Bond och DePaulo (2006). Gäller bedömningar av lögn mot sanning i experiment. Att slutsatsen även gäller spelat intresse i ett säljmöte är kursens tolkning."
+      }
+    },
+    {
+      "typ": "concept",
+      "kicker": "MEN NÅGOT LÄCKER",
+      "titel": "Ansträngningen att bli trodd",
+      "forklaring": "Samma meta-analys innehåller ett fynd som pekar åt ett annat håll. Den som är motiverad att bli trodd framstår som mindre trovärdig. Det är alltså inte lögnen som syns, det är ansträngningen. Att vilja väldigt mycket att någon ska tro dig får dig att se ut som någon som ljuger, oavsett om du gör det.",
+      "brodtext": [
+        "Det förklarar en sak varje säljare känner igen men sällan kan sätta ord på: mötet där du var som mest påläst, mest engagerad och mest övertygande, och som ändå tog slut. Du gjorde inget fel som gick att peka på. Du ville bara märkbart mycket.",
+        "Det är samma mekanism som i kapitlet om egot, nu med ett belägg bakom sig. Behovet syns, och det syns även när innehållet du levererar är korrekt."
+      ],
+      "evidens": {
+        "niva": "A",
+        "kalla": "K17",
+        "notering": "Fyndet gäller hur bedömare uppfattar personer som är motiverade att bli trodda. Överföringen till ett säljsamtal är kursens tolkning."
+      }
+    },
+    {
+      "typ": "reading",
+      "kicker": "DET RIKTIGA SKÄLET",
+      "lead": "Spelat intresse kostar dig inte för att det upptäcks. Det kostar dig för att det utför sämre arbete.",
+      "highlight": "utför sämre arbete",
+      "brodtext": [
+        "En person som spelar intresserad ställer frågan. En person som är intresserad ställer nästa fråga, den som bara går att komma på om man lyssnade på svaret. Det är där skillnaden uppstår, och den syns i vad du vet efter mötet, inte i vad kunden tyckte om dig.",
+        "Spelat intresse minns dessutom sämre. Det du frågar av plikt fastnar inte, så tre veckor senare kommer du inte ihåg vad kunden sa om omorganisationen, och du frågar antingen om samma sak igen eller inte alls. Ingen av delarna avslöjar dig. Båda gör dig sämre informerad än den som brydde sig."
+      ],
+      "takeaway": "Fejkat intresse straffas inte av kunden. Det straffas av att du inte får veta något."
+    },
+    {
+      "typ": "reading",
+      "kicker": "VAD SOM FÖLJER",
+      "lead": "Om intresse inte går att spela sig till, och ingen ändå märker, återstår en obekväm fråga: hur blir man intresserad av en kund man inte är intresserad av?",
+      "highlight": "hur blir man intresserad av en kund man inte är intresserad av",
+      "brodtext": [
+        "Den frågan besvaras aldrig i säljlitteraturen, som nöjer sig med att säga att du ska vara nyfiken, ungefär som man säger till någon att vara mer avslappnad. Nästa lektion tar den på allvar, och svaret är mindre mystiskt än det låter.",
+        "Ledtråden är att nyfikenhet inte behöver riktas mot personen. Den kan riktas mot situationen, och situationen är nästan alltid mer intressant än den ser ut vid första anblicken."
+      ],
+      "takeaway": "Du behöver inte tycka att kunden är fascinerande. Du behöver hitta det i affären som är det."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Hur bra är människor på att avgöra om någon ljuger?",
+          "alternativ": [
+            "Betydligt bättre än slumpen, särskilt erfarna personer",
+            "Omkring 54 procent rätt, alltså knappt över slumpen",
+            "Nästan alltid rätt när de känner personen sedan tidigare"
+          ],
+          "ratt": [1],
+          "forklaring": "Meta-analysen omfattar 206 arbeten och drygt 24 000 bedömare. Vi klassar dessutom sanningar rätt oftare än lögner, alltså lutar vi åt att tro."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad läcker enligt samma meta-analys?",
+          "alternativ": [
+            "Lögnen, om man vet vilka tecken man ska leta efter",
+            "Ansträngningen: den som är motiverad att bli trodd framstår som mindre trovärdig",
+            "Ingenting mätbart alls"
+          ],
+          "ratt": [1],
+          "forklaring": "Det är inte innehållet som avslöjar utan viljan att bli trodd. Samma mekanism som gör att behovet av affären kostar dig."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad är det riktiga skälet att inte spela intresserad?",
+          "alternativ": [
+            "Att kunden genomskådar det och tappar förtroendet",
+            "Att det utför sämre arbete: du ställer inte nästa fråga och minns inte svaret",
+            "Att det är oetiskt"
+          ],
+          "ratt": [1],
+          "forklaring": "Skillnaden syns i vad du vet efter mötet, inte i vad kunden tyckte om dig. Fejkat intresse straffas av okunskap, inte av avslöjande."
+        }
+      ]
+    }
+  ]
+}

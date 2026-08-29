@@ -89,6 +89,26 @@ tankemässig och en känslomässig del, där den senare i huvudsak är ilska.
 Kursens användning: förklarar varför pressade avslut och sista chansen fungerar sämre än de
 känns när du använder dem. Används i 0.1, 0.3.
 
+### K17. Bond och DePaulo (2006), Accuracy of Deception Judgments
+Personality and Social Psychology Review 10, 214 till 234.
+
+Meta-analys över 206 arbeten och 24 483 bedömare. Människor avgör rätt i 54 procent av
+fallen om någon ljuger eller talar sanning, alltså knappt över slumpen. Lögner klassas rätt
+i 47 procent av fallen, sanningar i 61 procent, vilket betyder att människor lutar åt att
+tro på det de hör.
+
+Analysen innehåller också ett fynd som är direkt användbart här: den som är motiverad att
+bli trodd framstår som mindre trovärdig. Ansträngningen i sig läser mottagaren som ett
+tecken.
+
+**Kursens användning, två saker och de pekar åt olika håll.** Det första: räkna inte med att
+bli genomskådad, och räkna inte heller med att genomskåda. Argument som bygger på att kunden
+ser att du spelar håller inte. Det andra: det som ändå läcker är inte lögnen utan behovet,
+vilket ger princip 11 partiellt stöd. Överföringen från lögndetektionsstudier till ett
+säljsamtal är kursens tolkning och ska sägas som sådan.
+
+Används i 0.3, 3.1.
+
 ---
 
 ## Nivå B
