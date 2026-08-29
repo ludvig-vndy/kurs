@@ -134,6 +134,7 @@
   .tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:99px;border:1px solid var(--rule-strong);color:var(--muted);margin-left:8px;white-space:nowrap;vertical-align:middle}
   .tag.ager{color:var(--oxblood);border-color:var(--oxblood)}
   .tag.foljer{color:var(--gold);border-color:var(--gold)}
+  .tag.watch{color:var(--good);border-color:var(--good)}
 
   /* ── Briefing ──────────────────────────────────────────────────────── */
   /* Bevakningen är en bred arbetsyta; briefingen är en läsning, så den får en
@@ -393,15 +394,38 @@ async function loadPrices(){
     }
   }catch(e){ /* utan kurser faller raden tillbaka på anskaffningsvärde */ }
 }
+// Motorns bevakade bolag (motor/bolag.json). Namn -> ticker, så innehav som
+// lades till innan chipsen bar ticker ändå joinar mot kurs, och så vi kan visa
+// "Bevakas" på just dessa. Namnen matchas löst (utan "AB (publ)"-svans).
+const WATCHED = [
+  {n:'unibap space solutions', t:'UNIBAP'},
+  {n:'lifco',                  t:'LIFCO.B'},
+  {n:'evolution',              t:'EVO'},
+  {n:'telia company',          t:'TELIA'},
+  {n:'sectra',                 t:'SECT.B'},
+  {n:'axfood',                 t:'AXFO'},
+];
+function watchedFor(h){
+  const t = h.ticker ? String(h.ticker).toUpperCase() : null;
+  const n = h.name ? String(h.name).toLowerCase().trim() : '';
+  return WATCHED.find(w => (t && w.t===t) || (n && (n===w.n || n.startsWith(w.n)))) || null;
+}
+function isWatched(h){ return !!watchedFor(h); }
+
 function priceFor(h){
   if(h.ticker){ const k=String(h.ticker).toUpperCase(); if(PRICES.has(k)) return PRICES.get(k); }
   if(h.name){ const k=String(h.name).toLowerCase().trim(); if(PRICES_N.has(k)) return PRICES_N.get(k); }
+  // Bevakat bolag utan lagrad ticker: slå upp via alias.
+  const w = watchedFor(h);
+  if(w && PRICES.has(w.t)) return PRICES.get(w.t);
   return null;
 }
 
 function realRow(h){
   const foljer = h.relation==='foljer';
-  const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>';
+  const watched = isWatched(h);
+  const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>'+
+    (watched?'<span class="tag watch">bevakas</span>':'');
   const px = priceFor(h);
   const qty = (h.quantity!=null && !isNaN(h.quantity)) ? Number(h.quantity) : null;
   const gav = (h.gav!=null && !isNaN(h.gav)) ? Number(h.gav) : null;
@@ -431,7 +455,9 @@ function realRow(h){
     rt=ansk
       ? '<div class="amt">'+ansk+(antal?'<span class="andel">'+antal+'</span>':'')+'</div><div class="day"><span class="lbl">anskaffningsvärde</span></div>'
       : (antal?'<div class="amt">'+antal+'</div>':'');
-    ln='Bevakning startar när motorn körts på bolaget.';
+    ln = watched
+      ? 'Bevakas av motorn. Kurs visas när bolaget finns i dagens snapshot.'
+      : 'Bevakning startar när vi kört motorn på bolaget.';
   }
 
   const href = h.id ? '/labs/innehav.html?id='+encodeURIComponent(h.id) : null;

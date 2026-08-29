@@ -143,7 +143,15 @@
 <script>
 // "Vanliga" = bolag motorn faktiskt bevakar i dag (motor/bolag.json), så POC-loopen
 // (lägg till -> följ -> brev -> fråga) fungerar direkt för dem.
-const BOLAG = ['Unibap Space Solutions','Lifco','Evolution','Telia Company','Sectra','Axfood'];
+// Namn + ticker (som i companies.json) så chip-tillägg joinar mot kurs och historik.
+const BOLAG = [
+  {n:'Unibap Space Solutions', t:'UNIBAP'},
+  {n:'Lifco',                  t:'LIFCO.B'},
+  {n:'Evolution',              t:'EVO'},
+  {n:'Telia Company',          t:'TELIA'},
+  {n:'Sectra',                 t:'SECT.B'},
+  {n:'Axfood',                 t:'AXFO'},
+];
 // Sökbart universum: ~1165 noterade nordiska bolag (namn, ticker, marknad), genererat
 // av motor/hamta-bolag.mjs -> public/labs/data/companies.json. Laddas asynkront; innan
 // listan är inne går det ändå att lägga till valfritt namn. Bolag utanför BOLAG går
@@ -216,7 +224,7 @@ function render(){
         '<input id="cosearch" type="text" autocomplete="off" placeholder="Sök bolag, t.ex. Volvo eller Sivers" value="'+esc(searchQ)+'"></div>'+
       '<div class="results" id="results"></div>'+
       '<div class="quick"><span class="ql">Vanliga</span>'+
-        BOLAG.map(b=>'<button class="chip'+(sel===b?' sel':'')+'" data-b="'+esc(b)+'">'+b+'</button>').join('')+'</div>'+
+        BOLAG.map(b=>'<button class="chip'+(sel===b.n?' sel':'')+'" data-b="'+esc(b.n)+'" data-t="'+esc(b.t)+'">'+esc(b.n)+'</button>').join('')+'</div>'+
       '<div class="nav-btns"><a class="btn ghost" href="/labs/dina-bolag.html">Avbryt</a><span class="spacer"></span>'+
         '<button class="btn prim" id="next" '+(sel?'':'disabled')+'>'+(sel?'Fortsätt med '+esc(sel)+' →':'Fortsätt →')+'</button></div>';
   } else if(step===1){
@@ -277,7 +285,7 @@ function wire(){
     });
   }
   stepEl.querySelectorAll('.chip[data-b]').forEach(c=>c.addEventListener('click',()=>{
-    sel = c.dataset.b; selT=null; render();
+    sel = c.dataset.b; selT = c.dataset.t||null; render();
   }));
   const next=stepEl.querySelector('#next'); if(next) next.addEventListener('click',()=>{step=1;render();});
   const fq=stepEl.querySelector('#f-qty'); if(fq) fq.addEventListener('input',()=>{qty=fq.value;});
