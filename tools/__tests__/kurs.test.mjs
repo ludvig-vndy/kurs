@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { KURSER, laddaKurs, laddaLektioner, byggLektionsvagar } from '../../src/lib/kurs.mjs';
+import { KURSER, laddaKurs, laddaLektioner, byggLektionsvagar, delFor } from '../../src/lib/kurs.mjs';
 
 test('KURSER innehåller aktiekursen med rätt bas och katalog', () => {
   const k = KURSER['fundamental-aktieanalys'];
@@ -34,4 +34,19 @@ test('byggLektionsvagar länkar grannar och pekar på kapitelsidan vid kapitelby
 
 test('okänd kursnyckel kastar med tydligt fel', () => {
   assert.throws(() => laddaKurs('finns-inte'), /okänd kursnyckel/i);
+});
+
+test('delar täcker varje kapitel exakt en gång', () => {
+  const kurs = laddaKurs('fundamental-aktieanalys');
+  assert.ok(Array.isArray(kurs.delar) && kurs.delar.length > 0);
+  const iDelar = kurs.delar.flatMap((d) => d.kapitel).sort((a, b) => a - b);
+  const iKapitel = kurs.kapitel.map((k) => k.nummer).sort((a, b) => a - b);
+  assert.deepEqual(iDelar, iKapitel);
+});
+
+test('delFor ger rätt del för ett kapitelnummer', () => {
+  const kurs = laddaKurs('fundamental-aktieanalys');
+  const d = delFor(kurs, 0);
+  assert.equal(d.titel, 'Grunderna');
+  assert.equal(d.n, 1);
 });

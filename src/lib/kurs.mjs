@@ -70,6 +70,14 @@ export function laddaLektioner(nyckel) {
   return ut;
 }
 
+/** Delen som ett kapitelnummer tillhör. Kastar om kapitlet saknas i delar,
+    eftersom ett kapitel utan del annars försvinner tyst ur översikten. */
+export function delFor(kurs, kapitelNr) {
+  const d = (kurs.delar ?? []).find((del) => del.kapitel.includes(kapitelNr));
+  if (!d) throw new Error(`Kapitel ${kapitelNr} saknar del i course.json`);
+  return d;
+}
+
 /** Lektionerna med grannlänkar. Nästa lektion i ett NYTT kapitel landar på
     kapitelsidan i stället för rakt in i lektionen. */
 export function byggLektionsvagar(nyckel) {
