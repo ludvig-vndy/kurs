@@ -1,0 +1,96 @@
+---
+import Broadsheet from '../layouts/Broadsheet.astro';
+import { konfig } from '../lib/kurs.mjs';
+import '../styles/motparten.css';
+
+const k = konfig('motparten');
+---
+
+<Broadsheet
+  title="Motparten, pilot"
+  description="Pilotinloggning för Motparten."
+  nav="none"
+  bodyClass={k.bodyClass}
+  kurs={k}
+  open={true}
+>
+  <main class="wrap pilot">
+    <div class="kicker">Pilot</div>
+    <h1 class="h-title">Motparten</h1>
+    <p class="standfirst">
+      Kursen är under uppbyggnad och ligger bakom en enkel grind under pilotperioden.
+      Skriv din adress så släpps du in.
+    </p>
+
+    <form class="pilot__form" data-pilot>
+      <label class="pilot__label" for="mejl">Din mejladress</label>
+      <input
+        class="pilot__input"
+        id="mejl"
+        name="mejl"
+        type="email"
+        autocomplete="email"
+        required
+        placeholder="namn@vndy.se"
+      />
+      <button class="btn-ink pilot__knapp" type="submit">Fortsätt</button>
+      <p class="pilot__svar" data-svar aria-live="polite"></p>
+    </form>
+
+    <p class="pilot__fine">
+      Pilotgrinden gäller bara den här adressen och ger ingen tillgång till något annat.
+      Den tas bort när kursen öppnar.
+    </p>
+  </main>
+</Broadsheet>
+
+<style>
+  .pilot { flex: 1; max-width: 46ch; padding-top: 12vh; padding-bottom: 12vh; }
+  .pilot__form { margin-top: 34px; display: flex; flex-direction: column; gap: 12px; }
+  .pilot__label { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+  .pilot__input { font-family: var(--serif); font-size: 18px; padding: 12px 14px; border: 1px solid var(--rule-strong); background: var(--card); color: var(--ink); }
+  .pilot__input:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 2px; }
+  .pilot__knapp { margin-top: 6px; align-self: flex-start; }
+  .pilot__svar { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; color: var(--oxblood); min-height: 1.2em; margin: 4px 0 0; }
+  .pilot__fine { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: var(--faint); max-width: 52ch; }
+</style>
+
+<script>
+  function koppla() {
+    const form = document.querySelector<HTMLFormElement>('[data-pilot]');
+    if (!form || form.dataset.kopplad) return;
+    form.dataset.kopplad = '1';
+    const svar = form.querySelector<HTMLElement>('[data-svar]');
+    const knapp = form.querySelector<HTMLButtonElement>('button');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = form.querySelector<HTMLInputElement>('#mejl');
+      const email = (input?.value || '').trim().toLowerCase();
+      if (!email) return;
+      if (knapp) knapp.disabled = true;
+      if (svar) svar.textContent = 'Kontrollerar ...';
+
+      try {
+        const r = await fetch('/api/pilot-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (!r.ok) {
+          if (svar) svar.textContent = 'Grinden är inte konfigurerad. Hör av dig till Ludvig.';
+          if (knapp) knapp.disabled = false;
+          return;
+        }
+        // Servern svarar likadant oavsett om adressen finns i listan. Fick vi
+        // ingen cookie stannar vi kvar har efter omdirigeringen.
+        location.href = '/motparten';
+      } catch {
+        if (svar) svar.textContent = 'Något gick fel. Försök igen.';
+        if (knapp) knapp.disabled = false;
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', koppla);
+</script>

@@ -92,6 +92,23 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
 
 ---
 
+## Motparten, pilotgrind (tidsbegränsad)
+
+- [ ] **Ta bort pilotinloggningen innan Motparten öppnas** (P0 för den kursen).
+      `functions/api/pilot-login.js` släpper in en kort namnlista genom att de bara
+      skriver sin mejladress. Den som känner till en adress i listan kommer alltså in.
+
+      Inhägnaden, så att beslutet kan fattas på rätt grunder: den fungerar bara på
+      motparten-värden (404 på Marginalen), den sätter en egen HMAC-signerad cookie
+      och inte en Supabase-session, den skapar inga konton, och den öppnar ingenting
+      på kurs-7m8. Verifierat i produktion 2026-08-29: pilotcookien mot
+      `kurs-7m8.pages.dev/fokus` ger omdirigering till inloggningen.
+
+      Det som ska bort när kursen öppnas: `functions/api/pilot-login.js`,
+      `src/pages/pilot.astro`, `PILOT_SECRET` på Pages-projektet `motparten`, samt
+      `verifieraPilot` och `/pilot` i `functions/_middleware.js`. Undantaget i
+      Broadsheets klientgrind kan då också tas bort.
+
 ## Rekommenderad sekvens
 
 1. **Datakälla-beslut** (P0), allt hänger på det.
