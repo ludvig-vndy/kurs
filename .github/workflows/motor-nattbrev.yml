@@ -57,5 +57,8 @@ jobs:
       - name: Publicera brevet till KV
         run: node motor/publicera-brev.mjs
 
+      - name: Uppdatera Frågas dokumentarkiv
+        run: node motor/bygg-arkiv.mjs --kor
+
       - name: Spara motorns minne till KV
         run: node motor/state-kv.mjs spara
