@@ -54,6 +54,11 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       personuppgifter, och tar betalt. Villkor, dataskydd och ansvarsfriskrivning
       ("aldrig köp/säljråd") måste finnas innan publik betalning.
 
+- [ ] **[Du] Applicera `supabase/migrations/20260830150000_tes.sql`** (SQL-editorn räcker,
+      en tabell och en policy). Utan den finns tesfältet i koden men inte i databasen:
+      rutan syns på innehavssidan och sparknappen svarar att fältet inte är påslaget.
+      Facitlistan (`npm run prova:fraga`) hoppar över sina två tesfall tills den är körd,
+      och säger det rakt ut. **[Jag]** deployar när du säger till att den är körd.
 - [ ] **[Du] Applicera `supabase/migrations/20260716000000_sakerhet-invites.sql`** på
       live-DB (`supabase db push` eller SQL-editor) OCH deploya klientändringen som
       hör ihop (accept_invite utan p_user, se migrationens not). Härdar två audit-fynd:
