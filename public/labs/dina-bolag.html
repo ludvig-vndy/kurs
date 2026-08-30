@@ -230,6 +230,8 @@
   .ans .q{font-family:var(--display);font-weight:500;font-size:15px;margin-bottom:8px}
   .ans p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:10px}
   .ans .lab{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-right:7px;padding:2px 6px;border:1px solid var(--rule-strong);color:var(--muted)}
+  .ans .thinking{color:var(--muted);font-style:italic}
+  .ans .foot a{color:var(--oxblood)}
   .ans .lab.slut{color:var(--oxblood);border-color:var(--oxblood)}
   .ans table.dt{margin-top:6px;font-size:12.5px}
   .ans table.dt td{padding:7px 0 7px 12px}
@@ -341,17 +343,50 @@ function setAsk(ask){
   seed.querySelectorAll('.seedb').forEach((b,i)=> b.addEventListener('click', ()=> answer(seeds[i])));
   ansEl.classList.remove('show'); ansEl.innerHTML='';
 }
-function answer(q){
-  const a = (CUR && CUR.answer && (q===CUR.answer.q)) ? CUR.answer : null;
-  if(a){
-    ansEl.innerHTML = '<div class="q">'+a.q+'</div>'+a.html+'<div class="foot">'+a.foot+'</div>';
-  } else {
-    ansEl.innerHTML = '<div class="q">'+q+'</div><p>I prototypen är ett exempelsvar inkopplat på Telvios "Hur illa är det?". '+
-      'I skarpt läge svarar modellen på frågan, med varje siffra spårad till källa och en länk till rätt lektion.</p>'+
-      '<div class="foot"><a href="#">Så fungerar källgrinden →</a></div>';
-  }
+// Riktig fraga mot /api/fraga: den kanner anvandarens egna innehav och far
+// utdrag ur bolagens dokument ur KV. Kallgrinden pa servern blockerar svar med
+// tal som inte star i utdragen, sa ett blockerat svar ar ett vantat utfall och
+// inte ett fel att dolja.
+let ASK_LOPNR = 0;
+async function answer(q){
+  const mitt = ++ASK_LOPNR;
+  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div><p class="thinking">Läser dina bolags dokument…</p>';
   ansEl.classList.add('show');
   openPanel();
+
+  let token=null;
+  try{ if(window.AB && window.AB.ready){ const ses=await window.AB.getSession(); token = ses && ses.access_token; } }catch(e){}
+
+  let d=null, status=0;
+  try{
+    const r = await fetch('/api/fraga',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({question:q, token:token})
+    });
+    status = r.status;
+    d = await r.json().catch(function(){return null;});
+  }catch(e){ /* natet */ }
+
+  if(mitt !== ASK_LOPNR) return; // en nyare fraga hann fore
+
+  if(!d || d.error){
+    const text = status===401 ? 'Logga in igen, sessionen har gått ut.'
+      : status===429 ? (d && d.error) || 'För många frågor just nu.'
+      : status===501 ? 'Fråga är inte påslagen just nu.'
+      : status===504 ? 'Det tog för lång tid. Skicka frågan igen.'
+      : (d && d.error) || 'Kunde inte nå tjänsten just nu.';
+    ansEl.innerHTML = '<div class="q">'+esc(q)+'</div><p>'+esc(text)+'</p>';
+    return;
+  }
+
+  const stycken = String(d.answer||'').split(/\n{2,}/).filter(Boolean)
+    .map(function(t){ return '<p>'+esc(t).replace(/\n/g,'<br>')+'</p>'; }).join('');
+  const kallor = (d.kallor||[]).length
+    ? '<div class="foot">Källor: '+d.kallor.map(function(k){
+        return '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">'+esc(k.rubrik||'dokument')+'</a>';
+      }).join(', ')+'</div>'
+    : '<div class="foot">Svarat ur ditt innehav. Inga dokument användes.</div>';
+  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div>'+stycken+kallor;
 }
 function openPanel(){ panel.classList.add('show'); panel.setAttribute('aria-hidden','false'); }
 function closePanel(){ panel.classList.remove('show'); panel.setAttribute('aria-hidden','true'); }
