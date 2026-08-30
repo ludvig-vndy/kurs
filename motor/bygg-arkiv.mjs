@@ -92,6 +92,13 @@ function textFor(bolagsId, url) {
 // Samma mönster som natt.mjs använder för att plocka artikellänkar ur ett flöde.
 const LANKRE = /href="((?:https:\/\/mfn\.se)?\/(?:[a-z]+\/)?a\/[a-z0-9-]+\/[^"/]+)"/g;
 const PER_BOLAG = 12;
+// Rapporterna ar det arkivet star och faller med: kassa, intakter och
+// rorelseresultat finns bara dar. I ett aktivt bolags flode ar de tolv senaste
+// posterna mestadels pressmeddelanden, sa rapporterna hamtas separat oavsett hur
+// langt ned i flodet de ligger. Matningen visade skillnaden: parsern klarade
+// Saniona men saknade helt enkelt rapporter att lasa for de andra.
+const RAPPORT = /(delarsrapport|delårsrapport|bokslutskommunike|bokslutskommuniké|interim-report|year-end-report|quarterly-report|kvartalsrapport|rapport-for)/i;
+const RAPPORTER_MAX = 8;
 
 /* Hämtar text för bevakade bolag som saknar dokument på disk, så arkivet kan
    svara även om nattjobbet aldrig såg dokumenten som nya. Skriver samma filer
@@ -120,8 +127,12 @@ async function fyllPa() {
       if (!lankar.includes(u)) lankar.push(u);
     }
 
+    // Senaste posterna, plus rapporterna var de an ligger i flodet.
+    const rapporter = lankar.filter(u => RAPPORT.test(u.split('/').pop())).slice(0, RAPPORTER_MAX);
+    const attHamta = [...new Set([...lankar.slice(0, PER_BOLAG), ...rapporter])];
+
     let nya = 0;
-    for (const url of lankar.slice(0, PER_BOLAG)) {
+    for (const url of attHamta) {
       const slug = url.split('/').pop();
       const namn = `${b.id}-${slug.slice(0, 60)}`;
       if (kanda.has(url) && existsSync(p(`./in/${namn}.txt`))) continue;

@@ -11,9 +11,54 @@ const ARKIV = [{ namn: 'Saniona AB (publ)', dokument: [
 ] }];
 
 test('periodFor laser kvartal och ar ur rubriken', () => {
-  assert.deepEqual(periodFor('delårsrapport för det andra kvartalet 2026'), { ar: 2026, kvartal: 2 });
-  assert.deepEqual(periodFor('bokslutskommuniké 2025'), { ar: 2025, kvartal: 4 });
+  assert.deepEqual(periodFor('delårsrapport för det andra kvartalet 2026'), { ar: 2026, kvartal: 2, langd: 1 });
+  assert.deepEqual(periodFor('bokslutskommuniké 2025'), { ar: 2025, kvartal: 4, langd: 1 });
   assert.equal(periodFor('Inbjudan till presentation'), null);
+});
+
+// Manadsintervall ar det vanligaste sattet svenska bolag rubricerar en rapport,
+// och forsta versionen missade dem helt. Langden ar antalet kvartal perioden
+// omfattar, vilket avgor vad talet far jamforas med.
+test('periodFor laser manadsintervall, med periodens langd', () => {
+  assert.deepEqual(periodFor('NYAB AB delårsrapport januari-juni 2026'), { ar: 2026, kvartal: 2, langd: 2 });
+  assert.deepEqual(periodFor('Interim Report January-September 2025'), { ar: 2025, kvartal: 3, langd: 3 });
+  assert.deepEqual(periodFor('Delårsrapport januari-mars 2026'), { ar: 2026, kvartal: 1, langd: 1 });
+});
+
+// MedCap rubricerar rapporten med en rubrik utan period. Da far den las ur
+// brodtextens forsta rader i stallet, annars tappas bolaget helt.
+test('periodFor faller tillbaka pa brodtexten nar rubriken ar en rubriksattning', () => {
+  const p = periodFor('Stark tillväxt; justerad EBITA ökade med 28 %',
+    'MedCap AB delårsrapport januari-juni 2026. Koncernens nettoomsättning uppgick till ...');
+  assert.deepEqual(p, { ar: 2026, kvartal: 2, langd: 2 });
+});
+
+test('tusentalsavgransare med vanligt mellanslag lases som ett tal', () => {
+  const arkiv = [{ namn: 'SSAB', dokument: [{ url: 'a', rubrik: 'SSAB: Rapport för andra kvartalet 2026',
+    bitar: ['Intäkterna uppgick till 27 489 (25 631) mkr rörelseresultatet uppgick till 2 695 (2 140) mkr'] }] }];
+  const tal = extraheraNyckeltal(arkiv);
+  const i = tal.find((t) => t.metrik === 'intäkter');
+  assert.equal(i.varde, 27489);   // inte 27
+  assert.equal(i.enhet, 'MSEK');  // mkr normaliseras
+});
+
+test('flodesposter jamfors aldrig mot en annan lang period', () => {
+  const arkiv = [{ namn: 'X', dokument: [
+    { url: 'h1', rubrik: 'Delårsrapport januari-juni 2026', bitar: ['Intäkterna uppgick till 100,0 MSEK'] },
+    { url: 'q1', rubrik: 'Delårsrapport januari-mars 2026', bitar: ['Intäkterna uppgick till 40,0 MSEK'] },
+  ] }];
+  // Q1 (1 kvartal) mot H1 (2 kvartal) ar inte jamforbara tal.
+  assert.equal(harled(extraheraNyckeltal(arkiv)).length, 0);
+});
+
+test('balansposter far jamforas over olika langa perioder', () => {
+  const arkiv = [{ namn: 'X', dokument: [
+    { url: 'h1', rubrik: 'Delårsrapport januari-juni 2026', bitar: ['Likvida medel 400,0 MSEK'] },
+    { url: 'q1', rubrik: 'Delårsrapport januari-mars 2026', bitar: ['Likvida medel 460,0 MSEK'] },
+  ] }];
+  const h = harled(extraheraNyckeltal(arkiv))[0];
+  assert.equal(h.forandring, -60);   // saldot 31 mars mot saldot 30 juni
+  assert.equal(h.perManad, 20);
 });
 
 test('extraheraNyckeltal tar det aktuella talet, inte jamforelsetalet i parentes', () => {
