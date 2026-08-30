@@ -2,12 +2,15 @@
 // (namn + ticker + marknad) från stockanalysis.com och skriver en bundlad
 // public/labs/data/companies.json som sidan söker klientsida.
 //
-// Källa: stockanalysis list-sidor (SvelteKit __data.json). BOOTSTRAP för POC:
-// de stora marknaderna (Stockholm, Oslo) returnerar topp ~500 per marknad efter
-// börsvärde, inte hela svansen av nanobolag. Det täcker i praktiken varje bolag
-// en småsparare äger (Sivers finns med). ISIN ingår inte i denna vy; namn + ticker
-// räcker för sök och tillägg. Byt till licensierad/officiell källa (Nasdaq Nordic
-// + Euronext Oslo) när listan ska bli komplett och skarp.
+// Källa: stockanalysis list-sidor (SvelteKit __data.json). Taket är hårt: 500 per
+// marknad efter börsvärde, och de har ingen First North-lista (kontrollerat
+// 2026-08-30, sex slugg-varianter och Nasdaqs eget API, alla tomma).
+//
+// Antagandet att 500 "täcker varje bolag en småsparare äger" föll samma dag: en
+// pilot la in Ferroamp, som ligger på First North och alltså inte finns här.
+// Svansen sköts nu i stället av /api/bolagssok (Yahoo), som söker live och ger
+// ticker i den form /api/kurshistorik vill ha. Den här filen är kvar som snabb
+// offline-lista med kurssnapshot för de stora, inte som hela universumet.
 //
 // Kör: node motor/hamta-bolag.mjs   (uppdatera regelbundet, t.ex. i nattjobbet)
 
