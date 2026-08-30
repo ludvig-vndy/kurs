@@ -62,6 +62,11 @@ Säljorganisationen är en annan produkt med andra krav och en annan risk. Se av
 | Affärer | prospekt och pipeline |
 | Veckan | vad du bör göra nu |
 
+Status per modul 2026-08-30: Coach är byggd och deployad men frikopplad. Radars **urval** är
+byggt via SCB-scrapern, **bevakningen** finns inte. Affärer finns som en arbetsyta ovanpå en
+köpt lista på grenen `prospektlista`, utan tidsaxel. Profil och Veckan finns inte. Se
+`2026-08-30-motparten-funktioner.md` avsnitt 1.7 och 2.6.
+
 Namnen är bra och bör behållas. De är tillsammans hela pitchen: Radar hittar dem, Veckan
 säger när, Coach hjälper dig genom samtalet, Affärer minns vad som hände. Ett vanligt SaaS
 hade kallat dem Prospecting, Assistant, Pipeline och Dashboard och sagt exakt ingenting.
@@ -237,6 +242,18 @@ disciplin som resten av kursen, tillämpad på kunden själv.
 Radar gör två olika jobb med olika källor. **Urvalet:** bolag i Sverige filtrerbara på
 storlek, bransch, geografi. **Bevakningen:** att veta när något händer med dem.
 
+### 6.0 Urvalet är redan löst, bevakningen är det inte
+
+**Lead-scrapern finns** och ligger i `../VNDY/scraper/vndy-scraper/`. Den bygger på **SCB**,
+under avtal: nyckeln `cfar` är SCB:s identifierare per arbetsställe, storleksklasserna är
+SCB:s koder. Uttagen importeras till Supabase med `tools/importera-prospektlista.mjs`. Se
+avsnitt 1.7 i `2026-08-30-motparten-funktioner.md`.
+
+Det betyder att resten av det här avsnittet handlar om **bevakningen**, inte om urvalet. De
+två källorna är komplement och inte alternativ: SCB vet vilka bolag som finns och hur stora
+de är, men säger nästan ingenting om att något har hänt. JobTech vet när något händer men
+har inget företagsregister. Radar behöver båda.
+
 ### 6.1 Gratis och lagligt, och det räcker långt
 
 Arbetsförmedlingens JobTech Dev har öppna API:er för platsannonser. JobSearch för sökning,
@@ -286,11 +303,36 @@ något som kostar pengar. Är källan gratis är credits ren ransonering, allts�
 knapphet. Båda kan fungera men de kräver olika argument, och det bör vara känt vilket som
 förs.
 
+**Och en krock som måste lösas:** creditmodellen i avsnitt 7 antar mätning per uppslag, en
+credit per bolag som avslöjas. Det som faktiskt är byggt är något annat: ett uttag är en
+vara, `prospekt_kop` säger vem som får se den, och listan delas av alla som köpt den. Det är
+styckvis försäljning av listor, inte mätning per rad.
+
+De två går att förena på tre sätt och valet är inte gjort:
+
+1. **Credits köper listor.** Ett uttag kostar N credits. Enkelt, matchar det byggda, men
+   klumpigt: 100 credits i månaden betyder ingenting om en lista kostar 500.
+2. **Credits köper rader ur en lista.** Uttaget görs brett, kunden betalar för att låsa upp
+   rader. Kräver att raderna kan visas dolda, vilket inte är byggt.
+3. **Listor är en tilläggstjänst vid sidan av abonnemanget**, utan credits alls, och credits
+   reserveras för bevakningen när den finns.
+
+Alternativ 3 är minst arbete och mest ärligt mot det som är byggt idag. Alternativ 2 är den
+modell som skalar bäst men förutsätter en levande frågeväg som inte finns.
+
 ### 6.6 Rekommendation för v1
 
-Bygg Radar på JobTech plus egen bevakning av bolag kunden själv lagt till. Gratis, lagligt,
-ingen förhandling, starkaste signalen från dag ett. Handla upp en betald källa först när
-förbrukningen är mätt, så förhandlingen sker med siffror i handen.
+Urvalet står redan på SCB, se 6.0. **Bygg bevakningen på JobTech** plus egen crawl av de
+bolag kunden själv har i sin lista. Gratis, lagligt, ingen förhandling, och den starkaste
+signalen som finns.
+
+Kopplingen är enkel: bolagen i en köpt prospektlista har orgnr och namn, och JobTech har
+platsannonser med arbetsgivare. Matchningen är inte gratis att göra rätt, men den behöver
+bara fungera för de bolag kunden faktiskt bevakar, inte för hela registret.
+
+Handla upp Bolagsverkets aviseringar när volymen ändå passerar 3 000 transaktioner i
+månaden, då är de kostnadsfria. Handla upp en kommersiell aggregator först när förbrukning
+är mätt, så förhandlingen sker med siffror i handen.
 
 ---
 
@@ -504,9 +546,18 @@ inmatningen tillrättalagd och analysen värdelös. Går vi mot team måste det 
 uttalad regel att coachsamtalen är privata och att chefen bara ser det säljaren själv
 publicerar. Skriv regeln innan den första chefen ber om motsatsen.
 
+**Creditmodellen mot listförsäljningen.** Se 6.5. Tre vägar, inget val gjort, och det
+påverkar prismodellen i avsnitt 7 direkt.
+
 **Förhållandet till vndycrm.** Vi är på väg att bygga ett litet CRM samtidigt som vi redan
-äger ett. Antingen är Affärer vndycrm i en mindre kavaj, eller så underhålls två CRM med
-två datamodeller och en av dem ruttnar. Avgör innan en tabell är skriven.
+äger ett, och nu finns dessutom en tredje: arbetsytan i `prospekt_arbete` på grenen
+`prospektlista`. Antingen är Affärer en av de befintliga i en mindre kavaj, eller så
+underhålls flera datamodeller och någon av dem ruttnar. Avgör innan nästa tabell skrivs.
+
+**Nästa steg med datum saknas i det byggda.** Säljverktygsspecen kallar det fältet
+viktigast, och arbetsytan har status, värde, anteckning och tre orsakskoder men ingen
+tidsaxel. Det är den enskilt största skillnaden mellan det som finns och Affärer som den
+beskrivs här.
 
 **Internationellt.** Metoden och motorn flyttar, datalagret gör det inte. Kursen är svensk,
 korpusen är svensk, Radar står på JobTech och Bolagsverket. Varje nytt land är en ny

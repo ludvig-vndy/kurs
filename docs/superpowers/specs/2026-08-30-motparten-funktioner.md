@@ -11,7 +11,7 @@ Siffrorna nedan är räknade ur källan 2026-08-30, inte uppskattade.
 
 ---
 
-## 1. Byggt och live
+## 1. Byggt
 
 ### 1.1 Innehållet
 
@@ -114,6 +114,66 @@ navigation, korslänkar. Sidkropparna delas, rutterna är skal. Aktiekursen ska 
 oförändrat efter varje ändring i motorn, vilket kontrolleras med `node tools/dist-hash.mjs`
 som normaliserar bort Astros asset-namn och scope-id:n.
 
+### 1.7 Prospektlistan och arbetsytan
+
+**Byggd, men ligger på grenen `prospektlista` och är inte inflätad.** Worktree:
+`C:\dev\kurs-prospekt`. Fem commits, tretton nya filer, 1 860 rader, alla additiva. Grenen
+avviker från `bc58476` och ligger 49 commits efter `motparten-pilot`.
+
+Det här är lead-scrapern och mini-CRM:et. Scrapern själv ligger utanför repot,
+`../VNDY/scraper/vndy-scraper/`, och producerar JSON-uttag. Repot innehåller importören,
+lagringen, ytan och orderboken.
+
+**Datakällan är SCB.** Nyckeln `cfar` är SCB:s identifierare per arbetsställe,
+storleksklasserna är SCB:s koder, och `kallhanvisning` pekar på avtalsvillkoren. Det
+besvarar frågan om Radars urvalskälla: den finns och den är licensierad.
+
+**Datamodellen** (`supabase/migrations/20260829140000_prospektlistor.sql`):
+
+| Tabell | Vad |
+| --- | --- |
+| `prospekt_lista` | ett uttag, delat av alla som köpt det |
+| `prospekt_rad` | företagsdatan, en gång, nycklad på cfar |
+| `prospekt_kop` | vem som får se vilken lista, nycklad på e-post |
+| `prospekt_arbete` | det enda som är personligt, nycklat på (epost, cfar) |
+| `prospekt_bestallning` | intern orderbok |
+
+Tre designbeslut är värda att lyfta fram, för de är bättre än de ser ut:
+
+**Arbetet hänger på cfar, inte på radens uuid.** Ett omkört uttag tappar därför inga
+anteckningar, och dyker samma bolag upp i en annan lista personen köpt följer anteckningen
+med. Har man redan pratat med dem är det sant oavsett vilken lista man tittar på.
+
+**Fyra oberoende dimensioner i stället för ett enda varför.** Status, `kontaktresultat`
+(kom vi fram och till vem), `orsak` (kommersiellt utfall) och `listfel` (var raden fel från
+början). Slås de ihop tränar man på flera saker samtidigt och lär sig ingenting om någon av
+dem. `listfel` är dessutom **den enda signalen som säger något om scrapern snarare än om
+säljaren**, alltså en mätbar återkoppling på listkvalitet. Se avsnitt 5 i
+säljverktygsspecen och avsnitt 10 där.
+
+**Integritet är inbyggd, inte påklistrad.** RLS på utan öppna policyer, all åtkomst via
+Pages Functions med servicenyckeln scopad på verifierad adress. `kanaler` bär reklamspärren
+i klartext med en kommentar om att den inte får tappas bort. `prospekt_glom(epost)` raderar
+en deltagares allt arbete i ett svep, eftersom anteckningarna är uppgifter om tredje part.
+
+**Ytor:** `/motparten/prospekt` (listan med arbetsytan) och `/motparten/bestallningar`
+(intern orderbok). API: `GET /api/prospekt/lista`, `POST /api/prospekt/arbete`, och
+`GET/POST/PATCH /api/prospekt/bestallningar`. Importören är
+`tools/importera-prospektlista.mjs`, idempotent på slug och cfar, med `--torrkorning`.
+
+**Två saker att veta innan det flätas in:**
+
+Arbete kan bara sparas för ett arbetsställe som finns i en lista adressen köpt. Det går
+alltså inte att lägga in ett eget bolag. Det är rätt som åtkomstkontroll men det är en
+verklig begränsning för CRM-ambitionen, se 2.6.
+
+Grenen har egna pilothjälpare i `functions/api/_pilot.js` (`arMotpartenVard`,
+`pilotAdress`) medan `motparten-pilot` har samma jobb i `functions/api/_lib.js`
+(`verifieraPilot`, `pilotMejl`) och en tredje `motpartenVard` i `functions/_middleware.js`.
+Det blir ingen git-konflikt eftersom filerna är nya, men resultatet blir tre
+implementationer av samma sak. Sammanslagningen är därför inte bara en merge, den är en
+konsolidering.
+
 ---
 
 ## 2. Kända luckor i det som finns
@@ -159,6 +219,19 @@ Ordlistan har sex termer. Marginalglosorna är alltså i praktiken oanvända.
 Sebastian har inte granskat de tolv "Sebastian tänker"-anekdoterna eller de tolv
 principerna. De är skrivna i hans namn och publicerade på hans auktoritet.
 
+### 2.6 Arbetsytan är inte ett CRM än
+
+`prospekt_arbete` är kärnan i ett mini-CRM och den är byggd, men den är scopad till köpta
+listor. Konsekvenser:
+
+- Det går inte att lägga in ett bolag man hittat själv.
+- Det finns ingen affär, inget belopp över tid, inget nästa steg med datum, ingen
+  aktivitetshistorik. Det finns en status, ett värde, en anteckning och tre orsakskoder.
+- Fältet som säljverktygsspecen kallar viktigast, **nästa steg med datum**, finns inte.
+
+Det är alltså en arbetsyta ovanpå en köpt lista, inte en pipeline. Steget därifrån till
+Affärer i säljverktygsspecen är kortare än att börja om, men det är ett steg.
+
 ---
 
 ## 3. Planerat, inte byggt
@@ -168,10 +241,10 @@ vad det är och i vilken ordning.
 
 | Modul | Vad | Status |
 | --- | --- | --- |
-| Profil | vad du säljer, till vem, årsmål | ej byggd |
-| Affärer | prospekt och pipeline, minimalt CRM | ej byggd |
+| Profil | vad du säljer, till vem, årsmål | ej byggd, men `prospekt_bestallning` har redan `saljer`, `malgrupp` och `diskvalificerar` |
+| Affärer | prospekt och pipeline, minimalt CRM | arbetsytan byggd på egen gren, pipelinen saknas, se 1.7 och 2.6 |
 | Veckan | vad du bör göra idag | ej byggd |
-| Radar | hittar och bevakar marknaden | ej byggd |
+| Radar | hittar och bevakar marknaden | urvalet byggt via SCB-scrapern, bevakningen saknas helt |
 | Coach | finns, men frikopplad | delvis |
 
 **Byggordning** (säljverktygsspecen avsnitt 9): nästa aktivitet med datum, sedan
@@ -205,11 +278,21 @@ Skrivet här för att det kommer att föreslås igen:
 I ordning:
 
 1. **Framstegsspårning.** Utan den är det inte en kurs man går, det är sidor man läser.
-2. **Betalväg och rättigheter.** Ingen kan köpa produkten idag.
-3. **Pilotinloggningen ska bort.** Den är P0 i `LAUNCH.md`, och den är samtidigt enda vägen
+2. **Betalväg och rättigheter.** Ingen kan köpa produkten idag. Notera att prospektlistan
+   redan har halva svaret: `prospekt_kop` bär vem som får se vad, med `kalla` för pilot,
+   stripe eller manuell och ett förberett nullbart `user_id` för den dag Motparten får
+   riktiga konton. Samma mönster bör bära kursrättigheterna.
+3. **Fläta in `prospektlista`** och konsolidera de tre implementationerna av
+   pilotverifiering till en. Grenen ligger 49 commits efter och bör rebasas innan den
+   flätas in, inte efter.
+4. **Pilotinloggningen ska bort.** Den är P0 i `LAUNCH.md`, och den är samtidigt enda vägen
    in, så den kan inte tas bort förrän punkt 2 finns.
-4. **Sebastians granskning** av anekdoterna och principerna.
-5. **Två beslut i `LAUNCH.md`:** korpusexfiltration och kunddata till Anthropic.
+5. **Sebastians granskning** av anekdoterna och principerna.
+6. **Två beslut i `LAUNCH.md`:** korpusexfiltration och kunddata till Anthropic.
 
-Punkt 1 och 2 är arbete. Punkt 3 till 5 är beslut och granskning, alltså snabbare men
+Punkt 1 till 3 är arbete. Punkt 4 till 6 är beslut och granskning, alltså snabbare men
 beroende av andra än den som kodar.
+
+Punkt 3 är också den som blir dyrare för varje vecka den ligger. Grenen låg 49 commits
+efter redan 2026-08-30, och avståndet växer med allt arbete som görs på
+`motparten-pilot`.
