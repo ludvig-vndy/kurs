@@ -37,7 +37,7 @@ functions/_middleware.js   kontogrind: verifierar Supabase-JWT (Cloudflare Pages
 tools/                     innehållsgrindar + skript (se nedan)
 docs/                      mallar, style guide, planer, specs, case-källor
 content/fundamental-aktieanalys/  Fokus-spelarens JSON (se nedan)
-content/motparten/         Säljkursen Motparten, samma JSON-format (se nedan)
+content/motparten/         Motpartens kursdel, samma JSON-format (se nedan)
 src/lib/kurs.mjs           kursregistret: var varje kurs bor, vad den heter
 src/components/kurs/       delade sidkroppar (KursOversikt, KapitelSida, Spelare)
 ```
@@ -91,11 +91,23 @@ Brief: `Brief_lektionsinnehall_v2.md`. Plan: `docs/superpowers/plans/2026-06-19-
 
 ---
 
-### Motparten: säljkurs, andra benet (2026-08)
+### Motparten: säljprodukten, andra benet (2026-08)
 
-Egen produkt på samma plattform och i samma bygge, egen URL. 12 kapitel, 42 lektioner,
-259 steg, i Fokus-spelarens JSON-format under `content/motparten/`. Sebastian Berg är
-ämnesförankringen, Ludvig och han är piloter.
+**Motparten är inte en kurs, det är fyra delar som hänger ihop i en loop.** Kursen lär ut
+hantverket, prospektscrapern ger bolagen, säljcoachen hjälper i stunden, mini-CRM:et samlar
+utfallet, och utfallet gör de tre andra bättre. Modulnamnen är Radar, Coach, Affärer och
+Veckan. Beskriv den som helheten, inte som kursen, om frågan inte uttryckligen gäller
+kursinnehållet.
+
+| Del | Var | Status |
+| --- | --- | --- |
+| Kursen | `content/motparten/`, 12 kapitel, 42 lektioner, 259 steg | live |
+| Säljcoachen | `functions/api/coach.js`, `/motparten/coach` | live, men frikopplad från de andra |
+| Prospektscrapern | utanför repot, `../VNDY/scraper/vndy-scraper/`, SCB-baserad | finns, importeras med `tools/importera-prospektlista.mjs` |
+| Mini-CRM:et | `prospekt_arbete`, gren `prospektlista` | byggt, **ej inflätat** |
+
+Egen produkt på samma plattform och i samma bygge, egen URL. Kursen ligger i
+Fokus-spelarens JSON-format. Sebastian Berg är ämnesförankringen, Ludvig och han är piloter.
 
 - **Kursmotorn är generaliserad.** `src/lib/kurs.mjs` är enda stället som vet var en kurs
   bor (katalog, ordlista, varumärke, navigation, korslänkar). Sidkropparna ligger i
@@ -131,7 +143,18 @@ Egen produkt på samma plattform och i samma bygge, egen URL. 12 kapitel, 42 lek
   på Pages-projektet `motparten`, och faller stängt (501) utan dem. Spec:
   `docs/superpowers/specs/2026-08-29-saljcoachen-design.md`. Plan:
   `docs/superpowers/plans/2026-08-29-saljcoachen.md`.
-- Spec: `docs/superpowers/specs/2026-08-22-motparten-saljkurs-design.md`. Plan:
+- **Prospektlistan och mini-CRM:et** ligger på grenen `prospektlista` (worktree
+  `C:\dev\kurs-prospekt`), inte i `motparten-pilot`. Tretton filer, allt additivt:
+  `functions/api/prospekt/*`, `/motparten/prospekt`, `/motparten/bestallningar`, migrationen
+  `supabase/migrations/20260829140000_prospektlistor.sql`. Datakällan är SCB, `cfar` är
+  nyckeln per arbetsställe. Deltagarens arbete hänger på (epost, cfar) så ett omkört uttag
+  behåller anteckningarna. Fyra oberoende orsaksdimensioner, varav `listfel` är den enda
+  signalen som säger något om scrapern snarare än om säljaren. **Sammanslagningen är en
+  konsolidering, inte en merge:** grenen har `_pilot.js` medan `motparten-pilot` har samma
+  jobb i `_lib.js` och middlewaren en tredje `motpartenVard`.
+- Specar: `docs/superpowers/specs/2026-08-22-motparten-saljkurs-design.md` (kursen),
+  `2026-08-30-saljverktyget-design.md` (produkten, prismodellen, byggordningen),
+  `2026-08-30-motparten-funktioner.md` (vad som faktiskt är byggt). Plan:
   `docs/superpowers/plans/2026-08-29-motparten-pilot.md`. Bildkällor:
   `docs/kallor/motparten-bildkallor.md`.
 
@@ -145,4 +168,6 @@ Egen produkt på samma plattform och i samma bygge, egen URL. 12 kapitel, 42 lek
 - `KURS-EXPORT.md` och `src/content/kurs.zip` är artefakter, inte källa.
 - **Lanseringsblockerare samlas i `LAUNCH.md`**, numera för båda kurserna. `functions/api/devlink.js` härdades 2026-07-12 (mintar ingen länk för befintligt konto och faller stängt utan `SUPABASE_SECRET_KEY`), men är fortfarande en testväg som ska bort före publik lansering. Motpartens pilotinloggning (`/pilot`) är P0 för den kursen.
 - Sebastian har ännu inte granskat de tolv "Sebastian tänker"-anekdoterna eller de tolv principerna i Motparten. De är skrivna i hans namn.
+- **Motparten saknar framstegsspårning helt.** Ingen localStorage, ingen serverlagring. Ingen kan återuppta där de slutade, översikten kan inte visa vad som är gjort, och quizgrinden på 80 procent nollställs vid omladdning. Det är lanseringsblockerare nummer ett för den produkten.
+- Grenen `prospektlista` låg 49 commits efter `motparten-pilot` 2026-08-30 och avståndet växer. Rebasa före inflätning, inte efter.
 - `design-explorations/` är borttagen (2026-07-10). Labs-mockar dual-writeas inte längre dit, prototyphistoriken finns i git-historiken.
