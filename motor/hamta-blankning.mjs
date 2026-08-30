@@ -1,5 +1,5 @@
 // FI:s blankningsregister: öppen data som ODS (zip med XML). Hämtas, packas upp
-// med PowerShell (inga npm-beroenden) och parsas till rader {emittent, procent,
+// med systemets egna verktyg (inga npm-beroenden) och parsas till rader {emittent, procent,
 // datum}. Aggregatfilen innehåller nettopositioner >= 0,5 procent per emittent.
 // Diffen mot förra körningen är "avvikelsen": blankning som byggs upp eller tas
 // ned är ofta första signalen, och det är fas 3-funktionen veckans avvikelser i
@@ -11,6 +11,18 @@ import { execFileSync } from 'child_process';
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const URL_AKTUELL = 'https://www.fi.se/sv/vara-register/blankningsregistret/GetBlankningsregisterAggregat/'; // aggregat per emittent
 
+// Uppackning utan npm-beroende. Windows har Expand-Archive, Linux har unzip
+// (finns på GitHubs ubuntu-körare). Nattjobbet kör numera båda miljöerna, och
+// utan det här föll blankningen tyst bort i molnet.
+function packaUpp(zip, till) {
+  if (process.platform === 'win32') {
+    execFileSync('powershell', ['-NoProfile', '-Command',
+      `Expand-Archive -Path "${zip}" -DestinationPath "${till}" -Force`], { encoding: 'utf8' });
+  } else {
+    execFileSync('unzip', ['-o', '-q', zip, '-d', till], { encoding: 'utf8' });
+  }
+}
+
 export async function hamtaBlankning() {
   const dir = p('./in/blankning');
   mkdirSync(dir, { recursive: true });
@@ -20,8 +32,7 @@ export async function hamtaBlankning() {
   const ods = `${dir}/aktuell.ods`, zip = `${dir}/aktuell.zip`;
   writeFileSync(ods, buf);
   copyFileSync(ods, zip);
-  execFileSync('powershell', ['-NoProfile', '-Command',
-    `Expand-Archive -Path "${zip}" -DestinationPath "${dir}/aktuell" -Force`], { encoding: 'utf8' });
+  packaUpp(zip, `${dir}/aktuell`);
   const xml = readFileSync(`${dir}/aktuell/content.xml`, 'utf8');
 
   // Radparsning: varje tabellrad -> celltexter. ODS upprepar celler med
