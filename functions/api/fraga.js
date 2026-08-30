@@ -19,6 +19,7 @@
 
 import { secureJson as json } from "./_lib.js";
 import { ogrundadeTal, hamtaUtdrag, bolagIFragan } from "./_kallgrind.js";
+import { nyckeltalsUnderlag } from "./_nyckeltal.js";
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 // Haiku pa fragan: kort interaktivt Q&A dar underlaget redan ar utvalt. Sonnet
@@ -47,9 +48,11 @@ const SYSTEM_BAS =
 // inte igenom ett svar som bryter mot dem. Battre att modellen vet det i forvag
 // an att svaret blockeras och anvandaren far ett fel.
 const SYSTEM_DOKUMENT =
-  "\nDu har fatt utdrag ur bolagens egna dokument. Om dem galler:\n" +
-  "- Anvand bara tal som ORDAGRANT star i utdragen. Utfor ALDRIG egna berakningar: ingen addition, subtraktion, procentandel eller summering. Du ar munnen, aldrig raknaren.\n" +
-  "- Racker utdragen inte for att svara: sag att det inte framgar av de dokument du har. Gissa aldrig, och rakna aldrig fram ett tal som saknas.\n" +
+  "\nDu har fatt utdrag ur bolagens egna dokument, och ibland ett NYCKELTAL- och HARLETT-block. Om dem galler:\n" +
+  "- Anvand bara tal som ORDAGRANT star i underlaget. Utfor ALDRIG egna berakningar: ingen addition, subtraktion, procentandel eller summering. Du ar munnen, aldrig raknaren.\n" +
+  "- HARLETT-blocket ar redan utraknat i kod. Behovs en forandring, en takt eller en burn rate: las den darifran, ordagrant. Star den inte dar finns den inte, och da sager du det.\n" +
+  "- Var noga med perioder. Ett tal i parentes efter ett annat ar samma period FORRA aret, inte forra kvartalet. Jamfor dem aldrig som om de foljde pa varandra.\n" +
+  "- Racker underlaget inte for att svara: sag att det inte framgar av de dokument du har. Gissa aldrig, och rakna aldrig fram ett tal som saknas.\n" +
   "- Namn kallan i klartext efter pastaendet, med dokumentets rubrik.\n" +
   "- Skriv 2 till 5 meningar.\n";
 
@@ -119,6 +122,11 @@ async function stryp(kv, id) {
   return null;
 }
 
+/* Returnerar { text } eller { fel, status, meddelande }.
+   Skilj pa felen. Forsta versionen svalde allt till null och rapporterade
+   "svarade inte i tid", vilket ledde fel i ett halvtimmes felsokande: modellen
+   svarade pa 276 ms, med att kontot var slut pa krediter. Ett fel som pekar at
+   fel hall ar samre an inget fel alls. */
 async function anropa(apiKey, kropp) {
   const ctrl = new AbortController();
   const klocka = setTimeout(() => ctrl.abort(), TIMEOUT);
@@ -133,11 +141,26 @@ async function anropa(apiKey, kropp) {
       body: JSON.stringify(kropp),
       signal: ctrl.signal,
     });
-    if (!r.ok) return null;
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      const m = (d && d.error && d.error.message) || "";
+      // Slut pa krediter ar ett driftfel hos oss, inte ett fel anvandaren gjort.
+      // Sag det rakt ut i stallet for att lata det se ut som strul hos modellen.
+      if (/credit balance|billing|quota/i.test(m)) {
+        return { fel: "kredit", status: 503, meddelande: "Fraga ar tillfalligt av: kontot hos modelleverantoren behover fyllas pa." };
+      }
+      if (r.status === 429) {
+        return { fel: "modell-429", status: 429, meddelande: "Modellen ar overbelastad just nu. Forsok igen om en stund." };
+      }
+      return { fel: "http", status: 502, meddelande: "Modellen svarade med ett fel (" + r.status + ")." };
+    }
     const d = await r.json();
-    return (d.content || []).map((b) => b.text || "").join("").trim();
+    return { text: (d.content || []).map((b) => b.text || "").join("").trim() };
   } catch (e) {
-    return null;
+    const avbruten = e && e.name === "AbortError";
+    return avbruten
+      ? { fel: "timeout", status: 504, meddelande: "Det tog for lang tid. Skicka fragan igen." }
+      : { fel: "nat", status: 502, meddelande: "Kunde inte na modellen." };
   } finally {
     clearTimeout(klocka);
   }
@@ -187,6 +210,7 @@ export async function onRequestPost(context) {
 
   // Steg 1: vilka av anvandarens bolag handlar fragan om. Ingen modell behovs.
   let utdrag = [];
+  let nyckeltal = { text: "", tillatnaTal: [] };
   if (env.DATA && holdings.length) {
     const traffar = bolagIFragan(question, holdings);
     if (traffar) {
@@ -198,27 +222,33 @@ export async function onRequestPost(context) {
         const a = await env.DATA.get("arkiv:" + id, "json");
         if (a) arkiv.push(a);
       }
-      // Steg 2: de mest relevanta bitarna ur de bolagens dokument.
-      if (arkiv.length) utdrag = hamtaUtdrag(question, arkiv, MAX_UTDRAG);
+      // Steg 2: de mest relevanta bitarna ur de bolagens dokument, plus
+      // nyckeltalen per period och det som gar att harleda ur dem i kod.
+      if (arkiv.length) {
+        utdrag = hamtaUtdrag(question, arkiv, MAX_UTDRAG);
+        nyckeltal = nyckeltalsUnderlag(arkiv);
+      }
     }
   }
 
   const system = SYSTEM_BAS +
     (utdrag.length ? SYSTEM_DOKUMENT : "\n- Anvand innehavet nedan nar fragan galler portfoljen. Hitta ALDRIG pa siffror som inte finns i datan. Saknas data, sag det rakt ut.\n") +
     "\nAnvandarens innehav:\n" + holdingsText +
+    (nyckeltal.text ? "\n\n" + nyckeltal.text : "") +
     (utdrag.length
       ? "\n\nUtdrag ur bolagens egna dokument:\n\n" + utdrag.map(function (u) {
           return "[" + u.bolag + " · " + u.rubrik + " · " + u.datum + "]\n" + u.text;
         }).join("\n\n---\n\n")
       : "");
 
-  const answer = await anropa(apiKey, {
+  const svar = await anropa(apiKey, {
     model: MODEL,
     max_tokens: 1024,
     system: system,
     messages: [{ role: "user", content: question }],
   });
-  if (answer === null) return json({ error: "Modellen svarade inte i tid. Forsok igen." }, 504);
+  if (svar.fel) return json({ error: svar.meddelande }, svar.status);
+  const answer = svar.text;
   if (!answer) return json({ answer: "Jag har inget bra svar pa det just nu." });
 
   // Kallgrinden. Bara nar svaret bygger pa dokument: utan utdrag finns inget
@@ -232,7 +262,9 @@ export async function onRequestPost(context) {
       if (h.gav != null) egnaTal.push(Number(h.gav));
       if (h.quantity != null && h.gav != null) egnaTal.push(Number(h.quantity) * Number(h.gav));
     }
-    const ogrundade = ogrundadeTal(answer, utdrag, question, egnaTal);
+    // Harledda tal ar raknade i kod och ar darfor lika giltigt underlag som ett
+    // tal ur ett dokument. Det ar hela poangen med att rakna dem har i stallet.
+    const ogrundade = ogrundadeTal(answer, utdrag, question, egnaTal.concat(nyckeltal.tillatnaTal));
     if (ogrundade.length) {
       return json({
         answer: "Jag hittade ett svar, men det innehöll tal som inte står i dokumenten jag har (" +
