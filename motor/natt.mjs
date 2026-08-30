@@ -1,5 +1,5 @@
 // Nattjobbet: alphans dagliga körning.
-// 1. Läser bevakningslistan (bolag.json).
+// 1. Bygger bevakningslistan ur användarnas innehav (bolag.json = flödeskatalog).
 // 2. Upptäcker nya pressmeddelanden i varje bolags MFN-flöde (arkivet minns sedda).
 // 3. Hämtar, typbestämmer och kör LLM-extraktion/klassificering med citatkrav.
 // 4. Sparar strukturerad data per bolag och renderar bolagssidor.
@@ -25,17 +25,17 @@ const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/
 const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
 
 const konf = JSON.parse(readFileSync(p('./bolag.json'), 'utf8'));
-// Bevakningslistan = seed (bolag.json) UNION användarnas Supabase-innehav.
-// Lägg till ett bolag i Delägaren -> motorn bevakar det i morgondagens brev.
-// Utan Supabase-nycklar i miljön faller den tillbaka på enbart seed.
+// Bevakningslistan ÄR användarnas Supabase-innehav: brevet handlar bara om det
+// någon äger eller bevakar. bolag.json är flödeskatalog, inte bevakningslista.
+// Utan Supabase-nycklar i miljön faller den tillbaka på katalogen (torrkörning).
 try {
-  const { bolag, orapporterade } = await byggBevakning(konf);
+  const { bolag, orapporterade, kalla } = await byggBevakning(konf);
   konf.bolag = bolag;
-  const franInnehav = bolag.filter(b => b.kalla === 'innehav').length;
-  console.log(`Bevakningslista: ${bolag.length} bolag (${franInnehav} ur innehav).`);
+  console.log(`Bevakningslista: ${bolag.length} bolag ur ${kalla === 'innehav' ? 'innehaven' : 'katalogen (ingen Supabase)'}.`);
   if (orapporterade.length) console.log(`  Utan MFN-flöde (bevakas ej): ${orapporterade.join(', ')}`);
+  if (!bolag.length) console.log('  Inga bolag att bevaka. Lägg till innehav i Delägaren.');
 } catch (e) {
-  console.log(`Kunde inte bygga bevakningslista ur innehav (${e.message}); kör seed.`);
+  console.log(`Kunde inte bygga bevakningslista ur innehav (${e.message}); kör katalogen.`);
 }
 const arkivFil = p('./in/arkiv.json');
 const arkiv = existsSync(arkivFil) ? JSON.parse(readFileSync(arkivFil, 'utf8')) : {};
@@ -258,10 +258,12 @@ const brevData = {
 };
 // Narrera brevet till skriven text (ingress + stycke per bolag), grundat i
 // fakta ovan. Utan LLM-nyckel sparas faktaformen som den är.
-if (brevData.poster.length && nyckelFinns(MODELL)) {
+// Narreras alltid, även en tyst dag: brevet ska vara ett brev även när
+// ingenting hände. Narrera-brev.mjs väljer själv tyst-formen.
+if (nyckelFinns(MODELL)) {
   try {
     await narreraBrev(brevData, MODELL);
-    console.log(`Brevet narrerat (ingress + ${Object.keys(brevData.brodtext || {}).length} bolagsstycken).`);
+    console.log(`Brevet narrerat (${(brevData.brev || []).length} stycken${brevData.poster.length ? '' : ', tyst dag'}).`);
   } catch (e) { console.log(`Narration hoppades över: ${e.message.slice(0, 120)}`); }
 }
 const brevJsonFil = p(`./out/brev-latest.json`);

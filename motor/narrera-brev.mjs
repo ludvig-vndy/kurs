@@ -50,8 +50,34 @@ Svara med ett JSON-objekt, inget annat:
 }
 där varje element är ett stycke i det sammanhållna brevet, i läsordning.`;
 
+// Tyst dag: inga poster, men brevet ska ändå vara ett brev. Tystnaden är
+// beskedet, och den är värd några rader: vad som lästes, och att ingenting i
+// bolagen rörde sig. Samma talförbud gäller.
+const SYSTEM_TYST = `Du skriver morgonens Ägarbrev till en småsparare. I dag hände ingenting i bolagen som läsaren äger eller bevakar: pressmeddelandeflödena, insynsregistret och blankningsregistret lästes, och inget av det rörde bolagen.
+
+Skriv ett kort brev om just det, lugnt och personligt, i klarspråk.
+
+- Skriv enbart på svenska. Inled INTE med en hälsning: sidan säger redan god morgon. Börja direkt i sak.
+- 2 till 3 korta stycken.
+- Säg vad som lästes och att det inte gav något som rörde läsarens bolag.
+- Säg att tystnad också är ett besked: de flesta dagar i ett ägande ser ut så här, och att inget händer är oftast det normala läget, inte ett problem.
+- Avsluta med en kort rad om att nästa brev kommer i morgon.
+
+Absoluta regler:
+1. Sätt INGA tal i texten, varken som siffror eller som ord. Inte heller antal bolag eller antal lästa dokument.
+2. Nämn inga bolagsnamn: räkna inte upp vad läsaren äger.
+3. Aldrig köp-, sälj- eller behåll-råd.
+4. Inga tankstreck (varken långt eller kort). Använd komma, kolon eller punkt.
+5. Korta meningar, varierad rytm. Undvik frasen "det är inte X, det är Y".
+6. Lugna inte läsaren och värdera inte läget. Skriv aldrig sådant som "ingen anledning till oro", "det bästa läget" eller "allt är som det ska". Konstatera att dagen var lugn, inget mer. Säg heller ingenting om vad som kommer att hända framöver.
+
+Svara med ett JSON-objekt, inget annat:
+{
+  "brev": ["stycke 1", "stycke 2"]
+}`;
+
 export async function narreraBrev(brev, modellnamn = 'claude-haiku') {
-  if (!brev.poster || !brev.poster.length) return brev;
+  if (!brev.poster || !brev.poster.length) return await narreraTyst(brev, modellnamn);
 
   // Gruppera fynden per bolag till ett kompakt underlag.
   const perBolag = {};
@@ -71,6 +97,19 @@ export async function narreraBrev(brev, modellnamn = 'claude-haiku') {
   brev.brev = Array.isArray(narr.brev)
     ? narr.brev.map(s => String(s).trim()).filter(Boolean)
     : (typeof narr.brev === 'string' ? [narr.brev.trim()] : []);
+  brev.narration_kostnad_usd = svar.kostnad_usd;
+  return brev;
+}
+
+// Tyst dag: inget underlag att grunda sig i, bara konstaterandet.
+async function narreraTyst(brev, modellnamn) {
+  const svar = await anropa(modellnamn, {
+    system: SYSTEM_TYST,
+    prompt: `Skriv dagens korta brev. Datum: ${brev.date}.`,
+    maxTokens: 600, json: false,
+  });
+  const narr = tolkaJson(svar.text);
+  brev.brev = Array.isArray(narr.brev) ? narr.brev.map(s => String(s).trim()).filter(Boolean) : [];
   brev.narration_kostnad_usd = svar.kostnad_usd;
   return brev;
 }

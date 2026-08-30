@@ -436,8 +436,9 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
       ((b.brev&&b.brev.length) ? b.brev.map(function(para){ return '<p>'+markera(para)+'</p>'; }).join('')
         : (b.lead ? '<p>'+markera(b.lead)+'</p>' : ''))+'</div>';
 
-    // Siffrorna bakom: redaktionell liggare, grupperad per bolag.
-    var bakom='<section class="bakom"><div class="bakom-h">Siffrorna bakom</div>'+
+    // Siffrorna bakom: redaktionell liggare, grupperad per bolag. En tyst dag
+    // har inga siffror bakom sig, och då ska rubriken inte stå där tom.
+    var bakom = !order.length ? '' : '<section class="bakom"><div class="bakom-h">Siffrorna bakom</div>'+
       order.map(function(co){
         return '<div class="bakom-co"><div class="bakom-co-n">'+esc(co)+'</div>'+
           grouped[co].map(function(p){

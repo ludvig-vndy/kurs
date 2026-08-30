@@ -1,12 +1,17 @@
-// Bygger motorns bevakningslista ur användarnas Supabase-innehav, inte bara den
-// statiska bolag.json. Så blir "lägg till bolag i Delägaren" == "motorn börjar
-// bevaka bolaget i morgondagens brev".
+// Bygger motorns bevakningslista ur användarnas Supabase-innehav. Brevet ska
+// handla om bolagen läsaren faktiskt äger eller bevakar, inget annat, så listan
+// ÄR innehaven. "Lägg till bolag i Delägaren" == "motorn bevakar det i morgon",
+// och "ta bort" == "det försvinner ur brevet".
 //
-// Flöde: seed (bolag.json, de kurerade med verifierade MFN-flöden + konkurrenter)
-//   UNION innehav (holdings i Supabase, läst med secret key -> alla användares).
-// Varje innehav utan känt flöde slås upp mot MFN: namnet sluggas, kandidat-URL:er
-// provas, och en tas med bara om flödet faktiskt ger artikellänkar. Resultatet
-// cachas (motor/in/bevakning-cache.json) så vi inte slår mot MFN varje natt.
+// bolag.json är inte längre en lista över vad som bevakas, utan en katalog över
+// verifierade MFN-flöden: matchar ett innehav ett namn där tas flödet därifrån.
+// Övriga innehav slås upp mot MFN: namnet sluggas, kandidat-URL:er provas, och
+// en tas med bara om flödet faktiskt ger artikellänkar. Resultatet cachas
+// (motor/in/bevakning-cache.json) så vi inte slår mot MFN varje natt.
+//
+// Enda undantaget: utan Supabase-nycklar i miljön finns inga innehav att läsa,
+// och då faller den tillbaka på katalogen så att en torrkörning har något att
+// göra. I skarp drift är nycklarna satta och listan är enbart innehaven.
 //
 // Kör fristående för test:  node motor/bevakningslista.mjs
 import { readFileSync, writeFileSync, existsSync } from 'fs';
@@ -30,7 +35,7 @@ function laddaEnv() {
 }
 
 // Kurerade namn->slug där en gissning inte träffar rätt. Substrängmatch på
-// gemener. De sex i bolag.json ligger redan i seed, så här bara extra.
+// gemener. Namnen i bolag.json slås upp i katalogen först, så här bara extra.
 const KURERADE = [
   { match: 'sivers', slug: 'sivers-semiconductors' },
 ];
@@ -78,63 +83,70 @@ async function hittaFlode(namn) {
 async function hamtaInnehav() {
   const base = process.env.SUPABASE_URL;
   const secret = process.env.SUPABASE_SECRET_KEY;
-  if (!base || !secret) return null; // ingen Supabase -> kör bara seed
+  if (!base || !secret) return null; // ingen Supabase -> kör bara katalogen
   const url = `${base}/rest/v1/holdings?select=name,ticker,relation`;
   const r = await fetch(url, { headers: { apikey: secret, Authorization: 'Bearer ' + secret } });
   if (!r.ok) throw new Error('Supabase holdings: HTTP ' + r.status);
   return await r.json();
 }
 
-// Bygger den slutliga bolag-listan. seed = parsad bolag.json.
+// Löst namnmatch åt båda håll: "Unibap Space Solutions" i innehavet ska hitta
+// "Unibap" i katalogen, och tvärtom.
+function liknar(a, b) { return a === b || a.startsWith(b) || b.startsWith(a); }
+
+// Bygger bevakningslistan ur innehaven. seed = parsad bolag.json (flödeskatalog).
 export async function byggBevakning(seed) {
   laddaEnv();
-  const bolag = [...(seed.bolag || [])];
-  const kandNamn = new Set(bolag.map(b => b.namn.toLowerCase().trim()));
+  const katalog = seed.bolag || [];
   const orapporterade = [];
 
   let innehav;
   try { innehav = await hamtaInnehav(); }
-  catch (e) { console.log('  Kunde inte läsa innehav:', e.message); return { bolag, orapporterade }; }
-  if (!innehav) return { bolag, orapporterade }; // ingen Supabase konfigurerad
+  catch (e) { console.log('  Kunde inte läsa innehav:', e.message); return { bolag: [...katalog], orapporterade, kalla: 'katalog' }; }
+  if (!innehav) return { bolag: [...katalog], orapporterade, kalla: 'katalog' }; // ingen Supabase konfigurerad
 
-  // Unika bolagsnamn ur innehaven som inte redan bevakas.
-  const nyaNamn = [];
-  const settNamn = new Set(kandNamn);
+  // Unika bolagsnamn ur innehaven (alla användares, alla relationer: äger och bevakar).
+  const namn = [];
+  const sett = new Set();
   for (const h of innehav) {
     const n = String(h.name || '').trim();
     if (!n) continue;
     const key = n.toLowerCase();
-    // Redan i seed via löst namnmatch (t.ex. "Unibap Space Solutions" ~ seed "Unibap...").
-    const iSeed = [...kandNamn].some(s => key.startsWith(s) || s.startsWith(key));
-    if (iSeed || settNamn.has(key)) continue;
-    settNamn.add(key);
-    nyaNamn.push(n);
+    if (sett.has(key) || namn.some(m => liknar(key, m.toLowerCase()))) continue;
+    sett.add(key);
+    namn.push(n);
   }
 
   const cacheFil = p('./in/bevakning-cache.json');
   const cache = existsSync(cacheFil) ? JSON.parse(readFileSync(cacheFil, 'utf8')) : {};
   let cacheAndrad = false;
+  const bolag = [];
 
-  for (const namn of nyaNamn) {
-    let post = cache[namn];
+  for (const n of namn) {
+    // Känt flöde ur katalogen först, annars slå upp mot MFN.
+    const key = n.toLowerCase();
+    const kat = katalog.find(b => liknar(key, String(b.namn).toLowerCase()));
+    if (kat) { bolag.push({ ...kat, kalla: 'innehav' }); continue; }
+
+    let post = cache[n];
     if (post === undefined) {
-      const funnet = await hittaFlode(namn);
+      const funnet = await hittaFlode(n);
       post = funnet ? { slug: funnet.slug, feed: funnet.feed } : null;
-      cache[namn] = post; cacheAndrad = true;
+      cache[n] = post; cacheAndrad = true;
     }
-    if (post) bolag.push({ id: post.slug, namn, feed: post.feed, maxNya: 6, kalla: 'innehav' });
-    else orapporterade.push(namn);
+    if (post) bolag.push({ id: post.slug, namn: n, feed: post.feed, maxNya: 6, kalla: 'innehav' });
+    else orapporterade.push(n);
   }
 
   if (cacheAndrad) { try { writeFileSync(cacheFil, JSON.stringify(cache, null, 2)); } catch {} }
-  return { bolag, orapporterade };
+  return { bolag, orapporterade, kalla: 'innehav' };
 }
 
 // Fristående körning: skriv ut den härledda listan.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const seed = JSON.parse(readFileSync(p('./bolag.json'), 'utf8'));
-  const { bolag, orapporterade } = await byggBevakning(seed);
-  console.log(`\nBevakningslista: ${bolag.length} bolag`);
+  const { bolag, orapporterade, kalla } = await byggBevakning(seed);
+  console.log(`\nBevakningslista: ${bolag.length} bolag (ur ${kalla === 'innehav' ? 'innehaven' : 'katalogen, ingen Supabase'})`);
   for (const b of bolag) console.log(`  ${b.kalla === 'innehav' ? '+' : '·'} ${b.namn}  ->  ${b.feed}`);
   if (orapporterade.length) {
     console.log(`\nKunde inte hitta MFN-flöde för ${orapporterade.length} innehav (bevakas ej än):`);
