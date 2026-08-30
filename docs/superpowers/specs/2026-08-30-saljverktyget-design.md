@@ -188,7 +188,7 @@ systematiskt fel. Därför:
 
 ---
 
-## 5. Den frågande boten
+## 5. Infångningen och den frågande boten
 
 Coachen svarar i dag. Den ska också fråga. Det är skillnaden mellan ett verktyg och en
 kompis: verktyget väntar på att bli använt, kompisen hör av sig och undrar hur det gick.
@@ -234,6 +234,131 @@ Folk minns fel om varför affärer dog, och de minns systematiskt fel på ett s�
 smickrar dem. Botten kan samla svaren, se att sju av tio säger prisrelaterade saker, och
 ändå behöva säga att det är vad du upplevde, inte nödvändigtvis vad som hände. Samma
 disciplin som resten av kursen, tillämpad på kunden själv.
+
+### 5.5 Infångningen: principen
+
+**Användaren loggar aldrig. Hon svarar på en fråga.** Systemet frågar bara efter det den
+omöjligt kan veta, alltså det mänskliga utfallet. Bolag, person, roll, telefonnummer, datum
+och tidpunkt vet Radar redan, och inget av det ska matas in.
+
+Trappan systemet ska gå igenom innan det öppnar munnen:
+
+> veta själv, härleda själv, defaulta själv, tolka själv, och **först när inget av det går**,
+> fråga.
+
+Varje fråga är friktion. Coachens följdfråga är sista utvägen, inte första verktyget. Det är
+också därför den ligger sist i ordningen i 5.10 och inte först.
+
+**Raden är loggningsytan, inte en egen vy.** Utfallskontrollerna ligger alltid synliga på
+varje rad i listan. Ingen kortöppning först, ingen separat dialog. Det löser desktopfallet på
+köpet: där finns ingen ringhändelse att hänga något på, men raden finns alltid.
+
+### 5.6 Designa efter frekvens, inte efter en enhetlig komponent
+
+Ungefär sextio procent av alla slag blir inget svar. Den händelsen avgör ensam om systemet
+känns lätt eller tungt.
+
+| Händelse | Interaktion |
+| --- | --- |
+| Inget svar, upptaget, fel nummer | ett tryck, raden stängs |
+| Fel person, ombedd återkomma | två tryck |
+| Riktigt samtal | rösten |
+| Förlust | rösten, alltid |
+
+**Inget svar ska sätta nästa steg åt användaren.** Det här är det viktigaste enskilda i hela
+infångningsdesignen. Producerar den vanligaste händelsen ingen nästa aktivitet går pipelinen
+tyst genom sin vanligaste väg, och Veckan har inget att läsa.
+
+Ett tryck räknar upp försöket och sätter nästa datum enligt en fast regel: försök ett ger två
+arbetsdagar, två ger fem, tre ger fjorton, fyra markerar raden som kall. Användaren får ändra
+men behöver aldrig göra det.
+
+Erbjud inte alla tre inmatningsvägar lika överallt. Snabbloggen är snabbast och kommer att
+dominera, men den ger ren kategoridata utan nyans. Matcha metoden till händelsens
+informationsvärde: inget svar är snabblogg, punkt, medan ett riktigt samtal, ett första möte
+och en förlust föreslår rösten först.
+
+### 5.7 Rösten i två släpp
+
+**Först: spela in, transkribera, spara texten som anteckning. Ingen tolkning alls.** Det är en
+bråkdel av arbetet, det är redan mycket bättre än att skriva, och det testar den riskabla
+frågan, som är om folk över huvud taget vill prata med produkten. Att tolkningen fungerar är
+den lätta frågan.
+
+Annars går två veckor åt till ljud, transkribering, extraktion, konfidens, datumtolkning och
+bekräftelse-UX, varefter det visar sig att säljarna ändå bara vill trycka Inget svar och
+skriva fem ord.
+
+**Sedan: tolkningen ovanpå.** Rå transkribering sparas alltid, oavsett vad tolkningen gör med
+den.
+
+**Bekräfta två fält, inte fem.** Granskning är röstflödets dolda kostnad: att avgöra om
+maskinen missförstått är själva arbetet, och fem tolkade fält gör en tiosekunders diktering
+till trettio sekunders kontroll. Visa bara det som förändrar något, alltså **nästa steg med
+datum** och **affärsvärde om ett belopp hördes**. Utfallskategori och anteckning sparas tyst
+och rättas vid behov senare på raden.
+
+Det är samma gräns som den positiva friktionen: modellen får göra allt administrativt, men
+människan bekräftar det som påverkar pipeline och värde.
+
+### 5.8 Vad som aldrig ska byggas
+
+Lead score, sannolikhet, förväntat avslut, temperatur, viktad pipeline. Varje sådant fält är
+något användaren måste underhålla, och ingen gör det. De ser bra ut i en demo och står tomma i
+månad tre.
+
+### 5.9 Måtten och den förregistrerade beslutspunkten
+
+**Primärt: andel rader i listan som fått minst en kontakthändelse under veckan.**
+
+Måttet blandar användarens säljtakt med hennes loggningsgrad, vilket är en verklig
+analytisk svaghet. Som pilotmått är det ändå rätt, för frågan som ska besvaras är inte "kan
+vårt gränssnitt registrera 95 procent av genomförda samtal" utan **"får produkten tillbaka
+utfallsdata på en meningsfull del av prospekten"**. Har en säljare hundra prospekt och sju
+rader med en händelse efter två veckor är loopen död, oavsett om orsaken är att hon inte
+ringde eller att hon inte loggade. Det går inte heller att göra sig snygg på.
+
+Diagnostik under primärmåttet, inte KPI:er:
+
+- initierade kontaktförsök som fått ett registrerat utfall, när det går att observera
+- median från avslutat samtal till loggning, per metod
+- andel loggade utfall som har ett nästa steg
+- fördelningen mellan snabblogg, röst och skrift
+
+**Beslutspunkten skrivs före piloten, inte efter:**
+
+> Efter två veckor: minst 50 procent av prospektraderna har minst en kontakthändelse, fortsätt
+> investera i infångningsloopen. Under 50 procent, ta reda på varför innan tolkningen byggs.
+
+**Segmentera innan slutsats dras.** 32 procent totalt kan betyda 78 procent bland de aktiva
+och två säljare som knappt öppnade produkten, och då är det ett aktiveringsproblem och inte
+ett infångningsproblem. Arbetar alla fem aktivt och säger att de ringt mycket, men bara 35
+procent av listan har händelser, då är det infångningen som är fel. Siffran ensam avgör inte,
+de kvalitativa pilotsamtalen behövs bredvid.
+
+### 5.10 Ordningen
+
+1. **Minimal händelselogg plus utfallsknappar på raden plus automatisk återkomst.** Ett
+   vertikalt snitt, inte två steg.
+2. **Röstinspelning som bara sparar text.**
+3. **Tolkningen ovanpå**, med bekräftelse på datum och belopp.
+4. **Coachens följdfråga när datum saknas.**
+
+Punkt ett är medvetet ett vertikalt snitt och inte "först UI, sedan datamodell". Pilotens
+`Inget svar`, `Fel nummer` och `Återkom` ska skapa oföränderliga händelser från första dagen,
+för **pilotdatan är den första riktiga produktdatan som finns**, och den ska inte skrivas till
+tillståndsmodellen och migreras i efterhand. Snittet behöver inte vara den fullständiga
+framtida eventmodellen, bara rätt i sin form.
+
+Datamodellens regler: händelseloggen är sanningen och `prospekt_arbete` blir en härledd vy
+över den, inte en tabell bredvid. `listfel` stannar på raden och flyttar inte in i händelsen,
+eftersom en rad kan vara fel bransch utan att någon ringt. De fyra oberoende dimensionerna
+behålls, `orsak` och `kontaktresultat` slås inte ihop till ett `outcome`.
+
+**Prioritet:** det här går före offertgenerator, före fler CRM-fält, före Veckan och före
+bevakningen. De två sista läser data som det här flödet producerar. Testet i 5.9 avgör om den
+slutna loopen över huvud taget kan existera, och utan den är produkten fortfarande kurs plus
+leadlista plus chatbot plus CRM, alltså inte den sammanhängande sak marknadskartan påstår.
 
 ---
 
@@ -467,6 +592,10 @@ Steg 5 och 6 är de enda som producerar värde när kunden försvinner, och kund
 Uppsägningar sker inte när folk är missnöjda, de sker efter sex tysta veckor. Den tunna
 versionen behöver inte vara mer än bolag kunden själv lagt till, bevakade mot JobTech.
 
+**Huvudlinjen är däremot infångningen, se 5.10.** Steg 1 till 3 i sekvensen ovan ersätts av
+det vertikala snittet där utfallsknappar, händelselogg och automatisk återkomst släpps
+tillsammans, följt av rösten i två släpp. Den tunna Radar-skivan går bredvid, inte i stället.
+
 ### 9.2 Kallstarten
 
 Steg 1 till 4 ger en bra personlig säljplattform men ger kunden en finare behållare för
@@ -558,6 +687,13 @@ underhålls flera datamodeller och någon av dem ruttnar. Avgör innan nästa ta
 viktigast, och arbetsytan har status, värde, anteckning och tre orsakskoder men ingen
 tidsaxel. Det är den enskilt största skillnaden mellan det som finns och Affärer som den
 beskrivs här.
+
+**Loggning på desktop är olöst.** `tel:`-länkar på dator gör i praktiken ingenting, och att
+låta användaren markera "ringer nu" före samtalet är friktion före samtalet, vilket ingen
+orkar. Två ärliga vägar: acceptera telefonen som primär loggningsyta och låt datorn vara
+eftersläpande, eller gör listan i sig till loggningsytan där varje rad alltid visar
+utfallsknapparna och Veckan tjatar om rader som öppnats men aldrig loggats. Specen förutsätter
+det andra i 5.5, men valet är inte prövat mot verkliga användare.
 
 **Internationellt.** Metoden och motorn flyttar, datalagret gör det inte. Kursen är svensk,
 korpusen är svensk, Radar står på JobTech och Bolagsverket. Varje nytt land är en ny
