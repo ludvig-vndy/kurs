@@ -1,4 +1,4 @@
-# Schemalagd Worker för Upptäcks insynsdata. Skild från Pages-projektet "kurs":
+# Schemalagd Worker för Upptäcks insynsdata. Skild från Pages-projektet "aktiekurs":
 # Pages Functions kan inte cron-triggas, det kan bara en fristående Worker.
 # Delar KV-namespace "upptack-data" med Pages (samma id), så /api/upptack-insyn
 # läser det Workern skriver.
@@ -13,4 +13,4 @@ crons = ["0 5 * * *"]   # 05:00 UTC dagligen (~07:00 svensk sommartid)
 
 [[kv_namespaces]]
 binding = "DATA"
-id = "f155742e0cb14bb390fced9aea5ca641"
+id = "97d78256ff664c54a724878034c8f0fd"
