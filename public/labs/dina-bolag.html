@@ -394,6 +394,42 @@ async function loadPrices(){
     }
   }catch(e){ /* utan kurser faller raden tillbaka på anskaffningsvärde */ }
 }
+// Snapshoten är de ~500 största per marknad, så First North-innehav saknas där
+// (Ferroamp). För dem hämtas en färsk kurs live ur /api/kurshistorik, sista
+// punkten i en kort serie. Bara för innehav som faktiskt saknas: endpointen
+// cachar 6 h på edgen, men en begäran per innehav och laddning vore ändå slöseri.
+const LANDSORDNING = ['SE', 'FI', 'NO', 'DK', 'IS'];
+async function fyllSaknadeKurser(holds){
+  const saknas = [];
+  for(const h of holds){
+    const t = h.ticker ? String(h.ticker).toUpperCase() : null;
+    if(!t || PRICES.has(t)) continue;
+    if(!saknas.includes(t)) saknas.push(t);
+  }
+  if(!saknas.length) return false;
+  let nagot = false;
+  await Promise.all(saknas.map(async function(t){
+    for(const land of LANDSORDNING){
+      try{
+        const r = await fetch('/api/kurshistorik?t='+encodeURIComponent(t)+'&c='+land+'&range=1mo');
+        if(!r.ok) continue;
+        const d = await r.json();
+        const pkt = d && d.punkter && d.punkter.length ? d.punkter[d.punkter.length - 1] : null;
+        if(!pkt) continue;
+        // ch (dagens procent) räknas ur de två sista stängningarna när de finns.
+        const forra = d.punkter.length > 1 ? d.punkter[d.punkter.length - 2][1] : null;
+        PRICES.set(t, {
+          t: t, n: null, c: land, p: pkt[1],
+          ch: (forra ? ((pkt[1] - forra) / forra) * 100 : null),
+        });
+        nagot = true;
+        return;
+      }catch(e){ /* prova nästa marknad */ }
+    }
+  }));
+  return nagot;
+}
+
 // Bevakningslistan ÄR innehaven sedan 2026-08-30: motorn bygger den ur den här
 // tabellen varje natt. Alltså bevakas allt som står här, och den gamla hårdkodade
 // listan över "motorns sex bolag" var både fel och missvisande. Den påstod att
@@ -461,7 +497,9 @@ function realRow(h){
       : (antal?'<div class="amt">'+antal+'</div>':'');
     // Bevakningen är redan igång; det som saknas är en kurs, och det beror på
     // att bolaget inte bär någon ticker (onoterat, eller inte hittat i söket).
-    ln = 'Bevakas av motorn. Kurs visas när bolaget har en ticker.';
+    ln = h.ticker
+      ? 'Bevakas av motorn. Ingen kurs hittad för ' + esc(h.ticker) + '.'
+      : 'Bevakas av motorn. Kurs visas när bolaget har en ticker.';
   }
 
   const href = h.id ? '/labs/innehav.html?id='+encodeURIComponent(h.id) : null;
@@ -559,7 +597,12 @@ async function boot(){
   await loadPrices();
   let holds=[];
   try{ holds = await AB.listHoldings(); }catch(e){ console.error('listHoldings:', e); }
-  if(holds && holds.length) renderReal(holds, user);
+  if(holds && holds.length){
+    renderReal(holds, user);
+    // Kurserna som saknas i snapshoten hämtas efteråt: sidan ska inte vänta på
+    // dem, och de flesta innehav har redan sin kurs.
+    if(await fyllSaknadeKurser(holds)) renderReal(holds, user);
+  }
   else renderEmpty(user);
 }
 // Modulen laddas nu deferrat: kor boot efter DOM (AB garanterat redo da).
