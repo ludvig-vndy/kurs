@@ -237,47 +237,67 @@ const faktaText = post => {
 };
 const nr = Math.max(1, Math.round((new Date(datum + 'T12:00:00') - new Date('2026-07-07T12:00:00')) / 864e5) + 1);
 const isDok = t => ['rapport', 'kallelse', 'emission', 'avtal', 'forvarv'].includes(t);
-const brevData = {
-  date: datum,
-  nr,
-  checked: {
-    reports: dagensPoster.filter(dp => dp.post.typ === 'rapport').length,
-    filings: dagensPoster.filter(dp => isDok(dp.post.typ)).length,
-    insiders: dagensPoster.filter(dp => dp.post.typ === 'insyn').length,
-  },
-  poster: dagensPoster.map(({ bolag, post }) => ({
-    bolag,
-    typ: post.typ,
-    typnamn: TYPNAMN[post.typ] || post.typ,
-    rubrik: (post.rubrik || '').split('>').pop().trim(),
-    fakta: faktaText(post),
-    url: post.url || '',
-    lektion: post.typ,
-  })),
-  lugna,
-};
-// Narrera brevet till skriven text (ingress + stycke per bolag), grundat i
-// fakta ovan. Utan LLM-nyckel sparas faktaformen som den är.
-// Narreras alltid, även en tyst dag: brevet ska vara ett brev även när
-// ingenting hände. Narrera-brev.mjs väljer själv tyst-formen.
-if (nyckelFinns(MODELL)) {
-  try {
-    await narreraBrev(brevData, MODELL);
-    console.log(`Brevet narrerat (${(brevData.brev || []).length} stycken${brevData.poster.length ? '' : ', tyst dag'}).`);
-  } catch (e) { console.log(`Narration hoppades över: ${e.message.slice(0, 120)}`); }
+/* ETT BREV PER ANVANDARE.
+   Dokumenten hamtas en gang per bolag, men brevet ar personligt: det handlar om
+   DINA innehav och far aldrig namna nagon annans. Fram till 2026-08-30 byggdes
+   ett gemensamt brev ur unionen av allas innehav, sa tva piloter sag varandras
+   portfoljer i sina brev. Delningen sker har, pa bolagens agarlista. */
+function brevForAgare(uid) {
+  const minaBolag = new Set(konf.bolag.filter(b => (b.agare || []).includes(uid)).map(b => b.namn));
+  const mina = dagensPoster.filter(dp => minaBolag.has(dp.bolag));
+  const minaLugna = lugna.filter(n => minaBolag.has(n));
+  return {
+    date: datum,
+    nr,
+    checked: {
+      reports: mina.filter(dp => dp.post.typ === 'rapport').length,
+      filings: mina.filter(dp => isDok(dp.post.typ)).length,
+      insiders: mina.filter(dp => dp.post.typ === 'insyn').length,
+    },
+    poster: mina.map(({ bolag, post }) => ({
+      bolag,
+      typ: post.typ,
+      typnamn: TYPNAMN[post.typ] || post.typ,
+      rubrik: (post.rubrik || '').split('>').pop().trim(),
+      fakta: faktaText(post),
+      url: post.url || '',
+      lektion: post.typ,
+    })),
+    lugna: minaLugna,
+  };
 }
-const brevJsonFil = p(`./out/brev-latest.json`);
-writeFileSync(brevJsonFil, JSON.stringify(brevData, null, 2), 'utf8');
-console.log(`Brev-JSON: ${brevJsonFil}`);
 
-if (konf.utskick && process.env.RESEND_API_KEY) {
+const agare = [...new Set(konf.bolag.flatMap(b => b.agare || []))];
+if (!agare.length) console.log('Inga agare i bevakningslistan: inga brev att skriva.');
+
+for (const uid of agare) {
+  const brevData = brevForAgare(uid);
+  // Narreras alltid, aven en tyst dag: brevet ska vara ett brev aven nar
+  // ingenting hant. Narrera-brev.mjs valjer sjalv tyst-formen.
+  if (nyckelFinns(MODELL)) {
+    try {
+      await narreraBrev(brevData, MODELL);
+    } catch (e) { console.log(`Narration hoppades över: ${e.message.slice(0, 120)}`); }
+  }
+  const fil = p(`./out/brev-${uid}.json`);
+  writeFileSync(fil, JSON.stringify(brevData, null, 2), 'utf8');
+  console.log(`Brev för ${uid.slice(0, 8)}: ${brevData.poster.length} poster, ${brevData.lugna.length} lugna, ${(brevData.brev || []).length} stycken.`);
+}
+
+// Mejlet gar annu pa den gemensamma HTML-formen och en fast mottagarlista, och
+// skulle darfor skicka allas bolag till alla. Det ar samma lacka i en annan
+// kanal, sa det skickas bara nar det finns exakt en agare. Ratt fix ar ett mejl
+// per anvandare till deras egen adress, och den kommer nar Resend ar pa.
+if (konf.utskick && process.env.RESEND_API_KEY && agare.length <= 1) {
   try {
     const amne = `Ägarbrevet · ${dagensPoster.length} ${dagensPoster.length === 1 ? 'sak' : 'saker'} i dina bolag · ${datum}`;
     const r = await skicka({ till: konf.utskick.till, fran: konf.utskick.fran, amne, html: brevHtml });
     console.log(`Mejlat till ${konf.utskick.till.join(', ')} (id ${r.id})`);
   } catch (e) { console.log(`MEJLFEL: ${e.message.slice(0, 160)}`); }
 } else {
-  console.log('Mejl: RESEND_API_KEY saknas i miljön, brevet sparades bara lokalt.');
+  console.log(agare.length > 1
+    ? `Mejl: hoppas över, ${agare.length} användare delar utskickslistan och breven är personliga.`
+    : 'Mejl: RESEND_API_KEY saknas i miljön, brevet sparades bara lokalt.');
 }
 
 console.log(`\nKLART: ${totNya} nya dokument · kostnad $${totKostnad.toFixed(4)} · modell ${MODELL}`);

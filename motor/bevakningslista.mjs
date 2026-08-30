@@ -84,7 +84,7 @@ async function hamtaInnehav() {
   const base = process.env.SUPABASE_URL;
   const secret = process.env.SUPABASE_SECRET_KEY;
   if (!base || !secret) return null; // ingen Supabase -> kör bara katalogen
-  const url = `${base}/rest/v1/holdings?select=name,ticker,relation`;
+  const url = `${base}/rest/v1/holdings?select=name,ticker,relation,user_id`;
   const r = await fetch(url, { headers: { apikey: secret, Authorization: 'Bearer ' + secret } });
   if (!r.ok) throw new Error('Supabase holdings: HTTP ' + r.status);
   return await r.json();
@@ -105,16 +105,22 @@ export async function byggBevakning(seed) {
   catch (e) { console.log('  Kunde inte läsa innehav:', e.message); return { bolag: [...katalog], orapporterade, kalla: 'katalog' }; }
   if (!innehav) return { bolag: [...katalog], orapporterade, kalla: 'katalog' }; // ingen Supabase konfigurerad
 
-  // Unika bolagsnamn ur innehaven (alla användares, alla relationer: äger och bevakar).
+  // Unika bolagsnamn ur innehaven (alla användares, alla relationer: äger och
+  // bevakar). Motorn hämtar dokumenten EN gång per bolag oavsett hur många som
+  // äger det, men vem som äger vad måste följa med: brevet är personligt, och
+  // två användares portföljer får aldrig blandas i samma brev.
   const namn = [];
   const sett = new Set();
+  const agare = new Map();   // kanoniskt bolagsnamn -> Set(user_id)
   for (const h of innehav) {
     const n = String(h.name || '').trim();
     if (!n) continue;
     const key = n.toLowerCase();
-    if (sett.has(key) || namn.some(m => liknar(key, m.toLowerCase()))) continue;
-    sett.add(key);
-    namn.push(n);
+    const redan = namn.find(m => liknar(key, m.toLowerCase()));
+    const kanoniskt = redan || n;
+    if (!redan && !sett.has(key)) { sett.add(key); namn.push(n); }
+    if (!agare.has(kanoniskt)) agare.set(kanoniskt, new Set());
+    if (h.user_id) agare.get(kanoniskt).add(h.user_id);
   }
 
   const cacheFil = p('./in/bevakning-cache.json');
@@ -126,7 +132,7 @@ export async function byggBevakning(seed) {
     // Känt flöde ur katalogen först, annars slå upp mot MFN.
     const key = n.toLowerCase();
     const kat = katalog.find(b => liknar(key, String(b.namn).toLowerCase()));
-    if (kat) { bolag.push({ ...kat, kalla: 'innehav' }); continue; }
+    if (kat) { bolag.push({ ...kat, namn: kat.namn, kalla: 'innehav', agare: [...(agare.get(n) || [])] }); continue; }
 
     let post = cache[n];
     if (post === undefined) {
@@ -134,7 +140,7 @@ export async function byggBevakning(seed) {
       post = funnet ? { slug: funnet.slug, feed: funnet.feed } : null;
       cache[n] = post; cacheAndrad = true;
     }
-    if (post) bolag.push({ id: post.slug, namn: n, feed: post.feed, maxNya: 6, kalla: 'innehav' });
+    if (post) bolag.push({ id: post.slug, namn: n, feed: post.feed, maxNya: 6, kalla: 'innehav', agare: [...(agare.get(n) || [])] });
     else orapporterade.push(n);
   }
 
