@@ -119,3 +119,13 @@ Alphans hela loop är därmed komplett: MFN-flöden → nya dokument upptäcks �
 
 - **Blankningsregistret** (`hamta-blankning.mjs`): FI:s aggregat per emittent (ODS, packas upp med PowerShell, ingen ny dependency). Nivån visas på bolagssidan, och diffen mot förra körningen är "veckans avvikelser" i sin första form: förändring över 0,15 procentenheter flaggas i dagsbrevet ("blankningen byggs upp: 2,3% till 2,6%"). Skarp data: Evolution 5,92%, Lifco 3,29%, Telia 2,34%.
 - **Omvärldsbevakningen v0**: konkurrentflöden per bolag i bolag.json (Tele2 för Telia, AAC Clyde Space för Unibap, Betsson för Evolution). Bara rubriker, ingen LLM-kostnad; rapporter, emissioner, förvärv och vinstvarningar hos konkurrenten flaggas i dagsbrevet som "Omvärld". Bransch- och konkurrentkartor i full skala är fortfarande fas 3; detta är den konfigdrivna föregångaren.
+
+## Nattbrevet i molnet (2026-08-30)
+
+Motorn körs numera av GitHub Actions, inte av schtasks-raden ovan: `.github/workflows/motor-nattbrev.yml`, 04:30 UTC dagligen och manuellt via "Run workflow". Sajten byggs inte om, brevet går via KV till `/api/brev`.
+
+Bevakningslistan är användarnas Supabase-innehav, inte längre bolag.json. `bolag.json` är kvar som katalog över verifierade MFN-flöden (och som hem för utskick och konkurrentlistor), men lägger inte till bolag på egen hand: äger eller bevakar ingen ett bolag så står det inte i brevet.
+
+Motorns minne (`in/arkiv.json` och `in/bevakning-cache.json`) är gitignorerat och skulle vara tomt på en färsk CI-maskin, så det ligger i KV under nyckeln `motor-state`. `state-kv.mjs hamta` före körningen, `state-kv.mjs spara` efter. `hamta` avbryter hellre än kör minneslöst: utan arkiv läses gamla pressmeddelanden som nya och brevet ljuger. Första gången, innan nyckeln finns: `node motor/state-kv.mjs hamta --tillat-tom`.
+
+Minnet sparas först efter att brevet publicerats. Faller publiceringen upptäcks samma dokument på nytt nästa körning i stället för att tappas tyst.

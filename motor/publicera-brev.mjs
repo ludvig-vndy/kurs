@@ -16,7 +16,8 @@ if (!existsSync(fil)) {
 }
 
 try {
-  execFileSync('npx', ['wrangler', 'kv', 'key', 'put', '--namespace-id=' + NS, 'brev-latest', '--path=' + fil, '--remote'],
+  // Pinnad major, och --yes för CI där npx annars kan stanna på installationsfrågan.
+  execFileSync('npx', ['--yes', 'wrangler@4', 'kv', 'key', 'put', '--namespace-id=' + NS, 'brev-latest', '--path=' + fil, '--remote'],
     { stdio: 'inherit', shell: process.platform === 'win32' });
   console.log('Dagsbrevet publicerat till KV (brev-latest).');
 } catch (e) {

@@ -1,0 +1,61 @@
+# Nattbrevet: kör motorn i molnet varje morgon och lägger dagens brev i KV, så
+# /labs/agarbrevet.html visar det utan att din dator behöver vara på.
+#
+# Bygger INTE om sajten. Brevet går via KV (/api/brev), och en ombyggnad skulle
+# bara deploya om samma statiska sidor i onödan. Det var precis vad det gamla
+# upptack-daily-jobbet gjorde innan det togs bort.
+#
+# Ordningen är medveten: minnet hämtas först, brevet publiceras före minnet
+# sparas. Faller publiceringen sparas inte minnet heller, och nästa körning
+# upptäcker samma pressmeddelanden på nytt i stället för att tappa dem tyst.
+#
+# Secrets som måste finnas på repot (Settings, Secrets and variables, Actions):
+#   ANTHROPIC_API_KEY      extraktionen och brevtexten
+#   SUPABASE_URL           bevakningslistan läses ur innehaven
+#   SUPABASE_SECRET_KEY
+#   CLOUDFLARE_API_TOKEN   token med Workers KV Storage: Edit
+#   CLOUDFLARE_ACCOUNT_ID
+#   RESEND_API_KEY         valfri. Utan den skrivs brevet bara till sidan.
+
+name: Nattbrevet (motorn)
+
+on:
+  schedule:
+    - cron: '30 4 * * *' # 04:30 UTC, ~06:30 svensk sommartid, ~05:30 vintertid
+  workflow_dispatch:
+
+# Två körningar samtidigt skulle skriva över varandras minne i KV.
+concurrency:
+  group: motor-nattbrev
+  cancel-in-progress: false
+
+jobs:
+  brev:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Motorn använder bara Nodes egna moduler, så inget npm ci behövs.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Hämta motorns minne ur KV
+        run: node motor/state-kv.mjs hamta
+
+      - name: Kör motorn
+        run: node motor/natt.mjs
+
+      - name: Publicera brevet till KV
+        run: node motor/publicera-brev.mjs
+
+      - name: Spara motorns minne till KV
+        run: node motor/state-kv.mjs spara
