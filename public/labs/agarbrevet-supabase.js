@@ -126,6 +126,21 @@
     return true;
   }
 
+  // Ett innehav och dess affärer. decisions.holding_id är "on delete set null",
+  // alltså skulle affärerna bli kvar som föräldralösa rader om vi bara raderade
+  // innehavet: osynliga i gränssnittet men kvar i tabellen. Tar man bort ett
+  // innehav menar man hela posten, så affärerna går först och innehavet sedan.
+  // RLS gäller (policyn "egna innehav"/"egna beslut" är for all), så ingen kan
+  // radera någon annans rader ens med rätt id.
+  async function deleteHolding(id) {
+    if (!id) throw new Error("Saknar id.");
+    var d = await sb.from("decisions").delete().eq("holding_id", id);
+    if (d.error) throw d.error;
+    var h = await sb.from("holdings").delete().eq("id", id);
+    if (h.error) throw h.error;
+    return true;
+  }
+
   // ── Affärer (decisions som huvudbok) ────────────────────────────────────
   // Ett innehav och dess köp/sälj. Positionen (quantity, gav) räknas om
   // server-side av triggern trg_decisions_recalc, så efter varje skrivning
@@ -199,6 +214,7 @@
     listHoldings: listHoldings,
     insertHoldings: insertHoldings,
     deleteAllHoldings: deleteAllHoldings,
+    deleteHolding: deleteHolding,
     getHolding: getHolding,
     listDecisions: listDecisions,
     addDecision: addDecision,

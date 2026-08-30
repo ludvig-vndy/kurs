@@ -103,6 +103,17 @@
   .fhint{font-family:var(--label);font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
   .ferr{font-family:var(--label);font-size:12px;color:var(--bad);margin-top:10px;min-height:1em}
 
+  /* Ta bort innehavet: nedtonat och langst ner, det ar inte en genvag man ska
+     raka snubbla pa nar man laser sin position. Bekraftelsen sitter i knappen
+     sjalv i stallet for en dialogruta, sa avbryt ar att lata bli. */
+  .farlig{margin:34px 0 0;padding-top:16px;border-top:1px solid var(--rule)}
+  .farlig-h{font-family:var(--label);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .delbtn{font-family:var(--label);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:none;border:1px solid var(--rule-strong);border-radius:99px;color:var(--muted);padding:8px 16px;cursor:pointer}
+  .delbtn:hover{border-color:var(--bad);color:var(--bad)}
+  .delbtn.arm{border-color:var(--bad);color:var(--bad);font-weight:600}
+  .delbtn[disabled]{opacity:.55;cursor:default}
+  .delhint{font-family:var(--label);font-size:11px;color:var(--muted);margin-top:9px;line-height:1.5}
+
   footer{border-top:2px solid var(--rule-strong);margin-top:40px}
   footer .wrap{padding:22px 0 40px;font-family:var(--label);font-size:11px;letter-spacing:.03em;color:var(--faint);line-height:1.6}
   @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -311,11 +322,17 @@
       '</div></div></div>';
 
     html += '</div>';
+    html += '<section class="farlig"><div class="farlig-h">Ta bort ur portföljen</div>'+
+      '<button class="delbtn" id="delbtn" type="button">Ta bort '+esc(holding.name)+'</button>'+
+      '<div class="delhint" id="delhint">Bolaget försvinner ur Dina bolag och ur morgonbrevet. '+
+      (trades.length ? 'Dina '+trades.length+(trades.length===1?' registrerade affär':' registrerade affärer')+' tas bort med det.' : 'Inga affärer är registrerade.')+
+      '</div></section>';
     root.innerHTML = html;
 
     renderChart();
     renderTrades();
     wireForm();
+    wireDelete();
   }
 
   function renderChart(){
@@ -444,6 +461,44 @@
     window.AB.deleteDecision(id).then(function(){ return reload(); }).catch(function(e){
       btn.disabled=false; btn.textContent="Ta bort";
       alert("Kunde inte ta bort affären: "+(e && e.message ? e.message : "okänt fel"));
+    });
+  }
+
+  // Tvastegsknapp i stallet for confirm(): forsta klicket beväpnar, andra utfor.
+  // En dialogruta klickas bort i reflex, en knapp som byter text gor det inte.
+  function wireDelete(){
+    var btn = byId("delbtn"), hint = byId("delhint");
+    if(!btn) return;
+    var armed = false;
+    btn.addEventListener("click", function(){
+      if(!armed){
+        armed = true;
+        btn.classList.add("arm");
+        btn.textContent = "Klicka igen för att ta bort";
+        hint.textContent = "Det går inte att ångra. Klicka någon annanstans för att avbryta.";
+        // Ett klick utanfor knappen avvapnar igen.
+        setTimeout(function(){
+          document.addEventListener("click", function av(e){
+            if(e.target === btn) return;
+            document.removeEventListener("click", av);
+            armed = false;
+            btn.classList.remove("arm");
+            btn.textContent = "Ta bort " + holding.name;
+            hint.textContent = "Bolaget försvinner ur Dina bolag och ur morgonbrevet.";
+          });
+        }, 0);
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = "Tar bort…";
+      window.AB.deleteHolding(HID).then(function(){
+        location.href = "/labs/dina-bolag.html";
+      }).catch(function(e){
+        btn.disabled = false;
+        btn.classList.remove("arm");
+        btn.textContent = "Ta bort " + holding.name;
+        hint.textContent = "Kunde inte ta bort: " + (e && e.message ? e.message : "okänt fel") + ".";
+      });
     });
   }
 
