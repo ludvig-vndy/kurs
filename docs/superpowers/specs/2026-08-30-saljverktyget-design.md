@@ -38,6 +38,17 @@ svaret innehåll, då säger den upp när den gått igenom kursen. Är svaret mi
 bolag, min historik, då säger den inte upp. Allt som håller kundens eget arbete är
 retention. Allt annat är marknadsföring.
 
+**Med en hård motvikt: kundens historik är inte gisslan.** Kunden äger sin inmatade data och
+kan när som helst exportera affärer, aktiviteter, transkriberingar och profil i ett läsbart
+format, även efter uppsägning. Retentionen ska komma från att Radar fortsätter bevaka, Veckan
+fortsätter prioritera och Coach fortsätter lära sig, alltså från löpande värde ovanpå
+historiken, aldrig från att historiken blir oåtkomlig.
+
+Det är inte bara anständigt utan strategiskt: "din data är din och du kan ta den med dig" är
+ett påstående ingen av de etablerade aktörerna säger högt, och det ligger i linje med samma
+hållning som den röda listan. Export, radering och vad som händer vid uppsägning ska finnas på
+plats **innan betalvägen byggs**, inte efter.
+
 ---
 
 ## 2. Kunden
@@ -118,6 +129,9 @@ Tre fält bär hela systemet:
 
 ### 3.4 Offerter
 
+> **Fas: efter v1.** Ingår inte i byggordningen i 5.10 och ska inte läsas som lika nära
+> förestående som infångningen. Avsnittet finns för att beslutet om form redan är fattat.
+
 Värdet ligger inte i dokumentet, det ligger i händelsen. När offerten går iväg startar en
 klocka, och det är där affärerna dör. Skickad tisdag, tyst i nio dagar, och det är exakt
 ditt vanligaste dödsmönster. Det kräver ingen produktkatalog, bara att systemet vet att en
@@ -138,6 +152,31 @@ ett lätt CRM blir ett tungt. Vill kunden ha signering integreras Oneflow eller 
 Offertdatan betalar tillbaka med fyra fält: datum, belopp, rader, utfall. Ur det faller
 vilka rader som finns i vunna mot förlorade offerter, rabattens verkliga effekt, och tiden
 från möte till offert ställd mot utfall.
+
+### 3.5 Veckan, veckobrevet och notifikationsbudgeten
+
+Två saker har blandats ihop under arbetsnamnet morgonbrev. De är olika och ska hållas isär:
+
+| | Vad det är | Kadens |
+| --- | --- | --- |
+| **Veckan** | arbetsytan som alltid finns, dit man går när man vill jobba | daglig hämtning |
+| **Veckobrevet** | pushkanalen, det som når dig när du inte tänker på produkten | en gång i veckan |
+
+**Beslutet är veckovis push och daglig hämtning.** Säljcykeln hos den ensamma säljaren är
+veckovis, inte daglig. Ett dagligt brev utan nyheter blir brus och lär mottagaren att ignorera
+kanalen, och då är den borta även den vecka den behövs. Delägarens morgonbrev är dagligt för
+att marknaden rör sig dagligt, en pipeline gör inte det. Det som ändå är dagsaktuellt, alltså
+återkomster som förfaller idag, hör hemma i Veckan där man hämtar det själv.
+
+**Notifikationsbudget.** Med Veckan, återkomstdatum, Radar-signaler, coachens frågor,
+veckobrevet och offertpåminnelser kan produkten mycket snabbt bli precis den jobbiga säljchef
+som 3.2 finns för att undvika. Regeln skrivs därför nu, medan det bara finns en kanal:
+
+> Ingen signal får bli en notifikation bara för att den finns. **Veckan är standardsänkan.**
+> Push och mejl reserveras för det som förlorar värde om det väntar till nästa gång användaren
+> öppnar produkten.
+
+Det är en av de mer konkreta sakerna som skiljer kompis från chef.
 
 ---
 
@@ -263,15 +302,30 @@ känns lätt eller tungt.
 | Inget svar, upptaget, fel nummer | ett tryck, raden stängs |
 | Fel person, ombedd återkomma | två tryck |
 | Riktigt samtal | rösten |
-| Förlust | rösten, alltid |
+| Förlust | rösten först, alltid med textreserv |
 
 **Inget svar ska sätta nästa steg åt användaren.** Det här är det viktigaste enskilda i hela
 infångningsdesignen. Producerar den vanligaste händelsen ingen nästa aktivitet går pipelinen
 tyst genom sin vanligaste väg, och Veckan har inget att läsa.
 
-Ett tryck räknar upp försöket och sätter nästa datum enligt en fast regel: försök ett ger två
-arbetsdagar, två ger fem, tre ger fjorton, fyra markerar raden som kall. Användaren får ändra
-men behöver aldrig göra det.
+Ett tryck räknar upp försöket och sätter nästa datum: försök ett ger två arbetsdagar, två ger
+fem, tre ger fjorton, fyra markerar raden som kall. Användaren får ändra men behöver aldrig
+göra det.
+
+**Siffrorna är systempolicy v1, inte en affärsregel.** De kommer sannolikt att ändras efter
+pilotdata. Ingen användarkonfiguration behövs, men begrav dem inte i händelsesemantiken så att
+"försök 3" definitionsmässigt betyder plus fjorton dagar.
+
+**Syskonfallen gör olika saker trots att de delar ett tryck.** Upptaget ger ett nytt försök
+inom kort och räknar inte upp försökskedjan. Fel nummer ska aldrig schemalägga ett nytt samtal
+till samma nummer, och det är en åtgärdssignal om kontaktdatans kvalitet, skild från `listfel`
+som handlar om huruvida bolaget hörde hemma i listan alls. Rätt bolag med fel nummer och fel
+bolag är två olika fel och två olika återkopplingar.
+
+**Förlust är röst först, aldrig röst tvång.** Säljaren sitter bredvid kollegor eller på tåget
+och orkar inte prata, och då är en sämre förlustanteckning oändligt mycket bättre än ingen
+förlust alls. Textreserven är ett fält, en mening, ingen kategoriväljare: "vad gjorde att det
+inte gick?" Kategorin sätts av modellen i efterhand enligt 4.3.
 
 Erbjud inte alla tre inmatningsvägar lika överallt. Snabbloggen är snabbast och kommer att
 dominera, men den ger ren kategoridata utan nyans. Matcha metoden till händelsens
@@ -300,6 +354,12 @@ och rättas vid behov senare på raden.
 
 Det är samma gräns som den positiva friktionen: modellen får göra allt administrativt, men
 människan bekräftar det som påverkar pipeline och värde.
+
+**Ett belopp föreslås som affärsvärde bara när modellen har uttryckligt stöd för att beloppet
+avser den aktuella möjligheten.** "De köper ungefär 200 000 om året idag" är kundens nuvarande
+spend, inte en offert på 200 000. Saknas det stödet stannar beloppet i anteckningen och visas
+inte som ett fält att bekräfta. Annars uppstår precis den AI-administration flödet finns för
+att undvika, där användaren får rätta maskinen i stället för att bli hjälpt av den.
 
 ### 5.8 Vad som aldrig ska byggas
 
@@ -336,6 +396,25 @@ ett infångningsproblem. Arbetar alla fem aktivt och säger att de ringt mycket,
 procent av listan har händelser, då är det infångningen som är fel. Siffran ensam avgör inte,
 de kvalitativa pilotsamtalen behövs bredvid.
 
+**Tre saker låses före piloten, annars flyttar sig måttet utan att någon fuskar medvetet:**
+
+1. **Nämnaren.** Bara rader som fanns i listan vid pilotens start räknas. En rad som
+   importerades dag tretton hör inte hemma i tvåveckorsmåttet.
+2. **Listans storlek.** Samma antal för alla deltagare. 50, 100 och 500 rader ger helt olika
+   procenttal av samma beteende.
+3. **Vad som är en aktiv deltagare.** Definiera det i arbetsdagar med produkten öppnad, inte i
+   efterhand utifrån vem som råkade prestera.
+
+**Rapportsnapshot.** Med oföränderliga händelser och reverseringar blir "vad systemet vet nu"
+och "vad rapporten byggde på då" två olika saker. En sen korrigering ändrar historien, så
+veckorapporten från måndag stämmer inte om samma fråga körs på fredag.
+
+Varje utskick fryser därför sitt underlag och bär `event_log_position`, `generated_at`,
+`profile_version` och versions-id för de analysregler eller den modellprompt som påverkat
+slutsatsen. Då går rapporten att återge exakt som den såg ut när den skickades. För en produkt
+vars varumärke är evidensdisciplin är en siffra som tyst ändrar sig ett
+trovärdighetsproblem.
+
 ### 5.10 Ordningen
 
 1. **Minimal händelselogg plus utfallsknappar på raden plus automatisk återkomst.** Ett
@@ -354,6 +433,37 @@ Datamodellens regler: händelseloggen är sanningen och `prospekt_arbete` blir e
 över den, inte en tabell bredvid. `listfel` stannar på raden och flyttar inte in i händelsen,
 eftersom en rad kan vara fel bransch utan att någon ringt. De fyra oberoende dimensionerna
 behålls, `orsak` och `kontaktresultat` slås inte ihop till ett `outcome`.
+
+**Korrigering: händelser ändras aldrig.** En felaktig händelse upphävs med en ny
+reverseringshändelse som pekar på den första, och den härledda vyn räknas om med båda. Det är
+inte en detalj: hela infångningsdesignen bygger på ett tryck utan bekräftelsedialog, och då
+kommer folk att trycka på fel rad. Gränssnittet visar därför Ångra direkt efter varje
+snabbloggning, och den knappen skapar en reversering, den raderar ingenting.
+
+**Listmedlemskap är inte arbetsrätt.** Idag är de samma sak: `arbete.js` kräver att ett cfar
+finns i en lista adressen köpt för att arbete ska få sparas. Faller ett bolag ur ett omkört
+uttag, för att storleken, SNI-koden eller filtret ändrats, kan säljaren inte längre logga på
+ett bolag hon är mitt i en dialog med. Systemet kapar alltså en pågående affär för att
+källdata rört sig.
+
+Roten är inte den kontrollen utan att ett begrepp gör två jobb. Dela dem:
+
+| Begrepp | Svarar på |
+| --- | --- |
+| `prospekt_kop`, listmedlemskap | hur kunden fick tillgång till bolaget |
+| beständig kund-CFAR-relation | att kunden har en relation och får fortsätta arbeta |
+
+> **Listmedlemskap får bara ge åtkomst, aldrig dra tillbaka den.** När ett cfar en gång
+> levererats till kunden skapas en beständig relation. Senare uttag får ändra medlemskapet men
+> aldrig arbetsrätten.
+
+"Matchar nuvarande urval" och "tillhör kundens säljhistorik" är två helt olika frågor. Ett
+bolag kan falla ur målprofilen och samtidigt vara i aktiv dialog, vunnet, förlorat, bevakat
+eller värt att återaktivera.
+
+Följdregel för gränssnittet: låtsas inte att inget hänt. Visa en diskret markering, "matchar
+inte längre din nuvarande Radar-profil", och låt allt arbete fortsätta. Det är i sig en
+användbar signal.
 
 **Prioritet:** det här går före offertgenerator, före fler CRM-fält, före Veckan och före
 bevakningen. De två sista läser data som det här flödet producerar. Testet i 5.9 avgör om den
@@ -448,8 +558,14 @@ modell som skalar bäst men förutsätter en levande frågeväg som inte finns.
 ### 6.6 Rekommendation för v1
 
 Urvalet står redan på SCB, se 6.0. **Bygg bevakningen på JobTech** plus egen crawl av de
-bolag kunden själv har i sin lista. Gratis, lagligt, ingen förhandling, och den starkaste
-signalen som finns.
+bolag kunden själv har i sin lista. Gratis, lagligt och utan förhandling, och den starkaste
+kandidat vi identifierat för v1.
+
+**Hypotes, inte belagt:** platsannonser ger hög signal per krona för den här målgruppen. Det
+ska mätas mot faktiskt utfall innan det behandlas som sanning. Samma sak gäller de externa
+kommersiella och juridiska påståendena i 6.2 och 6.4, som är hämtade ur leverantörernas egen
+dokumentation och **ska verifieras mot källan före implementation**. Ett dokument som är så
+noga med evidens internt bör hålla samma linje utåt.
 
 Kopplingen är enkel: bolagen i en köpt prospektlista har orgnr och namn, och JobTech har
 platsannonser med arbetsgivare. Matchningen är inte gratis att göra rätt, men den behöver
@@ -462,6 +578,10 @@ månaden, då är de kostnadsfria. Handla upp en kommersiell aggregator först n
 ---
 
 ## 7. Prismodellen
+
+> **Villkorad.** Priserna nedan bygger på creditmodellen, och creditens innebörd är inte
+> beslutad. Avsnitt 7 och 8 är inte en beslutad prismodell förrän gaten i avsnitt 12 är
+> stängd. Se 6.5.
 
 Modellen bytte karaktär när Radar, Affärer och Veckan kom in. Det är inte en kurs med
 verktyg bredvid, det är en löpande tjänst, och då är abonnemang inte en betalningsform utan
@@ -500,9 +620,22 @@ För ARR-syfte delas 5 990 i **2 500 kurs (engång)** och **3 490 tjänsteår (�
 Det går jämnt ut, och år ett kostar därmed exakt lika mycket för tjänsten som
 förnyelseåret. Ingen rabattlogik att förklara.
 
-ARR per aktiv kund: 3 490 plus cirka 345 i credits, alltså **cirka 3 800 kr**.
-Creditsiffran antar att var fjärde kund köper två 300-packar per år och är en gissning
-tills förbrukning är mätt.
+**Tre mått som inte får blandas ihop.** Uppdelningen ovan är allokering av värde per kund, och
+den är inte ARR i redovisningsmening.
+
+| Mått | Vad det är | Direktvägen | Månadsvägen, år ett |
+| --- | --- | --- | --- |
+| Kassaintäkt | vad som faktiskt kommer in | 5 990 en gång | 7 188 över året |
+| Recurring run-rate | vad aktiva abonnemang annualiserar till nu | 3 490 | **7 188** |
+| Steady-state tjänste-ARR | vad basen annualiserar till efter kursåret | 3 490 | 3 490 |
+
+Betalar en kund 599 i månaden just nu är hennes run-rate 7 188 tills priset trappar ned efter
+månad tolv, inte 3 490. Skillnaden spelar ingen roll för kassaflödet men stor roll så fort
+någon jämför kohorter eller pratar med bank, revisor eller investerare.
+
+Siffrorna i 8.1 och 8.2 nedan använder **steady-state tjänste-ARR**, alltså 3 490 plus cirka
+345 i credits, ungefär **3 800 kr per aktiv kund**. Creditsiffran antar att var fjärde kund
+köper två 300-packar per år och är en gissning tills förbrukning är mätt.
 
 ### 8.1 Vid 500 aktiva kunder
 
@@ -619,10 +752,19 @@ baserat på egna kunder har vi blivit det vi kritiserar, och någon kommer att p
 Det gör det inte omöjligt, det gör det till en designfråga som måste lösas tidigt, för ett
 kontrollgruppsupplägg går inte att retrofitta.
 
-**Stegvis utrullning.** Alla kunder får coachinglagret, men vissa i månad ett och vissa i
-månad fyra, slumpmässigt. Jämför under glappet. Alla får produkten till slut, så det är
-etiskt oproblematiskt, det är trivialt med feature flags, och det ger något som ärligt kan
-kallas ett orsakssamband.
+**Stegvis utrullning, som möjlig design för ett framtida test.** Alla kunder får
+coachinglagret, men vissa i månad ett och vissa i månad fyra, slumpmässigt, och jämförelsen
+görs under glappet.
+
+Det här är en skiss, inte en färdig plan, och avsnittet ska inte läsas som att randomisering
+ensam ger ett orsakssamband. Den löser inte litet urval, bortfall, säsong, skillnader mellan
+säljare, spridning mellan användare, att kontrollgruppen använder coachen på annat sätt, eller
+att betalande kunder undrar varför en central funktion hålls undan från dem. **Kräver
+styrkeberäkning, randomiseringsplan och analysplan innan genomförande.** Att skriva något annat
+vore att bryta mot dokumentets egen evidensdisciplin.
+
+Det som däremot inte kan retrofittas är möjligheten: kohorttillhörighet och funktionsflaggor
+måste finnas i produkten från början, även om testet körs långt senare.
 
 **Förregistrera måtten.** Bestäm vad som ska mätas innan datan betraktas. Det är den enda
 skillnaden mellan mätning och marknadsföring.
@@ -675,8 +817,21 @@ inmatningen tillrättalagd och analysen värdelös. Går vi mot team måste det 
 uttalad regel att coachsamtalen är privata och att chefen bara ser det säljaren själv
 publicerar. Skriv regeln innan den första chefen ber om motsatsen.
 
-**Creditmodellen mot listförsäljningen.** Se 6.5. Tre vägar, inget val gjort, och det
-påverkar prismodellen i avsnitt 7 direkt.
+**Och skriv den som datamodell, inte som policytext:** coachkonversationer är privata objekt
+per användare och får aldrig ingå i teamexport, chefsvy, API eller analys. Annars kommer
+frågan "kan vi inte bara visa en AI-sammanfattning för chefen", och då är principen bruten
+genom bakdörren utan att någon fattat ett beslut.
+
+**BLOCKERANDE: creditmodellen mot listförsäljningen.** Se 6.5. Avsnitt 7 och 8 kan inte
+betraktas som en beslutad prismodell förrän det här är avgjort, eftersom hela prisavsnittet
+vilar på 100 credits i månaden, extraköp och creditintäkt i ARR och LTV.
+
+Det är dessutom mer än ett faktureringsbeslut. Blir en credit **en ny upplåst CFAR för den
+kunden**, vilket är den renaste slutmodellen om Radar ska bli levande, förutsätter det en
+frågeyta där man bläddrar i ett universum och låser upp rader. Det är en annan produkt än att
+sälja färdiga uttag, med annan lagring och annat gränssnitt. Beslutet avgör alltså vad som
+byggs, inte bara vad som debiteras. Piloten behöver inte köra slutmodellen, men den ska vara
+vald innan betalvägen byggs.
 
 **Förhållandet till vndycrm.** Vi är på väg att bygga ett litet CRM samtidigt som vi redan
 äger ett, och nu finns dessutom en tredje: arbetsytan i `prospekt_arbete` på grenen
