@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "node tools/check-all.mjs",
-    "test:tools": "node --test \"tools/__tests__/*.test.mjs\""
+    "test:tools": "node --test \"tools/__tests__/*.test.mjs\"",
+    "prova:fraga": "node tools/prova-fraga.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",

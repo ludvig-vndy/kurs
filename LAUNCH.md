@@ -70,6 +70,13 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       utan att betala. Är det avsikten i betan (inbjudan == gratis access) räcker en rad
       i LAUNCH; ska betalning krävas behöver middleware slå upp subscriptions.
 
+- [x] **Facitlista för Fråga** (2026-08-30): `npm run prova:fraga` kör riktiga frågor
+      mot deployad endpoint och prövar mekaniska krav (står talet där, blockerades
+      svaret, avböjde den). Löftet "inga siffror tagna ur röven" är det produkten
+      säljs på, och det behöver ett skyddsnät som fångar om det tyst slutar gälla.
+      Bevisad mot en äldre deploy: burn rate-fallen faller där, allt annat står.
+      Kostar under en krona per körning, ingår därför inte i `npm run check`.
+
 ## P1 — bör vara på plats kort efter (eller före, om enkelt)
 
 - [ ] **[Jag] Positioneringsvakterna i all copy:** försäkring som metafor aldrig löfte,
