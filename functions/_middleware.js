@@ -8,7 +8,7 @@
    statiska tillgangar och /api/* (funktionerna gor sin egen auth). Ovrigt
    kraver en giltig session, annars -> /logga-in. */
 
-import { verifieraPilot } from './api/_lib.js';
+import { verifieraPilot, arMotpartenVard } from './api/_lib.js';
 
 const COOKIE = 'da_session';
 const JWKS_URL = 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1/.well-known/jwks.json';
@@ -118,15 +118,10 @@ async function verifyJwt(token) {
    ska roten visa saljkursen, inte Marginalens landningssida. Omskrivningen sker
    pa vardnamn sa att samma bygge kan serva bada, och den galler aven en framtida
    egen doman: allt som borjar med "motparten" raknas. */
-function motpartenVard(hostname) {
-  const h = (hostname || '').toLowerCase();
-  return h.startsWith('motparten.') || h.startsWith('motparten-');
-}
-
 export async function onRequest(context) {
   const { request, next, env } = context;
   const url = new URL(request.url);
-  const motparten = motpartenVard(url.hostname);
+  const motparten = arMotpartenVard(url.hostname);
 
   if (motparten && (url.pathname === '/' || url.pathname === '/hem' || url.pathname === '/hem/')) {
     return Response.redirect(new URL('/motparten', url.origin).toString(), 302);

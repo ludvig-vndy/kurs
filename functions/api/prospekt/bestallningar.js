@@ -13,7 +13,7 @@
    standarden nedan. */
 
 import { secureJson as json, rateLimited } from '../_lib.js';
-import { pilotAdress } from '../_pilot.js';
+import { pilotAdress } from '../_lib.js';
 import { supaConfig, supaGet, supaUpsert } from '../_supa.js';
 
 const STANDARD_ADMIN = ['ludvig@vndy.se', 'sebastian@vndy.se'];

@@ -8,7 +8,7 @@
    listan finns, så endpointen inte går att använda för att kartlägga utbudet. */
 
 import { secureJson as json, rateLimited } from '../_lib.js';
-import { pilotAdress } from '../_pilot.js';
+import { pilotAdress } from '../_lib.js';
 import { supaConfig, supaGet } from '../_supa.js';
 
 const RAD_FALT = [

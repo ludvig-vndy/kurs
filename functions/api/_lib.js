@@ -88,6 +88,31 @@ export function pilotMejl(request) {
   return delar.length === 3 ? delar[0] : null;
 }
 
+/* Ar det har Motpartens vardnamn? Delagaren och Motparten ar skilda produkter
+   som inte delar session, sa vardnamnet avgor vilken identitet som galler alls.
+   Bor darfor finnas pa ETT stalle: bade middlewaren och prospekt-endpointerna
+   fragar den har. */
+export function arMotpartenVard(hostname) {
+  const h = (hostname || '').toLowerCase();
+  return h.startsWith('motparten.') || h.startsWith('motparten-');
+}
+
+/* Deltagarens mejladress, eller null om cookien saknas, ar forfalskad, har gatt
+   ut, eller anropet inte sker pa en motparten-vard.
+
+   Verifieringen och adressuttaget sitter medvetet ihop: en endpoint ska inte
+   kunna komma at adressen utan att ha verifierat cookien forst, vilket ar
+   precis vad pilotMejl ensam skulle tillata.
+
+   Nar Motparten far riktiga Supabase-konton ersatts den har av verifieraSession,
+   och anroparna behover inte andras sa lange de fortsatter fraga efter en adress. */
+export async function pilotAdress(request, env) {
+  if (!arMotpartenVard(new URL(request.url).hostname)) return null;
+  if (!(await verifieraPilot(request, env && env.PILOT_SECRET))) return null;
+  const mejl = pilotMejl(request);
+  return mejl ? mejl.toLowerCase() : null;
+}
+
 /* Delagarsessionen: verifiering av `da_session`-cookien (Supabase access-token,
    ES256 mot projektets JWKS). Bor bara pa ETT stalle: middlewaren grindar
    sidorna med den, och API-funktioner som ror personliga data grindar sig

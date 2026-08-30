@@ -12,7 +12,7 @@
    Är allt tomt igen raderas raden i stället för att ligga kvar som skräp. */
 
 import { secureJson as json, rateLimited } from '../_lib.js';
-import { pilotAdress } from '../_pilot.js';
+import { pilotAdress } from '../_lib.js';
 import { supaConfig, supaGet, supaUpsert, supaDelete } from '../_supa.js';
 
 const STATUSAR = new Set(['ny', 'forsokt', 'pratat', 'intresse', 'nej']);
