@@ -224,7 +224,15 @@ export async function onRequestPost(context) {
   // Kallgrinden. Bara nar svaret bygger pa dokument: utan utdrag finns inget
   // underlag att grinda mot, och da ar innehavets egna tal (antal, GAV) sanningen.
   if (utdrag.length) {
-    const ogrundade = ogrundadeTal(answer, utdrag, question);
+    // Anvandarens egna tal ar ocksa underlag: antal och GAV star i innehavet,
+    // inte i nagot pressmeddelande, och ett svar om dem far inte blockeras.
+    const egnaTal = [];
+    for (const h of holdings) {
+      if (h.quantity != null) egnaTal.push(Number(h.quantity));
+      if (h.gav != null) egnaTal.push(Number(h.gav));
+      if (h.quantity != null && h.gav != null) egnaTal.push(Number(h.quantity) * Number(h.gav));
+    }
+    const ogrundade = ogrundadeTal(answer, utdrag, question, egnaTal);
     if (ogrundade.length) {
       return json({
         answer: "Jag hittade ett svar, men det innehöll tal som inte står i dokumenten jag har (" +

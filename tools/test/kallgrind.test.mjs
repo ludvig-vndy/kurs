@@ -49,3 +49,27 @@ test('bolagIFragan hittar bolaget pa forsta ordet', () => {
 test('bolagIFragan ger null nar inget bolag namns', () => {
   assert.equal(bolagIFragan('vad hande i natt?', [{ name: 'Lifco AB', ticker: 'LIFCO-B' }]), null);
 });
+
+test('ogrundadeTal slapper igenom tal ur anvandarens eget innehav', () => {
+  const fel = ogrundadeTal('Du ager 100 aktier i Sivers.', [{ text: 'inget tal alls' }], '', [100]);
+  assert.equal(fel.length, 0);
+});
+
+test('hamtaUtdrag valjer rapporten framfor inbjudan till presentationen', () => {
+  const arkiv = [{ namn: 'X', dokument: [
+    { url: 'inb', rubrik: 'Inbjudan till presentation av kvartalsrapporten', datum: '2026-08-01',
+      bitar: ['Bolaget bjuder in till presentation av kvartalsrapporten.'] },
+    { url: 'rap', rubrik: 'Delarsrapport andra kvartalet', datum: '2026-08-01',
+      bitar: ['I kvartalsrapporten uppgick likvida medel till 486,3 MSEK.'] },
+  ] }];
+  const ut = hamtaUtdrag('kvartalsrapporten', arkiv, 1, Date.parse('2026-08-30'));
+  assert.equal(ut[0].url, 'rap');
+});
+
+test('hamtaUtdrag foredrar det farska dokumentet vid lika trafF', () => {
+  const arkiv = [{ namn: 'X', dokument: [
+    { url: 'gammal', rubrik: 'A', datum: '2024-01-01', bitar: ['omsattningen steg kraftigt'] },
+    { url: 'ny', rubrik: 'A', datum: '2026-08-01', bitar: ['omsattningen steg kraftigt'] },
+  ] }];
+  assert.equal(hamtaUtdrag('omsattningen', arkiv, 1, Date.parse('2026-08-30'))[0].url, 'ny');
+});

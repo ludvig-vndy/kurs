@@ -26,10 +26,14 @@ export function hittaTal(text) {
 /** Tal i svaret som inte finns i underlaget. Tom lista = svaret slapps igenom.
     Exakt likhet med flyttalsepsilon, ingen avrundningstolerans: slapper man
     "ungefar ratt" igenom slapper man ocksa igenom modellens egna berakningar. */
-export function ogrundadeTal(svarstext, utdrag, fraga) {
+export function ogrundadeTal(svarstext, utdrag, fraga, egnaTal) {
   const tillatna = new Set();
   for (const u of utdrag) for (const t of hittaTal(u.text)) tillatna.add(t.varde);
   for (const t of hittaTal(fraga || '')) tillatna.add(t.varde); // tal ur fragan far ekas
+  // Anvandarens egna tal (antal, GAV) ar lika mycket underlag som ett dokument.
+  // Utan detta blockerades "hur mycket ager jag i Sivers" for att svaret sa 100,
+  // ett tal som stod i innehavet men inte i nagot pressmeddelande.
+  for (const v of egnaTal || []) if (typeof v === 'number' && isFinite(v)) tillatna.add(Math.abs(v));
   // Arttal och sma ordningstal (kvartal, halvar) ar inte pastaenden om pengar.
   const ofarligt = (v) => v <= 4 || (v >= 1900 && v <= 2100 && Number.isInteger(v));
   const lista = [...tillatna];
@@ -82,13 +86,30 @@ export function termer(fraga) {
    embedding, medvetet. Arkivet per bolag ar litet (tiotals dokument), och en
    vektorindex hade krävt ett byggsteg till utan att svara battre pa "hur ser
    kassan ut", dar ordet kassa faktiskt star i texten. */
-export function hamtaUtdrag(fraga, bolagsarkiv, max = 6) {
+/* Dokument som bara ar logistik: en kallelse till ett presentationssamtal sager
+   ingenting om bolaget. De matchar anda ord som "kvartal" och "rapport" och tog
+   darfor plats fran sjalva rapporten. De far vara kvar i arkivet, men vaga mindre. */
+const TUNN = /^(inbjudan|invitation|kallelse till present|notice of present)/i;
+
+/** Farskhet 0 till 1: dagens dokument 1, ett ar gammalt nara 0. Aldern ar inte
+    hela sanningen, en gammal arsredovisning kan bara svaret, sa den vager in
+    som en faktor och avgor inte ensam. */
+function farskhet(datum, nu) {
+  const t = Date.parse(datum || '');
+  if (!isFinite(t)) return 0.5;
+  const dagar = Math.max(0, (nu - t) / 86400000);
+  return Math.exp(-dagar / 365);
+}
+
+export function hamtaUtdrag(fraga, bolagsarkiv, max = 6, nu = Date.now()) {
   const t = termer(fraga);
   if (!t.length) return [];
   const kandidater = [];
   for (const ark of bolagsarkiv) {
     for (const dok of ark.dokument || []) {
       const rubrikLc = String(dok.rubrik || '').toLowerCase();
+      const tunn = TUNN.test(String(dok.rubrik || '').trim());
+      const fars = farskhet(dok.datum, nu);
       for (const bit of dok.bitar || []) {
         const lc = bit.toLowerCase();
         let poang = 0;
@@ -99,6 +120,8 @@ export function hamtaUtdrag(fraga, bolagsarkiv, max = 6) {
           if (rubrikLc.includes(term)) poang += Math.ceil(term.length / 2);
         }
         if (poang > 0) {
+          poang *= (0.6 + 0.8 * fars);   // farskt vager tyngre, gammalt racker anda
+          if (tunn) poang *= 0.4;
           kandidater.push({ poang, text: bit, rubrik: dok.rubrik, url: dok.url, datum: dok.datum, bolag: ark.namn });
         }
       }
