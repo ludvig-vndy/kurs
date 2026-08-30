@@ -4,10 +4,18 @@
    "brev-latest" (via motor/publicera-brev.mjs). Ägarbrevet-sidan läser det här
    och renderar händelsebrevet. Fältformen: { date, nr, checked, poster[], lugna[] }.
 
-   Publik-ish: brevet handlar om publika bolagsnyheter, men innehåller vilka bolag
-   som bevakas. Ligger bakom /api/ (kontogrindens undantag) men no-store så det inte
-   fastnar i mellanlager. Per-användare-filtrering är en senare fråga.
+   KRÄVER INLOGGNING. Brevet handlar om publika bolagsnyheter, men listan över
+   vilka bolag det handlar om ÄR användarnas innehav, alltså personlig data.
+   /api/* är undantaget i middlewaren, så den här funktionen grindar sig själv.
+   Låg oskyddad till 2026-08-30, då det upptäcktes att brevet röjde en pilots
+   hela portfölj för vem som helst som kunde skriva en URL.
+
+   Brevet är fortfarande GEMENSAMT för alla användare: det byggs ur unionen av
+   allas innehav. Inloggning stänger läckan mot internet, inte mellan konton.
+   Per-användare-brev är nästa steg.
 */
+import { verifieraSession } from "./_lib.js";
+
 const KV_KEY = "brev-latest";
 
 export async function onRequestGet(context) {
@@ -18,6 +26,9 @@ export async function onRequestGet(context) {
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Cache-Control": "no-store",
   };
+  if (!(await verifieraSession(context.request))) {
+    return new Response(JSON.stringify({ fel: "Kräver inloggning." }), { status: 401, headers: H });
+  }
   if (!env.DATA) return new Response(JSON.stringify({ fel: "KV ej bunden." }), { status: 501, headers: H });
   const cur = await env.DATA.get(KV_KEY);
   if (!cur) return new Response(JSON.stringify({ fel: "Inget brev ännu." }), { status: 404, headers: H });
