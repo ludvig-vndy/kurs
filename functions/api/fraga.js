@@ -210,7 +210,7 @@ export async function onRequestPost(context) {
 
   // Steg 1: vilka av anvandarens bolag handlar fragan om. Ingen modell behovs.
   let utdrag = [];
-  let nyckeltal = { text: "", tillatnaTal: [] };
+  let nyckeltal = { text: "", tillatnaTal: [], harledda: [] };
   if (env.DATA && holdings.length) {
     const traffar = bolagIFragan(question, holdings);
     if (traffar) {
@@ -279,5 +279,8 @@ export async function onRequestPost(context) {
   return json({
     answer: answer,
     kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url, datum: u.datum }; }),
+    // Uträkningarna med, sa sidan kan visa HUR ett harlett tal uppstod. Ett tal
+    // som inte star i nagon rapport ska aldrig presenteras utan sin rakning.
+    harlett: nyckeltal.harledda,
   });
 }

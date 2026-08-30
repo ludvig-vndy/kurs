@@ -101,7 +101,22 @@ export function harled(nyckeltal) {
       };
       if (metrik === 'likvida medel' && forandring < 0) {
         post.perManad = Math.round((Math.abs(forandring) / 3) * 10) / 10;
+        // Runway foljer sa naturligt pa en burn rate att modellen raknar ut den
+        // sjalv om vi inte gor det. Forsta skarpa korningen blockerades pa
+        // precis det: svaret bar ett "32" som inte fanns nagonstans. Alltsa
+        // raknar vi den har i stallet, med antagandet utskrivet.
+        if (post.perManad > 0) post.manaderKvar = Math.round(post.tillVarde / post.perManad);
       }
+      // Radet som visas for lasaren: exakt hur talet uppstod, med bada
+      // ingangstalen och deras perioder. Ett harlett tal utan sin uträkning ar
+      // bara ett pastaende, och det ar precis det vi inte vill leverera.
+      const n = (v) => String(v).replace('.', ',');
+      post.formel = post.perManad != null
+        ? `${n(post.franVarde)} ${post.enhet} i ${post.fran} minus ${n(post.tillVarde)} i ${post.till} ger ${n(Math.abs(post.forandring))}, delat pa kvartalets 3 manader ger ${n(post.perManad)} ${post.enhet} per manad` +
+          (post.manaderKvar != null
+            ? `. Kassan ${n(post.tillVarde)} delat pa ${n(post.perManad)} ger ${post.manaderKvar} manader, OM takten haller i sig, vilket den sallan gor`
+            : '')
+        : `${n(post.tillVarde)} ${post.enhet} i ${post.till} minus ${n(post.franVarde)} i ${post.fran} ger ${n(post.forandring)}`;
       ut.push(post);
       break; // bara det senaste steget per metrik, det ar det som fragas om
     }
@@ -113,7 +128,7 @@ export function harled(nyckeltal) {
     kallgrinden ska slappa igenom. Tom text = ingenting att saga. */
 export function nyckeltalsUnderlag(bolagsarkiv) {
   const tal = extraheraNyckeltal(bolagsarkiv);
-  if (!tal.length) return { text: '', tillatnaTal: [] };
+  if (!tal.length) return { text: '', tillatnaTal: [], harledda: [] };
   const harledda = harled(tal);
 
   const rader = tal.slice(0, 12).map((n) =>
@@ -122,9 +137,12 @@ export function nyckeltalsUnderlag(bolagsarkiv) {
   const hRader = harledda.map((h) => {
     const riktning = h.forandring < 0 ? 'minskade' : 'okade';
     const bas = `${h.metrik} ${riktning} fran ${String(h.franVarde).replace('.', ',')} till ${String(h.tillVarde).replace('.', ',')} ${h.enhet} mellan ${h.fran} och ${h.till}, en forandring pa ${String(h.forandring).replace('.', ',')} ${h.enhet}`;
-    return h.perManad != null
-      ? `${bas}. Det motsvarar ${String(h.perManad).replace('.', ',')} ${h.enhet} per manad over kvartalets tre manader (burn rate).`
-      : `${bas}.`;
+    if (h.perManad == null) return `${bas}.`;
+    let rad = `${bas}. Det motsvarar ${String(h.perManad).replace('.', ',')} ${h.enhet} per manad over kvartalets tre manader (burn rate).`;
+    if (h.manaderKvar != null) {
+      rad += ` Med samma takt racker kassan ${h.manaderKvar} manader. Skriv alltid ut att det forutsatter oforandrad takt.`;
+    }
+    return rad;
   });
 
   const text =
@@ -136,6 +154,12 @@ export function nyckeltalsUnderlag(bolagsarkiv) {
   for (const h of harledda) {
     tillatnaTal.push(h.franVarde, h.tillVarde, h.forandring);
     if (h.perManad != null) tillatnaTal.push(h.perManad);
+    if (h.manaderKvar != null) tillatnaTal.push(h.manaderKvar);
   }
-  return { text, tillatnaTal: tillatnaTal.map((v) => Math.abs(v)) };
+  return {
+    text,
+    tillatnaTal: tillatnaTal.map((v) => Math.abs(v)),
+    // Skickas vidare till klienten sa uträkningen kan visas under svaret.
+    harledda: harledda.map((h) => ({ metrik: h.metrik, formel: h.formel, kallor: h.kallor })),
+  };
 }

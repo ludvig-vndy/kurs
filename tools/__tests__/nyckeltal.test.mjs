@@ -49,3 +49,9 @@ test('en okande kassa far ingen burn rate', () => {
   assert.equal(h.forandring, 100);
   assert.equal(h.perManad, undefined);
 });
+
+test('runway raknas i kod och bar sitt antagande', () => {
+  const h = harled(extraheraNyckeltal(ARKIV)).find((x) => x.metrik === 'likvida medel');
+  assert.equal(h.manaderKvar, 32);            // 486,3 / 15,2
+  assert.match(h.formel, /OM takten haller i sig/);
+});

@@ -231,6 +231,12 @@
   .ans p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:10px}
   .ans .lab{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-right:7px;padding:2px 6px;border:1px solid var(--rule-strong);color:var(--muted)}
   .ans .thinking{color:var(--muted);font-style:italic}
+  .ans .rakning{margin:12px 0 4px;padding:10px 12px;border-left:2px solid var(--rule-strong);background:rgba(0,0,0,.02)}
+  .ans .rk-h{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .ans .rk-rad{font-size:12.5px;color:var(--ink-soft);line-height:1.5;margin-bottom:6px}
+  .ans .rk-rad:last-child{margin-bottom:0}
+  .ans .rk-m{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-right:8px}
+  .ans .rk-k{display:block;font-size:11px;color:var(--faint);margin-top:2px}
   .ans .foot a{color:var(--oxblood)}
   .ans .lab.slut{color:var(--oxblood);border-color:var(--oxblood)}
   .ans table.dt{margin-top:6px;font-size:12.5px}
@@ -386,7 +392,19 @@ async function answer(q){
         return '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">'+esc(k.rubrik||'dokument')+'</a>';
       }).join(', ')+'</div>'
     : '<div class="foot">Svarat ur ditt innehav. Inga dokument användes.</div>';
-  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div>'+stycken+kallor;
+
+  // Ett tal som inte star i nagon rapport ska aldrig presenteras utan sin
+  // rakning. Har visas exakt vilka tal som gick in och vad som gjordes med dem,
+  // sa lasaren kan gora om den for hand och se att den stammer.
+  const rakning = (d.harlett||[]).length
+    ? '<div class="rakning"><div class="rk-h">Så räknades det</div>'+
+      d.harlett.map(function(h){
+        return '<div class="rk-rad"><span class="rk-m">'+esc(h.metrik)+'</span>'+esc(h.formel)+
+          ((h.kallor||[]).length?'<span class="rk-k">Ur: '+esc(h.kallor.join(' och '))+'</span>':'')+'</div>';
+      }).join('')+'</div>'
+    : '';
+
+  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div>'+stycken+rakning+kallor;
 }
 function openPanel(){ panel.classList.add('show'); panel.setAttribute('aria-hidden','false'); }
 function closePanel(){ panel.classList.remove('show'); panel.setAttribute('aria-hidden','true'); }
