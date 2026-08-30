@@ -394,23 +394,28 @@ async function loadPrices(){
     }
   }catch(e){ /* utan kurser faller raden tillbaka på anskaffningsvärde */ }
 }
-// Motorns bevakade bolag (motor/bolag.json). Namn -> ticker, så innehav som
-// lades till innan chipsen bar ticker ändå joinar mot kurs, och så vi kan visa
-// "Bevakas" på just dessa. Namnen matchas löst (utan "AB (publ)"-svans).
-const WATCHED = [
+// Bevakningslistan ÄR innehaven sedan 2026-08-30: motorn bygger den ur den här
+// tabellen varje natt. Alltså bevakas allt som står här, och den gamla hårdkodade
+// listan över "motorns sex bolag" var både fel och missvisande. Den påstod att
+// Ferroamp inte bevakades samma morgon som motorn läste Ferroamps flöde.
+
+// Kursuppslag för innehav som lades till utan ticker (namnet skrevs för hand,
+// eller söket hittade inte bolaget). Namn -> ticker, löst matchat utan
+// "AB (publ)"-svans. Behövs bara tills varje innehav bär sin egen ticker.
+const TICKER_ALIAS = [
   {n:'unibap space solutions', t:'UNIBAP'},
   {n:'lifco',                  t:'LIFCO.B'},
   {n:'evolution',              t:'EVO'},
   {n:'telia company',          t:'TELIA'},
   {n:'sectra',                 t:'SECT.B'},
   {n:'axfood',                 t:'AXFO'},
+  {n:'sivers',                 t:'SIVE'},
 ];
 function watchedFor(h){
   const t = h.ticker ? String(h.ticker).toUpperCase() : null;
   const n = h.name ? String(h.name).toLowerCase().trim() : '';
-  return WATCHED.find(w => (t && w.t===t) || (n && (n===w.n || n.startsWith(w.n)))) || null;
+  return TICKER_ALIAS.find(w => (t && w.t===t) || (n && (n===w.n || n.startsWith(w.n)))) || null;
 }
-function isWatched(h){ return !!watchedFor(h); }
 
 function priceFor(h){
   if(h.ticker){ const k=String(h.ticker).toUpperCase(); if(PRICES.has(k)) return PRICES.get(k); }
@@ -423,9 +428,8 @@ function priceFor(h){
 
 function realRow(h){
   const foljer = h.relation==='foljer';
-  const watched = isWatched(h);
   const tag = '<span class="tag '+(foljer?'foljer':'ager')+'">'+(foljer?'följer':'äger')+'</span>'+
-    (watched?'<span class="tag watch">bevakas</span>':'');
+    '<span class="tag watch">bevakas</span>';
   const px = priceFor(h);
   const qty = (h.quantity!=null && !isNaN(h.quantity)) ? Number(h.quantity) : null;
   const gav = (h.gav!=null && !isNaN(h.gav)) ? Number(h.gav) : null;
@@ -455,9 +459,9 @@ function realRow(h){
     rt=ansk
       ? '<div class="amt">'+ansk+(antal?'<span class="andel">'+antal+'</span>':'')+'</div><div class="day"><span class="lbl">anskaffningsvärde</span></div>'
       : (antal?'<div class="amt">'+antal+'</div>':'');
-    ln = watched
-      ? 'Bevakas av motorn. Kurs visas när bolaget finns i dagens snapshot.'
-      : 'Bevakning startar när vi kört motorn på bolaget.';
+    // Bevakningen är redan igång; det som saknas är en kurs, och det beror på
+    // att bolaget inte bär någon ticker (onoterat, eller inte hittat i söket).
+    ln = 'Bevakas av motorn. Kurs visas när bolaget har en ticker.';
   }
 
   const href = h.id ? '/labs/innehav.html?id='+encodeURIComponent(h.id) : null;
