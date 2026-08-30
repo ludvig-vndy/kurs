@@ -193,6 +193,51 @@
     return true;
   }
 
+  // ── Tesen (varför du äger det) ─────────────────────────────────────────
+  // Ett fritextfält per innehav, unikt på holding_id. Tabellen skapas av
+  // supabase/migrations/20260830150000_tes.sql. Är migrationen inte körd svarar
+  // PostgREST med PGRST205 ("table not found"), och det ska inte se ut som att
+  // användarens text försvann: getThesis säger ingen tes, saveThesis säger rakt
+  // ut att fältet inte är påslaget än.
+  function saknasTabellen(err) {
+    var m = (err && err.message) || "";
+    return !!err && (err.code === "PGRST205" || (/theses/i.test(m) && /not find|does not exist/i.test(m)));
+  }
+
+  async function getThesis(holdingId) {
+    if (!holdingId) return null;
+    var res = await sb.from("theses").select("id,why,updated_at").eq("holding_id", holdingId).maybeSingle();
+    if (res.error) {
+      if (saknasTabellen(res.error)) return null;
+      throw res.error;
+    }
+    return res.data || null;
+  }
+
+  // Tom text raderar raden. Att spara en tom tes och att inte ha någon tes är
+  // samma sak för läsaren, och då ska det vara samma sak i databasen också.
+  async function saveThesis(holdingId, why) {
+    var user = await getUser();
+    if (!user) throw new Error("Inte inloggad.");
+    var text = String(why == null ? "" : why).trim();
+    var res;
+    if (!text) {
+      res = await sb.from("theses").delete().eq("holding_id", holdingId);
+    } else {
+      res = await sb.from("theses").upsert({
+        holding_id: holdingId,
+        user_id: user.id,
+        why: text,
+        updated_at: new Date().toISOString()
+      }, { onConflict: "holding_id" }).select("id,why,updated_at").single();
+    }
+    if (res.error) {
+      if (saknasTabellen(res.error)) throw new Error("Tesfältet är inte påslaget än (migrationen är inte körd).");
+      throw res.error;
+    }
+    return text ? res.data : null;
+  }
+
   // ── Inbjudningar ───────────────────────────────────────────────────────
   async function acceptInvite(token) {
     var user = await getUser();
@@ -219,6 +264,8 @@
     listDecisions: listDecisions,
     addDecision: addDecision,
     deleteDecision: deleteDecision,
+    getThesis: getThesis,
+    saveThesis: saveThesis,
     acceptInvite: acceptInvite,
     mountUserChip: mountUserChip,
     onAuthChange: function (cb) { return sb.auth.onAuthStateChange(cb); }

@@ -13,21 +13,10 @@ create type tripwire_op as enum ('below', 'above', 'crosses');
 create type tripwire_status as enum ('armed', 'tripped', 'muted');
 create type brief_status as enum ('silent', 'alerts');
 
--- ── theses: "försäkringsbrevet" per innehav ────────────────────────────────
--- Varför jag äger det + de invarianter som måste förbli sanna. Metriken/trådarna
--- i tripwires är den maskinläsbara delen; invariants fångar resonemanget.
-create table theses (
-  id uuid primary key default gen_random_uuid(),
-  holding_id uuid not null references holdings(id) on delete cascade,
-  user_id uuid not null references profiles(id) on delete cascade,
-  why text,                       -- varför jag äger det
-  invariants jsonb not null default '[]',   -- [{claim: "..."}]
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  unique (holding_id)
-);
-alter table theses enable row level security;
-create index on theses (user_id);
+-- ── theses ──────────────────────────────────────────────────────────────────
+-- Tabellen skapas numera av 20260830150000_tes.sql, som gick i produktion
+-- före den här skissen: tesfältet behövde inte resten av Fas 2. Kolumnen
+-- invariants ([{claim}]) finns där och är det trådarna nedan hänger på.
 
 -- ── tripwires: de hårda parametrarna (dödmansgreppet) ──────────────────────
 -- metric är avsiktligt text (öppen), så nya mått kan läggas till utan migration.
@@ -117,8 +106,6 @@ alter table briefs enable row level security;
 create index on briefs (user_id, brief_date);
 
 -- ── RLS: egna rader ────────────────────────────────────────────────────────
-create policy "egna teser"          on theses          for select using (user_id = auth.uid());
-create policy "egna teser skriv"    on theses          for all    using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "egna tradar"         on tripwires       for all    using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy "egna handelser"      on tripwire_events for select using (user_id = auth.uid());
 create policy "egna brev"           on briefs          for select using (user_id = auth.uid());

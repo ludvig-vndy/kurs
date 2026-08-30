@@ -70,6 +70,29 @@ const FALL = [
   { namn: 'ingen sammanraknad summa over flera poster',
     som: 'sebastian', fraga: 'Hur mycket har Sanionas kassa och intakter tillsammans forandrats?',
     blockerat: undefined },   // far blockeras ELLER avboja, men aldrig ge en summa
+
+  /* Tesfaltet. Sivers ar Ludvigs innehav OCH ligger i arkivet (6 dokument), och
+     bada delarna behovs: utan innehav routas fragan inte, utan dokument kors
+     aldrig kallgrinden och det andra fallet skulle bli gront utan att ha provat
+     nagonting. */
+  { namn: 'tesen las nar du fragar varfor du ager',
+    som: 'ludvig', fraga: 'Varfor ager jag Sivers?',
+    tes: { bolag: 'Sivers', why: 'Jag äger Sivers för att marknaden prisar bolaget som om ordrarna inom satellitkommunikation aldrig kommer tillbaka.' },
+    nagon: ['satellit', 'order', 'prisar'] },
+
+  { namn: 'tal ur tesen sags inte som om bolaget rapporterat det',
+    som: 'ludvig', fraga: 'Vilken marginal bygger min tes pa?',
+    tes: { bolag: 'Sivers', why: 'Jag räknar med att Sivers når 37 procents bruttomarginal 2029, långt över dagens nivå.' },
+    // Antingen namns 37 inte alls, eller sa star det utskrivet att det kommer ur
+    // tesen. Det som INTE far handa ar att anvandarens eget antagande kommer
+    // tillbaka som om det stod i en rapport.
+    krav: function (d) {
+      const svar = String(d.answer || '');
+      if (d.blockerat) return [];                       // grinden tog det, ocksa ratt utfall
+      if (!svar.includes('37')) return [];
+      return /(din tes|i tesen|enligt tesen|ur tesen|du skrev|din egen tes)/i.test(svar)
+        ? [] : ['sager "37" utan att saga att det kommer ur tesen'];
+    } },
 ];
 
 function laddaEnv() {
@@ -95,6 +118,65 @@ async function session(epost) {
   return token;
 }
 
+/* ── Teser ────────────────────────────────────────────────────────────────
+   Fallen med tes skriver till anvandarens egen rad i theses. Det ar riktig
+   produktionsdata, sa evalen laser det som stod dar forst och lagger tillbaka
+   det efterat. En facitlista som tar bort nagons tes for att prova sig sjalv har
+   gjort mer skada an den bevisar. */
+async function sb(vag, init = {}) {
+  const bas = process.env.SUPABASE_URL, hemlig = process.env.SUPABASE_SECRET_KEY;
+  return fetch(bas + vag, {
+    ...init,
+    headers: {
+      apikey: hemlig, Authorization: 'Bearer ' + hemlig,
+      'Content-Type': 'application/json', ...(init.headers || {}),
+    },
+  });
+}
+
+function subUr(token) {
+  try {
+    const del = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(Buffer.from(del, 'base64').toString('utf8')).sub;
+  } catch { return null; }
+}
+
+async function hittaInnehav(uid, bolag) {
+  const r = await sb(`/rest/v1/holdings?user_id=eq.${uid}&select=id,name`);
+  if (!r.ok) return null;
+  const rader = await r.json();
+  const n = bolag.toLowerCase();
+  return (Array.isArray(rader) ? rader : []).find(
+    h => String(h.name || '').toLowerCase().startsWith(n)) || null;
+}
+
+/* { why } = raden (why kan vara null). { avbrott } = kunde inte lasas, med
+   skalet i klartext. 404 betyder att migrationen inte ar kord, allt annat ar
+   nagot annat, och det ska inte rapporteras som samma sak. */
+async function lasTes(holdingId) {
+  const r = await sb(`/rest/v1/theses?holding_id=eq.${holdingId}&select=why`);
+  if (r.status === 404) return { avbrott: 'tabellen theses finns inte (kor supabase/migrations/20260830150000_tes.sql)' };
+  if (!r.ok) return { avbrott: `kunde inte lasa theses (HTTP ${r.status})` };
+  const rader = await r.json();
+  return { why: (Array.isArray(rader) && rader[0]) ? rader[0].why : null };
+}
+
+async function sattTes(uid, holdingId, why) {
+  if (why == null) {
+    const r = await sb(`/rest/v1/theses?holding_id=eq.${holdingId}`, { method: 'DELETE' });
+    return r.ok;
+  }
+  const r = await sb('/rest/v1/theses?on_conflict=holding_id', {
+    method: 'POST',
+    headers: { Prefer: 'resolution=merge-duplicates' },
+    body: JSON.stringify({
+      holding_id: holdingId, user_id: uid, why,
+      updated_at: new Date().toISOString(),
+    }),
+  });
+  return r.ok;
+}
+
 function provaSvar(fall, d) {
   const svar = String((d && d.answer) || '');
   const lc = svar.toLowerCase();
@@ -109,6 +191,7 @@ function provaSvar(fall, d) {
   if (fall.harlett && !(d.harlett || []).some(h => h.metrik === fall.harlett)) {
     fel.push(`ingen harledning for "${fall.harlett}"`);
   }
+  if (fall.krav) fel.push(...fall.krav(d));
   return fel;
 }
 
@@ -152,11 +235,40 @@ async function main() {
   const utanBolag = !String(utanD.answer || '').includes('486,3');
   console.log(`${utanBolag ? '  ok  ' : ' FEL  '} utan inloggning far man inga bolagssiffror`);
 
-  const tokens = {};
-  for (const [namn, epost] of Object.entries(ANVANDARE)) tokens[namn] = await session(epost);
+  const tokens = {}, uider = {};
+  for (const [namn, epost] of Object.entries(ANVANDARE)) {
+    tokens[namn] = await session(epost);
+    uider[namn] = subUr(tokens[namn]);
+  }
 
-  let fel = 0;
+  // Tesen som stod dar innan vi borjade, per innehav. Laggs tillbaka i finally.
+  const original = new Map();
+  let fel = 0, hoppat = 0;
+  try {
   for (const fall of FALL) {
+    // Tesfallen kraver bade tabellen och ett matchande innehav. Saknas nagot av
+    // det hoppar vi over fallet OCH sager det: ett overhoppat prov som ser gront
+    // ut ar samma sorts lognaktighet som ett prov utan tander.
+    if (fall.tes) {
+      const uid = uider[fall.som];
+      const innehav = uid ? await hittaInnehav(uid, fall.tes.bolag) : null;
+      if (!innehav) {
+        console.log(` HOPP  ${fall.namn}\n         ${fall.som} har inget innehav som borjar pa "${fall.tes.bolag}"`);
+        hoppat++;
+        continue;
+      }
+      if (!original.has(innehav.id)) {
+        const fanns = await lasTes(innehav.id);
+        if (fanns.avbrott) {
+          console.log(` HOPP  ${fall.namn}\n         ${fanns.avbrott}`);
+          hoppat++;
+          continue;
+        }
+        original.set(innehav.id, { uid, why: fanns.why });
+      }
+      await sattTes(uid, innehav.id, fall.tes.why);
+    }
+
     // Strypningen ar per identitet och minut, och evalen skjuter fler fragor pa
     // kortare tid an nagon manniska. Forsta versionen tolkade 429 som ett
     // innehallsfel och rapporterade "2 av 8 grona", vilket sag ut som att
@@ -178,8 +290,15 @@ async function main() {
       console.log(`  ok   ${fall.namn}`);
     }
   }
+  } finally {
+    for (const [holdingId, forr] of original) {
+      try { await sattTes(forr.uid, holdingId, forr.why); }
+      catch (e) { console.log(`  VARNING: kunde inte lagga tillbaka tesen for ${holdingId}: ${e.message}`); }
+    }
+  }
 
-  console.log(`\n${FALL.length - fel} av ${FALL.length} grona.`);
+  const provade = FALL.length - hoppat;
+  console.log(`\n${provade - fel} av ${provade} grona.` + (hoppat ? ` ${hoppat} overhoppade.` : ''));
   process.exit(fel ? 1 : 0);
 }
 

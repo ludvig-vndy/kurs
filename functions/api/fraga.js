@@ -18,7 +18,7 @@
    matchande Origin 403. */
 
 import { secureJson as json } from "./_lib.js";
-import { ogrundadeTal, hamtaUtdrag, bolagIFragan } from "./_kallgrind.js";
+import { ogrundadeTal, hamtaUtdrag, bolagIFragan, hittaTal } from "./_kallgrind.js";
 import { nyckeltalsUnderlag } from "./_nyckeltal.js";
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
@@ -56,6 +56,21 @@ const SYSTEM_DOKUMENT =
   "- Namn kallan i klartext efter pastaendet, med dokumentets rubrik.\n" +
   "- Skriv 2 till 5 meningar.\n";
 
+/* Tesen ar med i prompten men ar INTE en kalla. Skillnaden ar hela poangen: en
+   rapport sager vad bolaget redovisat, tesen sager vad anvandaren tror. Later
+   assistenten dem lata likadant har den gjort anvandarens antagande till ett
+   faktum, och det ar precis sa en tes slutar bli provad. */
+const SYSTEM_TES =
+  "\nDu har fatt anvandarens EGEN TES for ett eller flera bolag. Om den galler:\n" +
+  "- Tesen ar anvandarens eget resonemang, inte ett dokument. Den sager vad anvandaren tror, aldrig vad som ar sant.\n" +
+  "- Anvand den for att forsta vad anvandaren bryr sig om, och for att peka pa var underlaget stodjer eller motsager den.\n" +
+  "- Presentera aldrig nagot ur tesen som ett faktum eller som nagot bolaget rapporterat.\n" +
+  "- Namner du ett tal ur tesen: skriv ut att det kommer darifran, med orden \"din tes\" eller \"du skrev\".\n" +
+  "- Ge inget omdome om tesen ar bra eller dalig, och sag aldrig kop eller salj.\n";
+
+// Attribution, grovt men mekaniskt: sager svaret var talet kommer ifran?
+const TES_ATTRIBUTION = /(din tes|i tesen|enligt tesen|ur tesen|du skrev|din egen tes)/i;
+
 async function getUser(base, secret, token) {
   if (!token) return null;
   try {
@@ -72,12 +87,38 @@ async function getHoldings(base, secret, uid) {
   try {
     const r = await fetch(
       base + "/rest/v1/holdings?user_id=eq." + encodeURIComponent(uid) +
-      "&select=name,ticker,quantity,gav,relation",
+      "&select=id,name,ticker,quantity,gav,relation",
       { headers: { apikey: secret, Authorization: "Bearer " + secret } }
     );
     if (!r.ok) return [];
     const rows = await r.json();
     return Array.isArray(rows) ? rows : [];
+  } catch (e) { return []; }
+}
+
+/* Teserna for de bolag fragan galler. Filtrerar pa uid OCH pa holding_id, sa en
+   tes ar lika omojlig att lasa at fel person som ett innehav.
+
+   Saknas tabellen (migrationen inte kord) svarar PostgREST 404, och det far inte
+   gora Fraga trasig: da finns ingen tes, och allt annat fungerar som forut. */
+async function getTheses(base, secret, uid, traffar) {
+  const ids = traffar.map(function (h) { return h.id; }).filter(Boolean);
+  if (!ids.length) return [];
+  try {
+    const r = await fetch(
+      base + "/rest/v1/theses?user_id=eq." + encodeURIComponent(uid) +
+      "&holding_id=in.(" + ids.map(encodeURIComponent).join(",") + ")&select=holding_id,why",
+      { headers: { apikey: secret, Authorization: "Bearer " + secret } }
+    );
+    if (!r.ok) return [];
+    const rader = await r.json();
+    if (!Array.isArray(rader)) return [];
+    return rader
+      .filter(function (rad) { return rad && String(rad.why || "").trim(); })
+      .map(function (rad) {
+        const h = traffar.find(function (x) { return x.id === rad.holding_id; });
+        return { namn: (h && h.name) || "Innehavet", why: String(rad.why).trim() };
+      });
   } catch (e) { return []; }
 }
 
@@ -209,32 +250,46 @@ export async function onRequestPost(context) {
     : "Inga innehav uppladdade an.";
 
   // Steg 1: vilka av anvandarens bolag handlar fragan om. Ingen modell behovs.
-  let utdrag = [];
+  // Routningen kors aven utan KV-bindning: tesen bor i Supabase och ska med aven
+  // for ett bolag vi inte har ett enda dokument om.
+  let utdrag = [], teser = [];
   let nyckeltal = { text: "", tillatnaTal: [], harledda: [] };
-  if (env.DATA && holdings.length) {
-    const traffar = bolagIFragan(question, holdings);
-    if (traffar) {
-      const index = (await env.DATA.get("arkiv:index", "json")) || [];
-      const arkiv = [];
-      for (const h of traffar.slice(0, 2)) {   // hogst tva bolag per fraga
-        const id = arkivIdFor(h, index);
-        if (!id) continue;
-        const a = await env.DATA.get("arkiv:" + id, "json");
-        if (a) arkiv.push(a);
-      }
-      // Steg 2: de mest relevanta bitarna ur de bolagens dokument, plus
-      // nyckeltalen per period och det som gar att harleda ur dem i kod.
-      if (arkiv.length) {
-        utdrag = hamtaUtdrag(question, arkiv, MAX_UTDRAG);
-        nyckeltal = nyckeltalsUnderlag(arkiv);
+  if (holdings.length) {
+    const traffar = (bolagIFragan(question, holdings) || []).slice(0, 2); // hogst tva bolag
+    if (traffar.length) {
+      if (secret && user) teser = await getTheses(base, secret, user.id, traffar);
+      if (env.DATA) {
+        const index = (await env.DATA.get("arkiv:index", "json")) || [];
+        const arkiv = [];
+        for (const h of traffar) {
+          const id = arkivIdFor(h, index);
+          if (!id) continue;
+          const a = await env.DATA.get("arkiv:" + id, "json");
+          if (a) arkiv.push(a);
+        }
+        // Steg 2: de mest relevanta bitarna ur de bolagens dokument, plus
+        // nyckeltalen per period och det som gar att harleda ur dem i kod.
+        if (arkiv.length) {
+          utdrag = hamtaUtdrag(question, arkiv, MAX_UTDRAG);
+          nyckeltal = nyckeltalsUnderlag(arkiv);
+        }
       }
     }
   }
 
+  // Tesen far egen rubrik och star efter siffrorna, sa den aldrig kan lasas som
+  // en fortsattning pa nagot bolaget sjalvt skrivit.
+  const tesText = teser.length
+    ? "\n\nANVANDARENS EGEN TES (skriven av anvandaren, inte ett dokument):\n\n" +
+      teser.map(function (t) { return "[" + t.namn + "]\n" + t.why; }).join("\n\n")
+    : "";
+
   const system = SYSTEM_BAS +
     (utdrag.length ? SYSTEM_DOKUMENT : "\n- Anvand innehavet nedan nar fragan galler portfoljen. Hitta ALDRIG pa siffror som inte finns i datan. Saknas data, sag det rakt ut.\n") +
+    (teser.length ? SYSTEM_TES : "") +
     "\nAnvandarens innehav:\n" + holdingsText +
     (nyckeltal.text ? "\n\n" + nyckeltal.text : "") +
+    tesText +
     (utdrag.length
       ? "\n\nUtdrag ur bolagens egna dokument:\n\n" + utdrag.map(function (u) {
           return "[" + u.bolag + " · " + u.rubrik + " · " + u.datum + "]\n" + u.text;
@@ -265,11 +320,33 @@ export async function onRequestPost(context) {
     // Harledda tal ar raknade i kod och ar darfor lika giltigt underlag som ett
     // tal ur ett dokument. Det ar hela poangen med att rakna dem har i stallet.
     const ogrundade = ogrundadeTal(answer, utdrag, question, egnaTal.concat(nyckeltal.tillatnaTal));
-    if (ogrundade.length) {
+
+    // Tal ur tesen ar en tredje sort. De ar inte hittepa: anvandaren skrev dem
+    // sjalv. Men de ar heller inte rapporterade, sa de far bara sagas om svaret
+    // sager var de kommer ifran. Utan den regeln blir ett antagande till ett
+    // faktum bara for att en assistent lasit tillbaka det.
+    const tesTal = new Set();
+    for (const t of teser) for (const x of hittaTal(t.why)) tesTal.add(x.varde);
+    const franTes = [], hittepa = [];
+    for (const t of ogrundade) {
+      ([...tesTal].some(function (v) { return Math.abs(v - t.varde) < 1e-9; }) ? franTes : hittepa).push(t);
+    }
+
+    if (hittepa.length) {
       return json({
         answer: "Jag hittade ett svar, men det innehöll tal som inte står i dokumenten jag har (" +
-          ogrundade.map(function (t) { return t.rå; }).join(", ") +
+          hittepa.map(function (t) { return t.rå; }).join(", ") +
           "). Då visar jag det inte. Fråga gärna om en enskild siffra i stället, så svarar jag ur källan.",
+        blockerat: true,
+        kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url }; }),
+      });
+    }
+    if (franTes.length && !TES_ATTRIBUTION.test(answer)) {
+      return json({
+        answer: "Jag hittade ett svar, men det upprepade tal ur din egen tes (" +
+          franTes.map(function (t) { return t.rå; }).join(", ") +
+          ") utan att säga varifrån de kom. Din tes är vad du tror, inte vad bolaget har rapporterat, " +
+          "och de två får inte se likadana ut. Fråga gärna om siffran i rapporterna i stället.",
         blockerat: true,
         kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url }; }),
       });

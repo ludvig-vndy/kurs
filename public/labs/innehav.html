@@ -53,6 +53,20 @@
   .pos .v.up{color:var(--good)} .pos .v.dn{color:var(--bad)}
   .pos .v .sub{font-size:13px;color:var(--muted);margin-left:7px}
 
+  /* Tesen: varfor du ager det. Medvetet lugn och skrivbordslik, inte ett
+     formular bland andra: det ar den enda rutan pa sidan dar du sjalv talar. */
+  .tes{margin:22px 0 0;padding:18px 20px;background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--gold)}
+  .tes-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+  .tes-h .t{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .tes-h .stamp{font-family:var(--label);font-size:10.5px;color:var(--faint)}
+  .tes .lead{font-family:var(--serif);font-size:14.5px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+  .tes textarea{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;background:transparent;border:1px solid var(--rule);border-radius:2px;padding:11px 12px;font-family:var(--serif);font-size:16.5px;line-height:1.55;color:var(--ink)}
+  .tes textarea:focus{outline:none;border-color:var(--oxblood)}
+  .tes-foot{display:flex;align-items:center;gap:14px;margin-top:10px;flex-wrap:wrap}
+  .tes-foot button{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border:1px solid var(--oxblood);background:var(--oxblood);color:#fff;border-radius:2px;cursor:pointer}
+  .tes-foot button[disabled]{opacity:.45;cursor:default}
+  .tes-foot .say{font-family:var(--label);font-size:11.5px;color:var(--muted)}
+  .tes-foot .say.bad{color:var(--bad)}
   .chartsec{margin:24px 0 0}
   .charttop{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
   .legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--label);font-size:10.5px;letter-spacing:.02em;color:var(--muted)}
@@ -147,6 +161,7 @@
   var holding = null, trades = [], side = "kop", PRICE = null, PRICE_DATE = null, HISTORY = null;
   var RANGES = [{v:"6mo",lbl:"6M"},{v:"1y",lbl:"1Å"},{v:"5y",lbl:"5Å"}];
   var RANGE = "1y", HCACHE = {};
+  var TES = null;   // { why, updated_at } eller null
 
   var esc = function(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
   var fmt = function(n,d){ d=d||0; return Number(n).toLocaleString("sv-SE",{minimumFractionDigits:d,maximumFractionDigits:d}); };
@@ -291,6 +306,15 @@
     if(qty==null && !hasTrades) html += '<div class="b"><div class="k">Position</div><div class="v" style="font-family:var(--serif);font-size:16px;color:var(--muted)">Lägg in en affär nedan</div></div>';
     html += '</section>';
 
+    // Tesen. Ligger fore grafen med flit: skalet kommer fore kursen.
+    html += '<section class="tes"><div class="tes-h"><div class="t">Din tes</div>'+
+      '<div class="stamp" id="tes-stamp">'+tesStamp()+'</div></div>'+
+      '<div class="lead">Varför äger du '+esc(holding.name)+'? Skriv det i dina egna ord, medan du fortfarande minns det. '+
+      'Assistenten läser tesen när du frågar om bolaget, men hämtar aldrig siffror ur den.</div>'+
+      '<textarea id="tes-text" placeholder="T.ex. Marknaden prisar bolaget som om orderingången aldrig kommer tillbaka. Jag äger det för att ..."></textarea>'+
+      '<div class="tes-foot"><button id="tes-save" type="button" disabled>Spara tesen</button>'+
+      '<span class="say" id="tes-say"></span></div></section>';
+
     // Kursgraf: affärspriser + dagens kurs (kursbana byggs upp när vi sparat historik)
     html += '<section class="chartsec"><div class="charttop"><div class="legend">'+
       '<span><i class="ln"></i> Kurs/affärer</span>'+
@@ -332,6 +356,7 @@
     renderChart();
     renderTrades();
     wireForm();
+    wireTes();
     wireDelete();
   }
 
@@ -466,6 +491,41 @@
 
   // Tvastegsknapp i stallet for confirm(): forsta klicket beväpnar, andra utfor.
   // En dialogruta klickas bort i reflex, en knapp som byter text gor det inte.
+  // Tesen. Sparas mot theses (unik pa holding_id), tom text raderar raden.
+  function tesStamp(){
+    if(!TES || !TES.updated_at) return "";
+    var d = new Date(TES.updated_at);
+    if(isNaN(d)) return "";
+    return "Skriven " + d.toLocaleDateString("sv-SE", {year:"numeric",month:"long",day:"numeric"});
+  }
+
+  function wireTes(){
+    var ta = byId("tes-text"), btn = byId("tes-save"), say = byId("tes-say");
+    if(!ta || !btn) return;
+    var start = TES && TES.why ? TES.why : "";
+    ta.value = start;
+    // Knappen ar av tills nagot faktiskt andrats. En sparaknapp som alltid gar
+    // att trycka pa sager inget om ifall det finns nagot att spara.
+    function synka(){ btn.disabled = ta.value === start; if(say.className==="say") say.textContent=""; }
+    ta.addEventListener("input", synka);
+    btn.addEventListener("click", function(){
+      var text = ta.value;
+      btn.disabled = true;
+      say.className = "say"; say.textContent = "Sparar…";
+      window.AB.saveThesis(HID, text).then(function(rad){
+        TES = rad;
+        start = text.trim();
+        ta.value = start;
+        say.textContent = start ? "Sparad." : "Tesen är borttagen.";
+        var st = byId("tes-stamp"); if(st) st.textContent = tesStamp();
+      }).catch(function(e){
+        btn.disabled = false;
+        say.className = "say bad";
+        say.textContent = (e && e.message) ? e.message : "Kunde inte spara.";
+      });
+    });
+  }
+
   function wireDelete(){
     var btn = byId("delbtn"), hint = byId("delhint");
     if(!btn) return;
@@ -516,9 +576,9 @@
     if(!window.AB || !window.AB.ready){ byId("root").innerHTML='<div class="msg">Kunde inte ladda kontot. Ladda om sidan, eller <a href="/logga-in">logga in</a>.</div>'; return; }
     window.AB.getHolding(HID).then(function(h){
       holding=h;
-      return Promise.all([ window.AB.listDecisions(HID), loadPrice(h) ]);
+      return Promise.all([ window.AB.listDecisions(HID), loadPrice(h), window.AB.getThesis(HID).catch(function(){ return null; }) ]);
     }).then(function(res){
-      trades=res[0]||[]; PRICE=res[1];
+      trades=res[0]||[]; PRICE=res[1]; TES=res[2];
       render();                    // rita direkt med kurs + affärer
       return loadHistory();        // hämta historiken och rita om när den är klar
     }).then(function(h){
