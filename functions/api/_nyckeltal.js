@@ -112,9 +112,59 @@ function tolkaTal(rå) {
   return isFinite(n) ? n : null;
 }
 
+/* Faltnamn ur PDF-extraktionen (motor/faltlistor.mjs) till metrik har.
+   Likvida medel star sallan i pressmeddelandet: Unibaps Q2 2026 anger omsattning
+   och rorelseresultat men namner varken kassa eller kassaflode, de star pa sidan
+   10 i rapport-PDF:en. Sedan 2026-08-31 lases den PDF:en, och resultatet ligger
+   som fakta pa dokumentet med citat och en grind som kraver att talet star i sitt
+   citat. Det ar ett starkare belagg an en textmatchning, sa fakta gar fore. */
+const FRAN_FAKTA = {
+  kassa: { id: 'likvida medel', typ: 'balans' },
+  omsattning: { id: 'intäkter', typ: 'flode' },
+  rorelseresultat: { id: 'rörelseresultat', typ: 'flode' },
+};
+
+/* Rapporterna skriver samma belopp i olika skala. Allt normaliseras till MSEK,
+   for harled() jamfor bara poster med samma enhet och skulle annars tiga. */
+function normaliseraFakta(nu, rå) {
+  if (typeof nu !== 'number' || Number.isNaN(nu)) return null;
+  const e = String(rå || '').toUpperCase().replace(/\s+/g, '');
+  if (e === 'KSEK' || e === 'TSEK' || e === 'TKR') return { varde: Math.round(nu) / 1000, enhet: 'MSEK' };
+  if (e === 'SEK' || e === 'KR') return { varde: Math.round(nu / 1000) / 1000, enhet: 'MSEK' };
+  const norm = normEnhet(e);
+  if (norm === 'MSEK' || norm === 'MEUR' || norm === 'MUSD') return { varde: nu, enhet: norm };
+  return null;   // okand enhet: hellre tyst an fel skala
+}
+
 /** Alla nyckeltal vi kan lasa ur ett bolagsarkiv, ett per metrik och period. */
 export function extraheraNyckeltal(bolagsarkiv) {
   const funna = new Map(); // "metrik|ar|kvartal|langd" -> post
+
+  // Pass 1: belagda fakta ur rapport-PDF:erna. Egen slinga over hela arkivet, sa
+  // att de vinner over regexen aven nar regexdokumentet ligger forst.
+  for (const ark of bolagsarkiv) {
+    for (const dok of ark.dokument || []) {
+      if (!dok.fakta) continue;
+      const period = periodFor(dok.rubrik, (dok.bitar || []).join(' '));
+      if (!period) continue;
+      for (const [faltId, m] of Object.entries(FRAN_FAKTA)) {
+        const f = dok.fakta[faltId];
+        if (!f) continue;
+        const norm = normaliseraFakta(f.nu, f.enhet);
+        if (!norm) continue;
+        const nyckel = `${m.id}|${period.ar}|${period.kvartal}|${period.langd}`;
+        if (funna.has(nyckel)) continue;
+        funna.set(nyckel, {
+          metrik: m.id, typ: m.typ,
+          ar: period.ar, kvartal: period.kvartal, langd: period.langd,
+          varde: norm.varde, enhet: norm.enhet,
+          rubrik: dok.rubrik, url: dok.url, bolag: ark.namn,
+        });
+      }
+    }
+  }
+
+  // Pass 2: regexen over pressmeddelandets text, fyller det fakta inte tackte.
   for (const ark of bolagsarkiv) {
     for (const dok of ark.dokument || []) {
       const text = (dok.bitar || []).join(' ');

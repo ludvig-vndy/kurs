@@ -100,3 +100,81 @@ test('runway raknas i kod och bar sitt antagande', () => {
   assert.equal(h.manaderKvar, 32);            // 486,3 / 15,2
   assert.match(h.formel, /OM takten haller i sig/);
 });
+
+// ── Fakta ur rapport-PDF:en ───────────────────────────────────────────────
+// Regexpasset ovan lasar pressmeddelandets text. Likvida medel star ofta inte
+// dar: Unibaps Q2 2026-pressmeddelande anger omsattning och rorelseresultat men
+// namner varken kassa eller kassaflode, de star pa sidan 10 i rapport-PDF:en.
+// Sedan 2026-08-31 laser extraktionen PDF:en och lagger resultatet pa dokumentet
+// som fakta, med citat och en grind som kraver att talet star i sitt citat.
+// Fakta gar fore regexen: de ar belagda, det ar inte en textmatchning.
+const FAKTA_ARKIV = [{ namn: 'Unibap Space Solutions', dokument: [
+  { url: 'q2', rubrik: 'Unibap Space Solutions: Delårsrapport januari - juni 2026',
+    bitar: ['Nettoomsättningen uppgick till 21 204 KSEK (13 009)'],
+    fakta: { kassa: { nu: 80755, enhet: 'KSEK' } } },
+  { url: 'q1', rubrik: 'Unibap Space Solutions: Delårsrapport januari - mars 2026',
+    bitar: ['Kvartalet i korthet'],
+    fakta: { kassa: { nu: 25100, enhet: 'KSEK' } } },
+] }];
+
+test('fakta ur PDF ger likvida medel dar pressmeddelandet tiger', () => {
+  const tal = extraheraNyckeltal(FAKTA_ARKIV);
+  const kassa = tal.filter(t => t.metrik === 'likvida medel');
+  assert.equal(kassa.length, 2);
+  assert.equal(kassa[0].ar, 2026);
+  assert.equal(kassa[0].kvartal, 2);
+});
+
+test('KSEK i fakta raknas om till MSEK sa perioder gar att jamfora', () => {
+  const kassa = extraheraNyckeltal(FAKTA_ARKIV).find(t => t.metrik === 'likvida medel');
+  assert.equal(kassa.enhet, 'MSEK');
+  assert.equal(kassa.varde, 80.755);
+});
+
+// Kassan steg fran 25,1 till 80,755 MSEK. Det ar ingen burn rate, och en runway
+// far inte hittas pa. Unibap tog in 93,8 MSEK i finansieringsverksamheten under
+// perioden, sa det ar just det fallet.
+test('stigande kassa ger ingen burn rate och ingen runway', () => {
+  const h = harled(extraheraNyckeltal(FAKTA_ARKIV)).find(x => x.metrik === 'likvida medel');
+  assert.ok(h, 'harledningen ska finnas');
+  assert.ok(h.forandring > 0);
+  assert.equal(h.perManad, undefined);
+  assert.equal(h.manaderKvar, undefined);
+});
+
+test('fallande kassa ur fakta ger burn rate och runway', () => {
+  const ark = [{ namn: 'Provbolaget', dokument: [
+    { url: 'q2', rubrik: 'Provbolaget delårsrapport januari - juni 2026', bitar: [''],
+      fakta: { kassa: { nu: 60000, enhet: 'KSEK' } } },
+    { url: 'q1', rubrik: 'Provbolaget delårsrapport januari - mars 2026', bitar: [''],
+      fakta: { kassa: { nu: 90000, enhet: 'KSEK' } } },
+  ] }];
+  const h = harled(extraheraNyckeltal(ark)).find(x => x.metrik === 'likvida medel');
+  assert.equal(h.perManad, 10);        // 30 MSEK over kvartalets tre manader
+  assert.equal(h.manaderKvar, 6);      // 60 delat pa 10
+});
+
+test('fakta gar fore regexen nar bada finns for samma period', () => {
+  const ark = [{ namn: 'Provbolaget', dokument: [
+    { url: 'q2', rubrik: 'Provbolaget delårsrapport januari - juni 2026',
+      bitar: ['Likvida medel 999,9 MSEK (1,0)'],
+      fakta: { kassa: { nu: 80755, enhet: 'KSEK' } } },
+  ] }];
+  const kassa = extraheraNyckeltal(ark).find(t => t.metrik === 'likvida medel');
+  assert.equal(kassa.varde, 80.755);
+});
+
+test('fakta utan avgorbar period anvands inte', () => {
+  const ark = [{ namn: 'Provbolaget', dokument: [
+    { url: 'x', rubrik: 'Affärsuppdatering', bitar: [''], fakta: { kassa: { nu: 80755, enhet: 'KSEK' } } },
+  ] }];
+  assert.equal(extraheraNyckeltal(ark).length, 0);
+});
+
+test('fakta utan tal hoppas over', () => {
+  const ark = [{ namn: 'Provbolaget', dokument: [
+    { url: 'q2', rubrik: 'Provbolaget delårsrapport januari - juni 2026', bitar: [''],
+      fakta: { kassa: { nu: null, enhet: 'KSEK' } } },
+  ] }];
+  assert.equal(extraheraNyckeltal(ark).length, 0);
+});
