@@ -459,37 +459,59 @@ async function loadPrices(){
     }
   }catch(e){ /* utan kurser faller raden tillbaka på anskaffningsvärde */ }
 }
-// Snapshoten är de ~500 största per marknad, så First North-innehav saknas där
-// (Ferroamp). För dem hämtas en färsk kurs live ur /api/kurshistorik, sista
-// punkten i en kort serie. Bara för innehav som faktiskt saknas: endpointen
-// cachar 6 h på edgen, men en begäran per innehav och laddning vore ändå slöseri.
+// Kurserna hamtas LIVE ur /api/kurshistorik, inte ur snapshoten.
+//
+// companies.json ar sedan 2026-08-31 bara identitet (ticker, marknad, land) och
+// en reserv. Dess p/ch ar en committad statisk fil som ingen uppdaterar: den 31
+// augusti visade den Sivers som -24,45 % "i dag", vilket var raset den 29:e,
+// medan aktien samma stund lag pa 28,14. Bakvant nog fick First North-innehav
+// som SAKNADES i filen fardare data, eftersom de foll tillbaka pa den har
+// endpointen. Nu galler samma vag for alla.
+//
+// Kostnaden ar ett anrop per unik ticker vid laddning. Endpointen cachar 6 h pa
+// edgen, sa det ar billigt, och landet tas ur snapshoten nar vi kanner det sa vi
+// slipper gissa oss genom fem marknader.
 const LANDSORDNING = ['SE', 'FI', 'NO', 'DK', 'IS'];
-async function fyllSaknadeKurser(holds){
-  const saknas = [];
+async function fyllFarskaKurser(holds){
+  const vill = new Map();   // ticker -> land eller null
   for(const h of holds){
-    const t = h.ticker ? String(h.ticker).toUpperCase() : null;
-    if(!t || PRICES.has(t)) continue;
-    if(!saknas.includes(t)) saknas.push(t);
+    let t = h.ticker ? String(h.ticker).toUpperCase() : null;
+    if(!t){
+      const n = h.name ? String(h.name).toLowerCase().trim() : '';
+      const via = (n && PRICES_N.get(n)) || null;
+      const alias = watchedFor(h);
+      t = (via && via.t) || (alias && alias.t) || null;
+      if(t) t = String(t).toUpperCase();
+    }
+    if(!t || vill.has(t)) continue;
+    const kand = PRICES.get(t);
+    vill.set(t, (kand && kand.c) || null);
   }
-  if(!saknas.length) return false;
+  if(!vill.size) return false;
+
   let nagot = false;
-  await Promise.all(saknas.map(async function(t){
-    for(const land of LANDSORDNING){
+  await Promise.all([...vill.entries()].map(async function(par){
+    const t = par[0];
+    const lander = par[1] ? [par[1]] : LANDSORDNING;
+    for(const land of lander){
       try{
-        const r = await fetch('/api/kurshistorik?t='+encodeURIComponent(t)+'&c='+land+'&range=1mo');
+        const r = await fetch('/api/kurshistorik?t='+encodeURIComponent(t)+'&c='+land+'&range=5d');
         if(!r.ok) continue;
         const d = await r.json();
         const pkt = d && d.punkter && d.punkter.length ? d.punkter[d.punkter.length - 1] : null;
         if(!pkt) continue;
-        // ch (dagens procent) räknas ur de två sista stängningarna när de finns.
+        // Dagsforandringen raknas ur de tva sista stangningarna. Finns bara en
+        // punkt blir den null: hellre ingen procent an en pahittad.
         const forra = d.punkter.length > 1 ? d.punkter[d.punkter.length - 2][1] : null;
-        PRICES.set(t, {
-          t: t, n: null, c: land, p: pkt[1],
+        const gammal = PRICES.get(t) || {};
+        PRICES.set(t, Object.assign({}, gammal, {
+          t: t, c: gammal.c || land, p: pkt[1],
           ch: (forra ? ((pkt[1] - forra) / forra) * 100 : null),
-        });
+          d: pkt[0],                       // handelsdagen talet galler
+        }));
         nagot = true;
         return;
-      }catch(e){ /* prova nästa marknad */ }
+      }catch(e){ /* prova nasta marknad, annars star snapshoten kvar */ }
     }
   }));
   return nagot;
@@ -666,7 +688,7 @@ async function boot(){
     renderReal(holds, user);
     // Kurserna som saknas i snapshoten hämtas efteråt: sidan ska inte vänta på
     // dem, och de flesta innehav har redan sin kurs.
-    if(await fyllSaknadeKurser(holds)) renderReal(holds, user);
+    if(await fyllFarskaKurser(holds)) renderReal(holds, user);
   }
   else renderEmpty(user);
 }
