@@ -181,19 +181,106 @@ Summan av orealiserat värde ska fortfarande hoppa över dem, men raden ska finn
 
 ---
 
+## 6b. Vad får vara ett innehav, och vad lovar vi om det
+
+Sebastian bad om tre saker som alla föll på samma ställe: en position i koppar
+eller guld, en hävstångsprodukt, och Tesla. Det ser ut som tre önskemål men är en
+fråga, för produkten kan i dag bara hantera det som har ett MFN-flöde.
+
+### Delningen
+
+**Affärsboken är universell. Bevakningen är det inte.**
+
+Realiserat resultat bryr sig inte om instrumentet: det är antal gånger säljpris
+minus snittpris, ur användarens egna affärer. Det fungerar lika bra för ett
+kopparcertifikat som för en aktie, utan ny datakälla och utan ny beräkning.
+Alltså kan allt räknas i totalen, och **måste det**, annars är ett tal som heter
+"total avkastning" helt enkelt fel.
+
+Bevakningen kan aldrig följa med. Brev, Fråga, insynshandel, blankning och tes mot
+rapport hänger alla på att det finns en emittent som publicerar dokument. Koppar
+publicerar ingenting. Vi bygger därför **inte** tillgångsbevakning för råvaror:
+det vore att lova täckning vi inte har.
+
+### Formen
+
+Fält `slag` på `holdings`: `aktie`, `fond`, `ravara`, `havstang`, `ovrigt`.
+
+| Yta | `aktie` | övriga slag |
+| --- | --- | --- |
+| Position, anskaffning, realiserat | ja | ja |
+| Med i totalen | ja | ja |
+| Kursgraf | ja | nej (ingen ticker i `companies.json`) |
+| Tesruta | ja | nej |
+| Rapportnotis, brev, Fråga | ja | nej |
+| Bevakas av `bevakningslista.mjs` | ja | nej, hoppas över |
+
+**Slaget ska synas i raden.** En hävstångspost som ser ut precis som en aktiepost
+är en tyst osanning om vad du har.
+
+**GAV visas inte för `havstang`.** Snittpriset på ett certifikat som rullats säger
+ingenting om vad du äger. Anskaffningsvärde och realiserat är däremot sanna.
+
+### Hävstången är ett principbeslut, inte ett tekniskt
+
+Att registrera vad någon redan äger är inte att styra någon dit. Bokföring är inte
+en rekommendation, och det är skillnaden mellan den här raden och
+`public/labs/havstang.html`, som är en mockup med fiktiva produkter och emittenter
+och kräver en tredje datakälla vi inte utrett (emittent- eller mäklardata, inte
+Börsdata).
+
+Vägrar vi ta emot certifikatet säger vi inte "gör inte det här". Vi säger bara att
+vår total är fel.
+
+### Icke-nordiska innehav
+
+`public/labs/data/companies.json` innehåller 1 165 bolag från Oslo, Stockholm,
+Helsingfors, Köpenhamn och Reykjavik. **Noll amerikanska.** Söket hittar därför
+inte Tesla, och det är ett val ingen omprövat.
+
+Tesla skiljer sig från koppar: den **har** kurs (Yahoo klarar amerikanska tickers)
+men saknar bevakning, eftersom MFN är nordiskt. Alltså ett fjärde läge, och det
+enklaste är att låta `slag: 'aktie'` gälla bara nordiska noteringar och lägga
+övriga som `ovrigt` tills någon bestämmer något annat. Sökrutan ska under tiden
+säga rakt ut att den täcker Norden.
+
+---
+
 ## 7. Datakvalitet som måste lösas först
 
 Skarp data har dubbletter som gör varje totalsumma fel:
 
-- Två `Sivers Semiconductors AB (publ)`: en stängd med huvudbok, en med 100 aktier och GAV
-  2,12 utan huvudbok.
+- Två `Sivers Semiconductors AB (publ)`: en med huvudbok, en med 100 aktier och GAV 2,12
+  utan huvudbok.
 - Två `Unibap Space Solutions`: en med 101 233 aktier, en helt tom (`quantity` och `gav`
   båda null).
 
 `bevakningslista.mjs` deduplicerar på namn för motorns skull, men portföljsumman gör det
-inte. Innan tre tal visas måste det vara avgjort vad som är ett innehav. Antingen en
-unikhetsregel per användare och bolag, eller en sammanslagningsyta. Det är inte specat här,
-men det blockerar avsnitt 6.
+inte.
+
+### Och värre: affärer hamnar på fel bolag
+
+Mätt samma eftermiddag, när Sebastian lagt in sina köp:
+
+```
+7d1dad8e  Saniona AB (publ)      6 köp, 0 sälj  ->  82 367 st @ 7,98
+3de99510  Sivers Semiconductors  1 köp, 8 sälj  ->   5 446 st @ 3,84
+0d844abe  Sivers Semiconductors  inga affärer   ->     100 st @ 2,12
+```
+
+**Sex av sju köp landade på Saniona medan samtalet handlade om Sivers.** Två av dem
+avslöjar sig själva: köp på 44 367 och 7 000 aktier, exakt de kvantiteter som sålts i
+Sivers. Saniona bär nu någon annans historik och en GAV som inte är användarens.
+
+Triggern räknar rätt (131 000 minus 125 554 ger 5 446 @ 3,84, som holdings visar), så det
+är inte ett räknefel. Det är inmatningsflödet som låter en affär hamna på fel innehav utan
+att något säger ifrån, och konsekvensen är tyst: två positioner blir fel samtidigt och båda
+ser rimliga ut.
+
+Det här blockerar avsnitt 6 hårdare än dubbletterna gör, för en total byggd på fel
+placerade affärer är sämre än ingen total. Innan fler ombeds fylla i sin historik behöver
+inmatningen visa vilket innehav affären skrivs till, och ytan behöver ett sätt att flytta
+en affär mellan innehav.
 
 ---
 
