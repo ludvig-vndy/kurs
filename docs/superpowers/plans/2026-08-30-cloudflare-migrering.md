@@ -1,7 +1,7 @@
 # Flytt av Cloudflare-resurser till ludvig-kontot
 
 **Datum:** 2026-08-30
-**Status:** förberedd, väntar på inloggning till målkontot
+**Status:** aktiekursen flyttad och verifierad 2026-08-31. Kvar: motparten, workern, och att stänga av det gamla.
 **Från:** vndy-kontot (`a525ec472526e7bb5e054e8f88922c50`)
 **Till:** ludvig-kontot
 
