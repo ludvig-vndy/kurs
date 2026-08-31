@@ -38,7 +38,8 @@ export const FALT = {
   kassaflode:                { bd: 'cash_Flow_From_Operating_Activities', sort: 'flode'  },
   finansieringsverksamheten: { bd: 'cash_Flow_From_Financing_Activities', sort: 'flode'  },
   kassa:                     { bd: 'cash_And_Equivalents',                sort: 'balans' },
-  antal_aktier:              { bd: 'number_Of_Shares', bdSkala: 1e6,      sort: 'balans' },
+  // Antal aktier ar inget belopp: det ska inte rakas om med currency_Ratio.
+  antal_aktier:              { bd: 'number_Of_Shares', bdSkala: 1e6,      sort: 'balans', styck: true },
 };
 
 // Vår enhet -> faktor till miljoner i rapportvalutan.
@@ -154,7 +155,7 @@ export async function mat({ bara } = {}) {
           if (deras == null) continue;
         }
         if (spec.bdSkala) deras *= spec.bdSkala;
-        deras /= ratio;
+        if (!spec.styck) deras /= ratio;
 
         const rel = Math.abs(deras) > 1e-9
           ? Math.abs(vart - deras) / Math.abs(deras)
