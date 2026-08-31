@@ -1,7 +1,7 @@
 # Flytt av Cloudflare-resurser till ludvig-kontot
 
 **Datum:** 2026-08-30
-**Status:** aktiekursen flyttad och verifierad 2026-08-31. Kvar: motparten, workern, och att stänga av det gamla.
+**Status:** båda kurserna flyttade och verifierade 2026-08-31. Kvar: workern upptack-cron, byta piloterna till de nya adresserna, och radera de gamla projekten.
 **Från:** vndy-kontot (`a525ec472526e7bb5e054e8f88922c50`)
 **Till:** ludvig-kontot
 
@@ -158,3 +158,45 @@ säljkursen behåller sitt namn. Aktiekursen har inga värdnamnsantaganden alls.
 Kontot är inte längre samma som det Börsdata-, Tink- och Stripe-integrationerna
 registrerades mot. Cloudflare-flytten påverkar inte dem tekniskt, men kontrollera att
 eventuella IP-lås eller callback-URL:er hos de tjänsterna pekar rätt.
+
+
+---
+
+## Utfall 2026-08-31
+
+| Sak | Gammalt (VNDY) | Nytt (ludvig `fbfc68e2`) |
+| --- | --- | --- |
+| Aktiekursen | `kurs` / kurs-7m8.pages.dev | `aktiekurs` / aktiekurs.pages.dev |
+| Säljkursen | `motparten` / motparten.pages.dev | `motparten-app` / motparten-app.pages.dev |
+| KV `upptack-data` | `f155742e…` | `97d78256…`, 20 nycklar kopierade |
+| KV `fraga-rl` | `33773ae0…` | `41b27b64…` |
+
+Säljkursen fick ett nytt namn med flit: `motparten.pages.dev` går inte att återanvända
+förrän det gamla projektet raderats, och att ta ned en produkt mitt i en pilot för en
+vanity-adress är fel avvägning. Middlewarens `motpartenVard()` godkänner allt som börjar
+med `motparten-`, så `motparten-app.pages.dev` känns igen utan kodändring.
+
+**Deploykommandon efter flytten:**
+
+```
+npm run build
+npx wrangler pages deploy dist --project-name=aktiekurs --branch=main
+npx wrangler pages deploy dist --project-name=motparten-app --branch=main
+```
+
+`CLOUDFLARE_ACCOUNT_ID` ska vara `fbfc68e2efed9cbbe0dc0396f299e2c1` eller osatt.
+`wrangler.toml` bär projektnamnet `aktiekurs` och KV-bindningarna; säljkursen deployas med
+flaggan och får samma bindningar, vilket är ofarligt (den använder bara `RL`).
+
+**PILOT_SECRET roterades.** Den gick inte att läsa tillbaka ur Cloudflare och fanns inte i
+`.env`. En ny genererades, sattes på `motparten-app` och sparades i `.env` så den går att
+återskapa nästa gång. Följden: befintliga pilotcookies slutar gälla och piloterna loggar in
+på nytt med sin mejladress.
+
+**Verifierat live:** aktiekursen svarar på Fråga med innehav, arkiv, källor och kodräknade
+härledningar. Säljkursen passerar coachens tre konfigkontroller (`ANTHROPIC_API_KEY`,
+`PILOT_SECRET`, `RL`) och stannar först på pilotinloggningen, vilket är avsett.
+
+**Kvar:** workern `upptack-cron` skriver fortfarande till VNDY:s KV, så insynsdatan slutar
+uppdateras på de nya sidorna tills den flyttas. Piloterna ligger kvar på de gamla adresserna.
+Radera inte VNDY-projekten förrän piloterna bytt.
