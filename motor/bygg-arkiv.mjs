@@ -26,7 +26,7 @@ import { hamta } from './hamta.mjs';
 import { byggBevakning } from './bevakningslista.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
-const NS = 'f155742e0cb14bb390fced9aea5ca641'; // KV-namespace "upptack-data" (delas)
+const NS = '97d78256ff664c54a724878034c8f0fd'; // KV-namespace "upptack-data" (ludvig-kontot, bytt vid flytten 2026-08-31)
 
 // Tak per bolag. KV klarar 25 MB per värde, men det är inte gränsen som räknas:
 // arkivet läses vid varje fråga, och ett stort värde gör varje fråga långsammare.
