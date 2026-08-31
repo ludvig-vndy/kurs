@@ -31,9 +31,17 @@ const UR_ENV = [
   ['SUPABASE_URL', 'SUPABASE_URL'],
   ['SUPABASE_SECRET_KEY', 'SUPABASE_SECRET_KEY'],
   ['CF_KV_TOKEN', 'CLOUDFLARE_API_TOKEN'],
+  ['BORSDATA_API', 'BORSDATA_API'],
 ];
-// Inte hemligt, men jobbet behöver det och det hör ihop med de andra.
-const FASTA = { CLOUDFLARE_ACCOUNT_ID: 'a525ec472526e7bb5e054e8f88922c50' };
+/* Inte hemligt, men jobbet behöver det och det hör ihop med de andra.
+
+   Kontot är ludvigs sedan flytten 2026-08-31. Stod här tidigare VNDY:s
+   a525ec47..., och det var inte ofarligt: koden pekade på VNDY:s KV-namespace
+   medan sajtens Pages-projekt läser ludvigs. Nattjobbet skrev alltså brevet
+   dit ingen läste, och piloternas brev hade frusit på den 31 augusti utan att
+   något jobb misslyckades. Namespace-id:t och konto-id:t måste alltid byta
+   tillsammans. */
+const FASTA = { CLOUDFLARE_ACCOUNT_ID: 'fbfc68e2efed9cbbe0dc0396f299e2c1' };
 
 function lasEnv() {
   const fil = p('../.env');
