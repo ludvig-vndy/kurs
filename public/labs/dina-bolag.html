@@ -435,6 +435,18 @@ function cur(cc){ return cc==='FI' ? '€' : 'kr'; }
 // Kurssnapshot: samma companies.json som söket i Lägg till bolag. Byggs till
 // uppslag på ticker (primärt) och namn (fallback). Daglig snapshot, inte realtid.
 let PRICES=new Map(), PRICES_N=new Map(), PRICE_DATE=null;
+// Snapshoten byggs inte varje dag, sa "i dag" ar oftast en losning: Sivers stod
+// som -24,45 % "i dag" den 31 augusti, men det var rorelsen den 29:e, dagen
+// snapshoten togs. Sidan sa alltsa bade "Kurser per 2026-08-29" langst ned och
+// "i dag" bredvid talet. Dagsforandringen far bara heta "i dag" nar den ar fran
+// i dag, annars star datumet dar.
+function dagsEtikett(){
+  if(!PRICE_DATE) return 'i dag';
+  if(PRICE_DATE === new Date().toISOString().slice(0,10)) return 'i dag';
+  const M=['jan','feb','mars','april','maj','juni','juli','aug','sep','okt','nov','dec'];
+  const d=PRICE_DATE.split('-');
+  return d.length===3 ? (Number(d[2])+' '+M[Number(d[1])-1]) : PRICE_DATE;
+}
 async function loadPrices(){
   try{
     const r=await fetch('/labs/data/companies.json'); if(!r.ok) return;
@@ -532,12 +544,12 @@ function realRow(h){
       const mv=qty*px.p, ansk=qty*gav, avk=mv-ansk, avkPct=gav>0?(px.p/gav-1)*100:null, up=avk>=0;
       rt='<div class="amt">'+fmtN(mv,0)+' '+c+'<span class="andel">'+fmtN(qty,0)+' st</span></div>'+
          '<div class="tavk '+(up?'up':'dn')+'">'+pct(avkPct)+'<span class="kr">'+(up?'+':'')+fmtN(avk,0)+' '+c+'</span></div>'+
-         '<div class="day"><span class="lbl">kurs</span> '+kurs+' '+c+' '+dayv+' <span class="lbl">i dag · GAV '+fmtN(gav,2)+'</span></div>';
+         '<div class="day"><span class="lbl">kurs</span> '+kurs+' '+c+' '+dayv+' <span class="lbl">'+dagsEtikett()+' · GAV '+fmtN(gav,2)+'</span></div>';
       dot=up?'pos':'neg';
     } else {
       // Kurs men inget innehav (t.ex. följer, eller antal/GAV saknas).
       rt='<div class="amt">'+kurs+' '+c+'</div>'+
-         '<div class="day">'+dayv+' <span class="lbl">i dag</span></div>';
+         '<div class="day">'+dayv+' <span class="lbl">'+dagsEtikett()+'</span></div>';
       dot=dc>=0?'pos':'neg';
       if(!foljer) ln='Lägg till antal och inköpskurs för att se din avkastning.';
     }
