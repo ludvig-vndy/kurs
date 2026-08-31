@@ -1,7 +1,7 @@
 # Flytt av Cloudflare-resurser till ludvig-kontot
 
 **Datum:** 2026-08-30
-**Status:** båda kurserna flyttade och verifierade 2026-08-31. Kvar: workern upptack-cron, byta piloterna till de nya adresserna, och radera de gamla projekten.
+**Status:** allt flyttat och verifierat 2026-08-31. Kvar: byta piloterna till de nya adresserna, sedan radera det gamla.
 **Från:** vndy-kontot (`a525ec472526e7bb5e054e8f88922c50`)
 **Till:** ludvig-kontot
 
@@ -197,6 +197,20 @@ på nytt med sin mejladress.
 härledningar. Säljkursen passerar coachens tre konfigkontroller (`ANTHROPIC_API_KEY`,
 `PILOT_SECRET`, `RL`) och stannar först på pilotinloggningen, vilket är avsett.
 
-**Kvar:** workern `upptack-cron` skriver fortfarande till VNDY:s KV, så insynsdatan slutar
-uppdateras på de nya sidorna tills den flyttas. Piloterna ligger kvar på de gamla adresserna.
-Radera inte VNDY-projekten förrän piloterna bytt.
+**Workern `upptack-cron`** är också flyttad. `worker-upptack/wrangler.toml` pekade redan på
+det nya KV-id:t. Ny adress: `upptack-cron.cellar-api.workers.dev`, samma cron 05:00 UTC.
+Provkörd manuellt: 12 bolag, 437 köp, 785 transaktioner skrivna till det nya namespacet.
+
+`REFRESH_TOKEN` roterades av samma skäl som `PILOT_SECRET`: den går inte att läsa tillbaka
+ur Cloudflare. Den gäller bara den manuella triggern (`?refresh=`), inte cron-körningen, och
+är sparad i `.env`.
+
+**Kvar, i den här ordningen:**
+
+1. Lägg till de nya adresserna i Supabase Auth, Site URL och Redirect URLs, annars landar
+   magic-länkarna på den gamla sajten.
+2. Skicka de nya adresserna till piloterna. Piloterna på Motparten loggar in på nytt,
+   eftersom `PILOT_SECRET` roterades.
+3. Först därefter: radera VNDY:s `kurs`, `motparten` och den gamla `upptack-cron`. Den gamla
+   workern kör fortfarande sin cron 05:00 mot det gamla namespacet, alltså dubbelt arbete
+   utan mottagare.
