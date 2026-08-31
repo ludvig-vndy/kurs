@@ -54,7 +54,7 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       personuppgifter, och tar betalt. Villkor, dataskydd och ansvarsfriskrivning
       ("aldrig köp/säljråd") måste finnas innan publik betalning.
 
-- [ ] **[Du] Applicera `supabase/migrations/20260830150000_tes.sql`** (SQL-editorn räcker,
+- [x] **[Du] Applicera `supabase/migrations/20260830150000_tes.sql`** (2026-08-31): körd och verifierad, tabellen finns, RLS-policyn släpper igenom en skrivning som användaren, och Fråga läser tesen med rätt attribution ("du skrev själv") utan att ge omdöme. Ursprunglig text: (SQL-editorn räcker,
       en tabell och en policy). Utan den finns tesfältet i koden men inte i databasen:
       rutan syns på innehavssidan och sparknappen svarar att fältet inte är påslaget.
       Facitlistan (`npm run prova:fraga`) hoppar över sina två tesfall tills den är körd,
