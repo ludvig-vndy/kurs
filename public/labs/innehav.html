@@ -205,15 +205,36 @@
   // Position ur affärerna (snittkostnad) - spegling av DB-triggern, för
   // affärer som ännu inte hunnit skrivas. Har innehavet redan quantity/gav
   // från servern använder vi dem (triggerns sanning); annars räknar vi här.
+  // Snittkostnadsmetoden, samma uträkning som triggern recalc_holding gör i
+  // databasen. Utöver antal och GAV faller det REALISERADE resultatet ut ur samma
+  // svep: varje säljrad ger antal * (pris - snittet strax före affären).
+  //
+  // Varför det behövs: vyn visade bara orealiserat värde, så att säkra en vinst
+  // gjorde ditt tal MINDRE. Ett helt sålt innehav försvann dessutom ur summan.
+  // Modul 24 heter Girighet och att säkra avkastning, alltså belönade gränssnittet
+  // precis det beteende kursen varnar för.
+  //
+  // utanBas är skillnaden mellan noll och "vet inte". Säljs det utan att något köp
+  // finns inlagt vet vi inte vad du betalade, och då är realiserat null och aldrig
+  // 0. Det är inte ett kantfall: i dag ligger åtta säljaffärer och noll köp i
+  // basen, så det är det vanliga läget för den som fyllt i sina avslut men inte
+  // sin ingående position.
   function positionFromTrades(){
-    var qty=0, cost=0;
+    var qty=0, cost=0, real=0, harKop=false, utanBas=false;
     trades.slice().sort(function(a,b){ return new Date(a.decided_at)-new Date(b.decided_at); }).forEach(function(t){
       var q=Number(t.quantity)||0, p=Number(t.price)||0;
-      if(t.kind==="kop"){ qty+=q; cost+=q*p; }
-      else { var avg=qty?cost/qty:0; qty-=q; cost-=q*avg; }
+      if(t.kind==="kop"){ harKop=true; qty+=q; cost+=q*p; }
+      else {
+        var avg=qty?cost/qty:0;
+        if(!harKop || qty<=0) utanBas=true; else real += q*(p-avg);
+        qty-=q; cost-=q*avg;
+      }
     });
     qty=Math.max(qty,0); cost=Math.max(cost,0);
-    return { qty:qty, gav:qty?cost/qty:null, ansk:cost };
+    var saltNagot = trades.some(function(t){ return t.kind==="salj"; });
+    return { qty:qty, gav:qty?cost/qty:null, ansk:cost,
+             realiserat: (!saltNagot || utanBas) ? null : real,
+             saknarBas: saltNagot && utanBas };
   }
 
   function currentPrice(){ return PRICE && PRICE.p!=null ? Number(PRICE.p) : null; }
@@ -304,7 +325,25 @@
         '<span class="sub">'+(up?"+":"")+fmt(avk)+' '+c+'</span></div></div>';
     }
     if(qty==null && !hasTrades) html += '<div class="b"><div class="k">Position</div><div class="v" style="font-family:var(--serif);font-size:16px;color:var(--muted)">Lägg in en affär nedan</div></div>';
+
+    // Säkrad avkastning: det du redan tagit hem. Står BREDVID det orealiserade och
+    // aldrig i stället för, annars byter vi bara girighet mot dispositionseffekt,
+    // alltså att sälja vinnare för tidigt för att talet ska växa.
+    var pos = hasTrades ? positionFromTrades() : null;
+    if(pos && pos.realiserat!=null){
+      var rup = pos.realiserat>=0;
+      html += '<div class="b"><div class="k">Säkrad avkastning</div><div class="v '+(rup?"up":"dn")+'">'+
+        (rup?"+":"")+fmt(pos.realiserat)+' '+c+'<span class="sub">realiserat, före skatt</span></div></div>';
+    }
     html += '</section>';
+
+    // Saknad kostnadsbas. Noll och "vet inte" ar olika saker, sa har visas ingen
+    // nolla utan vad som fattas och varfor.
+    if(pos && pos.saknarBas){
+      html += '<div class="msg" style="margin:0 0 18px">Du har sålt i det här innehavet, men inget köp finns inlagt, '+
+        'så vi vet inte vad du betalade. Lägg in vad du ägde och till vilket snittpris innan första försäljningen, '+
+        'som ett köp med det datumet, så räknar vi ut vad du säkrat.</div>';
+    }
 
     // Tesen. Ligger fore grafen med flit: skalet kommer fore kursen.
     html += '<section class="tes"><div class="tes-h"><div class="t">Din tes</div>'+
