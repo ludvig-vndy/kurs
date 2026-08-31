@@ -45,14 +45,27 @@ async function bd(vag) {
   return r.json();
 }
 
+/* Innehaven heter som i aktieboken, Börsdata som i dagligt tal: "SSAB AB (publ)"
+   mot "SSAB A". Bolagsformen skalas av före matchningen, annars faller just de
+   bolag vars namn är kortast och därmed mest beroende av suffixet. */
+export function skalaNamn(namn) {
+  return String(namn || '')
+    .toLowerCase()
+    .replace(/\(publ\.?\)/g, ' ')
+    .replace(/\s+(ab|abp|oyj|asa|a\/s|plc|inc|corp|holding|group)\b/g, ' ')
+    .replace(/[.,]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 /* Bolagsnamn -> insId. Bevakningslistan kommer ur användarnas innehav, så den
    kan inte hårdkodas. Matchningen är avsiktligt strikt: hellre inget svar än
    fel bolag. "Telia Company" matchar "Telia Company", inte "Telia2". */
 export function valjInstrument(namn, instrument) {
-  const n = String(namn || '').toLowerCase().trim();
+  const n = skalaNamn(namn);
   if (!n) return null;
   const kandidater = instrument.filter(i => {
-    const k = i.name.toLowerCase();
+    const k = skalaNamn(i.name);
     return k === n || k.startsWith(n + ' ') || n.startsWith(k + ' ') || k === n.split(' ')[0];
   });
   if (!kandidater.length) return null;

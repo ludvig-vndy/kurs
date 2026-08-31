@@ -123,3 +123,29 @@ test('renderDagsbrev: nara rapport far egen formulering', () => {
     borsdata: [{ bolag: 'Lifco', kalender: { datum: '2026-10-23', typ: 'Q3', dagar: 53 }, vardering: null }] });
   assert.match(langt, /Närmast är Lifco, om 8 veckor/);
 });
+
+/* Innehaven kommer ur aktieboken och bar bolagsformen. Utan avskalning faller
+   just de kortaste namnen: "SSAB AB (publ)" matchade inte "SSAB A", eftersom
+   "ssab ab (publ)" varken borjar med "ssab a " eller har "ssab a" som forsta ord. */
+const MED_BOLAGSFORM = [
+  { insId: 211, name: 'SSAB A' },
+  { insId: 695, name: 'SSAB B' },
+  { insId: 1772, name: 'Lime Technologies' },
+  { insId: 249, name: 'Nokia' },
+  { insId: 478, name: 'Saniona' },
+];
+
+test('skalaNamn: bolagsform och interpunktion skalas av', async () => {
+  const { skalaNamn } = await import('../../motor/borsdata.mjs');
+  assert.equal(skalaNamn('SSAB AB (publ)'), 'ssab');
+  assert.equal(skalaNamn('Lime Technologies AB (publ)'), 'lime technologies');
+  assert.equal(skalaNamn('Nokia Oyj'), 'nokia');
+  assert.equal(skalaNamn('Saniona AB (publ.)'), 'saniona');
+});
+
+test('valjInstrument: innehavsnamn med bolagsform hittar ratt instrument', () => {
+  assert.equal(valjInstrument('SSAB AB (publ)', MED_BOLAGSFORM).insId, 211);
+  assert.equal(valjInstrument('Lime Technologies AB (publ)', MED_BOLAGSFORM).insId, 1772);
+  assert.equal(valjInstrument('Nokia Oyj', MED_BOLAGSFORM).insId, 249);
+  assert.equal(valjInstrument('Saniona AB (publ)', MED_BOLAGSFORM).insId, 478);
+});
