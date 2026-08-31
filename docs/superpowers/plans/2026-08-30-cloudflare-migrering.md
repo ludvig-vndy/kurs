@@ -33,12 +33,22 @@ till skillnad från motparten.pages.dev som svarade 302).
 | Pages `kurs` | 85 fokus-sidor plus resten | nej, byggs om ur repot |
 | Pages `motparten` | säljkursen | nej, byggs om ur repot |
 | KV `fraga-rl` | `33773ae0f9864d78853252d6cab09031` | nej, bara strypningsräknare |
-| KV `upptack-data` | `f155742e0cb14bb390fced9aea5ca641` | **nej, namespacet är tomt** (kontrollerat 2026-08-30) |
+| KV `upptack-data` | `f155742e0cb14bb390fced9aea5ca641` | **JA, måste kopieras** (ändrat 2026-08-31) |
 | Worker `upptack-cron` | daglig cron 05:00 UTC | nej, kod i `worker-upptack/` |
 
-Att `upptack-data` är tomt är i sig värt att titta på efter flytten: workern ska skriva dit
-dagligen. Antingen har den inte kört, eller så skriver den med kort TTL. Det är en egen
-fråga och inget som hindrar flytten.
+**Rättat 2026-08-31:** `upptack-data` är inte längre tomt. Det bär nu Frågas dokumentarkiv,
+femton bolag om cirka 300 kB vardera under nycklarna `arkiv:<bolagsid>` plus `arkiv:index`,
+och ett morgonbrev per användare under `brev:<user_id>`. Arkivet innehåller extraherade
+fakta ur rapport-PDF:erna, bland annat likvida medel per period, som kostat modellanrop att
+ta fram. Görs flytten på det gamla antagandet försvinner allt det, och Fråga är tillbaka på
+noll dokument.
+
+Nycklarna går att kopiera med `wrangler kv key list` följt av `get` och `put` mot det nya
+namespacet, eller enklare: kör om `node motor/bygg-arkiv.mjs --fyll --fakta --kor` mot det
+nya namespace-id:t. Det senare kostar modellanrop igen men ger färskare data.
+
+Att workern `upptack-cron` inte verkar ha skrivit något är fortfarande en egen fråga, och
+inget som hindrar flytten.
 
 ## Secrets som måste matas in på nytt
 
