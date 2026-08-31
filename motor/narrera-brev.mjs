@@ -43,6 +43,7 @@ Absoluta regler:
 6. Korta meningar, varierad rytm. Undvik frasen "det är inte X, det är Y".
 7. Facktermen i parentes vid första förekomst om du använder en, till exempel "insynshandel (när personer i ledningen köper egna aktier)".
 8. Tystnad är ett besked: brevet får konstatera att de bolag som inte nämns låg lugna.
+9. Underlaget kan innehålla "borsdata": kommande rapportdatum och värdering. Om nästa rapport ligger inom en vecka får du nämna det i en kort mening, med bolagets namn och datumet skrivet i ord ("Sectra rapporterar den fjärde september"). Ligger den längre bort, nämn den inte alls. Skriv ALDRIG ut nyckeltalen därifrån, varken P/E, median eller procent: de står i tabellen under prosan. Du får däremot säga att ett bolag värderas lägre eller högre än det brukat, i ord, utan tal.
 
 Svara med ett JSON-objekt, inget annat:
 {
@@ -64,8 +65,8 @@ Skriv ett kort brev om just det, lugnt och personligt, i klarspråk.
 - Avsluta med en kort rad om att nästa brev kommer i morgon.
 
 Absoluta regler:
-1. Sätt INGA tal i texten, varken som siffror eller som ord. Inte heller antal bolag eller antal lästa dokument.
-2. Nämn inga bolagsnamn: räkna inte upp vad läsaren äger.
+1. Sätt INGA tal i texten, varken som siffror eller som ord. Inte heller antal bolag eller antal lästa dokument. Undantag: står det i uppgiften att en rapport står för dörren får du skriva just det datumet i ord.
+2. Nämn inga bolagsnamn: räkna inte upp vad läsaren äger. Undantag: bolaget vars rapport står för dörren, om ett sådant anges.
 3. Aldrig köp-, sälj- eller behåll-råd.
 4. Inga tankstreck (varken långt eller kort). Använd komma, kolon eller punkt.
 5. Korta meningar, varierad rytm. Undvik frasen "det är inte X, det är Y".
@@ -84,7 +85,7 @@ export async function narreraBrev(brev, modellnamn = 'claude-haiku') {
   for (const post of brev.poster) {
     (perBolag[post.bolag] = perBolag[post.bolag] || []).push({ typ: post.typnamn || post.typ, rubrik: post.rubrik, fakta: post.fakta || '' });
   }
-  const underlag = { datum: brev.date, lugna: brev.lugna || [], bolag: perBolag };
+  const underlag = { datum: brev.date, lugna: brev.lugna || [], bolag: perBolag, borsdata: brev.borsdata || [] };
 
   const svar = await anropa(modellnamn, {
     system: SYSTEM,
@@ -101,11 +102,19 @@ export async function narreraBrev(brev, modellnamn = 'claude-haiku') {
   return brev;
 }
 
-// Tyst dag: inget underlag att grunda sig i, bara konstaterandet.
+/* Tyst dag: nästan inget underlag, bara konstaterandet. Undantaget är en rapport
+   som står för dörren, för det är det enda som är sant utan att något hänt, och
+   just den dagen är det också det enda läsaren har nytta av att veta. */
 async function narreraTyst(brev, modellnamn) {
+  const nara = (brev.borsdata || [])
+    .filter(r => r.kalender && r.kalender.dagar <= 7)
+    .sort((a, b) => a.kalender.dagar - b.kalender.dagar)[0];
+  const rapportrad = nara
+    ? `\nEn rapport står för dörren: ${nara.bolag}, ${nara.kalender.datum}. Nämn den i en mening, med datumet skrivet i ord. Inga andra tal.`
+    : '';
   const svar = await anropa(modellnamn, {
     system: SYSTEM_TYST,
-    prompt: `Skriv dagens korta brev. Datum: ${brev.date}.`,
+    prompt: `Skriv dagens korta brev. Datum: ${brev.date}.${rapportrad}`,
     maxTokens: 600, json: false,
   });
   const narr = tolkaJson(svar.text);
