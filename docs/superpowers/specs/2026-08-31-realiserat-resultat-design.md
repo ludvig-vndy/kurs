@@ -258,9 +258,9 @@ Skarp data har dubbletter som gör varje totalsumma fel:
 `bevakningslista.mjs` deduplicerar på namn för motorns skull, men portföljsumman gör det
 inte.
 
-### Och värre: affärer hamnar på fel bolag
+### Provdata ligger i samma tabell som sanningen
 
-Mätt samma eftermiddag, när Sebastian lagt in sina köp:
+Mätt samma eftermiddag, när Sebastian lagt in köp:
 
 ```
 7d1dad8e  Saniona AB (publ)      6 köp, 0 sälj  ->  82 367 st @ 7,98
@@ -268,19 +268,25 @@ Mätt samma eftermiddag, när Sebastian lagt in sina köp:
 0d844abe  Sivers Semiconductors  inga affärer   ->     100 st @ 2,12
 ```
 
-**Sex av sju köp landade på Saniona medan samtalet handlade om Sivers.** Två av dem
-avslöjar sig själva: köp på 44 367 och 7 000 aktier, exakt de kvantiteter som sålts i
-Sivers. Saniona bär nu någon annans historik och en GAV som inte är användarens.
+Första läsningen var att köpen hamnat på fel bolag, eftersom två av dem har kvantiteter
+(44 367 och 7 000) som exakt matchar Sivers-säljen. **Den slutsatsen var fel.** Formuläret
+binder `holding_id` till sidan man står på, så en affär kan inte hamna någon annanstans, och
+användaren förklarade själv vad som hänt: han satt på Saniona-sidan och matade in tal han
+sett tidigare, för att se om avkastningen räknades ut. Kvantiteterna stämde överens för att
+han kopierade dem, inte för att något flyttat dem.
 
-Triggern räknar rätt (131 000 minus 125 554 ger 5 446 @ 3,84, som holdings visar), så det
-är inte ett räknefel. Det är inmatningsflödet som låter en affär hamna på fel innehav utan
-att något säger ifrån, och konsekvensen är tyst: två positioner blir fel samtidigt och båda
-ser rimliga ut.
+Det som återstår är alltså inte ett inmatningsfel utan två andra saker:
 
-Det här blockerar avsnitt 6 hårdare än dubbletterna gör, för en total byggd på fel
-placerade affärer är sämre än ingen total. Innan fler ombeds fylla i sin historik behöver
-inmatningen visa vilket innehav affären skrivs till, och ytan behöver ett sätt att flytta
-en affär mellan innehav.
+1. **Saniona bär nu provdata.** 82 367 aktier och en GAV som inte är någons. Det måste
+   städas innan några totaler visas, och det går inte att skilja från riktiga affärer i
+   efterhand annat än genom att fråga.
+2. **Utforskande skriver till samma plats som sanningen.** Den som vill se om en funktion
+   finns har ingen annan väg än att mata in tal i sin riktiga portfölj. Det är inte akut,
+   men det är skälet till att en pilot fick en felaktig position, och en väg att prova utan
+   att smutsa ned skulle ha förhindrat det.
+
+Triggern räknar däremot rätt: 131 000 minus 125 554 ger 5 446 @ 3,84, precis vad `holdings`
+visar. Migrationen `20260829120000` är alltså körd och korrekt.
 
 ---
 
