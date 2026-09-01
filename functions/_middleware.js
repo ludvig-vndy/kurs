@@ -114,6 +114,27 @@ async function verifyJwt(token) {
   }
 }
 
+/* Rattighetskollen for Motparten.
+
+   Slar upp deltagarraden med anvandarens EGEN token, aldrig med service-
+   nyckeln. Det ar policyn deltagare_egen som svarar, sa grinden och
+   databasen sager samma sak och kan inte glida isar. Saknas raden blir
+   svaret en tom lista, alltsa nej. Svarar Supabase inte alls blir det ocksa
+   nej: grinden faller stangd, aldrig oppen. */
+async function arDeltagare(token, env) {
+  if (!env || !env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return false;
+  try {
+    const r = await fetch(
+      env.SUPABASE_URL + '/rest/v1/motparten_deltagare?select=user_id&limit=1',
+      { headers: { apikey: env.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + token } });
+    if (!r.ok) return false;
+    const rader = await r.json();
+    return Array.isArray(rader) && rader.length === 1;
+  } catch (e) {
+    return false;
+  }
+}
+
 /* Motparten deployas till ett eget Pages-projekt fran samma bygge. Pa den varden
    ska roten visa saljkursen, inte Marginalens landningssida. Omskrivningen sker
    pa vardnamn sa att samma bygge kan serva bada, och den galler aven en framtida
@@ -129,13 +150,16 @@ export async function onRequest(context) {
 
   if (isExempt(normalizePath(url.pathname))) return next();
 
-  // Delagaren och Motparten ar skilda produkter och delar darfor ingen session.
-  // Pa motparten-varden slapper Delagarens Supabase-JWT INTE in, bara pilotens
-  // egen cookie. Pa Marginalens varder galler bara JWT:n, aldrig piloten. Vem som
-  // far kopa vilken kurs ar en senare fraga (se LAUNCH.md), men skiljelinjen mellan
-  // produkterna gar att halla redan nu, och den halls har.
+  // Delagaren och Motparten ar skilda produkter. Tidigare holls skiljelinjen
+  // genom att motparten-varden vagrade Supabase-JWT:n helt och bara godtog
+  // pilotcookien. Nu delar produkterna inloggning, och da maste gransen ligga
+  // nagon annanstans: i en rad i motparten_deltagare. Konto ensamt racker
+  // aldrig, och en Delagaren-anvandare utan deltagarrad kommer alltsa inte in.
   if (motparten) {
     if (PILOT_SIDA.has(normalizePath(url.pathname))) return next();
+    const mpToken = getCookie(request, COOKIE);
+    if (mpToken && (await verifyJwt(mpToken)) && (await arDeltagare(mpToken, env))) return next();
+    // Pilotcookien lever kvar tills deltagarna har riktiga konton.
     if (await verifieraPilot(request, env && env.PILOT_SECRET)) return next();
     return Response.redirect(new URL('/pilot', url.origin).toString(), 302);
   }

@@ -3,12 +3,12 @@
    Svarar med en prospektlistas företagsdata plus deltagarens eget arbete.
    Företagsdatan är gemensam för alla som köpt listan, arbetet är personligt.
 
-   Åtkomst kräver två saker: en giltig pilotcookie, och ett köp som kopplar
-   adressen till listan. Saknas köpet svarar vi 403 utan att avslöja om
+   Åtkomst kräver två saker: en inloggad användare, och ett köp som kopplar
+   användaren till listan. Saknas köpet svarar vi 403 utan att avslöja om
    listan finns, så endpointen inte går att använda för att kartlägga utbudet. */
 
 import { secureJson as json, rateLimited } from '../_lib.js';
-import { pilotAdress } from '../_lib.js';
+import { kravAnvandare } from '../_session.js';
 import { supaConfig, supaGet } from '../_supa.js';
 
 const BOLAG_FALT = [
@@ -44,8 +44,8 @@ export async function onRequestGet(context) {
   const limited = await rateLimited(env, request, 'prospekt-lista', 60, 2000);
   if (limited) return json({ error: limited }, 429);
 
-  const adress = await pilotAdress(request, env);
-  if (!adress) return json({ error: 'ej inloggad' }, 401);
+  const { anvandare, svar } = await kravAnvandare(context);
+  if (svar) return svar;
 
   const slug = String(new URL(request.url).searchParams.get('slug') || '').trim();
   if (!slug) return json({ error: 'slug saknas' }, 400);
@@ -58,7 +58,7 @@ export async function onRequestGet(context) {
 
     // Köpet är grinden. Samma svar som när listan inte finns.
     const kop = await supaGet(cfg,
-      `prospekt_kop?select=id&lista_id=eq.${lista.id}&epost=eq.${encodeURIComponent(adress)}`);
+      `prospekt_kop?select=id&lista_id=eq.${lista.id}&user_id=eq.${encodeURIComponent(anvandare.id)}`);
     if (!Array.isArray(kop) || !kop.length) return json({ error: 'ingen atkomst' }, 403);
 
     const bolag = await supaGet(cfg,
@@ -79,7 +79,7 @@ export async function onRequestGet(context) {
     const arbete = orgnr.length
       ? await supaGet(cfg,
           `prospekt_arbete?select=${ARBETE_FALT}` +
-          `&epost=eq.${encodeURIComponent(adress)}` +
+          `&user_id=eq.${encodeURIComponent(anvandare.id)}` +
           `&orgnr=in.(${orgnr.map((o) => '"' + o + '"').join(',')})&limit=5000`)
       : [];
 
@@ -96,7 +96,7 @@ export async function onRequestGet(context) {
       };
     }
 
-    return json({ lista, bolag: bolag || [], arbete: mitt, adress });
+    return json({ lista, bolag: bolag || [], arbete: mitt, adress: anvandare.epost });
   } catch (e) {
     return json({ error: 'kunde inte hamta listan' }, 502);
   }

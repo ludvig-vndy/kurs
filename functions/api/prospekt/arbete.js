@@ -14,7 +14,7 @@
    Är allt tomt igen raderas raden i stället för att ligga kvar som skräp. */
 
 import { secureJson as json, rateLimited } from '../_lib.js';
-import { pilotAdress } from '../_lib.js';
+import { kravAnvandare } from '../_session.js';
 import { supaConfig, supaGet, supaUpsert, supaDelete } from '../_supa.js';
 
 const STATUSAR = new Set(['ny', 'forsokt', 'pratat', 'intresse', 'nej']);
@@ -40,8 +40,8 @@ export async function onRequestPost(context) {
   const limited = await rateLimited(env, request, 'prospekt-arbete', 240, 5000);
   if (limited) return json({ error: limited }, 429);
 
-  const adress = await pilotAdress(request, env);
-  if (!adress) return json({ error: 'ej inloggad' }, 401);
+  const { anvandare, svar } = await kravAnvandare(context);
+  if (svar) return svar;
 
   let body;
   try { body = await request.json(); } catch (e) { return json({ error: 'ogiltig json' }, 400); }
@@ -89,9 +89,9 @@ export async function onRequestPost(context) {
   }
 
   try {
-    // Finns arbetsstället i någon lista adressen köpt?
+    // Finns bolaget i någon lista användaren köpt?
     const kopta = await supaGet(cfg,
-      `prospekt_kop?select=lista_id&epost=eq.${encodeURIComponent(adress)}`);
+      `prospekt_kop?select=lista_id&user_id=eq.${encodeURIComponent(anvandare.id)}`);
     if (!Array.isArray(kopta) || !kopta.length) return json({ error: 'ingen atkomst' }, 403);
     const listor = kopta.map((k) => k.lista_id);
 
@@ -107,21 +107,22 @@ export async function onRequestPost(context) {
     if (tomt) {
       await supaDelete(cfg,
         `prospekt_arbete?orgnr=eq.${encodeURIComponent(orgnr)}` +
-        `&epost=eq.${encodeURIComponent(adress)}`);
+        `&user_id=eq.${encodeURIComponent(anvandare.id)}`);
       return json({ ok: true, sparat: false });
     }
 
     await supaUpsert(cfg, 'prospekt_arbete', [{
       orgnr,
       lista_id: listaId,
-      epost: adress,
+      user_id: anvandare.id,
+      epost: anvandare.epost,   // data, inte nyckel. prospekt_glom() behover den
       status,
       varde_kr: varde,
       anteckning,
       nasta_steg: nasta,
       nasta_datum: nastaDatum,
       ...koder,
-    }], 'epost,orgnr');
+    }], 'user_id,orgnr');
 
     return json({ ok: true, sparat: true });
   } catch (e) {
