@@ -285,8 +285,27 @@ for (let i = 0; i < stallen.length; i += 200) {
 const kop = arg('kop');
 if (typeof kop === 'string' && kop.trim()) {
   const adresser = kop.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
-  await sb('POST', 'prospekt_kop?on_conflict=lista_id,epost',
-    adresser.map(epost => ({ lista_id: lista.id, epost, kalla: 'manuell' })),
+
+  // prospekt_kop nycklas pa user_id sedan 2026-09-01, inte pa adressen.
+  // Adressen ar fortfarande ingangen har, for det ar den man skriver pa
+  // kommandoraden, men den slas upp mot profiles innan raden skrivs. Saknas
+  // kontot avbryter vi hellre an skriver en rad som inte gar att komma at.
+  const lista_adr = adresser.map(e => `"${e}"`).join(',');
+  const profiler = await sb('GET',
+    `profiles?select=id,email&email=in.(${encodeURIComponent(lista_adr)})`);
+  const idPerAdress = new Map((profiler || []).map(p => [String(p.email).toLowerCase(), p.id]));
+
+  const saknas = adresser.filter(e => !idPerAdress.has(e));
+  if (saknas.length) {
+    console.error(`
+Saknar konto for: ${saknas.join(', ')}`);
+    console.error('Skapa kontot i Supabase (Authentication -> Users -> Add user,');
+    console.error('med Auto Confirm) och kor om. Ingen atkomst gavs.');
+    process.exit(1);
+  }
+
+  await sb('POST', 'prospekt_kop?on_conflict=lista_id,user_id',
+    adresser.map(epost => ({ lista_id: lista.id, user_id: idPerAdress.get(epost), epost, kalla: 'manuell' })),
     'resolution=merge-duplicates,return=minimal');
   console.log(`Gav åtkomst till: ${adresser.join(', ')}`);
 }
