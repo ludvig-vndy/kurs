@@ -488,17 +488,31 @@
 
   // Speglar sessionen i en cookie sa serverns kontogrind (_middleware.js) kan
   // verifiera JWT:n. Access-token som varde; utgang styr max-age.
+  //
+  // "Ingen session har" betyder INTE "utloggad". Klienten kan sakna sin nyckel
+  // av skal som inte har med inloggningen att gora: magic-lanken slutfordes av
+  // snabbvagen i logga-in.astro, localStorage ar avstangt, det ar ett privat
+  // fonster. Raderade vi cookien da tog vi bort den enda halva av inloggningen
+  // som faktiskt var giltig, och nasta klick foll ut till /logga-in. Cookien
+  // rors darfor bara nar vi har nagot att satta, eller vid ett uttalat utlogg.
   function setSessionCookie(session) {
     try {
       if (session && session.access_token) {
         document.cookie = "da_session=" + session.access_token + "; path=/; max-age=" + (session.expires_in || 3600) + "; SameSite=Lax; Secure";
-      } else {
-        document.cookie = "da_session=; path=/; max-age=0; SameSite=Lax; Secure";
       }
     } catch (e) {}
   }
 
+  function clearSessionCookie() {
+    try { document.cookie = "da_session=; path=/; max-age=0; SameSite=Lax; Secure"; } catch (e) {}
+  }
+
   whenReady(function () { getSession().then(setSessionCookie); mountUserChip(); flushPendingInvite(); });
   // Sessionen dyker ofta upp strax efter load (hashen parsas asynkront) -> kör om.
-  sb.auth.onAuthStateChange(function (_event, session) { setSessionCookie(session); mountUserChip(); flushPendingInvite(); });
+  // SIGNED_OUT ar det enda som far ta bort cookien: da har nagon sagt ifran.
+  sb.auth.onAuthStateChange(function (event, session) {
+    if (event === "SIGNED_OUT") clearSessionCookie();
+    else setSessionCookie(session);
+    mountUserChip(); flushPendingInvite();
+  });
 })();
