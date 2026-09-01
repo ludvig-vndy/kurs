@@ -166,9 +166,11 @@ export async function onRequest(context) {
     if (PILOT_SIDA.has(normalizePath(url.pathname))) return next();
     const mpSession = await verifieraSession(request);
     if (mpSession && (await arDeltagare(mpSession.sub, env))) return next();
-    // Pilotcookien lever kvar tills deltagarna har riktiga konton.
+    // Pilotcookien lever kvar som reservvag, men bara for den som gar direkt
+    // till /pilot. Den ar inte langre defaultvagen in, och pa projekt utan
+    // PILOT_SECRET ar den helt dod.
     if (await verifieraPilot(request, env && env.PILOT_SECRET)) return next();
-    return Response.redirect(new URL('/pilot', url.origin).toString(), 302);
+    return Response.redirect(new URL('/logga-in', url.origin).toString(), 302);
   }
 
   const token = getCookie(request, COOKIE);
