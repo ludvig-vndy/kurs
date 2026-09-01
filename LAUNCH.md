@@ -106,7 +106,14 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
 
 ## Motparten, pilotgrind (tidsbegränsad)
 
-- [ ] **Ta bort pilotinloggningen innan Motparten öppnas** (P0 för den kursen).
+- [x] **KLART 2026-09-01. Pilotinloggningen borttagen.** Ersatt av riktiga
+      Supabase-konton plus en rad i `motparten_deltagare`, så skiljelinjen mot
+      Delägaren hålls kvar utan att produkterna slås ihop. Borttaget:
+      `pilot-login.js`, `pilot.astro`, `verifieraPilot`/`pilotMejl`/`pilotAdress`
+      i `_lib.js`, `/pilot` i middlewaren, undantaget i Broadsheets klientgrind
+      och `pilot-cookie.test.mjs`. `PILOT_SECRET` kan tas bort från Pages-projekten.
+
+      Ursprunglig lydelse:
       `functions/api/pilot-login.js` släpper in en kort namnlista genom att de bara
       skriver sin mejladress. Den som känner till en adress i listan kommer alltså in.
 

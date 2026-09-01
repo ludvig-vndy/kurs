@@ -3,12 +3,13 @@
    Tva steg: steg 1 routar fragan till hogst fem lektioner ur REGISTER, steg 2 svarar pa
    full text ur dem. Se docs/superpowers/specs/2026-08-29-saljcoachen-design.md.
 
-   Allt faller stangt: utan giltig pilotcookie 401, utan PILOT_SECRET,
+   Allt faller stangt: utan inloggad session 401, utan nyckel,
    ANTHROPIC_API_KEY eller KV-bindningen RL 501, utan matchande Origin 403.
    RL ar avsiktligt fail-closed har, till skillnad fran i fraga.js: en betald endpoint
    far aldrig sta ostrypt for att en bindning glomts bort. */
 
-import { secureJson as json, verifieraPilot, pilotMejl } from './_lib.js';
+import { secureJson as json } from './_lib.js';
+import { kravAnvandare } from './_session.js';
 import { REGISTER, LEKTIONER, TITLAR } from './_korpus.js';
 import {
   extraheraReferenser, slaIhopKandidater, tolkaRoutning, forstaJsonObjekt, validieraSvar,
@@ -82,13 +83,41 @@ Läsa materialet:
   som gäller enligt raderna VARIFRÅN och VAD SOM GÄLLER.
 - UPPRÄKNING är lektionens egna punkter, använd dem hellre än egna.`;
 
+/* Granskar och normaliserar kroppen. Ren funktion utan Request, env eller
+   natverk, sa den gar att testa direkt.
+
+   Den bor separat for att sessionskollen ligger fore indatagranskningen i
+   onRequestPost, och det ska den gora: en oinloggad ska inte kunna kosta oss
+   parsning. Men da nas inte granskningen av ett enhetstest, eftersom en
+   giltig Supabase-JWT inte gar att forfalska offline. Att flytta authen for
+   att blidka ett test vore fel vag. Att bryta ut granskningen ar ratt vag,
+   och den blir lattare att lasa pa kopet.
+
+   Returnerar { fel } eller { fraga, komplettering }. */
+export function granskaIndata(kropp) {
+  if (!kropp || typeof kropp !== 'object') return { fel: 'Trasig begaran.' };
+  const fraga = String(kropp.fraga || '').trim();
+  let komplettering = null;
+  if (kropp.komplettering && typeof kropp.komplettering === 'object') {
+    komplettering = {
+      ursprunglig_fraga: String(kropp.komplettering.ursprunglig_fraga || '').trim(),
+      coachens_fraga: String(kropp.komplettering.coachens_fraga || '').trim(),
+    };
+  }
+  if (!fraga) return { fel: 'Skriv en fraga forst.' };
+  if (fraga.length > MAX_FRAGA) return { fel: `Fragan far vara hogst ${MAX_FRAGA} tecken.` };
+  const kontextlangd = fraga.length +
+    (komplettering ? komplettering.ursprunglig_fraga.length + komplettering.coachens_fraga.length : 0);
+  if (kontextlangd > MAX_KONTEXT) return { fel: 'For mycket text. Korta ned och forsok igen.' };
+  return { fraga, komplettering };
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   const url = new URL(request.url);
 
   // 1. Konfiguration. Faller stangt, i tur och ordning.
   if (!env.ANTHROPIC_API_KEY) return json({ error: 'Coachen ar inte konfigurerad.' }, 501);
-  if (!env.PILOT_SECRET) return json({ error: 'Coachen ar inte konfigurerad.' }, 501);
   if (!env.RL) return json({ error: 'Coachen ar inte konfigurerad.' }, 501);
 
   // 2. Ursprung. Cookien ar SameSite=Lax, men kontraktet ska sta har och inte antas.
@@ -98,35 +127,16 @@ export async function onRequestPost(context) {
   if (!typ.includes('application/json')) return json({ error: 'Fel innehallstyp.' }, 415);
 
   // 3. Session.
-  if (!(await verifieraPilot(request, env.PILOT_SECRET))) {
-    return json({ error: 'Du behover vara inloggad.' }, 401);
-  }
-  const mejl = pilotMejl(request);
+  const { anvandare, svar } = await kravAnvandare(context);
+  if (svar) return svar;
+  // Strypningen nycklas pa user_id och inte pa adressen. Adressen kan bytas,
+  // id:t kan det inte, och det ar samma nyckel som resten av systemet anvander.
+  const mejl = anvandare.id;
 
   // 4. Indata och tak.
-  let fraga = '';
-  let komplettering = null;
-  try {
-    const kropp = await request.json();
-    fraga = String(kropp.fraga || '').trim();
-    if (kropp.komplettering && typeof kropp.komplettering === 'object') {
-      komplettering = {
-        ursprunglig_fraga: String(kropp.komplettering.ursprunglig_fraga || '').trim(),
-        coachens_fraga: String(kropp.komplettering.coachens_fraga || '').trim(),
-      };
-    }
-  } catch {
-    return json({ error: 'Trasig begaran.' }, 400);
-  }
-  if (!fraga) return json({ error: 'Skriv en fraga forst.' }, 400);
-  if (fraga.length > MAX_FRAGA) {
-    return json({ error: `Fragan far vara hogst ${MAX_FRAGA} tecken.` }, 400);
-  }
-  const kontextlangd = fraga.length +
-    (komplettering ? komplettering.ursprunglig_fraga.length + komplettering.coachens_fraga.length : 0);
-  if (kontextlangd > MAX_KONTEXT) {
-    return json({ error: 'For mycket text. Korta ned och forsok igen.' }, 400);
-  }
+  const granskad = granskaIndata(await request.json().catch(() => null));
+  if (granskad.fel) return json({ error: granskad.fel }, 400);
+  const { fraga, komplettering } = granskad;
 
   // 5. Strypning: per identitet, inte per IP. En identitet gar inte att byta som en IP.
   const stopp = await stryp(env.RL, mejl);

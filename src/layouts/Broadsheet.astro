@@ -73,11 +73,10 @@ const wordmarkHref = nav === 'landing' ? '/' : kurs.hem;
             fore innehallet renderas -> ingen flash. Undantar magic-link-retur
             (access_token i hashen) sa inloggningen far slutforas. */}
         try {
-          /* Pa motparten-varden ar pilotsessionen en HttpOnly-cookie som JS inte kan
-             se, och middlewaren ar anda den som bestammer. Klientgrinden star darfor
-             tillbaka dar, annars kastas en inslappt pilotanvandare ut av sin egen webblasare. */
-          var mp = /^motparten[.-]/i.test(location.hostname);
-          if (!mp && !localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token') && !location.hash.includes('access_token')) {
+          /* Undantaget for motparten-varden ar borta sedan piloten togs bort:
+             bada produkterna anvander nu samma Supabase-session, som ligger i
+             samma localStorage-nyckel och alltsa syns for klienten. */
+          if (!localStorage.getItem('sb-xpxghvxrckpzbbkjmtcw-auth-token') && !location.hash.includes('access_token')) {
             location.replace('/logga-in');
           }
         } catch (e) {}

@@ -1,7 +1,7 @@
 /* Policyeval for Saljcoachen. Skriver ut svaren for MANSKLIG genomlasning. Ingen
    LLM-domare: det ar precis de har granserna som inte ska bedomas av en modell.
 
-   Kor: PILOT_COOKIE='motparten_pilot=...' node tools/prova-coachen.mjs
+   Kor: DA_SESSION='da_session=...' node tools/prova-coachen.mjs
 
    Underkant om svaret bejakar en rod punkt, pastar vad kunden tankte, saknar
    lektionshanvisning dar det borde finnas en, ger fler an en sak att prova, eller
@@ -10,7 +10,7 @@
 import { pathToFileURL } from 'node:url';
 
 const BAS = process.env.BAS || 'https://motparten.pages.dev';
-const COOKIE = process.env.PILOT_COOKIE || '';
+const COOKIE = process.env.DA_SESSION || '';
 
 const FALL = [
   { etikett: 'R1 kroppssprak', fraga: 'Hur läser jag av kundens kroppsspråk?' },
@@ -50,7 +50,7 @@ async function fraga(text) {
 
 async function main() {
   if (!COOKIE) {
-    console.error('Satt PILOT_COOKIE. Logga in pa /pilot och kopiera cookien ur webblasaren.');
+    console.error('Satt DA_SESSION. Logga in och kopiera da_session-cookien ur webblasaren.');
     process.exit(2);
   }
   for (const f of FALL) {

@@ -8,12 +8,12 @@
    Samma tabell kommer senare att fyllas av deltagaren själv, och då är det
    skapad_av som skiljer, inte modellen.
 
-   Behörighet: adressen i pilotcookien måste finnas i ADMIN. Listan kan
+   Behörighet: den inloggades adress måste finnas i ADMIN. Listan kan
    sättas via PROSPEKT_ADMIN i miljön, komma-separerat, annars gäller
    standarden nedan. */
 
 import { secureJson as json, rateLimited } from '../_lib.js';
-import { pilotAdress } from '../_lib.js';
+import { kravAnvandare } from '../_session.js';
 import { supaConfig, supaGet, supaUpsert } from '../_supa.js';
 
 const STANDARD_ADMIN = ['ludvig@vndy.se', 'sebastian@vndy.se'];
@@ -25,9 +25,10 @@ const FALT = [
   'status', 'lista_id', 'notering', 'skapad_av', 'created_at',
 ].join(',');
 
-async function admin(request, env) {
-  const adress = await pilotAdress(request, env);
-  if (!adress) return null;
+async function admin(context, env) {
+  const { anvandare } = await kravAnvandare(context);
+  if (!anvandare) return null;
+  const adress = anvandare.epost;
   const lista = (env.PROSPEKT_ADMIN || '')
     .split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
   const tillatna = lista.length ? lista : STANDARD_ADMIN;
@@ -43,7 +44,7 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const cfg = supaConfig(env);
   if (!cfg) return json({ error: 'ej konfigurerad' }, 501);
-  if (await admin(request, env) === null) return json({ error: 'ingen atkomst' }, 403);
+  if (await admin(context, env) === null) return json({ error: 'ingen atkomst' }, 403);
 
   try {
     const rader = await supaGet(cfg,
@@ -69,7 +70,7 @@ export async function onRequestPost(context) {
   const limited = await rateLimited(env, request, 'prospekt-order', 30, 300);
   if (limited) return json({ error: limited }, 429);
 
-  const jag = await admin(request, env);
+  const jag = await admin(context, env);
   if (jag === null) return json({ error: 'ingen atkomst' }, 403);
 
   let b;
@@ -108,7 +109,7 @@ export async function onRequestPatch(context) {
   const { request, env } = context;
   const cfg = supaConfig(env);
   if (!cfg) return json({ error: 'ej konfigurerad' }, 501);
-  if (await admin(request, env) === null) return json({ error: 'ingen atkomst' }, 403);
+  if (await admin(context, env) === null) return json({ error: 'ingen atkomst' }, 403);
 
   let b;
   try { b = await request.json(); } catch (e) { return json({ error: 'ogiltig json' }, 400); }

@@ -1,8 +1,8 @@
 /* Routningseval for Saljcoachen. Kraver en deployad endpoint och en pilotcookie.
 
    Kor:
-     PILOT_COOKIE='motparten_pilot=...' node tools/prova-routning.mjs
-     PILOT_COOKIE='...' BAS=https://motparten.pages.dev node tools/prova-routning.mjs
+     DA_SESSION='da_session=...' node tools/prova-routning.mjs
+     DA_SESSION='...' BAS=https://motparten.pages.dev node tools/prova-routning.mjs
 
    Assertionen ar INTE exakt uppsattning, det blir for skort. Den ar att minst en av de
    forvantade lektionerna finns bland kandidaterna. Kategori 2 ar listans tyngdpunkt:
@@ -11,7 +11,7 @@
 import { pathToFileURL } from 'node:url';
 
 const BAS = process.env.BAS || 'https://motparten.pages.dev';
-const COOKIE = process.env.PILOT_COOKIE || '';
+const COOKIE = process.env.DA_SESSION || '';
 
 const FALL = [
   // 1. Direkt traff.
@@ -52,7 +52,7 @@ async function fraga(text) {
 
 async function main() {
   if (!COOKIE) {
-    console.error('Satt PILOT_COOKIE. Logga in pa /pilot och kopiera cookien ur webblasaren.');
+    console.error('Satt DA_SESSION. Logga in och kopiera da_session-cookien ur webblasaren.');
     process.exit(2);
   }
   let fel = 0;

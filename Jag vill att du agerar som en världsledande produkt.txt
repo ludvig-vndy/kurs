@@ -1,0 +1,834 @@
+Jag vill att du agerar som en världsledande produktchef, systemarkitekt och UX-designer med erfarenhet från Bloomberg Terminal, TradingView, Avanza och professionella tradingplattformar.
+
+Jag vill bygga marknadens bästa söktjänst för warranter och hävstångsprodukter. Målet är att skapa den självklara platsen där privata investerare snabbt kan hitta den bästa produkten utan att behöva leta hos olika emittenter.
+
+Mål
+
+Skapa en tjänst som samlar ALLA tillgängliga hävstångsprodukter på den svenska marknaden i en enda databas.
+
+Det ska inkludera exempelvis:
+
+* Warranter
+* Mini Futures
+* Bull & Bear-certifikat
+* Turbos
+* Knock-Outs
+* Open End Turbos
+* Tracker-certifikat
+* Alla liknande produkter från samtliga emittenter.
+
+Exempel på emittenter:
+
+* Morgan Stanley
+* Société Générale
+* BNP Paribas
+* Vontobel
+* Nordea
+* SEB
+* Citi
+* UBS
+* Handelsbanken
+* Goldman Sachs
+* Alla övriga relevanta.
+
+Problemet vi löser
+
+Idag måste investerare:
+
+* Besöka flera olika hemsidor.
+* Söka hos varje emittent.
+* Jämföra avgifter manuellt.
+* Leta efter rätt hävstång.
+* Kontrollera spread.
+* Kontrollera stop loss.
+* Kontrollera finansieringsnivå.
+* Kontrollera om produkten ens går att handla.
+
+Detta är extremt ineffektivt.
+
+Jag vill skapa “Bloomberg för hävstångsprodukter” men betydligt enklare.
+
+Funktioner
+
+Tänk helt fritt.
+
+Beskriv ALLA funktioner du tycker ska finnas.
+
+Exempel:
+
+Supersök
+
+Användaren ska kunna skriva
+
+Tesla
+
+och direkt få upp alla produkter från alla emittenter.
+
+Samma för
+
+* NVIDIA
+* OMX
+* Guld
+* Silver
+* Bitcoin
+* EUR/USD
+* S&P 500
+* etc.
+
+Filter
+
+Man ska kunna filtrera på exempelvis
+
+* Bull
+* Bear
+* Warrant
+* Mini Future
+* Turbo
+* Emittent
+* Hävstång
+* Spread
+* Avgift
+* Stop Loss
+* Finansieringsnivå
+* Löptid
+* Valuta
+* Underliggande tillgång
+* Börs
+* Risknivå
+
+Sortering
+
+Man ska kunna sortera efter
+
+* Högst hävstång
+* Lägst spread
+* Lägst finansieringskostnad
+* Bäst likviditet
+* Högst omsättning
+* Kortast avstånd till knock out
+* Längst avstånd till knock out
+* Mest handlade idag
+* Nyast
+* Mest prisvärd
+* AI-rekommenderad
+
+Produktkort
+
+Varje produkt ska ha ett tydligt informationskort.
+
+Exempelvis
+
+* Namn
+* Emittent
+* Ticker
+* ISIN
+* Underliggande
+* Typ
+* Hävstång
+* Knock Out
+* Stop Loss
+* Finansieringsnivå
+* Spread
+* Senaste pris
+* Dagens förändring
+* Omsättning
+* Finansieringskostnad
+* Daglig kostnad
+* Courtageinformation
+* Länk till KID
+* Länk till prospekt
+
+Smart jämförelse
+
+Man ska kunna markera flera produkter och jämföra dem sida vid sida.
+
+Precis som när man jämför mobiltelefoner.
+
+AI-funktioner
+
+Fundera ut AI-funktioner som skulle göra tjänsten unik.
+
+Exempel:
+
+* Vilken produkt ger mest exponering per krona?
+* Finns en liknande produkt med lägre spread?
+* Finns en liknande med högre hävstång?
+* Finns en bättre produkt från annan emittent?
+* Är knock out för nära?
+* Hur påverkas produkten om underliggande rör sig 1 %, 2 %, 5 % eller 10 %?
+* Visa risk grafiskt.
+* Visa sannolikhet att knockas ut baserat på historisk volatilitet.
+
+Data
+
+Beskriv hur all data kan hämtas.
+
+Vilka API:er finns?
+
+Vilka hemsidor erbjuder data?
+
+Kan data hämtas automatiskt?
+
+Hur uppdateras priser?
+
+Hur ofta?
+
+Hur hanteras produkter som försvinner?
+
+Skalbarhet
+
+Designa systemet så att det kan växa till Europas största databas över hävstångsprodukter.
+
+UX
+
+Designa ett gränssnitt som är extremt snabbt.
+
+Tänk TradingView möter Apple.
+
+Minimalt.
+
+Snyggt.
+
+Professionellt.
+
+Snabbt.
+
+Affärsmodell
+
+Föreslå flera sätt att tjäna pengar.
+
+Exempelvis:
+
+* Premiumabonnemang
+* API
+* White Label
+* Partnerprovision
+* Dataförsäljning
+* Företagslicenser
+
+Leverans
+
+Jag vill att du tänker som om du ska bygga ett miljardbolag.
+
+Utmana mina idéer.
+
+Föreslå funktioner jag inte ens tänkt på.
+
+Prioritera vad som ger störst användarnytta.
+
+Beskriv också en MVP som kan byggas på 2–3 månader och därefter en roadmap för version 2, 3 och 4.
+
+Jag vill inte ha ett vanligt svar. Jag vill ha ett genomarbetat produktförslag med systemarkitektur, datamodell, UX-flöden, wireframe-idéer, teknisk arkitektur, datakällor, konkurrensanalys och en konkret utvecklingsplan.
+
+
+Svar:
+Det jag utmanar i din idé:
+	•	Datan ÄR företaget. Sök/filter/kort/jämförelse är en helg var. Det svåra: komplett, normaliserad master från ~10 emittenter, färsk genom att tusentals minifutures knockas ut dagligen, plus kurs/spread. 80 % av jobbet, hela vallgraven.
+	•	“Ingen samlar detta” stämmer bara halvt. Avanza/Nordnet har redan screeners (gratis för kunder). Tyskland (EUWAX, onvista, boerse-frankfurt) är en mogen “Bloomberg för hävstång”. Vit yta = Norden-fokus + bättre analys/UX + emittentneutralitet, inte greenfield.
+	•	“AI rekommenderar bästa produkten” = potentiellt investeringsrådgivning (MiFID II), tillståndskrävande. Håll det som objektiv jämförelse efter användarvalda kriterier, aldrig “vi rekommenderar”.
+	•	Realtidskurser är dyrt och licensgrindat (Nasdaq per-user). Kör 15-min fördröjt i MVP, det räcker för jämförelse.
+	•	TAM: svensk hävstångsretail ensamt blir inget miljardbolag. Vägen dit = äga den renaste cross-issuer-databasen och sälja den B2B/API + Europa. B2C bygger datatillgången och varumärket; B2B är pengarna.
+Funktioner du missade som är de bästa: carry-decay-kalkylator (finansieringskostnaden som tyst dödar minifutures), “ersätt min produkt” (klistra in ISIN → bättre alternativ), emittent-tillförlitlighet (quote-kvalitet, eget dataset), KO-sannolikhet via barrier-hit-matematik, EUWAX-likt sentiment.
+MVP (2-3 mån), hårt scopat: Sverige, 5 största emittenterna, fördröjda priser, Supersök + kärnfilter + produktkort + jämförelse + analyslagret (effektiv hävstång, avstånd till KO, KO-sannolikhet). Ingen realtid, ingen AI-reco, inga larm. Differentieringen ligger i analysen och neutraliteten, inte fler features.
+Min rekommendation: bygg exakt den MVP:n, men positionera som den neutrala, snabbaste hävstångssöken för Norden med analys mäklarna inte ger, inte “Bloomberg” eller “AI-rådgivare”. Bevisa att du kan hålla datan ren och färsk på 5 emittenter, det är det enda som är svårt och det enda som är värt något.
+För att skärpa det här till en byggbar spec behöver jag tre vägval från dig:
+	1.	Bygga eller licensera datan först? Egna emittent-connectors (billigt, skört, långsamt) vs datavendor som Infront/SIX (dyrt, snabbt, rent). Avgör tidslinjen helt.
+	2.	B2C-app eller B2B-datamotor som primärt mål? Påverkar hela arkitektur- och go-to-market-ordningen.
+	3.	Är det här en separat satsning, eller ska den dela något med Marginalen (varumärke, inloggning, “verktyg”-ytan)?
+
+
+
+Sebastian igen:
+	Jag hade byggt den för en enda fråga:
+
+“Jag vill ha exponering mot X. Vilken produkt är bäst för mig?”
+
+Det är det problemet privata investerare faktiskt har.
+
+Idag gör man ungefär så här:
+
+* Söker på Avanza.
+* Får upp 150 produkter.
+* Har ingen aning om vilken som skiljer sig från vilken.
+* Öppnar tio flikar.
+* Jämför spread.
+* Jämför hävstång.
+* Jämför knock out.
+* Ger upp eller chansar.
+
+Din tjänst skulle göra detta på fem sekunder.
+
+Jag skulle därför inte kalla den en sökmotor.
+
+Jag skulle kalla den:
+
+“Hitta bästa hävstångsprodukten.”
+
+Det är ett mycket tydligare löfte.
+
+⸻
+
+Sedan skulle startsidan vara extremt enkel.
+
+Vad vill du handla?
+
+🔍 Tesla
+
+Sedan:
+
+Hur tror du att marknaden går?
+
+○ Upp
+
+○ Ner
+
+Sedan:
+
+Hur mycket risk vill du ta?
+
+○ Låg
+
+○ Medel
+
+○ Hög
+
+Sedan:
+
+Hur länge tänker du hålla?
+
+○ Idag
+
+○ Några dagar
+
+○ Några veckor
+
+○ Några månader
+
+Klart.
+
+⸻
+
+Sedan får man exempelvis:
+
+Bäst totalt ⭐⭐⭐⭐⭐
+
+Mini Future Long Morgan Stanley
+
+Effektiv hävstång: 5,8x
+
+Spread: 0,19 %
+
+Finansieringskostnad: låg
+
+Avstånd till KO: 21 %
+
+Likviditet: hög
+
+Passar bäst för swinghandel.
+
+⸻
+
+Högst hävstång
+
+Turbo Long
+
+9,6x
+
+Hög risk
+
+⸻
+
+Billigast
+
+Mini Future
+
+Lägst finansieringskostnad.
+
+⸻
+
+Säkraste
+
+Mini Future
+
+Längst till knock out.
+
+⸻
+
+Mest handlad idag
+
+…
+
+⸻
+
+Det där tror jag är betydligt mer användbart än att bara visa 400 produkter.
+
+Sedan hade jag byggt in riktigt smarta funktioner.
+
+Exempel:
+
+Du söker på Nvidia.
+
+Systemet säger direkt:
+
+Undvik dessa 17 produkter.
+
+De har högre finansieringskostnad än likvärdiga alternativ.
+
+eller
+
+Här finns en nästan identisk produkt med 40 % lägre spread.
+
+Det är sådant som sparar pengar direkt.
+
+⸻
+
+En annan funktion jag älskar
+
+Du klistrar in ett ISIN.
+
+Systemet svarar:
+
+Du äger denna produkt.
+
+Den är nu 63 dagar gammal.
+
+Det finns tre bättre alternativ idag.
+
+Det är extremt konkret nytta.
+
+⸻
+
+Det enda jag skulle undvika
+
+Jag skulle inte skriva:
+
+“AI rekommenderar.”
+
+Jag skulle skriva:
+
+“Bäst enligt dina valda kriterier.”
+
+Till exempel:
+
+Rankad #1 eftersom den har lägst spread, låg finansieringskostnad, hög likviditet och önskad hävstång.
+
+Det är transparent och objektivt. Användaren kan dessutom själv ändra vad som väger tyngst, till exempel hävstång, kostnad eller avstånd till knock out.
+
+⸻
+
+Jag tror faktiskt att en enkel rankingmotor är mer värdefull än AI här. De flesta privata investerare vill inte ha långa analyser – de vill kunna känna sig trygga med att de snabbt hittat en bra produkt. Om din tjänst konsekvent kan göra det på några sekunder har den ett mycket tydligt och lättförståeligt värde.
+
+ludvig svar:
+Det jag utmanar:
+	•	Din vision finns redan och byggs nu. FinChat → Fiscal.ai (2025) är nästan exakt “Koyfin möter ChatGPT över fundamenta + transkript”. AlphaSense äger “AI läser alla filings” i enterprise. Det här är den mest trängda, bäst finansierade av dina tre idéer. Head-on globalt = mycket svårt, du startar bakom.
+
+	•	Datan är åter hela företaget, fast dyrare (fundamenta + estimat + transkript = sexsiffrig årskostnad innan intäkt). AI:n är numera den billiga delen.
+
+	•	Hallucination i finans = omedelbar död. Säger AI:n fel vinst en gång är förtroendet borta. Räddningen är samma princip som warrant-motorn och kursens hårda regel: siffror är deterministiska, språk är AI. Talen extraheras ur strukturerad data, deltan beräknas i kod, LLM:en förklarar men räknar/minns aldrig, och varje påstående citerar en tidsstämplad källa och märks faktum/slutsats/vet-ej. Det är den röda tråden i allt du bygger.
+
+	•	“Vad bör jag göra nu?” = investeringsrådgivning (MiFID II). Skriv om till “vad har ändrats mot din tes” / “vad ska du hålla koll på”.
+	•	Avanza/Nordnet-koppling är inte löst (ingen ren PSD2 för värdepapper). Börja med manuell/CSV-import.
+
+	•	~150 funktioner = fem produkter, inte en MVP. Reddit/X-sentiment, podd/YouTube-ASR, auto-konkurrent, “köp/sälj-motorer” är v2+ eller bort.
+
+Din wedge (och varför just du): slå inte Bloomberg. Bygg AI-ägaranalytikern för nordiska långsiktiga investerare. Börsdata äger nordisk fundamentadata men har ingen AI-analytiker; de globala AI-spelarna betjänar inte nordisk retail, svenska pressmeddelanden, FI:s gratisregister (insider, blankning) eller svenska språket väl. Och ingen av dem har en uttalad investeringsfilosofi, de är neutrala terminaler. Du har en kurs som lär ut ett sätt att tänka. En AI som tänker som kursen (ägare, inte spekulant; fundamenta över brus) kan bara du bygga. Kursen är din moat, din differentiering OCH din kundtratt.
+Skär till fyra hjälteflöden, släng resten tills dessa är magiska:
+	1.	Morgonbriefingen — analytikern som jobbat över natten: varje morgon “3 saker som betyder något för din portfölj, 11 du kan ignorera”. Anti-brus som feature.
+
+	2.	Grundad rapportanalys — delta mot 8-12 kvartal och mot konsensus, beräknat i kod, narrerat av AI, allt citerat.
+
+	3.	Tes-spårning (din unika, kursdrivna feature) — du skriver din tes i en mening, AI:n flaggar bara när något materiellt utmanar den. Besvarar “har caset förändrats?” som ingen neutral terminal kan, och håller AI:n på rätt sida om rådgivningslinjen.
+
+	4.	Fråga-vad-som-helst — grundad chat med citat.
+MVP (3-4 mån): Norden, CSV-innehav, de fyra flödena, pressmeddelanden + insider + blankning, källprovenans överallt. Ingen broker-koppling, inget socialt, ingen ASR.
+Rekommendation: bygg inte “allt åt alla”. Bevisa att morgonbriefingen + tes-spårningen + grundad rapportanalys är så bra och så pålitliga att en seriös långsiktig investerare inte vill vara utan dem. Det är vinnbart, det är ditt, och det bygger på exakt den moat du redan har.
+En observation värd att säga rakt ut: dina tre idéer (warrantsök, rapportkollen, ägar-AI) är inte tre separata bolag, de är tre ytor på samma plattform med samma underliggande princip (deterministiska siffror, AI förklarar, allt citerat) och samma tratt (Marginalen). Rapportkollen är hjälteflöde 2 här. Det finns en sammanhållen produkt här, inte tre.
+Vill du att jag mockar dashboarden + en akties AI-sida (morgonbriefing rankad efter portföljpåverkan, rapportanalys med kvartalsdelta, tes-spårning, grundad chat med citat) precis som jag gjorde med warrant-tjänsten, så du ser känslan? Jag röstar på det, en klickbar yta säljer det här bättre än en spec.
+
+
+Sebastian:
+Riktigt bra analys. Jag håller med om mycket av det du skriver, framför allt principen att deterministiska data ska stå för siffrorna medan AI:n ska stå för analys, sammanfattning och förklaring – med tydliga källhänvisningar. Jag gillar också tes-spårningen, den känns som en funktion som verkligen kan särskilja produkten.
+
+Däremot vill jag att vi lyfter blicken lite. Just nu känns det som att vi optimerar en MVP innan vi ens har definierat den perfekta produkten. Jag vill göra tvärtom.
+
+Låt oss först designa världens bästa produkt för långsiktiga investerare, helt utan begränsningar. När vi vet hur den perfekta upplevelsen ser ut kan vi sedan bryta ner den till en MVP och en tydlig roadmap.
+
+Jag vill därför att du tänker som en produktdesigner på Apple, inte som en utvecklare som ska hålla nere scope.
+
+Designa den produkt som får en investerare att känna: “Jag kan inte investera utan den här längre.”
+
+Visa mig hela användarupplevelsen:
+
+* Hur startsidan/dashboarden ser ut.
+* Hur morgonbriefingen fungerar.
+* Hur en aktiesida är uppbyggd.
+* Hur rapportanalysen presenteras.
+* Hur tes-spårningen fungerar i praktiken.
+* Hur AI-chatten fungerar.
+* Hur användaren navigerar mellan allt detta.
+
+Jag vill att fokus ligger på användarupplevelsen och informationshierarkin snarare än tekniken. Om du tycker att någon av mina idéer är svag eller att det finns en bättre lösning, utmana mig och motivera varför.
+
+Målet är inte att bygga en terminal med mer data. Målet är att bygga en produkt som hjälper investeraren att fatta bättre beslut med så lite tid och mental energi som möjligt. Informationen ska vara filtrerad, prioriterad och förklarad – inte bara presenterad.
+
+
+
+En annan tjänst:
+Jag vill att du agerar som en världsledande produktchef, investeringsanalytiker, AI-arkitekt och UX-designer. Du har erfarenhet från Bloomberg Terminal, FactSet, Capital IQ, Koyfin, TradingView, Tikr, FinChat och professionella hedgefonder.
+
+Jag vill bygga världens bästa AI-plattform för aktieägare.
+
+Målet är att skapa den enda tjänst en investerare behöver för att förstå sina innehav. Plattformen ska inte bara visa data – den ska analysera, sammanfatta, prioritera och förklara vad som faktiskt är viktigt.
+
+Jag vill att du tänker helt utan begränsningar och designar den bästa produkten som skulle kunna finnas på marknaden.
+
+Vision
+
+En användare lägger in sina innehav eller kopplar sitt Avanza- eller Nordnet-konto.
+
+Därefter sköter plattformen resten.
+
+Användaren ska aldrig behöva leta efter information igen.
+
+Plattformen ska automatiskt samla, analysera och presentera allt som är relevant för varje innehav.
+
+Den ska fungera som en AI-driven personlig analytiker som arbetar dygnet runt.
+
+Dashboard
+
+Designa en startsida som direkt visar:
+
+* Mina innehav
+* Total portfölj
+* Dagens viktigaste händelser
+* Viktiga nyheter
+* Rapporter
+* Vinstvarningar
+* Insiderköp
+* Insiderförsäljningar
+* Blankningsförändringar
+* Riktkurser
+* Analytikerförändringar
+* Makrohändelser som påverkar mina bolag
+* Kommande rapporter
+* Kommande kapitalmarknadsdagar
+* Utdelningar
+* Emissioner
+* VD-intervjuer
+* Podcasts
+* Videor
+* Pressmeddelanden
+
+AI:n ska automatiskt sortera allt efter hur viktigt det är för just min portfölj.
+
+Varje akties egen AI-sida
+
+När jag klickar på en aktie vill jag få en komplett analys.
+
+Exempelvis:
+
+AI-sammanfattning
+
+På 30 sekunder ska jag förstå:
+
+* Vad har hänt?
+* Vad är viktigast?
+* Är nyheterna positiva eller negativa?
+* Hur påverkas caset?
+* Har investeringscaset förändrats?
+* Vad bör jag hålla koll på nu?
+
+Nyhetsmotor
+
+Samla automatiskt:
+
+* Börsmeddelanden
+* Pressmeddelanden
+* Nyhetsartiklar
+* Intervjuer
+* Podcasts
+* YouTube-videor
+* Bloggar
+* Myndighetsbeslut
+* Domstolsbeslut
+* Branschmedia
+* Sociala medier
+* X
+* Reddit
+* Finansforum
+
+AI:n ska:
+
+* sammanfatta allt
+* gruppera liknande nyheter
+* filtrera bort brus
+* identifiera det viktigaste
+* förklara varför informationen spelar roll
+
+Rapportanalys
+
+När ett bolag släpper en rapport ska AI automatiskt:
+
+Läsa hela rapporten.
+
+Sedan presentera:
+
+Kort sammanfattning
+
+Det viktigaste
+
+Bra saker
+
+Dåliga saker
+
+Risker
+
+Möjligheter
+
+Överraskningar
+
+Skillnader mot föregående kvartal
+
+Skillnader mot analytikernas förväntningar
+
+Vad marknaden sannolikt kommer fokusera på
+
+Nya risker
+
+Nya möjligheter
+
+Citat från VD
+
+Citat från CFO
+
+Förändringar i strategi
+
+Förändringar i guidning
+
+Förändringar i marginaler
+
+Förändringar i kassaflöde
+
+Förändringar i skuldsättning
+
+Förändringar i tillväxt
+
+Förändringar i orderingång
+
+Förändringar i marknader
+
+Förändringar i segment
+
+Automatisk jämförelse mot de senaste 8–12 kvartalen.
+
+Fundamental analys
+
+Bygg världens bästa fundamentala analys.
+
+Exempelvis:
+
+* Omsättning
+* EBIT
+* EBITDA
+* Vinst
+* Kassaflöde
+* FCF
+* Bruttomarginal
+* Rörelsemarginal
+* Nettomarginal
+* ROE
+* ROIC
+* ROC
+* Skuldsättning
+* Nettoskuld
+* Likviditet
+* Aktier
+* Utspädning
+* Historiska multiplar
+* EV/EBIT
+* EV/EBITDA
+* EV/Sales
+* P/E
+* PEG
+* P/FCF
+* FCF Yield
+
+AI:n ska förklara siffrorna på vanlig svenska.
+
+Inte bara visa dem.
+
+AI-analytiker
+
+Jag vill kunna ställa frågor.
+
+Exempelvis:
+
+“Varför föll aktien idag?”
+
+“Har caset försämrats?”
+
+“Vad är den största risken?”
+
+“Vilka konkurrenter går bättre?”
+
+“Vad säger senaste rapporten?”
+
+“Sammanfatta de senaste sex månaderna.”
+
+“Vad tycker marknaden?”
+
+“Vad missar marknaden?”
+
+“Vad är de tre viktigaste KPI:erna?”
+
+Historik
+
+Skapa en tidslinje.
+
+Där ska man kunna se:
+
+* Rapporter
+* Förvärv
+* Nyemissioner
+* VD-byten
+* Insiderköp
+* Blankning
+* Viktiga nyheter
+* Kursreaktioner
+* AI:s tidigare analyser
+
+Portföljövervakning
+
+För mina innehav ska AI automatiskt övervaka:
+
+* Alla nyheter
+* Alla rapporter
+* Alla pressmeddelanden
+* Alla SEC- eller myndighetsdokument
+* Insiderhandel
+* Blankning
+* Analytikerförändringar
+* Makrohändelser
+* Konkurrenter
+* Leverantörer
+* Kunder
+* Råvarupriser
+* Valutor
+* Räntor
+
+Om något viktigt händer ska AI direkt berätta:
+
+Vad har hänt?
+
+Varför är det viktigt?
+
+Hur påverkar det mina innehav?
+
+Vad bör jag göra nu?
+
+Konkurrentanalys
+
+För varje bolag ska AI automatiskt identifiera konkurrenter.
+
+Visa:
+
+* vem som växer snabbast
+* vem som tjänar mest pengar
+* vem som har bäst marginaler
+* vem som värderas högst
+* vem som tar marknadsandelar
+
+AI Risk Engine
+
+Identifiera automatiskt:
+
+* ökande skuldsättning
+* försämrat kassaflöde
+* minskande marginaler
+* ökande blankning
+* insiderförsäljningar
+* beroende av en kund
+* regulatoriska risker
+* valutarisken
+* geopolitisk risk
+* råvarurisk
+* ledningsrisk
+
+AI:n ska ge en tydlig motivering och visa vilka datapunkter som ligger bakom bedömningen.
+
+AI Opportunity Engine
+
+Identifiera:
+
+* förbättrade marginaler
+* nya marknader
+* ökande orderingång
+* positivt kassaflöde
+* sjunkande värdering
+* stark insideraktivitet
+* positiva estimatrevideringar
+* förbättrad kapitalallokering
+* strukturella trender
+
+Datakällor
+
+Beskriv vilka API:er och dataleverantörer som behövs.
+
+Vilka data kan hämtas automatiskt?
+
+Hur ofta ska data uppdateras?
+
+Hur kvalitetssäkras informationen?
+
+Hur hanteras motstridiga uppgifter?
+
+AI-funktioner
+
+Föreslå funktioner jag inte ens tänkt på.
+
+Överraska mig.
+
+Tänk fem år framåt.
+
+Vad skulle göra att ingen seriös investerare vill vara utan tjänsten?
+
+Affärsmodell
+
+Designa flera affärsmodeller:
+
+* Freemium
+* Premium
+* Pro
+* Företag
+* API
+* White label
+* Kapitalförvaltare
+* Family offices
+
+Leverans
+
+Jag vill inte ha ett vanligt svar.
+
+Jag vill ha ett komplett produktförslag för ett miljardbolag.
+
+Beskriv:
+
+* den perfekta användarupplevelsen
+* alla funktioner
+* prioriterad roadmap (MVP → V2 → V3 → V4)
+* teknisk arkitektur
+* AI-arkitektur
+* datamodell
+* backend
+* frontend
+* databaser
+* API-struktur
+* datakällor
+* säkerhet
+* skalbarhet
+* konkurrensanalys
+* vilka funktioner som blir “wow”-upplevelser
+* vilka funktioner som skapar störst konkurrensfördel
+
+Utmana mina idéer. Ta bort sådant som inte skapar värde och lägg till sådant som gör produkten till den självklara plattformen för långsiktiga investerare världen över.
+

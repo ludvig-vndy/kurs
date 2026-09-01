@@ -8,7 +8,7 @@
    statiska tillgangar och /api/* (funktionerna gor sin egen auth). Ovrigt
    kraver en giltig session, annars -> /logga-in. */
 
-import { verifieraPilot, arMotpartenVard, verifieraSession } from './api/_lib.js';
+import { arMotpartenVard, verifieraSession } from './api/_lib.js';
 
 const COOKIE = 'da_session';
 const JWKS_URL = 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1/.well-known/jwks.json';
@@ -21,10 +21,6 @@ const PUBLIC_EXACT = new Set([
   '/labs/inbjudan', '/labs/inbjudan.html',
 ]);
 
-// Pilotinloggningen ar Motpartens, inte Marginalens, och slapps darfor igenom i
-// motparten-grenen nedan i stallet for har. Pa Marginalens varder ar /pilot en
-// grindad sida som vilken annan, sa saljkursens inloggning inte gar att na dar.
-const PILOT_SIDA = new Set(['/pilot', '/pilot/']);
 
 // Normalisera pathen FORE alla grindbeslut: avkoda procent-escapes (upprepat, sa
 // dubbelkodning inte smugglar) och gemena. Utan detta ser `/labs/data%2fx.json` inte
@@ -163,13 +159,8 @@ export async function onRequest(context) {
   // nagon annanstans: i en rad i motparten_deltagare. Konto ensamt racker
   // aldrig, och en Delagaren-anvandare utan deltagarrad kommer alltsa inte in.
   if (motparten) {
-    if (PILOT_SIDA.has(normalizePath(url.pathname))) return next();
     const mpSession = await verifieraSession(request);
     if (mpSession && (await arDeltagare(mpSession.sub, env))) return next();
-    // Pilotcookien lever kvar som reservvag, men bara for den som gar direkt
-    // till /pilot. Den ar inte langre defaultvagen in, och pa projekt utan
-    // PILOT_SECRET ar den helt dod.
-    if (await verifieraPilot(request, env && env.PILOT_SECRET)) return next();
     return Response.redirect(new URL('/logga-in', url.origin).toString(), 302);
   }
 
