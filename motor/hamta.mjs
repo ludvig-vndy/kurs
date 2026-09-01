@@ -23,6 +23,24 @@ export function stadaHtml(html) {
     .trim();
 }
 
+// PDF-bilagor i ett pressmeddelande, bäst först.
+//
+// Värden får inte hårdkodas. Fram till 2026-08-31 matchades bara storage.mfn.se,
+// men beQuoted-distribuerade bolag (MFN-URL med /beq/) lägger bilagorna på
+// cdn.bequoted.com. Följden var att tio av Unibaps rapporter låg olästa och
+// kassan, som bara står i PDF:en och aldrig i pressmeddelandet, saknades helt.
+//
+// Ordningen är en del av kontraktet: natt.mjs tar pdfLankar[0], så den fulla
+// rapporten ska ligga före pressmeddelandeversionen (samma text som vi redan
+// har) och svenska före engelska.
+export function pdfLankarUr(html) {
+  const alla = [...new Set(
+    [...String(html || '').matchAll(/https?:\/\/[^"'\s)<>]+\.pdf/gi)].map(m => m[0])
+  )];
+  const rank = u => (/[-/]PM[-.]/i.test(u) ? 2 : 0) + (/interim|english|[-_]en[-.]/i.test(u) ? 1 : 0);
+  return alla.sort((a, b) => rank(a) - rank(b));   // stabil sort: lika rang behåller sidans ordning
+}
+
 export async function hamta(url, namn) {
   const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha; dokumenthamtning for intern analys)' } });
   if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
@@ -37,8 +55,7 @@ export async function hamta(url, namn) {
   }
 
   const html = await res.text();
-  // PDF-bilagor i pressmeddelandet (rapporter ligger ofta som storage.mfn.se-länkar).
-  const pdfLankar = [...new Set([...html.matchAll(/https:\/\/storage\.mfn\.se\/[^"'\s)]+\.pdf/gi)].map(m => m[0]))];
+  const pdfLankar = pdfLankarUr(html);
   const text = stadaHtml(html);
   const fil = p(`./in/${namn}.txt`);
   writeFileSync(fil, text, 'utf8');

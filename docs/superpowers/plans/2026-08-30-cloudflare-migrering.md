@@ -1,7 +1,7 @@
 # Flytt av Cloudflare-resurser till ludvig-kontot
 
 **Datum:** 2026-08-30
-**Status:** förberedd, väntar på inloggning till målkontot
+**Status:** allt flyttat och verifierat 2026-08-31. Kvar: byta piloterna till de nya adresserna, sedan radera det gamla.
 **Från:** vndy-kontot (`a525ec472526e7bb5e054e8f88922c50`)
 **Till:** ludvig-kontot
 
@@ -33,12 +33,22 @@ till skillnad från motparten.pages.dev som svarade 302).
 | Pages `kurs` | 85 fokus-sidor plus resten | nej, byggs om ur repot |
 | Pages `motparten` | säljkursen | nej, byggs om ur repot |
 | KV `fraga-rl` | `33773ae0f9864d78853252d6cab09031` | nej, bara strypningsräknare |
-| KV `upptack-data` | `f155742e0cb14bb390fced9aea5ca641` | **nej, namespacet är tomt** (kontrollerat 2026-08-30) |
+| KV `upptack-data` | `f155742e0cb14bb390fced9aea5ca641` | **JA, måste kopieras** (ändrat 2026-08-31) |
 | Worker `upptack-cron` | daglig cron 05:00 UTC | nej, kod i `worker-upptack/` |
 
-Att `upptack-data` är tomt är i sig värt att titta på efter flytten: workern ska skriva dit
-dagligen. Antingen har den inte kört, eller så skriver den med kort TTL. Det är en egen
-fråga och inget som hindrar flytten.
+**Rättat 2026-08-31:** `upptack-data` är inte längre tomt. Det bär nu Frågas dokumentarkiv,
+femton bolag om cirka 300 kB vardera under nycklarna `arkiv:<bolagsid>` plus `arkiv:index`,
+och ett morgonbrev per användare under `brev:<user_id>`. Arkivet innehåller extraherade
+fakta ur rapport-PDF:erna, bland annat likvida medel per period, som kostat modellanrop att
+ta fram. Görs flytten på det gamla antagandet försvinner allt det, och Fråga är tillbaka på
+noll dokument.
+
+Nycklarna går att kopiera med `wrangler kv key list` följt av `get` och `put` mot det nya
+namespacet, eller enklare: kör om `node motor/bygg-arkiv.mjs --fyll --fakta --kor` mot det
+nya namespace-id:t. Det senare kostar modellanrop igen men ger färskare data.
+
+Att workern `upptack-cron` inte verkar ha skrivit något är fortfarande en egen fråga, och
+inget som hindrar flytten.
 
 ## Secrets som måste matas in på nytt
 
@@ -148,3 +158,59 @@ säljkursen behåller sitt namn. Aktiekursen har inga värdnamnsantaganden alls.
 Kontot är inte längre samma som det Börsdata-, Tink- och Stripe-integrationerna
 registrerades mot. Cloudflare-flytten påverkar inte dem tekniskt, men kontrollera att
 eventuella IP-lås eller callback-URL:er hos de tjänsterna pekar rätt.
+
+
+---
+
+## Utfall 2026-08-31
+
+| Sak | Gammalt (VNDY) | Nytt (ludvig `fbfc68e2`) |
+| --- | --- | --- |
+| Aktiekursen | `kurs` / kurs-7m8.pages.dev | `aktiekurs` / aktiekurs.pages.dev |
+| Säljkursen | `motparten` / motparten.pages.dev | `motparten-app` / motparten-app.pages.dev |
+| KV `upptack-data` | `f155742e…` | `97d78256…`, 20 nycklar kopierade |
+| KV `fraga-rl` | `33773ae0…` | `41b27b64…` |
+
+Säljkursen fick ett nytt namn med flit: `motparten.pages.dev` går inte att återanvända
+förrän det gamla projektet raderats, och att ta ned en produkt mitt i en pilot för en
+vanity-adress är fel avvägning. Middlewarens `motpartenVard()` godkänner allt som börjar
+med `motparten-`, så `motparten-app.pages.dev` känns igen utan kodändring.
+
+**Deploykommandon efter flytten:**
+
+```
+npm run build
+npx wrangler pages deploy dist --project-name=aktiekurs --branch=main
+npx wrangler pages deploy dist --project-name=motparten-app --branch=main
+```
+
+`CLOUDFLARE_ACCOUNT_ID` ska vara `fbfc68e2efed9cbbe0dc0396f299e2c1` eller osatt.
+`wrangler.toml` bär projektnamnet `aktiekurs` och KV-bindningarna; säljkursen deployas med
+flaggan och får samma bindningar, vilket är ofarligt (den använder bara `RL`).
+
+**PILOT_SECRET roterades.** Den gick inte att läsa tillbaka ur Cloudflare och fanns inte i
+`.env`. En ny genererades, sattes på `motparten-app` och sparades i `.env` så den går att
+återskapa nästa gång. Följden: befintliga pilotcookies slutar gälla och piloterna loggar in
+på nytt med sin mejladress.
+
+**Verifierat live:** aktiekursen svarar på Fråga med innehav, arkiv, källor och kodräknade
+härledningar. Säljkursen passerar coachens tre konfigkontroller (`ANTHROPIC_API_KEY`,
+`PILOT_SECRET`, `RL`) och stannar först på pilotinloggningen, vilket är avsett.
+
+**Workern `upptack-cron`** är också flyttad. `worker-upptack/wrangler.toml` pekade redan på
+det nya KV-id:t. Ny adress: `upptack-cron.cellar-api.workers.dev`, samma cron 05:00 UTC.
+Provkörd manuellt: 12 bolag, 437 köp, 785 transaktioner skrivna till det nya namespacet.
+
+`REFRESH_TOKEN` roterades av samma skäl som `PILOT_SECRET`: den går inte att läsa tillbaka
+ur Cloudflare. Den gäller bara den manuella triggern (`?refresh=`), inte cron-körningen, och
+är sparad i `.env`.
+
+**Kvar, i den här ordningen:**
+
+1. Lägg till de nya adresserna i Supabase Auth, Site URL och Redirect URLs, annars landar
+   magic-länkarna på den gamla sajten.
+2. Skicka de nya adresserna till piloterna. Piloterna på Motparten loggar in på nytt,
+   eftersom `PILOT_SECRET` roterades.
+3. Först därefter: radera VNDY:s `kurs`, `motparten` och den gamla `upptack-cron`. Den gamla
+   workern kör fortfarande sin cron 05:00 mot det gamla namespacet, alltså dubbelt arbete
+   utan mottagare.

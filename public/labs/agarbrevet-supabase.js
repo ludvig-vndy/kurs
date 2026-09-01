@@ -17,9 +17,48 @@
   var SUPABASE_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
   var SUPABASE_PUBLISHABLE_KEY = "sb_publishable_WNA6bx4Fvp6sonHWhNADEg_5H3OeqTB";
 
+  /* Huvudboken räknad, snittkostnadsmetoden. Samma uträkning som triggern
+     recalc_holding gör i databasen, och den ligger HÄR och inte i sidorna
+     eftersom både bolagssidan och Dina bolag behöver den. Två implementationer
+     av ett pengabelopp driver isär, och det märks först när de visar olika tal
+     för samma innehav.
+
+     Utöver antal och GAV faller det REALISERADE resultatet ut ur samma svep:
+     varje säljrad ger antal * (pris - snittet strax före affären).
+
+     saknarBas är skillnaden mellan noll och "vet inte". Säljs det utan att något
+     köp finns inlagt vet vi inte vad som betalades, och då är realiserat null och
+     aldrig 0. Ytan ska säga vad som fattas, inte visa en nolla. */
+  function replayAffarer(affarer) {
+    var qty = 0, cost = 0, real = 0, harKop = false, utanBas = false, saltNagot = false;
+    var sorterade = (affarer || []).slice().sort(function (a, b) {
+      return new Date(a.decided_at) - new Date(b.decided_at);
+    });
+    for (var i = 0; i < sorterade.length; i++) {
+      var t = sorterade[i];
+      var q = Number(t.quantity) || 0, p = Number(t.price) || 0;
+      if (t.kind === "kop") { harKop = true; qty += q; cost += q * p; }
+      else {
+        saltNagot = true;
+        var avg = qty ? cost / qty : 0;
+        if (!harKop || qty <= 0) utanBas = true; else real += q * (p - avg);
+        qty -= q; cost -= q * avg;
+      }
+    }
+    qty = Math.max(qty, 0); cost = Math.max(cost, 0);
+    return {
+      qty: qty, gav: qty ? cost / qty : null, ansk: cost,
+      realiserat: (!saltNagot || utanBas) ? null : real,
+      saknarBas: saltNagot && utanBas,
+      saltNagot: saltNagot
+    };
+  }
+
   if (!window.supabase || !window.supabase.createClient) {
     console.error("[AB] supabase-js laddades inte. Kontrollera CDN-taggen ovanför denna fil.");
-    window.AB = { ready: false };
+    // Ren uträkning utan nätverk exponeras ändå: den fungerar på data sidan
+    // redan har, och ska inte falla bort för att klienten inte kunde laddas.
+    window.AB = { ready: false, replayAffarer: replayAffarer };
     return;
   }
 
@@ -168,6 +207,21 @@
     return res.data || [];
   }
 
+  /* Alla köp och sälj för den inloggade, i ETT anrop. Dina bolag behöver
+     huvudboken för varje innehav samtidigt, och ett anrop per rad vore både
+     långsamt och onödigt: RLS ("egna beslut") gör att svaret redan bara
+     innehåller användarens egna affärer. */
+  async function listAllDecisions() {
+    var res = await sb
+      .from("decisions")
+      .select("id,holding_id,kind,quantity,price,decided_at")
+      .in("kind", ["kop", "salj"])
+      .order("decided_at", { ascending: true })
+      .order("created_at", { ascending: true });
+    if (res.error) throw res.error;
+    return res.data || [];
+  }
+
   // d: { holding_id, kind:'kop'|'salj', quantity, price, decided_at?, reason? }
   // user_id sätts explicit så insert:en matchar RLS-policyn "egna beslut".
   async function addDecision(d) {
@@ -251,6 +305,8 @@
     ready: true,
     sb: sb,
     getSession: getSession,
+    replayAffarer: replayAffarer,
+    listAllDecisions: listAllDecisions,
     getUser: getUser,
     sendMagicLink: sendMagicLink,
     verifyCode: verifyCode,
@@ -432,17 +488,31 @@
 
   // Speglar sessionen i en cookie sa serverns kontogrind (_middleware.js) kan
   // verifiera JWT:n. Access-token som varde; utgang styr max-age.
+  //
+  // "Ingen session har" betyder INTE "utloggad". Klienten kan sakna sin nyckel
+  // av skal som inte har med inloggningen att gora: magic-lanken slutfordes av
+  // snabbvagen i logga-in.astro, localStorage ar avstangt, det ar ett privat
+  // fonster. Raderade vi cookien da tog vi bort den enda halva av inloggningen
+  // som faktiskt var giltig, och nasta klick foll ut till /logga-in. Cookien
+  // rors darfor bara nar vi har nagot att satta, eller vid ett uttalat utlogg.
   function setSessionCookie(session) {
     try {
       if (session && session.access_token) {
         document.cookie = "da_session=" + session.access_token + "; path=/; max-age=" + (session.expires_in || 3600) + "; SameSite=Lax; Secure";
-      } else {
-        document.cookie = "da_session=; path=/; max-age=0; SameSite=Lax; Secure";
       }
     } catch (e) {}
   }
 
+  function clearSessionCookie() {
+    try { document.cookie = "da_session=; path=/; max-age=0; SameSite=Lax; Secure"; } catch (e) {}
+  }
+
   whenReady(function () { getSession().then(setSessionCookie); mountUserChip(); flushPendingInvite(); });
   // Sessionen dyker ofta upp strax efter load (hashen parsas asynkront) -> kör om.
-  sb.auth.onAuthStateChange(function (_event, session) { setSessionCookie(session); mountUserChip(); flushPendingInvite(); });
+  // SIGNED_OUT ar det enda som far ta bort cookien: da har nagon sagt ifran.
+  sb.auth.onAuthStateChange(function (event, session) {
+    if (event === "SIGNED_OUT") clearSessionCookie();
+    else setSessionCookie(session);
+    mountUserChip(); flushPendingInvite();
+  });
 })();

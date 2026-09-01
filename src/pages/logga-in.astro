@@ -48,18 +48,38 @@ import Seal from '../components/Seal.astro';
   <script defer src="/vendor/supabase-js-2.110.2.min.js"></script>
   <script defer src="/labs/agarbrevet-supabase.js"></script>
   <script>
-    // Magic-länken kan slutföras HELT utan supabase-js: implicit-flödet lägger
-    // access-token i URL-hashen (#access_token=...). Läs den direkt, sätt
-    // da_session-cookien och gå in. Robust även om den tunga klienten inte
-    // laddar på enheten (gammal Safari, blockerare). Kör omedelbart vid load.
+    import { tolkaHash, felText, LAGRINGSNYCKEL } from '../lib/magiclank.mjs';
+
+    // Magic-länken slutförs HELT utan supabase-js: implicit-flödet lägger
+    // access-token i URL-hashen (#access_token=...). Robust även om den tunga
+    // klienten inte laddar på enheten (gammal Safari, blockerare).
+    //
+    // BÅDA halvorna skrivs, och först därefter navigerar vi: cookien som
+    // servergrinden läser OCH sessionsnyckeln som klientsidan läser. Skrevs bara
+    // cookien hann supabase-js aldrig spara sin egen nyckel (_getSessionFromURL
+    // väntar in ett anrop till /auth/v1/user först), och då skickade varje sida
+    // som dömer inloggat läge på localStorage tillbaka hit igen. Servern släppte
+    // in, klienten kastade ut, och mejlet såg trasigt ut fast det var helt.
     (function () {
-      try {
-        var m = /[#&]access_token=([^&]+)/.exec(location.hash || '');
-        if (m && m[1]) {
-          document.cookie = 'da_session=' + decodeURIComponent(m[1]) + '; path=/; max-age=3600; SameSite=Lax; Secure';
-          location.replace('/hem');
-        }
-      } catch (e) {}
+      var r = null;
+      try { r = tolkaHash(location.hash); } catch (e) {}
+      if (r && r.sort === 'session') {
+        try { localStorage.setItem(LAGRINGSNYCKEL, JSON.stringify(r.session)); } catch (e) {}
+        try {
+          document.cookie = 'da_session=' + r.session.access_token +
+            '; path=/; max-age=' + r.session.expires_in + '; SameSite=Lax; Secure';
+        } catch (e) {}
+        location.replace('/hem');
+      } else if (r && r.sort === 'fel') {
+        // En bränd eller utgången länk landar här med skälet i URL:en. Förut sa
+        // sidan ingenting alls: du fick formuläret igen och kunde tro att
+        // klicket inte gjorde något. Säg vad som hände i stället.
+        try {
+          history.replaceState(null, '', location.pathname);
+          var el = document.getElementById('li-msg');
+          if (el) { el.hidden = false; el.textContent = felText(r.kod); }
+        } catch (e) {}
+      }
     })();
 
     // Kod-som-andra-vag-in kraver att Supabase-mejlmallen visar {{ .Token }},

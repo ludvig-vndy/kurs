@@ -18,7 +18,7 @@ import { execFileSync } from 'child_process';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
-const NS = 'f155742e0cb14bb390fced9aea5ca641'; // KV-namespace "upptack-data" (delas)
+const NS = '97d78256ff664c54a724878034c8f0fd'; // KV-namespace "upptack-data" (ludvig-kontot, bytt vid flytten 2026-08-31)
 const NYCKEL = 'motor-state';
 const ARKIV = p('./in/arkiv.json');
 const CACHE = p('./in/bevakning-cache.json');

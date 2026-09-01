@@ -26,7 +26,7 @@ import { hamta } from './hamta.mjs';
 import { byggBevakning } from './bevakningslista.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
-const NS = 'f155742e0cb14bb390fced9aea5ca641'; // KV-namespace "upptack-data" (delas)
+const NS = '97d78256ff664c54a724878034c8f0fd'; // KV-namespace "upptack-data" (ludvig-kontot, bytt vid flytten 2026-08-31)
 
 // Tak per bolag. KV klarar 25 MB per värde, men det är inte gränsen som räknas:
 // arkivet läses vid varje fråga, och ett stort värde gör varje fråga långsammare.
@@ -159,6 +159,58 @@ async function fyllPa() {
   console.log('');
 }
 
+/* Läser rapport-PDF:erna och lägger fakta på dokumenten.
+   Kassan och kassaflödet står nästan aldrig i pressmeddelandet, bara i rapport-
+   PDF:en: Unibaps Q2 2026 anger omsättning och rörelseresultat i texten men
+   nämner varken "likvida medel" eller "kassaflöde", de står på sidan 10 i
+   bilagan. Utan det här steget kan Fråga inte svara på hur länge kassan räcker,
+   och _nyckeltal.js har inget att härleda ur.
+
+   Skilt från --fyll med flit: --fyll kostar bara bandbredd, det här kostar ett
+   modellanrop per rapport (cirka 4 cent med Haiku). Körs därför på begäran, och
+   hoppar över dokument som redan har fakta. */
+async function fyllFakta({ bara = null, max = RAPPORTER_MAX } = {}) {
+  const { extraheraLLM } = await import('./extract-llm.mjs');
+  const { FALT } = await import('./faltlistor.mjs');
+  const { pdfLankarUr } = await import('./hamta.mjs');
+  const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
+  let kostnad = 0;
+
+  for (const fil of bolagsfiler()) {
+    const id = fil.replace(/\.json$/, '');
+    if (bara && id !== bara) continue;
+    const dataFil = p(`./out/data/${id}.json`);
+    const data = JSON.parse(readFileSync(dataFil, 'utf8'));
+
+    // Inbjudningar innehaller ordet "kvartalsrapport" och matchar darfor RAPPORT,
+    // men de har ingen rapport-PDF och kostar ett modellanrop i onodan. Samma
+    // brusmonster som faltlistor.mjs anvander for att slippa typa dem som rapport.
+    const BRUS = /(inbjudan|invitation|publicerar-ars|publishes-annual|presentation-av)/i;
+    const attGora = (data.dokument || [])
+      .filter(d => !d.fakta && !d.fel && !d.fakta_kastat)
+      .filter(d => { const s = String(d.url).split('/').pop(); return RAPPORT.test(s) && !BRUS.test(s); })
+      .slice(0, max);
+    if (!attGora.length) { console.log(`  ${data.namn.padEnd(34)} inget att göra`); continue; }
+
+    let ok = 0, utan = 0;
+    for (const dok of attGora) {
+      try {
+        const html = await (await fetch(dok.url, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } })).text();
+        const pdfar = pdfLankarUr(html);
+        if (!pdfar.length) { utan++; continue; }
+        const hp = await hamta(pdfar[0], `${id}-bilaga-${Math.random().toString(36).slice(2, 8)}`);
+        const r = await extraheraLLM(null, FALT.rapport, MODELL, { pdfBase64: readFileSync(hp.fil).toString('base64') });
+        kostnad += r.kostnad_usd || 0;
+        if (Object.keys(r.fakta).length) { dok.fakta = r.fakta; dok.kallor = r.kallor; ok++; }
+        if (r.fel.length) dok.fakta_kastat = r.fel;   // spar vad grinden fallde
+      } catch (e) { console.log(`    ! ${String(dok.url).split('/').pop().slice(0, 50)}: ${e.message.slice(0, 60)}`); }
+    }
+    writeFileSync(dataFil, JSON.stringify(data, null, 1));
+    console.log(`  ${data.namn.padEnd(34)} ${String(ok).padStart(2)}/${attGora.length} rapporter med fakta${utan ? `, ${utan} utan PDF` : ''}`);
+  }
+  console.log(`\nExtraktionskostnad: $${kostnad.toFixed(4)}\n`);
+}
+
 export function byggBolag(bolagsId, befintligt) {
   const data = JSON.parse(readFileSync(p(`./out/data/${bolagsId}.json`), 'utf8'));
   // Det som redan ligger i KV behålls: texterna finns inte kvar på disk i CI.
@@ -166,7 +218,15 @@ export function byggBolag(bolagsId, befintligt) {
 
   for (const dok of data.dokument || []) {
     if (dok.dublett_av || dok.fel) continue;
-    if (kandaUrler.has(dok.url)) continue;
+    // Fakta ur rapport-PDF:en kan ha tillkommit efter att dokumentet redan lagts
+    // i KV (--fakta korde senare an --fyll), sa de vaves in aven i kanda poster.
+    // Annars far ett bolag aldrig sin kassa in i arkivet utan att texten byts ut.
+    if (kandaUrler.has(dok.url)) {
+      if (dok.fakta && !kandaUrler.get(dok.url).fakta) {
+        Object.assign(kandaUrler.get(dok.url), { fakta: dok.fakta, kallor: dok.kallor || {} });
+      }
+      continue;
+    }
     const text = textFor(bolagsId, dok.url);
     if (!text || text.length < 200) continue;
     kandaUrler.set(dok.url, {
@@ -175,6 +235,7 @@ export function byggBolag(bolagsId, befintligt) {
       datum: dok.datum || '',
       typ: dok.typ || 'ovrigt',
       bitar: bitar(text),
+      ...(dok.fakta ? { fakta: dok.fakta, kallor: dok.kallor || {} } : {}),
     });
   }
 
@@ -207,6 +268,11 @@ export async function byggArkiv({ kor = false } = {}) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const kor = process.argv.includes('--kor');
   if (process.argv.includes('--fyll')) await fyllPa();
+  if (process.argv.includes('--fakta')) {
+    const bara = (process.argv.find(a => a.startsWith('--bolag=')) || '').split('=')[1] || null;
+    console.log(`Läser rapport-PDF:er${bara ? ` för ${bara}` : ''} (kostar modellanrop):`);
+    await fyllFakta({ bara });
+  }
   console.log(kor ? 'Bygger dokumentarkivet till KV:' : 'Torrkörning, inget skrivs:');
   const index = await byggArkiv({ kor });
   console.log(`\n${index.length} bolag${kor ? ' skrivna till KV (arkiv:<id> + arkiv:index).' : '. Kör med --kor för att skriva.'}`);

@@ -435,6 +435,18 @@ function cur(cc){ return cc==='FI' ? '€' : 'kr'; }
 // Kurssnapshot: samma companies.json som söket i Lägg till bolag. Byggs till
 // uppslag på ticker (primärt) och namn (fallback). Daglig snapshot, inte realtid.
 let PRICES=new Map(), PRICES_N=new Map(), PRICE_DATE=null;
+// Snapshoten byggs inte varje dag, sa "i dag" ar oftast en losning: Sivers stod
+// som -24,45 % "i dag" den 31 augusti, men det var rorelsen den 29:e, dagen
+// snapshoten togs. Sidan sa alltsa bade "Kurser per 2026-08-29" langst ned och
+// "i dag" bredvid talet. Dagsforandringen far bara heta "i dag" nar den ar fran
+// i dag, annars star datumet dar.
+function dagsEtikett(){
+  if(!PRICE_DATE) return 'i dag';
+  if(PRICE_DATE === new Date().toISOString().slice(0,10)) return 'i dag';
+  const M=['jan','feb','mars','april','maj','juni','juli','aug','sep','okt','nov','dec'];
+  const d=PRICE_DATE.split('-');
+  return d.length===3 ? (Number(d[2])+' '+M[Number(d[1])-1]) : PRICE_DATE;
+}
 async function loadPrices(){
   try{
     const r=await fetch('/labs/data/companies.json'); if(!r.ok) return;
@@ -447,37 +459,59 @@ async function loadPrices(){
     }
   }catch(e){ /* utan kurser faller raden tillbaka på anskaffningsvärde */ }
 }
-// Snapshoten är de ~500 största per marknad, så First North-innehav saknas där
-// (Ferroamp). För dem hämtas en färsk kurs live ur /api/kurshistorik, sista
-// punkten i en kort serie. Bara för innehav som faktiskt saknas: endpointen
-// cachar 6 h på edgen, men en begäran per innehav och laddning vore ändå slöseri.
+// Kurserna hamtas LIVE ur /api/kurshistorik, inte ur snapshoten.
+//
+// companies.json ar sedan 2026-08-31 bara identitet (ticker, marknad, land) och
+// en reserv. Dess p/ch ar en committad statisk fil som ingen uppdaterar: den 31
+// augusti visade den Sivers som -24,45 % "i dag", vilket var raset den 29:e,
+// medan aktien samma stund lag pa 28,14. Bakvant nog fick First North-innehav
+// som SAKNADES i filen fardare data, eftersom de foll tillbaka pa den har
+// endpointen. Nu galler samma vag for alla.
+//
+// Kostnaden ar ett anrop per unik ticker vid laddning. Endpointen cachar 6 h pa
+// edgen, sa det ar billigt, och landet tas ur snapshoten nar vi kanner det sa vi
+// slipper gissa oss genom fem marknader.
 const LANDSORDNING = ['SE', 'FI', 'NO', 'DK', 'IS'];
-async function fyllSaknadeKurser(holds){
-  const saknas = [];
+async function fyllFarskaKurser(holds){
+  const vill = new Map();   // ticker -> land eller null
   for(const h of holds){
-    const t = h.ticker ? String(h.ticker).toUpperCase() : null;
-    if(!t || PRICES.has(t)) continue;
-    if(!saknas.includes(t)) saknas.push(t);
+    let t = h.ticker ? String(h.ticker).toUpperCase() : null;
+    if(!t){
+      const n = h.name ? String(h.name).toLowerCase().trim() : '';
+      const via = (n && PRICES_N.get(n)) || null;
+      const alias = watchedFor(h);
+      t = (via && via.t) || (alias && alias.t) || null;
+      if(t) t = String(t).toUpperCase();
+    }
+    if(!t || vill.has(t)) continue;
+    const kand = PRICES.get(t);
+    vill.set(t, (kand && kand.c) || null);
   }
-  if(!saknas.length) return false;
+  if(!vill.size) return false;
+
   let nagot = false;
-  await Promise.all(saknas.map(async function(t){
-    for(const land of LANDSORDNING){
+  await Promise.all([...vill.entries()].map(async function(par){
+    const t = par[0];
+    const lander = par[1] ? [par[1]] : LANDSORDNING;
+    for(const land of lander){
       try{
-        const r = await fetch('/api/kurshistorik?t='+encodeURIComponent(t)+'&c='+land+'&range=1mo');
+        const r = await fetch('/api/kurshistorik?t='+encodeURIComponent(t)+'&c='+land+'&range=5d');
         if(!r.ok) continue;
         const d = await r.json();
         const pkt = d && d.punkter && d.punkter.length ? d.punkter[d.punkter.length - 1] : null;
         if(!pkt) continue;
-        // ch (dagens procent) räknas ur de två sista stängningarna när de finns.
+        // Dagsforandringen raknas ur de tva sista stangningarna. Finns bara en
+        // punkt blir den null: hellre ingen procent an en pahittad.
         const forra = d.punkter.length > 1 ? d.punkter[d.punkter.length - 2][1] : null;
-        PRICES.set(t, {
-          t: t, n: null, c: land, p: pkt[1],
+        const gammal = PRICES.get(t) || {};
+        PRICES.set(t, Object.assign({}, gammal, {
+          t: t, c: gammal.c || land, p: pkt[1],
           ch: (forra ? ((pkt[1] - forra) / forra) * 100 : null),
-        });
+          d: pkt[0],                       // handelsdagen talet galler
+        }));
         nagot = true;
         return;
-      }catch(e){ /* prova nästa marknad */ }
+      }catch(e){ /* prova nasta marknad, annars star snapshoten kvar */ }
     }
   }));
   return nagot;
@@ -532,12 +566,12 @@ function realRow(h){
       const mv=qty*px.p, ansk=qty*gav, avk=mv-ansk, avkPct=gav>0?(px.p/gav-1)*100:null, up=avk>=0;
       rt='<div class="amt">'+fmtN(mv,0)+' '+c+'<span class="andel">'+fmtN(qty,0)+' st</span></div>'+
          '<div class="tavk '+(up?'up':'dn')+'">'+pct(avkPct)+'<span class="kr">'+(up?'+':'')+fmtN(avk,0)+' '+c+'</span></div>'+
-         '<div class="day"><span class="lbl">kurs</span> '+kurs+' '+c+' '+dayv+' <span class="lbl">i dag · GAV '+fmtN(gav,2)+'</span></div>';
+         '<div class="day"><span class="lbl">kurs</span> '+kurs+' '+c+' '+dayv+' <span class="lbl">'+dagsEtikett()+' · GAV '+fmtN(gav,2)+'</span></div>';
       dot=up?'pos':'neg';
     } else {
       // Kurs men inget innehav (t.ex. följer, eller antal/GAV saknas).
       rt='<div class="amt">'+kurs+' '+c+'</div>'+
-         '<div class="day">'+dayv+' <span class="lbl">i dag</span></div>';
+         '<div class="day">'+dayv+' <span class="lbl">'+dagsEtikett()+'</span></div>';
       dot=dc>=0?'pos':'neg';
       if(!foljer) ln='Lägg till antal och inköpskurs för att se din avkastning.';
     }
@@ -582,6 +616,43 @@ function groupH(txt){
 // Portföljöversikt: total värde, avkastning sedan köp, i dag, och allokering per
 // innehav. Räknas bara på innehav med både kurs och antal/GAV; övriga står som
 // rader men bidrar inte till totalerna.
+/* Huvudboken per innehav: holding_id -> { realiserat, saknarBas, ... }.
+   Raknas med window.AB.replayAffarer, samma funktion som bolagssidan och samma
+   snittkostnadsmetod som triggern i databasen. Faller anropet star sidan kvar
+   utan realiserade tal i stallet for att ga sonder. */
+let LEDGER = new Map();
+async function laddaHuvudbok(){
+  if(!(window.AB && window.AB.listAllDecisions)) return false;
+  try{
+    const rader = await window.AB.listAllDecisions();
+    const per = new Map();
+    for(const r of rader){
+      if(!r.holding_id) continue;
+      if(!per.has(r.holding_id)) per.set(r.holding_id, []);
+      per.get(r.holding_id).push(r);
+    }
+    LEDGER = new Map();
+    for(const [id, affarer] of per) LEDGER.set(id, window.AB.replayAffarer(affarer));
+    return LEDGER.size > 0;
+  }catch(e){ console.error('huvudbok:', e); return false; }
+}
+function bokFor(h){ return (h && h.id && LEDGER.get(h.id)) || null; }
+
+/* Sakrad avkastning i ar, summerad over innehaven.
+   Bara innehav dar kostnadsbasen finns raknas. Saknas den nagonstans sags det
+   rakt ut i stallet for att talet tyst blir for lagt: en total som utelamnar en
+   post utan att saga det ar varre an ingen total. */
+function realiseratTotalt(holds){
+  let summa = 0, med = 0, utan = 0;
+  for(const h of holds){
+    const b = bokFor(h);
+    if(!b || !b.saltNagot) continue;
+    if(b.realiserat == null){ utan++; continue; }
+    summa += b.realiserat; med++;
+  }
+  return { summa, med, utan };
+}
+
 function portfolioOverview(owned){
   const full = owned.map(h=>({h,px:priceFor(h)}))
     .filter(x=>x.px&&x.px.p!=null&&x.h.quantity!=null&&x.h.gav!=null)
@@ -597,23 +668,66 @@ function portfolioOverview(owned){
   const bars=sorted.map((x,i)=>'<span style="width:'+(x.mv/totalMv*100).toFixed(2)+'%;background:'+PAL[i%PAL.length]+'"></span>').join('');
   let leg=sorted.slice(0,4).map((x,i)=>'<span>'+sw(PAL[i%PAL.length])+esc(x.h.name.split(' ')[0])+' <b>'+(x.mv/totalMv*100).toFixed(0)+'%</b></span>').join('');
   if(sorted.length>4){ const rest=sorted.slice(4).reduce((a,x)=>a+x.mv,0); leg+='<span>'+sw('var(--faint)')+'Övriga <b>'+(rest/totalMv*100).toFixed(0)+'%</b></span>'; }
+  // Sakrad avkastning: det som redan ar hemtaget. Star BREDVID det orealiserade
+  // och aldrig i stallet for. Ett tal som vaxer nar du saljer kan annars lara ut
+  // att salja vinnare for tidigt, vilket ar dispositionseffekten och lika dyrt
+  // som girigheten modul 24 varnar for.
+  const rea = realiseratTotalt(owned);
+  const rup = rea.summa >= 0;
+  const harRea = rea.med > 0;
+  const summa = totalMv + (harRea ? rea.summa : 0);
+
   return '<section class="ovr">'+
     '<div class="ovr-fig">'+
-      '<div class="ovr-block"><div class="ovr-k">Din del är värd</div><div class="ovr-tot">'+fmtN(totalMv,0)+'<span class="kr">kr</span></div></div>'+
+      '<div class="ovr-block"><div class="ovr-k">Din del är värd</div><div class="ovr-tot">'+fmtN(totalMv,0)+'<span class="kr">kr</span></div>'+
+        (harRea ? '<div class="ovr-day">Plus säkrad avkastning blir det <span class="v">'+fmtN(summa,0)+' kr</span></div>' : '')+'</div>'+
       '<div class="ovr-block"><div class="ovr-k">Sedan du köpte</div><div class="ovr-avk '+(up?'up':'dn')+'">'+(up?'+':'')+fmtN(avk,0)+' kr<span class="pct">'+pct(avkPct)+'</span></div>'+
-        '<div class="ovr-day">I dag <span class="v '+(dup?'up':'dn')+'">'+(dup?'+':'')+fmtN(dayKr,0)+' kr</span> '+pct(dayPct)+' <span style="font-family:var(--serif);font-style:italic;color:var(--faint)">men det är inte i dag som räknas</span></div></div>'+
+        '<div class="ovr-day">'+dagsEtikett()+' <span class="v '+(dup?'up':'dn')+'">'+(dup?'+':'')+fmtN(dayKr,0)+' kr</span> '+pct(dayPct)+' <span style="font-family:var(--serif);font-style:italic;color:var(--faint)">men det är inte i dag som räknas</span></div></div>'+
+      (harRea
+        ? '<div class="ovr-block"><div class="ovr-k">Säkrad avkastning</div><div class="ovr-avk '+(rup?'up':'dn')+'">'+(rup?'+':'')+fmtN(rea.summa,0)+' kr</div>'+
+          '<div class="ovr-day">realiserat ur '+rea.med+' '+(rea.med===1?'innehav':'innehav')+', före skatt'+
+          (rea.utan ? '. <span style="color:var(--gold)">'+rea.utan+' till saknar inlagda köp och räknas inte</span>' : '')+'</div></div>'
+        : (rea.utan
+            ? '<div class="ovr-block"><div class="ovr-k">Säkrad avkastning</div><div class="ovr-avk" style="color:var(--muted)">–</div>'+
+              '<div class="ovr-day">'+rea.utan+' innehav har sälj utan inlagda köp, så vi vet inte vad du betalade</div></div>'
+            : ''))+
     '</div>'+
     '<div class="alloc"><div class="alloc-bar">'+bars+'</div><div class="alloc-line">'+leg+'</div></div>'+
   '</section>';
 }
 
+// Ett stangt innehav ar salt, inte borta. Fram till 2026-08-31 foll det ur
+// vyn helt, eftersom en full forsaljning nollstaller GAV och filtren kravde ett
+// GAV. Det gjorde att den som sakrade en vinst sag sitt tal krympa och bolaget
+// forsvinna. Nu far de en egen grupp med det de faktiskt gav.
+function arStangt(h){
+  const b = bokFor(h);
+  const inget = (h.quantity == null || Number(h.quantity) === 0);
+  return inget && !!(b && b.saltNagot);
+}
+function stangdRow(h){
+  const b = bokFor(h);
+  const r = b && b.realiserat;
+  const up = (r || 0) >= 0;
+  const varde = (r == null)
+    ? '<div class="amt" style="color:var(--muted)">–<span class="andel">köpen saknas</span></div>'
+    : '<div class="amt '+(up?'up':'dn')+'">'+(up?'+':'')+fmtN(r,0)+' kr<span class="andel">säkrat, före skatt</span></div>';
+  return '<a class="hold" href="/labs/innehav.html?id='+encodeURIComponent(h.id)+'">'+
+    '<div class="lf"><div class="nm">'+esc(h.name)+'</div>'+
+    '<div class="ln">Helt sålt. Historiken och din tes ligger kvar.</div></div>'+
+    '<div class="rt">'+varde+'</div></a>';
+}
+
 function renderReal(holds, user){
-  const owned = holds.filter(h=>h.relation!=='foljer');
+  const alla = holds.filter(h=>h.relation!=='foljer');
+  const stangda = alla.filter(arStangt);
+  const owned = alla.filter(h=>!arStangt(h));
   const follow = holds.filter(h=>h.relation==='foljer');
   let html = pageHeader();
-  if(PRICE_DATE) html += '<div style="font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--faint);margin:2px 0 2px">Kurser per '+esc(PRICE_DATE)+', daglig snapshot.</div>';
-  html += portfolioOverview(owned);
+  if(PRICE_DATE) html += '<div style="font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--faint);margin:2px 0 2px">Kurser hämtas live, identitet ur snapshot per '+esc(PRICE_DATE)+'.</div>';
+  html += portfolioOverview(alla);
   if(owned.length){ html += groupH('Äger ('+owned.length+')') + owned.map(realRow).join(''); }
+  if(stangda.length){ html += groupH('Stängda innehav ('+stangda.length+')') + stangda.map(stangdRow).join(''); }
   if(follow.length){ html += groupH('Följer ('+follow.length+')') + follow.map(realRow).join(''); }
   view.innerHTML = html;
   reveal();
@@ -654,7 +768,10 @@ async function boot(){
     renderReal(holds, user);
     // Kurserna som saknas i snapshoten hämtas efteråt: sidan ska inte vänta på
     // dem, och de flesta innehav har redan sin kurs.
-    if(await fyllSaknadeKurser(holds)) renderReal(holds, user);
+    if(await fyllFarskaKurser(holds)) renderReal(holds, user);
+  // Huvudboken sist: den behovs bara for de realiserade talen, och sidan ska
+  // vara lasbar innan den kommit.
+  if(await laddaHuvudbok()) renderReal(holds, user);
   }
   else renderEmpty(user);
 }

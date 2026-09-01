@@ -20,6 +20,7 @@ import { skicka } from './skicka.mjs';
 import { byggBevakning } from './bevakningslista.mjs';
 import { narreraBrev } from './narrera-brev.mjs';
 import { nyckelFinns } from './llm.mjs';
+import { byggBorsdata } from './borsdata.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
@@ -216,9 +217,19 @@ writeFileSync(p('./out/index.html'), index, 'utf8');
 
 writeFileSync(arkivFil, JSON.stringify(arkiv, null, 1));
 
+/* Börsdata: rapportkalendern och värderingen mot bolagets egen historik.
+   Till skillnad från allt ovan kräver det ingen händelse, så det är det enda i
+   brevet som har något att säga en dag då ingenting hänt. Faller tyst utan
+   BORSDATA_API. */
+const borsdata = await byggBorsdata(konf.bolag.map(b => b.namn));
+if (borsdata.rader.length) {
+  const medVardering = borsdata.rader.filter(r => r.vardering).length;
+  console.log(`\nBörsdata: ${borsdata.rader.length} bolag med rapportdatum, ${medVardering} med jämförbar värdering.`);
+} else if (borsdata.av) console.log(`\nBörsdata: av (${borsdata.av}).`);
+
 // Dagsbrevet: renderas ur nattens fynd och mejlas om Resend-nyckel finns.
 const datum = new Date().toISOString().slice(0, 10);
-const brevHtml = renderDagsbrev({ datum, poster: dagensPoster, lugna });
+const brevHtml = renderDagsbrev({ datum, poster: dagensPoster, lugna, borsdata: borsdata.rader });
 const brevFil = p(`./out/brev-${datum}.html`);
 writeFileSync(brevFil, brevHtml, 'utf8');
 console.log(`\nDagsbrevet: ${brevFil} (${dagensPoster.length} poster, ${lugna.length} lugna bolag)`);
@@ -263,6 +274,9 @@ function brevForAgare(uid) {
       url: post.url || '',
       lektion: post.typ,
     })),
+    // Kalendern och värderingen delas per ägare som allt annat: brevet får
+    // aldrig nämna ett bolag läsaren inte har.
+    borsdata: borsdata.rader.filter(r => minaBolag.has(r.bolag)),
     lugna: minaLugna,
   };
 }

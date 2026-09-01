@@ -3,13 +3,22 @@
 // (nattjobbet). Per-bolags-facit byggs ovanpå dessa när bolag onboardas skarpt.
 
 export const FALT = {
+  /* PERIODEN ÄR EN DEL AV FÄLTET, inte en detalj.
+     En delårsrapport har två kolumner: kvartalet och det ackumulerade året. Utan
+     instruktion väljer modellen antingen, och samma PDF gav 21,204 i en körning
+     och 55,591 i nästa (Unibaps Q2 respektive januari till juni 2026). Båda är
+     rätt tal, men bara ett stämmer med perioden _nyckeltal.js läser ur rubriken,
+     och en burn rate räknad på fel periodlängd blir fel med en faktor två.
+     Därför pinnas flödesposterna till rubrikens period. Balansposter (kassa,
+     antal aktier) är värden på balansdagen och har ingen periodlängd. */
   rapport: [
-    { id: 'omsattning', beskrivning: 'Nettoomsättning för perioden, med jämförelseperioden om den anges', enhet: 'Mkr eller tkr enligt dokumentet' },
-    { id: 'orderingang', beskrivning: 'Orderingång för perioden om den anges', enhet: 'Mkr' },
-    { id: 'rorelseresultat', beskrivning: 'Rörelseresultat (EBIT eller EBITDA, ange vilket i citatet)', enhet: 'Mkr' },
-    { id: 'periodens_resultat', beskrivning: 'Periodens resultat efter skatt', enhet: 'Mkr' },
-    { id: 'kassa', beskrivning: 'Likvida medel eller kassa vid periodens slut', enhet: 'Mkr' },
-    { id: 'kassaflode', beskrivning: 'Kassaflöde från den löpande verksamheten', enhet: 'Mkr' },
+    { id: 'omsattning', beskrivning: 'Nettoomsättning för HELA den period rubriken anger (står det "januari - juni" avses januari till juni, inte bara andra kvartalet), med jämförelseperioden om den anges', enhet: 'Mkr eller tkr enligt dokumentet' },
+    { id: 'orderingang', beskrivning: 'Orderingång för HELA rubrikens period om den anges', enhet: 'Mkr' },
+    { id: 'rorelseresultat', beskrivning: 'Rörelseresultat (EBIT eller EBITDA, ange vilket i citatet) för HELA rubrikens period', enhet: 'Mkr' },
+    { id: 'periodens_resultat', beskrivning: 'Resultat efter skatt för HELA rubrikens period', enhet: 'Mkr' },
+    { id: 'kassa', beskrivning: 'Likvida medel eller kassa PÅ BALANSDAGEN, alltså vid periodens slut. Står oftast i balansräkningen eller sist i kassaflödesanalysen, sällan i sammanfattningen först i rapporten', enhet: 'Mkr' },
+    { id: 'kassaflode', beskrivning: 'Kassaflöde från den löpande verksamheten för HELA rubrikens period, inte för det enskilda kvartalet', enhet: 'Mkr' },
+    { id: 'finansieringsverksamheten', beskrivning: 'Kassaflöde från finansieringsverksamheten för HELA rubrikens period om det anges. Positivt betyder att bolaget tagit in kapital, vilket måste synas bredvid en kassa som vuxit', enhet: 'Mkr' },
     { id: 'antal_aktier', beskrivning: 'Antal aktier vid periodens slut om det anges', enhet: 'st' }
   ],
   kallelse: [

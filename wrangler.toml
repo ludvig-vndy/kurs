@@ -1,7 +1,7 @@
-# Cloudflare Pages-konfig (projekt "kurs"). Bindningar har appliceras vid
+# Cloudflare Pages-konfig (projekt "aktiekurs"). Bindningar har appliceras vid
 # `wrangler pages deploy`. Secrets (SUPABASE_SECRET_KEY, ANTHROPIC_API_KEY)
 # ligger kvar som krypterade env-vars pa projektet och styrs INTE harifran.
-name = "kurs"
+name = "aktiekurs"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-01-01"
 
@@ -10,11 +10,11 @@ compatibility_date = "2026-01-01"
 # point of failure for sjalva svaret.
 [[kv_namespaces]]
 binding = "RL"
-id = "33773ae0f9864d78853252d6cab09031"
+id = "41b27b64d336495db4a33a22c39e9e55"
 
 # Upptäcks insynsdata, skriven av den schemalagda Workern "upptack-cron"
 # (worker-upptack/). Läses av functions/api/upptack-insyn.js. Ersatte det
 # dagliga GitHub-jobbet som byggde+deployade hela sajten för en datafil.
 [[kv_namespaces]]
 binding = "DATA"
-id = "f155742e0cb14bb390fced9aea5ca641"
+id = "97d78256ff664c54a724878034c8f0fd"

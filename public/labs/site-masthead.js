@@ -35,8 +35,20 @@
   // Inloggningsgrind: produktytorna kraver ett Delagaren-konto. Kors i <head>,
   // fore innehallet renderas (ingen flash). Undantar magic-link-retur
   // (#access_token i hashen) sa inloggningen kan slutforas.
+  // Klientens egen grind ar en bekvamlighet, inte skyddet: skyddet ar
+  // JWT-verifieringen i functions/_middleware.js, som redan skickat hit dig om
+  // cookien inte hall. Darfor far den har kollen aldrig vara STRANGARE an
+  // servern. da_session satts fran JS och gar alltsa att lasa harifran, sa finns
+  // den racker det. Utan det villkoret kastades den ut som slutfort sin
+  // inloggning via snabbvagen i logga-in.astro, alltsa med giltig cookie men
+  // utan att supabase-js hunnit skriva sin nyckel, och inloggningen sag ut att
+  // inte fastna.
   try {
-    if (!localStorage.getItem(SB_KEY) && location.hash.indexOf('access_token') === -1) {
+    var harCookie = (document.cookie || '').split(';').some(function (bit) {
+      var i = bit.indexOf('=');
+      return i > 0 && bit.slice(0, i).trim() === 'da_session' && bit.slice(i + 1).trim() !== '';
+    });
+    if (!localStorage.getItem(SB_KEY) && !harCookie && location.hash.indexOf('access_token') === -1) {
       location.replace('/logga-in');
       return;
     }
