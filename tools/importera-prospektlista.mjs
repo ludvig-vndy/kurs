@@ -93,31 +93,96 @@ if (utanCfar.length) {
 
 const STATUS_TILL_BAND = r => r['Anställdaband'] || null;
 
-const till_rad = r => ({
+// Prospektenheten ar bolaget. Scrapern levererar arbetsstallen, sa raderna
+// viks ihop pa organisationsnummer har och inte i databasen.
+const utanOrgnr = rader.filter(r => !String(r.Orgnr || '').replace(/\D/g, ''));
+if (utanOrgnr.length) {
+  console.error(`${utanOrgnr.length} rader saknar organisationsnummer. Avbryter.`);
+  console.error('Exempel: ' + utanOrgnr.slice(0, 3).map(r => r['Företag']).join(', '));
+  process.exit(1);
+}
+
+// Reklamsparren ar registrerad per arbetsstalle. Bolagets kanal ar darfor
+// den mest restriktiva bland dess arbetsstallen: nekar ett enda stalle en
+// kanal saknar bolaget den kanalen. Blandad sparr ar sallsynt, 1 bolag av
+// 1 455 i tre uppmatta segment, och just darfor latt att missa.
+const RANG = {
+  'Telefon (EJ brev/mejl)': 0,
+  'Brev och mejl (EJ telefon)': 0,
+  'Brev, mejl och telefon': 1,
+};
+const strangast = (a, b) => {
+  if (!a) return b;
+  if (!b) return a;
+  if (a === b) return a;
+  if ((RANG[a] ?? 0) !== (RANG[b] ?? 0)) return (RANG[a] ?? 0) < (RANG[b] ?? 0) ? a : b;
+  // Tva olika begransningar som inte overlappar: ingen kanal ar sakert tillaten.
+  return 'Ingen kanal bekräftad';
+};
+
+const till_stalle = r => ({
   cfar: String(r.CFAR || '').trim(),
-  nr: r.Nr,
-  prio: r.Prio,
-  foretag: r['Företag'],
-  orgnr: r.Orgnr || null,
+  huvudkontor: String(r['Arbetsställe'] || '').indexOf('Huvud') === 0,
   kommun: r.Kommun || null,
   ort: r.Ort || null,
   postnr: r.Postnr || null,
   adress: r.Adress || null,
+  anstallda_klass: r['Anställda'] || null,
+  telefon: r.Telefon || null,
+  kanaler: r['Tillåtna kanaler'] || 'Okänd',
+});
+
+const till_bolag = r => ({
+  orgnr: String(r.Orgnr).replace(/\D/g, ''),
+  prio: r.Prio,
+  foretag: r['Företag'],
   verksamhet: r.Verksamhet || null,
-  anstallda_bolag: r['Anställda bolag'] ?? null,
-  anstallda_arbetsstalle: r['Anställda'] || null,
+  anstallda: r['Anställda bolag'] ?? null,
   anstallda_band: STATUS_TILL_BAND(r),
   omsattning_tkr: r['Omsättning'] ?? null,
   omsattning_ar: r['Omsättningsår'] ?? null,
   omsattning_band: r['Omsättningsband'] || null,
   koncernlage: r['Koncernläge'] || null,
   moderbolag: r.Moderbolag || null,
-  vd: r.Kontaktperson || null,
+  moderbolag_orgnr: r['Moderbolag orgnr'] ? String(r['Moderbolag orgnr']).replace(/\D/g, '') : null,
+  kontakt_namn: r.Kontaktperson || null,
+  kontakt_roll: r['Kontaktperson roll'] || (r.Kontaktperson ? 'Verkställande direktör' : null),
+  kontakt_kalla: r['Kontakt källa'] || (r.Kontaktperson ? 'abpi' : null),
+  hemsida: r.Hemsida || null,
   telefon: r.Telefon || null,
+  telefon_kalla: r['Telefon källa'] || (r.Telefon ? 'scb' : null),
   epost: r['E-post'] || null,
-  kanaler: r['Tillåtna kanaler'] || 'Okänd',
   notering: r.Notering || null,
 });
+
+// Vik ihop. Huvudkontoret vinner nar arbetsstallena sager olika saker om
+// bolaget, annars forsta raden. Prio blir den basta bland stallena, for ett
+// bolag ar inte samre an sitt basta kontor.
+const PRIO_RANG = { A: 0, B: 1, C: 2 };
+const bolagPerOrgnr = new Map();
+for (const r of rader) {
+  const b = till_bolag(r), st = till_stalle(r);
+  const fanns = bolagPerOrgnr.get(b.orgnr);
+  if (!fanns) {
+    bolagPerOrgnr.set(b.orgnr, { ...b, kanaler: st.kanaler, stallen: [st] });
+    continue;
+  }
+  fanns.stallen.push(st);
+  fanns.kanaler = strangast(fanns.kanaler, st.kanaler);
+  if ((PRIO_RANG[b.prio] ?? 9) < (PRIO_RANG[fanns.prio] ?? 9)) fanns.prio = b.prio;
+  if (st.huvudkontor) {
+    for (const k of ['foretag', 'verksamhet', 'telefon', 'telefon_kalla', 'epost']) {
+      if (b[k]) fanns[k] = b[k];
+    }
+  }
+}
+const bolagen = [...bolagPerOrgnr.values()]
+  .sort((a, b) => (PRIO_RANG[a.prio] ?? 9) - (PRIO_RANG[b.prio] ?? 9) ||
+                  (b.omsattning_tkr ?? -1) - (a.omsattning_tkr ?? -1))
+  .map((b, i) => ({ ...b, nr: i + 1 }));
+
+const kedjor = bolagen.filter(b => b.stallen.length > 1).length;
+const koncerner = new Set(bolagen.map(b => b.moderbolag_orgnr || b.orgnr)).size;
 
 // ── Lista ─────────────────────────────────────────────────────────────
 const listrad = {
@@ -135,18 +200,38 @@ const listrad = {
 };
 
 if (TORR) {
-  const saknarKanal = rader.filter((r) => !till_rad(r).kanaler || till_rad(r).kanaler === 'Okänd').length;
-  const medVd = rader.filter((r) => till_rad(r).vd).length;
-  const prio = rader.reduce((a, r) => ((a[r.Prio] = (a[r.Prio] || 0) + 1), a), {});
+  const saknarKanal = bolagen.filter(b => !b.kanaler || b.kanaler === 'Okänd').length;
+  const medNamn = bolagen.filter(b => b.kontakt_namn).length;
+  const prio = bolagen.reduce((a, b) => ((a[b.prio] = (a[b.prio] || 0) + 1), a), {});
+  const storsta = [...bolagen].sort((a, b) => b.stallen.length - a.stallen.length)[0];
+  const perKoncern = new Map();
+  for (const b of bolagen) {
+    const k = b.moderbolag || null;
+    if (k) perKoncern.set(k, (perKoncern.get(k) || 0) + 1);
+  }
+  const topp = [...perKoncern.entries()].sort((a, b) => b[1] - a[1]).filter(([, n]) => n > 1);
+
   console.log('\nTORRKÖRNING, ingenting skrivs.\n');
   console.log('Lista:', JSON.stringify(listrad, null, 2));
-  console.log(`\nRader: ${rader.length}  ${JSON.stringify(prio)}`);
-  console.log(`Med namngiven VD: ${medVd}`);
+  console.log(`\n${rader.length} arbetsställen  ->  ${bolagen.length} bolag  ${JSON.stringify(prio)}`);
+  console.log(`${kedjor} bolag har fler än ett arbetsställe.`);
+  if (storsta && storsta.stallen.length > 1) {
+    console.log(`Störst: ${storsta.foretag}, ${storsta.stallen.length} arbetsställen.`);
+  }
+  console.log(`\n${koncerner} koncerner bland ${bolagen.length} bolag.`);
+  if (topp.length) {
+    console.log('Bolag som delar moderbolag med andra i listan:');
+    for (const [m, n] of topp.slice(0, 5)) console.log(`  ${String(n).padStart(3)}  ${m}`);
+    const iKluster = topp.reduce((a, [, n]) => a + n, 0);
+    console.log(`  ${iKluster} av ${bolagen.length} bolag ligger i en koncern med fler träffar.`);
+  }
+  console.log(`\nMed registrerad kontaktperson: ${medNamn}`);
   console.log(`Utan känd kanal (blir "Okänd"): ${saknarKanal}`);
-  console.log('\nFörsta raden översatt:');
-  console.log(JSON.stringify(till_rad(rader[0]), null, 2));
-  const tomma = Object.entries(till_rad(rader[0])).filter(([, v]) => v === null).map(([k]) => k);
-  if (tomma.length) console.log('\nTomma fält på första raden:', tomma.join(', '));
+  const { stallen: _st, ...forsta } = bolagen[0];
+  console.log('\nFörsta bolaget översatt:');
+  console.log(JSON.stringify(forsta, null, 2));
+  const tomma = Object.entries(forsta).filter(([, v]) => v === null).map(([k]) => k);
+  if (tomma.length) console.log('\nTomma fält på första bolaget:', tomma.join(', '));
   process.exit(0);
 }
 
@@ -155,23 +240,45 @@ await sb('POST', 'prospekt_lista?on_conflict=slug', [listrad],
 const [lista] = await sb('GET', `prospekt_lista?select=id,publicerad&slug=eq.${encodeURIComponent(slug)}`);
 console.log(`Lista ${slug} -> ${lista.id} (publicerad: ${lista.publicerad})`);
 
-// ── Rader ─────────────────────────────────────────────────────────────
-const befintliga = await sb('GET', `prospekt_rad?select=id&lista_id=eq.${lista.id}&limit=1`);
+// ── Bolag och arbetsställen ───────────────────────────────────────────
+const befintliga = await sb('GET', `prospekt_bolag?select=id&lista_id=eq.${lista.id}&limit=1`);
 if (befintliga.length && lista.publicerad) {
-  console.log('Listan är publicerad och har redan rader. Uppdaterar på cfar,');
+  console.log('Listan är publicerad och har redan bolag. Uppdaterar på orgnr,');
   console.log('så befintligt arbete följer med.');
 }
 
-const paket = [];
-for (let i = 0; i < rader.length; i += 200) {
-  paket.push(rader.slice(i, i + 200).map(r => ({ lista_id: lista.id, ...till_rad(r) })));
-}
 let n = 0;
-for (const p of paket) {
-  await sb('POST', 'prospekt_rad?on_conflict=lista_id,cfar', p,
+for (let i = 0; i < bolagen.length; i += 200) {
+  const p = bolagen.slice(i, i + 200).map(({ stallen, ...b }) => ({ lista_id: lista.id, ...b }));
+  await sb('POST', 'prospekt_bolag?on_conflict=lista_id,orgnr', p,
     'resolution=merge-duplicates,return=minimal');
   n += p.length;
-  console.log(`  ... ${n}/${rader.length}`);
+  console.log(`  ... ${n}/${bolagen.length} bolag`);
+}
+
+// Arbetsställena behöver bolagets uuid, så id:na hämtas tillbaka en gång.
+const idPerOrgnr = new Map();
+for (let i = 0; i < bolagen.length; i += 500) {
+  const del = bolagen.slice(i, i + 500).map(b => '"' + b.orgnr + '"').join(',');
+  const svar = await sb('GET',
+    `prospekt_bolag?select=id,orgnr&lista_id=eq.${lista.id}&orgnr=in.(${del})&limit=1000`);
+  for (const b of svar) idPerOrgnr.set(b.orgnr, b.id);
+}
+
+const stallen = bolagen.flatMap(b =>
+  b.stallen.map(st => ({ bolag_id: idPerOrgnr.get(b.orgnr), lista_id: lista.id, ...st })));
+const utanId = stallen.filter(st => !st.bolag_id).length;
+if (utanId) {
+  console.error(`${utanId} arbetsställen fick inget bolags-id tillbaka. Avbryter.`);
+  process.exit(1);
+}
+let m = 0;
+for (let i = 0; i < stallen.length; i += 200) {
+  const p = stallen.slice(i, i + 200);
+  await sb('POST', 'prospekt_arbetsstalle?on_conflict=lista_id,cfar', p,
+    'resolution=merge-duplicates,return=minimal');
+  m += p.length;
+  console.log(`  ... ${m}/${stallen.length} arbetsställen`);
 }
 
 // ── Köp ───────────────────────────────────────────────────────────────
@@ -184,5 +291,6 @@ if (typeof kop === 'string' && kop.trim()) {
   console.log(`Gav åtkomst till: ${adresser.join(', ')}`);
 }
 
-console.log(`\nKlart. ${n} rader i ${slug}.`);
+console.log(`\nKlart. ${n} bolag och ${m} arbetsställen i ${slug}.`);
+console.log(`  ${kedjor} bolag har fler än ett arbetsställe, ${koncerner} koncerner.`);
 if (!lista.publicerad) console.log('Listan är INTE publicerad än. Kör om med --publicera.');

@@ -11,11 +11,23 @@ import { secureJson as json, rateLimited } from '../_lib.js';
 import { pilotAdress } from '../_lib.js';
 import { supaConfig, supaGet } from '../_supa.js';
 
-const RAD_FALT = [
-  'id', 'cfar', 'nr', 'prio', 'foretag', 'orgnr', 'kommun', 'ort', 'postnr', 'adress',
-  'verksamhet', 'anstallda_bolag', 'anstallda_arbetsstalle', 'anstallda_band',
-  'omsattning_tkr', 'omsattning_ar', 'omsattning_band', 'koncernlage',
-  'moderbolag', 'vd', 'telefon', 'epost', 'kanaler', 'notering',
+const BOLAG_FALT = [
+  'id', 'orgnr', 'nr', 'prio', 'foretag', 'verksamhet',
+  'anstallda', 'anstallda_band', 'omsattning_tkr', 'omsattning_ar', 'omsattning_band',
+  'koncernlage', 'moderbolag', 'moderbolag_orgnr', 'koncern_nyckel',
+  'kontakt_namn', 'kontakt_roll', 'kontakt_kalla', 'kontakt_datum',
+  'hemsida', 'telefon', 'telefon_kalla', 'epost', 'kanaler', 'notering',
+].join(',');
+
+const STALLE_FALT = [
+  'bolag_id', 'cfar', 'huvudkontor', 'kommun', 'ort', 'postnr', 'adress',
+  'anstallda_klass', 'telefon', 'kanaler',
+].join(',');
+
+const ARBETE_FALT = [
+  'orgnr', 'status', 'varde_kr', 'anteckning', 'nasta_steg', 'nasta_datum',
+  'verifierad_namn', 'verifierad_titel', 'verifierad_kalla', 'verifierad_datum',
+  'kontaktresultat', 'orsak', 'listfel',
 ].join(',');
 
 const LISTA_FALT = [
@@ -49,28 +61,42 @@ export async function onRequestGet(context) {
       `prospekt_kop?select=id&lista_id=eq.${lista.id}&epost=eq.${encodeURIComponent(adress)}`);
     if (!Array.isArray(kop) || !kop.length) return json({ error: 'ingen atkomst' }, 403);
 
-    const rader = await supaGet(cfg,
-      `prospekt_rad?select=${RAD_FALT}&lista_id=eq.${lista.id}&order=nr.asc&limit=5000`);
+    const bolag = await supaGet(cfg,
+      `prospekt_bolag?select=${BOLAG_FALT}&lista_id=eq.${lista.id}&order=nr.asc&limit=5000`);
 
-    // Arbetet hämtas på cfar, inte på lista. Har deltagaren pratat med ett
+    // Arbetsställena hänger under bolaget. De visas, men de är aldrig egna
+    // prospekt: en kedja är ett prospekt med många adresser, inte många.
+    const stallen = await supaGet(cfg,
+      `prospekt_arbetsstalle?select=${STALLE_FALT}&lista_id=eq.${lista.id}` +
+      `&order=huvudkontor.desc,ort.asc&limit=20000`);
+    const perBolag = {};
+    for (const st of stallen || []) (perBolag[st.bolag_id] ||= []).push(st);
+    for (const b of bolag || []) b.stallen = perBolag[b.id] || [];
+
+    // Arbetet hämtas på orgnr, inte på lista. Har deltagaren pratat med ett
     // bolag i en annan lista följer anteckningen med hit.
-    const cfars = (rader || []).map((r) => r.cfar).filter(Boolean);
-    const arbete = cfars.length
+    const orgnr = (bolag || []).map((b) => b.orgnr).filter(Boolean);
+    const arbete = orgnr.length
       ? await supaGet(cfg,
-          `prospekt_arbete?select=cfar,status,varde_kr,anteckning,kontaktresultat,orsak,listfel` +
+          `prospekt_arbete?select=${ARBETE_FALT}` +
           `&epost=eq.${encodeURIComponent(adress)}` +
-          `&cfar=in.(${cfars.map((c) => '"' + c + '"').join(',')})&limit=5000`)
+          `&orgnr=in.(${orgnr.map((o) => '"' + o + '"').join(',')})&limit=5000`)
       : [];
 
-    const minaRader = {};
+    const mitt = {};
     for (const a of arbete || []) {
-      minaRader[a.cfar] = {
+      mitt[a.orgnr] = {
         status: a.status, varde: a.varde_kr, anteckning: a.anteckning,
+        nasta: a.nasta_steg, nastaDatum: a.nasta_datum,
+        verifierad: a.verifierad_namn ? {
+          namn: a.verifierad_namn, titel: a.verifierad_titel,
+          kalla: a.verifierad_kalla, datum: a.verifierad_datum,
+        } : null,
         kontaktresultat: a.kontaktresultat, orsak: a.orsak, listfel: a.listfel,
       };
     }
 
-    return json({ lista, rader: rader || [], arbete: minaRader, adress });
+    return json({ lista, bolag: bolag || [], arbete: mitt, adress });
   } catch (e) {
     return json({ error: 'kunde inte hamta listan' }, 502);
   }

@@ -7,13 +7,14 @@ import Broadsheet from '../../layouts/Broadsheet.astro';
 import { konfig } from '../../lib/kurs.mjs';
 import '../../styles/motparten.css';
 import '../../styles/prospekt.css';
+import '../../styles/prospekt-lista.css';
 
 const k = konfig('motparten');
 ---
 
 <Broadsheet
   title="Prospektlista · Motparten"
-  description="Din prospektlista med status, värde och anteckningar."
+  description="Din prospektlista: bolag, arbetsställen och ditt eget arbete."
   active="kurs"
   bodyClass={k.bodyClass}
   kurs={k}
@@ -37,30 +38,47 @@ const k = konfig('motparten');
           <span class="prog-label" data-progLabel></span>
           <span class="prog-track"><span class="prog-fill" data-progFill></span></span>
         </div>
-        <p class="prog-break" data-progBreak></p>
+        <p class="prog-def">Kontaktad betyder minst ett registrerat kontaktförsök,
+          inte att kortet är öppnat.</p>
       </header>
 
       <div class="controls">
-        <input type="search" data-q placeholder="Sök bolag, kommun eller ort" aria-label="Sök i listan" />
+        <input type="search" data-q placeholder="Sök bolag, person eller ort" aria-label="Sök i listan" />
         <div class="chips" role="group" aria-label="Filtrera på grupp">
           <button class="chip-btn" data-prio="A" aria-pressed="false">Grupp A</button>
           <button class="chip-btn" data-prio="B" aria-pressed="false">Grupp B</button>
           <button class="chip-btn" data-prio="C" aria-pressed="false">Grupp C</button>
         </div>
-        <select data-dim="st" aria-label="Filtrera på status"><option value="">Alla statusar</option></select>
-        <select data-dim="omsattning_band" aria-label="Filtrera på omsättning"><option value="">All omsättning</option></select>
-        <select data-dim="anstallda_band" aria-label="Filtrera på storlek"><option value="">Alla storlekar</option></select>
-        <select data-dim="koncernlage" aria-label="Filtrera på koncernläge"><option value="">Fristående och dotterbolag</option></select>
-        <select data-dim="kommun" aria-label="Filtrera på kommun"><option value="">Alla kommuner</option></select>
-        <select data-dim="verksamhet" aria-label="Filtrera på verksamhet"><option value="">All verksamhet</option></select>
+        <button class="chip-btn" data-cKoncern aria-pressed="false">Max ett per koncern</button>
+        <button class="chip-btn" data-cAtt aria-pressed="false">Att göra</button>
+        <select data-fStatus aria-label="Filtrera på status">
+          <option value="">Alla statusar</option>
+          <option value="ny">Ny</option>
+          <option value="forsokt">Försökt</option>
+          <option value="pratat">Pratat</option>
+          <option value="intresse">Intresse</option>
+          <option value="nej">Nej</option>
+        </select>
+        <select data-fOrt aria-label="Filtrera på ort"><option value="">Alla orter</option></select>
         <button class="chip-btn" data-export>Exportera urvalet</button>
         <button class="chip-btn reset" data-reset>Rensa</button>
         <span class="count" data-count></span>
         <span class="sparstatus" data-sparstatus aria-live="polite"></span>
       </div>
 
-      <main data-list></main>
-      <p class="empty" data-empty hidden>Inga bolag matchar det urvalet.</p>
+      <div class="split">
+        <div class="listspalt">
+          <div class="colhead" aria-hidden="true">
+            <span></span><span></span><span>Bolag</span>
+            <span class="r">Nästa steg</span><span class="r">Omsättning</span><span class="r">Ställen</span>
+          </div>
+          <div data-lista></div>
+          <p class="empty" data-tomt hidden>Inga bolag matchar det urvalet.</p>
+        </div>
+        <div class="kortspalt">
+          <div class="kort" data-panel></div>
+        </div>
+      </div>
 
       <footer class="kallor">
         <p data-kalla></p>

@@ -44,43 +44,92 @@ create table prospekt_lista (
 );
 alter table prospekt_lista enable row level security;
 
--- ── prospekt_rad (företagsdatan, en gång, delad) ──────────────────────
+-- ── prospekt_bolag (prospektenheten) ──────────────────────────────────
 --
--- cfar är SCB:s identifierare per arbetsställe och den enda nyckeln här som
--- är stabil över tid. Radens uuid byts när ett uttag körs om, cfar gör det
--- inte, och därför hänger deltagarnas arbete på cfar och inte på rad_id.
-create table prospekt_rad (
+-- Ett prospekt ar ett BOLAG, aldrig ett arbetsstalle. Skalet ar matt:
+-- ett gymuttag gav 1 285 rader men bara 524 bolag, och fem kedjor agde 726
+-- av raderna. 569 rader hade ett namn men bara 180 olika personer, for en
+-- kedjas VD upprepades pa varje anlaggning. Samma sak med vaxelnumret.
+--
+-- Arbetsstallena finns kvar, som barn till bolaget. De ar vardefulla att
+-- visa och farliga att salja styckvis.
+create table prospekt_bolag (
   id uuid primary key default gen_random_uuid(),
   lista_id uuid not null references prospekt_lista(id) on delete cascade,
-  cfar text not null,
+  orgnr text not null,                          -- nyckeln som bar deltagarens arbete
   nr int not null,
   prio text not null,                           -- 'A' | 'B' | 'C'
   foretag text not null,
-  orgnr text,
-  kommun text,
-  ort text,
-  postnr text,
-  adress text,
   verksamhet text,
-  anstallda_bolag int,                          -- hela bolaget
-  anstallda_arbetsstalle text,                  -- SCB:s storleksklass för kontoret
+
+  anstallda int,                                -- hela bolaget
   anstallda_band text,
   omsattning_tkr bigint,
   omsattning_ar int,
   omsattning_band text,
-  koncernlage text,                             -- 'Fristående' | 'Dotterbolag'
+
+  -- ── Koncern ─────────────────────────────────────────────────────────
+  -- Unikt organisationsnummer ar inte ett unikt saljtillfalle. I ett uttag
+  -- av 100 hotellbolag sorterat pa omsattning ligger 46 i en koncern med
+  -- fler traffar, och Choice Hotels ensamt ar 12 av de 100. Utan
+  -- koncern_nyckel ringer deltagaren samma inkopsorganisation tolv ganger.
+  koncernlage text,                             -- 'Fristående' | 'Dotterbolag' | 'Moderbolag'
   moderbolag text,
-  vd text,                                      -- bara verkställande direktör, aldrig styrelseposter
-  telefon text,
+  moderbolag_orgnr text,
+  koncern_nyckel text generated always as (coalesce(moderbolag_orgnr, orgnr)) stored,
+
+  -- ── Registrerad kontaktperson ───────────────────────────────────────
+  -- Namnet ur Bolagsverket sager vem som foretrader bolaget juridiskt. Det
+  -- ar INTE samma sak som vem som koper det deltagaren saljer, och far
+  -- darfor inte heta beslutsfattare. Den verifierade personen, hittad pa
+  -- bolagets egen sajt, bor i prospekt_arbete eftersom den ar ett fynd.
+  kontakt_namn text,
+  kontakt_roll text,                            -- 'Verkställande direktör', 'Ledamot', ...
+  kontakt_kalla text,                           -- 'abpi:2026-08' | 'scb'
+  kontakt_datum date,
+
+  hemsida text,
+  telefon text,                                 -- bolagets vaxel, inte ett direktnummer
+  telefon_kalla text,
   epost text,
-  kanaler text not null,                        -- reklamspärr i klartext, får inte tappas bort
+  -- Harledd ur arbetsstallena, mest restriktiva vinner: nekar ett enda
+  -- arbetsstalle en kanal saknar bolaget den kanalen. Blandad sparr ar
+  -- sallsynt, 1 bolag av 1 455 i tre uppmatta segment, och just darfor
+  -- det slag av fel som annars slinker igenom.
+  kanaler text not null,
   notering text,
-  unique (lista_id, cfar),
+
+  unique (lista_id, orgnr),
   unique (lista_id, nr)
 );
-alter table prospekt_rad enable row level security;
-create index on prospekt_rad (lista_id);
-create index on prospekt_rad (cfar);
+alter table prospekt_bolag enable row level security;
+create index on prospekt_bolag (lista_id);
+create index on prospekt_bolag (orgnr);
+create index on prospekt_bolag (lista_id, koncern_nyckel);
+
+-- ── prospekt_arbetsstalle (bolagets fysiska platser) ──────────────────
+--
+-- cfar ar SCB:s identifierare per arbetsstalle och stabil over tid.
+-- Reklamsparren ar registrerad HAR, inte pa bolaget, vilket ar precis
+-- darfor bolagets kanaler maste harledas och inte kopieras.
+create table prospekt_arbetsstalle (
+  id uuid primary key default gen_random_uuid(),
+  bolag_id uuid not null references prospekt_bolag(id) on delete cascade,
+  lista_id uuid not null references prospekt_lista(id) on delete cascade,
+  cfar text not null,
+  huvudkontor boolean not null default false,
+  kommun text,
+  ort text,
+  postnr text,
+  adress text,
+  anstallda_klass text,                         -- SCB:s storleksklass for kontoret
+  telefon text,
+  kanaler text not null,
+  unique (lista_id, cfar)
+);
+alter table prospekt_arbetsstalle enable row level security;
+create index on prospekt_arbetsstalle (bolag_id);
+create index on prospekt_arbetsstalle (lista_id);
 
 -- ── prospekt_kop (vem som får se vilken lista) ────────────────────────
 create table prospekt_kop (
@@ -96,24 +145,41 @@ create table prospekt_kop (
 alter table prospekt_kop enable row level security;
 create index on prospekt_kop (epost);
 
--- ── prospekt_arbete (det enda som är personligt) ──────────────────────
+-- ── prospekt_arbete (det enda som ar personligt) ──────────────────────
 --
--- Nyckeln är (epost, cfar), alltså personen och arbetsstället. Två följder,
--- båda avsiktliga:
---   1. Ett omkört uttag tappar inte anteckningarna, för cfar består.
---   2. Dyker samma bolag upp i en annan lista samma person köpt följer
---      anteckningen med. Har man redan pratat med dem är det sant oavsett
---      vilken lista man tittar på.
--- lista_id är därför bara "senast sedd i", inte en del av nyckeln.
+-- Nyckeln ar (epost, orgnr), alltsa personen och BOLAGET. Tre foljder:
+--   1. Ett omkort uttag tappar inte anteckningarna, for orgnr bestar.
+--   2. Dyker samma bolag upp i en annan lista samma person kopt foljer
+--      anteckningen med. Har man redan pratat med dem ar det sant oavsett
+--      vilken lista man tittar pa.
+--   3. En kedja bar ETT arbete, inte ett per anlaggning.
+-- lista_id ar darfor bara "senast sedd i", inte en del av nyckeln.
 create table prospekt_arbete (
   id uuid primary key default gen_random_uuid(),
   epost text not null,
-  cfar text not null,
+  orgnr text not null,
   lista_id uuid references prospekt_lista(id) on delete set null,
   user_id uuid references profiles(id) on delete cascade,
   status prospekt_status not null default 'ny',
   varde_kr bigint,
   anteckning text,
+
+  -- ── Nasta steg ──────────────────────────────────────────────────────
+  -- Det viktigaste faltet i ett mini-CRM, och det som saknades helt. En
+  -- anteckning svarar pa vad jag skrev sist. Det har svarar pa vem jag ska
+  -- gora nagot med i dag, vilket ar fragan som gor att arbetsytan oppnas.
+  nasta_steg text,
+  nasta_datum date,
+
+  -- ── Verifierad beslutsfattare ───────────────────────────────────────
+  -- Skild fran prospekt_bolag.kontakt_namn med flit. Registret sager vem
+  -- som foretrader bolaget. Det har ar vem som visade sig kopa, hittad pa
+  -- bolagets egen sajt eller i samtalet, med kalla sa pastaendet gar att
+  -- kontrollera i efterhand.
+  verifierad_namn text,
+  verifierad_titel text,
+  verifierad_kalla text,
+  verifierad_datum date,
 
   -- ── De fyra dimensionerna ───────────────────────────────────────────
   -- Nabarhet och interaktion: kom vi fram, och till vem?
@@ -126,15 +192,17 @@ create table prospekt_arbete (
   listfel prospekt_listfel,
 
   updated_at timestamptz not null default now(),
-  unique (epost, cfar)
+  unique (epost, orgnr)
 );
 alter table prospekt_arbete enable row level security;
 create index on prospekt_arbete (epost, lista_id);
+-- "Vem ska jag gora nagot med i dag?"
+create index on prospekt_arbete (epost, nasta_datum) where nasta_datum is not null;
 -- Analysen som gor det har vart besvaret: intressefrekvens per attribut.
 create index on prospekt_arbete (lista_id, status) where status <> 'ny';
 create index on prospekt_arbete (lista_id, listfel) where listfel is not null;
 
--- Håll updated_at sann utan att förlita sig på klienten.
+-- Hall updated_at sann utan att forlita sig pa klienten.
 create or replace function prospekt_arbete_touch()
 returns trigger language plpgsql as $$
 begin

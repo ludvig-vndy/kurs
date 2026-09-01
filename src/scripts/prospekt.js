@@ -5,338 +5,386 @@
  * ringer igenom över veckor inte får dö med en rensad webbläsare.
  *
  * Företagsdatan är gemensam för alla som köpt listan. Status, värde och
- * anteckning är personliga och skickas rad för rad när de ändras.
+ * anteckning är personliga och skickas fält för fält när de ändras.
+ *
+ * Prospektenheten är BOLAGET. Arbetsställena visas som barn till bolaget och
+ * blir aldrig egna rader. Skälet är mätt: ett gymuttag gav 1 285 rader men
+ * bara 524 bolag, och fem kedjor ägde 726 av raderna. Samma VD och samma
+ * växelnummer upprepades på varje anläggning.
+ *
+ * Raden bär sex saker och inget mer. Allt annat bor i kortet, för en lista
+ * man betar av måste gå att skanna.
  */
 
 const STATUSAR = [
-  ['ny', 'Ny'],
-  ['forsokt', 'Försökt'],
-  ['pratat', 'Pratat'],
-  ['intresse', 'Intresse'],
-  ['nej', 'Nej'],
+  ['ny', 'Ny'], ['forsokt', 'Försökt'], ['pratat', 'Pratat'],
+  ['intresse', 'Intresse'], ['nej', 'Nej'],
 ];
 const ETIKETT = Object.fromEntries(STATUSAR);
 
-/* Fyra oberoende dimensioner, inte ett enda "varför".
- *
- * Ett bolag som aldrig svarade är inget negativt exempel på listkvalitet, och
- * en rad i fel bransch är fel oavsett om någon ringde. Slås de ihop går det
- * inte att skilja "vår lista var dålig" från "säljaren nådde inte fram".
- *
- * Statusen förblir fem enkla lägen. Följdfrågan ställs bara när den är
- * relevant, och listfelet går att sätta på vilken rad som helst. */
-const KONTAKTRESULTAT = [
-  ['', 'Vad hände?'],
-  ['inget_svar', 'Inget svar'],
-  ['fel_nummer', 'Numret fungerade inte'],
-  ['fel_person', 'Fel person'],
-  ['natt_fram', 'Nådde fram'],
-  ['ombedd_aterkomma', 'Ombedd återkomma'],
-];
-const ORSAK = [
-  ['', 'Varför inte?'],
-  ['har_leverantor', 'Har redan leverantör'],
-  ['inget_behov', 'Inget behov'],
-  ['for_dyrt', 'För dyrt'],
-  ['fel_tajming', 'Fel tajming'],
-  ['ingen_beslutsratt', 'Ingen beslutsrätt'],
-  ['annat', 'Annat'],
-];
-const LISTFEL = [
-  ['', 'Fel i listan?'],
-  ['fel_bransch', 'Fel bransch'],
-  ['fel_storlek', 'Fel storlek'],
-  ['fel_geografi', 'Fel geografi'],
-  ['ar_kedja', 'Är kedja'],
-  ['nedlagt', 'Nedlagt'],
-  ['dubblett', 'Dubblett'],
-];
-
-// Vilken följdfråga hör till vilken status. Intresse behöver ingen.
+/* Följdfrågan beror på statusen. Att visa alla dimensioner samtidigt gör
+   fälten icke-ortogonala: "Pratat" plus "Nådde inte fram" är ett tillstånd
+   som inte ska gå att uttrycka. */
 const FOLJDFRAGA = {
-  forsokt: ['kontaktresultat', KONTAKTRESULTAT],
-  pratat: ['kontaktresultat', KONTAKTRESULTAT],
-  nej: ['orsak', ORSAK],
+  forsokt: ['kontaktresultat', 'Utfall', [
+    ['', '–'], ['inget_svar', 'Inget svar'], ['fel_nummer', 'Fel nummer'],
+    ['fel_person', 'Fel person'], ['ombedd_aterkomma', 'Ombedd återkomma']]],
+  pratat: ['kontaktresultat', 'Utfall', [
+    ['', '–'], ['natt_fram', 'Nådde fram'], ['fel_person', 'Fel person'],
+    ['ombedd_aterkomma', 'Ombedd återkomma']]],
+  intresse: ['kontaktresultat', 'Utfall', [
+    ['', '–'], ['natt_fram', 'Nådde fram'], ['ombedd_aterkomma', 'Ombedd återkomma']]],
+  nej: ['orsak', 'Orsak', [
+    ['', '–'], ['har_leverantor', 'Har leverantör'], ['inget_behov', 'Inget behov'],
+    ['for_dyrt', 'För dyrt'], ['fel_tajming', 'Fel tajming'],
+    ['ingen_beslutsratt', 'Ingen beslutsrätt'], ['annat', 'Annat']]],
 };
+const LISTFEL = [
+  ['', 'Ingen'], ['fel_bransch', 'Fel bransch'], ['fel_storlek', 'Fel storlek'],
+  ['fel_geografi', 'Fel geografi'], ['ar_kedja', 'Är kedja'],
+  ['nedlagt', 'Nedlagt'], ['dubblett', 'Dubblett'],
+];
 
-const val = (lista, valt) => lista.map(([v, t]) =>
-  '<option value="' + v + '"' + (valt === v ? ' selected' : '') + '>' + esc(t) + '</option>').join('');
-
-/* Band ska läsas lågt till högt, inte i bokstavsordning. Utan det hamnar
-   "15 till 50 Mkr" före "5 till 15 Mkr". Dimensioner som saknas här
-   sorteras alfabetiskt, vilket är rätt för kommun och verksamhet. */
-const ORDNINGAR = {
-  st: STATUSAR.map(([v]) => v),
-  omsattning_band: ['Under 5 Mkr', '5 till 15 Mkr', '15 till 50 Mkr', 'Över 50 Mkr', 'Okänd'],
-  anstallda_band: ['1 till 9', '10 till 49', '50 till 199', '200 eller fler', 'Okänt'],
-  koncernlage: ['Fristående', 'Dotterbolag'],
-};
-
-const GRUPPER = {
-  A: ['Grupp A', 'Ägarlett och nåbart'],
-  B: ['Grupp B', 'Nåbart med förbehåll'],
-  C: ['Grupp C', 'Beslutet ligger på annan ort'],
-};
+/* Kontaktad, inte "bearbetad". Att öppna ett kort är inte att ha försökt. */
+const KONTAKTAD = new Set(['forsokt', 'pratat', 'intresse', 'nej']);
 
 const TAB = String.fromCharCode(9);
 const NL = String.fromCharCode(10);
 const SKRAP = new RegExp('[' + String.fromCharCode(9, 10, 13) + ']+', 'g');
 
-const esc = (s) =>
-  String(s == null ? '' : s).replace(/[&<>"']/g, (c) =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const kr = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-const mkr = (v) =>
-  v == null ? null : v >= 100000 ? Math.round(v / 1000) + ' Mkr' : (v / 1000).toFixed(1).replace('.', ',') + ' Mkr';
+const mkr = (v) => v == null ? '–'
+  : (v / 1000).toLocaleString('sv-SE', { maximumFractionDigits: 0 }) + ' Mkr';
 const telHref = (t) => 'tel:+46' + String(t).replace(/\D/g, '').replace(/^0/, '');
+const val = (lista, valt) => lista.map(([v, t]) =>
+  '<option value="' + v + '"' + (String(valt || '') === v ? ' selected' : '') + '>' +
+  esc(t) + '</option>').join('');
+
+/* Koncernnyckeln är dedupe-nivån ovanför bolaget. Unikt organisationsnummer
+   är inte ett unikt säljtillfälle: i ett uttag av 100 hotellbolag sorterat på
+   omsättning ligger 46 i en koncern med fler träffar, och Choice Hotels
+   ensamt är 12 av de 100. Utan den här nyckeln ringer deltagaren samma
+   inköpsorganisation tolv gånger. */
+const koncern = (b) => b.koncern_nyckel || b.moderbolag_orgnr || b.orgnr;
+
+const IDAG = new Date(new Date().toISOString().slice(0, 10) + 'T00:00:00');
+function dagarTill(iso) {
+  if (!iso) return null;
+  const d = new Date(String(iso).slice(0, 10) + 'T00:00:00');
+  return Number.isNaN(d.getTime()) ? null : Math.round((d - IDAG) / 86400000);
+}
+function nastaVisning(a) {
+  const d = dagarTill(a && a.nastaDatum);
+  if (d === null) return { text: '', klass: '' };
+  const text = new Date(String(a.nastaDatum).slice(0, 10) + 'T00:00:00')
+    .toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' });
+  return { text, klass: d < 0 ? 'forbi' : d <= 7 ? 'snart' : '' };
+}
 
 export async function startaProspekt() {
   const rot = document.querySelector('[data-prospekt]');
   if (!rot) return;
+  const $ = (n) => rot.querySelector('[data-' + n + ']');
+  const slug = new URL(location.href).searchParams.get('lista') ||
+    rot.dataset.slug || 'el-vvs-vastra-gotaland';
 
-  const $ = (namn) => rot.querySelector('[data-' + namn + ']');
-  const lader = $('lader');
-  const felRuta = $('fel');
-  const innehall = $('innehall');
-
-  const slug = new URLSearchParams(location.search).get('lista') || 'el-vvs-vastra-gotaland';
-
-  let svar;
+  let data;
   try {
     const r = await fetch('/api/prospekt/lista?slug=' + encodeURIComponent(slug), {
       headers: { Accept: 'application/json' },
     });
-    svar = await r.json();
-    if (!r.ok) throw new Error(svar && svar.error);
+    data = await r.json();
+    if (!r.ok) throw new Error(data && data.error);
   } catch (e) {
-    lader.hidden = true;
-    felRuta.hidden = false;
+    $('lader').hidden = true;
+    $('fel').hidden = false;
     $('felText').textContent =
-      String(e.message) === 'ej inloggad'
-        ? 'Du behöver vara inloggad på Motparten för att se din lista.'
-        : 'Vi hittade ingen lista kopplad till ditt konto. Har du köpt den och ändå ser det här, hör av dig.';
+      'Kontrollera att du är inloggad och att listan ingår i ditt köp.';
     return;
   }
 
-  const { lista, rader, arbete } = svar;
-  lader.hidden = true;
-  innehall.hidden = false;
+  const lista = data.lista;
+  const bolag = (data.bolag || []).map((b) => ({ ...b, stallen: b.stallen || [] }));
+  const mitt = data.arbete || {};
+  const arb = (b) => (mitt[b.orgnr] = mitt[b.orgnr] || { status: 'ny' });
 
-  // Arbetet läggs på raderna, så filter och facetter kan behandla status som
-  // vilken dimension som helst. Nyckeln är cfar, arbetsställets stabila id
-  // hos SCB, inte radens uuid som byts när uttaget körs om.
-  const arbeteFor = (cfar) => arbete[cfar] || {};
-  for (const r of rader) {
-    const a = arbeteFor(r.cfar);
-    r.st = a.status || 'ny';
-    r.varde = a.varde || 0;
-    r.anteckning = a.anteckning || '';
-    r.kontaktresultat = a.kontaktresultat || '';
-    r.orsak = a.orsak || '';
-    r.listfel = a.listfel || '';
-  }
+  $('lader').hidden = true;
+  $('innehall').hidden = false;
 
   /* ---------- huvud ---------- */
-  $('eyebrow').textContent = [lista.segment, lista.geografi].filter(Boolean).join(' · ');
+  const koncerner = new Set(bolag.map(koncern)).size;
+  const stallenAntal = bolag.reduce((a, b) => a + Math.max(1, b.stallen.length), 0);
   $('namn').textContent = lista.namn;
-  $('ingress').textContent = lista.ingress || '';
+  $('eyebrow').textContent = 'Motparten · prospektlista';
+  $('ingress').innerHTML =
+    '<b>' + bolag.length + ' av ' + (lista.population || bolag.length) + ' bolag</b> ' +
+    'som matchar din marknad ligger i din arbetsyta. ' +
+    'De är ' + stallenAntal + ' arbetsställen och <b>' + koncerner + ' koncerner</b>.';
   $('meta').innerHTML = [
-    rader.length + ' bolag',
-    'Grupp A ' + rader.filter((r) => r.prio === 'A').length,
-    lista.population ? 'Länet totalt ' + kr(lista.population) : null,
-    lista.uttag_datum ? 'Uttag ' + lista.uttag_datum : null,
-  ].filter(Boolean).map((t) => '<span>' + esc(t) + '</span>').join('');
+    lista.segment ? '<span>Marknad <b>' + esc(lista.segment) + '</b></span>' : '',
+    lista.geografi ? '<span>Geografi <b>' + esc(lista.geografi) + '</b></span>' : '',
+    '<span>Uttag <b>' + esc(lista.uttag_datum) + '</b></span>',
+  ].filter(Boolean).join('');
   $('kalla').textContent = lista.kallhanvisning || '';
   $('urval').textContent = lista.urval || '';
 
-  /* ---------- rendera ---------- */
-  const list = $('list');
-  const radEl = new Map();
-
-  for (const nyckel of ['A', 'B', 'C']) {
-    const poster = rader.filter((r) => r.prio === nyckel);
-    if (!poster.length) continue;
-    const sek = document.createElement('section');
-    sek.className = 'group';
-    const g = GRUPPER[nyckel];
-    sek.innerHTML =
-      '<div class="group-head"><span class="group-key">' + esc(g[0]) +
-      '</span><h2 class="group-name">' + esc(g[1]) + '</h2><span class="group-line"></span></div>';
-
-    for (const r of poster) {
-      const satt = r.st !== 'ny' || r.varde;
-      const begransad = r.kanaler && r.kanaler.indexOf('EJ') !== -1;
-      const fakta = [
-        r.anstallda_bolag != null ? '<b>' + r.anstallda_bolag + ' anställda</b>' : null,
-        mkr(r.omsattning_tkr),
-        esc(r.kommun),
-        esc(r.verksamhet),
-        esc(r.koncernlage),
-      ].filter(Boolean).map((x) => '<span>' + x + '</span>').join('');
-
-      const lankar = [];
-      if (r.telefon) lankar.push('<a href="' + esc(telHref(r.telefon)) + '">' + esc(r.telefon) + '</a>');
-      if (r.epost) lankar.push('<a href="mailto:' + esc(r.epost) + '">' + esc(r.epost) + '</a>');
-
-      const statusval = STATUSAR.map(([v, t]) =>
-        '<option value="' + v + '"' + (r.st === v ? ' selected' : '') + '>' + esc(t) + '</option>').join('');
-      const folj = FOLJDFRAGA[r.st];
-      const foljVal = folj ? val(folj[1], r[folj[0]]) : '';
-
-      const art = document.createElement('article');
-      art.className = 'row' + (r.st === 'nej' ? ' avfard' : '');
-      art.dataset.id = r.id;
-      art.innerHTML =
-        '<span class="dot" data-s="' + esc(r.st) + '" aria-hidden="true"></span>' +
-        '<div class="num">' + String(r.nr).padStart(3, '0') + '</div>' +
-        '<div><h3 class="namn">' + esc(r.foretag) + '</h3>' +
-        '<div class="facts">' + fakta + '</div>' +
-        (r.notering ? '<p class="note">' + esc(r.notering) + '</p>' : '') +
-        '<textarea class="jot" rows="1" placeholder="Anteckning" aria-label="Anteckning om ' +
-          esc(r.foretag) + '">' + esc(r.anteckning) + '</textarea>' +
-        '</div>' +
-        '<div class="contact">' +
-        '<div class="rowtools' + (satt ? ' aktiv' : '') + '">' +
-          '<select class="status-sel" data-set="' + (r.st !== 'ny' ? '1' : '0') +
-            '" aria-label="Status för ' + esc(r.foretag) + '">' + statusval + '</select>' +
-          '<select class="kod-sel" data-falt="' + (folj ? folj[0] : '') + '"' +
-            (folj ? '' : ' hidden') + ' aria-label="Följdfråga">' + foljVal + '</select>' +
-          '<input class="amount" type="text" inputmode="numeric" placeholder="Värde kr" data-set="' +
-            (r.varde ? '1' : '0') + '" aria-label="Värde för ' + esc(r.foretag) + '" value="' +
-            (r.varde ? esc(kr(r.varde)) : '') + '">' +
-          '<select class="listfel-sel" data-set="' + (r.listfel ? '1' : '0') +
-            '" aria-label="Fel i listan">' + val(LISTFEL, r.listfel) + '</select>' +
-        '</div>' +
-        (r.vd ? '<p class="vd">' + esc(r.vd) + '<span>Verkställande direktör</span></p>' : '') +
-        lankar.join('') +
-        (begransad ? '<span class="kanal">' + esc(r.kanaler) + '</span>' : '') +
-        (r.adress ? '<span class="addr">' + esc(r.adress) + '<br>' + esc(r.postnr || '') + ' ' +
-          esc(r.ort || '') + '</span>' : '') +
-        '</div>';
-      sek.appendChild(art);
-      radEl.set(r.id, art);
-    }
-    list.appendChild(sek);
-  }
-
-  for (const ta of list.querySelectorAll('.jot')) if (ta.value) passa(ta);
-
   /* ---------- filter ---------- */
-  const DIMS = [...rot.querySelectorAll('.controls select[data-dim]')].map((el) => ({
-    dim: el.dataset.dim,
-    el,
-    ordning: ORDNINGAR[el.dataset.dim] || null,
-  }));
-  const prioBtns = [...rot.querySelectorAll('.chip-btn[data-prio]')];
-  const q = $('q');
-  const countEl = $('count');
-  const emptyEl = $('empty');
+  const orter = [...new Set(bolag.flatMap((b) => b.stallen.map((s) => s.ort).filter(Boolean)))]
+    .sort((a, b) => a.localeCompare(b, 'sv'));
+  $('fOrt').insertAdjacentHTML('beforeend',
+    orter.map((o) => '<option value="' + esc(o) + '">' + esc(o) + '</option>').join(''));
 
-  for (const d of DIMS) {
-    // Fasta ordningar filtreras mot vad listan faktiskt innehåller, utom för
-    // status där alla lägen ska gå att välja även innan någon rad har dem.
-    const varden = d.ordning
-      ? d.ordning.filter((v) => d.dim === 'st' || rader.some((r) => r[d.dim] === v))
-      : [...new Set(rader.map((r) => r[d.dim]).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'sv'));
-    for (const v of varden) {
-      const o = document.createElement('option');
-      o.value = v;
-      o.textContent = d.dim === 'st' ? ETIKETT[v] : v;
-      d.el.appendChild(o);
-    }
-    d.el.addEventListener('change', tillampa);
+  let vald = null;
+  let synliga = [];
+
+  function filtrera() {
+    const q = $('q').value.trim().toLowerCase();
+    const fs = $('fStatus').value;
+    const fo = $('fOrt').value;
+    const prio = [...rot.querySelectorAll('[data-prio][aria-pressed="true"]')]
+      .map((b) => b.dataset.prio);
+    const enPerKoncern = $('cKoncern').getAttribute('aria-pressed') === 'true';
+    const attGora = $('cAtt').getAttribute('aria-pressed') === 'true';
+
+    const sedda = new Set();
+    return bolag.filter((b) => {
+      const a = arb(b);
+      if (prio.length && !prio.includes(b.prio)) return false;
+      if (fs && a.status !== fs) return false;
+      if (fo && !b.stallen.some((s) => s.ort === fo)) return false;
+      if (attGora) {
+        const d = dagarTill(a.nastaDatum);
+        if (d === null || d > 7) return false;
+      }
+      if (q) {
+        const h = [b.foretag, b.kontakt_namn, b.orgnr, b.verksamhet,
+          ...b.stallen.map((s) => [s.ort, s.adress, s.kommun].join(' '))]
+          .join(' ').toLowerCase();
+        if (!h.includes(q)) return false;
+      }
+      if (enPerKoncern) {
+        const k = koncern(b);
+        if (sedda.has(k)) return false;
+        sedda.add(k);
+      }
+      return true;
+    });
   }
 
-  function matchar(r, hoppaOver) {
-    const term = q.value.trim().toLowerCase();
-    if (term) {
-      const hö = (r.foretag + ' ' + (r.kommun || '') + ' ' + (r.ort || '') + ' ' + (r.vd || '')).toLowerCase();
-      if (hö.indexOf(term) === -1) return false;
-    }
-    const prios = prioBtns.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.prio);
-    if (hoppaOver !== 'p' && prios.length && prios.indexOf(r.prio) === -1) return false;
-    for (const d of DIMS) {
-      if (d.dim === hoppaOver) continue;
-      if (d.el.value && String(r[d.dim]) !== d.el.value) return false;
-    }
-    return true;
+  /* ---------- listan ---------- */
+  function ritaLista() {
+    synliga = filtrera();
+    const iKoncern = {};
+    for (const b of bolag) iKoncern[koncern(b)] = (iKoncern[koncern(b)] || 0) + 1;
+
+    $('lista').innerHTML = synliga.map((b) => {
+      const a = arb(b);
+      const n = Math.max(1, b.stallen.length);
+      const nx = nastaVisning(a);
+      const syskon = iKoncern[koncern(b)] || 1;
+      const begransad = b.kanaler && b.kanaler.indexOf('EJ') !== -1;
+      const forsta = b.stallen[0] || {};
+      return '<button class="rad" data-org="' + esc(b.orgnr) + '"' +
+        ' data-status="' + esc(a.status) + '"' +
+        ' aria-current="' + (vald === b.orgnr) + '">' +
+        '<span class="dot" data-s="' + esc(a.status) + '"></span>' +
+        '<span class="nr">' + String(b.nr).padStart(3, '0') + '</span>' +
+        '<span><span class="namn">' + esc(b.foretag) + '</span>' +
+        '<span class="sub">' +
+          '<span>' + esc(forsta.ort || '') + (n > 1 ? ' m.fl.' : '') + '</span>' +
+          (syskon > 1 && b.moderbolag
+            ? '<span class="tagg gold">' + syskon + ' i ' +
+              esc(String(b.moderbolag).split(' ')[0]) + '</span>'
+            : '<span>' + esc(b.koncernlage || '') + '</span>') +
+          (begransad ? '<span class="tagg stop">Ej brev/mejl</span>' : '') +
+        '</span></span>' +
+        '<span class="nasta ' + nx.klass + '">' + (esc(nx.text) || '–') + '</span>' +
+        '<span class="oms">' + mkr(b.omsattning_tkr) + '</span>' +
+        '<span class="stallen-c">' +
+          (n > 1 ? '<span class="tagg blue">' + n + ' ställen</span>' : '1') +
+        '</span></button>';
+    }).join('');
+
+    $('tomt').hidden = synliga.length > 0;
+    const synligaKoncerner = new Set(synliga.map(koncern)).size;
+    $('count').textContent = synliga.length + ' bolag · ' + synligaKoncerner + ' koncerner';
+    const k = bolag.filter((b) => KONTAKTAD.has(arb(b).status)).length;
+    $('progLabel').textContent = k + ' kontaktade · ' + (bolag.length - k) + ' kvar';
+    $('progFill').style.transform = 'scaleX(' + (bolag.length ? k / bolag.length : 0) + ')';
   }
 
-  function framsteg() {
-    const pabörjade = rader.filter((r) => r.st !== 'ny').length;
-    $('progFill').style.transform = 'scaleX(' + (rader.length ? pabörjade / rader.length : 0) + ')';
-    $('progLabel').textContent = pabörjade + ' / ' + rader.length + ' påbörjade';
+  /* ---------- kortet ---------- */
+  function ritaKort() {
+    const panel = $('panel');
+    if (!vald) {
+      panel.innerHTML = '<div class="kort-tom">Välj ett bolag i listan.<br>' +
+        '<span>Piltangenterna flyttar, Esc stänger.</span></div>';
+      return;
+    }
+    const b = bolag.find((x) => x.orgnr === vald);
+    if (!b) { vald = null; return ritaKort(); }
+    const a = arb(b);
+    const f = FOLJDFRAGA[a.status];
+    const nx = nastaVisning(a);
+    const syskon = bolag.filter((x) => koncern(x) === koncern(b) && x.orgnr !== b.orgnr);
+    const begransad = b.kanaler && b.kanaler.indexOf('EJ') !== -1;
 
-    const bitar = [];
-    let oppet = 0;
-    for (const [v, t] of STATUSAR) {
-      if (v === 'ny') continue;
-      const träff = rader.filter((r) => r.st === v);
-      if (!träff.length) continue;
-      const summa = träff.reduce((a, r) => a + (r.varde || 0), 0);
-      if (v !== 'nej') oppet += summa;
-      bitar.push('<span>' + esc(t) + ' <b>' + träff.length + '</b>' + (summa ? ' · ' + kr(summa) + ' kr' : '') + '</span>');
-    }
-    if (oppet) bitar.push('<span>Öppet värde <b>' + kr(oppet) + ' kr</b></span>');
-    $('progBreak').innerHTML = bitar.join('');
-  }
+    panel.innerHTML =
+      '<div class="k-head"><p class="eyebrow">' +
+        '<span>Nr ' + String(b.nr).padStart(3, '0') + ' · Grupp ' + esc(b.prio) + '</span>' +
+        '<button class="stang" data-stang>Stäng</button></p>' +
+        '<h2>' + esc(b.foretag) + '</h2>' +
+        '<p class="orgnr">' + esc(b.orgnr) + ' · ' + esc(b.koncernlage || '') +
+        (b.moderbolag ? ' till ' + esc(b.moderbolag) : '') + '</p></div>' +
 
-  function tillampa() {
-    let visade = 0;
-    for (const r of rader) {
-      const ok = matchar(r, null);
-      radEl.get(r.id).hidden = !ok;
-      if (ok) visade++;
-    }
-    for (const sek of list.querySelectorAll('.group')) {
-      sek.hidden = ![...sek.querySelectorAll('.row')].some((el) => !el.hidden);
-    }
-    for (const d of DIMS) {
-      const pool = rader.filter((r) => matchar(r, d.dim));
-      const antal = new Map();
-      for (const r of pool) antal.set(String(r[d.dim]), (antal.get(String(r[d.dim])) || 0) + 1);
-      for (const opt of d.el.options) {
-        if (!opt.value) continue;
-        const c = antal.get(opt.value) || 0;
-        const namn = d.dim === 'st' ? ETIKETT[opt.value] : opt.value;
-        opt.textContent = namn + ' (' + c + ')';
-        opt.disabled = c === 0 && d.el.value !== opt.value;
+      (syskon.length
+        ? '<div class="blk"><div class="hist"><b>' + syskon.length +
+          ' andra bolag i din lista</b> tillhör ' + esc(b.moderbolag || 'samma koncern') +
+          '. Inköpet kan ligga centralt.<br><span class="dim">' +
+          syskon.slice(0, 6).map((x) => esc(x.foretag)).join(' · ') +
+          (syskon.length > 6 ? ' m.fl.' : '') + '</span></div></div>'
+        : '') +
+
+      '<div class="blk viktig"><p class="lbl">Nästa steg</p><div class="tva">' +
+        '<label><span class="lbl">Vad</span>' +
+        '<input class="txt" data-falt="nasta" value="' + esc(a.nasta || '') +
+        '" placeholder="t.ex. Ring igen"></label>' +
+        '<label><span class="lbl">När</span>' +
+        '<input class="txt" type="date" data-falt="nastaDatum" value="' +
+        esc(String(a.nastaDatum || '').slice(0, 10)) + '"></label></div>' +
+        (nx.klass === 'forbi' ? '<p class="varning stop">Datumet har passerat.</p>' : '') +
+      '</div>' +
+
+      '<div class="blk"><p class="lbl">Kontaktperson</p>' +
+        (b.kontakt_namn
+          ? '<div class="person"><span class="n">' + esc(b.kontakt_namn) + '</span>' +
+            '<span class="r">' + esc(b.kontakt_roll || '') + '</span></div>' +
+            '<p class="kalla">Registrerad hos Bolagsverket' +
+            (b.kontakt_kalla ? ' · ' + esc(b.kontakt_kalla) : '') + '</p>'
+          : '<div class="tomrad">Ingen registrerad kontaktperson.</div>') +
+        (a.verifierad && a.verifierad.namn
+          ? '<div class="varning"><b>Verifierad beslutsfattare</b><br>' +
+            esc(a.verifierad.namn) +
+            (a.verifierad.titel ? ' · ' + esc(a.verifierad.titel) : '') +
+            (a.verifierad.kalla
+              ? '<br><span class="dim">Hittad på ' + esc(a.verifierad.kalla) + '</span>' : '') +
+            '</div>'
+          : '<div class="tomrad mt">Ingen verifierad beslutsfattare än. Registrerad VD ' +
+            'säger vem som företräder bolaget juridiskt, inte vem som köper det du säljer.</div>') +
+      '</div>' +
+
+      '<div class="blk"><p class="lbl">Kontaktvägar</p>' +
+        (b.telefon
+          ? '<div class="faltrad"><span class="k">Bolagets växel</span>' +
+            '<a href="' + esc(telHref(b.telefon)) + '">' + esc(b.telefon) + '</a></div>' +
+            '<p class="kalla">' + esc(b.telefon_kalla || 'registret') +
+            ' · inte ett direktnummer</p>'
+          : '<div class="tomrad">Inget nummer i registret.</div>') +
+        (b.epost
+          ? '<div class="faltrad"><span class="k">Mejl</span>' +
+            '<a href="mailto:' + esc(b.epost) + '">' + esc(b.epost) + '</a></div>' : '') +
+        (b.hemsida
+          ? '<div class="faltrad"><span class="k">Webbplats</span>' +
+            '<a href="' + esc(b.hemsida) + '" target="_blank" rel="noopener">' +
+            esc(String(b.hemsida).replace(/^https?:\/\//, '')) + '</a></div>' : '') +
+        (begransad
+          ? '<p class="varning stop">' + esc(b.kanaler) + ' · reklamspärr hos SCB</p>' : '') +
+      '</div>' +
+
+      '<div class="blk"><p class="lbl">' +
+        (b.stallen.length > 1 ? b.stallen.length + ' arbetsställen' : 'Arbetsställe') +
+        '</p><ul class="stallen">' +
+        (b.stallen.length
+          ? b.stallen.map((s) => '<li><span>' + esc(s.adress || '') +
+              '<span class="ort">' + esc([s.postnr, s.ort].filter(Boolean).join(' ')) + '</span>' +
+              '</span>' + (s.huvudkontor ? '<span class="tagg gold">Huvudkontor</span>' : '') +
+              '</li>').join('')
+          : '<li><span class="dim">Ingen adress i uttaget</span></li>') +
+      '</ul></div>' +
+
+      '<div class="blk"><p class="lbl">Bolaget</p><div class="matchar">' +
+        (b.verksamhet ? '<span>' + esc(b.verksamhet) + '</span>' : '') +
+        (b.anstallda != null ? '<span>' + b.anstallda + ' anställda</span>' : '') +
+        (b.omsattning_tkr != null
+          ? '<span>' + mkr(b.omsattning_tkr) +
+            (b.omsattning_ar ? ' (' + b.omsattning_ar + ')' : '') + '</span>' : '') +
+      '</div>' + (b.notering ? '<p class="notering">' + esc(b.notering) + '</p>' : '') + '</div>' +
+
+      '<div class="blk"><p class="lbl">Ditt arbete</p><div class="tva">' +
+        '<label><span class="lbl">Status</span>' +
+        '<select data-falt="status">' + val(STATUSAR, a.status) + '</select></label>' +
+        (f
+          ? '<label><span class="lbl">' + esc(f[1]) + '</span>' +
+            '<select data-falt="' + f[0] + '">' + val(f[2], a[f[0]]) + '</select></label>'
+          : '<label><span class="lbl">Värde</span>' +
+            '<input class="txt" data-falt="varde" placeholder="Värde kr" value="' +
+            (a.varde ? esc(kr(a.varde)) : '') + '"></label>') +
+        '</div>' +
+        '<label class="enfalt"><span class="lbl">Fel i listan</span>' +
+        '<select data-falt="listfel">' + val(LISTFEL, a.listfel) + '</select></label>' +
+        '<textarea class="jot" data-falt="anteckning" placeholder="Anteckning">' +
+        esc(a.anteckning || '') + '</textarea>' +
+      '</div>';
+
+    panel.querySelector('[data-stang]').addEventListener('click', () => {
+      vald = null; ritaLista(); ritaKort();
+    });
+    for (const el of panel.querySelectorAll('[data-falt]')) {
+      el.addEventListener('change', () => andra(b, el));
+      if (el.matches('textarea, input.txt')) {
+        el.addEventListener('input', () => andra(b, el, true));
       }
     }
-    for (const b of prioBtns) {
-      const c = rader.filter((r) => r.prio === b.dataset.prio && matchar(r, 'p')).length;
-      b.textContent = 'Grupp ' + b.dataset.prio + ' (' + c + ')';
+  }
+
+  /* ---------- ändra och spara ---------- */
+  function andra(b, el, mjuk) {
+    const a = arb(b);
+    const falt = el.dataset.falt;
+    let v = el.value;
+    if (falt === 'varde') v = v.replace(/\D/g, '');
+    a[falt] = v === '' ? null : v;
+    if (falt === 'status') {
+      // Följdfrågan hör till statusen. Byts statusen faller den gamla koden.
+      a.kontaktresultat = null;
+      a.orsak = null;
+      ritaLista(); ritaKort();
+    } else if (!mjuk) {
+      ritaLista();
     }
-    countEl.textContent = visade === rader.length ? rader.length + ' bolag' : visade + ' av ' + rader.length + ' bolag';
-    emptyEl.hidden = visade > 0;
-    framsteg();
+    spara(b);
   }
 
-  /* ---------- spara ---------- */
-  const sparStatus = $('sparstatus');
   const koer = new Map();
-
   function visaSpar(text) {
-    sparStatus.textContent = text;
-    if (text === 'Sparat') setTimeout(() => { if (sparStatus.textContent === 'Sparat') sparStatus.textContent = ''; }, 1500);
+    $('sparstatus').textContent = text;
+    if (text === 'Sparat') {
+      setTimeout(() => {
+        if ($('sparstatus').textContent === 'Sparat') $('sparstatus').textContent = '';
+      }, 1500);
+    }
   }
-
-  function spara(r) {
-    clearTimeout(koer.get(r.id));
-    koer.set(r.id, setTimeout(async () => {
+  function spara(b) {
+    const a = arb(b);
+    clearTimeout(koer.get(b.orgnr));
+    koer.set(b.orgnr, setTimeout(async () => {
       visaSpar('Sparar…');
       try {
         const res = await fetch('/api/prospekt/arbete', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            cfar: r.cfar,
-            status: r.st,
-            varde: r.varde || null,
-            anteckning: r.anteckning || null,
-            kontaktresultat: r.kontaktresultat || null,
-            orsak: r.orsak || null,
-            listfel: r.listfel || null,
+            orgnr: b.orgnr,
+            status: a.status || 'ny',
+            varde: a.varde || null,
+            anteckning: a.anteckning || null,
+            nasta: a.nasta || null,
+            nastaDatum: a.nastaDatum || null,
+            kontaktresultat: a.kontaktresultat || null,
+            orsak: a.orsak || null,
+            listfel: a.listfel || null,
           }),
         });
         visaSpar(res.ok ? 'Sparat' : 'Kunde inte spara');
@@ -346,122 +394,77 @@ export async function startaProspekt() {
     }, 500));
   }
 
-  function passa(ta) { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }
-  const radFor = (el) => rader.find((r) => r.id === el.closest('.row').dataset.id);
-
-  list.addEventListener('change', (e) => {
-    const sel = e.target.closest('.status-sel');
-    if (!sel) return;
-    const r = radFor(sel);
-    r.st = sel.value;
-    const el = radEl.get(r.id);
-    el.querySelector('.dot').dataset.s = r.st;
-    el.classList.toggle('avfard', r.st === 'nej');
-    sel.dataset.set = r.st === 'ny' ? '0' : '1';
-    // Följdfrågan byts med statusen. Byter man bort från Nej ska den gamla
-    // orsaken inte ligga kvar och påstå något som inte längre gäller.
-    const folj = FOLJDFRAGA[r.st];
-    const kod = el.querySelector('.kod-sel');
-    for (const f of ['kontaktresultat', 'orsak']) {
-      if (!folj || folj[0] !== f) r[f] = '';
-    }
-    if (folj) {
-      kod.dataset.falt = folj[0];
-      kod.innerHTML = val(folj[1], r[folj[0]]);
-      kod.hidden = false;
-    } else {
-      kod.hidden = true;
-    }
-    sel.closest('.rowtools').classList.toggle('aktiv', r.st !== 'ny' || Boolean(r.varde));
-    spara(r);
-    tillampa();
-  });
-
-  list.addEventListener('change', (e) => {
-    const kod = e.target.closest('.kod-sel');
-    if (kod) {
-      const r = radFor(kod);
-      r[kod.dataset.falt] = kod.value;
-      spara(r);
-      return;
-    }
-    const lf = e.target.closest('.listfel-sel');
-    if (lf) {
-      const r = radFor(lf);
-      r.listfel = lf.value;
-      lf.dataset.set = lf.value ? '1' : '0';
-      lf.closest('.rowtools').classList.toggle('aktiv', Boolean(r.st !== 'ny' || r.varde || r.listfel));
-      spara(r);
+  /* ---------- interaktion ---------- */
+  $('lista').addEventListener('click', (e) => {
+    const r = e.target.closest('.rad');
+    if (!r) return;
+    vald = r.dataset.org;
+    ritaLista(); ritaKort();
+    if (window.matchMedia('(max-width: 1119px)').matches) {
+      $('panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 
-  list.addEventListener('input', (e) => {
-    const ta = e.target.closest('.jot');
-    if (ta) {
-      const r = radFor(ta);
-      r.anteckning = ta.value;
-      passa(ta);
-      spara(r);
-      return;
-    }
-    const amt = e.target.closest('.amount');
-    if (amt) {
-      const r = radFor(amt);
-      const siffror = amt.value.replace(/\D/g, '');
-      r.varde = siffror ? parseInt(siffror, 10) : 0;
-      amt.dataset.set = r.varde ? '1' : '0';
-      amt.closest('.rowtools').classList.toggle('aktiv', r.st !== 'ny' || Boolean(r.varde));
-      spara(r);
-      framsteg();
-    }
-  });
-
-  list.addEventListener('blur', (e) => {
-    const amt = e.target.closest && e.target.closest('.amount');
-    if (!amt) return;
-    const r = radFor(amt);
-    amt.value = r.varde ? kr(r.varde) : '';
-  }, true);
-
-  /* ---------- export ---------- */
-  const KOLUMNER = [
-    ['Nr', (r) => r.nr], ['Grupp', (r) => r.prio], ['Företag', (r) => r.foretag],
-    ['Orgnr', (r) => r.orgnr], ['Kommun', (r) => r.kommun], ['Verksamhet', (r) => r.verksamhet],
-    ['Anställda', (r) => r.anstallda_bolag], ['Omsättning tkr', (r) => r.omsattning_tkr],
-    ['Koncernläge', (r) => r.koncernlage], ['Moderbolag', (r) => r.moderbolag],
-    ['VD', (r) => r.vd], ['Telefon', (r) => r.telefon], ['E-post', (r) => r.epost],
-    ['Tillåtna kanaler', (r) => r.kanaler], ['Adress', (r) => r.adress],
-    ['Postnr', (r) => r.postnr], ['Ort', (r) => r.ort], ['Notering', (r) => r.notering],
-    ['Status', (r) => ETIKETT[r.st]], ['Värde', (r) => r.varde || ''], ['Anteckning', (r) => r.anteckning],
-  ];
-
-  $('export').addEventListener('click', async function () {
-    const valda = rader.filter((r) => !radEl.get(r.id).hidden);
-    if (!valda.length) return;
-    const rensa = (v) => String(v == null ? '' : v).replace(SKRAP, ' ').trim();
-    const ut = [KOLUMNER.map((c) => c[0]).join(TAB)];
-    for (const r of valda) ut.push(KOLUMNER.map((c) => rensa(c[1](r))).join(TAB));
-    const text = ut.join(NL);
-    let ok = false;
-    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) { ok = false; }
-    const etikett = this.textContent;
-    this.textContent = ok ? valda.length + ' rader kopierade' : 'Kunde inte kopiera';
-    setTimeout(() => { this.textContent = etikett; }, 1800);
-  });
-
-  for (const b of prioBtns) {
-    b.addEventListener('click', () => {
-      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
-      tillampa();
+  for (const n of ['q', 'fStatus', 'fOrt']) $(n).addEventListener('input', ritaLista);
+  for (const el of rot.querySelectorAll('.controls [aria-pressed]')) {
+    el.addEventListener('click', () => {
+      el.setAttribute('aria-pressed',
+        el.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      ritaLista();
     });
   }
   $('reset').addEventListener('click', () => {
-    q.value = '';
-    for (const d of DIMS) d.el.value = '';
-    for (const b of prioBtns) b.setAttribute('aria-pressed', 'false');
-    tillampa();
+    $('q').value = '';
+    $('fStatus').value = '';
+    $('fOrt').value = '';
+    for (const el of rot.querySelectorAll('.controls [aria-pressed]')) {
+      el.setAttribute('aria-pressed', 'false');
+    }
+    ritaLista();
   });
-  q.addEventListener('input', tillampa);
 
-  tillampa();
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { vald = null; ritaLista(); ritaKort(); return; }
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    if (e.target.matches('input, textarea, select')) return;
+    e.preventDefault();
+    const i = synliga.findIndex((b) => b.orgnr === vald);
+    const n = e.key === 'ArrowDown'
+      ? Math.min(i + 1, synliga.length - 1)
+      : Math.max(i - 1, 0);
+    if (synliga[n]) { vald = synliga[n].orgnr; ritaLista(); ritaKort(); }
+  });
+
+  /* ---------- export ---------- */
+  const KOLUMNER = [
+    ['Nr', (b) => b.nr], ['Grupp', (b) => b.prio], ['Företag', (b) => b.foretag],
+    ['Orgnr', (b) => b.orgnr], ['Verksamhet', (b) => b.verksamhet],
+    ['Anställda', (b) => b.anstallda], ['Omsättning tkr', (b) => b.omsattning_tkr],
+    ['Koncernläge', (b) => b.koncernlage], ['Moderbolag', (b) => b.moderbolag],
+    ['Arbetsställen', (b) => Math.max(1, b.stallen.length)],
+    ['Huvudkontor', (b) => {
+      const hk = b.stallen.find((s) => s.huvudkontor) || b.stallen[0] || {};
+      return [hk.adress, hk.postnr, hk.ort].filter(Boolean).join(', ');
+    }],
+    ['Kontaktperson', (b) => b.kontakt_namn], ['Roll', (b) => b.kontakt_roll],
+    ['Telefon', (b) => b.telefon], ['E-post', (b) => b.epost], ['Hemsida', (b) => b.hemsida],
+    ['Tillåtna kanaler', (b) => b.kanaler], ['Notering', (b) => b.notering],
+    ['Status', (b) => ETIKETT[arb(b).status]], ['Nästa steg', (b) => arb(b).nasta],
+    ['Nästa datum', (b) => arb(b).nastaDatum],
+    ['Värde', (b) => arb(b).varde || ''], ['Anteckning', (b) => arb(b).anteckning],
+  ];
+  $('export').addEventListener('click', async function () {
+    if (!synliga.length) return;
+    const rensa = (v) => String(v == null ? '' : v).replace(SKRAP, ' ').trim();
+    const ut = [KOLUMNER.map((c) => c[0]).join(TAB)];
+    for (const b of synliga) ut.push(KOLUMNER.map((c) => rensa(c[1](b))).join(TAB));
+    let ok = false;
+    try { await navigator.clipboard.writeText(ut.join(NL)); ok = true; } catch (e) { ok = false; }
+    const etikett = this.textContent;
+    this.textContent = ok ? synliga.length + ' bolag kopierade' : 'Kunde inte kopiera';
+    setTimeout(() => { this.textContent = etikett; }, 1800);
+  });
+
+  ritaLista();
+  ritaKort();
 }

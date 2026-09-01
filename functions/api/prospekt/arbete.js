@@ -1,13 +1,15 @@
 /* functions/api/prospekt/arbete.js  —  POST /api/prospekt/arbete
 
-   Sparar deltagarens status, värde och anteckning på en rad. En rad i taget,
-   för sidan skickar när fältet ändras och inte i klump.
+   Sparar deltagarens arbete på ETT BOLAG, inte på ett arbetsställe. En kedja
+   bär ett arbete, aldrig ett per anläggning. Ett fält i taget, för sidan
+   skickar när fältet ändras och inte i klump.
 
-   Body: { cfar, status?, varde?, anteckning?, kontaktresultat?, orsak?, listfel? }
+   Body: { orgnr, status?, varde?, anteckning?, nasta?, nastaDatum?,
+           kontaktresultat?, orsak?, listfel? }
 
-   Arbetsstället måste förekomma i en lista deltagaren köpt, annars går det
-   inte att skriva. Kontrollen görs mot databasen och inte mot något klienten
-   skickar, så ett gissat cfar leder ingenstans.
+   Bolaget måste förekomma i en lista deltagaren köpt, annars går det inte att
+   skriva. Kontrollen görs mot databasen och inte mot något klienten skickar,
+   så ett gissat organisationsnummer leder ingenstans.
 
    Är allt tomt igen raderas raden i stället för att ligga kvar som skräp. */
 
@@ -44,8 +46,8 @@ export async function onRequestPost(context) {
   let body;
   try { body = await request.json(); } catch (e) { return json({ error: 'ogiltig json' }, 400); }
 
-  const cfar = String(body.cfar || '').trim();
-  if (!/^[0-9]{1,20}$/.test(cfar)) return json({ error: 'ogiltigt cfar' }, 400);
+  const orgnr = String(body.orgnr || '').replace(/[^0-9]/g, '');
+  if (orgnr.length !== 10) return json({ error: 'ogiltigt orgnr' }, 400);
 
   const status = String(body.status || 'ny').toLowerCase();
   if (!STATUSAR.has(status)) return json({ error: 'ogiltig status' }, 400);
@@ -70,6 +72,22 @@ export async function onRequestPost(context) {
     anteckning = body.anteckning.slice(0, MAX_ANTECKNING);
   }
 
+  // Nästa steg är det fält som gör arbetsytan värd att öppna på morgonen.
+  // Datumet valideras hårt: ett ogiltigt datum blir tyst null i Postgres och
+  // uppföljningen försvinner utan att någon märker det.
+  let nasta = null;
+  if (typeof body.nasta === 'string' && body.nasta.trim()) {
+    nasta = body.nasta.trim().slice(0, 200);
+  }
+  let nastaDatum = null;
+  if (typeof body.nastaDatum === 'string' && body.nastaDatum.trim()) {
+    const d = body.nastaDatum.trim();
+    if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(d) || Number.isNaN(Date.parse(d))) {
+      return json({ error: 'ogiltigt datum' }, 400);
+    }
+    nastaDatum = d;
+  }
+
   try {
     // Finns arbetsstället i någon lista adressen köpt?
     const kopta = await supaGet(cfg,
@@ -77,30 +95,33 @@ export async function onRequestPost(context) {
     if (!Array.isArray(kopta) || !kopta.length) return json({ error: 'ingen atkomst' }, 403);
     const listor = kopta.map((k) => k.lista_id);
 
-    const rader = await supaGet(cfg,
-      `prospekt_rad?select=lista_id&cfar=eq.${encodeURIComponent(cfar)}` +
+    const traff = await supaGet(cfg,
+      `prospekt_bolag?select=lista_id&orgnr=eq.${encodeURIComponent(orgnr)}` +
       `&lista_id=in.(${listor.join(',')})&limit=1`);
-    if (!Array.isArray(rader) || !rader.length) return json({ error: 'ingen atkomst' }, 403);
-    const listaId = rader[0].lista_id;
+    if (!Array.isArray(traff) || !traff.length) return json({ error: 'ingen atkomst' }, 403);
+    const listaId = traff[0].lista_id;
 
     const tomt = status === 'ny' && varde === null && anteckning === null &&
+      nasta === null && nastaDatum === null &&
       !koder.kontaktresultat && !koder.orsak && !koder.listfel;
     if (tomt) {
       await supaDelete(cfg,
-        `prospekt_arbete?cfar=eq.${encodeURIComponent(cfar)}` +
+        `prospekt_arbete?orgnr=eq.${encodeURIComponent(orgnr)}` +
         `&epost=eq.${encodeURIComponent(adress)}`);
       return json({ ok: true, sparat: false });
     }
 
     await supaUpsert(cfg, 'prospekt_arbete', [{
-      cfar,
+      orgnr,
       lista_id: listaId,
       epost: adress,
       status,
       varde_kr: varde,
       anteckning,
+      nasta_steg: nasta,
+      nasta_datum: nastaDatum,
       ...koder,
-    }], 'epost,cfar');
+    }], 'epost,orgnr');
 
     return json({ ok: true, sparat: true });
   } catch (e) {
