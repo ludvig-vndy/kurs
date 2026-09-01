@@ -68,7 +68,7 @@ test('anvandare A kan inte lasa anvandare B:s arbete', async () => {
       // claim auth.uid() läser. Först nu gäller policyn.
       await k.query(`set local role authenticated`);
       await k.query(
-        `select set_config('request.jwt.claims', json_build_object('sub',$1)::text, true)`,
+        `select set_config('request.jwt.claims', json_build_object('sub', $1::text)::text, true)`,
         [a]);
 
       const r = await k.query(`select orgnr from prospekt_arbete order by orgnr`);

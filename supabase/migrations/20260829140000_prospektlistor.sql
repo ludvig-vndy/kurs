@@ -27,6 +27,27 @@ create type prospekt_orsak as enum (
 create type prospekt_listfel as enum (
   'fel_bransch', 'fel_storlek', 'fel_geografi', 'ar_kedja', 'nedlagt', 'dubblett');
 
+-- ── motparten_deltagare (vem som far komma in) ────────────────────────
+--
+-- Ersatter ALLOWLIST i functions/api/pilot-login.js.
+--
+-- En giltig Supabase-session racker INTE. _middleware.js rad 133 sager att
+-- Delagaren och Motparten ar skilda produkter och att Delagarens JWT inte
+-- ska slappa in har. Den gransen ska halla aven nar bada produkterna delar
+-- inloggning, och da maste den ligga nagonstans. Den ligger har: konto plus
+-- rad, aldrig konto ensamt.
+create table motparten_deltagare (
+  user_id    uuid primary key references profiles(id) on delete cascade,
+  epost      text not null,
+  kalla      text not null default 'pilot',     -- 'pilot' | 'stripe' | 'manuell'
+  created_at timestamptz not null default now()
+);
+alter table motparten_deltagare enable row level security;
+alter table motparten_deltagare force row level security;
+
+create policy deltagare_egen on motparten_deltagare
+  for select to authenticated using (user_id = auth.uid());
+
 -- ── prospekt_lista (ett uttag, delat av alla som köpt det) ────────────
 create table prospekt_lista (
   id uuid primary key default gen_random_uuid(),
@@ -135,31 +156,37 @@ create index on prospekt_arbetsstalle (lista_id);
 create table prospekt_kop (
   id uuid primary key default gen_random_uuid(),
   lista_id uuid not null references prospekt_lista(id) on delete cascade,
-  epost text not null,                          -- alltid gemener
-  user_id uuid references profiles(id) on delete cascade,  -- fylls när Motparten får konton
+  user_id uuid not null references profiles(id) on delete cascade,
+  epost text not null,                          -- alltid gemener, data inte nyckel
   kalla prospekt_kop_kalla not null default 'manuell',
   stripe_session_id text,
   created_at timestamptz not null default now(),
-  unique (lista_id, epost)
+  unique (lista_id, user_id)
 );
 alter table prospekt_kop enable row level security;
-create index on prospekt_kop (epost);
+create index on prospekt_kop (user_id);
 
 -- ── prospekt_arbete (det enda som ar personligt) ──────────────────────
 --
--- Nyckeln ar (epost, orgnr), alltsa personen och BOLAGET. Tre foljder:
+-- Nyckeln ar (user_id, orgnr), alltsa personen och BOLAGET. Tre foljder:
 --   1. Ett omkort uttag tappar inte anteckningarna, for orgnr bestar.
 --   2. Dyker samma bolag upp i en annan lista samma person kopt foljer
 --      anteckningen med. Har man redan pratat med dem ar det sant oavsett
 --      vilken lista man tittar pa.
 --   3. En kedja bar ETT arbete, inte ett per anlaggning.
 -- lista_id ar darfor bara "senast sedd i", inte en del av nyckeln.
+--
+-- Personen ar user_id, inte adressen. En e-postadress ar autentisering och
+-- kontaktuppgift, inte identitet for ett affarsobjekt: den byts, och den
+-- dagen den byts ska anteckningarna folja med personen och inte bli kvar
+-- hos strangen. Adressen star kvar som data, for prospekt_glom() behover
+-- kunna hitta rader pa den.
 create table prospekt_arbete (
   id uuid primary key default gen_random_uuid(),
-  epost text not null,
+  user_id uuid not null references profiles(id) on delete cascade,
+  epost text not null,                          -- data, aldrig nyckel
   orgnr text not null,
   lista_id uuid references prospekt_lista(id) on delete set null,
-  user_id uuid references profiles(id) on delete cascade,
   status prospekt_status not null default 'ny',
   varde_kr bigint,
   anteckning text,
@@ -192,12 +219,12 @@ create table prospekt_arbete (
   listfel prospekt_listfel,
 
   updated_at timestamptz not null default now(),
-  unique (epost, orgnr)
+  unique (user_id, orgnr)
 );
 alter table prospekt_arbete enable row level security;
-create index on prospekt_arbete (epost, lista_id);
+create index on prospekt_arbete (user_id, lista_id);
 -- "Vem ska jag gora nagot med i dag?"
-create index on prospekt_arbete (epost, nasta_datum) where nasta_datum is not null;
+create index on prospekt_arbete (user_id, nasta_datum) where nasta_datum is not null;
 -- Analysen som gor det har vart besvaret: intressefrekvens per attribut.
 create index on prospekt_arbete (lista_id, status) where status <> 'ny';
 create index on prospekt_arbete (lista_id, listfel) where listfel is not null;
@@ -245,15 +272,63 @@ create trigger prospekt_bestallning_updated
   before update on prospekt_bestallning
   for each row execute function prospekt_arbete_touch();
 
+-- ── Tenantgransen ─────────────────────────────────────────────────────
+--
+-- RLS var tidigare pasl aget utan policyer, alltsa neka-allt mot
+-- anon-nyckeln, medan Pages Functions gjorde scopingen med service-nyckeln.
+-- Det holl sa lange det fanns exakt EN vag in. Verktyget blir en egen
+-- deploy, alltsa finns snart tva, och en grans ar bara sa stark som den
+-- svagaste vagen igenom den. Darfor flyttar den hit.
+--
+-- force behovs eftersom tabellagaren annars kringgar policyn, precis som
+-- superuser och bypassrls gor. Utan force ar hela avsnittet ett dekorativt
+-- pasl ag som ingen markar ar verkningslost.
+alter table prospekt_arbete       force row level security;
+alter table prospekt_kop          force row level security;
+alter table prospekt_lista        force row level security;
+alter table prospekt_bolag        force row level security;
+alter table prospekt_arbetsstalle force row level security;
+
+-- Egna rader, inget annat. Inget medlemskapsuppslag, eftersom kunden ar en
+-- ensam saljare: se docs/superpowers/specs/2026-08-30-saljverktyget-design.md
+-- avsnitt 2. Den dagen en saljorganisation ska stodjas ar det en annan
+-- produkt och en annan policy.
+create policy arbete_eget on prospekt_arbete
+  for all to authenticated
+  using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+create policy kop_eget on prospekt_kop
+  for select to authenticated using (user_id = auth.uid());
+
+-- Listorna och bolagen ar inte personliga, men far bara lasas av den som
+-- kopt listan. prospekt_kop ar grinden.
+create policy lista_kopt on prospekt_lista
+  for select to authenticated
+  using (exists (select 1 from prospekt_kop k
+                  where k.lista_id = prospekt_lista.id and k.user_id = auth.uid()));
+
+create policy bolag_kopt on prospekt_bolag
+  for select to authenticated
+  using (exists (select 1 from prospekt_kop k
+                  where k.lista_id = prospekt_bolag.lista_id and k.user_id = auth.uid()));
+
+create policy arbetsstalle_kopt on prospekt_arbetsstalle
+  for select to authenticated
+  using (exists (select 1 from prospekt_kop k
+                  where k.lista_id = prospekt_arbetsstalle.lista_id and k.user_id = auth.uid()));
+
 -- Gallring: en deltagares anteckningar är uppgifter om tredje part.
--- Radera allt arbete för en adress i ett svep när någon begär det.
+-- Radera allt arbete för en person i ett svep när någon begär det.
+-- Ingangen ar fortfarande adressen, for det ar den den som begar det uppger.
 create or replace function prospekt_glom(p_epost text)
 returns int language plpgsql security definer set search_path = public as $$
-declare n int;
+declare n int; v_user uuid;
 begin
-  delete from prospekt_arbete where epost = lower(p_epost);
+  select id into v_user from profiles where lower(email) = lower(p_epost);
+  delete from prospekt_arbete where user_id = v_user;
   get diagnostics n = row_count;
-  delete from prospekt_kop where epost = lower(p_epost);
+  delete from prospekt_kop where user_id = v_user;
+  delete from motparten_deltagare where user_id = v_user;
   update prospekt_bestallning set bestallare_epost = '(raderad)', bestallare_namn = null
    where bestallare_epost = lower(p_epost);
   return n;
