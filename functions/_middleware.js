@@ -8,7 +8,7 @@
    statiska tillgangar och /api/* (funktionerna gor sin egen auth). Ovrigt
    kraver en giltig session, annars -> /logga-in. */
 
-import { verifieraPilot, arMotpartenVard } from './api/_lib.js';
+import { verifieraPilot, arMotpartenVard, verifieraSession } from './api/_lib.js';
 
 const COOKIE = 'da_session';
 const JWKS_URL = 'https://xpxghvxrckpzbbkjmtcw.supabase.co/auth/v1/.well-known/jwks.json';
@@ -116,17 +116,24 @@ async function verifyJwt(token) {
 
 /* Rattighetskollen for Motparten.
 
-   Slar upp deltagarraden med anvandarens EGEN token, aldrig med service-
-   nyckeln. Det ar policyn deltagare_egen som svarar, sa grinden och
-   databasen sager samma sak och kan inte glida isar. Saknas raden blir
-   svaret en tom lista, alltsa nej. Svarar Supabase inte alls blir det ocksa
-   nej: grinden faller stangd, aldrig oppen. */
-async function arDeltagare(token, env) {
-  if (!env || !env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return false;
+   Sessionen ar redan verifierad lokalt mot JWKS av verifieraSession(), sa
+   userId kommer ur en token vi sjalva har kontrollerat signatur, utgang,
+   utfardare och publik pa. Uppslaget gors darfor med service-nyckeln och ett
+   explicit filter, samma monster som resten av functions/api/.
+
+   Saknas raden blir svaret en tom lista, alltsa nej. Svarar Supabase inte
+   alls blir det ocksa nej: grinden faller stangd, aldrig oppen. */
+const SUPA_FALLBACK = 'https://xpxghvxrckpzbbkjmtcw.supabase.co';
+
+async function arDeltagare(userId, env) {
+  const secret = env && env.SUPABASE_SECRET_KEY;
+  if (!secret || !userId) return false;
+  const bas = (env && env.SUPABASE_URL) || SUPA_FALLBACK;
   try {
     const r = await fetch(
-      env.SUPABASE_URL + '/rest/v1/motparten_deltagare?select=user_id&limit=1',
-      { headers: { apikey: env.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + token } });
+      bas + '/rest/v1/motparten_deltagare?select=user_id&limit=1&user_id=eq.' +
+      encodeURIComponent(userId),
+      { headers: { apikey: secret, Authorization: 'Bearer ' + secret } });
     if (!r.ok) return false;
     const rader = await r.json();
     return Array.isArray(rader) && rader.length === 1;
@@ -157,8 +164,8 @@ export async function onRequest(context) {
   // aldrig, och en Delagaren-anvandare utan deltagarrad kommer alltsa inte in.
   if (motparten) {
     if (PILOT_SIDA.has(normalizePath(url.pathname))) return next();
-    const mpToken = getCookie(request, COOKIE);
-    if (mpToken && (await verifyJwt(mpToken)) && (await arDeltagare(mpToken, env))) return next();
+    const mpSession = await verifieraSession(request);
+    if (mpSession && (await arDeltagare(mpSession.sub, env))) return next();
     // Pilotcookien lever kvar tills deltagarna har riktiga konton.
     if (await verifieraPilot(request, env && env.PILOT_SECRET)) return next();
     return Response.redirect(new URL('/pilot', url.origin).toString(), 302);

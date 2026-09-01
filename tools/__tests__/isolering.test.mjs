@@ -11,9 +11,13 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { anslut, iTransaktion } from './_db.mjs';
+import { anslut, iTransaktion, finnsUrl } from './_db.mjs';
 
-test('prospekt_arbete ar nycklad pa user_id, inte epost', async () => {
+// Kraver en riktig Postgres. Saknas TEST_DATABASE_URL hoppas de over i
+// stallet for att falla: grinden ska saga nagot om koden, inte om maskinen.
+const HOPPA = finnsUrl() ? false : 'TEST_DATABASE_URL saknas';
+
+test('prospekt_arbete ar nycklad pa user_id, inte epost', { skip: HOPPA }, async () => {
   const k = await anslut();
   try {
     const r = await k.query(`
@@ -29,7 +33,7 @@ test('prospekt_arbete ar nycklad pa user_id, inte epost', async () => {
   }
 });
 
-test('de personliga tabellerna har force row level security', async () => {
+test('de personliga tabellerna har force row level security', { skip: HOPPA }, async () => {
   const k = await anslut();
   try {
     const r = await k.query(`
@@ -47,7 +51,7 @@ test('de personliga tabellerna har force row level security', async () => {
   }
 });
 
-test('anvandare A kan inte lasa anvandare B:s arbete', async () => {
+test('anvandare A kan inte lasa anvandare B:s arbete', { skip: HOPPA }, async () => {
   const k = await anslut();
   try {
     await iTransaktion(k, async () => {

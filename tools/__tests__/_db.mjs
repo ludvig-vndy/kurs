@@ -30,6 +30,12 @@ export function kravUrl() {
   return url;
 }
 
+/* Icke-kastande variant. Testerna anvander den for att HOPPA OVER i stallet
+   for att falla, sa en maskin utan testdatabas inte rodmarkerar hela grinden. */
+export function finnsUrl() {
+  try { kravUrl(); return true; } catch (e) { return false; }
+}
+
 export async function anslut() {
   const klient = new pg.Client({
     connectionString: kravUrl(),
