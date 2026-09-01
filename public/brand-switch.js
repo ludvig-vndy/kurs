@@ -20,7 +20,24 @@
     try { return localStorage.getItem(KEY) === 'delagaren'; } catch (e) { return false; }
   }
 
+  /* Motpartens vard servas ur SAMMA bygge som Delagaren. Bygget kan darfor
+     inte veta vilket varumarke sidan ska bara, och en delad sida som
+     /logga-in mote annars en Motparten-deltagare med fel namn i headern.
+     Avgors pa vardnamnet, samma monster som inloggningsgrinden i
+     Broadsheet.astro. Vinner over dev-vaxeln: pa motparten.* finns inget
+     lage dar Marginalen eller Delagaren ar ratt. */
+  function motpartenVard() {
+    try { return /^motparten[.-]/i.test(location.hostname); } catch (e) { return false; }
+  }
+
   function swap() {
+    if (motpartenVard()) {
+      document.querySelectorAll('.wordmark, .dm-word, .seal__name, .lp-brand, .brandname').forEach(function (el) {
+        if (/^\s*(marginalen|del[äa]garen)\s*$/i.test(el.textContent)) el.textContent = 'Motparten';
+      });
+      if (document.title) document.title = document.title.replace(/marginalen|del[äa]garen/gi, 'Motparten');
+      return;
+    }
     var toDelagaren = delagarenMode();
     document.querySelectorAll('.wordmark, .dm-word, .seal__name, .lp-brand, .brandname').forEach(function (el) {
       var t = el.textContent;
