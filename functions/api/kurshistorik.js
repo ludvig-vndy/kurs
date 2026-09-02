@@ -14,7 +14,9 @@ import { rateLimited } from "./_lib.js";
 
 // Landskod -> Yahoo-börssuffix. Aktieslag skrivs med bindestreck hos Yahoo
 // (LIFCO.B -> LIFCO-B.ST), companies.json använder punkt.
-const SUFFIX = { SE: ".ST", NO: ".OL", DK: ".CO", FI: ".HE", IS: ".IC" };
+// US har inget suffix hos Yahoo: TSLA, inte TSLA.US. Tomma strangen ar alltsa
+// ett giltigt varde och far inte forvaxlas med "okand landskod" nedan.
+const SUFFIX = { SE: ".ST", NO: ".OL", DK: ".CO", FI: ".HE", IS: ".IC", US: "" };
 // Whitelist. "5d" finns med for att Dina bolag bara behover de tva senaste
 // stangningarna for dagsforandringen; utan den foll anropet tillbaka pa 1y
 // och hamtade 250 punkter per innehav for att lasa av tva.
@@ -46,7 +48,7 @@ export async function onRequestGet(context) {
 
   // Validering: ticker får bara innehålla bokstäver, siffror, punkt, bindestreck.
   if (!t || !/^[A-Za-z0-9.\-]{1,14}$/.test(t)) return json({ fel: "Ogiltig ticker." }, 400);
-  if (!SUFFIX[c]) return json({ fel: "Ogiltig landskod." }, 400);
+  if (SUFFIX[c] === undefined) return json({ fel: "Ogiltig landskod." }, 400);
 
   // Grov rate-limit (edge-cachen bär det mesta; detta skyddar cache-missar).
   const limited = await rateLimited(env, request, "hist", 60, 2000);

@@ -331,6 +331,7 @@
 
 <script defer src="/vendor/supabase-js-2.110.2.min.js"></script>
 <script defer src="/labs/agarbrevet-supabase.js"></script>
+<script defer src="/labs/skatt.js"></script>
 <script>
 // Mock-datan (Telvio m.fl.) ar borttagen: boot() renderar riktiga innehav
 // (renderReal) eller tomt tillstand (renderEmpty). Se git-historiken.
@@ -430,11 +431,37 @@ function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;'
 function fmtSEK(n){ if(n==null||isNaN(n)) return null; return Math.round(n).toLocaleString('sv-SE')+' kr'; }
 function fmtN(n,d){ if(n==null||isNaN(n)) return null; return Number(n).toLocaleString('sv-SE',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
 function pct(n){ if(n==null||isNaN(n)) return ''; return (n>0?'+':'')+Number(n).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %'; }
-function cur(cc){ return cc==='FI' ? '€' : 'kr'; }
+// Valutan tas ur prissvaret nar den finns. Landskoden var en approximation som
+// holl sa lange listan var nordisk: den sa "kr" om allt utom Helsingfors, och
+// hade sagt "kr" om Tesla ocksa.
+const VALUTATECKEN={SEK:'kr',NOK:'kr',DKK:'kr',ISK:'kr',EUR:'€',USD:'$',GBP:'£',CHF:'CHF',CAD:'CAD'};
+function cur(px){
+  if(px && px.v) return VALUTATECKEN[String(px.v).toUpperCase()] || px.v;
+  return (px && px.c)==='FI' ? '€' : 'kr';
+}
 
 // Kurssnapshot: samma companies.json som söket i Lägg till bolag. Byggs till
 // uppslag på ticker (primärt) och namn (fallback). Daglig snapshot, inte realtid.
 let PRICES=new Map(), PRICES_N=new Map(), PRICE_DATE=null, LIVE_DATE=null;
+// Vaxelkurser mot kronan. Portfoljsumman lade forut ihop alla innehav rakt av
+// och skrev "kr", sa Nokias 8,54 EUR raknades som 8,54 kr. Ett belopp utan kand
+// kurs raknas nu inte alls: att falla tillbaka pa 1:1 vore samma fel flyttat
+// ett steg. Se functions/api/_valuta.js.
+let FX={SEK:1}, FX_FEL=false;
+async function loadFx(){
+  try{
+    const r=await fetch('/api/valutakurser'); if(!r.ok){ FX_FEL=true; return; }
+    const d=await r.json();
+    if(d && d.kurser) FX=d.kurser; else FX_FEL=true;
+  }catch(e){ FX_FEL=true; }
+}
+function tillSek(belopp, valuta){
+  if(typeof belopp!=='number' || !isFinite(belopp)) return null;
+  const v=String(valuta||'SEK').toUpperCase();
+  if(v==='SEK') return belopp;
+  const k=FX[v];
+  return (typeof k==='number' && isFinite(k) && k>0) ? belopp*k : null;
+}
 // Snapshoten byggs inte varje dag, sa "i dag" ar oftast en losning: Sivers stod
 // som -24,45 % "i dag" den 31 augusti, men det var rorelsen den 29:e, dagen
 // snapshoten togs. Sidan sa alltsa bade "Kurser per 2026-08-29" langst ned och
@@ -476,7 +503,7 @@ async function loadPrices(){
 // Kostnaden ar ett anrop per unik ticker vid laddning. Endpointen cachar 6 h pa
 // edgen, sa det ar billigt, och landet tas ur snapshoten nar vi kanner det sa vi
 // slipper gissa oss genom fem marknader.
-const LANDSORDNING = ['SE', 'FI', 'NO', 'DK', 'IS'];
+const LANDSORDNING = ['SE', 'FI', 'NO', 'DK', 'IS', 'US'];
 async function fyllFarskaKurser(holds){
   const vill = new Map();   // ticker -> land eller null
   for(const h of holds){
@@ -510,7 +537,7 @@ async function fyllFarskaKurser(holds){
         const forra = d.punkter.length > 1 ? d.punkter[d.punkter.length - 2][1] : null;
         const gammal = PRICES.get(t) || {};
         PRICES.set(t, Object.assign({}, gammal, {
-          t: t, c: gammal.c || land, p: pkt[1],
+          t: t, c: gammal.c || land, p: pkt[1], v: d.valuta || null,
           ch: (forra ? ((pkt[1] - forra) / forra) * 100 : null),
           d: pkt[0],                       // handelsdagen talet galler
         }));
@@ -565,7 +592,7 @@ function realRow(h){
   let rt='', dot='calm', ln='';
 
   if(px && px.p!=null){
-    const c=cur(px.c), kurs=fmtN(px.p,2), dc=px.ch;
+    const c=cur(px), kurs=fmtN(px.p,2), dc=px.ch;
     const dayv='<span class="v '+(dc>=0?'up':'dn')+'">'+pct(dc)+'</span>';
     if(qty!=null && gav!=null){
       // Innehav: marknadsvärde stort, totalavkastning prominent, kurs/dagens litet.
@@ -650,19 +677,60 @@ function bokFor(h){ return (h && h.id && LEDGER.get(h.id)) || null; }
    post utan att saga det ar varre an ingen total. */
 function realiseratTotalt(holds){
   let summa = 0, med = 0, utan = 0;
+  const poster = [];
   for(const h of holds){
     const b = bokFor(h);
     if(!b || !b.saltNagot) continue;
     if(b.realiserat == null){ utan++; continue; }
-    summa += b.realiserat; med++;
+    // Realiserat star i instrumentets valuta, precis som marknadsvardet, sa
+    // det maste rakas om innan det laggs till en krontotal.
+    const px = priceFor(h);
+    const kr = tillSek(b.realiserat, (px && px.v) || 'SEK');
+    if(kr == null){ utan++; continue; }
+    summa += kr; med++;
+    poster.push({ belopp: kr, konto: h.konto || null });
   }
-  return { summa, med, utan };
+  return { summa, med, utan, poster };
+}
+
+// Skattesatsen ar ett synligt, andringsbart falt och inte en konstant i koden.
+// Husets regel: skatteregler ges som mekanism, aldrig som ett fryst tal.
+const SATS_NYCKEL = 'agarbrevet-kapitalskatt';
+function skattesats(){
+  try{ const v = localStorage.getItem(SATS_NYCKEL); if(v !== null) return Number(v); }catch(e){}
+  return (window.SKATT && window.SKATT.STANDARDSATS) || 30;
+}
+function sattSkattesats(v){ try{ localStorage.setItem(SATS_NYCKEL, String(v)); }catch(e){} }
+
+/* Raden under sakrad avkastning. Den ska svara pa "ar det har fore eller efter
+   skatt", vilket den forut inte gjorde: den sa alltid "fore skatt", aven for
+   den som bara har ISK och darmed inte har nagon vinstskatt att vanta sig. */
+function skattRad(sk, sats){
+  const falt = '<input id="skattesats" type="number" min="0" max="100" step="1" value="'+sats+'" '+
+    'style="width:3.4em;border:1px solid var(--rule);background:transparent;font-family:var(--mono);'+
+    'font-size:11px;color:inherit;padding:1px 3px;text-align:right" aria-label="Kapitalskatt i procent">';
+  if(sk.beskattat === 0 && sk.okant === 0) return 'ingen vinstskatt: allt ligger i ISK eller KF';
+  if(sk.beskattat === 0) return 'före skatt. <span style="color:var(--gold)">'+sk.okant+' innehav saknar kontotyp</span>';
+  const efter = 'efter '+falt+' % skatt på depån ('+fmtN(sk.skatt,0)+' kr)';
+  return sk.okant ? efter+'. <span style="color:var(--gold)">'+sk.okant+' innehav saknar kontotyp och räknas obeskattat</span>' : efter;
 }
 
 function portfolioOverview(owned){
+  // Marknadsvarde och anskaffning i kronor. Bada star i instrumentets egen
+  // valuta (det ar sa en depa visar dem), sa avkastningen i procent var alltid
+  // ratt; det var summan tvars over valutor som ljog. Ett innehav vars valuta
+  // vi inte kan rakna om tas ur summan och namnges i stallet.
+  const utanKurs=[];
   const full = owned.map(h=>({h,px:priceFor(h)}))
     .filter(x=>x.px&&x.px.p!=null&&x.h.quantity!=null&&x.h.gav!=null)
-    .map(x=>({h:x.h, mv:x.h.quantity*x.px.p, ansk:x.h.quantity*x.h.gav, ch:x.px.ch}));
+    .map(x=>{
+      const val=(x.px.v||'SEK');
+      const mv=tillSek(x.h.quantity*x.px.p, val);
+      const ansk=tillSek(x.h.quantity*x.h.gav, val);
+      if(mv==null||ansk==null){ if(!utanKurs.includes(val.toUpperCase())) utanKurs.push(val.toUpperCase()); return null; }
+      return {h:x.h, mv:mv, ansk:ansk, ch:x.px.ch};
+    })
+    .filter(Boolean);
   if(!full.length) return '';
   const totalMv=full.reduce((a,x)=>a+x.mv,0), ansk=full.reduce((a,x)=>a+x.ansk,0);
   const avk=totalMv-ansk, avkPct=ansk>0?(totalMv/ansk-1)*100:0;
@@ -679,9 +747,16 @@ function portfolioOverview(owned){
   // att salja vinnare for tidigt, vilket ar dispositionseffekten och lika dyrt
   // som girigheten modul 24 varnar for.
   const rea = realiseratTotalt(owned);
-  const rup = rea.summa >= 0;
+  // Skatten pa det realiserade. Bara depa beskattas: ISK och KF beskattas pa
+  // kapitalet via schablon, som bygger pa statslanerantan och darfor inte
+  // raknas har. Innehav utan kontotyp beskattas inte och sags rakt ut.
+  const sats = skattesats();
+  const sk = (window.SKATT ? window.SKATT.skattaRealiserat(rea.poster || [], sats)
+                           : { brutto: rea.summa, skatt: 0, netto: rea.summa, okant: 0, beskattat: 0 });
+  const visatRea = sk.netto;
+  const rup = visatRea >= 0;
   const harRea = rea.med > 0;
-  const summa = totalMv + (harRea ? rea.summa : 0);
+  const summa = totalMv + (harRea ? visatRea : 0);
 
   return '<section class="ovr">'+
     '<div class="ovr-fig">'+
@@ -690,8 +765,8 @@ function portfolioOverview(owned){
       '<div class="ovr-block"><div class="ovr-k">Sedan du köpte</div><div class="ovr-avk '+(up?'up':'dn')+'">'+(up?'+':'')+fmtN(avk,0)+' kr<span class="pct">'+pct(avkPct)+'</span></div>'+
         '<div class="ovr-day">'+dagsEtikett()+' <span class="v '+(dup?'up':'dn')+'">'+(dup?'+':'')+fmtN(dayKr,0)+' kr</span> '+pct(dayPct)+' <span style="font-family:var(--serif);font-style:italic;color:var(--faint)">men det är inte i dag som räknas</span></div></div>'+
       (harRea
-        ? '<div class="ovr-block"><div class="ovr-k">Säkrad avkastning</div><div class="ovr-avk '+(rup?'up':'dn')+'">'+(rup?'+':'')+fmtN(rea.summa,0)+' kr</div>'+
-          '<div class="ovr-day">realiserat ur '+rea.med+' '+(rea.med===1?'innehav':'innehav')+', före skatt'+
+        ? '<div class="ovr-block"><div class="ovr-k">Säkrad avkastning</div><div class="ovr-avk '+(rup?'up':'dn')+'">'+(rup?'+':'')+fmtN(visatRea,0)+' kr</div>'+
+          '<div class="ovr-day">realiserat ur '+rea.med+' '+(rea.med===1?'innehav':'innehav')+', '+skattRad(sk, sats)+
           (rea.utan ? '. <span style="color:var(--gold)">'+rea.utan+' till saknar inlagda köp och räknas inte</span>' : '')+'</div></div>'
         : (rea.utan
             ? '<div class="ovr-block"><div class="ovr-k">Säkrad avkastning</div><div class="ovr-avk" style="color:var(--muted)">–</div>'+
@@ -699,6 +774,10 @@ function portfolioOverview(owned){
             : ''))+
     '</div>'+
     '<div class="alloc"><div class="alloc-bar">'+bars+'</div><div class="alloc-line">'+leg+'</div></div>'+
+    (utanKurs.length
+      ? '<p style="font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--gold);margin:8px 0 0">'
+        +'Innehav i '+esc(utanKurs.join(', '))+' ingår inte i summan: växelkursen gick inte att hämta.</p>'
+      : '')+
   '</section>';
 }
 
@@ -724,7 +803,10 @@ function stangdRow(h){
     '<div class="rt">'+varde+'</div></a>';
 }
 
+// Sista renderingens indata, sa satsfaltet kan rita om utan att lasa om sidan.
+let SENAST = null;
 function renderReal(holds, user){
+  SENAST = { holds: holds, user: user };
   const alla = holds.filter(h=>h.relation!=='foljer');
   const stangda = alla.filter(arStangt);
   const owned = alla.filter(h=>!arStangt(h));
@@ -770,7 +852,7 @@ async function boot(){
       localStorage.removeItem('agarbrevet-pending-import');
     }
   }catch(e){ console.error('flush pending import:', e); }
-  await loadPrices();
+  await Promise.all([loadPrices(), loadFx()]);
   let holds=[];
   try{ holds = await AB.listHoldings(); }catch(e){ console.error('listHoldings:', e); }
   if(holds && holds.length){
@@ -784,6 +866,18 @@ async function boot(){
   }
   else renderEmpty(user);
 }
+/* Satsfaltet ritas om vid varje rendering, sa lyssnaren sitter pa dokumentet i
+   stallet for pa elementet. Andrad sats sparas och vyn ritas om direkt: talet
+   ska svara medan man skriver, inte forst efter en omladdning. */
+document.addEventListener('change', function(e){
+  const el = e.target;
+  if(!el || el.id !== 'skattesats') return;
+  const v = Number(el.value);
+  if(!isFinite(v) || v < 0 || v > 100){ el.value = skattesats(); return; }
+  sattSkattesats(v);
+  if(SENAST) renderReal(SENAST.holds, SENAST.user);
+});
+
 // Modulen laddas nu deferrat: kor boot efter DOM (AB garanterat redo da).
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 </script>

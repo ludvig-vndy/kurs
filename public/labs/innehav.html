@@ -117,6 +117,14 @@
   .fhint{font-family:var(--label);font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
   .ferr{font-family:var(--label);font-size:12px;color:var(--bad);margin-top:10px;min-height:1em}
 
+  .konto{margin:26px 0 0;padding:18px 0 0;border-top:1px solid var(--rule)}
+  .kontorad{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+  .kbtn{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;padding:7px 12px;
+    border:1px solid var(--rule-strong);background:transparent;color:var(--ink-soft);cursor:pointer}
+  .kbtn:hover{border-color:var(--oxblood);color:var(--oxblood)}
+  .kbtn.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .kontohint{font-family:var(--serif);font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0;max-width:60ch}
+
   /* Ta bort innehavet: nedtonat och langst ner, det ar inte en genvag man ska
      raka snubbla pa nar man laser sin position. Bekraftelsen sitter i knappen
      sjalv i stallet for en dialogruta, sa avbryt ar att lata bli. */
@@ -166,7 +174,15 @@
   var esc = function(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
   var fmt = function(n,d){ d=d||0; return Number(n).toLocaleString("sv-SE",{minimumFractionDigits:d,maximumFractionDigits:d}); };
   var pct = function(n){ return (n>0?"+":"")+Number(n).toLocaleString("sv-SE",{minimumFractionDigits:1,maximumFractionDigits:1})+" %"; };
-  var cur = function(cc){ return cc==="FI" ? "€" : "kr"; };
+  /* Valutan tas ur kurshistorikens svar nar den hunnit hem. Landskoden var en
+     approximation som holl sa lange listan var nordisk: den sa "kr" om allt
+     utom Helsingfors, och hade sagt "kr" om Tesla ocksa. */
+  var VALUTATECKEN = { SEK:"kr", NOK:"kr", DKK:"kr", ISK:"kr", EUR:"€", USD:"$", GBP:"£", CHF:"CHF", CAD:"CAD" };
+  var cur = function(cc){
+    var v = HISTORY && HISTORY.valuta;
+    if(v) return VALUTATECKEN[String(v).toUpperCase()] || v;
+    return cc==="FI" ? "€" : "kr";
+  };
   var num = function(v){ var n=parseFloat(String(v).replace(",",".")); return isNaN(n)?null:n; };
   var byId = function(id){ return document.getElementById(id); };
 
@@ -375,6 +391,21 @@
         '<div class="fhint">Lägg in dina köp och sälj, så räknar vi ut din GAV och avkastning automatiskt. Du behöver inte veta din snittkurs.</div>'+
       '</div></div></div>';
 
+    /* Kontotyp. Den avgor om en realiserad vinst beskattas, och Dina bolag
+       raknar skatten pa depa-innehaven. Null ar ett giltigt svar och betyder
+       "vet inte": da beskattas inget, och summan sager att den inte vet. */
+    var konto = holding.konto || '';
+    html += '<section class="konto"><div class="sech">Konto</div>'+
+      '<div class="kontorad">'+
+      ['', 'depa', 'isk', 'kf'].map(function(k){
+        var namn = { '': 'Vet inte', depa: 'Depå', isk: 'ISK', kf: 'Kapitalförsäkring' }[k];
+        return '<button type="button" class="kbtn'+(konto===k?' on':'')+'" data-k="'+k+'">'+namn+'</button>';
+      }).join('')+
+      '</div>'+
+      '<div class="kontohint" id="kontohint">Vinst i en depå beskattas, vinst i ISK och KF gör det inte. '+
+      'ISK och KF beskattas i stället på kapitalet, och den schablonen ändras varje år, så den räknar vi inte åt dig.</div>'+
+      '</section>';
+
     html += '</div>';
     html += '<section class="farlig"><div class="farlig-h">Ta bort ur portföljen</div>'+
       '<button class="delbtn" id="delbtn" type="button">Ta bort '+esc(holding.name)+'</button>'+
@@ -387,7 +418,26 @@
     renderTrades();
     wireForm();
     wireTes();
+    wireKonto();
     wireDelete();
+  }
+
+  function wireKonto(){
+    var rad = document.querySelector('.kontorad');
+    if(!rad) return;
+    rad.addEventListener('click', function(e){
+      var btn = e.target.closest ? e.target.closest('.kbtn') : null;
+      if(!btn) return;
+      var k = btn.getAttribute('data-k') || null;
+      var hint = byId('kontohint');
+      hint.textContent = 'Sparar…';
+      window.AB.setKonto(HID, k).then(function(){
+        holding.konto = k || null;
+        render();
+      }).catch(function(e){
+        hint.textContent = 'Kunde inte spara: ' + (e && e.message ? e.message : 'okänt fel') + '.';
+      });
+    });
   }
 
   function renderChart(){

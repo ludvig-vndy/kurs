@@ -128,7 +128,7 @@
   async function listHoldings() {
     var res = await sb
       .from("holdings")
-      .select("id,name,ticker,isin,quantity,gav,relation,source,created_at")
+      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,created_at")
       .order("created_at", { ascending: true });
     if (res.error) throw res.error;
     return res.data || [];
@@ -180,6 +180,21 @@
     return true;
   }
 
+  /* Kontotypen styr om en realiserad vinst beskattas. Null ar ett giltigt
+     varde och betyder "vet inte": da beskattas den inte, och sidan sager att
+     den inte vet. RLS galler, sa ingen kan satta kontotyp pa nagon annans rad. */
+  async function setKonto(id, konto) {
+    if (!id) throw new Error("Saknar id.");
+    var v = konto === null || konto === undefined || konto === "" ? null : String(konto).toLowerCase();
+    if (v !== null && ["depa", "isk", "kf"].indexOf(v) === -1) throw new Error("Okand kontotyp.");
+    var res = await sb.from("holdings").update({ konto: v }).eq("id", id).select("id,konto").single();
+    if (res.error) {
+      if (saknasTabellen(res.error)) throw new Error("Kontotyp ar inte paslaget an (migrationen ar inte kord).");
+      throw res.error;
+    }
+    return res.data;
+  }
+
   // ── Affärer (decisions som huvudbok) ────────────────────────────────────
   // Ett innehav och dess köp/sälj. Positionen (quantity, gav) räknas om
   // server-side av triggern trg_decisions_recalc, så efter varje skrivning
@@ -187,7 +202,7 @@
   async function getHolding(id) {
     var res = await sb
       .from("holdings")
-      .select("id,name,ticker,isin,quantity,gav,relation,source,created_at")
+      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,created_at")
       .eq("id", id)
       .single();
     if (res.error) throw res.error;
@@ -316,6 +331,7 @@
     insertHoldings: insertHoldings,
     deleteAllHoldings: deleteAllHoldings,
     deleteHolding: deleteHolding,
+    setKonto: setKonto,
     getHolding: getHolding,
     listDecisions: listDecisions,
     addDecision: addDecision,

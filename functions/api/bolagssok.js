@@ -16,10 +16,47 @@
 */
 import { verifieraSession } from "./_lib.js";
 
-// Yahoo-suffix -> vår landskod. Bara Norden: allt annat är brus i det här söket
-// (samma bolag dyker upp på ett halvdussin tyska smålistor).
+// Yahoo-suffix -> vår landskod.
 const LAND = { ST: "SE", OL: "NO", CO: "DK", HE: "FI", IC: "IS" };
-const BORS = { SE: "Stockholm", NO: "Oslo", DK: "Köpenhamn", FI: "Helsingfors", IS: "Reykjavik" };
+const BORS = { SE: "Stockholm", NO: "Oslo", DK: "Köpenhamn", FI: "Helsingfors", IS: "Reykjavik", US: "USA" };
+
+/* Amerikanska symboler bär inget suffix hos Yahoo: TSLA, inte TSLA.US. Regeln
+   "har den ingen punkt så hoppa över den" var därför det enda som höll dem
+   ute. Vi kan inte bara släppa allt punktlöst igenom, för då drar en sökning
+   på Tesla in ett halvdussin tyska och brasilianska smålistor. Så vi listar de
+   börser vi faktiskt kan prissätta i stället. */
+const US_BORS = new Set(["NMS", "NGM", "NCM", "NYQ", "ASE", "PCX", "BTS", "NAS", "NYS"]);
+
+/** Yahoos träfflista -> våra bolag. Ren funktion, prövas i tools/__tests__. */
+export function tolkaTraffar(quotes) {
+  const traffar = [];
+  const sedda = new Set();
+  for (const x of quotes || []) {
+    if (x.quoteType !== "EQUITY" || !x.symbol) continue;
+    const sym = String(x.symbol);
+    const punkt = sym.lastIndexOf(".");
+    let land, ticker;
+    if (punkt === -1) {
+      if (!US_BORS.has(String(x.exchange || "").toUpperCase())) continue;
+      land = "US";
+      ticker = sym.toUpperCase();
+    } else {
+      land = LAND[sym.slice(punkt + 1).toUpperCase()];
+      if (!land) continue; // en börs vi inte kan prissätta
+      ticker = sym.slice(0, punkt).toUpperCase();
+    }
+    if (sedda.has(ticker + land)) continue;
+    sedda.add(ticker + land);
+    traffar.push({
+      namn: (x.longname || x.shortname || ticker).trim(),
+      ticker,          // FERRO, LIFCO-B, TSLA
+      land,            // SE, US
+      bors: BORS[land],
+      symbol: sym      // FERRO.ST, TSLA, för spårbarhet
+    });
+  }
+  return traffar;
+}
 
 export async function onRequestGet(context) {
   const { env, request } = context;
@@ -54,25 +91,7 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({ fel: "Söket är inte tillgängligt just nu." }), { status: 502, headers: H });
   }
 
-  const traffar = [];
-  const sedda = new Set();
-  for (const x of quotes) {
-    if (x.quoteType !== "EQUITY" || !x.symbol) continue;
-    const punkt = String(x.symbol).lastIndexOf(".");
-    if (punkt === -1) continue;
-    const land = LAND[String(x.symbol).slice(punkt + 1).toUpperCase()];
-    if (!land) continue; // inte nordisk notering
-    const ticker = String(x.symbol).slice(0, punkt).toUpperCase();
-    if (sedda.has(ticker + land)) continue;
-    sedda.add(ticker + land);
-    traffar.push({
-      namn: (x.longname || x.shortname || ticker).trim(),
-      ticker,          // FERRO, LIFCO-B
-      land,            // SE
-      bors: BORS[land],
-      symbol: x.symbol // FERRO.ST, för spårbarhet
-    });
-  }
+  const traffar = tolkaTraffar(quotes);
 
   const svar = new Response(JSON.stringify({ traffar }), {
     headers: { ...H, "Cache-Control": "public, max-age=86400" },
