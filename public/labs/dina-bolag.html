@@ -434,18 +434,23 @@ function cur(cc){ return cc==='FI' ? '€' : 'kr'; }
 
 // Kurssnapshot: samma companies.json som söket i Lägg till bolag. Byggs till
 // uppslag på ticker (primärt) och namn (fallback). Daglig snapshot, inte realtid.
-let PRICES=new Map(), PRICES_N=new Map(), PRICE_DATE=null;
+let PRICES=new Map(), PRICES_N=new Map(), PRICE_DATE=null, LIVE_DATE=null;
 // Snapshoten byggs inte varje dag, sa "i dag" ar oftast en losning: Sivers stod
 // som -24,45 % "i dag" den 31 augusti, men det var rorelsen den 29:e, dagen
 // snapshoten togs. Sidan sa alltsa bade "Kurser per 2026-08-29" langst ned och
 // "i dag" bredvid talet. Dagsforandringen far bara heta "i dag" nar den ar fran
 // i dag, annars star datumet dar.
+// Etiketten ska folja talet den star bredvid. Talen kommer live ur
+// /api/kurshistorik, snapshoten bidrar bara med identitet, sa LIVE_DATE galler
+// och PRICE_DATE ar reserv. Utan det stod "29 aug" bredvid dagens kurs i fyra
+// dagar, och sidan sag ut att vara gammal fast siffran var farsk.
 function dagsEtikett(){
-  if(!PRICE_DATE) return 'i dag';
-  if(PRICE_DATE === new Date().toISOString().slice(0,10)) return 'i dag';
+  const D = LIVE_DATE || PRICE_DATE;
+  if(!D) return 'i dag';
+  if(D === new Date().toISOString().slice(0,10)) return 'i dag';
   const M=['jan','feb','mars','april','maj','juni','juli','aug','sep','okt','nov','dec'];
-  const d=PRICE_DATE.split('-');
-  return d.length===3 ? (Number(d[2])+' '+M[Number(d[1])-1]) : PRICE_DATE;
+  const d=D.split('-');
+  return d.length===3 ? (Number(d[2])+' '+M[Number(d[1])-1]) : D;
 }
 async function loadPrices(){
   try{
@@ -509,6 +514,7 @@ async function fyllFarskaKurser(holds){
           ch: (forra ? ((pkt[1] - forra) / forra) * 100 : null),
           d: pkt[0],                       // handelsdagen talet galler
         }));
+        if(!LIVE_DATE || pkt[0] > LIVE_DATE) LIVE_DATE = pkt[0];
         nagot = true;
         return;
       }catch(e){ /* prova nasta marknad, annars star snapshoten kvar */ }
@@ -724,7 +730,10 @@ function renderReal(holds, user){
   const owned = alla.filter(h=>!arStangt(h));
   const follow = holds.filter(h=>h.relation==='foljer');
   let html = pageHeader();
-  if(PRICE_DATE) html += '<div style="font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--faint);margin:2px 0 2px">Kurser hämtas live, identitet ur snapshot per '+esc(PRICE_DATE)+'.</div>';
+  const kursNot = LIVE_DATE
+    ? 'Kurser per senaste stängning, '+esc(LIVE_DATE)+'.'
+    : (PRICE_DATE ? 'Kurser kunde inte hämtas live, visar snapshot per '+esc(PRICE_DATE)+'.' : '');
+  if(kursNot) html += '<div style="font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--faint);margin:2px 0 2px">'+kursNot+'</div>';
   html += portfolioOverview(alla);
   if(owned.length){ html += groupH('Äger ('+owned.length+')') + owned.map(realRow).join(''); }
   if(stangda.length){ html += groupH('Stängda innehav ('+stangda.length+')') + stangda.map(stangdRow).join(''); }

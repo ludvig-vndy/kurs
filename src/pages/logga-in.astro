@@ -89,17 +89,24 @@ import Seal from '../components/Seal.astro';
     const CODE_LOGIN_ENABLED = false;
 
     // Vantar in att Supabase-klienten (window.AB) blir redo, i stallet for att
-    // skramma direkt om den deferrade bundeln inte hunnit ladda. ~5s tak.
+    // skramma direkt om den deferrade bundeln inte hunnit ladda.
+    //
+    // Taket lag pa 5 sekunder. Supabase-bundeln ar 200 kB, och pa en seg
+    // mobiluppkoppling hinner den inte ner pa den tiden, varpa sidan pastod att
+    // tjansten var trasig fast den bara laddade an. 15 sekunder, och ett
+    // meddelande som sager vad som faktiskt hant.
+    const AB_TAK_MS = 15000;
     function waitForAB() {
       return new Promise((resolve) => {
         if (window.AB && window.AB.ready) return resolve(true);
         let n = 0;
         const iv = setInterval(() => {
           if (window.AB && window.AB.ready) { clearInterval(iv); resolve(true); }
-          else if (++n > 50) { clearInterval(iv); resolve(false); }
+          else if (++n > AB_TAK_MS / 100) { clearInterval(iv); resolve(false); }
         }, 100);
       });
     }
+    const SEGT = 'Uppkopplingen är för seg just nu, inloggningen hann inte laddas klart. Försök igen om en stund.';
 
     // Satt cookie fran token och skicka in till /hem. Delas av kod- och
     // lank-vagen (watchSession).
@@ -123,7 +130,7 @@ import Seal from '../components/Seal.astro';
         show('Skickar…');
         try {
           const ready = await waitForAB();
-          if (!ready) { show('Tjänsten kunde inte laddas. Ladda om sidan och försök igen.'); return; }
+          if (!ready) { show(SEGT); return; }
           // Magic-länken returnerar hit (/logga-in ar publik); vi satter cookien
           // och skickar in till /hem nar sessionen dykt upp.
           const r = await window.AB.sendMagicLink(v, { createUser: false, redirectPath: '/logga-in' });
@@ -190,7 +197,7 @@ import Seal from '../components/Seal.astro';
         show('Loggar in…');
         try {
           const ready = await waitForAB();
-          if (!ready || !window.AB.signInPassword) { show('Tjänsten kunde inte laddas. Ladda om sidan och försök igen.'); return; }
+          if (!ready || !window.AB.signInPassword) { show(SEGT); return; }
           const r = await window.AB.signInPassword(em, pw);
           const t = r && r.data && r.data.session && r.data.session.access_token;
           if (r && r.error) { show('Fel mejl eller lösenord.'); }

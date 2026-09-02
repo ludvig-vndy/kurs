@@ -15,7 +15,10 @@ import { rateLimited } from "./_lib.js";
 // Landskod -> Yahoo-börssuffix. Aktieslag skrivs med bindestreck hos Yahoo
 // (LIFCO.B -> LIFCO-B.ST), companies.json använder punkt.
 const SUFFIX = { SE: ".ST", NO: ".OL", DK: ".CO", FI: ".HE", IS: ".IC" };
-const RANGES = { "6mo": 1, "1y": 1, "2y": 1, "5y": 1 }; // whitelist
+// Whitelist. "5d" finns med for att Dina bolag bara behover de tva senaste
+// stangningarna for dagsforandringen; utan den foll anropet tillbaka pa 1y
+// och hamtade 250 punkter per innehav for att lasa av tva.
+const RANGES = { "5d": 1, "1mo": 1, "6mo": 1, "1y": 1, "2y": 1, "5y": 1 };
 
 function yahooSymbol(t, c) {
   return String(t).trim().replace(/\./g, "-").toUpperCase() + (SUFFIX[c] || "");
