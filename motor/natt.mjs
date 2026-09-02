@@ -45,7 +45,7 @@ const arkiv = existsSync(arkivFil) ? JSON.parse(readFileSync(arkivFil, 'utf8')) 
 mkdirSync(p('./out/data'), { recursive: true });
 
 let totKostnad = 0, totNya = 0;
-const dagensPoster = [], lugna = [], insynsbortfall = [];
+const dagensPoster = [], lugna = [], insynsbortfall = [], bevakade = [];
 
 /* Brevet ska handla om det som hänt sedan förra brevet, inget annat. Förra
    körningens tidpunkt sparas av state-kv när minnet lagts tillbaka i KV; utan
@@ -156,8 +156,11 @@ for (const bolag of konf.bolag) {
     totNya++;
     if (post.typ !== 'ovrigt' && !post.fel && !post.dublett_av) dagensPoster.push({ bolag: bolag.namn, post });
   }
-  if (!nya.length || nya.every(u => false)) lugna.push(bolag.namn);
-  else if (!dagensPoster.some(dp => dp.bolag === bolag.namn)) lugna.push(bolag.namn);
+  // Vilka som är lugna avgörs efter hela varvet, inte här. Insyn och blankning
+  // läggs till nedan, och den här raden räknade bara pressmeddelanden: brevet
+  // den 2 september listade Saniona som "ingen större rörelse" i samma brev som
+  // det redovisade tre insynsköp i bolaget.
+  bevakade.push(bolag.namn);
 
   // 3b. Insynsregistret (FI, öppen data): summeras per bolag; nya poster efter
   // baslinjen flaggas i dagsbrevet. Ingen LLM behövs, registret är strukturerat.
@@ -259,6 +262,10 @@ if (borsdata.rader.length) {
 } else if (borsdata.av) console.log(`\nBörsdata: av (${borsdata.av}).`);
 
 // Dagsbrevet: renderas ur nattens fynd och mejlas om Resend-nyckel finns.
+// Lugnt = inget alls i brevet om bolaget, oavsett var det skulle ha kommit ifrån.
+for (const namn of bevakade)
+  if (!dagensPoster.some(dp => dp.bolag === namn)) lugna.push(namn);
+
 if (insynsbortfall.length) console.log(`
 VARNING: insynsregistret kunde inte läsas för ${insynsbortfall.join(', ')}. `
   + 'De bolagen kan ha insynshandel som inte står i brevet.');
