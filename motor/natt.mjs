@@ -14,16 +14,18 @@ import { FALT, bestamTyp } from './faltlistor.mjs';
 import { renderBolag } from './render-bolag.mjs';
 import { renderDagsbrev } from './render-brev.mjs';
 import { hittaTal } from './verify.mjs';
-import { hamtaInsyn } from './hamta-insyn.mjs';
+import { hamtaInsyn, nyaInsyn, insynFran } from './hamta-insyn.mjs';
 import { hamtaBlankning } from './hamta-blankning.mjs';
 import { skicka } from './skicka.mjs';
 import { byggBevakning } from './bevakningslista.mjs';
 import { narreraBrev } from './narrera-brev.mjs';
 import { nyckelFinns } from './llm.mjs';
 import { byggBorsdata } from './borsdata.mjs';
+import { lasFlode, farskGrans, delaUppFlodet } from './mfn-flode.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
+const IDAG = new Date().toISOString().slice(0, 10);
 
 const konf = JSON.parse(readFileSync(p('./bolag.json'), 'utf8'));
 // Bevakningslistan ÄR användarnas Supabase-innehav: brevet handlar bara om det
@@ -45,6 +47,18 @@ mkdirSync(p('./out/data'), { recursive: true });
 let totKostnad = 0, totNya = 0;
 const dagensPoster = [], lugna = [];
 
+/* Brevet ska handla om det som hänt sedan förra brevet, inget annat. Förra
+   körningens tidpunkt sparas av state-kv när minnet lagts tillbaka i KV; utan
+   den faller gränsen tillbaka på två dygn. Se motor/mfn-flode.mjs för varför
+   det behövs: utan gränsen betade nya bolag av sin MFN-backlog sex artiklar
+   per natt och presenterade dem som nyheter. */
+const forraKorningen = (() => {
+  try { return JSON.parse(readFileSync(p('./in/senaste-korning.json'), 'utf8')).uppdaterad || null; }
+  catch { return null; }
+})();
+const farskhetsgrans = farskGrans(new Date(), forraKorningen);
+console.log(`Nytt sedan: ${farskhetsgrans}${forraKorningen ? '' : ' (ingen känd föregående körning, två dygn bakåt)'}`);
+
 // Blankningsregistret hämtas en gång per körning (aggregat per emittent).
 let blankning = null;
 try { blankning = await hamtaBlankning(); console.log(`Blankningsregistret: ${blankning.rader.length} emittenter i aggregatet.`); }
@@ -55,18 +69,20 @@ for (const bolag of konf.bolag) {
   console.log(`\n=== ${bolag.namn} ===`);
   arkiv[bolag.id] = arkiv[bolag.id] || {};
 
-  // 1. Upptäck: läs flödet, plocka artikellänkar. Mönstret kräver ett slug-segment
-  // efter entiteten och täcker både /a/<bolag>/<slug> och /<wire>/a/<bolag>/<slug>.
+  // 1. Upptäck: läs flödet med varje artikels EGEN tidpunkt, och dela upp det i
+  // sådant som hör hemma i brevet och sådant som bara ska bli minne. Första
+  // gången ett bolag ses arkiveras allt utan att något rapporteras, annars blir
+  // bolagets hela historik "nyheter i natt".
   const feedHtml = await (await fetch(bolag.feed, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } })).text();
-  const lankar = [];
-  const re = /href="((?:https:\/\/mfn\.se)?\/(?:[a-z]+\/)?a\/[a-z0-9-]+\/[^"/]+)"/g;
-  let m;
-  while ((m = re.exec(feedHtml)) !== null) {
-    const url = m[1].startsWith('http') ? m[1] : 'https://mfn.se' + m[1];
-    if (!lankar.includes(url)) lankar.push(url);
-  }
-  const nya = lankar.filter(u => !arkiv[bolag.id][u]).slice(0, bolag.maxNya || 8);
-  console.log(`  flödet: ${lankar.length} länkar, ${nya.length} nya att hämta`);
+  const flode = lasFlode(feedHtml);
+  const { forstaGangen, rapportera, baraArkivera } =
+    delaUppFlodet(flode, arkiv[bolag.id], farskhetsgrans, { tak: bolag.maxNya || 8 });
+  for (const post of baraArkivera) arkiv[bolag.id][post.url] = post.datum || IDAG;
+  const nya = rapportera.map(x => x.url);
+  const datumFor = new Map(rapportera.map(x => [x.url, x.datum]));
+  console.log(`  flödet: ${flode.length} länkar, ${nya.length} nya att hämta` +
+    (forstaGangen ? `, baslinje satt (${baraArkivera.length} arkiverade utan att rapporteras)`
+      : baraArkivera.length ? `, ${baraArkivera.length} äldre än gränsen arkiverades tyst` : ''));
 
   // 2. Hämta + extrahera nya dokument.
   const dataFil = p(`./out/data/${bolag.id}.json`);
@@ -77,7 +93,9 @@ for (const bolag of konf.bolag) {
     const slug = url.split('/').pop();
     let typ = bestamTyp(slug);
     const namn = `${bolag.id}-${slug.slice(0, 60)}`;
-    let post = { url, typ, rubrik: slug.replace(/-[a-f0-9]+$/, '').replace(/-/g, ' '), datum: new Date().toISOString().slice(0, 10) };
+    // Datumet är dokumentets eget, ur flödet. Förut stod körningsdagen här, så
+    // en rapport från 2025 presenterades som färsk nyhet i morgonbrevet.
+    let post = { url, typ, rubrik: slug.replace(/-[a-f0-9]+$/, '').replace(/-/g, ' '), datum: datumFor.get(url) || IDAG };
     try {
       const h = await hamta(url, namn);
       const text = readFileSync(h.fil, 'utf8');
@@ -149,12 +167,15 @@ for (const bolag of konf.bolag) {
     data.insyn = { netto_12m: insyn.netto_12m, antal_12m: insyn.transaktioner.length, senaste: insyn.transaktioner.slice(0, 5), kalla: insyn.kalla };
     const senastSedd = arkiv[bolag.id].__insyn;
     if (insyn.transaktioner[0]) arkiv[bolag.id].__insyn = insyn.transaktioner[0].pub;
-    if (senastSedd) {
-      for (const t of insyn.transaktioner.filter(t => t.pub > senastSedd).slice(0, 3)) {
-        dagensPoster.push({ bolag: bolag.namn, post: { typ: 'insyn', datum: t.pub, url: 'https://marknadssok.fi.se/publiceringsklient', rubrik: `Insynshandel: ${t.karaktar} av ${t.befattning || t.person}`, bevis: `${t.person} (${t.befattning}) ${t.karaktar.toLowerCase()} ${t.volym} st à ${t.pris} ${t.valuta}, publicerat ${t.pub}` } });
-      }
+    // Utan baslinje rapporterades förut ingenting alls, bara en baslinje sattes.
+    // Det hade tystat Sanionas tre köp och Ferroamps två för alltid: de var
+    // registrets första träffar för respektive bolag. Nu gäller ett fönster,
+    // se nyaInsyn i hamta-insyn.mjs.
+    const flaggade = nyaInsyn(insyn.transaktioner, senastSedd, insynFran());
+    for (const t of flaggade) {
+      dagensPoster.push({ bolag: bolag.namn, post: { typ: 'insyn', datum: t.pub, url: 'https://marknadssok.fi.se/publiceringsklient', rubrik: `Insynshandel: ${t.karaktar} av ${t.befattning || t.person}`, bevis: `${t.person} (${t.befattning}) ${t.karaktar.toLowerCase()} ${t.volym} st à ${t.pris} ${t.valuta}, publicerat ${t.pub}` } });
     }
-    console.log(`  insyn: ${insyn.transaktioner.length} transaktioner 12 mån${senastSedd ? '' : ' (baslinje satt, nya flaggas från nästa körning)'}`);
+    console.log(`  insyn: ${insyn.transaktioner.length} transaktioner 12 mån, ${flaggade.length} till brevet${senastSedd ? '' : ' (ingen baslinje, fönstret gäller)'}`);
   } catch (e) { console.log(`  insyn: kunde inte hämtas (${e.message.slice(0, 70)})`); }
 
   // 3c. Blankning: nivå + diff mot förra körningen = avvikelsen (fas 3 v0).
@@ -176,19 +197,20 @@ for (const bolag of konf.bolag) {
   for (const k of bolag.konkurrenter || []) {
     try {
       const kHtml = await (await fetch(k.feed, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } })).text();
-      const kLankar = [];
-      let km; const kre = /href="((?:https:\/\/mfn\.se)?\/(?:[a-z]+\/)?a\/[a-z0-9-]+\/[^"/]+)"/g;
-      while ((km = kre.exec(kHtml)) !== null) { const u = km[1].startsWith('http') ? km[1] : 'https://mfn.se' + km[1]; if (!kLankar.includes(u)) kLankar.push(u); }
+      const kFlode = lasFlode(kHtml);
       const nyckel = `__omv_${k.id}`;
       const sedda = arkiv[bolag.id][nyckel] || [];
-      const nyaK = kLankar.filter(u => !sedda.includes(u));
-      arkiv[bolag.id][nyckel] = kLankar.slice(0, 60);
+      // Samma gräns som för bolagets eget flöde: en konkurrents gamla besked är
+      // inte en nyhet bara för att vi råkar se den för första gången.
+      const nyaK = kFlode.filter(x => !sedda.includes(x.url) && (!x.publicerad || x.publicerad > farskhetsgrans));
+      arkiv[bolag.id][nyckel] = kFlode.slice(0, 60).map(x => x.url);
       if (sedda.length) {
-        for (const u of nyaK.slice(0, 2)) {
+        for (const x of nyaK.slice(0, 2)) {
+          const u = x.url;
           const kslug = u.split('/').pop();
           const ktyp = bestamTyp(kslug);
           if (['rapport', 'emission', 'forvarv'].includes(ktyp) || /vinstvarning|profit-warning/.test(kslug)) {
-            dagensPoster.push({ bolag: bolag.namn, post: { typ: 'omvarld', datum: new Date().toISOString().slice(0, 10), url: u, rubrik: `Omvärld, ${k.namn}: ${kslug.replace(/-[a-f0-9]+$/, '').replace(/-/g, ' ')}`, bevis: `Konkurrent till ${bolag.namn}. Typ: ${ktyp}.` } });
+            dagensPoster.push({ bolag: bolag.namn, post: { typ: 'omvarld', datum: x.datum || IDAG, url: u, rubrik: `Omvärld, ${k.namn}: ${kslug.replace(/-[a-f0-9]+$/, '').replace(/-/g, ' ')}`, bevis: `Konkurrent till ${bolag.namn}. Typ: ${ktyp}.` } });
           }
         }
         if (nyaK.length) console.log(`  omvärld (${k.namn}): ${nyaK.length} nya besked i flödet`);
@@ -216,6 +238,10 @@ a{color:#8A2E26} .m{font-family:monospace;font-size:11px;color:#8A8172}</style><
 writeFileSync(p('./out/index.html'), index, 'utf8');
 
 writeFileSync(arkivFil, JSON.stringify(arkiv, null, 1));
+// Ankaret för nästa körnings "nytt sedan". I CI skrivs samma fil av
+// state-kv vid hämtningen ur KV; lokalt är det den här raden som gör att en
+// andra körning samma dag inte upprepar gårdagens brev.
+writeFileSync(p('./in/senaste-korning.json'), JSON.stringify({ uppdaterad: new Date().toISOString() }));
 
 /* Börsdata: rapportkalendern och värderingen mot bolagets egen historik.
    Till skillnad från allt ovan kräver det ingen händelse, så det är det enda i

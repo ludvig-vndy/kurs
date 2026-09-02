@@ -22,6 +22,7 @@ const NS = '97d78256ff664c54a724878034c8f0fd'; // KV-namespace "upptack-data" (l
 const NYCKEL = 'motor-state';
 const ARKIV = p('./in/arkiv.json');
 const CACHE = p('./in/bevakning-cache.json');
+const KORNING = p('./in/senaste-korning.json');
 const TMP = p('./out/motor-state.json');
 
 // Pinnad major så en ny wrangler inte tystar ner ett nattjobb. --yes för CI,
@@ -56,6 +57,10 @@ function hamta(tillatTom) {
   mkdirSync(p('./in'), { recursive: true });
   writeFileSync(ARKIV, JSON.stringify(state.arkiv || {}, null, 1));
   if (state.bevakningCache) writeFileSync(CACHE, JSON.stringify(state.bevakningCache, null, 2));
+  // Tidpunkten minnet senast sparades är också "förra körningen", och det är
+  // gränsen natt.mjs mäter färskhet mot. Utan den vet en ren CI-maskin inte
+  // vad som redan stått i gårdagens brev.
+  writeFileSync(KORNING, JSON.stringify({ uppdaterad: state.uppdaterad || null }));
   const bolag = Object.keys(state.arkiv || {}).length;
   console.log(`Minnet hämtat ur KV: ${bolag} bolag i arkivet, sparat ${state.uppdaterad || 'okänt datum'}.`);
 }
