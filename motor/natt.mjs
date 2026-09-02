@@ -45,7 +45,7 @@ const arkiv = existsSync(arkivFil) ? JSON.parse(readFileSync(arkivFil, 'utf8')) 
 mkdirSync(p('./out/data'), { recursive: true });
 
 let totKostnad = 0, totNya = 0;
-const dagensPoster = [], lugna = [];
+const dagensPoster = [], lugna = [], insynsbortfall = [];
 
 /* Brevet ska handla om det som hänt sedan förra brevet, inget annat. Förra
    körningens tidpunkt sparas av state-kv när minnet lagts tillbaka i KV; utan
@@ -176,7 +176,12 @@ for (const bolag of konf.bolag) {
       dagensPoster.push({ bolag: bolag.namn, post: { typ: 'insyn', datum: t.pub, url: 'https://marknadssok.fi.se/publiceringsklient', rubrik: `Insynshandel: ${t.karaktar} av ${t.befattning || t.person}`, bevis: `${t.person} (${t.befattning}) ${t.karaktar.toLowerCase()} ${t.volym} st à ${t.pris} ${t.valuta}, publicerat ${t.pub}` } });
     }
     console.log(`  insyn: ${insyn.transaktioner.length} transaktioner 12 mån, ${flaggade.length} till brevet${senastSedd ? '' : ' (ingen baslinje, fönstret gäller)'}`);
-  } catch (e) { console.log(`  insyn: kunde inte hämtas (${e.message.slice(0, 70)})`); }
+  } catch (e) {
+    // Ett bortfall här är inte kosmetiskt: insynshandeln är det brevet är
+    // vassast på. Räkna det, och säg det högt i sammanfattningen.
+    insynsbortfall.push(bolag.namn);
+    console.log(`  insyn: KUNDE INTE HÄMTAS (${e.message.slice(0, 90)})`);
+  }
 
   // 3c. Blankning: nivå + diff mot förra körningen = avvikelsen (fas 3 v0).
   if (blankning) {
@@ -254,6 +259,9 @@ if (borsdata.rader.length) {
 } else if (borsdata.av) console.log(`\nBörsdata: av (${borsdata.av}).`);
 
 // Dagsbrevet: renderas ur nattens fynd och mejlas om Resend-nyckel finns.
+if (insynsbortfall.length) console.log(`
+VARNING: insynsregistret kunde inte läsas för ${insynsbortfall.join(', ')}. `
+  + 'De bolagen kan ha insynshandel som inte står i brevet.');
 const datum = new Date().toISOString().slice(0, 10);
 const brevHtml = renderDagsbrev({ datum, poster: dagensPoster, lugna, borsdata: borsdata.rader });
 const brevFil = p(`./out/brev-${datum}.html`);

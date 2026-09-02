@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { skalaUtgivare, samaBolag, nyaInsyn, INSYN_DYGN } from '../../motor/hamta-insyn.mjs';
+import { skalaUtgivare, samaBolag, nyaInsyn, INSYN_DYGN, hamtaMedRetry } from '../../motor/hamta-insyn.mjs';
 
 /* FI har Saniona som "Saniona AB", innehavet heter "Saniona AB (publ)", och
    sökningen hos FI är en substrängmatch. Alltså noll träffar, varje natt, sedan
@@ -54,4 +54,31 @@ test('nyaInsyn: taket haller ett brev last', () => {
 
 test('nyaInsyn: tal fonstret ar satt och rimligt', () => {
   assert.ok(INSYN_DYGN >= 2 && INSYN_DYGN <= 7);
+});
+
+/* FI stryper anrop som kommer tätt. Förut spacade LLM-extraktionen ut dem av
+   en slump; när backloggen försvann tog körningen 20 sekunder i stället för
+   minuter, och 2026-09-02 föll Ferroamp och Saniona bort med "fetch failed",
+   alltså precis de två bolag piloten bad om. Ett tyst bortfall på registret
+   är värre än ett sent brev. */
+
+test('hamtaMedRetry: ett tillfalligt avbrott ska inte kosta ett bolag', async () => {
+  let n = 0;
+  const hamtare = async () => { if (++n < 3) throw new Error('read ECONNRESET'); return { ok: true, n }; };
+  const r = await hamtaMedRetry('x', { hamtare, paus: 0 });
+  assert.equal(r.n, 3);
+});
+
+test('hamtaMedRetry: nar allt faller sager felet vad som hande', async () => {
+  const hamtare = async () => { throw new Error('read ECONNRESET'); };
+  await assert.rejects(
+    () => hamtaMedRetry('x', { hamtare, paus: 0, forsok: 2 }),
+    e => /2 forsok/.test(e.message) && /ECONNRESET/.test(e.message));
+});
+
+test('hamtaMedRetry: ett HTTP-fel fran FI raknas ocksa som misslyckande', async () => {
+  let n = 0;
+  const hamtare = async () => { n++; return { ok: false, status: 429 }; };
+  await assert.rejects(() => hamtaMedRetry('x', { hamtare, paus: 0, forsok: 2 }), /429/);
+  assert.equal(n, 2);
 });

@@ -52,10 +52,43 @@ export function insynFran(nu = new Date(), dygn = INSYN_DYGN) {
 
 function tal(s) { const v = parseFloat(String(s || '').replace(/\s/g, '').replace(',', '.')); return isFinite(v) ? v : null; }
 
+/* TAKTEN MOT FI.
+   FI stänger anslutningen när sökningar kommer tätt på varandra. Förut dolde
+   nattjobbet det: LLM-extraktionen mellan bolagen spacade ut anropen med
+   minuter. När backloggen försvann tog körningen tjugo sekunder i stället, och
+   den 2 september 2026 föll Nokia, Truecaller, Sivers, Ferroamp och Saniona
+   bort med "fetch failed", alltså precis de bolag piloten just hade frågat om.
+   Ett tyst bortfall på registret är värre än ett brev som dröjer, så vi går
+   långsamt fram och försöker om. */
+export const MINSTA_PAUS = 1500;
+let sistaAnrop = 0;
+
+const sov = ms => new Promise(r => setTimeout(r, ms));
+
+async function vantaTur() {
+  const drojt = Date.now() - sistaAnrop;
+  if (drojt < MINSTA_PAUS) await sov(MINSTA_PAUS - drojt);
+  sistaAnrop = Date.now();
+}
+
+/** Hämtar med omförsök. `hamtare` finns för att gå att pröva utan nätverk. */
+export async function hamtaMedRetry(url, { forsok = 3, paus = 3000, hamtare = fetch } = {}) {
+  let sist;
+  for (let i = 0; i < forsok; i++) {
+    if (i) await sov(paus * i);
+    try {
+      const r = await hamtare(url, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } });
+      if (r && r.ok) return r;
+      sist = new Error('HTTP ' + (r && r.status));
+    } catch (e) { sist = e; }
+  }
+  throw new Error(`FI svarade inte efter ${forsok} forsok: ${sist && sist.message}`);
+}
+
 async function sok(utgivare) {
   const url = `https://marknadssok.fi.se/publiceringsklient/sv-SE/Search/Search?SearchFunctionType=Insyn&Utgivare=${encodeURIComponent(utgivare)}&button=export`;
-  const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } });
-  if (!res.ok) throw new Error(`FI insyn ${utgivare}: HTTP ${res.status}`);
+  await vantaTur();
+  const res = await hamtaMedRetry(url);
   const buf = Buffer.from(await res.arrayBuffer());
   const text = buf.toString('utf16le').replace(/^﻿/, '');
 
@@ -111,8 +144,6 @@ export async function hamtaInsyn(namn) {
   const skalat = skalaUtgivare(namn);
   if (!skalat || skalat === String(namn || '').trim()) return summera(namn, full.kalla, []);
 
-  // FI stänger anslutningen om två sökningar kommer tätt på varandra.
-  await new Promise(r => setTimeout(r, 400));
   const bred = await sok(skalat);
   const vara = bred.transaktioner.filter(t => samaBolag(t.emittent, namn));
   return summera(namn, vara.length ? bred.kalla : full.kalla, vara);
