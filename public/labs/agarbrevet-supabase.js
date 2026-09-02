@@ -125,11 +125,25 @@
   }
 
   // ── Innehav ────────────────────────────────────────────────────────────
+  /* Kolumnerna konto och land kommer ur migrationer som kors for hand i
+     Supabase SQL editor. Mellan en deploy och den korningen finns kolumnerna
+     inte an, och en select som namner dem svarar med fel. Utan det har
+     fallbacket hade hela Dina bolag slutat lista innehav i glappet, alltsa ett
+     mycket varre fel an att kontotypen saknas en stund. */
+  var BAS_KOL = "id,name,ticker,isin,quantity,gav,relation,source,created_at";
+  var EXTRA_KOL = ",konto,land";
+
+  function saknasKolumn(err) {
+    var m = ((err && err.message) || "") + " " + ((err && err.code) || "");
+    return /column|42703|PGRST204/i.test(m) && /konto|land|schema cache|does not exist/i.test(m);
+  }
+
   async function listHoldings() {
-    var res = await sb
-      .from("holdings")
-      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,land,created_at")
+    var res = await sb.from("holdings").select(BAS_KOL + EXTRA_KOL)
       .order("created_at", { ascending: true });
+    if (res.error && saknasKolumn(res.error)) {
+      res = await sb.from("holdings").select(BAS_KOL).order("created_at", { ascending: true });
+    }
     if (res.error) throw res.error;
     return res.data || [];
   }
@@ -156,6 +170,13 @@
       };
     });
     var res = await sb.from("holdings").insert(payload).select("id");
+    if (res.error && saknasKolumn(res.error)) {
+      // Samma glapp som ovan: hellre spara innehavet utan marknad an att
+      // vagra spara det alls.
+      res = await sb.from("holdings").insert(payload.map(function (r) {
+        var k = Object.assign({}, r); delete k.land; delete k.konto; return k;
+      })).select("id");
+    }
     if (res.error) throw res.error;
     return res.data || [];
   }
@@ -192,7 +213,7 @@
     if (v !== null && ["depa", "isk", "kf"].indexOf(v) === -1) throw new Error("Okand kontotyp.");
     var res = await sb.from("holdings").update({ konto: v }).eq("id", id).select("id,konto").single();
     if (res.error) {
-      if (saknasTabellen(res.error)) throw new Error("Kontotyp ar inte paslaget an (migrationen ar inte kord).");
+      if (saknasKolumn(res.error) || saknasTabellen(res.error)) throw new Error("Kontotyp är inte påslaget än: migrationen 20260902160000_kontotyp.sql behöver köras.");
       throw res.error;
     }
     return res.data;
@@ -203,11 +224,10 @@
   // server-side av triggern trg_decisions_recalc, så efter varje skrivning
   // hämtar sidan om innehavet för att visa den uträknade positionen.
   async function getHolding(id) {
-    var res = await sb
-      .from("holdings")
-      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,land,created_at")
-      .eq("id", id)
-      .single();
+    var res = await sb.from("holdings").select(BAS_KOL + EXTRA_KOL).eq("id", id).single();
+    if (res.error && saknasKolumn(res.error)) {
+      res = await sb.from("holdings").select(BAS_KOL).eq("id", id).single();
+    }
     if (res.error) throw res.error;
     return res.data || null;
   }

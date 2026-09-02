@@ -91,10 +91,18 @@ async function hamtaInnehav() {
   const base = process.env.SUPABASE_URL;
   const secret = process.env.SUPABASE_SECRET_KEY;
   if (!base || !secret) return null; // ingen Supabase -> kör bara katalogen
-  const url = `${base}/rest/v1/holdings?select=name,ticker,land,relation,user_id`;
-  const r = await fetch(url, { headers: { apikey: secret, Authorization: 'Bearer ' + secret } });
-  if (!r.ok) throw new Error('Supabase holdings: HTTP ' + r.status);
-  return await r.json();
+  /* land kommer ur en migration som kors for hand. Mellan deploy och korning
+     finns kolumnen inte, och en select som namner den svarar 400. Utan det har
+     fallbacket hade hela bevakningslistan fallit tillbaka pa katalogen, alltsa
+     ett brev om fel bolag: mycket varre an att sakna marknad en stund. */
+  const H = { apikey: secret, Authorization: 'Bearer ' + secret };
+  for (const kol of ['name,ticker,land,relation,user_id', 'name,ticker,relation,user_id']) {
+    const r = await fetch(`${base}/rest/v1/holdings?select=${kol}`, { headers: H });
+    if (r.ok) return await r.json();
+    if (r.status !== 400) throw new Error('Supabase holdings: HTTP ' + r.status);
+    console.log('  (holdings.land saknas an, kor utan marknad)');
+  }
+  throw new Error('Supabase holdings: kunde inte lasa innehaven');
 }
 
 // Löst namnmatch åt båda håll: "Unibap Space Solutions" i innehavet ska hitta
