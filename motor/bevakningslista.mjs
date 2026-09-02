@@ -40,6 +40,13 @@ const KURERADE = [
   { match: 'sivers', slug: 'sivers-semiconductors' },
 ];
 
+// Ett stabilt id ur ett bolagsnamn, för bolag som inte har någon MFN-slug.
+function slugga(namn) {
+  return String(namn).toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'bolag';
+}
+
 // Kandidat-sluggar ur ett bolagsnamn, mest sannolika först.
 function sluggar(namn) {
   const bas = String(namn).toLowerCase()
@@ -84,7 +91,7 @@ async function hamtaInnehav() {
   const base = process.env.SUPABASE_URL;
   const secret = process.env.SUPABASE_SECRET_KEY;
   if (!base || !secret) return null; // ingen Supabase -> kör bara katalogen
-  const url = `${base}/rest/v1/holdings?select=name,ticker,relation,user_id`;
+  const url = `${base}/rest/v1/holdings?select=name,ticker,land,relation,user_id`;
   const r = await fetch(url, { headers: { apikey: secret, Authorization: 'Bearer ' + secret } });
   if (!r.ok) throw new Error('Supabase holdings: HTTP ' + r.status);
   return await r.json();
@@ -112,6 +119,7 @@ export async function byggBevakning(seed) {
   const namn = [];
   const sett = new Set();
   const agare = new Map();   // kanoniskt bolagsnamn -> Set(user_id)
+  const marknad = new Map(); // kanoniskt bolagsnamn -> { land, ticker }
   for (const h of innehav) {
     const n = String(h.name || '').trim();
     if (!n) continue;
@@ -121,6 +129,7 @@ export async function byggBevakning(seed) {
     if (!redan && !sett.has(key)) { sett.add(key); namn.push(n); }
     if (!agare.has(kanoniskt)) agare.set(kanoniskt, new Set());
     if (h.user_id) agare.get(kanoniskt).add(h.user_id);
+    if (h.land && !marknad.has(kanoniskt)) marknad.set(kanoniskt, { land: h.land, ticker: h.ticker || null });
   }
 
   const cacheFil = p('./in/bevakning-cache.json');
@@ -140,8 +149,20 @@ export async function byggBevakning(seed) {
       post = funnet ? { slug: funnet.slug, feed: funnet.feed } : null;
       cache[n] = post; cacheAndrad = true;
     }
-    if (post) bolag.push({ id: post.slug, namn: n, feed: post.feed, maxNya: 6, kalla: 'innehav', agare: [...(agare.get(n) || [])] });
-    else orapporterade.push(n);
+    if (post) { bolag.push({ id: post.slug, namn: n, feed: post.feed, maxNya: 6, kalla: 'innehav', agare: [...(agare.get(n) || [])] }); continue; }
+
+    /* Inget MFN-flöde. Är innehavet amerikanskt bevakas det ändå: MFN är
+       nordiskt, men SEC:s Form 4 är den amerikanska motsvarigheten till FI:s
+       insynsregister, och den räcker för att bolaget ska höra hemma i brevet.
+       Pressmeddelanden får det inte, och det ska stå i klartext hellre än att
+       bolaget tyst faller ur listan som Tesla annars hade gjort. */
+    const m = marknad.get(n);
+    if (m && m.land === 'US' && m.ticker) {
+      bolag.push({ id: slugga(n), namn: n, feed: null, sec: String(m.ticker).toUpperCase(),
+        land: 'US', kalla: 'innehav', agare: [...(agare.get(n) || [])] });
+      continue;
+    }
+    orapporterade.push(n);
   }
 
   if (cacheAndrad) { try { writeFileSync(cacheFil, JSON.stringify(cache, null, 2)); } catch {} }

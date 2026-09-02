@@ -128,7 +128,7 @@
   async function listHoldings() {
     var res = await sb
       .from("holdings")
-      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,created_at")
+      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,land,created_at")
       .order("created_at", { ascending: true });
     if (res.error) throw res.error;
     return res.data || [];
@@ -149,6 +149,9 @@
         quantity: r.quantity == null ? null : r.quantity,
         gav: r.gav == null ? null : r.gav,
         relation: r.relation === "foljer" ? "foljer" : "ager",
+        // Marknaden foljer med sa kursen inte behover gissas fram, och sa att
+        // en svensk och en amerikansk ticker med samma bokstaver inte blandas.
+        land: r.land || null,
         source: r.source || "csv"
       };
     });
@@ -202,7 +205,7 @@
   async function getHolding(id) {
     var res = await sb
       .from("holdings")
-      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,created_at")
+      .select("id,name,ticker,isin,quantity,gav,relation,source,konto,land,created_at")
       .eq("id", id)
       .single();
     if (res.error) throw res.error;

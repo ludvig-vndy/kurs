@@ -15,6 +15,7 @@ import { renderBolag } from './render-bolag.mjs';
 import { renderDagsbrev } from './render-brev.mjs';
 import { hittaTal } from './verify.mjs';
 import { hamtaInsyn, nyaInsyn, insynFran } from './hamta-insyn.mjs';
+import { hamtaSecInsyn, hamtaCikKarta } from './hamta-sec.mjs';
 import { hamtaBlankning } from './hamta-blankning.mjs';
 import { skicka } from './skicka.mjs';
 import { byggBevakning } from './bevakningslista.mjs';
@@ -59,6 +60,14 @@ const forraKorningen = (() => {
 const farskhetsgrans = farskGrans(new Date(), forraKorningen);
 console.log(`Nytt sedan: ${farskhetsgrans}${forraKorningen ? '' : ' (ingen känd föregående körning, två dygn bakåt)'}`);
 
+/* SEC:s ticker-till-CIK-lista, en fil på tiotusen bolag. Hämtas en gång per
+   körning och bara om något innehav faktiskt är amerikanskt. */
+let cikKarta = null;
+if (konf.bolag.some(b => b.sec)) {
+  try { cikKarta = await hamtaCikKarta(); console.log(`SEC: ${Object.keys(cikKarta).length} tickers i CIK-listan.`); }
+  catch (e) { console.log(`SEC: CIK-listan kunde inte hämtas (${e.message.slice(0, 70)}).`); }
+}
+
 // Blankningsregistret hämtas en gång per körning (aggregat per emittent).
 let blankning = null;
 try { blankning = await hamtaBlankning(); console.log(`Blankningsregistret: ${blankning.rader.length} emittenter i aggregatet.`); }
@@ -73,7 +82,10 @@ for (const bolag of konf.bolag) {
   // sådant som hör hemma i brevet och sådant som bara ska bli minne. Första
   // gången ett bolag ses arkiveras allt utan att något rapporteras, annars blir
   // bolagets hela historik "nyheter i natt".
-  const feedHtml = await (await fetch(bolag.feed, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } })).text();
+  // Amerikanska innehav har inget MFN-flöde. De bevakas ändå, via SEC nedan.
+  const feedHtml = bolag.feed
+    ? await (await fetch(bolag.feed, { headers: { 'user-agent': 'Mozilla/5.0 (agarkollen-alpha)' } })).text()
+    : '';
   const flode = lasFlode(feedHtml);
   const { forstaGangen, rapportera, baraArkivera } =
     delaUppFlodet(flode, arkiv[bolag.id], farskhetsgrans, { tak: bolag.maxNya || 8 });
@@ -162,10 +174,17 @@ for (const bolag of konf.bolag) {
   // det redovisade tre insynsköp i bolaget.
   bevakade.push(bolag.namn);
 
-  // 3b. Insynsregistret (FI, öppen data): summeras per bolag; nya poster efter
-  // baslinjen flaggas i dagsbrevet. Ingen LLM behövs, registret är strukturerat.
+  /* 3b. Insynsregistret: FI för nordiska bolag, SEC:s Form 4 för amerikanska.
+     Båda modulerna lämnar rader i samma form (pub, person, befattning,
+     karaktar, volym, pris, belopp), så allt nedanför är gemensamt och brevet
+     behöver inte veta i vilket land handeln skedde. Ingen LLM behövs, båda
+     registren är strukturerade. */
   try {
-    const insyn = await hamtaInsyn(bolag.namn);
+    const insyn = bolag.sec
+      ? await hamtaSecInsyn(bolag.sec, { karta: cikKarta, dygn: 30 })
+          .then(r => ({ ...r, netto_12m: r.transaktioner.reduce((a, t) =>
+              a + (t.belopp || 0) * (/förvärv/i.test(t.karaktar) ? 1 : -1), 0) }))
+      : await hamtaInsyn(bolag.namn);
     writeFileSync(p(`./out/data/${bolag.id}-insyn.json`), JSON.stringify(insyn, null, 1));
     data.insyn = { netto_12m: insyn.netto_12m, antal_12m: insyn.transaktioner.length, senaste: insyn.transaktioner.slice(0, 5), kalla: insyn.kalla };
     const senastSedd = arkiv[bolag.id].__insyn;
@@ -176,7 +195,7 @@ for (const bolag of konf.bolag) {
     // se nyaInsyn i hamta-insyn.mjs.
     const flaggade = nyaInsyn(insyn.transaktioner, senastSedd, insynFran());
     for (const t of flaggade) {
-      dagensPoster.push({ bolag: bolag.namn, post: { typ: 'insyn', datum: t.pub, url: 'https://marknadssok.fi.se/publiceringsklient', rubrik: `Insynshandel: ${t.karaktar} av ${t.befattning || t.person}`, bevis: `${t.person} (${t.befattning}) ${t.karaktar.toLowerCase()} ${t.volym} st à ${t.pris} ${t.valuta}, publicerat ${t.pub}` } });
+      dagensPoster.push({ bolag: bolag.namn, post: { typ: 'insyn', datum: t.pub, url: insyn.kalla || 'https://marknadssok.fi.se/publiceringsklient', rubrik: `Insynshandel: ${t.karaktar} av ${t.befattning || t.person}`, bevis: `${t.person} (${t.befattning}) ${t.karaktar.toLowerCase()} ${t.volym} st à ${t.pris} ${t.valuta || 'SEK'}, publicerat ${t.pub}` } });
     }
     console.log(`  insyn: ${insyn.transaktioner.length} transaktioner 12 mån, ${flaggade.length} till brevet${senastSedd ? '' : ' (ingen baslinje, fönstret gäller)'}`);
   } catch (e) {

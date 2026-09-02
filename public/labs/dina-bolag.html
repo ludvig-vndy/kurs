@@ -516,8 +516,11 @@ async function fyllFarskaKurser(holds){
       if(t) t = String(t).toUpperCase();
     }
     if(!t || vill.has(t)) continue;
+    // Innehavets egen marknad forst. Utan den provades SE, FI, NO, DK, IS i tur
+    // och ordning, vilket bade var langsamt och riskerade att hitta ett annat
+    // bolag med samma bokstaver pa en annan bors.
     const kand = PRICES.get(t);
-    vill.set(t, (kand && kand.c) || null);
+    vill.set(t, h.land || (kand && kand.c) || null);
   }
   if(!vill.size) return false;
 

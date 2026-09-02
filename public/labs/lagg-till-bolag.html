@@ -188,7 +188,7 @@ const OB = {
     ['Inga nya aktier trycks','säg till om antalet aktier ökar'],
   ]
 };
-let step=0, sel=null, selT=null, qty='', gav='';
+let step=0, sel=null, selT=null, selC=null, qty='', gav='';
 const NSTEP=3;
 const pipsEl=document.getElementById('pips'), stepEl=document.getElementById('step');
 
@@ -214,7 +214,7 @@ function num(s){
 function persistHolding(){
   if(!sel || savedFor===sel) return;   // spara varje bolag en gång
   savedFor=sel;
-  const row={ name:sel, ticker:selT||null, isin:null, quantity:num(qty), gav:num(gav), relation:'ager', source:'manual' };
+  const row={ name:sel, ticker:selT||null, land:selC||null, isin:null, quantity:num(qty), gav:num(gav), relation:'ager', source:'manual' };
   if(!(window.AB && window.AB.ready)){ setSaveNote('login'); return; }
   setSaveNote('saving');
   window.AB.getUser().then(u=>{
@@ -240,7 +240,7 @@ function render(){
         '<input id="cosearch" type="text" autocomplete="off" placeholder="Sök bolag, t.ex. Volvo eller Sivers" value="'+esc(searchQ)+'"></div>'+
       '<div class="results" id="results"></div>'+
       '<div class="quick"><span class="ql">Vanliga</span>'+
-        BOLAG.map(b=>'<button class="chip'+(sel===b.n?' sel':'')+'" data-b="'+esc(b.n)+'" data-t="'+esc(b.t)+'">'+esc(b.n)+'</button>').join('')+'</div>'+
+        BOLAG.map(b=>'<button class="chip'+(sel===b.n?' sel':'')+'" data-b="'+esc(b.n)+'" data-t="'+esc(b.t)+'" data-c="'+esc(b.c||'')+'">'+esc(b.n)+'</button>').join('')+'</div>'+
       '<div class="nav-btns"><a class="btn ghost" href="/labs/dina-bolag.html">Avbryt</a><span class="spacer"></span>'+
         '<button class="btn prim" id="next" '+(sel?'':'disabled')+'>'+(sel?'Fortsätt med '+esc(sel)+' →':'Fortsätt →')+'</button></div>';
   } else if(step===1){
@@ -285,16 +285,16 @@ function renderResults(){
     .filter(o=>!sedda.has(String(o.t).toUpperCase()+':'+o.n.toLowerCase())
             && !lokala.some(l=>String(l.t||'').toUpperCase()===String(o.t).toUpperCase()));
   const hits=lokala.concat(fjarr).slice(0,8);
-  let html=hits.map(o=>'<button type="button" class="rrow'+(sel===o.n?' sel':'')+'" data-pick="'+esc(o.n)+'" data-t="'+esc(o.t||'')+'">'+
+  let html=hits.map(o=>'<button type="button" class="rrow'+(sel===o.n?' sel':'')+'" data-pick="'+esc(o.n)+'" data-t="'+esc(o.t||'')+'" data-c="'+esc(o.c||'')+'">'+
     '<span>'+esc(o.n)+'</span><span class="rmeta">'+(sel===o.n?'vald ✓':esc((o.t||'')+' · '+o.m))+'</span></button>').join('');
   const typed=searchQ.trim();
   if(typed && !hits.some(o=>o.n.toLowerCase()===q)){
-    html+='<button type="button" class="rrow add" data-pick="'+esc(typed)+'" data-t="">'+
+    html+='<button type="button" class="rrow add" data-pick="'+esc(typed)+'" data-t="" data-c="">'+
       '<span>Lägg till ”'+esc(typed)+'”</span><span class="rmeta">nytt bolag →</span></button>';
   }
   if(!html) html='<div class="rempty">Söker. Hittar vi inget går det ändå att lägga till namnet du skrivit.</div>';
   rEl.innerHTML=html;
-  rEl.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>{ sel=b.dataset.pick; selT=b.dataset.t||null; render(); }));
+  rEl.querySelectorAll('[data-pick]').forEach(b=>b.addEventListener('click',()=>{ sel=b.dataset.pick; selT=b.dataset.t||null; selC=b.dataset.c||null; render(); }));
 }
 
 function wire(){
@@ -305,12 +305,12 @@ function wire(){
     cs.addEventListener('keydown',e=>{
       if(e.key==='Enter'){ e.preventDefault();
         const first=stepEl.querySelector('.rrow[data-pick]');
-        if(first){ sel=first.getAttribute('data-pick'); selT=first.getAttribute('data-t')||null; render(); }
+        if(first){ sel=first.getAttribute('data-pick'); selT=first.getAttribute('data-t')||null; selC=first.getAttribute('data-c')||null; render(); }
       }
     });
   }
   stepEl.querySelectorAll('.chip[data-b]').forEach(c=>c.addEventListener('click',()=>{
-    sel = c.dataset.b; selT = c.dataset.t||null; render();
+    sel = c.dataset.b; selT = c.dataset.t||null; selC = c.dataset.c||null; render();
   }));
   const next=stepEl.querySelector('#next'); if(next) next.addEventListener('click',()=>{step=1;render();});
   const fq=stepEl.querySelector('#f-qty'); if(fq) fq.addEventListener('input',()=>{qty=fq.value;});
@@ -319,7 +319,7 @@ function wire(){
   const hs=stepEl.querySelector('#hskip'); if(hs) hs.addEventListener('click',()=>{qty='';gav='';step=2;render();});
   stepEl.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{
     const g=+b.dataset.go;
-    if(g===0 && step===2){ sel=null; selT=null; qty=''; gav=''; savedFor=null; }
+    if(g===0 && step===2){ sel=null; selT=null; selC=null; qty=''; gav=''; savedFor=null; }
     step=g; render();
   }));
 }
