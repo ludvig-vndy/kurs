@@ -12,6 +12,7 @@ const DIR = join(HERE, '..', 'content', 'fundamental-aktieanalys');
 
 const STEG_TYPER = ['intro', 'reading', 'concept', 'dataviz', 'quiz', 'myt'];
 const VISUAL_TYPER = ['rutnat', 'linjediagram', 'jamforelse', 'stapeldiagram', 'flode', 'andel'];
+const RUTNAT_LAGEN = ['antal', 'position'];
 const DASH = /[—–]/; // em-dash, en-dash
 
 function isStr(v) { return typeof v === 'string' && v.length > 0; }
@@ -31,6 +32,19 @@ function checkVisual(v, where, errs) {
     if (!isNum(v.kolumner)) errs.push(`${w}: kolumner saknas eller ej tal`);
     if (!isNum(v.celler)) errs.push(`${w}: celler saknas eller ej tal`);
     if (!isNum(v.markerad)) errs.push(`${w}: markerad saknas eller ej tal`);
+    // `markerad` sager inte sig sjalvt om det ar ett antal (elva fonder av
+    // hundra) eller en position (rutan som ar du). Utan `lage` gissar
+    // renderaren, och gissade fel i 0.1: en prick dar etiketten lovade elva.
+    if (!RUTNAT_LAGEN.includes(v.lage)) {
+      errs.push(`${w}: lage ska vara ${RUTNAT_LAGEN.join(' eller ')} (styr om markerad ar antal eller position)`);
+    } else if (isNum(v.celler) && isNum(v.markerad)) {
+      if (v.lage === 'antal' && (v.markerad < 0 || v.markerad > v.celler)) {
+        errs.push(`${w}: markerad ${v.markerad} ryms inte i ${v.celler} celler`);
+      }
+      if (v.lage === 'position' && (v.markerad < 0 || v.markerad >= v.celler)) {
+        errs.push(`${w}: markerad ${v.markerad} ar utanfor ${v.celler} celler`);
+      }
+    }
     if (!isStr(v.etikett)) errs.push(`${w}: etikett saknas`);
   } else if (v.typ === 'linjediagram') {
     if (!isArr(v.serier) || v.serier.length < 1) errs.push(`${w}: serier saknas (array, minst 1)`);

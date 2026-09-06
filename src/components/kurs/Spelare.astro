@@ -97,7 +97,11 @@ function visualOk(v: VisualObj | undefined): boolean {
   const str = (x: unknown) => typeof x === 'string' && x.length > 0;
   const arr = (x: unknown) => Array.isArray(x) && x.length > 0;
   switch (v.typ) {
-    case 'rutnat': return num(a.kolumner) && num(a.celler) && num(a.markerad) && str(a.etikett);
+    // lage kravs: utan det vet renderaren inte om markerad ar ett antal
+    // eller en position, och ett rutnat som gissar fel ljuger tyst mot sin
+    // egen etikett. Hellre reservtexten.
+    case 'rutnat': return num(a.kolumner) && num(a.celler) && num(a.markerad)
+      && (a.lage === 'antal' || a.lage === 'position') && str(a.etikett);
     case 'linjediagram': return arr(a.serier) && a.serier.every((s: any) => str(s.namn) && Array.isArray(s.punkter) && s.punkter.length >= 2 && s.punkter.every(num));
     case 'jamforelse': return arr(a.element) && a.element.every((e: any) => str(e.rubrik) && str(e.text));
     case 'stapeldiagram': return arr(a.data) && a.data.every((d: any) => str(d.kategori) && num(d.varde));

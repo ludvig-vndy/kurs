@@ -32,6 +32,7 @@
         "kolumner": 7,
         "celler": 28,
         "markerad": 9,
+        "lage": "position",
         "etikett": "DU",
         "figurtext": "En aktie är en liten men fullt verklig del av allt bolaget äger och tjänar. Den markerade rutan är din."
       },

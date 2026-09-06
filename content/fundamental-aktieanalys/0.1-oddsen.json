@@ -21,6 +21,7 @@
         "kolumner": 10,
         "celler": 100,
         "markerad": 11,
+        "lage": "antal",
         "etikett": "Av 100 aktiva fonder slår ungefär 11 sitt index över 15 år",
         "figurtext": "Illustrativ ruta. Andelen bygger på SPIVA US, cirka 89 procent av fonderna underpresterade över 15 år."
       },

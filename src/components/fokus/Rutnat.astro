@@ -1,16 +1,24 @@
 ---
-// Rutnat, broadsheet ownership grid. One cell (index `markerad`) marked in oxblood,
-// label below. Cells pop in on .step.is-active.
-interface RutnatVisual { typ: 'rutnat'; kolumner: number; celler: number; markerad: number; etikett: string; figurtext: string }
+// Rutnat, broadsheet grid. Cells marked in oxblood, label below.
+// `lage` says what `markerad` means: 'antal' (a count, e.g. 11 of 100 funds)
+// or 'position' (one cell, e.g. the share that is you). See rutnat.mjs.
+// Cells pop in on .step.is-active.
+import { markerade, rutnatEtikett } from './rutnat.mjs';
+
+interface RutnatVisual {
+  typ: 'rutnat'; kolumner: number; celler: number; markerad: number;
+  lage: 'antal' | 'position'; etikett: string; figurtext: string;
+}
 interface Props { visual: RutnatVisual }
 const { visual } = Astro.props;
-const { kolumner, celler, markerad, etikett, figurtext } = visual;
+const { kolumner, celler, etikett, figurtext } = visual;
+const pa = markerade(visual);
 const cells = Array.from({ length: celler }, (_, i) => i);
 ---
-<figure class="rutnat" aria-label={`Rutnät: cell ${markerad + 1} av ${celler} markerad som ${etikett}`}>
+<figure class="rutnat" aria-label={rutnatEtikett(visual)}>
   <div class="grid" style={`grid-template-columns:repeat(${kolumner},16px)`}>
     {cells.map((i) => (
-      <span class:list={['cell', { on: i === markerad }]} style={`--d:${i * 14}ms`} aria-hidden="true"></span>
+      <span class:list={['cell', { on: pa.has(i) }]} style={`--d:${i * 14}ms`} aria-hidden="true"></span>
     ))}
   </div>
   <div class="etikett">{etikett}</div>
