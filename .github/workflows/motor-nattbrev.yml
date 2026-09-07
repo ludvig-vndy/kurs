@@ -21,7 +21,17 @@ name: Nattbrevet (motorn)
 
 on:
   schedule:
-    - cron: '30 4 * * *' # 04:30 UTC, ~06:30 svensk sommartid, ~05:30 vintertid
+    # 00:07 UTC, ~02:07 svensk sommartid. Ser tidigt ut, och det ar meningen:
+    # GitHub koar schemalagda jobb, och de sju korningarna 1 till 7 september
+    # startade 241 till 306 MINUTER efter sin tid. Med den gamla raden (04:30
+    # UTC) landade morgonbrevet 10:30 till 11:36 svensk tid, alltsa vid lunch,
+    # medan sidan stampade det "07:30". Fyra till fem timmars marginal fran
+    # 00:07 lagger det i stallet 06:00 till 07:00.
+    #
+    # Udda minut med flit: hel och halvtimme ar de mest kobelastade lagena.
+    # Kliv inte bakat forbi midnatt UTC: datumet i brevet ar UTC-datumet, och
+    # 23:xx UTC skulle datera natten till fel dag for en svensk lasare.
+    - cron: '7 0 * * *'
   workflow_dispatch:
 
 # Två körningar samtidigt skulle skriva över varandras minne i KV.

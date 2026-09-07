@@ -356,7 +356,7 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
 <script type="module">
 /* Av-mockad: brevet renderas ur en brief-payload (motor/vigilans/brief-build.mjs),
    samma slags data som tidslinjen. Inga hardkodade bolag. */
-import { brevLage, EXEMPEL_URL } from '/labs/brevlage.js';
+import { brevLage, klockslag, EXEMPEL_URL } from '/labs/brevlage.js';
 (function(){
   var METRIC={gross_margin:'Bruttomarginalen',revenue_growth:'Tillväxten',net_debt:'Nettoskulden',cash_runway:'Runway',dilution:'Utspädningen',roic:'ROIC',insider_sell:'Insiderförsäljningen'};
   var OP={below:'under',above:'över'};
@@ -408,7 +408,10 @@ import { brevLage, EXEMPEL_URL } from '/labs/brevlage.js';
     // Stannar nattjobbet svarar KV vidare med garden brev, och tystnaden ska da
     // last som ett fel hos oss, inte som lugn i bolagen.
     var gammalt = (alderDagar!=null && alderDagar>0);
-    document.getElementById('brev-eyebrow').textContent='Ägarbrevet · '+(b.date||'')+(gammalt?'':' · 07:30');
+    // Klockslaget kommer ur brevet, aldrig ur en gissning. Saknas det (brev
+    // skrivna fore faltet fanns) star bara datumet.
+    var tid = gammalt ? '' : klockslag(b.skriven);
+    document.getElementById('brev-eyebrow').textContent='Ägarbrevet · '+(b.date||'')+(tid?' · '+tid:'');
     document.getElementById('brev-title').innerHTML = gammalt
       ? 'Det här brevet är från '+esc(b.date||'')+'.<br>Något nyare finns inte.'
       : (n

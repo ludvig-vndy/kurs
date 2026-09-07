@@ -328,6 +328,11 @@ function brevForAgare(uid) {
   return {
     date: datum,
     nr,
+    // Nar brevet faktiskt skrevs. Sidan stod forut "07:30" hardkodat, och det
+    // var inte sant: schemalagda korningar startade 4 till 5 timmar efter sin
+    // tid, sa brevet skrevs mitt pa dagen. Schemat ar flyttat, men tiden ska
+    // komma ur brevet och inte ur en gissning.
+    skriven: new Date().toISOString(),
     // Vad vi gick igenom, inte vad som tog sig in. Raknade vi utfallet blev en
     // lugn dag "Vi laste 0 rapporter, 0 pressmeddelanden och 0
     // insynsanmalningar i natt", i samma brev som sa att floden och register

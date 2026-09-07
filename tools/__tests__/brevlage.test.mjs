@@ -12,7 +12,7 @@
 // hamta brevet ska det STA att vi inte kan hamta brevet.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { brevLage } from '../../public/labs/brevlage.js';
+import { brevLage, klockslag } from '../../public/labs/brevlage.js';
 
 const IDAG = '2026-09-07';
 const BREV = { date: IDAG, nr: 63, poster: [], lugna: ['Unibap Space Solutions'], brev: ['God morgon.'] };
@@ -83,4 +83,23 @@ test('ett brev utan datum pastas inte vara dagens', () => {
 test('ett svar utan poster ar inget brev', () => {
   assert.equal(brevLage({ status: 200, kropp: { fel: 'nagot' }, idag: IDAG }).sort, 'meddelande');
   assert.equal(brevLage({ status: 200, kropp: null, idag: IDAG }).sort, 'meddelande');
+});
+
+/* Sidhuvudet stod "Ägarbrevet · <datum> · 07:30" med klockslaget hardkodat.
+   Det var inte sant: de schemalagda korningarna 1 till 7 september startade
+   241 till 306 minuter efter sin tid, sa brevet skrevs 10:30 till 11:36 svensk
+   tid. Ett pahittat klockslag pa en produkt vars hela loft ar "det du ser ar
+   sant" ar samma sorts fel som demobrevet, bara mindre. Nu skrivs den tid
+   brevet faktiskt skrevs, ur faltet skriven. */
+test('klockslaget kommer ur brevet, i svensk tid', () => {
+  assert.equal(klockslag('2026-09-07T21:19:45.000Z'), '23:19'); // sommartid, UTC+2
+  assert.equal(klockslag('2026-12-07T21:19:45.000Z'), '22:19'); // vintertid, UTC+1
+  assert.equal(klockslag('2026-09-08T04:07:00.000Z'), '06:07'); // nya schemat
+});
+
+test('utan tidsstampel pastas inget klockslag', () => {
+  assert.equal(klockslag(null), '');
+  assert.equal(klockslag(undefined), '');
+  assert.equal(klockslag('inte ett datum'), '');
+  assert.equal(klockslag(''), '');
 });

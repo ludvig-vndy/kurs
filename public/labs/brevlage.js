@@ -28,6 +28,26 @@ export function alder(datum, idag) {
   return Math.round((n - d) / 864e5);
 }
 
+/* Klockslaget brevet faktiskt skrevs, ur faltet skriven.
+
+   Sidhuvudet stod förut "Ägarbrevet · <datum> · 07:30" med tiden hårdkodad.
+   Den var inte sann: de schemalagda körningarna 1 till 7 september startade 241
+   till 306 minuter efter sin tid, så brevet skrevs 10:30 till 11:36 svensk tid.
+   Ett påhittat klockslag på en produkt vars hela löfte är att det du ser är
+   sant är samma fel som demobrevet, bara mindre.
+
+   Svensk tid, inte läsarens: brevet handlar om nordiska bolag och säger "i
+   natt". Den natten är Stockholms, oavsett var läsaren sitter. */
+export function klockslag(iso) {
+  const t = Date.parse(iso || '');
+  if (!isFinite(t)) return '';
+  try {
+    return new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'Europe/Stockholm', hour: '2-digit', minute: '2-digit', hour12: false,
+    }).format(new Date(t));
+  } catch (e) { return ''; }
+}
+
 function meddelande(rubrik, text, lank) {
   return lank ? { sort: 'meddelande', rubrik, text, lank } : { sort: 'meddelande', rubrik, text };
 }
