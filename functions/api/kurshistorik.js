@@ -26,6 +26,38 @@ function yahooSymbol(t, c) {
   return String(t).trim().replace(/\./g, "-").toUpperCase() + (SUFFIX[c] || "");
 }
 
+/* Hur lange svaret far cachas pa edgen.
+
+   FORE DETTA LAG DEN PA SEX TIMMAR, rakt av. Kallan ar i praktiken realtid:
+   uppmatt en mandag 14:43 lag Axfood, Telia och Evolution alla pa senaste avslut
+   inom en minut. Sex timmars cache betyder att den forsta besokaren i ett
+   fonster far ett farskt pris och alla efter far samma frusna tal tills fonstret
+   rullar. Piloten oppnade sidan pa morgonen och igen pa eftermiddagen och sag
+   samma kurs, mitt under en handelsdag. Datan var farsk, vi holl kvar den.
+
+   TIDEN STYRS AV DATAN, inte av en borskalender. regularMarketTime ar tidpunkten
+   for senaste avslut, sa ar den nyss ar handeln igang och da ska vi vara snabba.
+   Ar den timmar gammal ar borsen stangd och da andras ingenting anda. Det
+   sjalvjusterar over helger, roda dagar och olika tidszoner, vilket en hardkodad
+   oppettidstabell inte gor: US oppnar 15:30 svensk tid, och helgdagarna skiljer
+   sig at mellan marknaderna.
+
+   Cachen finns for att skydda mot en skenande klient, inte for att spara pengar.
+   Med en handfull innehav per anvandare ar en minut gott om skydd. */
+export const CACHE_LIVE = 60;        // handeln pagar
+export const CACHE_NYSS = 600;       // stangt nyligen, sista avsluten kan komma in
+export const CACHE_STANGT = 3600;    // kvall, natt, helg
+
+export function cacheTid(senasteAvslut, nu = Date.now()) {
+  const t = Number(senasteAvslut) * 1000;
+  if (!isFinite(t) || t <= 0) return CACHE_NYSS;   // utan tidsstampel: mittemellan
+  const minuter = (nu - t) / 60000;
+  if (minuter < 0) return CACHE_LIVE;              // klockskillnad, behandla som live
+  if (minuter < 45) return CACHE_LIVE;
+  if (minuter < 12 * 60) return CACHE_NYSS;
+  return CACHE_STANGT;
+}
+
 function json(obj, status, cacheSeconds) {
   const headers = {
     "Content-Type": "application/json",
@@ -88,15 +120,21 @@ export async function onRequestGet(context) {
     punkter.push([new Date(ts[i] * 1000).toISOString().slice(0, 10), Math.round(v * 10000) / 10000]);
   }
 
+  // Tidpunkten for senaste avslut. Styr cachetiden, och skickas med sa ytan kan
+  // visa NAR talet ar fran i stallet for bara vilken dag. Ett innehav som inte
+  // handlats pa en halvtimme ser annars ut som gammal data, fast det ar sant:
+  // Unibap lag 30 minuter efter de likvida bolagen vid matningen, och det var
+  // marknadens tillstand, inte en fordrojning hos oss.
+  const handlad = res.meta && Number(res.meta.regularMarketTime);
   const body = {
     symbol,
     valuta: (res.meta && res.meta.currency) || null,
     uppdaterad: punkter.length ? punkter[punkter.length - 1][0] : null,
+    handlad: isFinite(handlad) && handlad > 0 ? new Date(handlad * 1000).toISOString() : null,
     punkter,
   };
 
-  // 6h edge-cache. Daglig data ändras en gång per handelsdag.
-  const out = json(body, 200, 21600);
+  const out = json(body, 200, cacheTid(handlad));
   try { await cache.put(cacheKey, out.clone()); } catch (e) { /* cache ej kritisk */ }
   return out;
 }

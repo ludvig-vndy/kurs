@@ -336,10 +336,15 @@
       '<span class="tag'+(foljer?' foljer':'')+'">'+(foljer?'Följer':'Äger')+'</span></h1></div>';
     if(px!=null){
       var dc = PRICE.ch;
+      // Klockslaget bara nar kursen ar fran i dag. Halva poangen med att hamta
+      // live ar att det ska SYNAS att den ar farsk; ett datum ensamt sager inte
+      // om talet ar fran i morse eller nyss.
+      var tid = window.AB.avslutstid ? window.AB.avslutstid(PRICE.h) : "";
       html += '<div class="price"><div class="p">'+fmt(px,2)+' '+c+'</div>'+
-        '<div class="c '+(dc>=0?'up':'dn')+'">'+pct(dc)+' '+dagsEtikett()+'</div></div>';
+        '<div class="c '+(dc>=0?'up':'dn')+'">'+pct(dc)+' '+dagsEtikett()+
+        (tid?' <span class="lbl">kl '+esc(tid)+'</span>':'')+'</div></div>';
     } else {
-      html += '<div class="price"><div class="nn">Ingen kurs i snapshoten</div></div>';
+      html += '<div class="price"><div class="nn">Ingen kurs just nu</div></div>';
     }
     html += '</div>';
 

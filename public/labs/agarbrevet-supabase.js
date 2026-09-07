@@ -90,11 +90,26 @@
         return {
           t: t, c: lander[i], p: pkt[1], v: d.valuta || null,
           ch: forra ? ((pkt[1] - forra) / forra) * 100 : null,
-          d: pkt[0]                       // handelsdagen talet faktiskt gäller
+          d: pkt[0],                      // handelsdagen talet faktiskt gäller
+          h: d.handlad || null             // tidpunkten för senaste avslut
         };
       } catch (e) { /* prova nästa marknad, annars faller vi tillbaka */ }
     }
     return null;
+  }
+
+  /* Klockslaget för senaste avslut, men BARA när det är från i dag. En tid utan
+     dag läses som "nyss", och det vore fel på en fredagskurs som visas på en
+     måndag. Tom sträng när vi inte vet: hellre inget än ett påstående. */
+  function avslutstid(iso, idag) {
+    if (!iso) return "";
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return "";
+    var nu = idag || new Date().toISOString().slice(0, 10);
+    if (d.toISOString().slice(0, 10) !== nu) return "";
+    try {
+      return d.toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Stockholm" });
+    } catch (e) { return ""; }
   }
 
   /* Etiketten bredvid dagsförändringen. Den ska följa talet den står bredvid:
@@ -120,7 +135,8 @@
     // Prislogiken följer med av samma skäl: den behöver inte heller klienten.
     window.AB = {
       ready: false, replayAffarer: replayAffarer,
-      farskKurs: farskKurs, dagsEtikett: dagsEtikett, LANDSORDNING: LANDSORDNING
+      farskKurs: farskKurs, dagsEtikett: dagsEtikett, avslutstid: avslutstid,
+      LANDSORDNING: LANDSORDNING
     };
     return;
   }
@@ -409,6 +425,7 @@
     replayAffarer: replayAffarer,
     farskKurs: farskKurs,
     dagsEtikett: dagsEtikett,
+    avslutstid: avslutstid,
     LANDSORDNING: LANDSORDNING,
     listAllDecisions: listAllDecisions,
     getUser: getUser,
