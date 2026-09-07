@@ -23,6 +23,7 @@ import { narreraBrev } from './narrera-brev.mjs';
 import { nyckelFinns } from './llm.mjs';
 import { byggBorsdata } from './borsdata.mjs';
 import { lasFlode, farskGrans, delaUppFlodet } from './mfn-flode.mjs';
+import { rakna } from './lasning.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const MODELL = process.env.MOTOR_MODELL || 'claude-haiku';
@@ -47,6 +48,11 @@ mkdirSync(p('./out/data'), { recursive: true });
 
 let totKostnad = 0, totNya = 0;
 const dagensPoster = [], lugna = [], insynsbortfall = [], bevakade = [];
+/* Vad vi GICK IGENOM per bolag, till brevets checked-talen. Skilt fran
+   dagensPoster, som ar vad som tog sig in i brevet: en lugn dag har manga
+   kontroller och noll poster, och bada talen behovs for att den dagen ska
+   ga att lita pa. Se motor/lasning.mjs. */
+const lasningar = {};
 
 /* Brevet ska handla om det som hänt sedan förra brevet, inget annat. Förra
    körningens tidpunkt sparas av state-kv när minnet lagts tillbaka i KV; utan
@@ -92,6 +98,7 @@ for (const bolag of konf.bolag) {
   for (const post of baraArkivera) arkiv[bolag.id][post.url] = post.datum || IDAG;
   const nya = rapportera.map(x => x.url);
   const datumFor = new Map(rapportera.map(x => [x.url, x.datum]));
+  lasningar[bolag.namn] = { flode: flode.length, insyn: 0, rapporter: 0 };
   console.log(`  flödet: ${flode.length} länkar, ${nya.length} nya att hämta` +
     (forstaGangen ? `, baslinje satt (${baraArkivera.length} arkiverade utan att rapporteras)`
       : baraArkivera.length ? `, ${baraArkivera.length} äldre än gränsen arkiverades tyst` : ''));
@@ -167,6 +174,7 @@ for (const bolag of konf.bolag) {
     arkiv[bolag.id][url] = post.datum;
     totNya++;
     if (post.typ !== 'ovrigt' && !post.fel && !post.dublett_av) dagensPoster.push({ bolag: bolag.namn, post });
+    if (post.typ === 'rapport' && !post.fel && !post.dublett_av) lasningar[bolag.namn].rapporter++;
   }
   // Vilka som är lugna avgörs efter hela varvet, inte här. Insyn och blankning
   // läggs till nedan, och den här raden räknade bara pressmeddelanden: brevet
@@ -197,6 +205,7 @@ for (const bolag of konf.bolag) {
     for (const t of flaggade) {
       dagensPoster.push({ bolag: bolag.namn, post: { typ: 'insyn', datum: t.pub, url: insyn.kalla || 'https://marknadssok.fi.se/publiceringsklient', rubrik: `Insynshandel: ${t.karaktar} av ${t.befattning || t.person}`, bevis: `${t.person} (${t.befattning}) ${t.karaktar.toLowerCase()} ${t.volym} st à ${t.pris} ${t.valuta || 'SEK'}, publicerat ${t.pub}` } });
     }
+    lasningar[bolag.namn].insyn = insyn.transaktioner.length;
     console.log(`  insyn: ${insyn.transaktioner.length} transaktioner 12 mån, ${flaggade.length} till brevet${senastSedd ? '' : ' (ingen baslinje, fönstret gäller)'}`);
   } catch (e) {
     // Ett bortfall här är inte kosmetiskt: insynshandeln är det brevet är
@@ -307,7 +316,6 @@ const faktaText = post => {
   return '';
 };
 const nr = Math.max(1, Math.round((new Date(datum + 'T12:00:00') - new Date('2026-07-07T12:00:00')) / 864e5) + 1);
-const isDok = t => ['rapport', 'kallelse', 'emission', 'avtal', 'forvarv'].includes(t);
 /* ETT BREV PER ANVANDARE.
    Dokumenten hamtas en gang per bolag, men brevet ar personligt: det handlar om
    DINA innehav och far aldrig namna nagon annans. Fram till 2026-08-30 byggdes
@@ -320,11 +328,11 @@ function brevForAgare(uid) {
   return {
     date: datum,
     nr,
-    checked: {
-      reports: mina.filter(dp => dp.post.typ === 'rapport').length,
-      filings: mina.filter(dp => isDok(dp.post.typ)).length,
-      insiders: mina.filter(dp => dp.post.typ === 'insyn').length,
-    },
+    // Vad vi gick igenom, inte vad som tog sig in. Raknade vi utfallet blev en
+    // lugn dag "Vi laste 0 rapporter, 0 pressmeddelanden och 0
+    // insynsanmalningar i natt", i samma brev som sa att floden och register
+    // hade lasts. Se motor/lasning.mjs.
+    checked: rakna(lasningar, minaBolag),
     poster: mina.map(({ bolag, post }) => ({
       bolag,
       typ: post.typ,

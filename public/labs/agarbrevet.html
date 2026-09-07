@@ -353,9 +353,10 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
   .brev-rail .kh-n{margin-left:auto;min-width:0;font-size:10px}
   .brev-rail .kh-types{flex-basis:100%;margin:3px 0 0 17px;font-size:9.5px}
 </style>
-<script>
+<script type="module">
 /* Av-mockad: brevet renderas ur en brief-payload (motor/vigilans/brief-build.mjs),
    samma slags data som tidslinjen. Inga hardkodade bolag. */
+import { brevLage, EXEMPEL_URL } from '/labs/brevlage.js';
 (function(){
   var METRIC={gross_margin:'Bruttomarginalen',revenue_growth:'Tillväxten',net_debt:'Nettoskulden',cash_runway:'Runway',dilution:'Utspädningen',roic:'ROIC',insider_sell:'Insiderförsäljningen'};
   var OP={below:'under',above:'över'};
@@ -388,13 +389,34 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
   }
   // Händelsebrevet ur motorn (nyheter, insyn, blankning), formen { poster[], lugna[] }.
   var TYPKLASS={rapport:'gold',forvarv:'gold',emission:'neg',kallelse:'gold',insyn:'neg',avvikelse:'neg',omvarld:'calm',avtal:'gold',ovrigt:'calm'};
-  function renderNyheter(b){
+  // Vad motorn gick igenom i natt. Bara det som faktiskt har ett tal namnges:
+  // raden lyder annars "Vi laste 0 rapporter, 0 pressmeddelanden och 0
+  // insynsanmalningar i natt", vilket ar precis den doda produkt en lugn dag
+  // inte ar. Talen kommer ur checked, se brevForAgare i motor/natt.mjs.
+  function lasrad(c){
+    var d=[];
+    if(c.reports) d.push(c.reports+(c.reports===1?' rapport':' rapporter'));
+    if(c.filings) d.push(c.filings+(c.filings===1?' pressmeddelande':' pressmeddelanden'));
+    if(c.insiders) d.push(c.insiders+(c.insiders===1?' insynsanmälan':' insynsanmälningar'));
+    if(!d.length) return 'Vi gick igenom bolagens pressflöden, insynsregistret och blankningsregistret i natt.';
+    var sist=d.pop();
+    return 'Vi gick igenom '+(d.length?d.join(', ')+' och '+sist:sist)+' i natt.';
+  }
+  function renderNyheter(b, alderDagar){
     var poster=b.poster||[], lugna=b.lugna||[], n=poster.length, c=b.checked||{};
-    document.getElementById('brev-eyebrow').textContent='Ägarbrevet · '+(b.date||'')+' · 07:30';
-    document.getElementById('brev-title').innerHTML = n
-      ? 'God morgon.<br>'+n+(n===1?' händelse':' händelser')+' i dina bolag i natt.'
-      : 'God morgon.<br>Inget nytt i dina bolag i dag.';
-    document.getElementById('brev-sub').textContent='Vi läste '+(c.reports||0)+' rapporter, '+(c.filings||0)+' pressmeddelanden och '+(c.insiders||0)+' insynsanmälningar i natt. '+(n?'Det här rörde dina bolag, resten var brus.':'Inga trådar korsades, allt låg still.');
+    // Ett brev som inte ar dagens far aldrig sagas "God morgon" och "i natt".
+    // Stannar nattjobbet svarar KV vidare med garden brev, och tystnaden ska da
+    // last som ett fel hos oss, inte som lugn i bolagen.
+    var gammalt = (alderDagar!=null && alderDagar>0);
+    document.getElementById('brev-eyebrow').textContent='Ägarbrevet · '+(b.date||'')+(gammalt?'':' · 07:30');
+    document.getElementById('brev-title').innerHTML = gammalt
+      ? 'Det här brevet är från '+esc(b.date||'')+'.<br>Något nyare finns inte.'
+      : (n
+        ? 'God morgon.<br>'+n+(n===1?' händelse':' händelser')+' i dina bolag i natt.'
+        : 'God morgon.<br>Inget nytt i dina bolag i dag.');
+    document.getElementById('brev-sub').textContent = gammalt
+      ? 'Motorn skriver ett brev varje morgon. Kommer det inget nytt är det ett fel hos oss, inte ett lugnt besked om dina bolag.'
+      : lasrad(c)+' '+(n?'Det här rörde dina bolag, resten var brus.':'Inga trådar korsades, allt låg still.');
     // Gruppera per bolag i den ordning de först dyker upp.
     var order=[], grouped={};
     poster.forEach(function(p){ if(!grouped[p.bolag]){grouped[p.bolag]=[];order.push(p.bolag);} grouped[p.bolag].push(p); });
@@ -453,15 +475,41 @@ document.addEventListener('keydown',function(e){if((e.metaKey||e.ctrlKey)&&e.key
     st.innerHTML = '<div class="brev-grid"><div class="brev-main">'+letter+'</div>'+
       '<aside class="brev-rail"><div class="rail-h">I korthet</div><div class="korthet">'+khHtml+'</div></aside></div>' + bakom;
   }
-  // Primärt: riktigt brev ur KV (/api/brev). Fallback: exempeldatan (vakt-formen).
-  fetch('/api/brev').then(function(r){return r.ok?r.json():null;}).then(function(b){
-    if(b && b.poster){ renderNyheter(b); return; }
-    return fetch('/labs/data/brev-exempel.json').then(function(r){return r.json();}).then(render);
-  }).catch(function(){
-    fetch('/labs/data/brev-exempel.json').then(function(r){return r.json();}).then(render).catch(function(){
-      var t=document.getElementById('brev-title'); if(t) t.textContent='Kunde inte ladda brevet.';
-    });
-  });
+  // Ett arligt besked i stallet for ett brev: utloggad, inget brev annu, fel hos
+  // oss. Sidan foll forut tyst tillbaka pa exempeldatan sa fort svaret inte var
+  // 200, sa en pilot med utgangen session fick en demo fran juli med pahittade
+  // bolag serverad som sitt eget morgonbrev. Vad vi visar avgors i
+  // /labs/brevlage.js, som gar att prova.
+  function visaMeddelande(m){
+    document.getElementById('brev-eyebrow').textContent='Ägarbrevet';
+    document.getElementById('brev-title').textContent=m.rubrik;
+    document.getElementById('brev-sub').textContent=m.text;
+    var summSec=document.querySelector('.summ'); if(summSec) summSec.style.display='none';
+    document.getElementById('brev-stories').innerHTML = m.lank
+      ? '<div class="brev-body"><p class="srcs"><a class="kurs" href="'+esc(m.lank.href)+'">'+esc(m.lank.text)+' →</a></p></div>'
+      : '';
+  }
+  var IDAG=new Date().toISOString().slice(0,10);
+  var VILL_EXEMPEL=/[?&]exempel=1(?![0-9])/.test(location.search);
+  function avgor(status, kropp){
+    var l=brevLage({ status:status, kropp:kropp, idag:IDAG, exempel:VILL_EXEMPEL });
+    if(l.sort==='brev'){ renderNyheter(l.brev, l.alderDagar); return; }
+    if(l.sort==='exempel'){
+      // Exempeldatan finns kvar for demon, men den ska SYNAS att den ar ett exempel.
+      fetch(EXEMPEL_URL).then(function(r){return r.json();}).then(function(d){
+        render(d);
+        document.getElementById('brev-eyebrow').textContent='Ägarbrevet · exempel · '+(d.date||'');
+      }).catch(function(){ visaMeddelande(brevLage({ status:0 })); });
+      return;
+    }
+    visaMeddelande(l);
+  }
+  fetch('/api/brev')
+    .then(function(r){
+      return r.json().catch(function(){ return null; }).then(function(k){ return { status:r.status, kropp:k }; });
+    })
+    .then(function(x){ avgor(x.status, x.kropp); })
+    .catch(function(){ avgor(0, null); });
 })();
 </script>
 
