@@ -73,9 +73,22 @@ export function renderDagsbrev({ datum, poster, lugna, borsdata = [] }) {
     a: 'color:#8A2E26;display:inline-block;padding:6px 2px;min-height:20px',
     td: 'font-size:12px;color:#5C544A;padding:6px 8px 6px 0;border-bottom:1px solid #EFE9DA;line-height:1.45;vertical-align:top'
   };
+  /* Varje post bär sitt eget publiceringsdatum i etikettraden.
+     Mastheaden var daterad, men de enskilda posterna var det inte, samtidigt
+     som ingressen påstod att allt var "i natt". Det stämde inte: ett rapportdatum
+     tre veckor bort såg ut som en nyhet, och ett pressmeddelande motorn först nu
+     upptäckte gjorde det också. Datumet gör brevet kontrollerbart post för post,
+     precis som kalenderblocket redan är. */
+  const kortDatum = (d) => {
+    const s = String(d || '').slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return '';
+    const dt = new Date(s + 'T12:00:00');
+    return dt.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' }).replace(/\.$/, '');
+  };
+
   const sektioner = poster.map(({ bolag, post }) => `
   <div style="${s.sek}">
-    <p style="${s.et}">${bolag} · ${TYPNAMN[post.typ] || post.typ}</p>
+    <p style="${s.et}">${bolag} · ${TYPNAMN[post.typ] || post.typ}${kortDatum(post.datum) ? ` · ${kortDatum(post.datum)}` : ''}</p>
     <h2 style="${s.h2}">${(post.rubrik || '').split('>').pop().trim()}</h2>
     <p style="${s.p}">${radFakta(post)}</p>
     <p style="${s.p}"><a style="${s.a}" href="${post.url}">Källdokumentet →</a>${LEKTIONSLANK[post.typ] ? ` · <a style="${s.a}" href="${LEKTIONSLANK[post.typ].url}">Fördjupning i kursen →</a>` : ''}</p>
@@ -90,7 +103,7 @@ export function renderDagsbrev({ datum, poster, lugna, borsdata = [] }) {
       <div style="font-family:monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(251,247,238,.85)">№ ${nr} · ${veckodag} ${datumtext}</div>
       <div style="font-weight:700;font-size:26px;color:#FBF7EE;margin-top:2px">Ägarbrevet</div>
     </div>
-    <p style="font-size:13px;color:#5C544A;margin:10px 0 18px">${poster.length} ${poster.length === 1 ? 'sak' : 'saker'} i dina bolag i natt. Varje siffra bär citat ur källdokumentet.</p>
+    <p style="font-size:13px;color:#5C544A;margin:10px 0 18px">${poster.length} ${poster.length === 1 ? 'sak' : 'saker'} i dina bolag. Varje post står med sitt publiceringsdatum, och varje siffra bär citat ur källdokumentet.</p>
     ${sektioner || `<div style="${s.sek}"><p style="${s.p}">Inget nytt i något bevakat bolag. Det är ett besked, inte ett fel.</p></div>`}
     ${borsdata.length ? `<div style="${s.sek};border-top:2px solid #9A6E1C">
       <p style="${s.et}">Kalendern</p>
