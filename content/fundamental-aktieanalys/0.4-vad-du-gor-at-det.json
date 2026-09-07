@@ -1,0 +1,83 @@
+{
+  "kapitel": 0,
+  "lektion": "0.4",
+  "titel": "Vad du gör åt det",
+  "niva": "Nybörjare",
+  "tid_min": 6,
+  "mal": "Efter lektionen kan eleven namnge fyra konkreta motdrag mot de vanligaste misstagen, och vet att vart och ett av dem behandlas senare i kursen.",
+  "steg": [
+    {
+      "typ": "intro",
+      "kicker": "INNAN DU BÖRJAR",
+      "titel": "Vad du gör åt det",
+      "ingress": "Du vet nu hur oddsen ser ut och varför de flesta misslyckas. Det vore magert att lämna dig där. Här är svaret, och det är fyra vanor snarare än en talang."
+    },
+    {
+      "typ": "concept",
+      "kicker": "FYRA MOTDRAG",
+      "titel": "Ett svar på varje mönster",
+      "brodtext": [
+        "Skriv caset innan du köper. Det är motdraget mot överhandeln. En eller två meningar om varför du äger bolaget, skrivna innan pengarna är inne. Det gör köpet långsammare, vilket är hela poängen, och det ger dig något att pröva mot när det svänger. Ett köp du inte kan motivera skriftligt är ett köp du inte har tänkt färdigt.",
+        "Låt storleken bära ditt tvivel. Det är motdraget mot övertron. Hur mycket du äger är där du säger hur säker du är. Ett innehav som skulle göra riktigt ont om det halverades är för stort för ett case du är osäker på. Storleken är det enda stället där ödmjukhet blir mätbar.",
+        "Räkna kostnaden per år, inte per affär. Det är motdraget mot avgifterna. Varje enskild avgift ser liten ut, årets summa gör det inte. Detsamma gäller skillnaden mellan köp och säljkurs, som du betalar varje gång du byter fot.",
+        "Bestäm säljregeln medan du är lugn. Det är motdraget mot beteendegapet. Skriv ner vad som skulle få dig att sälja, alltså vilka fakta som måste ändras, innan du äger något. Ett beslut fattat i lugn är det enda du kan lita på när det inte är lugnt."
+      ],
+      "forklaring": "Lägg märke till att inget av de fyra kräver att du blir bättre på att gissa. De handlar om att bestämma i förväg, medan det fortfarande är billigt att ändra sig."
+    },
+    {
+      "typ": "reading",
+      "kicker": "KÄRNAN",
+      "lead": "Det som skiljer de här fyra från goda föresatser är att de alla är skrivna i förväg, utanför huvudet.",
+      "highlight": "skrivna i förväg",
+      "brodtext": [
+        "Minnet är partiskt i efterhand. Har kursen gått upp minns du att du var säker, har den gått ner minns du att du tvekade. En anteckning från innan gör dig ärlig mot dig själv på ett sätt som minnet inte klarar, och den kostar en minut.",
+        "Därför återkommer de fyra genom hela kursen, inte som pekpinnar utan som hantverk. Caset byggs i kapitlen om att förstå bolaget och värdera det. Storleken och säljregeln behandlas i kapitlen om risk, psykologi och att äga över tid. Det du precis läst är alltså inte en checklista vid sidan om kursen, det är kursens innehållsförteckning sedd från andra hållet."
+      ],
+      "takeaway": "Fyra beslut, alla fattade i förväg och nedskrivna. Resten av kursen är hur du fattar dem väl."
+    },
+    {
+      "typ": "quiz",
+      "fragor": [
+        {
+          "typ": "single",
+          "fraga": "Vad är den gemensamma nämnaren för de fyra motdragen?",
+          "alternativ": [
+            "De gör dig bättre på att förutsäga kursen",
+            "De innebär att du bestämmer i förväg och skriver ner det",
+            "De minskar antalet bolag du får äga"
+          ],
+          "ratt": [
+            1
+          ],
+          "forklaring": "Inget av dem handlar om att gissa bättre. Alla handlar om att bestämma medan det är billigt att ändra sig."
+        },
+        {
+          "typ": "single",
+          "fraga": "Vad säger positionsstorleken om dig?",
+          "alternativ": [
+            "Hur säker du är på caset",
+            "Hur mycket du gillar bolaget",
+            "Hur länge du tänkt äga det"
+          ],
+          "ratt": [
+            0
+          ],
+          "forklaring": "Storleken är där tvivlet blir mätbart. Ett innehav som skulle göra riktigt ont om det halverades är för stort för ett osäkert case."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför ska säljregeln bestämmas innan du äger något?",
+          "alternativ": [
+            "För att den då hinner godkännas av någon annan",
+            "För att ett beslut fattat i lugn är det enda som håller när det inte är lugnt",
+            "För att den annars blir skattemässigt ogiltig"
+          ],
+          "ratt": [
+            1
+          ],
+          "forklaring": "Beteendegapet uppstår i stunden. Regeln måste därför finnas före stunden, och den ska hänga på fakta som ändrats, inte på att kursen fallit."
+        }
+      ]
+    }
+  ]
+}
