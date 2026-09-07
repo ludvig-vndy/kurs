@@ -42,14 +42,14 @@
     {
       "typ": "concept",
       "kicker": "VARFÖR SÅ FÅ",
-      "titel": "Fondernas skäl är inte dina",
+      "titel": "Två skäl du slipper, ett du delar",
       "brodtext": [
-        "Först en avgränsning, för de två blandas ihop hela tiden. Siffran ovan mäter fonder mot sitt index. Hur fondens andelsägare bär sig åt påverkar inte den siffran alls: fondens avkastning är densamma oavsett när du och jag köper in oss. Frågan här är alltså varför förvaltarna missar, inte varför du gör det. Den andra frågan är minst lika viktig och kommer i nästa lektion.",
+        "Först en avgränsning, för två saker blandas ihop hela tiden. Siffran ovan mäter fonder mot sitt index. När du och jag köper in oss påverkar inte den siffran alls: fondens avkastning är densamma oavsett vår tajming. Frågan här är alltså varför förvaltarna missar. Varför du missar är en annan fråga, och den kommer i nästa lektion.",
         "Avgiften gäller alla. En aktivt förvaltad fond tar betalt varje år oavsett utfall. Överavkastningen är osäker, kostnaden är det inte, och över femton år ska den skillnaden tjänas in på nytt varje enskilt år.",
-        "Aritmetiken gäller gruppen, inte varje fond. Alla aktiva förvaltare äger tillsammans i princip hela marknaden, så före kostnader måste den genomsnittliga aktivt förvaltade kronan ge ungefär marknadens avkastning. Efter kostnader mindre. Det hindrar inte enskilda förvaltare från att slå index, ibland länge och skickligt. Det som är omöjligt är att de gör det allihop samtidigt.",
-        "Skåpindexering gäller vissa. En del fonder som kallas aktiva ligger nära sitt jämförelseindex i innehav men tar aktivt betalt, och då är utfallet nästan givet på förhand. Hur många det rör sig om varierar mellan marknader och mätningar."
+        "Aritmetiken gäller gruppen, inte varje fond. Alla aktiva förvaltare äger tillsammans i princip hela marknaden, så före kostnader måste den genomsnittliga aktivt förvaltade kronan ge ungefär marknadens avkastning. Efter kostnader mindre. Det hindrar inte enskilda förvaltare från att slå index, ibland länge och skickligt. Det omöjliga är att alla gör det samtidigt.",
+        "Och så det tredje, som du faktiskt delar med dem: handlandet. Morningstar granskade de hundra största aktiva amerikanska aktiefonderna och fann att deras innehav sammantaget slog marknaden. Fryser man fondernas portföljer och låter dem ligga gav de 14,3 procent per år, mot 13,4 som förvaltarna faktiskt fick. Nära en hel procentenhet per år försvann i handeln efter köpet, alltså mer än den genomsnittliga avgiften på 0,59 procent. En studie i Journal of Finance pekar på var det går fel: förvaltarnas köp slår både index och slumpen, men deras säljbeslut är sämre än att sälja slumpmässigt."
       ],
-      "forklaring": "En sak till om siffran, som handlar om mätningen snarare än om förvaltarna: fonder som går dåligt läggs ner eller slås ihop med andra. Räknar man bara dem som finns kvar ser det bättre ut än det var, och SPIVA räknar även de nedlagda. Det är därför andelen blir så låg, och det är ett tecken på att mätningen är ärlig snarare än på att förvaltarna är obegåvade."
+      "forklaring": "Två fotnoter. Vissa fonder som kallas aktiva ligger nära sitt index i innehav men tar aktivt betalt, och då är utfallet nästan givet på förhand, men det gäller en del och inte alla. Och en sak som handlar om mätningen snarare än om förvaltarna: fonder som går dåligt läggs ner eller slås ihop, och räknar man bara dem som finns kvar ser det bättre ut än det var. SPIVA räknar även de nedlagda. Lägg framför allt märke till det tredje skälet ovan. Proffsen har hela team, all data och inga känslor investerade i ditt sparkonto, och ändå kostar deras eget handlande dem mer än avgiften. Det är därför resten av kursen handlar lika mycket om hur du bär dig åt som om vad du äger."
     },
     {
       "typ": "quiz",
@@ -105,6 +105,19 @@
             1
           ],
           "forklaring": "Det är aritmetik, inte omdöme. Äger de aktiva tillsammans marknaden kan de inte som grupp slå den, och avgiften dras sedan av. Enskilda förvaltare kan mycket väl slå index, det är gruppen som inte kan."
+        },
+        {
+          "typ": "single",
+          "fraga": "Morningstar frös de hundra största aktiva fondernas innehav och lät dem ligga. Vad hände?",
+          "alternativ": [
+            "De frysta portföljerna gick sämre, förvaltarnas handel tillförde värde",
+            "De frysta portföljerna gick bättre än vad förvaltarna faktiskt fick, alltså kostade handeln efter köpet mer än den gav",
+            "Det blev exakt samma resultat, handeln spelade ingen roll"
+          ],
+          "ratt": [
+            1
+          ],
+          "forklaring": "Innehaven var rätt valda, det var vad som gjordes efter köpet som drog ner. Nära en procentenhet per år, mer än den genomsnittliga avgiften. Samma misstag som kursen ska lära dig undvika, begånget av proffs."
         }
       ]
     }
