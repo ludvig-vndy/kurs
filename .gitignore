@@ -41,3 +41,6 @@ rost-motparten.md
 
 # Rå-dump från bolagshämtaren (scratch)
 sto.json
+
+# Wrangler/miniflare lokal dev-state (KV-sqlite m.m.), aldrig i repot
+.wrangler/
