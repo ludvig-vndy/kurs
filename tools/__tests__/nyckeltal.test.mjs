@@ -77,10 +77,26 @@ test('harled raknar burn rate ur tva pa varandra foljande kvartal', () => {
   assert.equal(h.till, 'Q2 2026');
 });
 
-test('harled hoppar over perioder som inte foljer pa varandra', () => {
+/* Ett glapp pa fyra kvartal ar INTE ett kvartalssteg, och far darfor aldrig bli
+   en burn rate: det vore att dela ett ars forbrukning pa tre manader. Daremot ar
+   det en giltig arsjamforelse, och det ar den rapporterna sjalva gor i
+   parentesen. Skillnaden mellan de tva ar hela poangen med sort-faltet. */
+test('fyra kvartals glapp blir en arsjamforelse, aldrig en burn rate', () => {
   const glesa = [{ namn: 'X', dokument: [
     { url: 'a', rubrik: 'delårsrapport för det andra kvartalet 2026', bitar: ['Likvida medel 100,0 MSEK'] },
     { url: 'b', rubrik: 'delårsrapport för det andra kvartalet 2025', bitar: ['Likvida medel 300,0 MSEK'] },
+  ] }];
+  const h = harled(extraheraNyckeltal(glesa));
+  assert.equal(h.length, 1);
+  assert.equal(h[0].sort, 'aroverar');
+  assert.equal(h[0].forandring, -200);
+  assert.equal(h[0].perManad, undefined, 'ett ars glapp far inte bli en manadstakt');
+});
+
+test('ett glapp som varken ar ett kvartal eller ett ar ger ingenting', () => {
+  const glesa = [{ namn: 'X', dokument: [
+    { url: 'a', rubrik: 'delårsrapport för det fjärde kvartalet 2026', bitar: ['Likvida medel 100,0 MSEK'] },
+    { url: 'b', rubrik: 'delårsrapport för det första kvartalet 2026', bitar: ['Likvida medel 300,0 MSEK'] },
   ] }];
   assert.equal(harled(extraheraNyckeltal(glesa)).length, 0);
 });
