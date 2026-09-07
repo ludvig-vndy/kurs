@@ -103,6 +103,19 @@ test('valjDokument hoppar over inbjudan till presentation', () => {
   assert.ok(!v.some((x) => /inbjudan/.test(x.url)), 'logistikdokument ska inte hamtas');
 });
 
+/* Slugarna bar bolagsnamnet forst, sa ett ankare fore ordet gor att filtret
+   aldrig slar till. Forsta versionen hade det, och en inbjudan tog da en plats
+   i utdraget fran sjalva rapporten. */
+test('valjDokument fangar inbjudan aven nar bolagsnamnet star forst i sluggen', () => {
+  const flode = [
+    { datum: '2022-05-01', url: 'https://mfn.se/beq/a/unibap/unibap-inbjudan-till-presentation-av-q1-aaa', rubrik: 'Unibap: Inbjudan till presentation av Q1' },
+    { datum: '2022-05-02', url: 'https://mfn.se/beq/a/unibap/unibap-delarsrapport-q1-2022-bbb', rubrik: 'Delårsrapport Q1 2022' },
+  ];
+  const v = valjDokument(flode, { fran: '2022-01-01', till: '2022-12-31' }, [], 10);
+  assert.equal(v.length, 1);
+  assert.match(v[0].url, /delarsrapport/);
+});
+
 test('valjDokument hoppar over det arkivet redan har', () => {
   const idx = lasIndex(FLODE);
   const kanda = new Set([idx[4].url]);

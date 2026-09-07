@@ -34,7 +34,10 @@ const BITSTORLEK = 1200;
 // Logistikdokument. En inbjudan till ett presentationssamtal sager ingenting om
 // bolaget men matchar "rapport" och "kvartal", och tog darfor plats fran sjalva
 // rapporten. Samma lista som TUNN i _kallgrind.js, har som urvalsfilter.
-const TUNN = /(^|\/)(inbjudan|invitation|kallelse-till-present|notice-of-present)/i;
+// Ankarlost med flit. Forsta versionen krav (^|\/) fore ordet, men slugarna
+// bar bolagsnamnet forst ("unibap-inbjudan-till-presentation-av-q3"), sa
+// filtret slog aldrig till och en inbjudan tog en plats i utdraget.
+const TUNN = /(inbjudan|invitation|kallelse-till-present|notice-of-present|presentation-av-(delars|kvartals|bokslut))/i;
 const RAPPORT = /(delarsrapport|delårsrapport|bokslutskommunike|bokslutskommuniké|kvartalsrapport|arsredovisning|årsredovisning|interim-report|year-end-report|quarterly-report|annual-report)/i;
 
 /** Entitetsfloedet for ett bolag, harlett ur ett av dess dokument-URL:er.
@@ -124,10 +127,16 @@ export function valjDokument(index, period, termer, max = 4, kanda = new Set()) 
     if (!iPerioden(post.datum, period)) continue;
     const slug = post.url.split('/').pop().toLowerCase();
     if (TUNN.test(slug)) continue;
-    let poang = RAPPORT.test(slug) ? 10 : 0;
+    // Basvikt 1 at allt som inte ar logistik. Utan den foll bolag som
+    // rubriksatter sina rapporter redaktionellt helt bort: Axfoods Q2 2026
+    // heter "Starkt narvaro och positiv resultatutveckling" och innehaller
+    // varken ordet delarsrapport eller nagon av fragans termer, trots att
+    // siffrorna star i texten. Rapporter rankas anda langt over, sa basvikten
+    // andrar bara vad som hamtas nar inget battre finns.
+    let poang = 1 + (RAPPORT.test(slug) ? 10 : 0);
     const text = (slug + ' ' + String(post.rubrik || '')).toLowerCase();
     for (const term of t) if (text.includes(term)) poang += term.length;
-    if (poang > 0) kandidater.push({ poang, post });
+    kandidater.push({ poang, post });
   }
   // Hogst poang forst, och vid lika poang det nyaste.
   kandidater.sort((a, b) => b.poang - a.poang || String(b.post.datum).localeCompare(String(a.post.datum)));
