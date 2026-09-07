@@ -42,14 +42,14 @@
     {
       "typ": "concept",
       "kicker": "VARFÖR SÅ FÅ",
-      "titel": "Det handlar inte om att de är dåliga",
+      "titel": "Fondernas skäl är inte dina",
       "brodtext": [
-        "Avgiften är det enda säkra. En aktivt förvaltad fond tar betalt varje år oavsett utfall. Överavkastningen är osäker, kostnaden är det inte, och över femton år ska den skillnaden tjänas in på nytt varje enskilt år.",
-        "Sedan kommer aritmetiken, och den är obeveklig. Alla aktiva förvaltare äger tillsammans i princip hela marknaden. Före kostnader måste därför den genomsnittliga aktivt förvaltade kronan ge ungefär marknadens avkastning, för den är marknaden. Efter kostnader måste den ge mindre. Det följer av räkningen, inte av att förvaltarna skulle vara obegåvade.",
-        "De som försvinner räknas också. Fonder som går dåligt läggs ner eller slås ihop med andra, och tittar man bara på dem som finns kvar ser bilden bättre ut än den var. SPIVA räknar även de nedlagda, och det är en del av varför andelen blir så låg.",
-        "Till sist är en del index i förklädnad. Vissa fonder som kallas aktiva ligger nära sitt jämförelseindex i innehav men tar aktivt betalt. Då är utfallet nästan givet på förhand: ungefär index, minus avgiften."
+        "Först en avgränsning, för de två blandas ihop hela tiden. Siffran ovan mäter fonder mot sitt index. Hur fondens andelsägare bär sig åt påverkar inte den siffran alls: fondens avkastning är densamma oavsett när du och jag köper in oss. Frågan här är alltså varför förvaltarna missar, inte varför du gör det. Den andra frågan är minst lika viktig och kommer i nästa lektion.",
+        "Avgiften gäller alla. En aktivt förvaltad fond tar betalt varje år oavsett utfall. Överavkastningen är osäker, kostnaden är det inte, och över femton år ska den skillnaden tjänas in på nytt varje enskilt år.",
+        "Aritmetiken gäller gruppen, inte varje fond. Alla aktiva förvaltare äger tillsammans i princip hela marknaden, så före kostnader måste den genomsnittliga aktivt förvaltade kronan ge ungefär marknadens avkastning. Efter kostnader mindre. Det hindrar inte enskilda förvaltare från att slå index, ibland länge och skickligt. Det som är omöjligt är att de gör det allihop samtidigt.",
+        "Skåpindexering gäller vissa. En del fonder som kallas aktiva ligger nära sitt jämförelseindex i innehav men tar aktivt betalt, och då är utfallet nästan givet på förhand. Hur många det rör sig om varierar mellan marknader och mätningar."
       ],
-      "forklaring": "Lägg märke till att inget av de fyra handlar om okunskap. De är strukturella, och de gäller proffsen. Dina egna skäl att missa är andra, och dem tar vi i nästa lektion."
+      "forklaring": "En sak till om siffran, som handlar om mätningen snarare än om förvaltarna: fonder som går dåligt läggs ner eller slås ihop med andra. Räknar man bara dem som finns kvar ser det bättre ut än det var, och SPIVA räknar även de nedlagda. Det är därför andelen blir så låg, och det är ett tecken på att mätningen är ärlig snarare än på att förvaltarna är obegåvade."
     },
     {
       "typ": "quiz",
@@ -104,7 +104,7 @@
           "ratt": [
             1
           ],
-          "forklaring": "Det är aritmetik, inte omdöme. Ägar de aktiva tillsammans marknaden kan de som grupp inte slå den, och avgiften dras sedan av."
+          "forklaring": "Det är aritmetik, inte omdöme. Äger de aktiva tillsammans marknaden kan de inte som grupp slå den, och avgiften dras sedan av. Enskilda förvaltare kan mycket väl slå index, det är gruppen som inte kan."
         }
       ]
     }

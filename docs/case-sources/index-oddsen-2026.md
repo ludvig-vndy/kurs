@@ -16,6 +16,14 @@ Underlag för Kapitel 0 ("Innan du börjar: oddsen") i Fokus-kursen. Alla tal ä
 
 ## Att notera / lokalisering
 
+- **HALL ISAR FONDERNA OCH SPARAREN. Det har ar den vanligaste felläsningen, och en ämneskunnig pilot gjorde den direkt vid granskning av 0.1 (2026-09-07).** De tre siffrorna ovan mäter tre olika populationer:
+  - SPIVA mäter **fonder mot index**. Andelsägarnas beteende påverkar inte den siffran: fondens avkastning är densamma oavsett när någon köper in sig. Det som driver den är avgiften och Sharpes aritmetik (aktiva förvaltare äger tillsammans marknaden, så genomsnittskronan kan inte slå den före kostnader och måste ligga under efter).
+  - Barber och Odean mäter **aktiva privatspararens egna affärer**. Där är beteende och kostnader hela förklaringen.
+  - Mind the Gap mäter **spararens tajming mot sin egen fond**. Rent beteende, cirka 1,1 till 1,7 procentenheter per år.
+  
+  Påståendet "det beror på mänskliga beteenden" är alltså rätt för de två sista och fel för den första. Ligger siffrorna nära varandra i en text (89 procent, 8 av 10, över 90 procent) läses de lätt som tre mätningar av samma sak. Lektion 0.1 skriver därför ut avgränsningen explicit innan de strukturella skälen tas upp.
+- **Ingen verifierad källa finns för ett tal i stil med "90 procent av fondernas underprestation beror på beteende".** Ett sådant påstående får inte in i kursen utan källa i det här registret. Dalbars QAIB citeras ofta för stora beteendetal men är metodologiskt omtvistad och mäter dessutom spararen, inte förvaltaren.
+
 - SPIVA Europe (ovan) täcker nordiska fonder och är den lokaliserade motsvarigheten till SPIVA US. Använd den för svensk publik.
 - **Svensk hushållsdata, hantera med nyans:** Calvet, Campbell & Sodini, "Down or Out" (Journal of Political Economy 2007), på svenska hushåll, handlar om välfärdskostnaden av **underdiversifiering och icke-deltagande**, INTE om att slå index. Studien finner faktiskt att de flesta svenska hushåll klarar sig hyfsat via internationell diversifiering. Använd den alltså inte som stöd för "få slår index"; det vore en felläsning. Nämns här enbart för att vi inte ska överdriva från den.
 - Övriga tal (Barber-Odean Taiwan, Morningstar US) är internationella men mekanismen är universell; lektionerna attribuerar tydligt till respektive studie.
