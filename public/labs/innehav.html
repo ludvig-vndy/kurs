@@ -166,7 +166,7 @@
   "use strict";
 
   var HID = new URLSearchParams(location.search).get("id");
-  var holding = null, trades = [], side = "kop", PRICE = null, PRICE_DATE = null, HISTORY = null;
+  var holding = null, trades = [], side = "kop", PRICE = null, PRICE_DATE = null, LIVE_DATE = null, HISTORY = null;
   var RANGES = [{v:"6mo",lbl:"6M"},{v:"1y",lbl:"1Å"},{v:"5y",lbl:"5Å"}];
   var RANGE = "1y", HCACHE = {};
   var TES = null;   // { why, updated_at } eller null
@@ -232,18 +232,44 @@
 
   function currentPrice(){ return PRICE && PRICE.p!=null ? Number(PRICE.p) : null; }
 
+  /* Skriver over snapshotens pris med det farska ur /api/kurshistorik.
+     Snapshoten bidrar bara med IDENTITET, alltsa ticker och marknad, aldrig med
+     talet: companies.json ar en committad fil som ingen uppdaterar, och dess
+     p/ch var nio dagar gamla den 7 september 2026. Dina bolag gick over till
+     den har vagen den 31 augusti, den har sidan folde aldrig med, och darfor
+     visade de tva sidorna olika kurs for samma innehav.
+
+     Faller anropet star snapshotens tal kvar och dagsEtikett sager vilket datum
+     de ar fran. Ett gammalt tal med ratt datum ar arligt, ett gammalt tal som
+     utger sig for att vara dagens ar det inte.
+
+     Innehavets egen marknad gar fore snapshotens: det ar den kolumn migrationen
+     20260902170000_innehav-land lade till, och den finns just for att TSLA pa
+     tva borser inte ska kunna bli fel bolag. */
+  function farskaPa(){
+    var t = (holding && holding.ticker) || (PRICE && PRICE.t) || null;
+    var c = (holding && holding.land) || (PRICE && PRICE.c) || null;
+    if(!t || !window.AB.farskKurs) return Promise.resolve(false);
+    return window.AB.farskKurs(t, c).then(function(f){
+      if(!f) return false;
+      // Behall snapshotens ovriga falt (namn m.m.), byt bara ut talen.
+      PRICE = Object.assign({}, PRICE || {}, f);
+      LIVE_DATE = f.d;
+      return true;
+    }).catch(function(){ return false; });
+  }
+
   // Snapshoten byggs inte varje dag, sa "i dag" ar oftast en losning. Sivers stod
   // som -24,45 % "i dag" den 31 augusti: det var rorelsen den 29:e, dagen
   // snapshoten togs. Sidan sa alltsa bade "Kurser per 2026-08-29" och "i dag" om
   // samma tal. Dagsforandringen far bara heta "i dag" nar den faktiskt ar fran i
   // dag, annars star datumet dar.
+  //
+  // Sjalva etiketten bor i window.AB, delad med Dina bolag. Den har fanns i tva
+  // kopior, och bara den ena fick veta att kurserna hamtas live: den har sidan
+  // stampade snapshotens datum bredvid ett tal som kom nagon annanstans ifran.
   function dagsEtikett(){
-    if(!PRICE_DATE) return "";
-    var i_dag = new Date().toISOString().slice(0,10);
-    if(PRICE_DATE === i_dag) return "i dag";
-    var M = ["jan","feb","mars","april","maj","juni","juli","aug","sep","okt","nov","dec"];
-    var d = PRICE_DATE.split("-");
-    return d.length===3 ? (Number(d[2])+" "+M[Number(d[1])-1]) : PRICE_DATE;
+    return window.AB.dagsEtikett(LIVE_DATE, PRICE_DATE);
   }
 
   // Riktig daglig kurshistorik via vår Cloudflare-funktion (Yahoo server-side).
@@ -659,6 +685,8 @@
       return Promise.all([ window.AB.listDecisions(HID), loadPrice(h), window.AB.getThesis(HID).catch(function(){ return null; }) ]);
     }).then(function(res){
       trades=res[0]||[]; PRICE=res[1]; TES=res[2];
+      return farskaPa();           // live-kurs FÖRE första ritningen
+    }).then(function(){
       render();                    // rita direkt med kurs + affärer
       return loadHistory();        // hämta historiken och rita om när den är klar
     }).then(function(h){

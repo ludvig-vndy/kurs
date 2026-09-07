@@ -54,11 +54,74 @@
     };
   }
 
+  /* ── Delad prislogik ──────────────────────────────────────────────────────
+     Ligger före supabase-kontrollen med flit: den pratar bara med vår egen
+     /api/kurshistorik och behöver varken klienten eller en session.
+
+     VARFÖR DEN ÄR DELAD. companies.json är en committad statisk fil som ingen
+     uppdaterar. Dina bolag slutade lita på dess p/ch den 31 augusti 2026, men
+     innehavssidan gjorde det aldrig, och visade därför kurser från den 29:e i
+     nio dagar medan listan bredvid visade dagens. Två kopior av samma logik
+     driver isär, och det märks först när de säger olika saker om samma
+     innehav. Ett pris ska hämtas på ETT ställe, precis som ett pengabelopp
+     räknas på ett ställe i replayAffarer. */
+  var LANDSORDNING = ["SE", "FI", "NO", "DK", "IS", "US"];
+
+  /* Färsk kurs för en ticker, ur samma endpoint som graferna ritas från.
+     Returnerar { t, c, p, ch, d, v } eller null.
+
+     `land` först när vi känner det: utan det provas marknaderna i tur och
+     ordning, vilket både är långsamt och kan hitta ett annat bolag med samma
+     bokstäver på en annan börs. */
+  async function farskKurs(ticker, land) {
+    var t = String(ticker || "").toUpperCase().trim();
+    if (!t) return null;
+    var lander = land ? [land] : LANDSORDNING;
+    for (var i = 0; i < lander.length; i++) {
+      try {
+        var r = await fetch("/api/kurshistorik?t=" + encodeURIComponent(t) + "&c=" + lander[i] + "&range=5d");
+        if (!r.ok) continue;
+        var d = await r.json();
+        var pkt = d && d.punkter && d.punkter.length ? d.punkter[d.punkter.length - 1] : null;
+        if (!pkt) continue;
+        // Dagsförändringen räknas ur de två sista stängningarna. Finns bara en
+        // punkt blir den null: hellre ingen procent än en påhittad.
+        var forra = d.punkter.length > 1 ? d.punkter[d.punkter.length - 2][1] : null;
+        return {
+          t: t, c: lander[i], p: pkt[1], v: d.valuta || null,
+          ch: forra ? ((pkt[1] - forra) / forra) * 100 : null,
+          d: pkt[0]                       // handelsdagen talet faktiskt gäller
+        };
+      } catch (e) { /* prova nästa marknad, annars faller vi tillbaka */ }
+    }
+    return null;
+  }
+
+  /* Etiketten bredvid dagsförändringen. Den ska följa talet den står bredvid:
+     live-datumet gäller, snapshotens datum är reserv.
+
+     Utan datum blir det tomt, aldrig "i dag". Att kalla något "i dag" när vi
+     inte vet vilken dag talet är från är precis det felet den här funktionen
+     finns för att förhindra. */
+  var MANADER = ["jan", "feb", "mars", "april", "maj", "juni", "juli", "aug", "sep", "okt", "nov", "dec"];
+  function dagsEtikett(liveDatum, snapshotDatum, idag) {
+    var D = liveDatum || snapshotDatum;
+    if (!D) return "";
+    var nu = idag || new Date().toISOString().slice(0, 10);
+    if (D === nu) return "i dag";
+    var d = String(D).split("-");
+    return d.length === 3 ? (Number(d[2]) + " " + MANADER[Number(d[1]) - 1]) : String(D);
+  }
+
   if (!window.supabase || !window.supabase.createClient) {
     console.error("[AB] supabase-js laddades inte. Kontrollera CDN-taggen ovanför denna fil.");
     // Ren uträkning utan nätverk exponeras ändå: den fungerar på data sidan
     // redan har, och ska inte falla bort för att klienten inte kunde laddas.
-    window.AB = { ready: false, replayAffarer: replayAffarer };
+    // Prislogiken följer med av samma skäl: den behöver inte heller klienten.
+    window.AB = {
+      ready: false, replayAffarer: replayAffarer,
+      farskKurs: farskKurs, dagsEtikett: dagsEtikett, LANDSORDNING: LANDSORDNING
+    };
     return;
   }
 
@@ -344,6 +407,9 @@
     sb: sb,
     getSession: getSession,
     replayAffarer: replayAffarer,
+    farskKurs: farskKurs,
+    dagsEtikett: dagsEtikett,
+    LANDSORDNING: LANDSORDNING,
     listAllDecisions: listAllDecisions,
     getUser: getUser,
     sendMagicLink: sendMagicLink,

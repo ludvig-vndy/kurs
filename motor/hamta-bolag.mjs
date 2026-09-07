@@ -75,11 +75,13 @@ export async function hamtaBolag() {
       const key = cc + ':' + ticker;
       if (seen.has(key)) continue;
       seen.add(key);
-      all.push({
-        n: name, t: ticker, m: market, c: cc,
-        p: typeof row.price === 'number' ? row.price : null,   // senaste kurs (snapshot)
-        ch: typeof row.change === 'number' ? row.change : null, // dagens förändring i procent
-      });
+      // BARA IDENTITET. Filen bar tidigare senaste kurs (p) och dagens
+      // forandring (ch), men den ar en committad statisk fil som ingen kor om:
+      // den 7 september 2026 visade den fortfarande kurser fran den 29 augusti.
+      // Kurserna hamtas numera live ur /api/kurshistorik av bade Dina bolag och
+      // innehavssidan, sa talen har fyllde ingen funktion utom att kunna bli
+      // gamla utan att nagon markte det. Lagg inte tillbaka dem.
+      all.push({ n: name, t: ticker, m: market, c: cc });
       n++;
     }
     console.log(`${market.padEnd(12)} ${slug.padEnd(26)} ${n} bolag`);
@@ -92,9 +94,11 @@ async function main() {
   const all = await hamtaBolag();
   const outDir = fileURLToPath(new URL('../public/labs/data/', import.meta.url));
   mkdirSync(outDir, { recursive: true });
-  // Kurserna är en daglig snapshot från källan, inte realtid: stämpla datumet
-  // så Dina bolag kan visa "kurs per <datum>" ärligt.
-  const payload = { uppdaterad: new Date().toISOString().slice(0, 10), bolag: all };
+  // Ingen `uppdaterad`-stampel: filen bar inga kurser langre, bara identitet
+  // (namn, ticker, marknad, land), och den aldras inte. Ett datum har skulle
+  // bara inbjuda nasta sida att visa "kurs per <datum>" om ett tal som inte
+  // finns i filen.
+  const payload = { bolag: all };
   const out = outDir + 'companies.json';
   const json = JSON.stringify(payload);
   writeFileSync(out, json, 'utf8');
