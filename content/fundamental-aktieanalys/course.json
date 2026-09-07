@@ -14,10 +14,11 @@
    "nummer": 0,
    "titel": "Innan du börjar: oddsen",
    "niva": "Nybörjare",
-   "tid_min": 24,
+   "tid_min": 26,
    "blurb": "En ärlig start: hur få som faktiskt slår index över tid, varför de flesta misslyckas, vad du konkret gör åt det, och vad den här kursen realistiskt lovar. Kort, obekvämt, och själva anledningen till att resten av kursen finns.",
    "outcomes": [
     "Känna till hur få sparare och fonder som slår index över tid",
+    "Förklara vad som producerar den siffran: avgiften, aritmetiken bakom aktiv förvaltning, överlevnadsbias och skåpindexering",
     "Namnge de vanligaste orsakerna: avgifter, överhandel, övertro och beteendegapet",
     "Veta vad kursen lovar, förståelse och disciplin, och vad den inte lovar, en garanti att slå index",
     "Namnge fyra konkreta motdrag: skriva caset i förväg, låta storleken bära tvivlet, räkna kostnaden per år och bestämma säljregeln i lugn"
@@ -28,7 +29,7 @@
      "lektion": "0.1",
      "titel": "Oddsen",
      "niva": "Nybörjare",
-     "tid_min": 6,
+     "tid_min": 8,
      "status": "klar",
      "fil": "0.1-oddsen.json"
     },

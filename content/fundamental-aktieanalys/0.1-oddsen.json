@@ -3,8 +3,8 @@
   "lektion": "0.1",
   "titel": "Oddsen",
   "niva": "Nybörjare",
-  "tid_min": 6,
-  "mal": "Efter lektionen känner eleven till hur få som slår index över tid, och varför det gör kursens fokus på temperament och förståelse relevant.",
+  "tid_min": 8,
+  "mal": "Efter lektionen känner eleven till hur få aktivt förvaltade fonder som slår sitt index över tid, och kan namnge de strukturella skälen till det: avgiften, aritmetiken, överlevnadsbias och skåpindexering.",
   "steg": [
     {
       "typ": "intro",
@@ -40,13 +40,31 @@
       "takeaway": "Utfallet avgörs lika mycket av hur du beter dig som av vad du äger. Det pekar rakt mot det den här kursen handlar om."
     },
     {
+      "typ": "concept",
+      "kicker": "VARFÖR SÅ FÅ",
+      "titel": "Det handlar inte om att de är dåliga",
+      "brodtext": [
+        "Avgiften är det enda säkra. En aktivt förvaltad fond tar betalt varje år oavsett utfall. Överavkastningen är osäker, kostnaden är det inte, och över femton år ska den skillnaden tjänas in på nytt varje enskilt år.",
+        "Sedan kommer aritmetiken, och den är obeveklig. Alla aktiva förvaltare äger tillsammans i princip hela marknaden. Före kostnader måste därför den genomsnittliga aktivt förvaltade kronan ge ungefär marknadens avkastning, för den är marknaden. Efter kostnader måste den ge mindre. Det följer av räkningen, inte av att förvaltarna skulle vara obegåvade.",
+        "De som försvinner räknas också. Fonder som går dåligt läggs ner eller slås ihop med andra, och tittar man bara på dem som finns kvar ser bilden bättre ut än den var. SPIVA räknar även de nedlagda, och det är en del av varför andelen blir så låg.",
+        "Till sist är en del index i förklädnad. Vissa fonder som kallas aktiva ligger nära sitt jämförelseindex i innehav men tar aktivt betalt. Då är utfallet nästan givet på förhand: ungefär index, minus avgiften."
+      ],
+      "forklaring": "Lägg märke till att inget av de fyra handlar om okunskap. De är strukturella, och de gäller proffsen. Dina egna skäl att missa är andra, och dem tar vi i nästa lektion."
+    },
+    {
       "typ": "quiz",
       "fragor": [
         {
           "typ": "single",
           "fraga": "Ungefär hur stor andel av aktivt förvaltade storbolagsfonder slog sitt index över 15 år, enligt SPIVA?",
-          "alternativ": ["Ungefär 1 av 10", "Ungefär 5 av 10", "Ungefär 9 av 10"],
-          "ratt": [0],
+          "alternativ": [
+            "Ungefär 1 av 10",
+            "Ungefär 5 av 10",
+            "Ungefär 9 av 10"
+          ],
+          "ratt": [
+            0
+          ],
           "forklaring": "Cirka 89 procent underpresterade, alltså slog ungefär 1 av 10 sitt index. Och det gäller proffs, inte privatsparare."
         },
         {
@@ -57,7 +75,9 @@
             "Fler än 8 av 10 förlorar pengar, och bara omkring 1 procent är förutsägbart lönsamma",
             "Erfarna traders tjänar alltid pengar"
           ],
-          "ratt": [1],
+          "ratt": [
+            1
+          ],
           "forklaring": "Aktiv handel gör det sämre, inte bättre. De mest aktiva privatspararna underpresterade marknaden rejält."
         },
         {
@@ -68,8 +88,23 @@
             "Att spararen får mindre än fonden hen äger, för att hen köper på topp och säljer i botten",
             "Skillnaden mellan börsens öppning och stängning"
           ],
-          "ratt": [1],
+          "ratt": [
+            1
+          ],
           "forklaring": "Även den som väljer rätt fond förlorar avkastning genom dålig tajming. Hur du beter dig avgör."
+        },
+        {
+          "typ": "single",
+          "fraga": "Varför måste den genomsnittliga aktivt förvaltade kronan ge mindre än marknaden efter kostnader?",
+          "alternativ": [
+            "För att aktiva förvaltare är sämre analytiker än andra",
+            "För att de aktiva tillsammans i princip är marknaden, så före kostnader ger de marknadens avkastning och efter kostnader mindre",
+            "För att index alltid stiger snabbare än enskilda aktier"
+          ],
+          "ratt": [
+            1
+          ],
+          "forklaring": "Det är aritmetik, inte omdöme. Ägar de aktiva tillsammans marknaden kan de som grupp inte slå den, och avgiften dras sedan av."
         }
       ]
     }
