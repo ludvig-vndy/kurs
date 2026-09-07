@@ -18,8 +18,9 @@
    matchande Origin 403. */
 
 import { secureJson as json } from "./_lib.js";
-import { ogrundadeTal, hamtaUtdrag, bolagIFragan, hittaTal } from "./_kallgrind.js";
+import { ogrundadeTal, hamtaUtdrag, bolagIFragan, hittaTal, termer, periodIFragan } from "./_kallgrind.js";
 import { nyckeltalsUnderlag } from "./_nyckeltal.js";
+import { hamtaPeriod } from "./_mfn.js";
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 // Haiku pa fragan: kort interaktivt Q&A dar underlaget redan ar utvalt. Sonnet
@@ -28,6 +29,25 @@ const MODEL = "claude-haiku-4-5-20251001";
 const TIMEOUT = 30000;
 const MAX_FRAGA = 1000;
 const MAX_UTDRAG = 6;
+// Historik pa begaran: hogst sa har manga dokument hamtas hem per bolag och
+// fraga. Fyra racker for ett ar (tre kvartalsrapporter plus bokslutet) och
+// kostar runt 200 ms parallellt.
+const MAX_HISTORIK = 4;
+// Indexet ar ~1 MB per bolag och andras en gang om dagen. Utan cache skulle
+// varje historisk fraga dra hem det pa nytt.
+const INDEX_TTL = 86400;
+// Taket for det pa-begaran-hamtade arkivet. Det ligger i en EGEN nyckel,
+// arkiv:hist:<id>, av tva skal: nattjobbet ager arkiv:<id> och ska inte behova
+// sla ihop med oss, och en historisk post skulle annars kastas ut direkt av
+// nattjobbets "nyast forst, kapa pa 40".
+const HIST_MAX_DOK = 60;
+const HIST_MAX_BYTE = 600 * 1024;
+// Hur stort glappet mellan fragans period och arkivets horisont maste vara for
+// att en hamtning ska vara vard ett natverksanrop. Rapporter kommer kvartalsvis,
+// sa ett glapp pa nagra dagar i borjan av perioden kan inte innehalla en rapport
+// vi saknar. Utan marginalen hamtade "vad hande 2026" hela floedet bara for att
+// arkivet rakade borja den 2 januari.
+const HORISONT_MARGINAL_DAGAR = 30;
 
 // Strypning per identitet, inte per IP. En IP byts pa en sekund och straffar
 // dessutom alla bakom samma nat. Plus ett globalt dygnstak for dagen da nagot
@@ -55,6 +75,17 @@ const SYSTEM_DOKUMENT =
   "- Racker underlaget inte for att svara: sag att det inte framgar av de dokument du har. Gissa aldrig, och rakna aldrig fram ett tal som saknas.\n" +
   "- Namn kallan i klartext efter pastaendet, med dokumentets rubrik.\n" +
   "- Skriv 2 till 5 meningar.\n";
+
+/* Utan dokument ska svaret INTE se ut som ett analyssvar. Fore den har regeln
+   svarade Fraga flytande och sakligt aven nar den inte hade en enda rad om
+   bolaget, och anvandaren kunde inte se skillnaden. Registret ska byta: fran
+   "sa har ligger det till" till "sa har tar du reda pa det". */
+const SYSTEM_UTAN_DOKUMENT =
+  "\nDu har INGA dokument om bolagen i fragan. Om det galler:\n" +
+  "- Borja svaret med att du inte har nagra dokument om bolaget, i en kort mening.\n" +
+  "- Svara sedan pa METODEN: vad anvandaren sjalv ska titta pa och var, och vad det betyder. Peka garna pa en lektion i kursen.\n" +
+  "- Anvand innehavet nedan nar fragan galler portfoljen. Hitta ALDRIG pa siffror som inte finns i datan.\n" +
+  "- Pasta aldrig nagot om vad bolaget har rapporterat, sagt eller gjort. Det vet du inte.\n";
 
 /* Tesen ar med i prompten men ar INTE en kalla. Skillnaden ar hela poangen: en
    rapport sager vad bolaget redovisat, tesen sager vad anvandaren tror. Later
@@ -141,6 +172,34 @@ function arkivIdFor(holding, index) {
     }
   }
   return bast ? bast.id : null;
+}
+
+/* Aldsta och nyaste dokumentdatum i en samling. Det ar arkivets HORISONT, och
+   den maste vara utskriven bade i prompten och i svaret: utan den kan modellen
+   inte veta att den saknar en period, och anvandaren kan inte veta att svaret
+   bara tackte en del av fragan. */
+function spann(dokument) {
+  const datum = (dokument || []).map((d) => String(d.datum || "").slice(0, 10)).filter(Boolean).sort();
+  return datum.length ? { aldst: datum[0], nyast: datum[datum.length - 1] } : { aldst: null, nyast: null };
+}
+
+/* Skriver hem det som hamtats pa begaran, sa nasta fraga om samma period ar
+   gratis. Arkivet ar per bolag och inte per anvandare, sa den forsta som fragar
+   varmer at alla andra.
+
+   Nyast forst och kapa: samma hallning som motor/bygg-arkiv.mjs, men i en egen
+   nyckel och med ett eget tak, sa nattjobbets arkiv aldrig ror sig harifran. */
+async function sparaHistorik(kv, id, befintliga, nya) {
+  if (!kv || !nya.length) return;
+  const kanda = new Map((befintliga || []).map((d) => [d.url, d]));
+  for (const d of nya) if (!kanda.has(d.url)) kanda.set(d.url, d);
+  const dokument = [...kanda.values()]
+    .sort((a, b) => String(b.datum).localeCompare(String(a.datum)))
+    .slice(0, HIST_MAX_DOK);
+  while (dokument.length > 1 && JSON.stringify(dokument).length > HIST_MAX_BYTE) dokument.pop();
+  try {
+    await kv.put("arkiv:hist:" + id, JSON.stringify({ uppdaterad: new Date().toISOString(), dokument }));
+  } catch (e) { /* cachen ar en bonus, inte ett krav */ }
 }
 
 async function stryp(kv, id) {
@@ -254,24 +313,97 @@ export async function onRequestPost(context) {
   // for ett bolag vi inte har ett enda dokument om.
   let utdrag = [], teser = [];
   let nyckeltal = { text: "", tillatnaTal: [], harledda: [] };
-  if (holdings.length) {
-    const traffar = (bolagIFragan(question, holdings) || []).slice(0, 2); // hogst tva bolag
-    if (traffar.length) {
+
+  const period = periodIFragan(question);
+
+  /* TACKNINGEN. Fore det har kunde Fraga svara med noll dokument pa fem olika
+     satt, alla tysta: inga innehav, inget bolag matchat, inget arkiv-id, tomt
+     arkiv, eller ingen KV-bindning. I samtliga fall fick anvandaren ett flytande
+     svar byggt pa innehavslistan och kursens metod, utan att kunna se det.
+
+     Det ar farligare har an i en sokmotor: brevets loffte ar att tystnad betyder
+     att inget hant, och lar sig anvandaren lasa Fraga med samma semantik har
+     gravverktyget atit upp forsakringen. Darfor redovisas alltid vad som lastes
+     och vad som saknas. */
+  const tackning = {
+    period: period ? { fran: period.fran, till: period.till } : null,
+    bolag: [], utelamnade: [], lasta: 0, hamtade: 0, orsak: null,
+  };
+
+  if (!holdings.length) {
+    tackning.orsak = "inga innehav uppladdade";
+  } else {
+    const alla = bolagIFragan(question, holdings) || [];
+    const traffar = alla.slice(0, 2); // hogst tva bolag
+    // Det slice(0, 2) tappade sades tidigare inte till nagon.
+    tackning.utelamnade = alla.slice(2).map((h) => h.name || "");
+    if (!traffar.length) {
+      tackning.orsak = "inget av dina bolag namndes i fragan";
+    } else {
       if (secret && user) teser = await getTheses(base, secret, user.id, traffar);
-      if (env.DATA) {
+      if (!env.DATA) {
+        tackning.orsak = "dokumentarkivet ar inte tillgangligt";
+      } else {
         const index = (await env.DATA.get("arkiv:index", "json")) || [];
         const arkiv = [];
         for (const h of traffar) {
+          const namn = h.name || "";
           const id = arkivIdFor(h, index);
-          if (!id) continue;
-          const a = await env.DATA.get("arkiv:" + id, "json");
-          if (a) arkiv.push(a);
+          if (!id) { tackning.bolag.push({ namn, arkiv: false, av: "finns inte i arkivets index" }); continue; }
+
+          const a = (await env.DATA.get("arkiv:" + id, "json")) || null;
+          const hist = (await env.DATA.get("arkiv:hist:" + id, "json")) || null;
+          const dokument = [...((a && a.dokument) || []), ...((hist && hist.dokument) || [])];
+          if (!dokument.length) { tackning.bolag.push({ namn, arkiv: false, av: "inga dokument i arkivet" }); continue; }
+
+          /* HISTORIK PA BEGARAN. Nattjobbet ackumulerar bara det som varit nytt
+             sedan bevakningen borjade, sa arkivets horisont ar ung. Racker den
+             inte for fragans period hamtar vi primarkallan nu, valjer pa rubrik
+             och hamtar bara vinnarna. Kallgrinden nedan bryr sig inte om varifran
+             utdraget kom, sa rackvidden vaxer utan att garantin forsvagas. */
+          let hamtade = [];
+          const har = spann(dokument);
+          const glapp = period && period.fran && har.aldst
+            ? (Date.parse(har.aldst) - Date.parse(period.fran)) / 86400000
+            : Infinity;
+          if (period && period.fran && glapp > HORISONT_MARGINAL_DAGAR) {
+            const nyckel = "mfn:idx:" + id;
+            let cachat = null;
+            try { cachat = await env.DATA.get(nyckel, "json"); } catch (e) { /* utan cache: hamta */ }
+            const r = await hamtaPeriod({
+              dokumentUrl: dokument[0] && dokument[0].url,
+              period, termer: termer(question), max: MAX_HISTORIK,
+              kanda: new Set(dokument.map((d) => d.url)),
+              index: cachat,
+            });
+            if (!r.fransCache && r.index.length) {
+              try { await env.DATA.put(nyckel, JSON.stringify(r.index), { expirationTtl: INDEX_TTL }); } catch (e) { /* ok */ }
+            }
+            hamtade = r.dokument;
+            if (hamtade.length) {
+              dokument.push(...hamtade);
+              tackning.hamtade += hamtade.length;
+              await sparaHistorik(env.DATA, id, (hist && hist.dokument) || [], hamtade);
+            }
+          }
+
+          const s = spann(dokument);
+          tackning.bolag.push({
+            namn, arkiv: true, dokument: dokument.length,
+            aldst: s.aldst, nyast: s.nyast, hamtade: hamtade.length,
+          });
+          arkiv.push({ id, namn: (a && a.namn) || namn, dokument });
         }
         // Steg 2: de mest relevanta bitarna ur de bolagens dokument, plus
         // nyckeltalen per period och det som gar att harleda ur dem i kod.
+        // Perioden skickas in sa urvalet anvander samma tolkning som avgjorde
+        // om dokument skulle hamtas hem.
         if (arkiv.length) {
-          utdrag = hamtaUtdrag(question, arkiv, MAX_UTDRAG);
+          utdrag = hamtaUtdrag(question, arkiv, MAX_UTDRAG, Date.now(), period);
           nyckeltal = nyckeltalsUnderlag(arkiv);
+          tackning.lasta = utdrag.length;
+        } else if (!tackning.orsak) {
+          tackning.orsak = "inga dokument for bolaget i fragan";
         }
       }
     }
@@ -284,8 +416,23 @@ export async function onRequestPost(context) {
       teser.map(function (t) { return "[" + t.namn + "]\n" + t.why; }).join("\n\n")
     : "";
 
+  /* HORISONTEN. Utan den kan modellen inte avsta pa ratt grund: den ser sex
+     traffande utdrag, svarar sakligt om dem, och varje tal star i underlaget sa
+     kallgrinden slapper igenom. Resultatet ar sant, valciterat och om fel
+     period. Grinden skyddar mot pahittade tal, inte mot fel ar, sa granserna
+     maste sagas ut i klartext har. */
+  const medArkiv = tackning.bolag.filter(function (b) { return b.arkiv && b.aldst; });
+  const horisontText = medArkiv.length
+    ? "\n\nDITT UNDERLAG, granser du MASTE respektera:\n" +
+      medArkiv.map(function (b) {
+        return "- " + b.namn + ": " + b.dokument + " dokument, " + b.aldst + " till " + b.nyast + ".";
+      }).join("\n") +
+      "\n- Galler fragan helt eller delvis en period FORE det aldsta datumet ovan: sag rakt ut att du saknar underlag for den perioden och fran vilket datum du har. Svara sedan bara om det du faktiskt har, och skriv ut vilken period svaret galler.\n" +
+      "- Pasta aldrig att en period saknas nar den finns, och tig aldrig om att den saknas nar den gor det.\n"
+    : "";
+
   const system = SYSTEM_BAS +
-    (utdrag.length ? SYSTEM_DOKUMENT : "\n- Anvand innehavet nedan nar fragan galler portfoljen. Hitta ALDRIG pa siffror som inte finns i datan. Saknas data, sag det rakt ut.\n") +
+    (utdrag.length ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
     (teser.length ? SYSTEM_TES : "") +
     "\nAnvandarens innehav:\n" + holdingsText +
     (nyckeltal.text ? "\n\n" + nyckeltal.text : "") +
@@ -304,7 +451,7 @@ export async function onRequestPost(context) {
   });
   if (svar.fel) return json({ error: svar.meddelande }, svar.status);
   const answer = svar.text;
-  if (!answer) return json({ answer: "Jag har inget bra svar pa det just nu." });
+  if (!answer) return json({ answer: "Jag har inget bra svar pa det just nu.", tackning: tackning });
 
   // Kallgrinden. Bara nar svaret bygger pa dokument: utan utdrag finns inget
   // underlag att grinda mot, och da ar innehavets egna tal (antal, GAV) sanningen.
@@ -339,6 +486,7 @@ export async function onRequestPost(context) {
           "). Då visar jag det inte. Fråga gärna om en enskild siffra i stället, så svarar jag ur källan.",
         blockerat: true,
         kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url }; }),
+        tackning: tackning,
       });
     }
     if (franTes.length && !TES_ATTRIBUTION.test(answer)) {
@@ -349,6 +497,7 @@ export async function onRequestPost(context) {
           "och de två får inte se likadana ut. Fråga gärna om siffran i rapporterna i stället.",
         blockerat: true,
         kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url }; }),
+        tackning: tackning,
       });
     }
   }
@@ -356,6 +505,9 @@ export async function onRequestPost(context) {
   return json({
     answer: answer,
     kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url, datum: u.datum }; }),
+    // Underlaget, alltid med: vad som lastes och vad som saknas. Sidan ska kunna
+    // visa granserna bredvid svaret, inte som en fotnot efterat.
+    tackning: tackning,
     // Uträkningarna med, sa sidan kan visa HUR ett harlett tal uppstod. Ett tal
     // som inte star i nagon rapport ska aldrig presenteras utan sin rakning.
     harlett: nyckeltal.harledda,
