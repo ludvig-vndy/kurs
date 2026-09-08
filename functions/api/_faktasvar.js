@@ -26,6 +26,11 @@ Perioder FAR namnges i fri text: 2022-12-31, december 2022, Q3 2022 eller
 kalenderaret 2022. Tidslangder far det inte: skriv juli 2021 till december 2022,
 aldrig arton manader. Kassans rackvidd finns som post och raknas aldrig i text.
 Skriv svenska. Inga tankstreck. Hogst 16 block, 1800 tecken fri text per block.
+
+SISTA KONTROLLEN INNAN DU SVARAR: las igenom varje text-falt och leta efter tal.
+Hittar du en siffra, ett utskrivet tal eller ett storleksord som miljon, miljard
+eller tusen, ta bort det eller flytta uppgiften till ett postblock. Ett enda tal
+i fri text gor att hela svaret kastas och anvandaren far ingenting alls.
 `;
 
 /* SVARET KOMMER UR API:T, INTE UR TEXTFLODET.
@@ -53,7 +58,14 @@ export const SVARSVERKTYG = {
           properties: {
             typ: { type: 'string', enum: ['post', 'metod', 'tolkning', 'saknas'] },
             id: { type: 'string', description: 'Endast for typ post: ett exakt id ur FAKTAREGISTER.' },
-            text: { type: 'string', description: 'Endast for metod, tolkning och saknas. Aldrig tal.' },
+            text: { type: 'string', description:
+              'Endast for metod, tolkning och saknas. FAR ALDRIG INNEHALLA ETT TAL. '
+              + 'Inga siffror, inga belopp, inga utskrivna tal, och inga storleksord som '
+              + 'miljon, miljard, tusen eller hundra, inte ens i ett pahittat exempel eller '
+              + 'ett vagt "manga miljarder". Behover du visa ett tal: anvand ett postblock. '
+              + 'Perioder far du namnge (2022-12-31, december 2022, Q3 2022, kalenderaret 2022), '
+              + 'men aldrig tidslangder som arton manader. '
+              + 'Ett enda tal har gor att HELA svaret kastas och anvandaren far ingenting.' },
             stod: { type: 'array', items: { type: 'string' }, description: 'Endast for tolkning: post-id:n som stodjer resonemanget.' },
           },
           required: ['typ'],
