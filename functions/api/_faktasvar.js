@@ -27,6 +27,10 @@ kalenderaret 2022. Tidslangder far det inte: skriv juli 2021 till december 2022,
 aldrig arton manader. Kassans rackvidd finns som post och raknas aldrig i text.
 Skriv svenska. Inga tankstreck. Hogst 16 block, 1800 tecken fri text per block.
 
+Formler skrivs i ORD, aldrig med siffror eller raknetecken: skriv
+"rorelseresultatet efter skatt delat med investerat kapital", inte en formel med
+tal i. Ska en definition visas ordagrant, referera kursposten i stallet.
+
 SISTA KONTROLLEN INNAN DU SVARAR: las igenom varje text-falt och leta efter tal.
 Hittar du en siffra, ett utskrivet tal eller ett storleksord som miljon, miljard
 eller tusen, ta bort det eller flytta uppgiften till ett postblock. Ett enda tal

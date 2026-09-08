@@ -837,7 +837,9 @@ export async function onRequestPost(context) {
   // Ett granskarfel far ALDRIG falla tillbaka till ett ogranskat svar.
   if (kontrollerat.prosa.length) {
     const granskning = await anropa(apiKey, {
-      model: MODEL_SNABB, max_tokens: 80, system: GRANSKA_SYSTEM,
+      /* 80 rackte for {"godkand":true} men inte for ett nej med skal, sa
+         granskarens svar klipptes av och blev ett nej av fel anledning. */
+      model: MODEL_SNABB, max_tokens: 220, system: GRANSKA_SYSTEM,
       messages: [
         { role: "user", content: JSON.stringify({
           fraga: question, svar: kontrollerat.block, tackning,
