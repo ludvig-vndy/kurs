@@ -247,3 +247,34 @@ test('ett rakneord sist i satsen ar ett belopp, inte ett antal', () => {
     assert.equal(otillatenProsa(t), true, 'slapptes igenom: ' + t);
   }
 });
+
+/* DATUM AR INTE PENGAR, och den lardomen fick tas tva ganger.
+   Den gamla kallgrinden blockerade ett sant svar for att 12 och 31 ur
+   "2022-12-31" lastes som ogrundade tal. Prosagrinden gjorde om samma sak:
+   modellen forklarade korrekt att Unibap haft ett forlangt rakenskapsar och
+   namngav perioden, och fylldes for datumen i sin egen forklaring. */
+test('perioder far namnges i fri text', () => {
+  for (const t of [
+    'Rapporten avser 2021-07-01 till 2022-12-31.',
+    'Kalenderåret 2022 saknas som egen post.',
+    'Perioden juli 2021 till december 2022 rapporteras samlat.',
+    'Siffran gäller Q3 2022.',
+  ]) assert.equal(otillatenProsa(t), false, 'stoppades: ' + t);
+});
+
+/* Halva poangen. Ett artal som foljs av en enhet ar inget datum utan ett
+   belopp, och just "2026 MSEK" var ett av hålen granskningen pekade ut. */
+test('ett artal med enhet efter ar ett belopp, inte ett datum', () => {
+  for (const t of [
+    'Kassan var 2026 MSEK.',
+    'Kassan var 2026 miljoner kronor.',
+    'Bolaget hade 2022 kronor i kassan.',
+  ]) assert.equal(otillatenProsa(t), true, 'slapptes igenom: ' + t);
+});
+
+/* Tidslangder ar inga datum. Kassans rackvidd raknas i kod och har en egen
+   post, sa den far aldrig uppsta i fri text. */
+test('tidslangder far inte skrivas i fri text', () => {
+  assert.equal(otillatenProsa('Perioden omfattar 18 månader.'), true);
+  assert.equal(otillatenProsa('Kassan räcker i 14 månader.'), true);
+});
