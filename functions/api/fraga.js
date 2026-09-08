@@ -236,9 +236,6 @@ export function kursText(lektioner) {
 
 const MAX_VARV = 2;              // alltsa hogst tre modellanrop
 
-/* Aven utan arkiv ska svaret komma ur verktyget. Just den vagen, dar
-   assistenten har minst att komma med, var en gang helt ogrindad. */
-const TVINGA_SVAR = { tools: [SVARSVERKTYG], tool_choice: { type: "tool", name: "svara" } };
 const UTDRAG_PER_VERKTYG = 6;
 
 export const SYSTEM_VERKTYG =
@@ -384,10 +381,24 @@ export function byggKorVerktyg(ctx) {
 /* Utredningen: modellen far svara, be om mer, och svara igen. Sista varvet gar
    UTAN verktyg, sa den tvingas formulera ett svar i stallet for att fortsatta
    hamta i all evighet. */
-export async function utred(apiKey, kropp, verktyg, kor, tackning) {
+/* REPARATIONSRUNDAN. Fore den kastades hela svaret sa fort ett block foll, och
+   anvandaren fick ingenting. Men ett formatfel ar inte samma sak som ett svar
+   utan tackning: modellen visste vad den skulle saga, den skrev det bara pa fel
+   satt. Nu far den veta exakt vad som brast och svara om en gang.
+
+   Verifieringen ar oforandrad. Det omskrivna svaret gar genom samma
+   lasFaktasvar som det forsta, sa det har kostar ett extra anrop vid fel och
+   ingenting alls i sakerhet. Och bara MEKANISKA fel repareras. Ett nej fran den
+   semantiska granskaren repareras ALDRIG: att lata modellen skriva om tills
+   granskaren slapper igenom ar att optimera mot domaren, inte att bli riktigare. */
+const MAX_REPARATION = 1;
+
+export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
   const meddelanden = [{ role: "user", content: kropp.fraga }];
-  for (let varv = 0; varv <= MAX_VARV; varv++) {
-    const sista = varv === MAX_VARV;
+  let gravvarv = 0, reparationer = 0;
+  for (let steg = 0; steg <= MAX_VARV + MAX_REPARATION; steg++) {
+    // Utan nagot att grava i finns bara svara, och da tvingas det fram direkt.
+    const sista = gravvarv >= MAX_VARV || !verktyg.length;
     /* Sista varvet erbjuder BARA svara, och tvingar fram det. Utan tvanget kan
        det sista varvet ga ut utan svar, och da faller hela fragan pa "varv". */
     const svar = await anropa(apiKey, {
@@ -407,13 +418,27 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning) {
     if (svar.fel) return svar;
     if (svar.stopp !== "tool_use" || !svar.block) return svar;
 
-    /* Svarar modellen ar utredningen slut, aven om den samtidigt bad om mer. */
+    /* Svarar modellen ar utredningen slut, aven om den samtidigt bad om mer.
+       Verktyget svara far sitt resultat tillbaka som vilket verktyg som helst:
+       godkant, eller vad som brast. Det ar reparationsrundan. */
     const svaret = svar.block.find((b) => b && b.type === "tool_use" && b.name === "svara");
-    if (svaret) return { ...svar, data: svaret.input };
+    if (svaret) {
+      const dom = provaSvar ? provaSvar(svaret.input) : { ok: true };
+      if (dom.ok || reparationer >= MAX_REPARATION) return { ...svar, data: svaret.input };
+      reparationer++;
+      tackning.reparation = reparationer;
+      meddelanden.push({ role: "assistant", content: svar.block });
+      meddelanden.push({ role: "user", content: [{
+        type: "tool_result", tool_use_id: svaret.id, is_error: true,
+        content: dom.klagan + " Svara igen med hela svaret, rattat.",
+      }] });
+      continue;
+    }
 
     const anvandning = svar.block.filter((b) => b && b.type === "tool_use" && b.name !== "svara");
     if (!anvandning.length) return svar;
 
+    gravvarv++;
     meddelanden.push({ role: "assistant", content: svar.block });
     const resultat = [];
     for (const a of anvandning) {
@@ -799,18 +824,23 @@ export async function onRequestPost(context) {
 
   const modell = valjModell({ period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
   tackning.modell = modell;
-  const brev = { max_tokens: 1600, system: system, messages: [{ role: "user", content: question }] };
+  /* Kontrollen som utredningen far anvanda mitt i loppet. Samma funktion som
+     provar svaret nedan, sa reparationsrundan kan omojligt vara slappare. */
+  const provaSvar = (data) => lasFaktasvar(data, register);
+  const brev = { model: modell, max_tokens: 1600, system: system, fraga: question };
 
+  /* AVEN UTAN ARKIV gar svaret genom utred, med en tom verktygslista. Da
+     tvingas svara fram direkt, och vagen dar assistenten har minst att komma
+     med far samma kontrakt och samma reparationsrunda som utredningen. */
   let svar;
   if (kanGrava) {
     svar = await utred(
-      apiKey,
-      { model: modell, max_tokens: 1600, system: system, fraga: question },
+      apiKey, brev,
       verktygsDefinitioner(),
       byggKorVerktyg({ arkiv: arkivet, env: env, utdrag: utdrag, tackning: tackning, question: question, register: register }),
-      tackning);
+      tackning, provaSvar);
   } else {
-    svar = await anropa(apiKey, Object.assign({ model: modell }, brev, TVINGA_SVAR));
+    svar = await utred(apiKey, brev, [], async () => "", tackning, provaSvar);
   }
 
   /* Varken ett routningsbeslut eller en utredning far ta ner Fraga. Faller
@@ -819,13 +849,33 @@ export async function onRequestPost(context) {
   if (svar.fel) {
     tackning.modell = MODEL_SNABB;
     tackning.modellfall = true;
-    svar = await anropa(apiKey, Object.assign({ model: MODEL_SNABB }, brev, TVINGA_SVAR));
+    svar = await utred(apiKey, { ...brev, model: MODEL_SNABB }, [], async () => "", tackning, provaSvar);
   }
   if (svar.fel) return json({ error: svar.meddelande }, svar.status);
   /* data kommer fran verktyget, text ar reserven. Bada provas likadant. */
   const kontrollerat = lasFaktasvar(svar.data !== undefined ? svar.data : svar.text, register);
+  /* TVA SORTERS NEJ, och de betyder helt olika saker for den som last fragan.
+
+     Ett mekaniskt nej ar VART fel: modellen visste vad den ville saga men skrev
+     det pa fel satt, och inte ens reparationsrundan raddade det. Da ska texten
+     saga att felet ligger hos oss. Sager vi "jag kunde inte verifiera svaret"
+     later det som ett besked om bolaget, och det ar det inte.
+
+     Ett semantiskt nej ar ett riktigt nej: nagot i svaret gick inte att belagga.
+     Da ar det arliga att saga just det, och vad man kan fraga i stallet.
+
+     Modellens ratext visas aldrig, oavsett vilket. Ett svar som inte holl ar
+     inte battre for att lasaren far se det. */
+  const MEKANISKT = new Set(["format", "postformat", "blocktyp", "prosaformat",
+    "fri_uppgift", "tolkningsstod", "referens", "avklippt"]);
   const blockera = orsak => json({
-    answer: "Jag kunde inte verifiera svaret mot underlaget och visar det inte. Prova att avgränsa frågan till en uppgift eller en rapport.",
+    answer: MEKANISKT.has(orsak)
+      ? "Jag fick inte ihop svaret i en form jag kan stå för, och då visar jag det inte. "
+        + "Det är ett fel hos oss, inte ett besked om dina bolag. Ställ gärna frågan igen, "
+        + "eller fråga om en enskild siffra i en enskild rapport, så svarar jag ur källan."
+      : "Jag hade ett svar men kunde inte belägga allt i det mot underlaget, så jag visar det inte. "
+        + "Det brukar betyda att frågan spänner över mer än rapporterna säger rakt ut. "
+        + "Fråga gärna om en period eller en uppgift i taget.",
     blockerat: true, verifiering: { format: "dataposter-v1", orsak },
     block: [], kallor: [], tackning,
   });

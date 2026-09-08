@@ -151,8 +151,15 @@ const ARTAL_UTAN_ENHET = new RegExp('\\b(?:19|20)\\d{2}\\b(?!\\s*(?:' + ENHETER 
    att PROVA i stallet for att forbjudas, och "las mer i 5.1" ar en av de
    nyttigaste sakerna assistenten kan saga. Ett nummer som inte finns i
    registret ar fortfarande ett tal som vilket annat. */
-export function otillatenProsa(text, lektioner = []) {
-  if (typeof text !== 'string' || !text.trim() || text.length > 1800) return true;
+/* Grinden ska kunna saga VAD som var fel, inte bara att nagot var det.
+   Utan det kan ett stoppat svar bara kastas. Med det kan modellen fa veta
+   precis vad som brast och svara om, sa ett formatfel slutar kosta hela svaret.
+   otillatenProsa ar kvar som ja eller nej och ar bokstavligen samma prov. */
+export const otillatenProsa = (text, lektioner = []) => talIProsa(text, lektioner) !== '';
+
+export function talIProsa(text, lektioner = []) {
+  if (typeof text !== 'string' || !text.trim()) return 'texten ar tom';
+  if (text.length > 1800) return 'texten ar for lang';
   const s = text.normalize('NFKC').replace(/\p{Cf}/gu, '').toLowerCase();
   // Perioder far namnges. Stadningen ror BARA siffertestet nedan; orden som
   // provas mot rakneords- och storleksreglerna ar kvar or\u00f6rda i s.
@@ -163,25 +170,33 @@ export function otillatenProsa(text, lektioner = []) {
     const flykt = String(id).toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     utanPeriod = utanPeriod.replace(new RegExp(flykt + '(?!\\s*(?:' + ENHETER + ')\\b)', 'g'), ' ');
   }
-  if (/[\p{N}]/u.test(utanPeriod)) return true;
-  if (/[\u2013\u2014<>\[\]{}]/u.test(s) || /https?:|&#|\\u[0-9a-f]/i.test(s)) return true;
+  const siffra = utanPeriod.match(/[\p{N}][\p{N}\u00a0\u202f ,.]*/u);
+  if (siffra) return 'siffran "' + siffra[0].trim() + '"';
+  if (/[\u2013\u2014<>\[\]{}]/u.test(s)) return 'ett otillatet tecken, tankstreck eller klammer';
+  if (/https?:|&#|\\u[0-9a-f]/i.test(s)) return 'en lank eller en teckenkodning';
   /* "en krona" ar ett IDIOM, inte ett belopp. Regeln fallde "hur lite kapital
      bolaget behover for att tjana en krona", alltsa exakt det satt man
      forklarar ROIC och marginaler pa. En krona ar heller aldrig en rapporterad
      siffra: nordiska rapporter star i KSEK och MSEK, och ett belopp per aktie
      skrivs med decimaler, som stoppas av siffertestet anda. "en procent" ar en
      annan sak, ett fullt trovardigt pastaende, och stoppas som forut. */
-  if (/\b(?:en|ett)\s+(?:enda\s+)?(?:procent|euro|dollar|cent|msek|ksek|mkr)\b/u.test(s)) return true;
+  const enhet = s.match(/\b(?:en|ett)\s+(?:enda\s+)?(?:procent|euro|dollar|cent|msek|ksek|mkr)\b/u);
+  if (enhet) return 'beloppet "' + enhet[0] + '"';
   /* ... men "kassan ar en krona" ar det inte. Skillnaden ar verbet fore: ett
      VARDE star efter ar, var, blev eller uppgick till, ett matt star efter
      tjana, binda eller per. Bada formerna finns i samma text nar modellen
      forklarar ROIC, sa det racker inte att titta pa orden en och krona. */
   // \b ar ASCII, sa den matchar inte fore "ar". Grans pa \p{L} i stallet.
-  if (/(?<!\p{L})(?:är|var|blev|uppgick till|uppgår till|låg på|låg kring|hade|blir)\s+(?:\p{L}+\s+)?(?:en|ett)\s+(?:enda\s+)?(?:krona|kronor|öre)(?!\p{L})/u.test(s)) return true;
-  if (ENHET_EFTER.test(s) || UTAN_RAKNAT.test(s)) return true;
+  const varde = s.match(/(?<!\p{L})(?:är|var|blev|uppgick till|uppgår till|låg på|låg kring|hade|blir)\s+(?:\p{L}+\s+)?(?:en|ett)\s+(?:enda\s+)?(?:krona|kronor|öre)(?!\p{L})/u);
+  if (varde) return 'beloppet "' + varde[0] + '"';
+  const medEnhet = s.match(ENHET_EFTER);
+  if (medEnhet) return 'beloppet "' + medEnhet[0] + '"';
+  const utanRaknat = s.match(UTAN_RAKNAT);
+  if (utanRaknat) return 'rakneordet "' + utanRaknat[0] + '", som inte rackar nagot och darfor lases som ett varde';
   const ord = s.match(/\p{L}+/gu) || [];
   // Sammansatta rakneord ("tjugofem") ar aldrig antal, alltid belopp eller andel.
-  return ord.some(w => NUMBER_SCALE.test(w) || (SAMMANSATT.test(w) && !RAKNEORD.has(w)));
+  const traff = ord.find(w => NUMBER_SCALE.test(w) || (SAMMANSATT.test(w) && !RAKNEORD.has(w)));
+  return traff ? 'ordet "' + traff + '"' : '';
 }
 
 const kallorFor = p => (p.kallor || []).map(k => ({ ...k, citat: k.citat || p.text || '' }));
@@ -203,33 +218,59 @@ function renderaPost(p) {
     kallor: kallorFor(p), ...(p.indata ? { indata: p.indata } : {}) };
 }
 
+/* KLAGAN. Ett stoppat svar behover inte vara ett kastat svar: sager vi exakt
+   vad som brast kan modellen svara om en gang. Texten gar bara till modellen,
+   aldrig till anvandaren, sa den far vara teknisk. Den ska daremot alltid saga
+   VAD man gor at det, inte bara vad som var fel. */
 export function lasFaktasvar(raw, register) {
-  const nej = orsak => ({ ok: false, orsak });
+  let nr = 0;
+  const nej = (orsak, klagan) => ({ ok: false, orsak, klagan: 'Svaret godkandes inte: ' + klagan });
+  const iBlock = t => 'block ' + nr + ' (' + t + ')';
   let data;
   // Verktygsvagen ger ett fardigt objekt, textvagen en strang. Efter den har
   // raden ar de omojliga att skilja at, sa kontrollerna nedan galler bada.
   if (raw && typeof raw === 'object') data = raw;
-  else { try { data = JSON.parse(raw); } catch { return nej('format'); } }
+  else {
+    try { data = JSON.parse(raw); } catch {
+      return nej('format', 'det var inte giltig JSON. Anropa verktyget svara i stallet for att skriva svaret som text.');
+    }
+  }
   if (!exakt(data, ['version', 'block']) || data.version !== 1 ||
-      !Array.isArray(data.block) || !data.block.length || data.block.length > 16) return nej('format');
+      !Array.isArray(data.block) || !data.block.length || data.block.length > 16) {
+    return nej('format', 'formen var fel. Skicka exakt {"version":1,"block":[...]} med mellan ett och sexton block, och inga andra falt.');
+  }
   // Bara lektioner som faktiskt hamnat i registret far namnges vid nummer.
   const lektionsnummer = (typeof register.poster === 'function' ? register.poster() : [])
     .filter(p => p.typ === 'kurs' && p.lektion).map(p => p.lektion);
   const block = [], prosa = [], referenser = new Set();
   for (const b of data.block) {
+    nr++;
     if (b?.typ === 'post') {
-      if (!exakt(b, ['typ', 'id']) || typeof b.id !== 'string') return nej('postformat');
+      if (!exakt(b, ['typ', 'id']) || typeof b.id !== 'string') {
+        return nej('postformat', iBlock('post') + ' hade fler falt an typ och id. Servern skriver sjalv ut bolag, matt, period, varde och enhet, sa skicka bara id:t.');
+      }
       const p = register.get(b.id);
-      if (!p || !ETIKETT[p.typ]) return nej('referens');
+      if (!p || !ETIKETT[p.typ]) {
+        return nej('referens', iBlock('post') + ' pekar pa id "' + String(b.id).slice(0, 40) + '" som inte finns i FAKTAREGISTER. Anvand ett id som star i registret, eller ta bort blocket och beskriv luckan i ett saknas-block.');
+      }
       block.push(renderaPost(p));
       referenser.add(b.id);
     } else {
-      if (!['metod', 'tolkning', 'saknas'].includes(b?.typ)) return nej('blocktyp');
-      if (!exakt(b, b.typ === 'tolkning' ? ['typ', 'text', 'stod'] : ['typ', 'text'])) return nej('prosaformat');
-      if (otillatenProsa(b.text, lektionsnummer)) return nej('fri_uppgift');
+      if (!['metod', 'tolkning', 'saknas'].includes(b?.typ)) {
+        return nej('blocktyp', iBlock(String(b?.typ).slice(0, 20)) + ' har en typ som inte finns. Tillatna typer ar post, metod, tolkning och saknas.');
+      }
+      if (!exakt(b, b.typ === 'tolkning' ? ['typ', 'text', 'stod'] : ['typ', 'text'])) {
+        return nej('prosaformat', iBlock(b.typ) + ' hade fel falt. Ett tolkningsblock har typ, text och stod. Metod och saknas har bara typ och text.');
+      }
+      const funnet = talIProsa(b.text, lektionsnummer);
+      if (funnet) {
+        return nej('fri_uppgift', iBlock(b.typ) + ' innehaller ' + funnet + '. Fri text far inte bara tal. Ta bort uppgiften eller visa den som ett postblock i stallet, och skriv meningen utan den.');
+      }
       const stod = b.typ === 'tolkning' ? b.stod : [];
       if (!Array.isArray(stod) || (b.typ === 'tolkning' && !stod.length) || stod.length > 8 ||
-          stod.some(id => typeof id !== 'string' || !register.get(id))) return nej('tolkningsstod');
+          stod.some(id => typeof id !== 'string' || !register.get(id))) {
+        return nej('tolkningsstod', iBlock('tolkning') + ' saknar giltigt stod. Ange mellan ett och atta id:n ur FAKTAREGISTER som resonemanget vilar pa, eller gor om blocket till metod om det ar generell undervisning.');
+      }
       for (const id of stod) referenser.add(id);
       const p = { typ: b.typ, etikett: ETIKETT[b.typ], text: b.text, stod,
         kallor: stod.flatMap(id => kallorFor(register.get(id))) };

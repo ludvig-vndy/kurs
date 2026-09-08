@@ -16,7 +16,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { onRequestPost, SVARSVERKTYG } from '../../functions/api/fraga.js';
-import { godkann } from './_fraga-fixtur.mjs';
+import { godkann, postSvar } from './_fraga-fixtur.mjs';
 
 const UID = 'u-1';
 const UNIBAP = { id: 'h-1', name: 'Unibap Space Solutions', ticker: 'UNIBAP', quantity: 100, gav: 20, relation: 'ager' };
@@ -54,8 +54,13 @@ function stubbaFetch(skript) {
     if (u.includes('/rest/v1/theses')) return ok([]);
     if (u.includes('api.anthropic.com')) {
       const kropp = JSON.parse(init.body);
-      if (String(kropp.system).startsWith('Du granskar ett svar')) { anropen.push(kropp); return ok(godkann()); }
       anropen.push(kropp);
+      /* En FUNKTION som skript svarar pa alla anrop, aven granskarens. En lista
+         svarar i tur och ordning och later granskaren godkanna. Utan den
+         skillnaden lastes en funktion som en lista, `skript[0]` blev odefinierat
+         och testet provade ingenting alls. */
+      if (typeof skript === 'function') return ok(skript(kropp));
+      if (String(kropp.system).startsWith('Du granskar ett svar')) return ok(godkann());
       const nasta = skript[Math.min(i++, skript.length - 1)];
       return ok(typeof nasta === 'function' ? nasta(kropp) : nasta);
     }
@@ -179,4 +184,71 @@ test('svarsverktyget beskriver samma block som kontraktet', () => {
   assert.equal(SVARSVERKTYG.name, 'svara');
   const typer = SVARSVERKTYG.input_schema.properties.block.items.properties.typ.enum;
   assert.deepEqual([...typer].sort(), ['metod', 'post', 'saknas', 'tolkning']);
+});
+
+/* ---------- reparationsrundan ---------- */
+
+/* Ett stoppat svar behover inte vara ett kastat svar. Fore det har fallde hela
+   svaret sa fort ett block bröt mot formatet, och anvandaren fick ingenting,
+   trots att modellen visste vad den ville saga och bara skrev det pa fel satt.
+
+   Verifieringen ar oforandrad: det omskrivna svaret gar genom samma
+   lasFaktasvar som det forsta. Det ar en andra chans, inte en uppmjukning. */
+test('ett tal i prosan ger en andra chans i stallet for ett kastat svar', async () => {
+  const anropen = stubbaFetch([
+    svarar([{ typ: 'metod', text: 'Kassan var 41 900 KSEK vid periodens slut.' }]),
+    svarar([{ typ: 'metod', text: 'Kassan redovisas i delarsrapporten.' }]),
+  ]);
+  const d = await (await anrop('hur gick det for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  assert.ok(!d.blockerat, 'blockerades: ' + (d.verifiering && d.verifiering.orsak));
+  assert.match(d.answer, /Kassan redovisas/);
+  assert.equal(d.tackning.reparation, 1, 'reparationen syns inte i tackningen');
+});
+
+/* Klagan ska saga VAD som var fel, annars ar rundan bara ett extra anrop. */
+test('modellen far veta exakt vad som brast', async () => {
+  const anropen = stubbaFetch([
+    svarar([{ typ: 'metod', text: 'Kassan var 41 900 KSEK vid periodens slut.' }]),
+    svarar([{ typ: 'metod', text: 'Kassan redovisas i delarsrapporten.' }]),
+  ]);
+  await (await anrop('hur gick det for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  const sista = anropen[1].messages[anropen[1].messages.length - 1];
+  const klagan = sista.content[0].content;
+  assert.equal(sista.content[0].type, 'tool_result');
+  assert.match(klagan, /block 1/, 'sager inte vilket block: ' + klagan);
+  assert.match(klagan, /41 900/, 'sager inte vad som var fel: ' + klagan);
+});
+
+/* En andra chans, inte hur manga som helst. */
+test('reparationen ges en gang, sedan blockeras svaret', async () => {
+  const anropen = stubbaFetch([svarar([{ typ: 'metod', text: 'Kassan var 41 900 KSEK.' }])]);
+  const d = await (await anrop('hur gick det for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  assert.ok(d.blockerat);
+  assert.equal(d.verifiering.orsak, 'fri_uppgift');
+  const svarsanrop = anropen.filter((k) => !String(k.system).startsWith('Du granskar ett svar'));
+  assert.equal(svarsanrop.length, 2, 'skulle ha provat exakt en gang till');
+});
+
+/* Ett okant post-id ar ocksa mekaniskt och ska darfor gå att rätta. */
+test('ett okant post-id gar att rätta i andra forsoket', async () => {
+  stubbaFetch([
+    svarar([{ typ: 'post', id: 'p_finns_inte_1' }]),
+    (kropp) => postSvar(kropp, (p) => p.typ === 'dokument'),
+  ]);
+  const d = await (await anrop('hur gick det for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  assert.ok(!d.blockerat, 'blockerades: ' + (d.verifiering && d.verifiering.orsak));
+  assert.match(d.answer, /12 400/);
+});
+
+/* GRANSKARENS NEJ REPARERAS ALDRIG. Att lata modellen skriva om tills granskaren
+   slapper igenom vore att optimera mot domaren, inte att bli riktigare. */
+test('ett nej fran granskaren ger ingen andra chans', async () => {
+  const anropen = stubbaFetch((kropp) => (String(kropp.system).startsWith('Du granskar ett svar')
+    ? { content: [{ type: 'text', text: '{"godkand":false,"skal":"pastaende utan stod"}' }], stop_reason: 'end_turn' }
+    : svarar([{ typ: 'metod', text: 'Ett resonemang utan tal.' }])));
+  const d = await (await anrop('vad ar en moat', { ...ENV, DATA: kv(ARKIV()) })).json();
+  assert.ok(d.blockerat);
+  assert.equal(d.verifiering.orsak, 'semantik');
+  const svarsanrop = anropen.filter((k) => !String(k.system).startsWith('Du granskar ett svar'));
+  assert.equal(svarsanrop.length, 1, 'skrev om svaret at granskaren');
 });
