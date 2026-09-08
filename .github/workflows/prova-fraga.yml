@@ -1,0 +1,28 @@
+# Provkorning av Fraga mot riktiga Anthropic och riktiga MFN.
+#
+# Enhetstesterna stubbar modellen, och det duger for logiken. Tva saker gar inte
+# att prova sa: att modell-id:t claude-sonnet-5 finns och nyckeln har tillgang
+# till det, och att verktygsloopen fungerar mot det verkliga API:t. Bada faller
+# TYST i produktion, routningen ramlar tillbaka pa Haiku och svaret blir grundare
+# utan att nagon marker det.
+#
+# Kostar nagra ore per korning, sa bara pa begaran. Ingen schemalaggning.
+
+name: Prova Fragan (kostar pengar)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prov:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prova Fragan
+        run: node tools/prova-fraga.mjs
