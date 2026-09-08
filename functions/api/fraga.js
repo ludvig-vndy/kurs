@@ -21,6 +21,7 @@ import { secureJson as json } from "./_lib.js";
 import { ogrundadeTal, hamtaUtdrag, bolagIFragan, hittaTal, termer, periodIFragan } from "./_kallgrind.js";
 import { nyckeltalsUnderlag } from "./_nyckeltal.js";
 import { hamtaPeriod } from "./_mfn.js";
+import { INDEX, REGISTER, LEKTIONER } from "./_kurskorpus.js";
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 /* Tva modeller, vald efter fragans storlek.
@@ -188,6 +189,104 @@ export function valjModell(arg) {
   if (Number(a.bolag) > 1) return MODEL_DJUP;
   if (Number(a.utdrag) > MAX_UTDRAG) return MODEL_DJUP;
   return MODEL_SNABB;
+}
+
+/* Kursen som kalla, och skillnaden mellan att peka och att citera.
+
+   Prompten sa "Peka garna pa en lektion i kursen" medan modellen inte hade en
+   enda lektion i kontexten. Den hittade alltsa pa lektionsnummer, och just den
+   raden ligger i grenen UTAN dokument, dar kallgrinden inte kors alls (den
+   kraver utdrag.length). Pa den vag dar assistenten hade minst att komma med
+   var den alltsa helt ogrindad.
+
+   Tva niva'er, och de gor olika saker:
+
+   INDEX, alla 66 lektionernas id och titel, tva kB, ligger ALLTID i prompten.
+   Det ensamt gor ett pahittat lektionsnummer omojligt.
+
+   LEKTIONSTEXT slas upp for hogst tva lektioner, och bara nar fragan faktiskt
+   handlar om metod. En fraga som "vad hande med Unibap i gar" ska inte betala
+   femtusen tokens for en lektion den inte ska anvanda.
+
+   TALEN I KURSMATERIALET AR INTE BOLAGSDATA. Kursen innehaller siffror ur
+   forskning och ur illustrativa exempel. Slapptes de in i kallgrindens underlag
+   skulle "14,3" ur Morningstar-fyndet i 0.1 bli ett godkant tal att skriva ut
+   om Unibaps marginal. Lektionstexten gar darfor ALDRIG in i grindens underlag,
+   och prompten sager rakt ut att tal om bolagen bara far komma ur dokumenten. */
+
+// Ett tak sa prompten inte kan svalla av en lang lektion. Snittet ar 8674
+// tecken; 6000 racker for resonemanget, och det ar resonemanget vi ar ute efter.
+const MAX_LEKTIONSTEXT = 6000;
+const RADBRYT = String.fromCharCode(10);
+
+/* Ett traffat ord i TITELN racker, tre traffar i malet ocksa.
+
+   Tva forsok innan det har satt. Det forsta viktade pa ordlangd, och da foll
+   korta facktermer ut: "vad ar ROIC" traffade ingenting fast 5.1 heter
+   "Marginaler och ROIC". Det andra matchade delstrangar, och da traffade
+   "vad hande med Unibap i gar" tva lektioner om loften och affarsmodeller, for
+   att "gar" star inne i andra ord. ANTALET traffade ORD ar rätt matt. */
+const TITELVIKT = 3;
+const MIN_POANG = 3;
+// Under fyra tecken ar ett ord for trubbigt for att saga nagot om relevans.
+const MIN_TERM = 4;
+
+/* Diakriter bort pa bada sidor. Folk skriver "kassaflode" lika ofta som
+   "kassaflöde", och en lektion far inte bli osynlig for det. Split och join i
+   stallet for regex, lika tydligt och utan escape-fallor. */
+function nyckla(s) {
+  const v = String(s || "").toLowerCase();
+  return v.split("å").join("a").split("ä").join("a").split("ö").join("o");
+}
+
+const ORD = (s) => nyckla(s).split(/[^a-z0-9]+/).filter((o) => o.length >= MIN_TERM);
+
+/* Prefixmatchning at bada hall, sa "ledningen" traffar "ledning" och
+   "kassaflode" traffar "kassaflodet". Boejningar ar regel i svenska, och exakt
+   likhet skulle missa de flesta riktiga fragor. */
+function traffar(ord, term) {
+  for (const o of ord) if (o.startsWith(term) || term.startsWith(o)) return true;
+  return false;
+}
+
+export function valjLektioner(fraga, max = 2) {
+  const t = termer(fraga).map(nyckla).filter((o) => o.length >= MIN_TERM);
+  if (!t.length) return [];
+
+  const funna = [];
+  for (const rad of REGISTER.split(RADBRYT)) {
+    const delar = rad.split(" | ");
+    const id = delar[0];
+    const titel = delar[1] || "";
+    if (!id) continue;
+    const ordITitel = ORD(titel);
+    const ordIRaden = ORD(rad);
+    let poang = 0;
+    for (const term of t) {
+      // Titeln sager vad lektionen AR, malet vad den ger. Titeln vager tyngre.
+      if (traffar(ordITitel, term)) poang += TITELVIKT;
+      else if (traffar(ordIRaden, term)) poang += 1;
+    }
+    if (poang >= MIN_POANG) funna.push({ id: id, titel: titel, poang: poang });
+  }
+
+  return funna
+    .sort((a, b) => b.poang - a.poang || a.id.localeCompare(b.id))
+    .slice(0, max)
+    .map((l) => ({ id: l.id, titel: l.titel, text: String(LEKTIONER[l.id] || "").slice(0, MAX_LEKTIONSTEXT) }));
+}
+
+/** Kursmaterialet som promptavsnitt. Alltid registret, ibland texten. */
+export function kursText(lektioner) {
+  const valda = lektioner || [];
+  let ut = "\n\nKURSENS LEKTIONER, alla som finns:\n" + INDEX +
+    "\n- Hanvisa garna till en lektion, men BARA till ett id som star i listan ovan. Hitta aldrig pa ett lektionsnummer och gissa aldrig en titel.\n";
+  if (valda.length) {
+    ut += "\nMATERIALET UR DE LEKTIONER SOM LIGGER NARMAST FRAGAN:\n\n" +
+      valda.map(function (l) { return l.text; }).join("\n\n---\n\n") +
+      "\n- Kursmaterialet ovan forklarar METOD. Tal om anvandarens bolag tas ALDRIG darifran, bara ur dokumentutdragen.\n";
+  }
+  return ut;
 }
 
 async function getUser(base, secret, token) {
@@ -519,9 +618,16 @@ export async function onRequestPost(context) {
       "- Pasta aldrig att en period saknas nar den finns, och tig aldrig om att den saknas nar den gor det.\n"
     : "";
 
+  /* Kursen som kalla. Registret ligger alltid med, sa ett pahittat
+     lektionsnummer ar omojligt; sjalva lektionstexten bara nar fragan handlar om
+     metod. Se valjLektioner. */
+  const lektioner = valjLektioner(question);
+  tackning.lektioner = lektioner.map(function (l) { return l.id; });
+
   const system = SYSTEM_BAS +
     (utdrag.length ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
     tackningText(tackning) +
+    kursText(lektioner) +
     (teser.length ? SYSTEM_TES : "") +
     "\nAnvandarens innehav:\n" + holdingsText +
     (nyckeltal.text ? "\n\n" + nyckeltal.text : "") +

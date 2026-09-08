@@ -3,12 +3,14 @@
    Kör: node tools/check-fokus.mjs
    Fältnamn är ASCII (niva, mal, brodtext, forklaring, fragor, ratt), inte diakritiska. */
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { byggKurskorpus } from './bygg-kurskorpus.mjs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DIR = join(HERE, '..', 'content', 'fundamental-aktieanalys');
+const CR = String.fromCharCode(13);
 
 const STEG_TYPER = ['intro', 'reading', 'concept', 'dataviz', 'quiz', 'myt'];
 const VISUAL_TYPER = ['rutnat', 'linjediagram', 'jamforelse', 'stapeldiagram', 'flode', 'andel'];
@@ -150,6 +152,18 @@ export function checkFokus(dir = DIR) {
   const files = readdirSync(dir).filter((f) => f.endsWith('.json') && f !== 'course.json').sort();
   const errs = [];
   for (const f of files) checkLesson(f, readFileSync(join(dir, f), 'utf8').replace(/\r\n/g, '\n'), errs);
+
+  /* Kurskorpusen i synk med lektionerna. Fraga har registret over alla
+     lektioner i prompten, och det ensamt gor det omojligt for modellen att
+     hitta pa ett lektionsnummer. Driver filen isar borjar den hanvisa till
+     lektioner som inte langre heter sa. */
+  const korpusfil = join(HERE, '..', 'functions', 'api', '_kurskorpus.js');
+  if (existsSync(korpusfil)) {
+    const paDisk = readFileSync(korpusfil, 'utf8').split(CR).join('');
+    if (paDisk !== byggKurskorpus(dir)) {
+      errs.push('kurskorpus: functions/api/_kurskorpus.js ar ur synk, kor `node tools/bygg-kurskorpus.mjs`');
+    }
+  }
   return errs;
 }
 
