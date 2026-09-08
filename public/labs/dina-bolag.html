@@ -283,6 +283,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
 <style>.wordmark,.housemark{font-family:"Zilla Slab",Georgia,serif;font-weight:700;letter-spacing:.03em}</style>
 <script src="/labs/site-masthead.js"></script>
+<link rel="stylesheet" href="/fraga-svar.css">
+<script src="/fraga-svar.js"></script>
 </head>
 <body>
 
@@ -386,26 +388,7 @@ async function answer(q){
     return;
   }
 
-  const stycken = String(d.answer||'').split(/\n{2,}/).filter(Boolean)
-    .map(function(t){ return '<p>'+esc(t).replace(/\n/g,'<br>')+'</p>'; }).join('');
-  const kallor = (d.kallor||[]).length
-    ? '<div class="foot">Källor: '+d.kallor.map(function(k){
-        return '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">'+esc(k.rubrik||'dokument')+'</a>';
-      }).join(', ')+'</div>'
-    : '<div class="foot">Svarat ur ditt innehav. Inga dokument användes.</div>';
-
-  // Ett tal som inte star i nagon rapport ska aldrig presenteras utan sin
-  // rakning. Har visas exakt vilka tal som gick in och vad som gjordes med dem,
-  // sa lasaren kan gora om den for hand och se att den stammer.
-  const rakning = (d.harlett||[]).length
-    ? '<div class="rakning"><div class="rk-h">Så räknades det</div>'+
-      d.harlett.map(function(h){
-        return '<div class="rk-rad"><span class="rk-m">'+esc(h.metrik)+'</span>'+esc(h.formel)+
-          ((h.kallor||[]).length?'<span class="rk-k">Ur: '+esc(h.kallor.join(' och '))+'</span>':'')+'</div>';
-      }).join('')+'</div>'
-    : '';
-
-  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div>'+stycken+rakning+kallor;
+  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div>'+FragaSvar.render(d);
 }
 function openPanel(){ panel.classList.add('show'); panel.setAttribute('aria-hidden','false'); }
 function closePanel(){ panel.classList.remove('show'); panel.setAttribute('aria-hidden','true'); }

@@ -1,3 +1,4 @@
+import { svarJson, godkann } from './_fraga-fixtur.mjs';
 // Kursen som kalla i Fraga.
 //
 // FELET: prompten sa "Peka garna pa en lektion i kursen" medan modellen inte
@@ -30,7 +31,7 @@ function kv(bucket = {}) {
   };
 }
 
-function stubbaFetch({ holdings = [UNIBAP], svar = 'Ett lugnt svar.' } = {}) {
+function stubbaFetch({ holdings = [UNIBAP], svar = svarJson('Ett lugnt svar.') } = {}) {
   const anropen = [];
   globalThis.fetch = async (url, init) => {
     const u = String(url);
@@ -39,6 +40,7 @@ function stubbaFetch({ holdings = [UNIBAP], svar = 'Ett lugnt svar.' } = {}) {
     if (u.includes('/rest/v1/holdings')) return ok(holdings);
     if (u.includes('/rest/v1/theses')) return ok([]);
     if (u.includes('api.anthropic.com')) {
+      if (JSON.parse(init.body).system.startsWith('Du granskar ett svar')) return ok(godkann());
       anropen.push(JSON.parse(init.body));
       return ok({ content: [{ type: 'text', text: svar }] });
     }

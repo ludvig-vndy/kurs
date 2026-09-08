@@ -1,3 +1,4 @@
+import { svarJson, godkann } from './_fraga-fixtur.mjs';
 // Tackningsredovisningen i Fraga: att svaret alltid sager vad som lastes och
 // vad som saknas, oavsett vilken av de tysta grenarna som togs.
 //
@@ -27,7 +28,7 @@ function kv(bucket = {}) {
 }
 
 /* Stubbar allt utat: Supabase, Anthropic och MFN. */
-function stubbaFetch({ svar = 'Ett lugnt svar.', holdings = [HOLDING], mfn = null } = {}) {
+function stubbaFetch({ svar = svarJson('Ett lugnt svar.'), holdings = [HOLDING], mfn = null } = {}) {
   const sedda = [];
   globalThis.fetch = async (url) => {
     const u = String(url);

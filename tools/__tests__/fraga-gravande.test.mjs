@@ -1,3 +1,4 @@
+import { svarJson, godkann } from './_fraga-fixtur.mjs';
 // Att Fraga far grava utan att borja hitta pa.
 //
 // Piloten beskrev assistenten som toklast. Den var det, men inte pa grund av
@@ -34,7 +35,7 @@ function kv(bucket = {}) {
 
 /* Samma stubb som tackningstesterna, men den FANGAR anropet till modellen. Det
    ar hela poangen har: vi provar vad modellen faktiskt far se. */
-function stubbaFetch({ holdings = [UNIBAP], svar = 'Ett lugnt svar.', felForst = false } = {}) {
+function stubbaFetch({ holdings = [UNIBAP], svar = svarJson('Ett lugnt svar.'), felForst = false } = {}) {
   const anrop = [];
   let raknare = 0;
   globalThis.fetch = async (url, init) => {
@@ -44,6 +45,7 @@ function stubbaFetch({ holdings = [UNIBAP], svar = 'Ett lugnt svar.', felForst =
     if (u.includes('/rest/v1/holdings')) return ok(holdings);
     if (u.includes('/rest/v1/theses')) return ok([]);
     if (u.includes('api.anthropic.com')) {
+      if (JSON.parse(init.body).system.startsWith('Du granskar ett svar')) return ok(godkann());
       anrop.push(JSON.parse(init.body));
       raknare++;
       if (felForst && raknare === 1) return { ok: false, status: 404, text: async () => 'model not found' };
@@ -187,5 +189,5 @@ test('ett tal som inte finns i underlaget slapps fortfarande inte igenom', async
   // Grinden namner sjalv talet den stoppade, sa det som ska vara borta ar
   // PASTAENDET, inte siffran.
   assert.ok(!/forbattrades till 42,7/.test(d.answer), 'ogrundat pastaende kom igenom: ' + d.answer);
-  assert.match(d.answer, /inte star i dokumenten|inte står i dokumenten/);
+  assert.equal(d.blockerat, true);
 });

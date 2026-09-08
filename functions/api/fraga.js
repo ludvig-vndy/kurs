@@ -1,25 +1,13 @@
-/* functions/api/fraga.js  -  Fraga-assistenten, server-side.
-
-   Nyckeln (ANTHROPIC_API_KEY) lever bara har pa edgen, aldrig i klienten.
-
-   Flode, tva steg som i Saljcoachen:
-   1. Routning, utan modellanrop: vilka av ANVANDARENS EGNA bolag namns i fragan.
-      Innehaven ar hogst ett tiotal, sa en namnmatch racker och kostar noll. Namns
-      inget bolag svarar vi pa innehavslistan och kursens metod, utan dokument.
-   2. Svar ur utdrag: bolagens dokument ligger i KV (arkiv:<id>, skrivet av
-      motor/bygg-arkiv.mjs), och modellen far bara de mest relevanta bitarna.
-
-   Sist KALLGRINDEN, portad ur motor/fraga.mjs: varje tal i svaret maste finnas i
-   utdragen modellen fick. Ett svar med ett tal modellen raknat fram sjalv visas
-   inte. Det ar hela skillnaden mellan en assistent och en gissningsmaskin nar
-   fragan galler nagons pengar.
-
-   Faller stangt: utan ANTHROPIC_API_KEY 501, utan giltig session 401, utan
-   matchande Origin 403. */
+/* Fraga-assistenten, server-side.
+   Dokumenthamtning och kodberakningar bygger ett requestlokalt faktaregister.
+   Modellen valjer postreferenser; servern renderar hela faktauppgiften.
+   Fri prosa granskas mekaniskt och separat semantiskt. Det senare ar ett
+   extra skydd, inte en garanti for att varje tolkning ar riktig. */
 
 import { secureJson as json } from "./_lib.js";
-import { ogrundadeTal, hamtaUtdrag, bolagIFragan, hittaTal, termer, periodIFragan } from "./_kallgrind.js";
-import { nyckeltalsUnderlag } from "./_nyckeltal.js";
+import { hamtaUtdrag, bolagIFragan, termer, periodIFragan } from "./_kallgrind.js";
+import { skapaFaktaregister } from "./_faktaregister.js";
+import { SVAR_KONTRAKT, GRANSKA_SYSTEM, lasFaktasvar, godkandGranskning } from "./_faktasvar.js";
 import { hamtaPeriod } from "./_mfn.js";
 import { INDEX, REGISTER, LEKTIONER } from "./_kurskorpus.js";
 
@@ -83,34 +71,12 @@ const SYSTEM_BAS =
   "- Ge ALDRIG finansiell radgivning eller kop/salj-rekommendationer. Forklara mekanik och vad anvandaren sjalv kan titta pa. Besluten ar anvandarens.\n" +
   "- Inga tankstreck. Anvand komma, kolon eller punkt.\n";
 
-/* TVA REGISTER, och skillnaden mellan dem ar hela poangen.
-
-   Fore det har var varje rad i den har prompten ett forbud, elva stycken, och
-   ingen rad sa vad assistenten SKA gora nar den vill grava. Modellen
-   generaliserade forsiktigheten fran talen till hela svaret: den vagade inte
-   resonera, inte peka pa en lucka, inte foresla ett nasta steg. Taket pa fem
-   meningar gjorde resten. Piloten beskrev den som toklast.
-
-   Kallgrinden bryr sig BARA om tal. Allt annat var sjalvpalagt. */
+/* Faktauppgifter och tolkningar har skilda svarstyper. */
 const SYSTEM_DOKUMENT =
-  "\nDu har fatt utdrag ur bolagens egna dokument, och ibland ett NYCKELTAL- och HARLETT-block.\n\n" +
-  "TALEN AR LASTA:\n" +
-  "- Anvand bara tal som ORDAGRANT star i underlaget. Utfor ALDRIG egna berakningar: ingen addition, subtraktion, procentandel eller summering. Du ar munnen, aldrig raknaren.\n" +
-  "- HARLETT-blocket ar redan utraknat i kod. Behovs en forandring, en takt eller en burn rate: las den darifran, ordagrant. Star den inte dar finns den inte, och da sager du det.\n" +
-  "- Var noga med perioder. Ett tal i parentes efter ett annat ar samma period FORRA aret, inte forra kvartalet. Jamfor dem aldrig som om de foljde pa varandra.\n" +
-  "- Skriv talet EXAKT som det star, med samma enhet. Rakna aldrig om KSEK till MSEK eller till kronor, en enhetsomrakning ar ocksa en berakning.\n" +
-  "- Namn kallan i klartext efter pastaendet, med dokumentets rubrik.\n\n" +
-  "RESONEMANGET AR FRITT. Forsiktigheten ovan galler tal, ingenting annat. Var den gravande laskamraten, inte en uppslagsbok:\n" +
-  "- Bind ihop det du ser. Star samma sak i tva dokument, eller sager de emot varandra, sa sag det.\n" +
-  "- Sag vad ett tal betyder for en agare, och vad det INTE sager. Det ar mekanik, inte radgivning.\n" +
-  "- Peka pa vad du skulle vilja se harnast for att komma vidare, och var det brukar sta.\n" +
-  "- Stall garna en foljdfraga tillbaka nar fragan gar att skarpa.\n\n" +
-  "NAR UNDERLAGET INTE RACKER sager du det pa den har formen, aldrig bara att det inte framgar:\n" +
-  "1. vad du faktiskt har, med bolag och period,\n" +
-  "2. vad som saknas for att svara,\n" +
-  "3. vad anvandaren kan gora at det.\n" +
-  "- Namner anvandaren ett artal eller en period hamtar systemet automatiskt bolagets dokument fran den tiden, aven sadana som inte redan lasts in. Saknar du en period: sag att anvandaren kan fraga om just det aret, sa hamtas det da.\n" +
-  "- Gissa aldrig, och rakna aldrig fram ett tal som saknas. Att sakna ett svar ar ett giltigt svar, sa lange du sager VAD du saknar.\n";
+  "\nDu har bolagens dokument och ett faktaregister. Anvand postreferenser for faktauppgifter.\n" +
+  "Resonera om vad underlaget stodjer, vad som talar emot och vad som saknas. " +
+  "Markera tolkningar och ange stodreferenser. Faktapastaenden, aven utan siffror, kraver belagg.\n" +
+  "Skilj perioder, bolag, rapporterat och antaganden. En jamforelse i parentes ar normalt samma period forra aret.\n";
 
 /* Utan dokument ska svaret INTE se ut som ett analyssvar. Fore den har regeln
    svarade Fraga flytande och sakligt aven nar den inte hade en enda rad om
@@ -128,15 +94,8 @@ const SYSTEM_UTAN_DOKUMENT =
    assistenten dem lata likadant har den gjort anvandarens antagande till ett
    faktum, och det ar precis sa en tes slutar bli provad. */
 const SYSTEM_TES =
-  "\nDu har fatt anvandarens EGEN TES for ett eller flera bolag. Om den galler:\n" +
-  "- Tesen ar anvandarens eget resonemang, inte ett dokument. Den sager vad anvandaren tror, aldrig vad som ar sant.\n" +
-  "- Anvand den for att forsta vad anvandaren bryr sig om, och for att peka pa var underlaget stodjer eller motsager den.\n" +
-  "- Presentera aldrig nagot ur tesen som ett faktum eller som nagot bolaget rapporterat.\n" +
-  "- Namner du ett tal ur tesen: skriv ut att det kommer darifran, med orden \"din tes\" eller \"du skrev\".\n" +
-  "- Ge inget omdome om tesen ar bra eller dalig, och sag aldrig kop eller salj.\n";
-
-// Attribution, grovt men mekaniskt: sager svaret var talet kommer ifran?
-const TES_ATTRIBUTION = /(din tes|i tesen|enligt tesen|ur tesen|du skrev|din egen tes)/i;
+  "\nAnvandarens tes ar ett antagande. Aterge den bara via dess postreferens. " +
+  "En tolkning av tesen ska markeras och referera bade till tesen och relevanta dokument.\n";
 
 /* Vad systemet faktiskt gjorde, sagt till modellen.
 
@@ -192,28 +151,9 @@ export function valjModell(arg) {
   return MODEL_SNABB;
 }
 
-/* Kursen som kalla, och skillnaden mellan att peka och att citera.
-
-   Prompten sa "Peka garna pa en lektion i kursen" medan modellen inte hade en
-   enda lektion i kontexten. Den hittade alltsa pa lektionsnummer, och just den
-   raden ligger i grenen UTAN dokument, dar kallgrinden inte kors alls (den
-   kraver utdrag.length). Pa den vag dar assistenten hade minst att komma med
-   var den alltsa helt ogrindad.
-
-   Tva niva'er, och de gor olika saker:
-
-   INDEX, alla 66 lektionernas id och titel, tva kB, ligger ALLTID i prompten.
-   Det ensamt gor ett pahittat lektionsnummer omojligt.
-
-   LEKTIONSTEXT slas upp for hogst tva lektioner, och bara nar fragan faktiskt
-   handlar om metod. En fraga som "vad hande med Unibap i gar" ska inte betala
-   femtusen tokens for en lektion den inte ska anvanda.
-
-   TALEN I KURSMATERIALET AR INTE BOLAGSDATA. Kursen innehaller siffror ur
-   forskning och ur illustrativa exempel. Slapptes de in i kallgrindens underlag
-   skulle "14,3" ur Morningstar-fyndet i 0.1 bli ett godkant tal att skriva ut
-   om Unibaps marginal. Lektionstexten gar darfor ALDRIG in i grindens underlag,
-   och prompten sager rakt ut att tal om bolagen bara far komma ur dokumenten. */
+/* Kursregistret ger routningshjalp. Valda lektioner blir egna kallposter,
+   tydligt skilda fran rapporterade bolagsfakta. Prompten ensam verifierar
+   varken lektionsnummer eller fakta; slutkontraktet kontrollerar referenser. */
 
 // Ett tak sa prompten inte kan svalla av en lang lektion. Snittet ar 8674
 // tecken; 6000 racker for resonemanget, och det ar resonemanget vi ar ute efter.
@@ -290,19 +230,8 @@ export function kursText(lektioner) {
   return ut;
 }
 
-/* AGENS. Fram till nu bestamde rorledningen vad modellen fick se INNAN modellen
-   last en enda rad. En analytiker laser forst och bestammer sedan vad hon ska
-   lasa harnast. Det ar skillnaden mellan en lasare och en utredare.
-
-   Det har ar ofarligt just for att kallgrinden finns, och bara darfor. Varje
-   dokument ett verktyg drar in laggs till i `utdrag`, alltsa i exakt den mangd
-   grinden sedan provar svarets tal mot. Agens utan verifiering ar en
-   gissningsmaskin. Verifiering utan agens ar den lasta lasare vi hade. Det ar
-   kombinationen som ar produkten.
-
-   Lektionstexten ar undantaget: den gar aldrig in i `utdrag`. Kursen innehaller
-   tal ur forskning och ur illustrativa exempel, och de far aldrig kunna skrivas
-   ut som ett bolags siffror. */
+/* Verktyg kan utoka underlaget under samma svar. Nya faktaposter skickas
+   som deltan; slutkontrollen anvander samma requestlokala register. */
 
 const MAX_VARV = 2;              // alltsa hogst tre modellanrop
 const UTDRAG_PER_VERKTYG = 6;
@@ -313,7 +242,7 @@ export const SYSTEM_VERKTYG =
   "- hamta_historik: hamtar bolagets egna dokument fran en aldre period, direkt fran kallan. Anvand den nar fragan galler ett ar du inte har.\n" +
   "- las_lektion: hela texten till en lektion ur registret ovan. Anvand den nar fragan galler metod.\n" +
   "- Hamta hellre en gang for mycket an svara att du inte vet. Men hamta inte i blindo: sag for dig sjalv vad du letar efter forst.\n" +
-  "- Tal ur hamtade dokument ar lika giltiga som tal ur de forsta utdragen. Tal ur en lektion ar det INTE, de galler kursen och aldrig anvandarens bolag.\n";
+  "- Nya postreferenser kommer i verktygsresultaten. Aterge aldrig egna faktatal. Kursmaterial far inte bli bolagsfakta.\n";
 
 export function verktygsDefinitioner() {
   return [
@@ -361,7 +290,14 @@ export function verktygsDefinitioner() {
    det inte gick och kan svara anda. Ett trasigt natverksanrop mitt i en
    utredning ska ge ett grundare svar, aldrig inget svar. */
 export function byggKorVerktyg(ctx) {
-  const { arkiv, env, utdrag, tackning, question } = ctx;
+  const { arkiv, env, utdrag, tackning, question, register } = ctx;
+  const medPoster = (text, lektioner = []) => {
+    if (!register) return text;
+    register.synka({ arkiv, utdrag, lektioner });
+    tackning.faktaregister = register.status();
+    return text + "\nUppdaterad dokumenthorisont efter verktyget (ersatter den tidigare):\n" +
+      JSON.stringify(tackning.bolag) + register.prompt(true);
+  };
   const hitta = (namn) => {
     const n = String(namn || "").toLowerCase();
     return arkiv.find((a) => String(a.namn).toLowerCase().includes(n) || n.includes(String(a.namn).toLowerCase()));
@@ -389,7 +325,7 @@ export function byggKorVerktyg(ctx) {
         const text = LEKTIONER[id];
         if (!text) return "Det finns ingen lektion " + id + ". Anvand ett id ur registret.";
         if (tackning.lektioner.indexOf(id) < 0) tackning.lektioner.push(id);
-        return text.slice(0, MAX_LEKTIONSTEXT);
+        return medPoster(text.slice(0, MAX_LEKTIONSTEXT), [{ id, titel: id, text: text.slice(0, MAX_LEKTIONSTEXT) }]);
       }
 
       const b = hitta(indata.bolag);
@@ -399,7 +335,7 @@ export function byggKorVerktyg(ctx) {
         const nya = hamtaUtdrag(String(indata.sokord || question), [b], UTDRAG_PER_VERKTYG, Date.now(), null);
         if (!nya.length) return "Inget i " + b.namn + "s dokument matchar de orden.";
         lagg(nya);
-        return somText(nya);
+        return medPoster(somText(nya));
       }
 
       if (namn === "hamta_historik") {
@@ -420,10 +356,17 @@ export function byggKorVerktyg(ctx) {
         if (!r.dokument.length) return "Hittade inga dokument fran " + b.namn + " mellan " + period.fran + " och " + period.till + ".";
         b.dokument.push(...r.dokument);
         tackning.hamtade += r.dokument.length;
-        try { await sparaHistorik(env.DATA, b.id, [], r.dokument); } catch (e) { /* cache, inte kritiskt */ }
+        const info = tackning.bolag.find(x => x.namn === b.namn);
+        if (info) Object.assign(info, spann(b.dokument), {
+          dokument: b.dokument.length, hamtade: (info.hamtade || 0) + r.dokument.length,
+        });
+        try {
+          const hist = await env.DATA.get("arkiv:hist:" + b.id, "json");
+          await sparaHistorik(env.DATA, b.id, hist?.dokument || [], r.dokument);
+        } catch (e) { /* cache, inte kritiskt */ }
         const nya = hamtaUtdrag(question, [b], UTDRAG_PER_VERKTYG, Date.now(), period);
         lagg(nya);
-        return "Hamtade " + r.dokument.length + " dokument.\n\n" + somText(nya);
+        return medPoster("Hamtade " + r.dokument.length + " dokument.\n\n" + somText(nya));
       }
 
       return "Okant verktyg: " + namn;
@@ -681,7 +624,7 @@ export async function onRequestPost(context) {
   // Arkivet lyfts ut ur blocket: verktygsloopen nedan behover det for att kunna
   // lasa mer och hamta historik pa modellens egen begaran.
   let utdrag = [], teser = [], arkivet = [];
-  let nyckeltal = { text: "", tillatnaTal: [], harledda: [] };
+  const register = skapaFaktaregister();
 
   const period = periodIFragan(question);
 
@@ -730,8 +673,8 @@ export async function onRequestPost(context) {
           /* HISTORIK PA BEGARAN. Nattjobbet ackumulerar bara det som varit nytt
              sedan bevakningen borjade, sa arkivets horisont ar ung. Racker den
              inte for fragans period hamtar vi primarkallan nu, valjer pa rubrik
-             och hamtar bara vinnarna. Kallgrinden nedan bryr sig inte om varifran
-             utdraget kom, sa rackvidden vaxer utan att garantin forsvagas. */
+             och hamtar bara vinnarna. De hamtade dokumenten registreras sedan
+             med samma kallkedja som det befintliga arkivet. */
           let hamtade = [];
           const har = spann(dokument);
           const glapp = period && period.fran && har.aldst
@@ -771,7 +714,6 @@ export async function onRequestPost(context) {
         // om dokument skulle hamtas hem.
         if (arkiv.length) {
           utdrag = hamtaUtdrag(question, arkiv, period ? MAX_UTDRAG_PERIOD : MAX_UTDRAG, Date.now(), period);
-          nyckeltal = nyckeltalsUnderlag(arkiv);
           tackning.lasta = utdrag.length;
         } else if (!tackning.orsak) {
           tackning.orsak = "inga dokument for bolaget i fragan";
@@ -798,12 +740,12 @@ export async function onRequestPost(context) {
       medArkiv.map(function (b) {
         return "- " + b.namn + ": " + b.dokument + " dokument, " + b.aldst + " till " + b.nyast + ".";
       }).join("\n") +
-      "\n- Galler fragan helt eller delvis en period FORE det aldsta datumet ovan: sag rakt ut att du saknar underlag for den perioden och fran vilket datum du har. Svara sedan bara om det du faktiskt har, och skriv ut vilken period svaret galler.\n" +
+      "\n- Saknas fragans period: beskriv luckan i ett saknas-block utan egna datum. Servern visar horisonten. Verktygsresultat kan uppdatera den har initiala horisonten.\n" +
       "- Pasta aldrig att en period saknas nar den finns, och tig aldrig om att den saknas nar den gor det.\n"
     : "";
 
   /* Kursen som kalla. Registret ligger alltid med, sa ett pahittat
-     lektionsnummer ar omojligt; sjalva lektionstexten bara nar fragan handlar om
+     lektionsnummer kan slas upp; sjalva lektionstexten bara nar fragan handlar om
      metod. Se valjLektioner. */
   const lektioner = valjLektioner(question);
   tackning.lektioner = lektioner.map(function (l) { return l.id; });
@@ -817,19 +759,22 @@ export async function onRequestPost(context) {
      om bolagen" samtidigt som den satt med tre verktyg for att hamta dem. */
   const harUnderlag = utdrag.length > 0 || kanGrava;
 
-  const system = SYSTEM_BAS +
+  register.synka({ arkiv: arkivet, utdrag, holdings, teser, question, lektioner });
+  tackning.faktaregister = register.status();
+
+  const system = SYSTEM_BAS + SVAR_KONTRAKT +
+    (kanGrava ? SYSTEM_VERKTYG : "") +
     (harUnderlag ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
     tackningText(tackning) +
     kursText(lektioner) +
     (teser.length ? SYSTEM_TES : "") +
     "\nAnvandarens innehav:\n" + holdingsText +
-    (nyckeltal.text ? "\n\n" + nyckeltal.text : "") +
     tesText +
     (utdrag.length
       ? "\n\nUtdrag ur bolagens egna dokument:\n\n" + utdrag.map(function (u) {
           return "[" + u.bolag + " · " + u.rubrik + " · " + u.datum + "]\n" + u.text;
         }).join("\n\n---\n\n")
-      : "");
+      : "") + register.prompt();
 
   const modell = valjModell({ period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
   tackning.modell = modell;
@@ -839,9 +784,9 @@ export async function onRequestPost(context) {
   if (kanGrava) {
     svar = await utred(
       apiKey,
-      { model: modell, max_tokens: 1600, system: system + SYSTEM_VERKTYG, fraga: question },
+      { model: modell, max_tokens: 1600, system: system, fraga: question },
       verktygsDefinitioner(),
-      byggKorVerktyg({ arkiv: arkivet, env: env, utdrag: utdrag, tackning: tackning, question: question }),
+      byggKorVerktyg({ arkiv: arkivet, env: env, utdrag: utdrag, tackning: tackning, question: question, register: register }),
       tackning);
   } else {
     svar = await anropa(apiKey, Object.assign({ model: modell }, brev));
@@ -849,89 +794,45 @@ export async function onRequestPost(context) {
 
   /* Varken ett routningsbeslut eller en utredning far ta ner Fraga. Faller
      nagot av dem provas det enkla anropet pa den snabba modellen en gang. Da
-     blir svaret grundare, aldrig borta. */
+     provas samma svarskontrakt och verifiering igen. */
   if (svar.fel) {
     tackning.modell = MODEL_SNABB;
     tackning.modellfall = true;
     svar = await anropa(apiKey, Object.assign({ model: MODEL_SNABB }, brev));
   }
   if (svar.fel) return json({ error: svar.meddelande }, svar.status);
-  const answer = svar.text;
-  if (!answer) return json({ answer: "Jag har inget bra svar pa det just nu.", tackning: tackning });
+  const kontrollerat = lasFaktasvar(svar.text, register);
+  const blockera = orsak => json({
+    answer: "Jag kunde inte verifiera svaret mot underlaget och visar det inte. Prova att avgränsa frågan till en uppgift eller en rapport.",
+    blockerat: true, verifiering: { format: "dataposter-v1", orsak },
+    block: [], kallor: [], tackning,
+  });
+  if (!kontrollerat.ok) return blockera(kontrollerat.orsak);
+  if (svar.stopp === "max_tokens") return blockera("avklippt");
 
-  // Kallgrinden. Bara nar svaret bygger pa dokument: utan utdrag finns inget
-  // underlag att grinda mot, och da ar innehavets egna tal (antal, GAV) sanningen.
-  /* KORS AVEN NAR URVALET VALDE NOLL UTDRAG. Med bara utdrag.length som villkor
-     fanns ett hal sa fort modellen fick verktyg: den kunde ha ett arkiv, lasa en
-     LEKTION i stallet for ett dokument, och sedan pasta vad som helst om bolagets
-     siffror utan att nagon grind kordes. Talen i kursen ar inte bolagsdata. */
-  if (utdrag.length || kanGrava) {
-    // Anvandarens egna tal ar ocksa underlag: antal och GAV star i innehavet,
-    // inte i nagot pressmeddelande, och ett svar om dem far inte blockeras.
-    const egnaTal = [];
-    for (const h of holdings) {
-      if (h.quantity != null) egnaTal.push(Number(h.quantity));
-      if (h.gav != null) egnaTal.push(Number(h.gav));
-      if (h.quantity != null && h.gav != null) egnaTal.push(Number(h.quantity) * Number(h.gav));
-    }
-    /* Horisontdatumen ar ocksa underlag, raknade i kod ur dokumenten. Utan dem
-       blockerade grinden ett svar for att det gjorde precis det horisontregeln
-       beordrar: "sag fran vilket datum du har". Manad och dag ur 2026-08-28
-       lastes som ogrundade tal, och hela svaret foll. */
-    for (const b of medArkiv) {
-      for (const d of [b.aldst, b.nyast]) {
-        for (const bit of String(d || "").split("-")) {
-          const v = Number(bit);
-          if (isFinite(v)) egnaTal.push(v);
-        }
-      }
-    }
-    // Harledda tal ar raknade i kod och ar darfor lika giltigt underlag som ett
-    // tal ur ett dokument. Det ar hela poangen med att rakna dem har i stallet.
-    const ogrundade = ogrundadeTal(answer, utdrag, question, egnaTal.concat(nyckeltal.tillatnaTal));
-
-    // Tal ur tesen ar en tredje sort. De ar inte hittepa: anvandaren skrev dem
-    // sjalv. Men de ar heller inte rapporterade, sa de far bara sagas om svaret
-    // sager var de kommer ifran. Utan den regeln blir ett antagande till ett
-    // faktum bara for att en assistent lasit tillbaka det.
-    const tesTal = new Set();
-    for (const t of teser) for (const x of hittaTal(t.why)) tesTal.add(x.varde);
-    const franTes = [], hittepa = [];
-    for (const t of ogrundade) {
-      ([...tesTal].some(function (v) { return Math.abs(v - t.varde) < 1e-9; }) ? franTes : hittepa).push(t);
-    }
-
-    if (hittepa.length) {
-      return json({
-        answer: "Jag hittade ett svar, men det innehöll tal som inte står i dokumenten jag har (" +
-          hittepa.map(function (t) { return t.rå; }).join(", ") +
-          "). Då visar jag det inte. Fråga gärna om en enskild siffra i stället, så svarar jag ur källan.",
-        blockerat: true,
-        kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url }; }),
-        tackning: tackning,
-      });
-    }
-    if (franTes.length && !TES_ATTRIBUTION.test(answer)) {
-      return json({
-        answer: "Jag hittade ett svar, men det upprepade tal ur din egen tes (" +
-          franTes.map(function (t) { return t.rå; }).join(", ") +
-          ") utan att säga varifrån de kom. Din tes är vad du tror, inte vad bolaget har rapporterat, " +
-          "och de två får inte se likadana ut. Fråga gärna om siffran i rapporterna i stället.",
-        blockerat: true,
-        kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url }; }),
-        tackning: tackning,
-      });
+  // Prosans innebord bevisas inte av korrekta referenser. En separat kontroll
+  // kan stoppa ogrundade fakta, fel kategorisering och motsagelser.
+  // Ett granskarfel far ALDRIG falla tillbaka till ett ogranskat svar.
+  if (kontrollerat.prosa.length) {
+    const granskning = await anropa(apiKey, {
+      model: MODEL_SNABB, max_tokens: 80, system: GRANSKA_SYSTEM,
+      messages: [{ role: "user", content: JSON.stringify({
+        fraga: question, svar: kontrollerat.block, tackning,
+        poster: register.poster(),
+      }) }],
+    });
+    if (granskning.fel || granskning.stopp === "max_tokens" || !godkandGranskning(granskning.text)) {
+      return blockera(granskning.fel ? "granskarfel" : "semantik");
     }
   }
-
-  return json({
-    answer: answer,
-    kallor: utdrag.map(function (u) { return { rubrik: u.rubrik, url: u.url, datum: u.datum }; }),
-    // Underlaget, alltid med: vad som lastes och vad som saknas. Sidan ska kunna
-    // visa granserna bredvid svaret, inte som en fotnot efterat.
-    tackning: tackning,
-    // Uträkningarna med, sa sidan kan visa HUR ett harlett tal uppstod. Ett tal
-    // som inte star i nagon rapport ska aldrig presenteras utan sin rakning.
-    harlett: nyckeltal.harledda,
+  const anvanda = kontrollerat.referenser.map(id => register.get(id));
+  const kallor = [...new Map(kontrollerat.block.flatMap(b => b.kallor)
+    .map(k => [JSON.stringify([k.url, k.citat]), k])).values()];
+  return json({ answer: kontrollerat.answer, block: kontrollerat.block,
+    kallor, tackning, verifiering: { format: "dataposter-v1",
+      prosa: kontrollerat.prosa.length ? "modellgranskad" : "ingen" },
+    harlett: anvanda.filter(p => p.typ === "beraknat").map(p => ({
+      metrik: p.matt, formel: p.formel, kallor: p.kallor.map(k => k.rubrik),
+    })),
   });
 }

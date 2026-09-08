@@ -80,7 +80,8 @@ globalThis.fetch = async (url, init) => {
     if (!r.ok) return r;
     const body = await r.json();
     const t = (body.content || []).map((b) => b.text || '').join('').trim();
-    if (t) ratext.push(t);
+    const arGranskning = JSON.parse(init.body).system.startsWith('Du granskar ett svar');
+    if (t && !arGranskning) ratext.push(t);
     return ok(body);
   }
   return riktigFetch(url, init);
@@ -142,7 +143,7 @@ for (const p of PROV) {
   console.log('  lektioner ' + (t.lektioner && t.lektioner.length ? t.lektioner.join(', ') : '(inga)'));
   console.log('  lasta ' + t.lasta + ' utdrag, hamtade ' + t.hamtade + ' dokument, ' + d.ms + ' ms');
   console.log('\nSVAR:\n' + d.answer);
-  if (/Jag hittade ett svar/.test(d.answer || '') && ratext.length) {
+  if (d.blockerat && ratext.length) {
     console.log('\nGRINDEN STOPPADE DET HAR:\n' + ratext[ratext.length - 1]);
   }
 
@@ -150,6 +151,11 @@ for (const p of PROV) {
   if (t.modellfall) {
     console.log('\n  !! Den djupa modellen gick inte att anvanda. Kontrollera modell-id:t.');
     fel++;
+  }
+  if (d.blockerat) {
+    console.log('  !! Svaret blockerades: ' + (d.verifiering?.orsak || 'okant'));
+    fel++;
+    continue;
   }
   const brist = p.krav(d);
   if (brist) {

@@ -58,6 +58,8 @@ export function utanDatum(text) {
 /** Tal i svaret som inte finns i underlaget. Tom lista = svaret slapps igenom.
     Exakt likhet med flyttalsepsilon, ingen avrundningstolerans: slapper man
     "ungefar ratt" igenom slapper man ocksa igenom modellens egna berakningar. */
+// LEGACY: numerisk forekomstkontroll, INTE en faktaverifiering. Fraga anvander
+// numera _faktaregister.js och _faktasvar.js for sina slutliga svar.
 export function ogrundadeTal(svarstext, utdrag, fraga, egnaTal) {
   const tillatna = new Set();
   for (const u of utdrag) for (const t of hittaTal(u.text)) tillatna.add(t.varde);

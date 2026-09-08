@@ -43,7 +43,7 @@
 // som 27. Enhetsankaret nedan raddade oss fran att faktiskt SVARA 27, men det
 // var tur, inte design.
 const MELLANSLAG = '[ \\u00a0\\u202f]';
-const TAL = `(-?\\d{1,3}(?:${MELLANSLAG}\\d{3})+(?:,\\d+)?|-?\\d+(?:,\\d+)?)`;
+const TAL = `([-\u2212]?\\d{1,3}(?:${MELLANSLAG}\\d{3})+(?:,\\d+)?|[-\u2212]?\\d+(?:,\\d+)?)`;
 // Jamforelsetalet star ofta mellan talet och enheten: "606,3 (521,7) MSEK".
 const PARENTES = '(?:\\s*\\([^)]{0,40}\\))?';
 /* TUSENTALSENHETERNA MASTE MED. Ankaret kande bara miljonenheter, och smabolag
@@ -59,7 +59,7 @@ const PARENTES = '(?:\\s*\\([^)]{0,40}\\))?';
 const ENHET = '(KSEK|TSEK|TKR|KEUR|GSEK|MDSEK|MDKR|MSEK|MKR|MNKR|MEUR|MUSD|miljoner euro|miljoner kronor|miljarder kronor)';
 
 function matt(fore) {
-  return new RegExp(`(?:${fore})[^0-9\\-]{0,24}${TAL}${PARENTES}\\s*${ENHET}`, 'i');
+  return new RegExp(`(?:${fore})[^0-9\\-\u2212]{0,24}${TAL}${PARENTES}\\s*${ENHET}`, 'i');
 }
 
 /* Metriker vi kan lasa ut.
@@ -172,7 +172,7 @@ export function periodFor(rubrik, text) {
 }
 
 function tolkaTal(rå) {
-  const n = parseFloat(String(rå).replace(/[   ]/g, '').replace(',', '.'));
+  const n = parseFloat(String(rå).replace(/[   ]/g, '').replace(/\u2212/g, '-').replace(',', '.'));
   return isFinite(n) ? n : null;
 }
 
@@ -223,15 +223,20 @@ export function extraheraNyckeltal(bolagsarkiv) {
       for (const [faltId, m] of Object.entries(FRAN_FAKTA)) {
         const f = dok.fakta[faltId];
         if (!f) continue;
+        const belagg = dok.kallor?.[faltId] || {};
         const norm = normaliseraFakta(f.nu, f.enhet);
         if (!norm) continue;
-        const nyckel = `${ark.namn}|${m.id}|${period.ar}|${period.kvartal}|${period.langd}`;
+        const nyckel = JSON.stringify([ark.id || ark.namn, m.id, period.ar, period.kvartal, period.langd]);
         if (funna.has(nyckel)) continue;
         funna.set(nyckel, {
           metrik: m.id, typ: m.typ,
           ar: period.ar, kvartal: period.kvartal, langd: period.langd,
           varde: norm.varde, enhet: norm.enhet,
           rubrik: dok.rubrik, url: dok.url, bolag: ark.namn,
+          bolagId: ark.id || ark.namn,
+          original: { varde: f.nu, enhet: f.enhet },
+          kalla: { url: dok.url, rubrik: dok.rubrik, datum: dok.datum,
+            citat: belagg.citat || '', sida: belagg.sida || null, falt: faltId, typ: 'pdf' },
         });
       }
     }
@@ -255,13 +260,17 @@ export function extraheraNyckeltal(bolagsarkiv) {
         // gett en tusenfaldig "forandring".
         const norm = normaliseraFakta(varde, träff[2]);
         if (!norm) continue;
-        const nyckel = `${ark.namn}|${m.id}|${period.ar}|${period.kvartal}|${period.langd}`;
+        const nyckel = JSON.stringify([ark.id || ark.namn, m.id, period.ar, period.kvartal, period.langd]);
         if (funna.has(nyckel)) continue;
         funna.set(nyckel, {
           metrik: m.id, typ: m.typ,
           ar: period.ar, kvartal: period.kvartal, langd: period.langd,
           varde: norm.varde, enhet: norm.enhet,
           rubrik: dok.rubrik, url: dok.url, bolag: ark.namn,
+          bolagId: ark.id || ark.namn,
+          original: { varde, enhet: träff[2] },
+          kalla: { url: dok.url, rubrik: dok.rubrik, datum: dok.datum,
+            citat: text, start: träff.index, slut: träff.index + träff[0].length, typ: 'text' },
         });
       }
     }
@@ -301,7 +310,7 @@ const kvartalSteg = (senare, tidigare) =>
 function jamforbar(senare, tidigare) {
   // Tva bolags tal ar aldrig jamforbara med varandra, hur lika perioderna an
   // ser ut. Utan den har raden kunde en utveckling raknas mellan bolag.
-  if (senare.bolag !== tidigare.bolag) return false;
+  if (bolagsnyckel(senare) !== bolagsnyckel(tidigare)) return false;
   if (senare.enhet !== tidigare.enhet) return false;
   if (senare.typ === 'flode' && senare.langd !== tidigare.langd) return false;
   return true;
@@ -309,6 +318,7 @@ function jamforbar(senare, tidigare) {
 
 function bygg(sort, metrik, tidigare, senare) {
   return {
+    bolagId: senare.bolagId, indata: [tidigare, senare],
     sort, metrik, bolag: senare.bolag, typ: senare.typ, enhet: senare.enhet,
     fran: etikett(tidigare), till: etikett(senare),
     franVarde: tidigare.varde, tillVarde: senare.varde,
@@ -325,6 +335,8 @@ const KVOTER = [
   { id: 'bruttomarginal', tal: 'bruttoresultat', namnare: 'intäkter' },
 ];
 const MAX_KVOT = 4;
+const bolagsnyckel = (n) => n.bolagId || n.bolag;
+const serienyckel = (bolag, metrik) => JSON.stringify([bolag, metrik]);
 
 /** Harledningar ur nyckeltalsserien.
 
@@ -349,7 +361,7 @@ export function harled(nyckeltal) {
      tvars over bolagsgransen. */
   const perMetrik = new Map();
   for (const n of nyckeltal) {
-    const nyckel = n.bolag + '|' + n.metrik;
+    const nyckel = serienyckel(bolagsnyckel(n), n.metrik);
     if (!perMetrik.has(nyckel)) perMetrik.set(nyckel, []);
     perMetrik.get(nyckel).push(n);
   }
@@ -399,19 +411,20 @@ export function harled(nyckeltal) {
      ANNAT bolags omsattning och presenteras som en rorelsemarginal. Talet gick
      sedan in i tillatnaTal, sa kallgrinden godkande det: fel siffra, rätt
      kallor, och ingenting som kunde upptacka det langre fram. */
-  const bolagen = [...new Set(nyckeltal.map((n) => n.bolag))];
+  const bolagen = [...new Set(nyckeltal.map(bolagsnyckel))];
   for (const bolag of bolagen) {
     for (const k of KVOTER) {
-      const taljare = perMetrik.get(bolag + '|' + k.tal) || [];
-      const namnare = perMetrik.get(bolag + '|' + k.namnare) || [];
+      const taljare = perMetrik.get(serienyckel(bolag, k.tal)) || [];
+      const namnare = perMetrik.get(serienyckel(bolag, k.namnare)) || [];
       let n = 0;
       for (const t of taljare) {
         if (n >= MAX_KVOT) break;
         const nam = namnare.find((x) =>
-          x.bolag === t.bolag &&
+          bolagsnyckel(x) === bolagsnyckel(t) &&
           x.ar === t.ar && x.kvartal === t.kvartal && x.langd === t.langd && x.enhet === t.enhet);
         if (!nam || !nam.varde) continue;
         const post = {
+          bolagId: t.bolagId, indata: [t, nam],
           sort: 'kvot', metrik: k.id, bolag: t.bolag, period: etikett(t), enhet: t.enhet,
           procent: Math.round((t.varde / nam.varde) * 1000) / 10,
           talVarde: t.varde, namnarVarde: nam.varde,

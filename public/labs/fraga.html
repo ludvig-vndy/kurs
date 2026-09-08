@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fråga · Delägaren</title>
-<meta name="description" content="Fråga AI om dina bolag och kursen. Svar med källa, aldrig påhittade tal.">
+<meta name="description" content="Fråga om dina bolag och kursen. Se källor, beräkningar och vilket underlag som saknas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -106,6 +106,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
 <style>.wordmark,.housemark{font-family:"Zilla Slab",Georgia,serif;font-weight:700;letter-spacing:.03em}</style>
 <script src="/labs/site-masthead.js"></script>
+<link rel="stylesheet" href="/fraga-svar.css">
+<script src="/fraga-svar.js"></script>
 </head>
 <body>
 
@@ -116,7 +118,7 @@
     <div data-reveal>
       <div class="kicker">Fråga · dina bolag och kursen</div>
       <h1 class="h-title">Fråga</h1>
-      <p class="standfirst">Svar med källa och siffrorna synliga, aldrig påhittade tal. Fråga om dina egna bolag eller om något ur kursen. Ligger frågan utanför det säger den ifrån hellre än gissar.</p>
+      <p class="standfirst">Fråga om dina egna bolag eller om något ur kursen. Se källorna bakom uppgifterna, hur beräkningarna gjordes och vad som är en tolkning.</p>
     </div>
 
     <form class="askhero" id="askform" data-reveal>
@@ -129,7 +131,7 @@
     <div class="seed" data-reveal id="seed"></div>
 
     <div class="thread" id="thread">
-      <p class="intro" data-reveal>Jag känner dina sex innehav och ditt skäl för vart och ett, och hela kursen. Fråga vad du vill.</p>
+      <p class="intro" data-reveal>Nämn bolaget och perioden du vill undersöka. Vid svaret ser du vilket underlag som användes och vad som saknas.</p>
     </div>
   </div>
 </main>
@@ -145,7 +147,7 @@
         <a href="/labs/dina-bolag.html">Dina bolag</a>
       </nav>
     </div>
-    <p class="site-foot__fine">Prototyp · exempeldata · fiktiva bolag, påhittade siffror. Information i utbildningssyfte, aldrig köp- eller säljråd.</p>
+    <p class="site-foot__fine">Information i utbildningssyfte, aldrig köp- eller säljråd.</p>
   </div>
 </footer>
 
@@ -200,7 +202,7 @@ async function ask(q){
     const r = await fetch('/api/fraga',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q, token:token})});
     const d = await r.json().catch(function(){return{};});
     if(!r.ok){ aEl.innerHTML = '<p><span class="lab">'+(r.status===501?'ej på':'fel')+'</span>'+esc(d.error||'Något gick fel.')+'</p>'; return; }
-    aEl.innerHTML = fmt(d.answer||'') + (token?'':'<div class="foot"><a href="/labs/inbjudan.html">Logga in för att fråga om ditt innehav →</a></div>');
+    aEl.innerHTML = FragaSvar.render(d) + (token?'':'<div class="foot"><a href="/labs/inbjudan.html">Logga in för att fråga om ditt innehav →</a></div>');
   }catch(e){ aEl.innerHTML = '<p><span class="lab">fel</span>Kunde inte nå tjänsten just nu.</p>'; }
 }
 document.getElementById('askform').addEventListener('submit',e=>{e.preventDefault();const v=inp.value.trim();if(v){ask(v);inp.value='';}});

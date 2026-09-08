@@ -1,3 +1,4 @@
+import { svarJson, godkann, postSvar } from './_fraga-fixtur.mjs';
 // Fraga far hamta sjalv, och kallgrinden tacker det den hamtade.
 //
 // Fram till nu bestamde rorledningen vad modellen fick se INNAN modellen last en
@@ -51,10 +52,11 @@ function stubbaFetch(skript, { mfn = null } = {}) {
     if (u.includes('/rest/v1/holdings')) return ok([UNIBAP]);
     if (u.includes('/rest/v1/theses')) return ok([]);
     if (u.includes('api.anthropic.com')) {
+      if (JSON.parse(init.body).system.startsWith('Du granskar ett svar')) return ok(godkann());
       const kropp = JSON.parse(init.body);
       anropen.push(kropp);
       const nasta = skript[Math.min(i++, skript.length - 1)];
-      return ok(nasta);
+      return ok(typeof nasta === 'function' ? nasta(kropp) : nasta);
     }
     if (u.includes('mfn.se')) {
       if (mfn == null) return { ok: false, status: 500, text: async () => '' };
@@ -65,7 +67,7 @@ function stubbaFetch(skript, { mfn = null } = {}) {
   return anropen;
 }
 
-const text = (t) => ({ content: [{ type: 'text', text: t }], stop_reason: 'end_turn' });
+const text = (t) => ({ content: [{ type: 'text', text: svarJson(t) }], stop_reason: 'end_turn' });
 const verktyg = (name, input) => ({
   content: [{ type: 'tool_use', id: 'tu_1', name, input }],
   stop_reason: 'tool_use',
@@ -106,7 +108,7 @@ test('sista varvet gar utan verktyg, sa den tvingas svara', async () => {
   const anropen = stubbaFetch([
     verktyg('las_mer', { bolag: 'Unibap Space Solutions', sokord: 'kassa' }),
     verktyg('las_mer', { bolag: 'Unibap Space Solutions', sokord: 'omsattning' }),
-    text('Nettoomsattningen uppgick till 12 400 KSEK.'),
+    kropp => postSvar(kropp, p => p.typ === 'dokument' && p.text.includes('12 400')),
   ]);
   const r = await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) });
   const d = await r.json();
@@ -123,17 +125,41 @@ test('sista varvet gar utan verktyg, sa den tvingas svara', async () => {
    blockerat. */
 test('ett tal ur ett hamtat dokument slapps igenom', async () => {
   const mfn = {
-    flode: '<a href="/beq/a/unibap/bokslutskommunike-2022-bb22">Bokslutskommunike 2022</a><time datetime="2022-02-10">',
-    dokument: '<article><h1>Bokslutskommunike 2022</h1><p>Nettoomsattningen for helaret uppgick till 50 077 KSEK.</p></article>',
+    flode: '<div class="short-item compressible"><span class="compressed-date">2023-02-10</span><a class="title-link item-link" href="/beq/a/unibap/bokslutskommunike-2022-bb22">Bokslutskommunike 2022</a></div>',
+    dokument: '<article><h1>Bokslutskommunike 2022</h1><p>Nettoomsattningen for helaret uppgick till 50 077 KSEK.</p>' +
+      '<p>Rapporten beskriver verksamhetens utveckling under perioden. Bolaget redovisar också vilka investeringar som har genomförts och vilka osäkerheter som finns inför kommande rapportperiod.</p></article>',
   };
   const anropen = stubbaFetch([
     verktyg('hamta_historik', { bolag: 'Unibap Space Solutions', fran: '2022-01-01', till: '2022-12-31' }),
-    text('Nettoomsattningen for helaret uppgick till 50 077 KSEK enligt bokslutskommunikén 2022.'),
+    kropp => postSvar(kropp, p => p.typ === 'dokument' && p.text.includes('50 077')),
   ], { mfn });
   const r = await anrop('hur stor var omsattningen for Unibap', { ...ENV, DATA: kv(ARKIV()) });
   const d = await r.json();
+  assert.notEqual(d.blockerat, true);
   assert.deepEqual(d.tackning.verktyg, ['hamta_historik']);
+  assert.equal(d.tackning.hamtade, 1);
   assert.match(d.answer, /50 077/, 'talet ur det hamtade dokumentet blockerades: ' + d.answer);
+});
+
+test('historik som modellen hamtar ger beraknade poster med kallkedja i samma svar', async () => {
+  // Illustrativa testtal, inte uppgifter om det verkliga bolaget.
+  const mfn = {
+    flode: '<div class="short-item compressible"><span class="compressed-date">2023-02-10</span><a class="title-link item-link" href="/beq/a/unibap/bokslutskommunike-q4-2022-bb22" title="Q4 2022">Q4 2022</a></div>',
+    dokument: '<article><h1>Q4 2022</h1><p>Nettoomsättningen uppgick till 100 MSEK. Rörelseresultatet uppgick till -20 MSEK.</p>' +
+      '<p>Rapporten beskriver verksamhetens utveckling under perioden och redovisar investeringar. Företaget kommenterar också vilka osäkerheter som finns inför kommande rapportperiod.</p></article>',
+  };
+  stubbaFetch([
+    verktyg('hamta_historik', { bolag: 'Unibap Space Solutions', fran: '2022-01-01', till: '2022-12-31' }),
+    kropp => postSvar(kropp, p => p.typ === 'beraknat' && p.matt === 'rörelsemarginal'),
+  ], { mfn });
+  const d = await (await anrop('hur ser marginalen ut for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  assert.notEqual(d.blockerat, true);
+  assert.match(d.answer, /-20 procent/);
+  assert.match(d.answer, /Q4 2022/);
+  assert.equal(d.block[0].indata.length, 2);
+  assert.equal(d.block[0].kallor.length, 2);
+  assert.equal(d.tackning.hamtade, 1);
+  assert.equal(d.tackning.bolag[0].aldst, '2023-02-10');
 });
 
 /* Andra halvan av samma egenskap: rackvidden vaxte, garantin gjorde det inte. */
@@ -178,11 +204,12 @@ test('ett verktyg som inte finns stoppar inte svaret', async () => {
 test('en hamtning som faller ger ett grundare svar, aldrig inget', async () => {
   stubbaFetch([
     verktyg('hamta_historik', { bolag: 'Unibap Space Solutions', fran: '2019-01-01', till: '2019-12-31' }),
-    text('Jag kom inte at 2019. Det jag har borjar 2026-08-28.'),
+    text('Hamtningen misslyckades. Jag saknar underlag for den efterfragade perioden.'),
   ]); // mfn saknas -> hamtningen faller
   const r = await anrop('hur gick Unibap 2019', { ...ENV, DATA: kv(ARKIV()) });
   const d = await r.json();
-  assert.match(d.answer, /2019/);
+  assert.match(d.answer, /Hamtningen misslyckades/);
+  assert.equal(d.tackning.period.fran, '2019-01-01');
 });
 
 test('ett okant bolagsnamn far ett svar som sager vilka som finns', async () => {
