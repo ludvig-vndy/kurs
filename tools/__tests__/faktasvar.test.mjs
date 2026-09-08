@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { skapaFaktaregister } from '../../functions/api/_faktaregister.js';
-import { lasFaktasvar } from '../../functions/api/_faktasvar.js';
+import { lasFaktasvar, otillatenProsa } from '../../functions/api/_faktasvar.js';
 
 const dokument = {
   url: 'https://example.test/alfa/q2', rubrik: 'Q2 2026', datum: '2026-08-01',
@@ -204,5 +204,46 @@ test('stora arkiv far inte tranga undan indata, berakningar, egna uppgifter och 
   }
   for (const p of r.poster().filter(p => p.typ === 'beraknat')) {
     assert.ok(p.indata.every(id => r.get(id)?.typ === 'rapporterat'));
+  }
+});
+
+/* SMA RAKNEORD FAR STA ENSAMMA.
+   Hittat skarpt. Prosagrinden fallde varje rakneord, ocksa "de fyra kvartalen
+   tacker kalenderaret", alltsa vanlig svenska helt utan pastaende om pengar.
+   Provkorningen mot riktiga API:t foll pa exakt den meningen: modellen hade
+   upptackt att bolaget haft ett forlangt rakenskapsar och forklarade det
+   korrekt, och blockerades for ordet "fyra".
+
+   Halva poangen med testerna nedan ar den andra halvan: ett BELOPP kraver en
+   enhet eller ett storleksord, och ingetdera slapps igenom. */
+test('rakneord far racka antal', () => {
+  assert.equal(otillatenProsa('De fyra kvartalen tillsammans täcker kalenderåret.'), false);
+  assert.equal(otillatenProsa('Jag har två rapporter från bolaget.'), false);
+  assert.equal(otillatenProsa('Tre av bolagen saknar underlag för perioden.'), false);
+});
+
+test('rakneord far aldrig bara en enhet', () => {
+  for (const t of [
+    'Marginalen var fem procent.',
+    'Bolaget delade ut tre kronor.',
+    'Aktien steg tre gånger.',
+    'Resultatet forbattrades med två öre.',
+  ]) assert.equal(otillatenProsa(t), true, 'slapptes igenom: ' + t);
+});
+
+test('storleksord och sammansatta rakneord stoppas som forut', () => {
+  for (const t of [
+    'Kassan uppgick till tre miljarder.',
+    'Kassan var tvåhundra miljoner kronor.',
+    'Vinsten steg med tjugofem procent.',
+    'Marginalen låg kring trettio.',
+    'Bolaget har en miljard i kassan.',
+  ]) assert.equal(otillatenProsa(t), true, 'slapptes igenom: ' + t);
+});
+
+/* Ett rakneord som inte racker nagot ar inte ett antal, det ar ett varde. */
+test('ett rakneord sist i satsen ar ett belopp, inte ett antal', () => {
+  for (const t of ['Kassan är noll.', 'Kassan är fem.', 'Antalet rapporter jag har är tre.']) {
+    assert.equal(otillatenProsa(t), true, 'slapptes igenom: ' + t);
   }
 });

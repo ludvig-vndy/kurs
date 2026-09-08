@@ -79,7 +79,13 @@ globalThis.fetch = async (url, init) => {
     const r = await riktigFetch(url, init);
     if (!r.ok) return r;
     const body = await r.json();
-    const t = (body.content || []).map((b) => b.text || '').join('').trim();
+    /* Svaret kommer numera som ett verktygsanrop, inte som text. Fangades bara
+       texten sag man ingenting alls nar prosagrinden fallde ett block, och da
+       gar det inte att avgora om grinden hade ratt eller ar for strang. */
+    const svara = (body.content || []).find((b) => b.type === 'tool_use' && b.name === 'svara');
+    const t = svara
+      ? JSON.stringify(svara.input, null, 2)
+      : (body.content || []).map((b) => b.text || '').join('').trim();
     const arGranskning = JSON.parse(init.body).system.startsWith('Du granskar ett svar');
     if (t && !arGranskning) ratext.push(t);
     return ok(body);

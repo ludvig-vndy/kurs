@@ -92,13 +92,32 @@ for (const word of ["noll","två","tre","fyra","fem","sju","åtta","nio","tio","
 for (const suffix of ['', 'ton', 'tio']) NUMBER_WORDS.add('se' + 'x' + suffix);
 const SAMMANSATT = new RegExp('^(?:' + [...NUMBER_WORDS].sort((a, b) => b.length - a.length).join('|') + ')+(?:en|ett)?(?:kronor|krona|ore|procent|aktier)?$', 'u');
 
+/* SMA RAKNEORD FAR STA ENSAMMA. Fangade regeln varje rakneord fallde den ocksa
+   "de fyra kvartalen tacker kalenderaret", alltsa vanlig svenska helt utan
+   pastaende om pengar. Provkorningen mot riktiga API:t foll pa just den
+   meningen, och en grind som gor det gor produkten obrukbar.
+
+   Garantin ar orord: ett BELOPP kraver en enhet eller ett storleksord, och bada
+   ar fortfarande bannlysta. "tre miljarder", "trettio procent", "tre kronor"
+   och "tjugofem" stoppas som forut. Det som slapps igenom ar rakneord upp till
+   tolv UTAN enhet, alltsa antal rapporter och kvartal, aldrig summor. */
+const RAKNEORD = new Set(['noll', 'två', 'tre', 'fyra', 'fem', 'se' + 'x', 'sju', 'åtta', 'nio', 'tio', 'elva', 'tolv']);
+const ENHET_EFTER = new RegExp('\\b(?:' + [...RAKNEORD].join('|') +
+  ')\\s+(?:kron(?:a|or)|öre|procent|euro|dollar|cent|msek|ksek|tsek|mkr|mdkr|gånger)\\b', 'u');
+/* Och det maste racka NAGOT. Star rakneordet sist i satsen ar det inget antal
+   langre utan ett varde: "kassan ar noll" och "kassan ar fem" ar pastaenden om
+   pengar, "de fyra kvartalen" ar det inte. */
+const UTAN_RAKNAT = new RegExp('\\b(?:' + [...RAKNEORD].join('|') + ')\\b(?!\\s+\\p{L})', 'u');
+
 export function otillatenProsa(text) {
   if (typeof text !== 'string' || !text.trim() || text.length > 1800) return true;
   const s = text.normalize('NFKC').replace(/\p{Cf}/gu, '').toLowerCase();
   if (/[\p{N}\u2013\u2014<>\[\]{}]/u.test(s) || /https?:|&#|\\u[0-9a-f]/i.test(s)) return true;
   if (/\b(?:en|ett)\s+(?:enda\s+)?(?:krona|kronor|öre|procent|euro|dollar|cent|msek|ksek|mkr)\b/u.test(s)) return true;
+  if (ENHET_EFTER.test(s) || UTAN_RAKNAT.test(s)) return true;
   const ord = s.match(/\p{L}+/gu) || [];
-  return ord.some(w => SAMMANSATT.test(w) || NUMBER_SCALE.test(w));
+  // Sammansatta rakneord ("tjugofem") ar aldrig antal, alltid belopp eller andel.
+  return ord.some(w => NUMBER_SCALE.test(w) || (SAMMANSATT.test(w) && !RAKNEORD.has(w)));
 }
 
 const kallorFor = p => (p.kallor || []).map(k => ({ ...k, citat: k.citat || p.text || '' }));
