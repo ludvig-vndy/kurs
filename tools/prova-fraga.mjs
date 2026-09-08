@@ -39,7 +39,9 @@ const BUCKET = {
     id: 'unibap',
     namn: 'Unibap Space Solutions',
     dokument: [{
-      url: 'https://mfn.se/a/unibap/delarsrapport-januari-juni-2026',
+      // Riktig MFN-form: hamtaPeriod harleder bolagets slug ur den har URL:en, sa
+      // en pahittad form gor att historikhamtningen tyst inte hittar nagot.
+      url: 'https://mfn.se/beq/a/unibap/delarsrapport-januari-juni-2026-a1b2c3d4',
       rubrik: 'Delarsrapport januari juni 2026',
       datum: '2026-08-28',
       bitar: [

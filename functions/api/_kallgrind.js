@@ -23,6 +23,38 @@ export function hittaTal(text) {
   return ut;
 }
 
+/* Datum ar inte pastaenden om pengar.
+
+   Provkorningen mot riktiga API:t foll pa precis det. Fragan gallde helaret
+   2022, modellen hamtade perioden och skrev ut vilken period den hamtat, och
+   grinden stoppade hela svaret for att 12 och 31 ur "2022-12-31" lastes som
+   ogrundade tal. Samma sak hade redan hant med horisontdatumen, som
+   horisontregeln UTTRYCKLIGEN beordrar modellen att skriva ut.
+
+   Det ar det varsta felet en grind kan gora: den blockerade ett sant svar for
+   att det gjorde som det blivit tillsagt. Datum plockas darfor bort ur svaret
+   innan talen letas fram.
+
+   Bara ur SVARET, aldrig ur underlaget: underlagets tal ar en tillatelselista,
+   och att stada den skulle bara gora grinden strangare av misstag. */
+const MANADER =
+  '(januari|februari|mars|april|maj|juni|juli|augusti|september|oktober|november|december|' +
+  'jan|feb|mar|apr|jun|jul|aug|sep|sept|okt|nov|dec)';
+
+const DATUMFORMER = [
+  /\b\d{4}-\d{2}-\d{2}\b/gi,                                    // 2022-12-31
+  /\b\d{1,2}\/\d{1,2}(?:[ -]\d{2,4})?\b/gi,                     // 31/12 och 31/12-2022
+  new RegExp('\\b\\d{1,2}\\.? ' + MANADER + '(?: \\d{4})?\\b', 'gi'), // 31 december 2022
+  new RegExp('\\b' + MANADER + ' \\d{4}\\b', 'gi'),             // december 2022
+  /\bQ[1-4][ -]?\d{4}\b/gi,                                     // Q3 2022
+];
+
+export function utanDatum(text) {
+  let ut = String(text || '');
+  for (const re of DATUMFORMER) ut = ut.replace(re, ' ');
+  return ut;
+}
+
 /** Tal i svaret som inte finns i underlaget. Tom lista = svaret slapps igenom.
     Exakt likhet med flyttalsepsilon, ingen avrundningstolerans: slapper man
     "ungefar ratt" igenom slapper man ocksa igenom modellens egna berakningar. */
@@ -37,7 +69,7 @@ export function ogrundadeTal(svarstext, utdrag, fraga, egnaTal) {
   // Arttal och sma ordningstal (kvartal, halvar) ar inte pastaenden om pengar.
   const ofarligt = (v) => v <= 4 || (v >= 1900 && v <= 2100 && Number.isInteger(v));
   const lista = [...tillatna];
-  return hittaTal(svarstext).filter(
+  return hittaTal(utanDatum(svarstext)).filter(
     (t) => !ofarligt(t.varde) && !lista.some((v) => Math.abs(v - t.varde) < 1e-9)
   );
 }
