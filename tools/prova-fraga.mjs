@@ -67,7 +67,7 @@ const DATA = {
    Modellens RATEXT sparas ocksa. Blockerar grinden ett svar ser man bara vilka
    tal som foll, aldrig meningen de stod i, och da gar det inte att avgora om
    grinden hade ratt eller ar for strang. */
-const ratext = [];
+const ratext = [], domen = [];
 const riktigFetch = globalThis.fetch;
 globalThis.fetch = async (url, init) => {
   const u = String(url);
@@ -87,7 +87,10 @@ globalThis.fetch = async (url, init) => {
       ? JSON.stringify(svara.input, null, 2)
       : (body.content || []).map((b) => b.text || '').join('').trim();
     const arGranskning = JSON.parse(init.body).system.startsWith('Du granskar ett svar');
-    if (t && !arGranskning) ratext.push(t);
+    // Granskarens skal nar aldrig anvandaren, men utan det ar "semantik" ett
+    // svart hal i provkorningen: man ser att nagot fallde, aldrig vad.
+    if (arGranskning) domen.push(t);
+    else if (t) ratext.push(t);
     return ok(body);
   }
   return riktigFetch(url, init);
@@ -108,6 +111,7 @@ async function fraga(text) {
   });
   const t0 = Date.now();
   ratext.length = 0;
+  domen.length = 0;
   const r = await onRequestPost({ request, env: ENV });
   const d = await r.json();
   return { status: r.status, ms: Date.now() - t0, ...d };
@@ -160,6 +164,7 @@ for (const p of PROV) {
   }
   if (d.blockerat) {
     console.log('  !! Svaret blockerades: ' + (d.verifiering?.orsak || 'okant'));
+    if (domen.length) console.log('  granskarens skal: ' + domen[domen.length - 1]);
     fel++;
     continue;
   }
