@@ -2,6 +2,8 @@
    Inga uppgifter eller id:n accepteras fran klienten/modellens slutliga svar. */
 import { extraheraNyckeltal, harled } from './_nyckeltal.js';
 
+const MAX_KURSCITAT = 900;
+
 const period = n => n.langd === 1 ? `Q${n.kvartal} ${n.ar}` : `${n.langd} kvartal till och med Q${n.kvartal} ${n.ar}`;
 const tal = n => String(n).replace('.', ',');
 const faktanyckel = n => JSON.stringify([n.bolagId, n.metrik, n.ar, n.kvartal, n.langd, n.varde, n.enhet, n.kalla]);
@@ -63,7 +65,11 @@ export function skapaFaktaregister() {
       if (t.why) lagg({ typ: 'antagande', bolag: t.namn, rubrik: 'Din tes, inte rapporterade fakta', text: t.why, kallor: [] });
     }
     for (const l of lektioner) {
-      if (l.text) lagg({ typ: 'kurs', lektion: l.id, rubrik: l.titel, text: l.text,
+      /* Ett citat, inte hela lektionen. Utan taket blev svaret pa "vad ar
+         ROIC" en vagg av text: sextusen tecken lektion fore de tre meningar
+         som faktiskt svarade. Modellen har anda hela lektionen i prompten via
+         kursText, sa taket ror bara det som citeras. */
+      if (l.text) lagg({ typ: 'kurs', lektion: l.id, rubrik: l.titel, text: String(l.text).slice(0, MAX_KURSCITAT),
         kallor: [{ url: '/fokus/' + encodeURIComponent(l.id), rubrik: l.titel || l.id, typ: 'kurs' }] });
     }
     // Endast serveragda exempel. Fragas API tar aldrig emot listan fran klienten.
