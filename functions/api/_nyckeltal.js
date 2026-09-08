@@ -207,7 +207,11 @@ function normaliseraFakta(nu, rå) {
 
 /** Alla nyckeltal vi kan lasa ur ett bolagsarkiv, ett per metrik och period. */
 export function extraheraNyckeltal(bolagsarkiv) {
-  const funna = new Map(); // "metrik|ar|kvartal|langd" -> post
+  /* BOLAGET AR EN DEL AV NYCKELN. Utan det slog tva bolags varde for samma
+     metrik och period ut varandra: `if (funna.has(nyckel)) continue` gjorde att
+     forst till kvarn vann, och det andra bolagets siffra forsvann tyst. En
+     fraga far tva bolag i taget, sa laget var inte hypotetiskt. */
+  const funna = new Map(); // "bolag|metrik|ar|kvartal|langd" -> post
 
   // Pass 1: belagda fakta ur rapport-PDF:erna. Egen slinga over hela arkivet, sa
   // att de vinner over regexen aven nar regexdokumentet ligger forst.
@@ -221,7 +225,7 @@ export function extraheraNyckeltal(bolagsarkiv) {
         if (!f) continue;
         const norm = normaliseraFakta(f.nu, f.enhet);
         if (!norm) continue;
-        const nyckel = `${m.id}|${period.ar}|${period.kvartal}|${period.langd}`;
+        const nyckel = `${ark.namn}|${m.id}|${period.ar}|${period.kvartal}|${period.langd}`;
         if (funna.has(nyckel)) continue;
         funna.set(nyckel, {
           metrik: m.id, typ: m.typ,
@@ -251,7 +255,7 @@ export function extraheraNyckeltal(bolagsarkiv) {
         // gett en tusenfaldig "forandring".
         const norm = normaliseraFakta(varde, träff[2]);
         if (!norm) continue;
-        const nyckel = `${m.id}|${period.ar}|${period.kvartal}|${period.langd}`;
+        const nyckel = `${ark.namn}|${m.id}|${period.ar}|${period.kvartal}|${period.langd}`;
         if (funna.has(nyckel)) continue;
         funna.set(nyckel, {
           metrik: m.id, typ: m.typ,
@@ -269,15 +273,19 @@ function etikett(n) {
   return n.langd === 1 ? `Q${n.kvartal} ${n.ar}` : `${n.langd} kvartal till och med Q${n.kvartal} ${n.ar}`;
 }
 
+/* Bolaget star forst i varje formel. En harledning utan bolagsnamn gick inte
+   att granska: laste man den i underlaget syntes inte vilket bolag talen kom
+   ifran, och det var sa hopblandningen kunde leva obemarkt. */
 function formel(post) {
   const n = (v) => String(v).replace('.', ',');
+  const b = post.bolag ? post.bolag + ': ' : '';
   if (post.sort === 'kvot') {
-    return `${n(post.talVarde)} delat pa ${n(post.namnarVarde)} ${post.enhet} for ${post.period} ger ${n(post.procent)} procent`;
+    return `${b}${n(post.talVarde)} delat pa ${n(post.namnarVarde)} ${post.enhet} for ${post.period} ger ${n(post.procent)} procent`;
   }
   if (post.perManad == null) {
-    return `${n(post.tillVarde)} ${post.enhet} i ${post.till} minus ${n(post.franVarde)} i ${post.fran} ger ${n(post.forandring)}`;
+    return `${b}${n(post.tillVarde)} ${post.enhet} i ${post.till} minus ${n(post.franVarde)} i ${post.fran} ger ${n(post.forandring)}`;
   }
-  let s = `${n(post.franVarde)} ${post.enhet} vid slutet av ${post.fran} minus ${n(post.tillVarde)} vid slutet av ${post.till} ger ${n(Math.abs(post.forandring))}, delat pa kvartalets 3 manader ger ${n(post.perManad)} ${post.enhet} per manad`;
+  let s = `${b}${n(post.franVarde)} ${post.enhet} vid slutet av ${post.fran} minus ${n(post.tillVarde)} vid slutet av ${post.till} ger ${n(Math.abs(post.forandring))}, delat pa kvartalets 3 manader ger ${n(post.perManad)} ${post.enhet} per manad`;
   if (post.manaderKvar != null) {
     s += `. Kassan ${n(post.tillVarde)} delat pa ${n(post.perManad)} ger ${post.manaderKvar} manader, OM takten haller i sig, vilket den sallan gor`;
   }
@@ -291,6 +299,9 @@ const kvartalSteg = (senare, tidigare) =>
    Flodesposter jamfors bara mot en LIKA LANG period, annars ar talen inte
    jamforbara och vi sager hellre ingenting. */
 function jamforbar(senare, tidigare) {
+  // Tva bolags tal ar aldrig jamforbara med varandra, hur lika perioderna an
+  // ser ut. Utan den har raden kunde en utveckling raknas mellan bolag.
+  if (senare.bolag !== tidigare.bolag) return false;
   if (senare.enhet !== tidigare.enhet) return false;
   if (senare.typ === 'flode' && senare.langd !== tidigare.langd) return false;
   return true;
@@ -298,7 +309,7 @@ function jamforbar(senare, tidigare) {
 
 function bygg(sort, metrik, tidigare, senare) {
   return {
-    sort, metrik, typ: senare.typ, enhet: senare.enhet,
+    sort, metrik, bolag: senare.bolag, typ: senare.typ, enhet: senare.enhet,
     fran: etikett(tidigare), till: etikett(senare),
     franVarde: tidigare.varde, tillVarde: senare.varde,
     forandring: Math.round((senare.varde - tidigare.varde) * 10) / 10,
@@ -333,13 +344,18 @@ const MAX_KVOT = 4;
     alla rapporter lag i underlaget: dokumenten fanns, aritmetiken saknades. */
 export function harled(nyckeltal) {
   const ut = [];
+  /* Grupperat pa BOLAG OCH metrik. Med bara metriken hamnade tva bolags
+     serier i samma lista, och steg, arsjamforelse och spann kunde raknas
+     tvars over bolagsgransen. */
   const perMetrik = new Map();
   for (const n of nyckeltal) {
-    if (!perMetrik.has(n.metrik)) perMetrik.set(n.metrik, []);
-    perMetrik.get(n.metrik).push(n);
+    const nyckel = n.bolag + '|' + n.metrik;
+    if (!perMetrik.has(nyckel)) perMetrik.set(nyckel, []);
+    perMetrik.get(nyckel).push(n);
   }
 
-  for (const [metrik, lista] of perMetrik) {
+  for (const [nyckel, lista] of perMetrik) {
+    const metrik = lista[0].metrik;
     for (let i = 0; i + 1 < lista.length; i++) {
       const senare = lista[i], tidigare = lista[i + 1];
       if (!jamforbar(senare, tidigare) || kvartalSteg(senare, tidigare) !== 1) continue;
@@ -378,24 +394,33 @@ export function harled(nyckeltal) {
     }
   }
 
-  for (const k of KVOTER) {
-    const taljare = perMetrik.get(k.tal) || [];
-    const namnare = perMetrik.get(k.namnare) || [];
-    let n = 0;
-    for (const t of taljare) {
-      if (n >= MAX_KVOT) break;
-      const nam = namnare.find((x) =>
-        x.ar === t.ar && x.kvartal === t.kvartal && x.langd === t.langd && x.enhet === t.enhet);
-      if (!nam || !nam.varde) continue;
-      const post = {
-        sort: 'kvot', metrik: k.id, period: etikett(t), enhet: t.enhet,
-        procent: Math.round((t.varde / nam.varde) * 1000) / 10,
-        talVarde: t.varde, namnarVarde: nam.varde,
-        kallor: [t.rubrik, nam.rubrik],
-      };
-      post.formel = formel(post);
-      ut.push(post);
-      n++;
+  /* DET ALLVARLIGASTE STALLET. Taljare och namnare slogs ihop pa period och
+     enhet men inte pa bolag, sa ett bolags rorelseresultat kunde delas med ett
+     ANNAT bolags omsattning och presenteras som en rorelsemarginal. Talet gick
+     sedan in i tillatnaTal, sa kallgrinden godkande det: fel siffra, rätt
+     kallor, och ingenting som kunde upptacka det langre fram. */
+  const bolagen = [...new Set(nyckeltal.map((n) => n.bolag))];
+  for (const bolag of bolagen) {
+    for (const k of KVOTER) {
+      const taljare = perMetrik.get(bolag + '|' + k.tal) || [];
+      const namnare = perMetrik.get(bolag + '|' + k.namnare) || [];
+      let n = 0;
+      for (const t of taljare) {
+        if (n >= MAX_KVOT) break;
+        const nam = namnare.find((x) =>
+          x.bolag === t.bolag &&
+          x.ar === t.ar && x.kvartal === t.kvartal && x.langd === t.langd && x.enhet === t.enhet);
+        if (!nam || !nam.varde) continue;
+        const post = {
+          sort: 'kvot', metrik: k.id, bolag: t.bolag, period: etikett(t), enhet: t.enhet,
+          procent: Math.round((t.varde / nam.varde) * 1000) / 10,
+          talVarde: t.varde, namnarVarde: nam.varde,
+          kallor: [t.rubrik, nam.rubrik],
+        };
+        post.formel = formel(post);
+        ut.push(post);
+        n++;
+      }
     }
   }
 
