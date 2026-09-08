@@ -156,6 +156,25 @@ test('granskaren godkanner ett svar som fortsatter pa prefillen', async () => {
   assert.ok(!d.blockerat, 'blockerades: ' + (d.verifiering && d.verifiering.orsak));
 });
 
+/* HALET SOM PROVKORNINGEN VISADE: modellen tog bada gravverktygen i SAMMA
+   varv. Nasta varv var da varken det sista eller tvingande, sa den skrev prosa
+   i stallet for att svara, och hela svaret foll pa format. Med type any maste
+   varje varv anvanda ett verktyg, och svara ar alltid ett av dem. */
+test('inget varv far svara med fri text', async () => {
+  const anropen = stubbaFetch([
+    { content: [
+        { type: 'tool_use', id: 'a', name: 'las_mer', input: { bolag: 'Unibap Space Solutions', sokord: 'kassa' } },
+        { type: 'tool_use', id: 'b', name: 'hamta_historik', input: { bolag: 'Unibap Space Solutions', fran: '2022-01-01', till: '2022-12-31' } },
+      ], stop_reason: 'tool_use' },
+    svarar([{ typ: 'metod', text: 'Nu svarar jag pa det jag last.' }]),
+  ]);
+  const d = await (await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  assert.deepEqual(anropen[0].tool_choice, { type: 'any' }, 'forsta varvet kunde svara med fri text');
+  assert.ok((anropen[1].tools || []).some((t) => t.name === 'svara'), 'kunde inte svara i mellanvarvet');
+  assert.deepEqual(anropen[1].tool_choice, { type: 'any' }, 'mellanvarvet kunde svara med fri text');
+  assert.ok(!d.blockerat, 'blockerades: ' + (d.verifiering && d.verifiering.orsak));
+});
+
 test('svarsverktyget beskriver samma block som kontraktet', () => {
   assert.equal(SVARSVERKTYG.name, 'svara');
   const typer = SVARSVERKTYG.input_schema.properties.block.items.properties.typ.enum;

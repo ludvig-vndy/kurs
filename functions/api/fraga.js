@@ -395,9 +395,14 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning) {
       max_tokens: kropp.max_tokens,
       system: kropp.system,
       messages: meddelanden,
+      /* type any, alltsa: anvand NAGOT av verktygen, aldrig fri text. Utan det
+         fanns halet att modellen tog bada gravverktygen i SAMMA varv, varpa
+         nasta varv varken var det sista eller tvingande, och den skrev prosa
+         som foll pa format. Nu ar svara alltid ett av alternativen, sa att
+         svara ar mojligt i varje varv, men text ar det aldrig. */
       ...(sista
         ? { tools: [SVARSVERKTYG], tool_choice: { type: "tool", name: "svara" } }
-        : { tools: verktyg.concat([SVARSVERKTYG]) }),
+        : { tools: verktyg.concat([SVARSVERKTYG]), tool_choice: { type: "any" } }),
     });
     if (svar.fel) return svar;
     if (svar.stopp !== "tool_use" || !svar.block) return svar;
