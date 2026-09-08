@@ -7,7 +7,8 @@
 import { secureJson as json } from "./_lib.js";
 import { hamtaUtdrag, bolagIFragan, termer, periodIFragan } from "./_kallgrind.js";
 import { skapaFaktaregister } from "./_faktaregister.js";
-import { SVAR_KONTRAKT, GRANSKA_SYSTEM, lasFaktasvar, godkandGranskning } from "./_faktasvar.js";
+import { SVAR_KONTRAKT, GRANSKA_SYSTEM, SVARSVERKTYG, lasFaktasvar, godkandGranskning } from "./_faktasvar.js";
+export { SVARSVERKTYG };
 import { hamtaPeriod } from "./_mfn.js";
 import { INDEX, REGISTER, LEKTIONER } from "./_kurskorpus.js";
 
@@ -234,6 +235,10 @@ export function kursText(lektioner) {
    som deltan; slutkontrollen anvander samma requestlokala register. */
 
 const MAX_VARV = 2;              // alltsa hogst tre modellanrop
+
+/* Aven utan arkiv ska svaret komma ur verktyget. Just den vagen, dar
+   assistenten har minst att komma med, var en gang helt ogrindad. */
+const TVINGA_SVAR = { tools: [SVARSVERKTYG], tool_choice: { type: "tool", name: "svara" } };
 const UTDRAG_PER_VERKTYG = 6;
 
 export const SYSTEM_VERKTYG =
@@ -383,17 +388,25 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning) {
   const meddelanden = [{ role: "user", content: kropp.fraga }];
   for (let varv = 0; varv <= MAX_VARV; varv++) {
     const sista = varv === MAX_VARV;
+    /* Sista varvet erbjuder BARA svara, och tvingar fram det. Utan tvanget kan
+       det sista varvet ga ut utan svar, och da faller hela fragan pa "varv". */
     const svar = await anropa(apiKey, {
       model: kropp.model,
       max_tokens: kropp.max_tokens,
       system: kropp.system,
       messages: meddelanden,
-      ...(sista ? {} : { tools: verktyg }),
+      ...(sista
+        ? { tools: [SVARSVERKTYG], tool_choice: { type: "tool", name: "svara" } }
+        : { tools: verktyg.concat([SVARSVERKTYG]) }),
     });
     if (svar.fel) return svar;
     if (svar.stopp !== "tool_use" || !svar.block) return svar;
 
-    const anvandning = svar.block.filter((b) => b && b.type === "tool_use");
+    /* Svarar modellen ar utredningen slut, aven om den samtidigt bad om mer. */
+    const svaret = svar.block.find((b) => b && b.type === "tool_use" && b.name === "svara");
+    if (svaret) return { ...svar, data: svaret.input };
+
+    const anvandning = svar.block.filter((b) => b && b.type === "tool_use" && b.name !== "svara");
     if (!anvandning.length) return svar;
 
     meddelanden.push({ role: "assistant", content: svar.block });
@@ -561,10 +574,13 @@ async function anropa(apiKey, kropp) {
     }
     const d = await r.json();
     // Blocken och stop_reason behovs for verktygsloopen; text for allt annat.
+    const innehall = d.content || [];
+    const svaret = innehall.find((b) => b && b.type === "tool_use" && b.name === "svara");
     return {
-      text: (d.content || []).map((b) => b.text || "").join("").trim(),
-      block: d.content || [],
+      text: innehall.map((b) => b.text || "").join("").trim(),
+      block: innehall,
       stopp: d.stop_reason || "",
+      ...(svaret ? { data: svaret.input } : {}),
     };
   } catch (e) {
     const avbruten = e && e.name === "AbortError";
@@ -789,7 +805,7 @@ export async function onRequestPost(context) {
       byggKorVerktyg({ arkiv: arkivet, env: env, utdrag: utdrag, tackning: tackning, question: question, register: register }),
       tackning);
   } else {
-    svar = await anropa(apiKey, Object.assign({ model: modell }, brev));
+    svar = await anropa(apiKey, Object.assign({ model: modell }, brev, TVINGA_SVAR));
   }
 
   /* Varken ett routningsbeslut eller en utredning far ta ner Fraga. Faller
@@ -798,10 +814,11 @@ export async function onRequestPost(context) {
   if (svar.fel) {
     tackning.modell = MODEL_SNABB;
     tackning.modellfall = true;
-    svar = await anropa(apiKey, Object.assign({ model: MODEL_SNABB }, brev));
+    svar = await anropa(apiKey, Object.assign({ model: MODEL_SNABB }, brev, TVINGA_SVAR));
   }
   if (svar.fel) return json({ error: svar.meddelande }, svar.status);
-  const kontrollerat = lasFaktasvar(svar.text, register);
+  /* data kommer fran verktyget, text ar reserven. Bada provas likadant. */
+  const kontrollerat = lasFaktasvar(svar.data !== undefined ? svar.data : svar.text, register);
   const blockera = orsak => json({
     answer: "Jag kunde inte verifiera svaret mot underlaget och visar det inte. Prova att avgränsa frågan till en uppgift eller en rapport.",
     blockerat: true, verifiering: { format: "dataposter-v1", orsak },
@@ -816,10 +833,17 @@ export async function onRequestPost(context) {
   if (kontrollerat.prosa.length) {
     const granskning = await anropa(apiKey, {
       model: MODEL_SNABB, max_tokens: 80, system: GRANSKA_SYSTEM,
-      messages: [{ role: "user", content: JSON.stringify({
-        fraga: question, svar: kontrollerat.block, tackning,
-        poster: register.poster(),
-      }) }],
+      messages: [
+        { role: "user", content: JSON.stringify({
+          fraga: question, svar: kontrollerat.block, tackning,
+          poster: register.poster(),
+        }) },
+        /* Prefill. Granskaren kan inte erbjudas ett verktyg utan att bli en
+           andra svarsmodell, sa i stallet borjar vi objektet at den. Utan det
+           foll aven granskaren pa en kodruta, och da blockerades varje svar
+           som innehol prosa. */
+        { role: "assistant", content: "{" },
+      ],
     });
     if (granskning.fel || granskning.stopp === "max_tokens" || !godkandGranskning(granskning.text)) {
       return blockera(granskning.fel ? "granskarfel" : "semantik");

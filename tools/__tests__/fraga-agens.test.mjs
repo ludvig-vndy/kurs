@@ -98,13 +98,17 @@ test('modellen kan be om mer och far svara efterat', async () => {
   assert.match(d.answer, /forbattrades/);
 });
 
-test('verktygen erbjuds bara nar det finns ett arkiv att grava i', async () => {
+/* GRAVVERKTYGEN, inte svarsverktyget. Sedan svaret lamnas genom verktyget
+   svara har varje anrop verktyg; poangen ar att det inte gar att LASA MER nar
+   det inte finns nagot arkiv att lasa i. */
+test('gravverktygen erbjuds bara nar det finns ett arkiv att grava i', async () => {
   const anropen = stubbaFetch([text('Jag har inga dokument om bolaget.')]);
   await (await anrop('vad hander med Unibap', { ...ENV, DATA: kv({ 'arkiv:index': [] }) })).json();
-  assert.ok(!anropen[0].tools, 'verktyg skickades utan arkiv');
+  const namn = (anropen[0].tools || []).map((t) => t.name);
+  assert.deepEqual(namn, ['svara'], 'gravverktyg skickades utan arkiv: ' + namn.join(', '));
 });
 
-test('sista varvet gar utan verktyg, sa den tvingas svara', async () => {
+test('sista varvet gar utan gravverktyg, sa den tvingas svara', async () => {
   const anropen = stubbaFetch([
     verktyg('las_mer', { bolag: 'Unibap Space Solutions', sokord: 'kassa' }),
     verktyg('las_mer', { bolag: 'Unibap Space Solutions', sokord: 'omsattning' }),
@@ -113,7 +117,8 @@ test('sista varvet gar utan verktyg, sa den tvingas svara', async () => {
   const r = await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) });
   const d = await r.json();
   assert.equal(anropen.length, 3);
-  assert.ok(!anropen[2].tools, 'sista anropet hade fortfarande verktyg');
+  const namn = (anropen[2].tools || []).map((t) => t.name);
+  assert.deepEqual(namn, ['svara'], 'sista anropet kunde fortfarande grava: ' + namn.join(', '));
   assert.match(d.answer, /12 400/);
 });
 
