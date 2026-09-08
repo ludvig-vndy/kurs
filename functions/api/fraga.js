@@ -23,12 +23,30 @@ import { nyckeltalsUnderlag } from "./_nyckeltal.js";
 import { hamtaPeriod } from "./_mfn.js";
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
-// Haiku pa fragan: kort interaktivt Q&A dar underlaget redan ar utvalt. Sonnet
-// sparas till den tunga dokumentanalysen.
-const MODEL = "claude-haiku-4-5-20251001";
+/* Tva modeller, vald efter fragans storlek.
+
+   Haiku racker for en enradig fraga om ett bolag dar underlaget redan ar utvalt.
+   Den racker INTE for en fraga som spanner over flera rapporter eller flera ar:
+   da ska svaret halla ihop en kedja over dokument som motsager varandra, halla
+   isar perioder, och saga vad som saknas. Det ar en annan sorts arbete.
+
+   Kostnaden stiger alltsa bara pa de fragor som fortjanar det. Se valjModell. */
+const MODEL_SNABB = "claude-haiku-4-5-20251001";
+const MODEL_DJUP = "claude-sonnet-5";
 const TIMEOUT = 30000;
 const MAX_FRAGA = 1000;
+/* Hur mycket text modellen far se.
+
+   Sex bitar a 1200 tecken ar 7200 tecken. En delarsrapport ar ungefar 7000. En
+   fraga om marginalen 2022 till 2025 fick alltsa UNGEFAR EN RAPPORT utspridd
+   over fyra ar, och kunde omojligt svara pa det den fick. Det ar inte grinden
+   som gjorde Fraga forsiktig, det ar den har siffran.
+
+   Periodfragor far darfor ett storre tak. Bitarna ar fortfarande valda pa
+   relevans, sa taket ar ett tak och inte en kvot: en tunn fraga hamtar inte upp
+   mer text bara for att den namner ett artal. */
 const MAX_UTDRAG = 6;
+const MAX_UTDRAG_PERIOD = 16;
 // Historik pa begaran: hogst sa har manga dokument hamtas hem per bolag och
 // fraga. Fyra racker for ett ar (tre kvartalsrapporter plus bokslutet) och
 // kostar runt 200 ms parallellt.
@@ -59,22 +77,38 @@ const TAK_GLOBALT = 400;
 const SYSTEM_BAS =
   "Du ar Delagarens assistent, en lugn och saklig hjalp for en privatinvesterare i en kurs om fundamental aktieanalys.\n\n" +
   "Regler:\n" +
-  "- Svara pa svenska, kortfattat och konkret.\n" +
+  "- Svara pa svenska och konkret. Lat langden folja fragan: en enkel fraga far ett kort svar, en fraga som spanner over flera rapporter eller flera ar far det utrymme den behover.\n" +
   "- Svara BARA pa fragor om anvandarens egna innehav och om kursens innehall (fundamental aktieanalys). Avboj vanligt annat.\n" +
   "- Ge ALDRIG finansiell radgivning eller kop/salj-rekommendationer. Forklara mekanik och vad anvandaren sjalv kan titta pa. Besluten ar anvandarens.\n" +
   "- Inga tankstreck. Anvand komma, kolon eller punkt.\n";
 
-// Nar vi har dokument: harda regler om tal, for kallgrinden nedan slapper anda
-// inte igenom ett svar som bryter mot dem. Battre att modellen vet det i forvag
-// an att svaret blockeras och anvandaren far ett fel.
+/* TVA REGISTER, och skillnaden mellan dem ar hela poangen.
+
+   Fore det har var varje rad i den har prompten ett forbud, elva stycken, och
+   ingen rad sa vad assistenten SKA gora nar den vill grava. Modellen
+   generaliserade forsiktigheten fran talen till hela svaret: den vagade inte
+   resonera, inte peka pa en lucka, inte foresla ett nasta steg. Taket pa fem
+   meningar gjorde resten. Piloten beskrev den som toklast.
+
+   Kallgrinden bryr sig BARA om tal. Allt annat var sjalvpalagt. */
 const SYSTEM_DOKUMENT =
-  "\nDu har fatt utdrag ur bolagens egna dokument, och ibland ett NYCKELTAL- och HARLETT-block. Om dem galler:\n" +
+  "\nDu har fatt utdrag ur bolagens egna dokument, och ibland ett NYCKELTAL- och HARLETT-block.\n\n" +
+  "TALEN AR LASTA:\n" +
   "- Anvand bara tal som ORDAGRANT star i underlaget. Utfor ALDRIG egna berakningar: ingen addition, subtraktion, procentandel eller summering. Du ar munnen, aldrig raknaren.\n" +
   "- HARLETT-blocket ar redan utraknat i kod. Behovs en forandring, en takt eller en burn rate: las den darifran, ordagrant. Star den inte dar finns den inte, och da sager du det.\n" +
   "- Var noga med perioder. Ett tal i parentes efter ett annat ar samma period FORRA aret, inte forra kvartalet. Jamfor dem aldrig som om de foljde pa varandra.\n" +
-  "- Racker underlaget inte for att svara: sag att det inte framgar av de dokument du har. Gissa aldrig, och rakna aldrig fram ett tal som saknas.\n" +
-  "- Namn kallan i klartext efter pastaendet, med dokumentets rubrik.\n" +
-  "- Skriv 2 till 5 meningar.\n";
+  "- Namn kallan i klartext efter pastaendet, med dokumentets rubrik.\n\n" +
+  "RESONEMANGET AR FRITT. Forsiktigheten ovan galler tal, ingenting annat. Var den gravande laskamraten, inte en uppslagsbok:\n" +
+  "- Bind ihop det du ser. Star samma sak i tva dokument, eller sager de emot varandra, sa sag det.\n" +
+  "- Sag vad ett tal betyder for en agare, och vad det INTE sager. Det ar mekanik, inte radgivning.\n" +
+  "- Peka pa vad du skulle vilja se harnast for att komma vidare, och var det brukar sta.\n" +
+  "- Stall garna en foljdfraga tillbaka nar fragan gar att skarpa.\n\n" +
+  "NAR UNDERLAGET INTE RACKER sager du det pa den har formen, aldrig bara att det inte framgar:\n" +
+  "1. vad du faktiskt har, med bolag och period,\n" +
+  "2. vad som saknas for att svara,\n" +
+  "3. vad anvandaren kan gora at det.\n" +
+  "- Namner anvandaren ett artal eller en period hamtar systemet automatiskt bolagets dokument fran den tiden, aven sadana som inte redan lasts in. Saknar du en period: sag att anvandaren kan fraga om just det aret, sa hamtas det da.\n" +
+  "- Gissa aldrig, och rakna aldrig fram ett tal som saknas. Att sakna ett svar ar ett giltigt svar, sa lange du sager VAD du saknar.\n";
 
 /* Utan dokument ska svaret INTE se ut som ett analyssvar. Fore den har regeln
    svarade Fraga flytande och sakligt aven nar den inte hade en enda rad om
@@ -101,6 +135,60 @@ const SYSTEM_TES =
 
 // Attribution, grovt men mekaniskt: sager svaret var talet kommer ifran?
 const TES_ATTRIBUTION = /(din tes|i tesen|enligt tesen|ur tesen|du skrev|din egen tes)/i;
+
+/* Vad systemet faktiskt gjorde, sagt till modellen.
+
+   Tackningen raknades ut men modellen fick aldrig se den. Sa nar arkivet var
+   tunt sa assistenten den vagaste mening som finns, "det framgar inte av de
+   dokument jag har", medan servern satt pa det exakta svaret: vilka bolag som
+   hade arkiv, hur langt bak, vilka som lamnades utanfor och varfor.
+
+   Skillnaden i upplevelse mellan de tva ar hela avstandet mellan en last och en
+   gravande assistent, och den kostar ingenting i korrekthet:
+
+     "Det framgar inte av de dokument jag har."
+
+     "Jag har Unibaps pressmaterial fran 2017 och framat och laste de fyra som
+      namner kassaflode. Uppstallningen du fragar om star bara i rapportbilagorna.
+      Fraga om 2022 sa hamtar jag rapporterna fran da."
+
+   Samma grind, samma noll pahittade tal. */
+export function tackningText(tackning) {
+  const t = tackning || {};
+  const rader = [];
+
+  if (t.period && t.period.fran) {
+    rader.push("- Fragan tolkades som att den galler perioden " + t.period.fran + " till " + t.period.till + ".");
+  }
+  for (const b of t.bolag || []) {
+    if (b && b.arkiv === false) rader.push("- " + b.namn + ": inget underlag, " + (b.av || "okand orsak") + ".");
+  }
+  for (const namn of t.utelamnade || []) {
+    if (namn) rader.push("- " + namn + " namndes i fragan men lamnades utanfor: hogst tva bolag at gangen.");
+  }
+  if (t.hamtade) rader.push("- " + t.hamtade + " aldre dokument hamtades hem for just den har fragan.");
+  if (t.lasta) rader.push("- " + t.lasta + " utdrag lastes.");
+  if (t.orsak) rader.push("- Inga dokument alls den har gangen: " + t.orsak + ".");
+
+  if (!rader.length) return "";
+  return "\n\nSA HAR GICK SOKNINGEN. Det ar vad systemet gjorde, inte vad som finns i varlden.\n" +
+    rader.join("\n") +
+    "\n- Kan du inte svara fullt ut: sag i klartext vilken av punkterna ovan som ar skalet. Skyll aldrig pa att det bara inte framgar.\n";
+}
+
+/* Modellval efter fragans storlek, inte efter fragans amne.
+
+   Haiku racker for en enradig fraga om ett bolag dar utdragen redan ar utvalda.
+   Den racker inte for en fraga som spanner over flera rapporter eller flera ar:
+   da ska svaret halla ihop en kedja over dokument, halla isar perioder och saga
+   vad som saknas. Kostnaden stiger alltsa bara dar den fortjanar det. */
+export function valjModell(arg) {
+  const a = arg || {};
+  if (a.period) return MODEL_DJUP;
+  if (Number(a.bolag) > 1) return MODEL_DJUP;
+  if (Number(a.utdrag) > MAX_UTDRAG) return MODEL_DJUP;
+  return MODEL_SNABB;
+}
 
 async function getUser(base, secret, token) {
   if (!token) return null;
@@ -399,7 +487,7 @@ export async function onRequestPost(context) {
         // Perioden skickas in sa urvalet anvander samma tolkning som avgjorde
         // om dokument skulle hamtas hem.
         if (arkiv.length) {
-          utdrag = hamtaUtdrag(question, arkiv, MAX_UTDRAG, Date.now(), period);
+          utdrag = hamtaUtdrag(question, arkiv, period ? MAX_UTDRAG_PERIOD : MAX_UTDRAG, Date.now(), period);
           nyckeltal = nyckeltalsUnderlag(arkiv);
           tackning.lasta = utdrag.length;
         } else if (!tackning.orsak) {
@@ -433,6 +521,7 @@ export async function onRequestPost(context) {
 
   const system = SYSTEM_BAS +
     (utdrag.length ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
+    tackningText(tackning) +
     (teser.length ? SYSTEM_TES : "") +
     "\nAnvandarens innehav:\n" + holdingsText +
     (nyckeltal.text ? "\n\n" + nyckeltal.text : "") +
@@ -443,12 +532,18 @@ export async function onRequestPost(context) {
         }).join("\n\n---\n\n")
       : "");
 
-  const svar = await anropa(apiKey, {
-    model: MODEL,
-    max_tokens: 1024,
-    system: system,
-    messages: [{ role: "user", content: question }],
-  });
+  const modell = valjModell({ period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
+  tackning.modell = modell;
+  const brev = { max_tokens: 1600, system: system, messages: [{ role: "user", content: question }] };
+  let svar = await anropa(apiKey, Object.assign({ model: modell }, brev));
+  /* Ett routningsbeslut far aldrig ta ner Fraga. Faller den djupa modellen, av
+     vilket skal som helst, provas den snabba en gang innan vi ger upp. Da blir
+     svaret grundare, aldrig borta. */
+  if (svar.fel && modell !== MODEL_SNABB) {
+    tackning.modell = MODEL_SNABB;
+    tackning.modellfall = true;
+    svar = await anropa(apiKey, Object.assign({ model: MODEL_SNABB }, brev));
+  }
   if (svar.fel) return json({ error: svar.meddelande }, svar.status);
   const answer = svar.text;
   if (!answer) return json({ answer: "Jag har inget bra svar pa det just nu.", tackning: tackning });
