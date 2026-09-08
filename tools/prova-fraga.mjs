@@ -62,7 +62,12 @@ const DATA = {
   async put(k, v) { try { BUCKET[k] = JSON.parse(v); } catch (e) { BUCKET[k] = v; } },
 };
 
-/* Supabase stubbas, allt annat gar ut pa riktigt. */
+/* Supabase stubbas, allt annat gar ut pa riktigt.
+
+   Modellens RATEXT sparas ocksa. Blockerar grinden ett svar ser man bara vilka
+   tal som foll, aldrig meningen de stod i, och da gar det inte att avgora om
+   grinden hade ratt eller ar for strang. */
+const ratext = [];
 const riktigFetch = globalThis.fetch;
 globalThis.fetch = async (url, init) => {
   const u = String(url);
@@ -70,6 +75,14 @@ globalThis.fetch = async (url, init) => {
   if (u.includes('/auth/v1/user')) return ok({ id: UID });
   if (u.includes('/rest/v1/holdings')) return ok(HOLDINGS);
   if (u.includes('/rest/v1/theses')) return ok([]);
+  if (u.includes('api.anthropic.com')) {
+    const r = await riktigFetch(url, init);
+    if (!r.ok) return r;
+    const body = await r.json();
+    const t = (body.content || []).map((b) => b.text || '').join('').trim();
+    if (t) ratext.push(t);
+    return ok(body);
+  }
   return riktigFetch(url, init);
 };
 
@@ -87,6 +100,7 @@ async function fraga(text) {
     headers: { 'Content-Type': 'application/json' },
   });
   const t0 = Date.now();
+  ratext.length = 0;
   const r = await onRequestPost({ request, env: ENV });
   const d = await r.json();
   return { status: r.status, ms: Date.now() - t0, ...d };
@@ -128,6 +142,9 @@ for (const p of PROV) {
   console.log('  lektioner ' + (t.lektioner && t.lektioner.length ? t.lektioner.join(', ') : '(inga)'));
   console.log('  lasta ' + t.lasta + ' utdrag, hamtade ' + t.hamtade + ' dokument, ' + d.ms + ' ms');
   console.log('\nSVAR:\n' + d.answer);
+  if (/Jag hittade ett svar/.test(d.answer || '') && ratext.length) {
+    console.log('\nGRINDEN STOPPADE DET HAR:\n' + ratext[ratext.length - 1]);
+  }
 
   /* Fallet tillbaka ar hela skalet till skriptet: det ar tyst i produktion. */
   if (t.modellfall) {
