@@ -124,14 +124,41 @@ const PROV = [
     krav: (d) => (d.tackning.lektioner.length ? null : 'ingen lektion vald'),
   },
   {
+    /* Perioden ligger utanfor arkivets horisont, sa svaret kraver att modellen
+       sjalv bett om hamta_historik och natt MFN pa riktigt. Skillnaden mot
+       provet nedan ar att DEN HAR fragan har ett rapporterat svar. */
     namn: 'periodfraga utanfor horisonten, ska ga pa den djupa modellen och hamta',
-    fraga: 'hur stor var Unibaps nettoomsättning helåret 2022?',
+    fraga: 'vad rapporterade Unibap i nettoomsättning för fjärde kvartalet 2022?',
     krav: (d) => (/sonnet/.test(d.tackning.modell) ? null : 'gick inte pa den djupa modellen'),
   },
   {
     namn: 'fraga inom horisonten, ska svara ur arkivet utan att hamta',
     fraga: 'hur mycket likvida medel hade Unibap vid senaste rapporten?',
     krav: (d) => (d.answer && d.answer.includes('41 900') ? null : 'talet ur arkivet kom inte med'),
+  },
+  {
+    /* FRAGAN SOM INTE HAR NAGOT SVAR, och som darfor prover nagot annat.
+
+       Unibap bytte till kalenderar via ett forlangt rakenskapsar juli 2021 till
+       december 2022. Det finns alltsa ingen rapporterad nettoomsattning for
+       kalenderaret 2022, bara kvartal och kumulativa perioder. Ett riktigt svar
+       ar antingen en forklaring av luckan eller en blockering, aldrig ett tal.
+
+       Provet uppstod ur en riktig korning dar modellen visade en Q4-post
+       tillsammans med en text om helaret, och granskaren stoppade det med orden
+       att anvandaren riskerar att lasa Q4-siffran som helaret. Den domen var
+       ratt, och det ar precis det beteendet som ska halla. */
+    namn: 'fraga utan rapporterat svar, far aldrig bli ett hittepatal',
+    fraga: 'hur stor var Unibaps nettoomsättning helåret 2022?',
+    farBlockeras: true,
+    krav: (d) => {
+      if (!/sonnet/.test(d.tackning.modell)) return 'gick inte pa den djupa modellen';
+      // Blockerat ar ett giltigt utfall. Svarar den maste svaret saga att
+      // kalenderaret saknas, inte presentera nagot som om det vore helaret.
+      if (d.blockerat) return null;
+      const saknas = (d.block || []).some((b) => b.typ === 'saknas');
+      return saknas ? null : 'svarade pa helaret utan att namna att perioden saknas';
+    },
   },
 ];
 
@@ -163,10 +190,12 @@ for (const p of PROV) {
     fel++;
   }
   if (d.blockerat) {
-    console.log('  !! Svaret blockerades: ' + (d.verifiering?.orsak || 'okant'));
+    console.log('  ' + (p.farBlockeras ? '' : '!! ') + 'Svaret blockerades: ' + (d.verifiering?.orsak || 'okant'));
     if (domen.length) console.log('  granskarens skal: ' + domen[domen.length - 1]);
-    fel++;
-    continue;
+    /* For de flesta prov ar en blockering ett fel: anvandaren fick ingenting.
+       For ett prov utan rapporterat svar ar den ett giltigt utfall, och da
+       provas kravet i stallet. */
+    if (!p.farBlockeras) { fel++; continue; }
   }
   const brist = p.krav(d);
   if (brist) {
