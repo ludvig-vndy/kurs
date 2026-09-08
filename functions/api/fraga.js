@@ -289,6 +289,180 @@ export function kursText(lektioner) {
   return ut;
 }
 
+/* AGENS. Fram till nu bestamde rorledningen vad modellen fick se INNAN modellen
+   last en enda rad. En analytiker laser forst och bestammer sedan vad hon ska
+   lasa harnast. Det ar skillnaden mellan en lasare och en utredare.
+
+   Det har ar ofarligt just for att kallgrinden finns, och bara darfor. Varje
+   dokument ett verktyg drar in laggs till i `utdrag`, alltsa i exakt den mangd
+   grinden sedan provar svarets tal mot. Agens utan verifiering ar en
+   gissningsmaskin. Verifiering utan agens ar den lasta lasare vi hade. Det ar
+   kombinationen som ar produkten.
+
+   Lektionstexten ar undantaget: den gar aldrig in i `utdrag`. Kursen innehaller
+   tal ur forskning och ur illustrativa exempel, och de far aldrig kunna skrivas
+   ut som ett bolags siffror. */
+
+const MAX_VARV = 2;              // alltsa hogst tre modellanrop
+const UTDRAG_PER_VERKTYG = 6;
+
+export const SYSTEM_VERKTYG =
+  "\nDU KAN HAMTA MER SJALV. Svara inte att underlaget saknas forran du forsokt:\n" +
+  "- las_mer: fler stycken ur det du redan har, sokta pa andra ord. Anvand den nar fragan galler nagot som borde sta i en rapport men inte kom med i utdragen.\n" +
+  "- hamta_historik: hamtar bolagets egna dokument fran en aldre period, direkt fran kallan. Anvand den nar fragan galler ett ar du inte har.\n" +
+  "- las_lektion: hela texten till en lektion ur registret ovan. Anvand den nar fragan galler metod.\n" +
+  "- Hamta hellre en gang for mycket an svara att du inte vet. Men hamta inte i blindo: sag for dig sjalv vad du letar efter forst.\n" +
+  "- Tal ur hamtade dokument ar lika giltiga som tal ur de forsta utdragen. Tal ur en lektion ar det INTE, de galler kursen och aldrig anvandarens bolag.\n";
+
+export function verktygsDefinitioner() {
+  return [
+    {
+      name: "las_mer",
+      description: "Fler stycken ur bolagets dokument som du redan har tillgang till, sokta pa dina egna ord i stallet for anvandarens fraga.",
+      input_schema: {
+        type: "object",
+        properties: {
+          bolag: { type: "string", description: "Bolagets namn, precis som det star i underlaget." },
+          sokord: { type: "string", description: "Orden du vill soka pa, till exempel 'kassaflode rorelsekapital'." },
+        },
+        required: ["bolag", "sokord"],
+      },
+    },
+    {
+      name: "hamta_historik",
+      description: "Hamtar bolagets egna pressmeddelanden och rapporter fran en aldre period direkt fran kallan, for perioder som inte redan finns i arkivet.",
+      input_schema: {
+        type: "object",
+        properties: {
+          bolag: { type: "string", description: "Bolagets namn, precis som det star i underlaget." },
+          fran: { type: "string", description: "Startdatum, YYYY-MM-DD." },
+          till: { type: "string", description: "Slutdatum, YYYY-MM-DD." },
+        },
+        required: ["bolag", "fran", "till"],
+      },
+    },
+    {
+      name: "las_lektion",
+      description: "Hela texten till en lektion i kursen. Id maste sta i lektionsregistret.",
+      input_schema: {
+        type: "object",
+        properties: { id: { type: "string", description: "Lektionens id, till exempel 5.1." } },
+        required: ["id"],
+      },
+    },
+  ];
+}
+
+/* Kor ett verktyg och lamnar text tillbaka till modellen. Allt som kommer ur
+   bolagens dokument laggs samtidigt till i `utdrag`, sa grinden tacker det.
+
+   Faller ett verktyg ar det inte ett fel som ska avbryta: modellen far veta att
+   det inte gick och kan svara anda. Ett trasigt natverksanrop mitt i en
+   utredning ska ge ett grundare svar, aldrig inget svar. */
+export function byggKorVerktyg(ctx) {
+  const { arkiv, env, utdrag, tackning, question } = ctx;
+  const hitta = (namn) => {
+    const n = String(namn || "").toLowerCase();
+    return arkiv.find((a) => String(a.namn).toLowerCase().includes(n) || n.includes(String(a.namn).toLowerCase()));
+  };
+  const lagg = (nya) => {
+    const sedda = new Set(utdrag.map((u) => u.rubrik + "|" + u.text.slice(0, 60)));
+    let n = 0;
+    for (const u of nya) {
+      const nyckel = u.rubrik + "|" + u.text.slice(0, 60);
+      if (sedda.has(nyckel)) continue;
+      sedda.add(nyckel);
+      utdrag.push(u);
+      n++;
+    }
+    tackning.lasta = utdrag.length;
+    return n;
+  };
+  const somText = (nya) =>
+    nya.map((u) => "[" + u.bolag + " · " + u.rubrik + " · " + u.datum + "]\n" + u.text).join("\n\n---\n\n");
+
+  return async function kor(namn, indata) {
+    try {
+      if (namn === "las_lektion") {
+        const id = String(indata.id || "").trim();
+        const text = LEKTIONER[id];
+        if (!text) return "Det finns ingen lektion " + id + ". Anvand ett id ur registret.";
+        if (tackning.lektioner.indexOf(id) < 0) tackning.lektioner.push(id);
+        return text.slice(0, MAX_LEKTIONSTEXT);
+      }
+
+      const b = hitta(indata.bolag);
+      if (!b) return "Jag har inget arkiv for " + indata.bolag + ". Bolag jag har: " + arkiv.map((a) => a.namn).join(", ") + ".";
+
+      if (namn === "las_mer") {
+        const nya = hamtaUtdrag(String(indata.sokord || question), [b], UTDRAG_PER_VERKTYG, Date.now(), null);
+        if (!nya.length) return "Inget i " + b.namn + "s dokument matchar de orden.";
+        lagg(nya);
+        return somText(nya);
+      }
+
+      if (namn === "hamta_historik") {
+        const period = { fran: String(indata.fran || ""), till: String(indata.till || "") };
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(period.fran)) return "Datumen ska skrivas YYYY-MM-DD.";
+        const nyckel = "mfn:idx:" + b.id;
+        let cachat = null;
+        try { cachat = await env.DATA.get(nyckel, "json"); } catch (e) { /* utan cache: hamta */ }
+        const r = await hamtaPeriod({
+          dokumentUrl: b.dokument[0] && b.dokument[0].url,
+          period, termer: termer(String(indata.sokord || question)), max: MAX_HISTORIK,
+          kanda: new Set(b.dokument.map((d) => d.url)),
+          index: cachat,
+        });
+        if (!r.fransCache && r.index.length) {
+          try { await env.DATA.put(nyckel, JSON.stringify(r.index), { expirationTtl: INDEX_TTL }); } catch (e) { /* ok */ }
+        }
+        if (!r.dokument.length) return "Hittade inga dokument fran " + b.namn + " mellan " + period.fran + " och " + period.till + ".";
+        b.dokument.push(...r.dokument);
+        tackning.hamtade += r.dokument.length;
+        try { await sparaHistorik(env.DATA, b.id, [], r.dokument); } catch (e) { /* cache, inte kritiskt */ }
+        const nya = hamtaUtdrag(question, [b], UTDRAG_PER_VERKTYG, Date.now(), period);
+        lagg(nya);
+        return "Hamtade " + r.dokument.length + " dokument.\n\n" + somText(nya);
+      }
+
+      return "Okant verktyg: " + namn;
+    } catch (e) {
+      return "Verktyget gick inte att kora just nu. Svara pa det du redan har, och sag att hamtningen inte gick.";
+    }
+  };
+}
+
+/* Utredningen: modellen far svara, be om mer, och svara igen. Sista varvet gar
+   UTAN verktyg, sa den tvingas formulera ett svar i stallet for att fortsatta
+   hamta i all evighet. */
+export async function utred(apiKey, kropp, verktyg, kor, tackning) {
+  const meddelanden = [{ role: "user", content: kropp.fraga }];
+  for (let varv = 0; varv <= MAX_VARV; varv++) {
+    const sista = varv === MAX_VARV;
+    const svar = await anropa(apiKey, {
+      model: kropp.model,
+      max_tokens: kropp.max_tokens,
+      system: kropp.system,
+      messages: meddelanden,
+      ...(sista ? {} : { tools: verktyg }),
+    });
+    if (svar.fel) return svar;
+    if (svar.stopp !== "tool_use" || !svar.block) return svar;
+
+    const anvandning = svar.block.filter((b) => b && b.type === "tool_use");
+    if (!anvandning.length) return svar;
+
+    meddelanden.push({ role: "assistant", content: svar.block });
+    const resultat = [];
+    for (const a of anvandning) {
+      tackning.verktyg.push(a.name);
+      resultat.push({ type: "tool_result", tool_use_id: a.id, content: await kor(a.name, a.input || {}) });
+    }
+    meddelanden.push({ role: "user", content: resultat });
+  }
+  return { fel: "varv", status: 502, meddelande: "Kom inte fram till ett svar." };
+}
+
 async function getUser(base, secret, token) {
   if (!token) return null;
   try {
@@ -442,7 +616,12 @@ async function anropa(apiKey, kropp) {
       return { fel: "http", status: 502, meddelande: "Modellen svarade med ett fel (" + r.status + ")." };
     }
     const d = await r.json();
-    return { text: (d.content || []).map((b) => b.text || "").join("").trim() };
+    // Blocken och stop_reason behovs for verktygsloopen; text for allt annat.
+    return {
+      text: (d.content || []).map((b) => b.text || "").join("").trim(),
+      block: d.content || [],
+      stopp: d.stop_reason || "",
+    };
   } catch (e) {
     const avbruten = e && e.name === "AbortError";
     return avbruten
@@ -498,7 +677,9 @@ export async function onRequestPost(context) {
   // Steg 1: vilka av anvandarens bolag handlar fragan om. Ingen modell behovs.
   // Routningen kors aven utan KV-bindning: tesen bor i Supabase och ska med aven
   // for ett bolag vi inte har ett enda dokument om.
-  let utdrag = [], teser = [];
+  // Arkivet lyfts ut ur blocket: verktygsloopen nedan behover det for att kunna
+  // lasa mer och hamta historik pa modellens egen begaran.
+  let utdrag = [], teser = [], arkivet = [];
   let nyckeltal = { text: "", tillatnaTal: [], harledda: [] };
 
   const period = periodIFragan(question);
@@ -515,6 +696,8 @@ export async function onRequestPost(context) {
   const tackning = {
     period: period ? { fran: period.fran, till: period.till } : null,
     bolag: [], utelamnade: [], lasta: 0, hamtade: 0, orsak: null,
+    // Vad modellen sjalv bad om under utredningen, och vilka lektioner den fick.
+    verktyg: [], lektioner: [],
   };
 
   if (!holdings.length) {
@@ -532,7 +715,7 @@ export async function onRequestPost(context) {
         tackning.orsak = "dokumentarkivet ar inte tillgangligt";
       } else {
         const index = (await env.DATA.get("arkiv:index", "json")) || [];
-        const arkiv = [];
+        const arkiv = arkivet;
         for (const h of traffar) {
           const namn = h.name || "";
           const id = arkivIdFor(h, index);
@@ -624,8 +807,17 @@ export async function onRequestPost(context) {
   const lektioner = valjLektioner(question);
   tackning.lektioner = lektioner.map(function (l) { return l.id; });
 
+  /* Verktygen bara nar det finns nagot att grava i. En ren kursfraga ska inte
+     betala for tre verktygsdefinitioner den aldrig anvander. */
+  const kanGrava = arkivet.length > 0 && !!env.DATA;
+
+  /* Kan den hamta sjalv har den dokument, aven om urvalet inte valde nagra.
+     Med bara utdrag.length som villkor fick den registret "du har INGA dokument
+     om bolagen" samtidigt som den satt med tre verktyg for att hamta dem. */
+  const harUnderlag = utdrag.length > 0 || kanGrava;
+
   const system = SYSTEM_BAS +
-    (utdrag.length ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
+    (harUnderlag ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
     tackningText(tackning) +
     kursText(lektioner) +
     (teser.length ? SYSTEM_TES : "") +
@@ -641,11 +833,23 @@ export async function onRequestPost(context) {
   const modell = valjModell({ period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
   tackning.modell = modell;
   const brev = { max_tokens: 1600, system: system, messages: [{ role: "user", content: question }] };
-  let svar = await anropa(apiKey, Object.assign({ model: modell }, brev));
-  /* Ett routningsbeslut far aldrig ta ner Fraga. Faller den djupa modellen, av
-     vilket skal som helst, provas den snabba en gang innan vi ger upp. Da blir
-     svaret grundare, aldrig borta. */
-  if (svar.fel && modell !== MODEL_SNABB) {
+
+  let svar;
+  if (kanGrava) {
+    svar = await utred(
+      apiKey,
+      { model: modell, max_tokens: 1600, system: system + SYSTEM_VERKTYG, fraga: question },
+      verktygsDefinitioner(),
+      byggKorVerktyg({ arkiv: arkivet, env: env, utdrag: utdrag, tackning: tackning, question: question }),
+      tackning);
+  } else {
+    svar = await anropa(apiKey, Object.assign({ model: modell }, brev));
+  }
+
+  /* Varken ett routningsbeslut eller en utredning far ta ner Fraga. Faller
+     nagot av dem provas det enkla anropet pa den snabba modellen en gang. Da
+     blir svaret grundare, aldrig borta. */
+  if (svar.fel) {
     tackning.modell = MODEL_SNABB;
     tackning.modellfall = true;
     svar = await anropa(apiKey, Object.assign({ model: MODEL_SNABB }, brev));
@@ -656,7 +860,11 @@ export async function onRequestPost(context) {
 
   // Kallgrinden. Bara nar svaret bygger pa dokument: utan utdrag finns inget
   // underlag att grinda mot, och da ar innehavets egna tal (antal, GAV) sanningen.
-  if (utdrag.length) {
+  /* KORS AVEN NAR URVALET VALDE NOLL UTDRAG. Med bara utdrag.length som villkor
+     fanns ett hal sa fort modellen fick verktyg: den kunde ha ett arkiv, lasa en
+     LEKTION i stallet for ett dokument, och sedan pasta vad som helst om bolagets
+     siffror utan att nagon grind kordes. Talen i kursen ar inte bolagsdata. */
+  if (utdrag.length || kanGrava) {
     // Anvandarens egna tal ar ocksa underlag: antal och GAV star i innehavet,
     // inte i nagot pressmeddelande, och ett svar om dem far inte blockeras.
     const egnaTal = [];
@@ -664,6 +872,18 @@ export async function onRequestPost(context) {
       if (h.quantity != null) egnaTal.push(Number(h.quantity));
       if (h.gav != null) egnaTal.push(Number(h.gav));
       if (h.quantity != null && h.gav != null) egnaTal.push(Number(h.quantity) * Number(h.gav));
+    }
+    /* Horisontdatumen ar ocksa underlag, raknade i kod ur dokumenten. Utan dem
+       blockerade grinden ett svar for att det gjorde precis det horisontregeln
+       beordrar: "sag fran vilket datum du har". Manad och dag ur 2026-08-28
+       lastes som ogrundade tal, och hela svaret foll. */
+    for (const b of medArkiv) {
+      for (const d of [b.aldst, b.nyast]) {
+        for (const bit of String(d || "").split("-")) {
+          const v = Number(bit);
+          if (isFinite(v)) egnaTal.push(v);
+        }
+      }
     }
     // Harledda tal ar raknade i kod och ar darfor lika giltigt underlag som ett
     // tal ur ett dokument. Det ar hela poangen med att rakna dem har i stallet.
