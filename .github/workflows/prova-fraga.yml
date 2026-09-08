@@ -7,6 +7,16 @@
 # utan att nagon marker det.
 #
 # Kostar nagra ore per korning, sa bara pa begaran. Ingen schemalaggning.
+#
+# JOBBET GAR ALLTID GRONT, med flit. Domen star i jobbsammanfattningen i
+# stallet. Det har ar ett workflow_dispatch-prov som inte grindar nagot: det
+# finns for att en manniska ska LASA utfallet, och den som kor det laser loggen
+# anda. Ett rott kryss har gjorde alltsa ingen nytta, men skickade ett mejl till
+# alla som prenumererar pa repots Actions. Under en felsokningskvall blev det
+# tio mejl pa en halvtimme, och da slutar man lasa dem.
+#
+# Skriptet sjalvt returnerar fortfarande 1 vid fel, sa `node tools/prova-fraga.mjs`
+# lokalt eller i ett riktigt grindande jobb beter sig som vanligt.
 
 name: Prova Fragan (kostar pengar)
 
@@ -25,4 +35,22 @@ jobs:
         with:
           node-version: '22'
       - name: Prova Fragan
-        run: node tools/prova-fraga.mjs
+        run: |
+          set +e
+          node tools/prova-fraga.mjs 2>&1 | tee prov.log
+          kod=${PIPESTATUS[0]}
+          {
+            if [ "$kod" -eq 0 ]; then
+              echo "## Alla prov gick igenom"
+              echo "Modell-id, verktygsloop, hamtning och grind fungerar mot riktiga API:t."
+            else
+              echo "## Prov som inte gick igenom"
+              echo "Las utfallet nedan. Ett stoppat svar behover inte vara ett fel i koden:"
+              echo "grinden ska stoppa ett svar som inte gar att verifiera."
+            fi
+            echo
+            echo '```'
+            cat prov.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
