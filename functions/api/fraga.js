@@ -891,9 +891,19 @@ export async function onRequestPost(context) {
          granskarens svar klipptes av och blev ett nej av fel anledning. */
       model: MODEL_SNABB, max_tokens: 220, system: GRANSKA_SYSTEM,
       messages: [
+        /* "svar" ar det som ska publiceras, "tillgangligt" ar vad som fanns att
+           valja pa. Fore den uppdelningen fick granskaren hela registret under
+           namnet poster och lasta det som en del av svaret: den fallde tre
+           valskrivna metodblock om ROIC for att registret rakade innehalla
+           anvandarens fraga och ett innehav. Sammanfattningarna bar varde och
+           period sa motsagelser fortfarande gar att se, men inte citaten, som
+           bara gjorde prompten dyr. */
         { role: "user", content: JSON.stringify({
           fraga: question, svar: kontrollerat.block, tackning,
-          poster: register.poster(),
+          tillgangligt: register.poster().map((p) => ({
+            id: p.id, typ: p.typ, bolag: p.bolag, matt: p.matt,
+            period: p.period, varde: p.varde, enhet: p.enhet,
+          })),
         }) },
         /* Prefill. Granskaren kan inte erbjudas ett verktyg utan att bli en
            andra svarsmodell, sa i stallet borjar vi objektet at den. Utan det
