@@ -278,3 +278,26 @@ test('tidslangder far inte skrivas i fri text', () => {
   assert.equal(otillatenProsa('Perioden omfattar 18 månader.'), true);
   assert.equal(otillatenProsa('Kassan räcker i 14 månader.'), true);
 });
+
+/* LEKTIONSNUMMER GAR ATT PROVA, till skillnad fran ett belopp.
+   Forbudet fanns for att modellen forr hittade pa lektionsnummer nar den inte
+   hade en enda lektion i kontexten. Nu ligger lektionen i registret, sa numret
+   kan provas mot det, och "las mer i 5.1" ar en av de nyttigaste sakerna
+   assistenten kan saga. Provkorningen blockerade ett helt korrekt ROIC-svar
+   for orden "Lektionen 5.1". */
+test('ett lektionsnummer ur registret far namnges', () => {
+  assert.equal(otillatenProsa('Lektionen 5.1 går djupare in på detta.', ['5.1']), false);
+  assert.equal(otillatenProsa('Läs 0.2 och 5.1 för metoden.', ['5.1', '0.2']), false);
+});
+
+test('ett lektionsnummer som inte finns i registret ar ett tal som andra', () => {
+  assert.equal(otillatenProsa('Lektionen 9.9 förklarar det.', ['5.1']), true);
+  assert.equal(otillatenProsa('Lektionen 5.1 förklarar det.', []), true);
+});
+
+/* Och ett belopp som rakar se ut som ett lektionsnummer ar fortfarande ett
+   belopp. Skillnaden ar ordet efter. */
+test('ett tal med enhet efter ar inget lektionsnummer', () => {
+  assert.equal(otillatenProsa('Marginalen var 5.1 procent.', ['5.1']), true);
+  assert.equal(otillatenProsa('Bolaget hade 5.1 miljoner kronor.', ['5.1']), true);
+});

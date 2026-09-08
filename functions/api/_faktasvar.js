@@ -11,7 +11,8 @@ Varje block har exakt ett av dessa format:
 {"typ":"saknas","text":"Vad som saknas for att svara, utan tal."}
 Postblock far aldrig ha text, rubrik, varde, bolag, enhet eller andra falt.
 Servern skriver hela uppgiften med bolag, matt, period, tecken och enhet.
-Tal, datum, lektionsnummer och utskrivna belopp visas bara genom postblock.
+Tal och utskrivna belopp visas bara genom postblock. Ett lektionsnummer far du
+skriva i text, men bara for en lektion du faktiskt fatt i FAKTAREGISTER.
 Tal fran fragan, tesen eller kursen ar inte rapporterade bolagsfakta.
 Dokumentposter blir ordagranna citat. Anvand dem nar typade faktaposter saknas.
 Metod ar generell undervisning. Tolkning kravs for resonemang om ett bolag och
@@ -144,12 +145,24 @@ const UTAN_RAKNAT = new RegExp('\\b(?:' + [...RAKNEORD].join('|') + ')\\b(?!\\s+
 const ENHETER = 'msek|ksek|tsek|mkr|mdkr|mnkr|meur|musd|sek|eur|usd|kr|kron(?:a|or)|\u00f6re|procent|aktier|g\u00e5nger|miljon(?:er)?|miljard(?:er)?|tusen';
 const ARTAL_UTAN_ENHET = new RegExp('\\b(?:19|20)\\d{2}\\b(?!\\s*(?:' + ENHETER + ')\\b)', 'gu');
 
-export function otillatenProsa(text) {
+/* Lektionsnummer far namnges, men bara de som verkligen ligger i registret.
+   Forbudet fanns for att modellen forr hittade pa lektionsnummer nar den inte
+   hade en enda lektion i kontexten. Nu finns lektionen som post, sa numret gar
+   att PROVA i stallet for att forbjudas, och "las mer i 5.1" ar en av de
+   nyttigaste sakerna assistenten kan saga. Ett nummer som inte finns i
+   registret ar fortfarande ett tal som vilket annat. */
+export function otillatenProsa(text, lektioner = []) {
   if (typeof text !== 'string' || !text.trim() || text.length > 1800) return true;
   const s = text.normalize('NFKC').replace(/\p{Cf}/gu, '').toLowerCase();
   // Perioder far namnges. Stadningen ror BARA siffertestet nedan; orden som
   // provas mot rakneords- och storleksreglerna ar kvar or\u00f6rda i s.
-  const utanPeriod = utanDatum(s).replace(ARTAL_UTAN_ENHET, ' ');
+  let utanPeriod = utanDatum(s).replace(ARTAL_UTAN_ENHET, ' ');
+  // ... men bara nar numret ar ett lektionsnummer. Foljs det av en enhet ar
+  // det ett belopp som rakar se ut som en lektion, och da star det kvar.
+  for (const id of lektioner) {
+    const flykt = String(id).toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    utanPeriod = utanPeriod.replace(new RegExp(flykt + '(?!\\s*(?:' + ENHETER + ')\\b)', 'g'), ' ');
+  }
   if (/[\p{N}]/u.test(utanPeriod)) return true;
   if (/[\u2013\u2014<>\[\]{}]/u.test(s) || /https?:|&#|\\u[0-9a-f]/i.test(s)) return true;
   /* "en krona" ar ett IDIOM, inte ett belopp. Regeln fallde "hur lite kapital
@@ -199,6 +212,9 @@ export function lasFaktasvar(raw, register) {
   else { try { data = JSON.parse(raw); } catch { return nej('format'); } }
   if (!exakt(data, ['version', 'block']) || data.version !== 1 ||
       !Array.isArray(data.block) || !data.block.length || data.block.length > 16) return nej('format');
+  // Bara lektioner som faktiskt hamnat i registret far namnges vid nummer.
+  const lektionsnummer = (typeof register.poster === 'function' ? register.poster() : [])
+    .filter(p => p.typ === 'kurs' && p.lektion).map(p => p.lektion);
   const block = [], prosa = [], referenser = new Set();
   for (const b of data.block) {
     if (b?.typ === 'post') {
@@ -210,7 +226,7 @@ export function lasFaktasvar(raw, register) {
     } else {
       if (!['metod', 'tolkning', 'saknas'].includes(b?.typ)) return nej('blocktyp');
       if (!exakt(b, b.typ === 'tolkning' ? ['typ', 'text', 'stod'] : ['typ', 'text'])) return nej('prosaformat');
-      if (otillatenProsa(b.text)) return nej('fri_uppgift');
+      if (otillatenProsa(b.text, lektionsnummer)) return nej('fri_uppgift');
       const stod = b.typ === 'tolkning' ? b.stod : [];
       if (!Array.isArray(stod) || (b.typ === 'tolkning' && !stod.length) || stod.length > 8 ||
           stod.some(id => typeof id !== 'string' || !register.get(id))) return nej('tolkningsstod');
