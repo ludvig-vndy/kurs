@@ -85,7 +85,16 @@ globalThis.fetch = async (url, init) => {
       return ok({content:[{type:'tool_use',id:'prov_svar',name:'svara',input:fastSvar(posts)}],stop_reason:'tool_use'});
     }
     const r = await riktigFetch(url, init);
-    if (!r.ok) return r;
+    if (!r.ok) {
+      if (r.status === 400) {
+        const error=await r.clone().json().catch(()=>({}));
+        // API-kontraktsfel: provfrågorna innehåller bara offentlig rapporttext
+        // eller uttryckligen fiktiva data. Skriv aldrig ut nyckeln.
+        console.error('API-KONTRAKTSFEL: '+String(error.error?.message || 'HTTP 400').split(NYCKEL).join('[hemlighet]').slice(0,800));
+        process.exit(2);
+      }
+      return r;
+    }
     const body = await r.json();
     /* Svaret kommer numera som ett verktygsanrop, inte som text. Fangades bara
        texten sag man ingenting alls nar prosagrinden fallde ett block, och da
