@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {kortningsbehov, valjRedigering, redigeraSvar} from '../../functions/api/_redigering.js';
 import {skapaFaktaregister} from '../../functions/api/_faktaregister.js';
-import {lasFaktasvar} from '../../functions/api/_faktasvar.js';
+import {lasFaktasvar, SVAR_KONTRAKT} from '../../functions/api/_faktasvar.js';
 const raw=text=>({version:1,block:[{typ:'metod',text}]});
 const long=raw(Array(24).fill('Granska resultatet och kontrollera vad underlaget faktiskt visar.').join(' '));
 
@@ -24,6 +24,17 @@ test('avvisad kortning anger fast orsakskod utan svarstext',async()=>{
   await redigeraSvar(long,r,t,'fråga',async()=>({data:raw('Kassan är 12 MSEK.'),stopp:'tool_use'}));
   assert.equal(t.redigering.orsak,'fri_uppgift');
   assert.ok(!JSON.stringify(t.redigering).includes('Kassan'));
+});
+
+test('kortningen får samma prosakontrakt som den valideras mot',async()=>{
+  const r=skapaFaktaregister(),t={djup:false,modellanrop:0,deadline:Date.now()+90000};
+  let skickat;
+  await redigeraSvar(long,r,t,'fråga',async kropp=>{
+    skickat=kropp;
+    return {data:raw('Kontrollera underlaget.'),stopp:'tool_use'};
+  });
+  assert.ok(skickat.system.includes(SVAR_KONTRAKT),'editorn saknar svarsgeneratorns kontrakt');
+  assert.equal(t.redigering.status,'kortat');
 });
 test('kortning får inte tappa källreferenser, faktaposter eller alla reservationer',()=>{
   const r=skapaFaktaregister();

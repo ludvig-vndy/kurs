@@ -1,5 +1,5 @@
 // Redigering ändrar aldrig registret och ersätter aldrig slutgranskningen.
-import {lasFaktasvar, SVARSVERKTYG} from './_faktasvar.js';
+import {lasFaktasvar, SVARSVERKTYG, SVAR_KONTRAKT} from './_faktasvar.js';
 import {budgetFor} from './_utredning.js';
 const ord = s => String(s || '').trim().split(/\s+/u).filter(Boolean);
 const antal = d => d.prosa.reduce((n,b)=>n+ord(b.text).length,0);
@@ -63,7 +63,7 @@ export async function redigeraSvar(raw,register,tackning,fraga,call) {
   let result;
   try {
     result=await call({model:'claude-sonnet-5',max_tokens:4096,output_config:{effort:'medium'},
-      system:REDIGERA_SYSTEM,
+      system:REDIGERA_SYSTEM + SVAR_KONTRAKT,
       messages:[{role:'user',content:JSON.stringify({fraga,djup:!!tackning.djup,original:raw,
         // Bara använda poster behövs; editorn får inte söka nya belägg.
         poster:original.referenser.map(id=>register.get(id))})}],
