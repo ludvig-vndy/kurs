@@ -194,8 +194,7 @@ test('svarsverktyget beskriver samma block som kontraktet', () => {
   assert.deepEqual([...typer].sort(), ['metod', 'post', 'saknas', 'tolkning']);
 });
 
-test('API-schemat forhindrar stod med fel stavning och extra falt i metodblock', () => {
-  assert.equal(SVARSVERKTYG.strict,true);
+test('verktygsschemat beskriver exakta stöd- och metodfält för serverns validering', () => {
   assert.equal(SVARSVERKTYG.input_schema.additionalProperties,false);
   const former=SVARSVERKTYG.input_schema.properties.block.items.anyOf;
   const tolkning=former.find(s=>s.properties.typ.enum.includes('tolkning'));

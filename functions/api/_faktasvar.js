@@ -61,7 +61,9 @@ i fri text gor att hela svaret kastas och anvandaren far ingenting alls.
    kvar i lasFaktasvar, som provar bada vagarna exakt likadant. */
 export const SVARSVERKTYG = {
   name: 'svara',
-  strict: true,
+  // Lokala A/B-prov gav snabbare, läsbar svenska utan constrained decoding,
+  // särskilt i rättningsvarvet. Verktygsformatet är kvar; lasFaktasvar är
+  // fortfarande den obligatoriska kontrollen av hela svaret på servern.
   description: 'Lamna det slutliga svaret. Anvand alltid det har verktyget, aldrig fri text.',
   input_schema: {
     type: 'object',
@@ -69,8 +71,7 @@ export const SVARSVERKTYG = {
     properties: {
       version: { type: 'integer', enum: [1] },
       block: {
-        // API:s strict-format stöder minItems:1, men inte maxItems.
-        // Tak på block och stödreferenser kontrolleras fortsatt på servern.
+        // Tak på block och stödreferenser kontrolleras på servern.
         type: 'array', minItems: 1,
         items: {
           anyOf: [
