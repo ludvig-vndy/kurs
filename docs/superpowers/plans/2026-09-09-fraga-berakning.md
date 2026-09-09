@@ -61,5 +61,29 @@ Skarpa prov endast om nyckeln finns; redovisa annars begransningen.
 - Slutverifiering: 201 berorda tester grona. Hela sviten 500 tester,
   498 grona och samma tva tidigare prospekt_arbete/user_id-schemafel.
   npm run check och git diff --check grona. Bygge 278 sidor, Chromium-smoke gron.
-- Task 3: lokal verifiering klar; skarpa modellprov aterstar eftersom lokal
-  API-nyckel saknas. Andringarna ar inte deployade eller committade.
+- Task 3: lokal verifiering klar. Skarpa modellprov genomfordes darefter i
+  GitHub Actions med befintlig repository-hemlighet, utan lokal nyckelkopia.
+
+## Skarpa prov och rattningar 2026-09-09
+
+- Implementationen och provfixarna ligger pa testgrenen fraga-berakning-prov,
+  senaste kodcommit e43947b. Ingen produktionsdeploy eller merge genomford.
+- Forsta skarpa korningen klarade tre av sex fall. Rattningar: obligatoriska
+  stodreferenser i svarsschemat, precist reparationsmeddelande, kvartalsnamn
+  utan upprepat artal, samt korrekt skillnad mellan underlagsavslag och driftfel.
+- Summeringsprovet accepterar bade direkt stod i resultatposten och att en
+  tolkning stods av samtliga ingangsreferenser. Bolag, matt, period och varde
+  kontrolleras fortfarande. Diagnostik tillford endast som kategorier/raknare.
+- Senaste riktade verifiering: 156 tester grona; npm run check och
+  git diff --check grona. Oberoende granskning fann ingen konkret regression.
+- Actions-run 34329587653 pa e43947b: sex av sex prov klarade sina krav,
+  noll blockerade svar. Loggen och svaren lasta; workflow-status ensam ar inte
+  bevis eftersom workflow aven kan avslutas gront vid underkanda prov.
+- Begransning: historikprovet godkanner ett forklarat avslag, inte en lyckad
+  helarssummering. Dokumentcitatens kvartal ar inte alla typade operander.
+  Svaret lamnar darfor fortfarande arbete at anvandaren. Sex godkanda fall
+  ar inte en garanti for generell svarskvalitet eller korrekta tolkningar.
+- Nasta prioritet for svarsfomaga: kallbunden extraktion av verifierade
+  berakningsposter ur hamtade rapporter, med prov som faktiskt kraver summan.
+  Darefter samtalsminne och planerad djupgranskning. Granska aven onodigt langa
+  citat och hur starka slutsatser modellen drar av korta tidsserier.
