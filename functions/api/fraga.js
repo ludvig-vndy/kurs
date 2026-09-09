@@ -76,7 +76,8 @@ const SYSTEM_BAS =
     "- Ange osäkerheten där den påverkar slutsatsen, en gång. Lista inte spekulativa orsaker utan nytta: välj högst de mest relevanta alternativa förklaringarna och säg vilket underlag som skulle skilja dem åt. En kort positiv tidsserie visar en förbättring under perioden, inte att förbättringen är varaktig. Upprepa inte samma lucka i både tolkning och saknas.\n" +
     "- Bevara frågans begrepp: operativt kassaflöde är inte fritt kassaflöde eller förändring i kassan. Normala anläggningsinvesteringar hör till investeringskassaflödet. Ökad rörelsekapitalbindning kan samexistera med skalfördelar. Sjunkande avkastning på nya investeringar kan fortfarande överstiga kapitalkostnaden; anta inte att gränsen har passerats. Att närma sig kapitalkostnaden ovanifrån är inte värdeförstöring: över gränsen positivt ekonomiskt mervärde, lika neutralt, under negativt.\n" +
     "- För en avgränsad resonemangsfråga: ge din bedömning först, pröva de viktigaste alternativen och prioritera nästa kontroll. Normalt räcker ett kort stycke per del. Använd inte breda inledningar eller en avslutning som upprepar delarna.\n" +
-    "- Kontrollera dina premisser: utdelning betyder inte att lönsamma projekt saknas, hög historisk ROIC bevisar inte hög avkastning på nästa investering, och frånvaro i underlaget bevisar inte frånvaro i bolaget. Om en slutsats kräver en extra förutsättning, säg vilken och formulera sambandet villkorat.\n" +
+    "- Kontrollera dina premisser: utdelning betyder inte att lönsamma projekt eller nyinvesteringar saknas, hög historisk ROIC bevisar inte hög avkastning på nästa investering, och frånvaro i underlaget bevisar inte frånvaro i bolaget. Om en slutsats kräver en extra förutsättning, säg vilken och formulera sambandet villkorat.\n" +
+    "- Kontrollera riktningen: nedskrivningar sänker resultatet, återföringar kan höja det. Uppskjutna leverantörsbetalningar höjer normalt operativt kassaflöde men höjer inte i sig marginalen. Efter utdelning disponerar aktieägarna kapitalet.\n" +
   "- Skilj stigande nivå från accelererande tillväxt. Lika stora absoluta ökningar innebär inte att tillväxten accelererar. När du beskriver begränsad historik räcker 'perioderna i underlaget'; undvik räknade tidslängder i fri text.\n" +
   "- Hjalp med fundamental aktieanalys, bolag i underlaget, anvandarens innehav och kursens metoder. Breda analysfragor och samband mellan rapporter ingar. Avboj amnen utanfor detta.\n" +
   "- Besvara det anvandaren faktiskt vill undersoka. Utveckla bade mojligheter och risker nar kallorna ger stod, utan att tvinga fram lika manga argument pa varje sida.\n" +
@@ -1043,12 +1044,12 @@ export async function onRequestPost(context) {
   // Prosans innebord bevisas inte av korrekta referenser. En separat kontroll
   // kan stoppa ogrundade fakta, fel kategorisering och motsagelser.
   // Ett granskarfel far ALDRIG falla tillbaka till ett ogranskat svar.
-  const behoverGranskning = kontrollerat.prosa.length > 0 || kontrollerat.block.some(b => b.typ === "beraknat");
+  const behoverGranskning = redigerat.andrat || kontrollerat.prosa.length > 0 || kontrollerat.block.some(b => b.typ === "beraknat");
   if (behoverGranskning) {
     // Samma analysförmåga behövs för att granska en tolkning som för att
     // skriva den. Den snabba modellen misstolkade upprepade gånger uttryckliga
     // reservationer och missade en felaktig acceleration i skarpa prov.
-    const granskarModell = kontrollerat.block.some(b=>['metod','tolkning','beraknat'].includes(b.typ))
+    const granskarModell = redigerat.andrat || kontrollerat.block.some(b=>['metod','tolkning','beraknat'].includes(b.typ))
       ? MODEL_DJUP : MODEL_SNABB;
     tackning.granskarmodell = granskarModell;
     const granskning = await anropa(apiKey, {

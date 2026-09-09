@@ -25,6 +25,8 @@ test('omfattning, riktning och exakta värden avgör relationerna',()=>{
   assert.equal(berakna('utveckling',serie([10,20,60])).post.acceleration,true);
   assert.equal(berakna('utveckling',serie([10,19.999])).post.jamforelser[0].fordubbling,false);
   assert.equal(berakna('utveckling',serie([10,20])).post.acceleration,null);
+  assert.equal(berakna('utveckling',serie([0.01,0.0107,0.011449])).post.acceleration,false);
+  assert.equal(berakna('utveckling',serie([1e-8,1.07e-8,1.1449e-8])).post.acceleration,false);
 });
 test('fel bolag, mått, enhet, periodluckor och icke-positiva baser avslås',()=>{
   const [a,b]=serie([10,20]);
@@ -42,4 +44,10 @@ test('kända kvantifierade relationspåståenden får inte smygas in i prosa',()
     assert.equal(d.orsak,'relation');
   }
   assert.equal(lasFaktasvar({version:1,block:[{typ:'metod',text:'Jämför förändringen mellan motsvarande perioder.'}]},r).ok,true);
+});
+
+test('kontrolltecken får inte förstöra prosa eller dölja relationsord',()=>{
+  const r=skapaFaktaregister();
+  for(const text of ['F\bördubbling.','Text\u0000med fel.'])
+    assert.equal(lasFaktasvar({version:1,block:[{typ:'metod',text}]},r).ok,false);
 });

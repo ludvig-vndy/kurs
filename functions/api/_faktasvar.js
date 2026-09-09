@@ -120,6 +120,8 @@ lägger till. En rimlig förklaring är inte en given förutsättning. Pröva om
 slutsatsen skulle kunna vara falsk trots att samtliga givna uppgifter stämmer.
 I så fall måste den vara villkorad, inte presenteras som säker.
 - Utdelning visar inte i sig att bolaget saknar lönsamma investeringsprojekt.
+  Att nästan hela vinsten delas ut betyder inte att nyinvesteringar saknas.
+  Efter utdelning disponerar aktieägarna kapitalet, inte bolaget.
 - Hög redovisad ROIC visar inte i sig att nya investeringar tjänar över WACC.
 - En uppgift som saknas i underlaget är inte bevis för att fenomenet saknas.
 - Svagare operativt kassaflöde bevisar inte att en marginalförbättring är falsk.
@@ -155,6 +157,10 @@ Bevara frågans mått och förutsättningar genom hela resonemanget:
 - Ökad rörelsekapitalbindning kan förekomma samtidigt med verkliga
   skalfördelar. Den bevisar inte att skalfördelar saknas. Stigande marginal
   bevisar heller inte skalfördelar eller utesluter säsong och produktmix.
+- Kontrollera riktningen i varje redovisningsförklaring: en nedskrivning
+  sänker resultatet; en återföring kan höja det. Senare betalning till
+  leverantörer höjer normalt periodens operativa kassaflöde och höjer inte
+  i sig rörelsemarginalen. Blanda inte betalningstidpunkt med kostnadsföring.
 Kontrollera även negativa påståenden: "utesluter", "måste bero på" och
 "kan inte förklara" kräver stöd, precis som en fastslagen positiv orsak.
 Metod far endast vara generell undervisning, inte bolagsspecifika fakta.
@@ -274,6 +280,7 @@ export const otillatenProsa = (text, lektioner = []) => talIProsa(text, lektione
 export function talIProsa(text, lektioner = []) {
   if (typeof text !== 'string' || !text.trim()) return 'texten ar tom';
   if (text.length > 1800) return 'texten ar for lang';
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/u.test(text)) return 'texten innehaller ogiltiga kontrolltecken; skriv normal svensk text';
   const s = text.normalize('NFKC').replace(/\p{Cf}/gu, '').toLowerCase();
   // Perioder far namnges. Stadningen ror BARA siffertestet nedan; orden som
   // provas mot rakneords- och storleksreglerna ar kvar or\u00f6rda i s.

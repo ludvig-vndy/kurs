@@ -20,6 +20,20 @@ const etikett = p => p.period || (p.langd === 1 ? `Q${p.kvartal} ${p.ar}` :
 const tal = formateraTal;
 const avslag = skal => ({ ok: false, skal });
 
+// Jämför produkter som exakta decimaler av registrets kanoniska värden.
+// Kvotdivisionens binära avrundningsbrus får inte bli en accelerationsutsaga.
+function decimal(v) {
+  const [mantissa, exponent='0']=String(v).toLowerCase().split('e');
+  const [heltal, fraction='']=mantissa.split('.');
+  return {n:BigInt(heltal+fraction),e:Number(exponent)-fraction.length};
+}
+function produktJamforelse(left,right) {
+  const product=xs=>xs.map(decimal).reduce((a,b)=>({n:a.n*b.n,e:a.e+b.e}),{n:1n,e:0});
+  const a=product(left),b=product(right),e=Math.min(a.e,b.e);
+  const an=a.n*10n**BigInt(a.e-e),bn=b.n*10n**BigInt(b.e-e);
+  return an>bn ? 1 : an<bn ? -1 : 0;
+}
+
 export function jamforbara(a, b) {
   if (!a || !b) return false;
   if (!a.slag || !b.slag) throw new TypeError('Jämförbara poster måste ange slag.');
@@ -91,11 +105,12 @@ export function berakna(operation, indata) {
     const jamforelser=ps.slice(1).map((p,i)=>({
       fran:etikett(ps[i]),till:etikett(p),tillvaxt:(varde(p)/varde(ps[i])-1)*100,
       // Beslut tas på kanoniska värden, inte avrundad procent i gränssnittet.
-      fordubbling:varde(p)===varde(ps[i])*2,halvering:varde(p)*2===varde(ps[i]),
+      fordubbling:produktJamforelse([varde(p)],[varde(ps[i]),2])===0,
+      halvering:produktJamforelse([varde(p),2],[varde(ps[i])])===0,
     }));
     if (jamforelser.some(p=>!Number.isFinite(p.tillvaxt))) return avslag('Jämförelsen gav inget ändligt resultat.');
-    const acceleration=jamforelser.length<2 ? null : jamforelser.every(p=>p.tillvaxt>0) &&
-      jamforelser.slice(1).every((p,i)=>p.tillvaxt>jamforelser[i].tillvaxt);
+    const acceleration=jamforelser.length<2 ? null : ps.slice(1).every((p,i)=>varde(p)>varde(ps[i])) &&
+      ps.slice(2).every((p,i)=>produktJamforelse([varde(p),varde(ps[i])],[varde(ps[i+1]),varde(ps[i+1])])>0);
     const dubbla=jamforelser.filter(p=>p.fordubbling), halva=jamforelser.filter(p=>p.halvering);
     const utsagor=[];
     if(dubbla.length) utsagor.push('Fördubbling: '+dubbla.map(p=>p.fran+' till '+p.till).join('; ')+'.');
