@@ -345,7 +345,7 @@ export function byggKorVerktyg(ctx) {
         if (tackning.berakningar.length >= MAX_BERAKNINGAR) return "Berakningsbudgeten ar slut. Svara med befintliga poster.";
         const dom = register ? register.laggBeraknad(indata) : {ok: false, skal: "Faktaregister saknas."};
         tackning.berakningar.push({operation: String(indata?.operation || '').slice(0, 30), ...dom});
-        if (!dom.ok) return "Berakningen avslogs: " + dom.skal;
+        if (!dom.ok) return "Berakningen avslogs: " + dom.skal + " Upprepa inte samma bestallning. Prova igen bara om du har andra giltiga operander eller nytt underlag. Aterge det faktiska skalet i saknas; kalla inte ett underlagsavslag for ett tekniskt fel.";
         tackning.faktaregister = register.status();
         return "Berakningen finns i post " + dom.id + ". Visa posten och forklaringen i svaret." + register.prompt(true);
       }

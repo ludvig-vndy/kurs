@@ -105,6 +105,11 @@ FULLSTANDIGHET AR INTE DIN SAK. Ett svar som tacker en del av fragan, valjer fa
 poster, namner att mer finns eller erbjuder att rakna vidare ar inte ett fel.
 Du stoppar det som ar osant, obelagt, felkategoriserat eller radgivning, aldrig
 det som ar kort. "Ofullstandigt" ar aldrig ett giltigt skal.
+Berakningsavslag i tackning beskriver vad servern kunde rakna med. Att siffror
+syns i dokumentcitat betyder inte att de finns som typade, jamforbara operander.
+Du far inte krava att modellen summerar citatsiffror manuellt eller stoppa
+svaret for att servern avslog en berakning. Kontrollera att forklaringen aterger
+avslagets verkliga skal, utan att hitta pa en saknad bolagsuppgift eller ett driftfel.
 
 Kontrollera varje prosablock och samspelet med faktablocken:
 Kontrollera aven att anvanda berakningar ar meningsfulla for fragan och
@@ -234,6 +239,9 @@ export function talIProsa(text, lektioner = []) {
     if (ENHET_DIREKT.test(efter)) return m;   // "2026 MSEK" ar ett belopp
     return artalIPeriod(hela.slice(Math.max(0, i - 40), i), efter) ? ' ' : m;
   });
+  // Q anger uttryckligen ett kvartal; artalet behover inte upprepas.
+  utanPeriod = utanPeriod.replace(/\bq[1-4]\b/gu, (m, i, hela) =>
+    ENHET_DIREKT.test(hela.slice(i + m.length, i + m.length + 40)) ? m : ' ');
   // ... men bara nar numret ar ett lektionsnummer i en hanvisning. Foljs det av
   // en enhet ar det ett belopp som rakar se ut som en lektion, och star det
   // utan hanvisning ar det ett tal som vilket annat.

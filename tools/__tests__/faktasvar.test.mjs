@@ -28,6 +28,15 @@ test('reparation namnger saknat stod och ber modellen valja verkliga referenser'
   assert.match(dom.klagan,/FAKTAREGISTER/);
 });
 
+test('kvartalsnamn utan upprepat artal ar perioder men ger inget frikort for belopp', () => {
+  for (const t of ['Utvecklingen under 2025, fran Q1 till Q4.', 'Jamfor med Q4 for aret innan.']) {
+    assert.equal(otillatenProsa(t),false,t);
+  }
+  for (const t of ['Marginalen ar 4 procent.','Kassan ar Q4 MSEK.','Kassan ar 2026.']) {
+    assert.equal(otillatenProsa(t),true,t);
+  }
+});
+
 test('servern skriver hela faktauppgiften med minus, enhet, bolag och period', () => {
   const r = setup(), p = faktum(r);
   const s = lasFaktasvar(svar({ typ: 'post', id: p.id }), r);

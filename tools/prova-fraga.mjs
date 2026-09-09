@@ -197,7 +197,7 @@ for (const p of PROV) {
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
       orsak:/inte plats/.test(b.skal || '')?'register_fullt':
-        /kanoniskt/.test(b.skal || '')?'otypad_operand':
+        /kanoniskt|saknar typade/.test(b.skal || '')?'otypad_operand':
         /Okänd/.test(b.skal || '')?'okand_operation':
         /refererade poster/.test(b.skal || '')?'okand_referens':
         /Beställningen/.test(b.skal || '')?'bestallningsformat':

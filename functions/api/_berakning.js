@@ -78,7 +78,7 @@ function direktFormel(indata, text) {
 export function berakna(operation, indata) {
   if (!Array.isArray(indata) || !indata.length || indata.length > MAX_INDATA || indata.some(p => !p || typeof p !== 'object'))
     return avslag('Indata måste vara en begränsad lista med registerposter.');
-  if (indata.some(p => !andlig(p) || !p.id)) return avslag('Alla operander måste ha ett ändligt kanoniskt värde.');
+  if (indata.some(p => !andlig(p) || !p.id)) return avslag('De valda posterna saknar typade tal med verifierad enhet och period. Dokumentcitat kan innehålla siffror men kan inte användas direkt som operander. Välj faktaposter med normaliserat värde, eller förklara att uppgifterna ännu inte kan kopplas säkert till beräkningen. Detta är ett avslag på underlaget, inte ett tekniskt verktygsfel.');
   if (operation === 'summa') {
     if (indata.length < 2) return avslag('Summa kräver minst två operander.');
     if (indata.some(p => p.slag !== 'flode')) return avslag('Bara flödesposter kan summeras över perioder.');
