@@ -85,6 +85,11 @@ globalThis.fetch = async (url, init) => {
       for(const tool of requestBody.tools || []) if(tool.name==='svara')delete tool.strict;
       init={...init,body:JSON.stringify(requestBody)};
     }
+    if(process.env.FRAGA_PROV_ANALYS_HIGH==='true' && requestBody.model==='claude-sonnet-5' &&
+        !requestBody.system.startsWith('Du granskar ett svar') && !requestBody.system.startsWith('Du redigerar ett svar')) {
+      requestBody.output_config={...requestBody.output_config,effort:'high'};
+      init={...init,body:JSON.stringify(requestBody)};
+    }
     if (avancerat) {
       for (const message of requestBody.messages || []) {
         for (const block of Array.isArray(message.content) ? message.content : []) {
@@ -345,6 +350,12 @@ for (const [namn, text, skaBlockeras, metod] of [
   ['betalning lyfter marginal', 'Uppskjutna leverantörsbetalningar höjer rörelsemarginalen och sänker periodens operativa kassaflöde.',true,true],
   ['utdelning tillater investering', 'Att nästan hela vinsten delas ut utesluter inte nyinvesteringar.',false,true],
   ['utdelning utesluter investering', 'Ett bolag som delar ut nästan hela vinsten får inget tillskott från nyinvesteringar.',true,true],
+  ['ROE och skuld', 'Skuldsättning kan höja ROE utan att den underliggande rörelsen förbättras. ROIC mäter avkastning på både eget och lånat rörelsekapital.',false,true],
+  ['ROIC och skuld', 'En hög ROIC kan vara lånad genom höga skulder i stället för intjänad, eftersom skuld krymper kapitalbasen i ROIC.',true,true],
+  ['utdelning utan garanti', 'Hög utdelning visar inte att framtida avkastning är känd eller pålitlig. Aktieägarens avkastning beror också på priset som betalas.',false,true],
+  ['utdelning ger känd avkastning', 'Utdelningsbolaget ger en känd och pålitlig framtida avkastning, ungefär lika med dess nuvarande ROIC, förutsatt att ROIC håller i sig.',true,true],
+  ['positiv spread är inte rangordning', 'Avkastning över kapitalkostnaden kan skapa värde på nya investeringar, men det räcker inte ensamt för att rangordna bolagens totala framtida värdeskapande.',false,true],
+  ['positiv spread avgör rangordning', 'Så länge avkastningen på nya investeringar överstiger kapitalkostnaden skapar återinvesteraren alltid mer totalt värde än utdelningsbolaget, oavsett bolagens storlek och investeringsmöjligheter.',true,true],
 ]) {
   aktivBucket=structuredClone(exempel);aktivaInnehav=exempelInnehav;
   fastSvar=posts=>{
