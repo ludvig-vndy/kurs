@@ -422,20 +422,30 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
        Verktyget svara far sitt resultat tillbaka som vilket verktyg som helst:
        godkant, eller vad som brast. Det ar reparationsrundan. */
     const svaret = svar.block.find((b) => b && b.type === "tool_use" && b.name === "svara");
+    const anvandning = svar.block.filter((b) => b && b.type === "tool_use" && b.name !== "svara");
     if (svaret) {
       const dom = provaSvar ? provaSvar(svaret.input) : { ok: true };
       if (dom.ok || reparationer >= MAX_REPARATION) return { ...svar, data: svaret.input };
       reparationer++;
       tackning.reparation = reparationer;
       meddelanden.push({ role: "assistant", content: svar.block });
-      meddelanden.push({ role: "user", content: [{
-        type: "tool_result", tool_use_id: svaret.id, is_error: true,
-        content: dom.klagan + " Svara igen med hela svaret, rattat.",
-      }] });
+      /* ALLA anrop i varvet maste besvaras, inte bara svara. tool_choice any
+         tillater flera verktyg i samma varv med flit, och ett tool_use utan
+         tool_result avvisas av API:t. Sa lange bara svara besvarades foll
+         alltsa hela reparationen sa fort modellen bad om mer underlag i samma
+         andetag som den svarade, alltsa i just de varv den behovdes mest. */
+      const svarat = [{ type: "tool_result", tool_use_id: svaret.id, is_error: true,
+        content: dom.klagan + " Svara igen med hela svaret, rattat." }];
+      for (const a of anvandning) {
+        tackning.verktyg.push(a.name);
+        svarat.push({ type: "tool_result", tool_use_id: a.id, content: await kor(a.name, a.input || {}) });
+      }
+      // Hamtningen kostar ett gravvarv aven nar den delar varv med ett svar.
+      if (anvandning.length) gravvarv++;
+      meddelanden.push({ role: "user", content: svarat });
       continue;
     }
 
-    const anvandning = svar.block.filter((b) => b && b.type === "tool_use" && b.name !== "svara");
     if (!anvandning.length) return svar;
 
     gravvarv++;
@@ -868,6 +878,40 @@ export async function onRequestPost(context) {
      inte battre for att lasaren far se det. */
   const MEKANISKT = new Set(["format", "postformat", "blocktyp", "prosaformat",
     "fri_uppgift", "tolkningsstod", "referens", "avklippt"]);
+  /* Granskaren maste se INNEHALLET, inte bara etiketterna.
+
+     Nar sammanfattningen bara bar id, matt, period och varde gick en av dess
+     egna regler inte att tillampa: "saknas far inte pasta en lucka som motsags
+     av underlaget". En tes som sager tvartemot ett saknas-block sag granskaren
+     aldrig, for teser bar sitt pastaende i text och texten skickades inte med.
+     Detsamma galler beraknade poster, dar formeln och antagandet ar hela
+     skalet att tro pa talet.
+
+     Uppdelningen mellan svar och tillgangligt ar oforandrad, det var bara
+     sammanfattningen som var for mager. Dokumentens text ar fortfarande ute:
+     den var det som gjorde prompten dyr, och svarets egna citat foljer med i
+     "svar". Texterna ar fortfarande data, aldrig instruktioner, och det star i
+     granskarens system. */
+  const GRANSKARTEXT = 240, GRANSKARBUDGET = 3000;
+  const MED_TEXT = new Set(["egen_uppgift", "antagande", "kurs", "illustration"]);
+  function granskarunderlag(poster) {
+    let kvar = GRANSKARBUDGET;
+    return poster.map((p) => {
+      const ut = { id: p.id, typ: p.typ, bolag: p.bolag, matt: p.matt,
+        period: p.period, varde: p.varde, enhet: p.enhet, rubrik: p.rubrik };
+      if (MED_TEXT.has(p.typ) && p.text && kvar > 0) {
+        ut.text = String(p.text).slice(0, Math.min(GRANSKARTEXT, kvar));
+        kvar -= ut.text.length;
+      }
+      if (p.typ === "beraknat") {
+        ut.formel = p.formel;
+        ut.indata = p.indata;
+        ut.antagande = p.antagande;
+      }
+      return ut;
+    });
+  }
+
   const blockera = orsak => json({
     answer: MEKANISKT.has(orsak)
       ? "Jag fick inte ihop svaret i en form jag kan stå för, och då visar jag det inte. "
@@ -895,15 +939,10 @@ export async function onRequestPost(context) {
            valja pa. Fore den uppdelningen fick granskaren hela registret under
            namnet poster och lasta det som en del av svaret: den fallde tre
            valskrivna metodblock om ROIC for att registret rakade innehalla
-           anvandarens fraga och ett innehav. Sammanfattningarna bar varde och
-           period sa motsagelser fortfarande gar att se, men inte citaten, som
-           bara gjorde prompten dyr. */
+           anvandarens fraga och ett innehav. */
         { role: "user", content: JSON.stringify({
           fraga: question, svar: kontrollerat.block, tackning,
-          tillgangligt: register.poster().map((p) => ({
-            id: p.id, typ: p.typ, bolag: p.bolag, matt: p.matt,
-            period: p.period, varde: p.varde, enhet: p.enhet,
-          })),
+          tillgangligt: granskarunderlag(register.poster()),
         }) },
         /* Prefill. Granskaren kan inte erbjudas ett verktyg utan att bli en
            andra svarsmodell, sa i stallet borjar vi objektet at den. Utan det

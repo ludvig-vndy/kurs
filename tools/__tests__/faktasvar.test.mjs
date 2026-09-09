@@ -301,3 +301,38 @@ test('ett tal med enhet efter ar inget lektionsnummer', () => {
   assert.equal(otillatenProsa('Marginalen var 5.1 procent.', ['5.1']), true);
   assert.equal(otillatenProsa('Bolaget hade 5.1 miljoner kronor.', ['5.1']), true);
 });
+
+/* GRANSKNINGEN 2026-09-09. Fyra pastaenden som gick rakt igenom grinden aven
+   sedan dataposterna infordes. Alla fyra har samma form: ett undantag som
+   fanns av ett gott skal var skrivet bredare an skalet kravde. */
+test('ett artal utan periodsammanhang ar ett tal, inte en period', () => {
+  assert.equal(otillatenProsa('Kassan i SEK är 2026.'), true);
+  assert.equal(otillatenProsa('Kassan uppgick till 2026.'), true);
+  assert.equal(otillatenProsa('Bolaget grundades 1998.'), true);
+});
+
+test('artal i ett periodsammanhang far fortfarande namnas', () => {
+  assert.equal(otillatenProsa('Räkenskapsåret 2022 var förlängt.'), false);
+  assert.equal(otillatenProsa('Under 2022 ändrades redovisningen.'), false);
+  assert.equal(otillatenProsa('Perioden april till juni 2022 redovisas separat.'), false);
+  assert.equal(otillatenProsa('Bolaget rapporterade mellan 2019 och 2022.'), false);
+});
+
+test('ett lektionsnummer utanfor en hanvisning ar ett tal', () => {
+  assert.equal(otillatenProsa('Marginalen var 5.1 %.', ['5.1']), true);
+  assert.equal(otillatenProsa('Marginalen låg på 5.1 och steg sedan.', ['5.1']), true);
+});
+
+test('en tidslangd i ord ar ett varde', () => {
+  assert.equal(otillatenProsa('Kassan räcker i tre månader.'), true);
+  assert.equal(otillatenProsa('Bolaget har gått med vinst i fem år.'), true);
+  // ... men en hanvisning till kanda perioder ar det inte.
+  assert.equal(otillatenProsa('De fyra kvartalen täcker kalenderåret.'), false);
+});
+
+test('en krona ar ett belopp overallt utom i idiomet', () => {
+  assert.equal(otillatenProsa('Bolaget delade ut en krona per aktie.'), true);
+  assert.equal(otillatenProsa('Utdelningen höjdes med en krona.'), true);
+  assert.equal(otillatenProsa('Hur lite kapital som krävs för att tjäna en krona.'), false);
+  assert.equal(otillatenProsa('Avkastning per investerad krona är måttet.'), false);
+});

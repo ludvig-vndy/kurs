@@ -252,3 +252,45 @@ test('ett nej fran granskaren ger ingen andra chans', async () => {
   const svarsanrop = anropen.filter((k) => !String(k.system).startsWith('Du granskar ett svar'));
   assert.equal(svarsanrop.length, 1, 'skrev om svaret at granskaren');
 });
+
+/* GRANSKNINGEN 2026-09-09. tool_choice any tillater flera verktyg i samma varv
+   med flit, sa modellen kan be om mer underlag i samma andetag som den svarar.
+   Reparationen besvarade bara svara, och ett tool_use utan tool_result avvisas
+   av API:t: reparationen foll alltsa i just de varv den behovdes mest. */
+test('reparationen besvarar alla anrop i varvet, inte bara svara', async () => {
+  const anropen = stubbaFetch([
+    (kropp) => ({
+      content: [
+        { type: 'tool_use', id: 'tu_las', name: 'las_mer', input: { bolag: 'Unibap Space Solutions', sokord: 'kassa' } },
+        { type: 'tool_use', id: 'tu_svar', name: 'svara', input: { version: 1, block: [{ typ: 'metod', text: 'Kassan var 41 900 KSEK.' }] } },
+      ],
+      stop_reason: 'tool_use',
+    }),
+    svarar([{ typ: 'metod', text: 'Kassan redovisas i delarsrapporten.' }]),
+  ]);
+  const d = await (await anrop('hur gick det for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  const sista = anropen[1].messages[anropen[1].messages.length - 1];
+  const besvarade = sista.content.filter((b) => b.type === 'tool_result').map((b) => b.tool_use_id).sort();
+  assert.deepEqual(besvarade, ['tu_las', 'tu_svar'], 'alla anrop besvarades inte: ' + besvarade.join(', '));
+  assert.ok(!d.blockerat, 'blockerades: ' + (d.verifiering && d.verifiering.orsak));
+});
+
+/* GRANSKNINGEN 2026-09-09. Granskaren har en regel om att ett saknas-block inte
+   far pasta en lucka som motsags av underlaget. Den gick inte att tillampa:
+   sammanfattningen bar id, matt och period, men inte tesernas text, sa
+   motsagelsen fanns aldrig i prompten. */
+test('granskaren far tesernas och de beraknade posternas innehall', async () => {
+  const anropen = stubbaFetch([svarar([{ typ: 'saknas', text: 'Jag hittar ingen uppgift om det.' }])]);
+  await (await anrop('vad tycker du om Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  const gransk = anropen.find((k) => String(k.system).startsWith('Du granskar ett svar'));
+  assert.ok(gransk, 'granskaren anropades inte');
+  const kropp = JSON.parse(gransk.messages[0].content);
+  assert.ok(kropp.fraga, 'fragan skickas inte med');
+  const egen = kropp.tillgangligt.filter((p) => p.typ === 'egen_uppgift');
+  assert.ok(egen.length && egen.some((p) => p.text), 'egna uppgifter saknar text: ' + JSON.stringify(egen));
+  const raknat = kropp.tillgangligt.filter((p) => p.typ === 'beraknat');
+  assert.ok(!raknat.length || raknat.every((p) => p.formel), 'beraknade poster saknar formel');
+  // ... men dokumentens text ar fortfarande ute, den gjorde prompten dyr.
+  assert.ok(kropp.tillgangligt.filter((p) => p.typ === 'dokument').every((p) => !p.text),
+    'dokumenttext skickades med igen');
+});
