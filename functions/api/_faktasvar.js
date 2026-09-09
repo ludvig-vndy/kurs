@@ -91,6 +91,11 @@ och en post som ligger dar utan att namnas i svaret gor inte svaret sammanblanda
 Ett svar som bara ar allman undervisning om metod ar fullt giltigt aven nar det
 fanns bolagsdata att tillga.
 
+FULLSTANDIGHET AR INTE DIN SAK. Ett svar som tacker en del av fragan, valjer fa
+poster, namner att mer finns eller erbjuder att rakna vidare ar inte ett fel.
+Du stoppar det som ar osant, obelagt, felkategoriserat eller radgivning, aldrig
+det som ar kort. "Ofullstandigt" ar aldrig ett giltigt skal.
+
 Kontrollera varje prosablock och samspelet med faktablocken:
 Metod far endast vara generell undervisning, inte bolagsspecifika fakta.
 Tolkning far vara ett forsiktigt resonemang med stod i angivna poster.
