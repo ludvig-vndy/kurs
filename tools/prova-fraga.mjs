@@ -391,6 +391,10 @@ for (const [namn, text, skaBlockeras, metod] of [
   ['utdelning ger känd avkastning', 'Utdelningsbolaget ger en känd och pålitlig framtida avkastning, ungefär lika med dess nuvarande ROIC, förutsatt att ROIC håller i sig.',true,true],
   ['positiv spread är inte rangordning', 'Avkastning över kapitalkostnaden kan skapa värde på nya investeringar, men det räcker inte ensamt för att rangordna bolagens totala framtida värdeskapande.',false,true],
   ['positiv spread avgör rangordning', 'Så länge avkastningen på nya investeringar överstiger kapitalkostnaden skapar återinvesteraren alltid mer totalt värde än utdelningsbolaget, oavsett bolagens storlek och investeringsmöjligheter.',true,true],
+  ['blandad ROIC med korrekt reservation', 'Historisk ROIC visar inte avkastningen på nästa investering. Utdelningsbolaget ger en pålitlig avkastning ungefär i nivå med sin ROIC. För en fullständig jämförelse behövs mer data om framtiden.',true,true],
+  ['blandad ROIC utan otillåten slutsats', 'Historisk ROIC visar inte avkastningen på nästa investering. En utdelning flyttar kapital till ägarna men ger inte i sig en känd framtida avkastning. Bolagens totala värdeskapande kan inte rangordnas utan jämförbara uppgifter om investeringsmöjligheter, avkastning och skala.',false,true],
+  ['blandad rörelsekapital med uteslutande', 'Rörelsekapitalbindning kan samexistera med skalfördelar. Växer kundfordringar och lager snabbare än omsättningen är det däremot bevis på att en äkta skalfördel saknas. Mer underlag behövs för en fullständig bedömning.',true,true],
+  ['blandad rörelsekapital utan uteslutande', 'Rörelsekapitalbindning kan samexistera med skalfördelar. Växer kundfordringar och lager snabbare än omsättningen behöver betalningsvillkor och lageruppbyggnad undersökas, medan skalfördelstesen prövas mot kostnadernas utveckling. Det senare sambandet är ännu inte belagt.',false,true],
 ]) {
   aktivBucket=structuredClone(exempel);aktivaInnehav=exempelInnehav;
   fastSvar=posts=>{
