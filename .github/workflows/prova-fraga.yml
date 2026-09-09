@@ -43,6 +43,10 @@ on:
         description: 'Experiment: Opus 5 enbart i svarsgeneratorn, övriga kontroller oförändrade'
         type: boolean
         default: false
+      granskar_motivering:
+        description: 'Experiment: granskaren motiverar även positiva beslut i samma anrop'
+        type: boolean
+        default: false
 
 jobs:
   prov:
@@ -54,6 +58,7 @@ jobs:
       FRAGA_PROV_LOST_FORMAT: ${{ inputs.lost_format }}
       FRAGA_PROV_ANALYS_HIGH: ${{ inputs.analys_high }}
       FRAGA_PROV_ANALYS_OPUS: ${{ inputs.analys_opus }}
+      FRAGA_PROV_GRANSKAR_MOTIVERING: ${{ inputs.granskar_motivering }}
     steps:
       - uses: actions/checkout@v4
         with:

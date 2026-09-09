@@ -95,6 +95,15 @@ globalThis.fetch = async (url, init) => {
       requestBody.model='claude-opus-5';
       init={...init,body:JSON.stringify(requestBody)};
     }
+    const motivera=process.env.FRAGA_PROV_GRANSKAR_MOTIVERING==='true' &&
+      requestBody.model==='claude-sonnet-5' && requestBody.system.startsWith('Du granskar ett svar');
+    if(motivera) {
+      requestBody.system+='\nPROV AV BESLUTSMOTIVERING: Skriv först skal, sedan godkand. Motivera även ett godkännande: välj svarets mest tveksamma sakpåstående och förklara kort vilket underlag eller metodsamband som bär det, eller varför det brister. En reservation senare i svaret gör inte ett tidigare obelagt påstående sant. Högst två meningar. Returnera alltid exakt {"skal":"din konkreta motivering","godkand":true eller false}. Detta ersätter bara regeln att positiva beslut saknar skal. Samtliga sakkrav gäller fortfarande.';
+      requestBody.output_config={...requestBody.output_config,format:{type:'json_schema',schema:{
+        type:'object',additionalProperties:false,properties:{skal:{type:'string'},godkand:{type:'boolean'}},required:['skal','godkand'],
+      }}};
+      init={...init,body:JSON.stringify(requestBody)};
+    }
     if (avancerat) {
       for (const message of requestBody.messages || []) {
         for (const block of Array.isArray(message.content) ? message.content : []) {
@@ -139,6 +148,18 @@ globalThis.fetch = async (url, init) => {
     // svart hal i provkorningen: man ser att nagot fallde, aldrig vad.
     if (arGranskning) { domen.push(t); domStopp.push(body.stop_reason); }
     else if (t) ratext.push(t);
+    if(motivera) {
+      console.log('GRANSKARMOTIVERING: '+t);
+      // Bara testadaptern: samma sanningsvärde till befintlig serverparser.
+      // Ett nej, avklippt eller oväntat format konverteras aldrig till ja.
+      try {
+        const v=JSON.parse(t);
+        if(v.godkand===true && typeof v.skal==='string' && v.skal.trim() &&
+            Object.keys(v).sort().join(',')==='godkand,skal' && body.stop_reason!=='max_tokens') {
+          body.content=body.content.map(b=>b.type==='text'?{...b,text:'{"godkand":true}'}:b);
+        }
+      } catch {}
+    }
     return ok(body);
   }
   return riktigFetch(url, init);
