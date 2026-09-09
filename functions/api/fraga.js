@@ -211,7 +211,9 @@ function traffar(ord, term) {
 
 export function valjLektioner(fraga, max = 2) {
   const t = termer(fraga).map(nyckla).filter((o) => o.length >= MIN_TERM);
-  if (!t.length) return [];
+  const explicita = [...String(fraga).matchAll(/\b(?:lektion(?:en)?|avsnitt(?:et)?)\s+(\d{1,2}\.\d{1,2})\b(?!\.\d)/gi)]
+    .map(m=>m[1]).filter(id=>Object.hasOwn(LEKTIONER,id));
+  if (!t.length && !explicita.length) return [];
 
   const funna = [];
   for (const rad of REGISTER.split(RADBRYT)) {
@@ -221,7 +223,7 @@ export function valjLektioner(fraga, max = 2) {
     if (!id) continue;
     const ordITitel = ORD(titel);
     const ordIRaden = ORD(rad);
-    let poang = 0;
+    let poang = explicita.includes(id) ? 1000 : 0;
     for (const term of t) {
       // Titeln sager vad lektionen AR, malet vad den ger. Titeln vager tyngre.
       if (traffar(ordITitel, term)) poang += TITELVIKT;
@@ -460,12 +462,14 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
   const budget = budgetFor(tackning.djup);
   tackning.deadline ??= Date.now() + budget.ms;
   let reparationer = 0;
+  let reparationsOrsak = null, reparationsBerakning = false;
   // En plats reserveras alltid for granskaren. Budgeten overlever fallback.
   while (tackning.modellanrop < budget.modellanrop - 1) {
     if (Date.now() >= tackning.deadline) return {fel:'budget',status:504,meddelande:'Utredningen hann inte bli klar inom tidsbudgeten.'};
-    const masteSvara = tackning.modellanrop >= budget.modellanrop - 3 || reparationer > 0 ||
+    const masteSvara = tackning.modellanrop >= budget.modellanrop - 3 ||
       Date.now() >= tackning.deadline - 40000 || tackning.verktygsanrop >= budget.verktyg;
-    const tillatna = masteSvara ? [] : verktyg.filter(t => t.name === 'berakna'
+    const tillatna = masteSvara ? [] : verktyg.filter(t=>reparationer===0 ||
+      (reparationsOrsak==='relation' && !reparationsBerakning && t.name==='berakna')).filter(t => t.name === 'berakna'
       ? tackning.berakningsforsok < budget.berakningar : t.name === 'planera'
         ? !tackning.verktyg.includes('planera') : tackning.gravvarv < budget.gravvarv);
     const svar = await anropa(apiKey, {
@@ -501,7 +505,14 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
           content:'Verktyget ar inte tillgangligt eller budgeten ar slut. Svara med befintligt underlag.'});
         continue;
       }
-      if (a.name === 'berakna') tackning.berakningsforsok++;
+      if (a.name === 'berakna') {
+        if(reparationer>0 && reparationsBerakning) {
+          resultat.push({type:'tool_result',tool_use_id:a.id,is_error:true,content:'Rättningsvarvets beräkning är redan använd. Svara med befintliga poster.'});
+          continue;
+        }
+        tackning.berakningsforsok++;
+        if(reparationer>0) reparationsBerakning=true;
+      }
       else if (a.name !== 'planera') gravde = true;
       tackning.verktygsanrop++;
       tackning.verktyg.push(a.name);
@@ -519,7 +530,7 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
       resultat.push({type:'tool_result',tool_use_id:a.id,content});
     }
     if (gravde) tackning.gravvarv++;
-    if (svaret) { reparationer++; tackning.reparation = reparationer; }
+    if (svaret) { reparationer++; reparationsOrsak=dom.orsak; tackning.reparation = reparationer; }
     meddelanden.push({role:'assistant',content:svar.block});
     meddelanden.push({role:'user',content:resultat});
   }
@@ -889,8 +900,8 @@ export async function onRequestPost(context) {
   const lektioner = valjLektioner(question);
   tackning.lektioner = lektioner.map(function (l) { return l.id; });
 
-  /* Verktygen bara nar det finns nagot att grava i. En ren kursfraga ska inte
-     betala for tre verktygsdefinitioner den aldrig anvander. */
+  /* Rapportverktyg kräver arkiv. Kursfrågor kan läsa mer kursmaterial även
+     utan bolagsarkiv, inom samma verktygs- och tidsbudget. */
   const kanGrava = arkivet.length > 0 && !!env.DATA;
 
   /* Kan den hamta sjalv har den dokument, aven om urvalet inte valde nagra.
@@ -904,6 +915,7 @@ export async function onRequestPost(context) {
   const system = SYSTEM_BAS + SVAR_KONTRAKT +
     (djup ? SYSTEM_DJUP : '') + samtalsText(samtal) +
     (kanGrava ? SYSTEM_VERKTYG : "") +
+    (!kanGrava && lektioner.length ? '\nDu kan läsa en relevant fördjupning med las_lektion när de valda kursutdragen inte räcker. Välj id ur kurskatalogen. Läs bara när det behövs för frågan.\n' : '') +
     (harUnderlag ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
     tackningText(tackning) +
     kursText(lektioner) +
@@ -957,6 +969,7 @@ export async function onRequestPost(context) {
   } else {
     const utanArkiv = verktygsDefinitioner(djup).filter(t=>
       (t.name === 'berakna' && register.poster().some(p=>p.normaliserat)) ||
+      (t.name === 'las_lektion' && lektioner.length > 0) ||
       (djup && ['planera','las_lektion'].includes(t.name)));
     svar = await utred(apiKey, brev, utanArkiv, kor, tackning, provaSvar);
   }

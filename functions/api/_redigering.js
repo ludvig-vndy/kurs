@@ -25,7 +25,9 @@ export function kortningsbehov(d, djup) {
 export function valjRedigering(original, proposal, register) {
   const before=lasFaktasvar(original,register), after=lasFaktasvar(proposal,register);
   if(!before.ok || !after.ok || antal(after)>=antal(before)) return null;
-  if(!lika(original.block.filter(b=>b.typ==='post'),proposal.block.filter(b=>b.typ==='post'))) return null;
+  // Båda formerna är redan schemavaliderade. JSON-nycklarnas ordning har
+  // ingen betydelse; posternas id, antal och inbördes ordning har det.
+  if(!lika(original.block.filter(b=>b.typ==='post').map(b=>b.id),proposal.block.filter(b=>b.typ==='post').map(b=>b.id))) return null;
   if(!lika(stod(original),stod(proposal))) return null;
   const types=new Set(original.block.map(b=>b.typ));
   if(proposal.block.some(b=>!types.has(b.typ))) return null;

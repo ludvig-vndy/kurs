@@ -417,7 +417,7 @@ export function lasFaktasvar(raw, register) {
         return nej('prosaformat', iBlock(b.typ) + ' hade fel falt. Ett tolkningsblock har typ, text och stod. Metod och saknas har bara typ och text.');
       }
       const funnet = talIProsa(b.text, lektionsnummer);
-      const relation = String(b.text || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+      const relation = String(b.text || '').normalize('NFKD').replace(/[\p{M}\p{Cf}]/gu,'').toLowerCase()
         .match(/\b(?:fordubbl\p{L}*|halver\p{L}*|acceler\p{L}*|dubbelt\s+sa|halften\s+(?:av|sa))\b/u);
       if (relation) return nej('relation','Kvantifierade relationer skrivs av servern. Använd berakna med operation utveckling och de relevanta periodernas post-id:n. Visa resultatposten; skriv resten utan orden för fördubbling, halvering eller acceleration. Finns inga operander, förklara metoden utan ett sådant påstående.');
       if (funnet) {
