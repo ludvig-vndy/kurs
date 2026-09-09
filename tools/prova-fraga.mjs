@@ -223,6 +223,13 @@ if (avancerat) PROV.splice(0, PROV.length, ...avanceradeFragor.map((fraga,i)=>({
   namn:'avancerad metod '+(i+1),fraga,djup:i===0,anonym:true,
   krav:d=>d.answer && !d.blockerat ? null : 'saknar svar',
 })),relationsProv);
+if(avancerat) PROV.push(
+  {namn:'direkt lektionshänvisning',anonym:true,fraga:'Förklara lektion 5.3 kort. Vad är det viktigaste jag ska undersöka i ett bolag?',
+    krav:d=>d.tackning?.lektioner?.includes('5.3') ? null : 'den efterfrågade lektionen lästes inte'},
+  {namn:'begärd kursfördjupning utan arkiv',anonym:true,
+    fraga:'Hur bör jag granska kapitalallokeringen när ROIC är hög men bolaget delar ut mycket? Använd läsverktyget för att läsa kursavsnitt 7.2 innan du svarar och prioritera den viktigaste kontrollen.',
+    krav:d=>d.tackning?.verktyg?.includes('las_lektion') && d.tackning?.lektioner?.includes('7.2') ? null : 'den begärda fördjupningen hämtades inte med verktyget'}
+);
 let fel = 0, blockerade = 0, foregaendeTrad = '';
 for (const p of PROV) {
   aktivBucket = p.exempel ? structuredClone(exempel) : BUCKET;
@@ -237,6 +244,8 @@ for (const p of PROV) {
   }
   const d = await fraga(p.fraga,{djup:!!p.djup,trad:p.foljd ? foregaendeTrad : '',...(p.anonym?{token:''}:{})});
   foregaendeTrad = !d.blockerat && !d.error ? d.trad || '' : '';
+  console.log('MÄTNING: '+JSON.stringify({namn:p.namn,ms:d.ms,modellanrop:d.tackning?.modellanrop,
+    reparation:d.tackning?.reparation || 0,blockerat:!!d.blockerat,error:!!d.error}));
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     modellfel:d.tackning?.modellfel || null,

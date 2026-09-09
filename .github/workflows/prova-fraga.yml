@@ -27,6 +27,10 @@ on:
         description: 'Kör avancerade metodfrågor med intern diagnostik'
         type: boolean
         default: false
+      baslinje:
+        description: 'Jämför med chatbotkoden före förbättringskedjan (69de416)'
+        type: boolean
+        default: false
 
 jobs:
   prov:
@@ -37,6 +41,11 @@ jobs:
       FRAGA_AVANCERAT: ${{ inputs.avancerat }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Välj fast baslinje
+        if: ${{ inputs.baslinje }}
+        run: git restore --source=69de416 -- functions/api
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
