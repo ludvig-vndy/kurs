@@ -31,6 +31,10 @@ on:
         description: 'Jämför med chatbotkoden före förbättringskedjan (69de416)'
         type: boolean
         default: false
+      lost_format:
+        description: 'Experiment: utan API-strict på svara, oförändrad servervalidering'
+        type: boolean
+        default: false
 
 jobs:
   prov:
@@ -39,6 +43,7 @@ jobs:
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       FRAGA_AVANCERAT: ${{ inputs.avancerat }}
+      FRAGA_PROV_LOST_FORMAT: ${{ inputs.lost_format }}
     steps:
       - uses: actions/checkout@v4
         with:

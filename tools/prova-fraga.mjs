@@ -81,6 +81,10 @@ globalThis.fetch = async (url, init) => {
   if (u.includes('/rest/v1/theses')) return ok([]);
   if (u.includes('api.anthropic.com')) {
     const requestBody = JSON.parse(init.body);
+    if(process.env.FRAGA_PROV_LOST_FORMAT==='true') {
+      for(const tool of requestBody.tools || []) if(tool.name==='svara')delete tool.strict;
+      init={...init,body:JSON.stringify(requestBody)};
+    }
     if (avancerat) {
       for (const message of requestBody.messages || []) {
         for (const block of Array.isArray(message.content) ? message.content : []) {
