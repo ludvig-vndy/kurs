@@ -9,16 +9,16 @@ men får inte ändra faktaposter eller stödreferenser; slutgranskaren ser
 original och slutversion för att kontrollera betydelse och reservationer.
 **Tech Stack:** Befintliga JavaScript Pages Functions, node:test och API-proven.
 
-- [ ] Beräkning: positiv, jämförbar periodserie; exakta par och omfattning;
+- [x] Beräkning: positiv, jämförbar periodserie; exakta par och omfattning;
   kontroll av fördubbling/halvering och procentuell acceleration utan avrundade
   beslut. Bevara bolag, mått, enhet, period, proveniens och beroendegraf.
-- [ ] Prosa: kända uttryck för kvantifierade relationer får inte skrivas som
+- [x] Prosa: kända uttryck för kvantifierade relationer får inte skrivas som
   fria bolagspåståenden. Modellen använder utvecklingsposten. Dokumentera
   att lexikal upptäckt inte bevisar all möjlig naturlig språksemantik.
-- [ ] Premisser: granskaren skiljer givna uppgifter, villkor och härledda
+- [x] Premisser: granskaren skiljer givna uppgifter, villkor och härledda
   slutsatser. Positiva/negativa kontrollpar för utdelning, kapitalkostnad,
   skalfördelar och frånvaro av belägg.
-- [ ] Redigering: högst ett budgeterat försök, före slutgranskaren. Samma
+- [x] Redigering: högst ett budgeterat försök, före slutgranskaren. Samma
   postblock och referenser. Ingen publicering av ogranskad redigering.
   Vid ogiltigt eller misslyckat förslag granskas originalet.
 - [ ] Regressioner: fel serie 10/20/30/40, korrekt 10/20/40/80, negationer,
