@@ -460,7 +460,8 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
       ? tackning.berakningsforsok < budget.berakningar : t.name === 'planera'
         ? !tackning.verktyg.includes('planera') : tackning.gravvarv < budget.gravvarv);
     const svar = await anropa(apiKey, {
-      model: kropp.model, max_tokens: kropp.max_tokens, system: kropp.system,
+      model: kropp.model, max_tokens: kropp.max_tokens,
+      system: kropp.system + (reparationer ? '\nRÄTTNINGSVARV: Behåll relevanta postreferenser. Skriv om förklaringen kort, högst ett par meningar per prosablock. Kontrollera hela texten mot felmeddelandet, inte bara första förekomsten. Beskriv rapportperioderna utan att ange deras antal eller en tidslängd i prosa.\n' : ''),
       messages: meddelanden,
       tools: tillatna.concat([SVARSVERKTYG]),
       tool_choice: tillatna.some(t=>t.name==='planera') ? {type:'tool',name:'planera'} :
@@ -1033,12 +1034,18 @@ export async function onRequestPost(context) {
     const granskning = await anropa(apiKey, {
       /* 80 rackte for {"godkand":true} men inte for ett nej med skal, sa
          granskarens svar klipptes av och blev ett nej av fel anledning. */
-      model: granskarModell, max_tokens: 320, system: GRANSKA_SYSTEM,
+      model: granskarModell, max_tokens: granskarModell === MODEL_DJUP ? 2048 : 320, system: GRANSKA_SYSTEM,
       // Sonnet 5 stöder inte assistant-prefill. JSON-format ersätter prefixet.
       // https://platform.claude.com/docs/en/models/sonnet-5/migration-guide
-      ...(granskarModell === MODEL_DJUP ? {output_config:{format:{type:'json_schema',schema:{
+      ...(granskarModell === MODEL_DJUP ? {output_config:{effort:'medium',format:{type:'json_schema',schema:{
         type:'object',additionalProperties:false,required:['godkand'],
         properties:{godkand:{type:'boolean'},skal:{type:'string'}},
+        anyOf:[
+          {type:'object',additionalProperties:false,required:['godkand'],
+            properties:{godkand:{type:'boolean',enum:[true]}}},
+          {type:'object',additionalProperties:false,required:['godkand','skal'],
+            properties:{godkand:{type:'boolean',enum:[false]},skal:{type:'string'}}},
+        ],
       }}}} : {}),
       messages: [
         /* "svar" ar det som ska publiceras, "tillgangligt" ar vad som fanns att
