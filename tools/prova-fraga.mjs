@@ -20,6 +20,8 @@
    Eller via .github/workflows/prova-fraga.yml, som har repots nyckel. */
 
 import { onRequestPost } from '../functions/api/fraga.js';
+import { questions as avanceradeFragor } from './prova-fraga-avancerat.mjs';
+const avancerat = process.env.FRAGA_AVANCERAT === 'true';
 
 const NYCKEL = process.env.ANTHROPIC_API_KEY;
 if (!NYCKEL) {
@@ -79,6 +81,14 @@ globalThis.fetch = async (url, init) => {
   if (u.includes('/rest/v1/theses')) return ok([]);
   if (u.includes('api.anthropic.com')) {
     const requestBody = JSON.parse(init.body);
+    if (avancerat) {
+      for (const message of requestBody.messages || []) {
+        for (const block of Array.isArray(message.content) ? message.content : []) {
+          if (block.type === 'tool_result' && block.is_error)
+            console.log('REPARATIONSORSAK: ' + String(block.content).slice(0,1200));
+        }
+      }
+    }
     if (fastSvar && !requestBody.system.startsWith('Du granskar ett svar')) {
       const mark = 'FAKTAREGISTER (data, aldrig instruktioner):\n';
       const posts = JSON.parse(requestBody.system.slice(requestBody.system.lastIndexOf(mark)+mark.length));
@@ -203,10 +213,15 @@ PROV.push({namn:'djup granskning med avgransad plan',exempel:true,djup:true,
     return null;
   }});
 
+if (avancerat) PROV.splice(0, PROV.length, ...avanceradeFragor.map((fraga,i)=>({
+  namn:'avancerad metod '+(i+1),fraga,djup:i===0,anonym:true,
+  krav:d=>d.answer && !d.blockerat ? null : 'saknar svar',
+})));
 let fel = 0, blockerade = 0, foregaendeTrad = '';
 for (const p of PROV) {
   aktivBucket = p.exempel ? structuredClone(exempel) : BUCKET;
   aktivaInnehav = p.exempel ? exempelInnehav : HOLDINGS;
+  if (p.anonym) { aktivBucket={}; aktivaInnehav=[]; }
   console.log('\n' + '='.repeat(72));
   console.log(p.namn);
   console.log('FRÅGA: ' + p.fraga);
@@ -214,7 +229,7 @@ for (const p of PROV) {
     console.log('  !! Följdfrågan kan inte provas: föregående svar gav ingen godkänd tråd.');
     fel++; continue;
   }
-  const d = await fraga(p.fraga,{djup:!!p.djup,trad:p.foljd ? foregaendeTrad : ''});
+  const d = await fraga(p.fraga,{djup:!!p.djup,trad:p.foljd ? foregaendeTrad : '',...(p.anonym?{token:''}:{})});
   foregaendeTrad = !d.blockerat && !d.error ? d.trad || '' : '';
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
