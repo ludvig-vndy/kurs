@@ -175,12 +175,20 @@ export function periodVidTraff(text, index, rubrik) {
   const innan = fore.slice(0, bast.index);
   const kopieradRubrik = String(rubrik || '').toLowerCase().startsWith(
     fore.slice(0, bast.index + bast[0].length).trim().toLowerCase());
+  // MFN:s lagrade text kan ha tappat HTML-raderna: dokumentrubrik, datum
+  // med klockslag, ibland en upprepad rapportrubrik, sedan kvartalsrubriken.
+  // Godta bara denna exakta prefixstruktur, inte godtycklig prosa efter datum.
+  const titel = String(rubrik || '').trim().toLowerCase();
+  const kortTitel = titel.match(/(?:delårsrapport|bokslutskommuniké|interim report|year-end report).*/)?.[0];
+  const huvud = innan.trim().match(/^(.*?)\s+(20\d{2}-\d{2}-\d{2} [0-2]\d:[0-5]\d:[0-5]\d)\s*(.*?)$/);
+  const efterRapporthuvud = huvud && huvud[1].toLowerCase() === titel &&
+    (!huvud[3] || huvud[3].toLowerCase() === titel || huvud[3].toLowerCase() === kortTitel);
   // Ett periodomnämnande mitt i en mening är ingen avsnittsrubrik. När
   // radbrytningar saknas tillåts även gränsen efter datum eller måttets enhet.
   // Vid tvetydighet utelämnas måttet; vi återgår inte till en äldre rubrik.
   const rubrikgrans = !innan.trim() || /[.!?;:\n]\s*$/.test(innan) ||
     /\b20\d{2}-\d{2}-\d{2}\s*$/.test(innan) ||
-    new RegExp(`\\b${ENHET}\\s*$`, 'i').test(innan) || kopieradRubrik;
+    new RegExp(`\\b(?:${ENHET}|SEK|EUR|USD)\\s*$`, 'i').test(innan) || kopieradRubrik || efterRapporthuvud;
   const efter = fore.slice(bast.index + bast[0].length);
   // "Q1 2026 väntas ..." är en mening även när den börjar på ny rad.
   // Ett efterföljande mått får däremot börja med liten bokstav.

@@ -64,6 +64,8 @@ test('periodomnämnande i löptext får inte bli rubrik för nästa mått', () =
     'Q4 2025 Tillväxten väntas fortsätta i Q1 2026. ',
     'Q4 2025 Tillväxten under januari-mars 2026 väntas öka. ',
     'Q4 2025. Q1 2026 väntas tillväxten öka. ',
+    'Q4 2025 2026-02-05 08:00:16 Prognosen för Q1 2026 är positiv. ',
+    'Q4 2025 2026-02-05 08:00:16 Q4 2025 Prognosen för Q1 2026 är positiv. ',
   ]) {
     assert.deepEqual(extraheraNyckeltal(arkiv(text + intakt('1000'), 'Q4 2025')), []);
   }
@@ -117,4 +119,61 @@ test('fyra hämtade lokala kvartal kan summeras med bevarade källställen', () 
   assert.equal(sum.langd, 4);
   assert.equal(sum.kallor.length, 4);
   assert.deepEqual(new Set(sum.vilar_pa.poster), new Set(poster.map(p => p.id)));
+});
+
+// Exact flattened source excerpts returned by the live API on 2026-09-09.
+const LIVE_UNIBAP_2022 = [
+  {
+    "rubrik": "Unibap Delårsrapport juli 2021 - mars 2022",
+    "datum": "2022-05-12",
+    "url": "https://example.com/unibap-live-q1",
+    "bitar": [
+      "Unibap Delårsrapport juli 2021 - mars 2022 2022-05-12 08:00:17 Delårsrapport juli 2021 - mars 2022 Januari - mars 2022 Nettoomsättningen uppgick till 5 860 KSEK (1 848) Rörelseresultatet uppgick till -11 024 KSEK (-7 214) Resultat efter finansiella poster uppgick till -11 300 KSEK (-6 948) Resultat per aktie -1,24 SEK (-0,86) Juli 2021 - mars 2022 Nettoomsättningen uppgick till 16 917 KSEK (8 465) Rörelseresultatet uppgick till -26 366 KSEK (-18 126) Resultat efter finansiella poster uppgick till -26 534 KSEK (-17 145) Resultat per aktie -2,92 SEK (-2,11)"
+    ]
+  },
+  {
+    "rubrik": "Delårsrapport juli 2021 - juni 2022",
+    "datum": "2022-08-31",
+    "url": "https://example.com/unibap-live-q2",
+    "bitar": [
+      "Delårsrapport juli 2021 - juni 2022 2022-08-31 08:00:16 April - juni 2022 Nettoomsättningen uppgick till 6 969 KSEK (4 268) Rörelseresultatet uppgick till -9 791 KSEK (-8 494) Resultat efter finansiella poster uppgick till -9 852 KSEK (-8 498) Resultat per aktie -1,08 SEK (-1,05) Juli 2021 - juni 2022 Nettoomsättningen uppgick till 23 894 KSEK (12 733) Rörelseresultatet uppgick till -36 148 KSEK (-26 621) Resultat efter finansiella poster uppgick till -36 377 KSEK (-25 644) Resultat per aktie -4,00 SEK (-3,16)"
+    ]
+  },
+  {
+    "rubrik": "Delårsrapport juli 2021 - september 2022",
+    "datum": "2022-11-10",
+    "url": "https://example.com/unibap-live-q3",
+    "bitar": [
+      "Delårsrapport juli 2021 - september 2022 2022-11-10 08:00:11 Juli - september 2022 Nettoomsättningen uppgick till 2 992 KSEK (3 977) Rörelseresultatet uppgick till -12 151 KSEK (-6 153) Resultat efter finansiella poster uppgick till -12 416 KSEK (-6 086) Resultat per aktie -1,26 SEK (-0,68) Juli 2021 - september 2022 (15 månader) * Nettoomsättningen uppgick till 26 887 KSEK (16 710) Rörelseresultatet uppgick till -48 299 KSEK (-32 774) Resultat efter finansiella poster uppgick till -48 793 KSEK (-31 730) Resultat per aktie -5,27 SEK (-3,82) *Jämförelsetal inom parentes visar motsvarande period ett år tidigare"
+    ]
+  },
+  {
+    "rubrik": "Bokslutskommuniké juli 2021 - december 2022",
+    "datum": "2023-02-09",
+    "url": "https://example.com/unibap-live-q4",
+    "bitar": [
+      "Bokslutskommuniké juli 2021 - december 2022 2023-02-09 08:00:12 Oktober - december 2022 Nettoomsättningen uppgick till 6 215 KSEK (7 078) Rörelseresultatet uppgick till -10 697 KSEK (-9 195) Resultat efter finansiella poster uppgick till -10 841 KSEK (-9 154) Resultat per aktie -1,10 SEK (-1,00) Juli 2021 - december 2022 (18 månader) * Nettoomsättningen uppgick till 33 103 KSEK (23 788) Rörelseresultatet uppgick till -58 995 KSEK (-41 963) Resultat efter finansiella poster uppgick till -59 633 KSEK (-40 878) Resultat per aktie -6,38 SEK (-4,84) *Jämförelsetal inom parentes visar motsvarande period ett år tidigare"
+    ]
+  }
+];
+
+test('live MFN datetime and repeated titles preserve all four 2022 quarter operands', () => {
+  const archive = [{ id: 'unibap', namn: 'Unibap', dokument: LIVE_UNIBAP_2022 }];
+  assert.deepEqual(extraheraNyckeltal(archive).filter(p => p.metrik === 'intäkter' && p.langd > 1)
+    .map(p => [p.langd, p.varde]).sort((a, b) => a[0] - b[0]),
+  [[3, 16.917], [4, 23.894], [5, 26.887], [6, 33.103]]);
+  const register = skapaFaktaregister();
+  register.synka();
+  register.prompt();
+  register.synka({ arkiv: archive });
+  const quarters = register.poster().filter(p => p.typ === 'rapporterat' && p.matt === 'int\u00e4kter' && p.langd === 1);
+  assert.deepEqual(quarters.map(p => [p.ar, p.kvartal, p.normaliserat.varde]).sort((a, b) => a[1] - b[1]),
+    [[2022, 1, 5.86], [2022, 2, 6.969], [2022, 3, 2.992], [2022, 4, 6.215]]);
+  const result = register.laggBeraknad({ operation: 'summa', indata: quarters.map(p => p.id) });
+  assert.equal(result.ok, true, result.skal);
+  const sum = register.get(result.id);
+  assert.equal(Number(sum.varde.toFixed(3)), 22.036);
+  assert.equal(sum.langd, 4);
+  assert.equal(sum.kallor.length, 4);
+  assert.deepEqual(new Set(sum.vilar_pa.poster), new Set(quarters.map(p => p.id)));
 });
