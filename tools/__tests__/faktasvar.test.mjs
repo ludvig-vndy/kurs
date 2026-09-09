@@ -29,6 +29,16 @@ test('dubbelt kodade svenska bokstaver aterstalls fore samma prosagrind', () => 
     assert.equal(lasFaktasvar(svar({typ:'metod',text}),r).ok,false,text);
 });
 
+test('trasiga escape-sekvenser i prosa avvisas utan att gissa svenska ord',()=>{
+  const r=skapaFaktaregister();
+  for(const text of [String.raw`Nettooms\ttningen \tkade under perioden.`,String.raw`J\mf\r perioderna.`]) {
+    const dom=lasFaktasvar(svar({typ:'metod',text}),r);
+    assert.equal(dom.ok,false,text);
+    assert.match(dom.klagan,/kodning/);
+  }
+  assert.ok(lasFaktasvar(svar({typ:'metod',text:'Jämför motsvarande perioder.\nGranska underlaget.'}),r).ok);
+});
+
 test('reparation namnger saknat stod och ber modellen valja verkliga referenser', () => {
   const r=setup();
   const dom=lasFaktasvar(svar({typ:'tolkning',text:'Det kan tyda pa en svagare utveckling.'}),r);

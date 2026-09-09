@@ -281,6 +281,7 @@ export const otillatenProsa = (text, lektioner = []) => talIProsa(text, lektione
 export function talIProsa(text, lektioner = []) {
   if (typeof text !== 'string' || !text.trim()) return 'texten ar tom';
   if (text.length > 1800) return 'texten ar for lang';
+  if (text.includes('\\')) return 'texten innehaller trasig kodning; skriv om med vanliga svenska bokstaver';
   if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/u.test(text)) return 'texten innehaller ogiltiga kontrolltecken; skriv normal svensk text';
   const s = text.normalize('NFKC').replace(/\p{Cf}/gu, '').toLowerCase();
   // Perioder far namnges. Stadningen ror BARA siffertestet nedan; orden som
