@@ -1038,8 +1038,6 @@ export async function onRequestPost(context) {
       // Sonnet 5 stöder inte assistant-prefill. JSON-format ersätter prefixet.
       // https://platform.claude.com/docs/en/models/sonnet-5/migration-guide
       ...(granskarModell === MODEL_DJUP ? {output_config:{effort:'medium',format:{type:'json_schema',schema:{
-        type:'object',additionalProperties:false,required:['godkand'],
-        properties:{godkand:{type:'boolean'},skal:{type:'string'}},
         anyOf:[
           {type:'object',additionalProperties:false,required:['godkand'],
             properties:{godkand:{type:'boolean',enum:[true]}}},
