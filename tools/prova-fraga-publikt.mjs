@@ -38,7 +38,7 @@ async function main() {
   const pub = createPublicKey(pem);
   if (pub.asymmetricKeyType !== 'rsa' || pub.asymmetricKeyDetails.modulusLength < 2048) throw new Error('publik nyckel');
   const sources = JSON.parse(readFileSync(process.argv[2], 'utf8'));
-  const base = byggArkiv(sources), budget = new Budget();
+  const base = byggArkiv(sources), budget = new Budget(2_000_000);
   const originalFetch = globalThis.fetch;
   let calls = [], audit = [];
   globalThis.fetch = async (url, init = {}) => {
@@ -73,7 +73,7 @@ async function main() {
       return json(data);
     } finally { budget.avsluta(ticket, actual); calls.push({ ...row, ms: Date.now() - start, costUnknown: actual === null }); }
   };
-  console.log('PUBLIKT_START ' + JSON.stringify({ questions: fragor.length, repeats: 2, budgetUSD: 5, hashes }));
+  console.log('PUBLIKT_START ' + JSON.stringify({ questions: fragor.length, repeats: 2, budgetUSD: 2, hashes }));
   try {
     for (let rep = 0; rep < 2; rep++) for (const p of fragor) {
       const archive = structuredClone(base); calls = []; audit = [];

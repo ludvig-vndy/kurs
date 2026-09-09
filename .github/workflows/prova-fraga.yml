@@ -52,7 +52,7 @@ on:
         type: string
         default: ''
       publika_bolag:
-        description: 'Volvo/TRATON: hämta daterade offentliga rapporter, sex frågor, högst 5 USD'
+        description: 'Volvo/TRATON: hämta daterade offentliga rapporter, sex frågor, högst 2 USD'
         type: boolean
         default: false
       public_receipt_key:
