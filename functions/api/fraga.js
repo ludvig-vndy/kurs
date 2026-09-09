@@ -921,7 +921,7 @@ export async function onRequestPost(context) {
   const omfang = djup
     ? '\nSVARSOMFÅNG: Sikta på högst tvåhundrafemtio ord fri förklaring. Visa centrala belägg separat. Utredningen behöver inte återberättas steg för steg.\n'
     : '\nSVARSOMFÅNG: Sikta på högst etthundraåttio ord fri förklaring, ofta betydligt mindre. En avgränsad analys får normalt plats i tre korta stycken: bedömning, avgörande alternativ, nästa kontroll. Överskrid bara om användaren ber om utförlighet eller om nödvändiga belägg kräver det.\n';
-  const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: system + omfang, fraga: question };
+  const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: omfang + system, fraga: question };
   const undersokning = skapaUndersokning();
   const kor = async (namn, input, signal) => {
     if (namn === 'planera') {
