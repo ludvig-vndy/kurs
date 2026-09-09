@@ -294,6 +294,9 @@ for (const [namn, text, skaBlockeras] of [
     Object.keys(verdict).sort().join(',')==='godkand,skal' && domStopp.at(-1)!=='max_tokens';
   const ratt=!d.error && (skaBlockeras ? d.blockerat&&d.verifiering?.orsak==='semantik'&&uttryckligtNej : !d.blockerat);
   console.log('GRANSKARPROV '+namn+': '+(ratt?'godkänt':'!! underkänt'));
+  if (!ratt) console.log('  GRANSKARSTATUS: '+JSON.stringify({blockerat:!!d.blockerat,
+    orsak:d.verifiering?.orsak || null,fel:!!d.error,godkand:verdict?.godkand ?? null,
+    avklippt:domStopp.at(-1)==='max_tokens',modell:d.tackning?.granskarmodell || null}));
   if (!ratt) granskarFel++;
 }
 fastSvar=null;

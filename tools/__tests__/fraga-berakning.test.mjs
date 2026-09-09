@@ -75,6 +75,9 @@ test('API hamtar, summerar och kedjar per manad innan ett kallbelagt svar render
     const body=JSON.parse(init.body);
     if(body.system.startsWith('Du granskar')) {
       granskningar++;
+      assert.match(body.model,/sonnet/, 'beräknad analys behöver granskas med analysmodellen');
+      assert.equal(body.messages.at(-1).role,'user','Sonnet stöder inte assistant-prefill');
+      assert.equal(body.output_config.format.type,'json_schema');
       const review=JSON.parse(body.messages[0].content);
       assert.ok(review.tillgangligt.some(p=>p.typ==='beraknat' && p.indata.length && p.formel && p.vilar_pa));
       return ok({content:[{type:'text',text:'{"godkand":true}'}],stop_reason:'end_turn'});

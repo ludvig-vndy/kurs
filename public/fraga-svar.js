@@ -43,11 +43,28 @@
       rader.map(s => '<div>' + esc(s) + '</div>').join('') + '</div>';
   }
 
+  function blocktext(b) {
+    if (b.typ !== 'beraknat') return '<p>' + prosa(b.text) + '</p>';
+    const [resultat, ...rader] = String(b.text || '').split(/\r?\n/);
+    const tekniskt = [], forutsattningar = [];
+    let varning = false;
+    for (const rad of rader) {
+      if (/^(?:Förutsättning:|Beräkningen vilar på)/.test(rad)) varning = true;
+      else if (/^(?:Så räknades det:|Enheter i beräkningen:)/.test(rad)) varning = false;
+      // Antaganden kan själva innehålla radbrytningar: håll också dem synliga.
+      (varning ? forutsattningar : tekniskt).push(rad);
+    }
+    const utrakning = tekniskt.join('\n').replace(/^Så räknades det:\s*/, '').trim();
+    return '<p>' + prosa(resultat) + '</p>' +
+      (forutsattningar.length ? '<p class="fraga-forutsattning">' + prosa(forutsattningar.join('\n')) + '</p>' : '') +
+      (utrakning ? '<details class="fraga-berakning"><summary>Så räknades det</summary><p>' + prosa(utrakning) + '</p></details>' : '');
+  }
+
   function render(d) {
     const body = !d.blockerat && d.block?.length
       ? d.block.map(b => '<section class="fraga-block"><strong class="fraga-etikett">' +
         esc(b.etikett) + '</strong>' + (b.tidigare ? '<span class="fraga-tidigare">Tidigare svar i samtalet</span>' : '') +
-        '<p>' + prosa(b.text) + '</p>' + kallor(b.kallor) + '</section>').join('')
+        blocktext(b) + kallor(b.kallor) + '</section>').join('')
       : '<p>' + prosa(d.answer || 'Inget svar kunde visas.') + '</p>';
     return body + tackning(d.tackning);
   }

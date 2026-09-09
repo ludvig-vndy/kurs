@@ -1024,10 +1024,22 @@ export async function onRequestPost(context) {
   // Ett granskarfel far ALDRIG falla tillbaka till ett ogranskat svar.
   const behoverGranskning = kontrollerat.prosa.length > 0 || kontrollerat.block.some(b => b.typ === "beraknat");
   if (behoverGranskning) {
+    // Samma analysförmåga behövs för att granska en tolkning som för att
+    // skriva den. Den snabba modellen misstolkade upprepade gånger uttryckliga
+    // reservationer och missade en felaktig acceleration i skarpa prov.
+    const granskarModell = kontrollerat.block.some(b=>['tolkning','beraknat'].includes(b.typ))
+      ? MODEL_DJUP : MODEL_SNABB;
+    tackning.granskarmodell = granskarModell;
     const granskning = await anropa(apiKey, {
       /* 80 rackte for {"godkand":true} men inte for ett nej med skal, sa
          granskarens svar klipptes av och blev ett nej av fel anledning. */
-      model: MODEL_SNABB, max_tokens: 220, system: GRANSKA_SYSTEM,
+      model: granskarModell, max_tokens: 320, system: GRANSKA_SYSTEM,
+      // Sonnet 5 stöder inte assistant-prefill. JSON-format ersätter prefixet.
+      // https://platform.claude.com/docs/en/models/sonnet-5/migration-guide
+      ...(granskarModell === MODEL_DJUP ? {output_config:{format:{type:'json_schema',schema:{
+        type:'object',additionalProperties:false,required:['godkand'],
+        properties:{godkand:{type:'boolean'},skal:{type:'string'}},
+      }}}} : {}),
       messages: [
         /* "svar" ar det som ska publiceras, "tillgangligt" ar vad som fanns att
            valja pa. Fore den uppdelningen fick granskaren hela registret under
@@ -1043,7 +1055,7 @@ export async function onRequestPost(context) {
            andra svarsmodell, sa i stallet borjar vi objektet at den. Utan det
            foll aven granskaren pa en kodruta, och da blockerades varje svar
            som innehol prosa. */
-        { role: "assistant", content: "{" },
+        ...(granskarModell === MODEL_SNABB ? [{ role: "assistant", content: "{" }] : []),
       ],
     }, tackning);
     if (granskning.fel || granskning.stopp === "max_tokens" || !godkandGranskning(granskning.text)) {

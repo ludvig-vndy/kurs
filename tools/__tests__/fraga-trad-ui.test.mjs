@@ -162,3 +162,44 @@ test('an auth event during initial session loading prevents older account histor
     assert.equal(await page.getByText('bob private history', { exact: true }).count(), 1);
   } finally { await browser.close(); }
 });
+
+test('calculation details start closed while result, assumptions and provenance remain visible', async () => {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage();
+    await page.setContent('<main></main>');
+    await page.addScriptTag({ content: await readFile(new URL('../../public/fraga-svar.js', import.meta.url), 'utf8') });
+    await page.evaluate(() => {
+      document.querySelector('main').innerHTML = FragaSvar.render({ block: [
+        { typ: 'beraknat', etikett: 'Beräknat', text: [
+          'Alfa, kassa, Q1 2026: 80 MSEK.',
+          'Så räknades det: 100 - 20 = 80',
+          'Andra ledet <img src=x onerror=alert(1)>',
+          'Enheter i beräkningen: kronor till MSEK',
+          'Förutsättning: Oförändrat antal aktier.',
+          'Beräkningen vilar på egen uppgift, inte enbart rapporterade uppgifter.'
+        ].join('\n'), kallor: [{ rubrik: 'Rapport', url: 'https://example.test/q1', citat: 'Källcitat' }] },
+        { typ: 'rapporterat', etikett: 'Rapporterat', text: 'Rapporterat belopp\nAndra rapportraden', kallor: [] }
+      ] });
+    });
+    const calculation = page.locator('.fraga-block').first();
+    const details = calculation.locator('details').filter({ has: page.getByText('Så räknades det', { exact: true }) });
+    assert.equal(await details.count(), 1);
+    assert.equal(await details.evaluate(el => el.open), false);
+    assert.equal(await page.getByText('Alfa, kassa, Q1 2026: 80 MSEK.', { exact: true }).isVisible(), true);
+    const assumptions = calculation.locator('p').filter({ hasText: 'Förutsättning:' });
+    assert.equal(await assumptions.isVisible(), true);
+    assert.equal(await assumptions.evaluate(el => el.closest('details')), null);
+    assert.equal(await calculation.locator('p').filter({ hasText: 'Beräkningen vilar på' }).isVisible(), true);
+    assert.equal(await details.locator('p').isVisible(), false);
+    assert.equal(await page.locator('img').count(), 0);
+    assert.equal(await calculation.locator('.fraga-kalla summary').isVisible(), true);
+    assert.equal(await page.locator('.fraga-block').nth(1).locator('details').count(), 0);
+    assert.equal(await page.getByText('Rapporterat belopp', { exact: false }).isVisible(), true);
+    await details.locator('summary').click();
+    assert.equal(await details.locator('p').isVisible(), true);
+    assert.match(await details.innerText(), /100 - 20 = 80/);
+    assert.match(await details.innerText(), /Andra ledet <img src=x onerror=alert\(1\)>/);
+    assert.match(await details.innerText(), /kronor till MSEK/);
+  } finally { await browser.close(); }
+});
