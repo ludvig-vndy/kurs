@@ -39,6 +39,10 @@ on:
         description: 'Experiment: högre resonemangsnivå enbart i svarsgeneratorn'
         type: boolean
         default: false
+      analys_opus:
+        description: 'Experiment: Opus 5 enbart i svarsgeneratorn, övriga kontroller oförändrade'
+        type: boolean
+        default: false
 
 jobs:
   prov:
@@ -49,6 +53,7 @@ jobs:
       FRAGA_AVANCERAT: ${{ inputs.avancerat }}
       FRAGA_PROV_LOST_FORMAT: ${{ inputs.lost_format }}
       FRAGA_PROV_ANALYS_HIGH: ${{ inputs.analys_high }}
+      FRAGA_PROV_ANALYS_OPUS: ${{ inputs.analys_opus }}
     steps:
       - uses: actions/checkout@v4
         with:

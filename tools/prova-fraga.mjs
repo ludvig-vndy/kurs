@@ -90,6 +90,11 @@ globalThis.fetch = async (url, init) => {
       requestBody.output_config={...requestBody.output_config,effort:'high'};
       init={...init,body:JSON.stringify(requestBody)};
     }
+    if(process.env.FRAGA_PROV_ANALYS_OPUS==='true' && requestBody.model==='claude-sonnet-5' &&
+        !requestBody.system.startsWith('Du granskar ett svar') && !requestBody.system.startsWith('Du redigerar ett svar')) {
+      requestBody.model='claude-opus-5';
+      init={...init,body:JSON.stringify(requestBody)};
+    }
     if (avancerat) {
       for (const message of requestBody.messages || []) {
         for (const block of Array.isArray(message.content) ? message.content : []) {
