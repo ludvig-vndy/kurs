@@ -122,6 +122,27 @@ test('en fraga dar allt gick vagen far ingen tackningstext', () => {
 });
 
 /* ---------- valjModell: kostnaden stiger bara dar den fortjanar det ---------- */
+test('avancerade resonemang utan rapporter far analysmodellen, definitioner forblir snabba', () => {
+  for (const fraga of [
+    'Hur bör jag resonera om vilket som skapar mest värde framåt?',
+    'Vad stöder min tes och vilka alternativa förklaringar bör jag pröva?',
+    'Är förbättringen strukturell snarare än säsongsdriven?',
+    'Jämför två bolag med lika hög ROIC men olika återinvestering.',
+  ]) assert.match(valjModell({fraga}), /sonnet/, fraga);
+  for (const fraga of ['Vad är ROIC?', 'Vad betyder strukturell tillväxt?', 'Hur mycket var kassan?'])
+    assert.match(valjModell({fraga}), /haiku/, fraga);
+});
+
+test('analysfragan skickas till modellvalet aven utan innehav', async () => {
+  const original = globalThis.fetch;
+  try {
+    const calls = stubbaFetch({holdings:[]});
+    await anrop('Hur bör jag resonera om vilket bolag som skapar mest värde framåt?', ENV);
+    assert.match(calls[0].model,/sonnet/);
+    assert.equal(calls[0].output_config?.effort,'medium');
+    assert.ok(calls[0].max_tokens >= 4096);
+  } finally { globalThis.fetch=original; }
+});
 
 test('en enradig fraga om ett bolag gar pa den snabba modellen', () => {
   assert.match(valjModell({ period: null, bolag: 1, utdrag: 3 }), /haiku/);

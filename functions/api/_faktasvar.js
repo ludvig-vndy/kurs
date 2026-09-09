@@ -56,33 +56,31 @@ i fri text gor att hela svaret kastas och anvandaren far ingenting alls.
    kvar i lasFaktasvar, som provar bada vagarna exakt likadant. */
 export const SVARSVERKTYG = {
   name: 'svara',
+  strict: true,
   description: 'Lamna det slutliga svaret. Anvand alltid det har verktyget, aldrig fri text.',
   input_schema: {
     type: 'object',
+    additionalProperties: false,
     properties: {
       version: { type: 'integer', enum: [1] },
       block: {
-        type: 'array', minItems: 1, maxItems: 16,
+        // API:s strict-format stöder minItems:1, men inte maxItems.
+        // Tak på block och stödreferenser kontrolleras fortsatt på servern.
+        type: 'array', minItems: 1,
         items: {
-          type: 'object',
-          properties: {
-            typ: { type: 'string', enum: ['post', 'metod', 'tolkning', 'saknas'] },
-            id: { type: 'string', description: 'Endast for typ post: ett exakt id ur FAKTAREGISTER.' },
-            text: { type: 'string', description:
-              'Endast for metod, tolkning och saknas. FAR ALDRIG INNEHALLA ETT TAL. '
-              + 'Inga siffror, inga belopp, inga utskrivna tal, och inga storleksord som '
-              + 'miljon, miljard, tusen eller hundra, inte ens i ett pahittat exempel eller '
-              + 'ett vagt "manga miljarder". Behover du visa ett tal: anvand ett postblock. '
-              + 'Perioder far du namnge (2022-12-31, december 2022, Q3 2022, kalenderaret 2022), '
-              + 'men aldrig tidslangder som arton manader. '
-              + 'Ett enda tal har gor att HELA svaret kastas och anvandaren far ingenting.' },
-            stod: { type: 'array', minItems: 1, maxItems: 8, items: { type: 'string' }, description: 'OBLIGATORISKT for tolkning: exakta post-id:n som stodjer resonemanget. Om du tolkar ett berakningsresultat ska resultatpostens id inga, inte bara dess indata.' },
-          },
-          required: ['typ'],
           anyOf: [
-            { properties: {typ:{enum:['post']}}, required:['typ','id'] },
-            { properties: {typ:{enum:['metod','saknas']}}, required:['typ','text'] },
-            { properties: {typ:{enum:['tolkning']}}, required:['typ','text','stod'] },
+            { type:'object',additionalProperties:false,properties: {
+              typ:{type:'string',enum:['post']},id:{type:'string',description:'Exakt id ur FAKTAREGISTER.'},
+            },required:['typ','id'] },
+            { type:'object',additionalProperties:false,properties: {
+              typ:{type:'string',enum:['metod','saknas']},
+              text:{type:'string',description:'Kort prosa utan belopp eller räknade tidslängder. Periodnamn är tillåtna. Tal visas som postblock.'},
+            },required:['typ','text'] },
+            { type:'object',additionalProperties:false,properties: {
+              typ:{type:'string',enum:['tolkning']},
+              text:{type:'string',description:'Kort tolkning utan belopp eller räknade tidslängder. Upprepa inte andra block.'},
+              stod:{type:'array',minItems:1,items:{type:'string'},description:'Högst åtta exakta post-id:n. Vid beräkning ska resultatpostens id ingå.'},
+            },required:['typ','text','stod'] },
           ],
         },
       },
@@ -122,6 +120,20 @@ uttryckligen en möjlig förklaring och är tillåtet när observationen har st�
 En observerad ökning mellan de redovisade kvartalen får beskrivas som sådan;
 det innebär inte ett påstående att ökningen fortsätter i framtiden.
 Bedöm saklig innebörd. En stilistiskt kort formel är inte ett aritmetiskt fel.
+Pröva även metodblockens sakliga samband; etiketten metod är inget undantag.
+Bevara frågans mått och förutsättningar genom hela resonemanget:
+- Kassaflöde från löpande verksamhet är inte fritt kassaflöde, förändring i
+  kassan eller investeringskassaflöde. Normala köp av anläggningstillgångar
+  hör till investeringsverksamheten och förklarar inte i sig svagare operativt
+  kassaflöde. En uttrycklig jämförelse mellan kategorierna är tillåten.
+- Sjunkande avkastning på nya investeringar betyder inte att avkastningen
+  understiger kapitalkostnaden. Det kräver separat stöd. Avkastning kan falla
+  och ändå skapa värde över kapitalkostnaden.
+- Ökad rörelsekapitalbindning kan förekomma samtidigt med verkliga
+  skalfördelar. Den bevisar inte att skalfördelar saknas. Stigande marginal
+  bevisar heller inte skalfördelar eller utesluter säsong och produktmix.
+Kontrollera även negativa påståenden: "utesluter", "måste bero på" och
+"kan inte förklara" kräver stöd, precis som en fastslagen positiv orsak.
 Metod far endast vara generell undervisning, inte bolagsspecifika fakta.
 Tolkning far vara ett forsiktigt resonemang med stod i angivna poster.
 Pastaenden om verkliga handelser maste ha explicit stod, aven utan siffror.

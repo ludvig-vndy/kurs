@@ -72,7 +72,9 @@ const SYSTEM_BAS =
   "- Svara pa svenska och konkret. Lat langden folja fragan: en enkel fraga far ett kort svar, en fraga som spanner over flera rapporter eller flera ar far det utrymme den behover.\n" +
   "- Svar först, belägg sedan. En enkel fråga behöver normalt bara den efterfrågade posten och högst en kort förklaring. En analysfråga behöver de viktigaste sambanden, inte en genomgång av allt du vet. Varje stycke ska tillföra ett svar, ett belägg eller en relevant osäkerhet.\n" +
   "- Visa bara relevanta poster. Välj typade faktaposter före långa dokumentcitat när de besvarar samma fråga. Upprepa inte tabellens eller posternas innehåll i prosa. Undvik inledningsfraser, avslutande sammanfattningar som upprepar svaret och rutinmässiga erbjudanden att fortsätta.\n" +
-  "- Ange osäkerheten där den påverkar slutsatsen, en gång. Lista inte spekulativa orsaker utan nytta: välj högst de mest relevanta alternativa förklaringarna och säg vilket underlag som skulle skilja dem åt. En kort positiv tidsserie visar en förbättring under perioden, inte att förbättringen är varaktig.\n" +
+    "- Ange osäkerheten där den påverkar slutsatsen, en gång. Lista inte spekulativa orsaker utan nytta: välj högst de mest relevanta alternativa förklaringarna och säg vilket underlag som skulle skilja dem åt. En kort positiv tidsserie visar en förbättring under perioden, inte att förbättringen är varaktig. Upprepa inte samma lucka i både tolkning och saknas.\n" +
+    "- Bevara frågans begrepp: operativt kassaflöde är inte fritt kassaflöde eller förändring i kassan. Normala anläggningsinvesteringar hör till investeringskassaflödet. Ökad rörelsekapitalbindning kan samexistera med skalfördelar. Sjunkande avkastning på nya investeringar kan fortfarande överstiga kapitalkostnaden; anta inte att gränsen har passerats.\n" +
+    "- För en avgränsad resonemangsfråga: ge din bedömning först, pröva de viktigaste alternativen och prioritera nästa kontroll. Normalt räcker ett kort stycke per del. Använd inte breda inledningar eller en avslutning som upprepar delarna.\n" +
   "- Skilj stigande nivå från accelererande tillväxt. Lika stora absoluta ökningar innebär inte att tillväxten accelererar. När du beskriver begränsad historik räcker 'perioderna i underlaget'; undvik räknade tidslängder i fri text.\n" +
   "- Hjalp med fundamental aktieanalys, bolag i underlaget, anvandarens innehav och kursens metoder. Breda analysfragor och samband mellan rapporter ingar. Avboj amnen utanfor detta.\n" +
   "- Besvara det anvandaren faktiskt vill undersoka. Utveckla bade mojligheter och risker nar kallorna ger stod, utan att tvinga fram lika manga argument pa varje sida.\n" +
@@ -158,6 +160,10 @@ export function valjModell(arg) {
   if (a.period) return MODEL_DJUP;
   if (Number(a.bolag) > 1) return MODEL_DJUP;
   if (Number(a.utdrag) > MAX_UTDRAG) return MODEL_DJUP;
+  // Uppgiften kan kräva analys även utan identifierade bolag eller rapporter.
+  const fraga = String(a.fraga || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  if (/\b(resonera|jamfor|granska|tes|alternativa forklaringar)\b/.test(fraga) ||
+      /strukturell[\s\S]*sasong|sasong[\s\S]*strukturell/.test(fraga)) return MODEL_DJUP;
   return MODEL_SNABB;
 }
 
@@ -461,6 +467,9 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
         ? !tackning.verktyg.includes('planera') : tackning.gravvarv < budget.gravvarv);
     const svar = await anropa(apiKey, {
       model: kropp.model, max_tokens: kropp.max_tokens,
+      // Sonnet 5 räknar även tänkandet mot max_tokens. Medium begränsar
+      // arbetet per varv; tids- och anropsbudgeterna gäller fortfarande.
+      ...(kropp.model === MODEL_DJUP ? {output_config:{effort:'medium'}} : {}),
       system: kropp.system + (reparationer ? '\nRÄTTNINGSVARV: Behåll relevanta postreferenser. Skriv om förklaringen kort, högst ett par meningar per prosablock. Kontrollera hela texten mot felmeddelandet, inte bara första förekomsten. Beskriv rapportperioderna utan att ange deras antal eller en tidslängd i prosa.\n' : ''),
       messages: meddelanden,
       tools: tillatna.concat([SVARSVERKTYG]),
@@ -904,12 +913,12 @@ export async function onRequestPost(context) {
         }).join("\n\n---\n\n")
       : "") + register.prompt();
 
-  const modell = djup ? MODEL_DJUP : valjModell({ period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
+  const modell = djup ? MODEL_DJUP : valjModell({ fraga: question, period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
   tackning.modell = modell;
   /* Kontrollen som utredningen far anvanda mitt i loppet. Samma funktion som
      provar svaret nedan, sa reparationsrundan kan omojligt vara slappare. */
   const provaSvar = (data) => lasFaktasvar(data, register);
-  const brev = { model: modell, max_tokens: djup ? 2400 : 1600, system: system, fraga: question };
+  const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: system, fraga: question };
   const undersokning = skapaUndersokning();
   const kor = async (namn, input, signal) => {
     if (namn === 'planera') {
@@ -950,6 +959,7 @@ export async function onRequestPost(context) {
      nagot av dem provas det enkla anropet pa den snabba modellen en gang. Da
      provas samma svarskontrakt och verifiering igen. */
   if (svar.fel) {
+    tackning.modellfel = {typ:svar.fel,status:svar.status};
     tackning.modell = MODEL_SNABB;
     tackning.modellfall = true;
     svar = await utred(apiKey, { ...brev, model: MODEL_SNABB }, [], async () => "", tackning, provaSvar);

@@ -300,18 +300,25 @@ for (const p of PROV) {
 // konstruerat svar om det fiktiva bolaget. Granskaren körs mot riktiga API:t.
 // Detta mäter både felaktiga blockeringar och att en faktisk orsak kräver stöd.
 let granskarFel = 0;
-for (const [namn, text, skaBlockeras] of [
+for (const [namn, text, skaBlockeras, metod] of [
   ['villkorad orsak', 'Marginalförbättringen kan bero på skalfördelar, men orsaken kan inte fastställas ur underlaget.',false],
   ['fastslagen orsak utan belägg', 'Marginalförbättringen beror på skalfördelar.',true],
   ['observerad förbättring', 'Marginalen steg under de redovisade kvartalen. Det visar inte att utvecklingen fortsätter framöver.',false],
   ['felaktig acceleration', 'Omsättningens tillväxt accelererar under de redovisade kvartalen.',true],
+  ['skilj kassafloden', 'Normala köp av anläggningstillgångar hör till investeringskassaflödet och förklarar inte i sig svagare kassaflöde från löpande verksamhet.',false,true],
+  ['sammanblandade kassafloden', 'Normala köp av anläggningstillgångar minskar kassaflödet från löpande verksamhet eftersom investeringsbetalningen ingår i det operativa kassaflödet.',true,true],
+  ['fallande avkastning over kapitalkostnad', 'Sjunkande avkastning på nya investeringar kan fortfarande skapa värde om avkastningen överstiger kapitalkostnaden.',false,true],
+  ['fallande avkastning ar vardeforstoring', 'Sjunkande avkastning på nya investeringar innebär alltid värdeförstöring, även när avkastningen fortfarande överstiger kapitalkostnaden.',true,true],
+  ['rorelsekapital och skala kan samexistera', 'Ökad rörelsekapitalbindning kan förekomma samtidigt med verkliga skalfördelar och utesluter dem inte.',false,true],
+  ['rorelsekapital utesluter skala', 'Ökad rörelsekapitalbindning bevisar att bolaget saknar skalfördelar.',true,true],
 ]) {
   aktivBucket=structuredClone(exempel);aktivaInnehav=exempelInnehav;
   fastSvar=posts=>{
+    if (metod) return {version:1,block:[{typ:'metod',text}]};
     const stod=posts.filter(p=>namn==='felaktig acceleration' ? p.typ==='rapporterat'&&p.matt==='intäkter' : p.typ==='beraknat'&&p.matt==='rörelsemarginal').map(p=>p.id);
     return {version:1,block:[...stod.map(id=>({typ:'post',id})),{typ:'tolkning',text,stod}]};
   };
-  const d=await fraga('Hur utvecklades omsättning och marginal i Exempelbolag Rakneprov 2025?');
+  const d=await fraga(metod ? 'Förklara samband mellan kassaflöde, skalfördelar och avkastning på investeringar.' : 'Hur utvecklades omsättning och marginal i Exempelbolag Rakneprov 2025?');
   let verdict=null;
   try { const raw=domen.at(-1)||''; verdict=JSON.parse(raw.startsWith('{')?raw:'{'+raw); } catch {}
   const uttryckligtNej=verdict?.godkand===false && typeof verdict.skal==='string' &&

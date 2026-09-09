@@ -182,8 +182,21 @@ test('inget varv far svara med fri text', async () => {
 
 test('svarsverktyget beskriver samma block som kontraktet', () => {
   assert.equal(SVARSVERKTYG.name, 'svara');
-  const typer = SVARSVERKTYG.input_schema.properties.block.items.properties.typ.enum;
+  const typer = SVARSVERKTYG.input_schema.properties.block.items.anyOf.flatMap(s=>s.properties.typ.enum);
   assert.deepEqual([...typer].sort(), ['metod', 'post', 'saknas', 'tolkning']);
+});
+
+test('API-schemat forhindrar stod med fel stavning och extra falt i metodblock', () => {
+  assert.equal(SVARSVERKTYG.strict,true);
+  assert.equal(SVARSVERKTYG.input_schema.additionalProperties,false);
+  const former=SVARSVERKTYG.input_schema.properties.block.items.anyOf;
+  const tolkning=former.find(s=>s.properties.typ.enum.includes('tolkning'));
+  const metod=former.find(s=>s.properties.typ.enum.includes('metod'));
+  assert.deepEqual(tolkning.required.slice().sort(),['stod','text','typ']);
+  assert.deepEqual(Object.keys(tolkning.properties).sort(),['stod','text','typ']);
+  assert.equal(tolkning.additionalProperties,false);
+  assert.deepEqual(Object.keys(metod.properties).sort(),['text','typ']);
+  assert.equal(metod.additionalProperties,false);
 });
 
 /* ---------- reparationsrundan ---------- */
