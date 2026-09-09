@@ -71,8 +71,8 @@ test('extraheraNyckeltal tar det aktuella talet, inte jamforelsetalet i parentes
 
 test('harled raknar burn rate ur tva pa varandra foljande kvartal', () => {
   const h = harled(extraheraNyckeltal(ARKIV)).find((x) => x.metrik === 'likvida medel');
-  assert.equal(h.forandring, -45.7);
-  assert.equal(h.perManad, 15.2);        // inte 59, som parentestalet hade gett
+  assert.ok(Math.abs(h.forandring - (-45.7)) < 1e-12);
+  assert.ok(Math.abs(h.perManad - (45.7 / 3)) < 1e-12); // inte 59, som parentestalet hade gett
   assert.equal(h.fran, 'Q1 2026');
   assert.equal(h.till, 'Q2 2026');
 });
@@ -113,7 +113,7 @@ test('en okande kassa far ingen burn rate', () => {
 
 test('runway raknas i kod och bar sitt antagande', () => {
   const h = harled(extraheraNyckeltal(ARKIV)).find((x) => x.metrik === 'likvida medel');
-  assert.equal(h.manaderKvar, 32);            // 486,3 / 15,2
+  assert.ok(Math.abs(h.manaderKvar - (486.3 / (45.7 / 3))) < 1e-12);
   assert.match(h.formel, /OM takten haller i sig/);
 });
 

@@ -118,7 +118,7 @@ test('sista varvet gar utan gravverktyg, sa den tvingas svara', async () => {
   const d = await r.json();
   assert.equal(anropen.length, 3);
   const namn = (anropen[2].tools || []).map((t) => t.name);
-  assert.deepEqual(namn, ['svara'], 'sista anropet kunde fortfarande grava: ' + namn.join(', '));
+  assert.deepEqual(namn, ['berakna', 'svara'], 'sista anropet kunde fortfarande hamta: ' + namn.join(', '));
   assert.match(d.answer, /12 400/);
 });
 

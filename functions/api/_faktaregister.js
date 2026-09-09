@@ -1,6 +1,7 @@
 /* Append-only register PER REQUEST. Id:n pekar pa hela uppgifter, inte tal.
    Inga uppgifter eller id:n accepteras fran klienten/modellens slutliga svar. */
 import { extraheraNyckeltal, harled } from './_nyckeltal.js';
+import { berakna } from './_berakning.js';
 
 const MAX_KURSCITAT = 900;
 
@@ -87,7 +88,9 @@ export function skapaFaktaregister() {
       const original = n.original || { varde: n.varde, enhet: n.enhet };
       const id = lagg({ typ: 'rapporterat', bolagId: n.bolagId, bolag: n.bolag,
         matt: n.metrik, period: period(n), varde: original.varde, enhet: original.enhet,
-        normaliserat: { varde: n.varde, enhet: n.enhet }, kallor: [kallstalle(n)] });
+        normaliserat: { varde: n.varde, enhet: n.enhet }, slag: n.typ,
+        ar: n.ar, kvartal: n.kvartal, langd: n.langd, djup: 0,
+        kallor: [kallstalle(n)] });
       ids.set(faktanyckel(n), id);
       return id;
     };
@@ -97,27 +100,57 @@ export function skapaFaktaregister() {
       const gemensamt = { typ: 'beraknat', bolagId: h.bolagId, bolag: h.bolag,
         period: h.period || `${h.fran} till ${h.till}`, indata,
         kallor: h.indata.map(kallstalle), formel: h.formel,
+        djup: 1,
+        vilar_pa: { ursprung: 'rapporterat', poster: indata, antaganden: [],
+          ursprung_per_post: Object.fromEntries(indata.map(id => [id, 'rapporterat'])) },
         normalisering: h.indata.map(n => `${tal(n.original.varde)} ${n.original.enhet} = ${tal(n.varde)} ${n.enhet}`).join('; ') };
       if (h.sort === 'kvot') {
-        lagg({ ...gemensamt, matt: h.metrik, regel: 'kvot', varde: h.procent, enhet: 'procent' });
+        const exakt = h.indata[0].varde / h.indata[1].varde * 100;
+        lagg({ ...gemensamt, matt: h.metrik, regel: 'kvot', varde: h.procent, enhet: 'procent',
+          normaliserat: { varde: exakt, enhet: 'procent' }, slag: 'kvot',
+          ar: h.indata[0].ar, kvartal: h.indata[0].kvartal, langd: h.indata[0].langd });
       } else {
-        lagg({ ...gemensamt, matt: `Förändring i ${h.metrik}`, regel: h.sort, varde: h.forandring, enhet: h.enhet });
+        const exakt = h.indata[1].varde - h.indata[0].varde;
+        lagg({ ...gemensamt, matt: `Förändring i ${h.metrik}`, regel: h.sort, varde: h.forandring, enhet: h.enhet,
+          normaliserat: { varde: exakt, enhet: h.enhet }, slag: h.typ });
         if (h.perManad != null) {
+          const exaktPerManad = Math.abs(exakt) / 3;
+          const antagande = 'Förändringen i kassasaldot omfattar även investeringar och finansiering. Den är inte samma sak som operativ förbrukning.';
           lagg({ ...gemensamt, matt: 'Genomsnittlig nettominskning av kassan per månad', regel: 'kassaminskning_per_manad',
-            varde: h.perManad, enhet: h.enhet,
-            antagande: 'Förändringen i kassasaldot omfattar även investeringar och finansiering. Den är inte samma sak som operativ förbrukning.' });
+            varde: h.perManad, enhet: h.enhet, normaliserat: { varde: exaktPerManad, enhet: `${h.enhet} per månad` },
+            slag: 'takt', ar: h.indata[1].ar, kvartal: h.indata[1].kvartal, langd: 1,
+            antagande, vilar_pa: { ...gemensamt.vilar_pa, antaganden: [antagande] } });
         }
         if (h.manaderKvar != null) {
+          const exaktPerManad = Math.abs(exakt) / 3;
+          const exaktManader = h.indata[1].varde / exaktPerManad;
+          const antagande = 'Förutsätter oförändrad nettominskning av kassan. Detta är ett scenario, ingen prognos.';
           lagg({ ...gemensamt, matt: 'Beräknad tid med kvarvarande kassa', regel: 'kassa_delat_med_nettominskning',
-            varde: h.manaderKvar, enhet: 'månader', antagande: 'Förutsätter oförändrad nettominskning av kassan. Detta är ett scenario, ingen prognos.' });
+            varde: h.manaderKvar, enhet: 'månader', normaliserat: { varde: exaktManader, enhet: 'månader' },
+            slag: 'takt', ar: h.indata[1].ar, kvartal: h.indata[1].kvartal, langd: 1,
+            antagande, vilar_pa: { ...gemensamt.vilar_pa, antaganden: [antagande] } });
         }
       }
     }
     for (const n of prioriterade) registreraFakta(n);
 
   }
+  function laggBeraknad(bestallning) {
+    if (!bestallning || typeof bestallning !== 'object' || Array.isArray(bestallning) ||
+        Object.keys(bestallning).sort().join(',') !== 'indata,operation' ||
+        typeof bestallning.operation !== 'string' || !Array.isArray(bestallning.indata) ||
+        bestallning.indata.some(id => typeof id !== 'string'))
+      return { ok: false, skal: 'Beställningen får bara innehålla operation och en lista med post-id:n.' };
+    const indata = bestallning.indata.map(id => poster.get(id));
+    if (indata.some(p => !p)) return { ok: false, skal: 'En eller flera refererade poster finns inte i denna fråga.' };
+    const resultat = berakna(bestallning.operation, indata);
+    if (!resultat.ok) return resultat;
+    const id = lagg(resultat.post);
+    return id ? { ok: true, id } : { ok: false, skal: 'Faktaregistret har inte plats för fler poster.' };
+  }
   return {
     synka,
+    laggBeraknad,
     get: id => poster.get(id),
     poster: () => [...poster.values()],
     status: () => ({ poster: poster.size, bytes, begransat }),

@@ -37,6 +37,8 @@
    filen sig sjalv, och tackningen blir fullstandig i stallet for uppmatt.
 
    Inga beroenden har, sa allt gar att prova med node --test. */
+import { jamforbara as fullstandigtJamforbara } from './_berakning.js';
+import { formateraTal } from './_talformat.js';
 
 // Tusentalsavgransare: vanligt mellanslag, hart mellanslag och smalt hart
 // mellanslag. Det vanliga saknades i forsta versionen, och "27 489" lastes da
@@ -193,13 +195,13 @@ const FRAN_FAKTA = {
 function normaliseraFakta(nu, rå) {
   if (typeof nu !== 'number' || Number.isNaN(nu)) return null;
   const e = String(rå || '').toUpperCase().replace(/\s+/g, '');
-  if (e === 'KSEK' || e === 'TSEK' || e === 'TKR') return { varde: Math.round(nu) / 1000, enhet: 'MSEK' };
-  if (e === 'KEUR' || e === 'TEUR') return { varde: Math.round(nu) / 1000, enhet: 'MEUR' };
+  if (e === 'KSEK' || e === 'TSEK' || e === 'TKR') return { varde: nu / 1000, enhet: 'MSEK' };
+  if (e === 'KEUR' || e === 'TEUR') return { varde: nu / 1000, enhet: 'MEUR' };
   // Storbolagen gar at andra hallet: Telia redovisar i GSEK (miljarder), och
   // 20,7 GSEK lasta som MSEK vore fel med faktor tusen.
   if (e === 'GSEK' || e === 'MDSEK' || e === 'MDKR' || e === 'MILJARDERKRONOR')
-    return { varde: Math.round(nu * 1000 * 10) / 10, enhet: 'MSEK' };
-  if (e === 'SEK' || e === 'KR') return { varde: Math.round(nu / 1000) / 1000, enhet: 'MSEK' };
+    return { varde: nu * 1000, enhet: 'MSEK' };
+  if (e === 'SEK' || e === 'KR') return { varde: nu / 1000000, enhet: 'MSEK' };
   const norm = normEnhet(e);
   if (norm === 'MSEK' || norm === 'MEUR' || norm === 'MUSD') return { varde: nu, enhet: norm };
   return null;   // okand enhet: hellre tyst an fel skala
@@ -286,7 +288,9 @@ function etikett(n) {
    att granska: laste man den i underlaget syntes inte vilket bolag talen kom
    ifran, och det var sa hopblandningen kunde leva obemarkt. */
 function formel(post) {
-  const n = (v) => String(v).replace('.', ',');
+  // Kanoniska värden behåller full precision. Formeltexten tar bort binära
+  // flyttalsartefakter som 0,1999999999999993 utan att bli beräkningsunderlag.
+  const n = formateraTal;
   const b = post.bolag ? post.bolag + ': ' : '';
   if (post.sort === 'kvot') {
     return `${b}${n(post.talVarde)} delat pa ${n(post.namnarVarde)} ${post.enhet} for ${post.period} ger ${n(post.procent)} procent`;
@@ -296,7 +300,7 @@ function formel(post) {
   }
   let s = `${b}${n(post.franVarde)} ${post.enhet} vid slutet av ${post.fran} minus ${n(post.tillVarde)} vid slutet av ${post.till} ger ${n(Math.abs(post.forandring))}, delat pa kvartalets 3 manader ger ${n(post.perManad)} ${post.enhet} per manad`;
   if (post.manaderKvar != null) {
-    s += `. Kassan ${n(post.tillVarde)} delat pa ${n(post.perManad)} ger ${post.manaderKvar} manader, OM takten haller i sig, vilket den sallan gor`;
+    s += `. Kassan ${n(post.tillVarde)} delat pa ${n(post.perManad)} ger ${n(post.manaderKvar)} manader, OM takten haller i sig, vilket den sallan gor`;
   }
   return s;
 }
@@ -307,13 +311,16 @@ const kvartalSteg = (senare, tidigare) =>
 /* Balansposter jamfors pa periodens slut, oavsett hur lang perioden var.
    Flodesposter jamfors bara mot en LIKA LANG period, annars ar talen inte
    jamforbara och vi sager hellre ingenting. */
+function somJamforbarPost(n) {
+  // Äldre testfixturer saknar bolagId. Namnfallbacken stannar i denna adapter;
+  // registerposter måste alltid bära den stabila identiteten själva.
+  return { bolagId: n.bolagId || n.bolag, matt: n.metrik, slag: n.typ,
+    ar: n.ar, kvartal: n.kvartal, langd: n.langd,
+    normaliserat: { varde: n.varde, enhet: n.enhet } };
+}
+
 function jamforbar(senare, tidigare) {
-  // Tva bolags tal ar aldrig jamforbara med varandra, hur lika perioderna an
-  // ser ut. Utan den har raden kunde en utveckling raknas mellan bolag.
-  if (bolagsnyckel(senare) !== bolagsnyckel(tidigare)) return false;
-  if (senare.enhet !== tidigare.enhet) return false;
-  if (senare.typ === 'flode' && senare.langd !== tidigare.langd) return false;
-  return true;
+  return fullstandigtJamforbara(somJamforbarPost(senare), somJamforbarPost(tidigare));
 }
 
 function bygg(sort, metrik, tidigare, senare) {
@@ -322,7 +329,7 @@ function bygg(sort, metrik, tidigare, senare) {
     sort, metrik, bolag: senare.bolag, typ: senare.typ, enhet: senare.enhet,
     fran: etikett(tidigare), till: etikett(senare),
     franVarde: tidigare.varde, tillVarde: senare.varde,
-    forandring: Math.round((senare.varde - tidigare.varde) * 10) / 10,
+    forandring: senare.varde - tidigare.varde,
     kallor: [tidigare.rubrik, senare.rubrik],
   };
 }
@@ -373,11 +380,11 @@ export function harled(nyckeltal) {
       if (!jamforbar(senare, tidigare) || kvartalSteg(senare, tidigare) !== 1) continue;
       const post = bygg('steg', metrik, tidigare, senare);
       if (metrik === 'likvida medel' && post.forandring < 0) {
-        post.perManad = Math.round((Math.abs(post.forandring) / 3) * 10) / 10;
+        post.perManad = Math.abs(post.forandring) / 3;
         // Runway foljer sa naturligt pa en burn rate att modellen raknar ut den
         // sjalv om vi inte gor det. Forsta skarpa korningen blockerades pa
         // precis det: svaret bar ett "32" som inte fanns nagonstans.
-        if (post.perManad > 0) post.manaderKvar = Math.round(post.tillVarde / post.perManad);
+        if (post.perManad > 0) post.manaderKvar = post.tillVarde / post.perManad;
       }
       post.formel = formel(post);
       ut.push(post);
@@ -426,7 +433,7 @@ export function harled(nyckeltal) {
         const post = {
           bolagId: t.bolagId, indata: [t, nam],
           sort: 'kvot', metrik: k.id, bolag: t.bolag, period: etikett(t), enhet: t.enhet,
-          procent: Math.round((t.varde / nam.varde) * 1000) / 10,
+          procent: t.varde / nam.varde * 100,
           talVarde: t.varde, namnarVarde: nam.varde,
           kallor: [t.rubrik, nam.rubrik],
         };

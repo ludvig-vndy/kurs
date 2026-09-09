@@ -53,13 +53,14 @@ const BUCKET = {
   },
 };
 
+let aktivBucket = BUCKET, aktivaInnehav = HOLDINGS;
 const DATA = {
   async get(k, typ) {
-    const v = BUCKET[k];
+    const v = aktivBucket[k];
     if (v === undefined) return null;
     return typ === 'json' ? JSON.parse(JSON.stringify(v)) : v;
   },
-  async put(k, v) { try { BUCKET[k] = JSON.parse(v); } catch (e) { BUCKET[k] = v; } },
+  async put(k, v) { try { aktivBucket[k] = JSON.parse(v); } catch (e) { aktivBucket[k] = v; } },
 };
 
 /* Supabase stubbas, allt annat gar ut pa riktigt.
@@ -73,7 +74,7 @@ globalThis.fetch = async (url, init) => {
   const u = String(url);
   const ok = (body) => ({ ok: true, status: 200, json: async () => body, text: async () => JSON.stringify(body) });
   if (u.includes('/auth/v1/user')) return ok({ id: UID });
-  if (u.includes('/rest/v1/holdings')) return ok(HOLDINGS);
+  if (u.includes('/rest/v1/holdings')) return ok(aktivaInnehav);
   if (u.includes('/rest/v1/theses')) return ok([]);
   if (u.includes('api.anthropic.com')) {
     const r = await riktigFetch(url, init);
@@ -162,8 +163,31 @@ const PROV = [
   },
 ];
 
-let fel = 0;
+// Syntetiska tal bara for uttryckligen fiktivt bolag. Modellen ar riktig,
+// underlaget kontrollerat, sa faktiskt berakningsresultat kan provas exakt.
+const exempel = {
+  'arkiv:index': [{id:'exempel',namn:'Exempelbolag Rakneprov'}],
+  'arkiv:exempel': {id:'exempel',namn:'Exempelbolag Rakneprov',dokument:
+    [1,2,3,4].map(q=>({url:'https://example.test/q'+q,rubrik:'Q'+q+' 2025',
+      datum:q===1?'2025-01-01':'2026-01-15',bitar:['Nettoomsättningen uppgick till '+(q*10)+' MSEK. Rörelseresultatet uppgick till '+(q*q)+' MSEK.']}))},
+};
+const exempelInnehav = [{id:'h-exempel',name:'Exempelbolag Rakneprov',quantity:1,gav:1}];
+for (const [namn,fraga,enhet,varde] of [
+  ['marginal med tolkning','Vad var rörelsemarginalen i Exempelbolag Rakneprov Q4 2025 och hur bör jag tolka den?','procent','40'],
+  ['summera kvartal nu','Summera nettoomsättningen för Q1 till Q4 2025 i Exempelbolag Rakneprov och förklara vad summan säger.','MSEK','100'],
+]) PROV.push({namn,fraga,exempel:true,krav:d=> {
+  const resultat=(d.block || []).find(b=>b.typ==='beraknat' && b.text.startsWith('Exempelbolag Rakneprov,') &&
+    (enhet==='procent' ? /rörelsemarginal|rörelseresultat.*intäkter/i.test(b.text) && /Q4 2025/.test(b.text) : /intäkter|nettoomsättning/i.test(b.text) && /Q1.*Q4.*2025|4 kvartal.*Q4.*2025/.test(b.text)) &&
+    b.text.includes(': '+varde+' '+enhet+'.'));
+  if (!resultat) return 'saknar det begarda berakningsresultatet';
+  if (!(d.block || []).some(b=>b.typ==='tolkning' && b.stod?.includes(resultat.post))) return 'resultatet saknar kopplad tolkning';
+  return null;
+}});
+
+let fel = 0, blockerade = 0;
 for (const p of PROV) {
+  aktivBucket = p.exempel ? structuredClone(exempel) : BUCKET;
+  aktivaInnehav = p.exempel ? exempelInnehav : HOLDINGS;
   console.log('\n' + '='.repeat(72));
   console.log(p.namn);
   console.log('FRÅGA: ' + p.fraga);
@@ -190,12 +214,16 @@ for (const p of PROV) {
     fel++;
   }
   if (d.blockerat) {
+    blockerade++;
     console.log('  ' + (p.farBlockeras ? '' : '!! ') + 'Svaret blockerades: ' + (d.verifiering?.orsak || 'okant'));
     if (domen.length) console.log('  granskarens skal: ' + domen[domen.length - 1]);
     /* For de flesta prov ar en blockering ett fel: anvandaren fick ingenting.
        For ett prov utan rapporterat svar ar den ett giltigt utfall, och da
        provas kravet i stallet. */
-    if (!p.farBlockeras) { fel++; continue; }
+    console.log('  SVARSFÖRMÅGA: underkänd, användaren fick inget svar.');
+    console.log('  SÄKERHET: svaret hölls tillbaka; det visar inte att blockeringen var korrekt.');
+    fel++;
+    continue;
   }
   const brist = p.krav(d);
   if (brist) {
@@ -205,8 +233,9 @@ for (const p of PROV) {
 }
 
 console.log('\n' + '='.repeat(72));
+console.log('Blockerade svar: ' + blockerade + ' av ' + PROV.length + '.');
 if (fel) {
   console.log(fel + ' prov gick inte igenom.');
   process.exit(1);
 }
-console.log('Alla prov gick igenom: modell-id, verktygsloop och grind fungerar mot riktiga API:t.');
+console.log('Alla ' + PROV.length + ' provsvar klarade kraven utan blockering. Det provar dessa fall, inte alla mojliga svar.');

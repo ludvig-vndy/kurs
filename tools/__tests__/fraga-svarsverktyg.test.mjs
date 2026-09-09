@@ -104,15 +104,15 @@ test('verktyget svara erbjuds sa fort modellen far svara', async () => {
 
 /* Kan modellen inte langre grava MASTE den svara, annars far vi ett tomt varv
    som faller ut som ett fel for anvandaren. */
-test('sista varvet erbjuder bara svara, och tvingar fram det', async () => {
+test('efter sista hamtvarvet finns berakning och svar kvar', async () => {
   const anropen = stubbaFetch([
     laser('kassa'), laser('omsattning'),
     svarar([{ typ: 'metod', text: 'Nu svarar jag pa det jag last.' }]),
   ]);
   const d = await (await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
   const sista = anropen[2];
-  assert.deepEqual((sista.tools || []).map((t) => t.name), ['svara'], 'graververktygen lag kvar pa sista varvet');
-  assert.deepEqual(sista.tool_choice, { type: 'tool', name: 'svara' }, 'svaret tvingades inte fram');
+  assert.deepEqual((sista.tools || []).map((t) => t.name), ['berakna', 'svara'], 'graververktygen lag kvar');
+  assert.deepEqual(sista.tool_choice, { type: 'any' });
   assert.ok(!d.blockerat);
 });
 

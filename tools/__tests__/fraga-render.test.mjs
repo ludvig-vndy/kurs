@@ -2,12 +2,33 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { lasFaktasvar } from '../../functions/api/_faktasvar.js';
 
 function render(d) {
   const scope = {};
   vm.runInNewContext(readFileSync(new URL('../../public/fraga-svar.js', import.meta.url), 'utf8'), scope);
   return scope.FragaSvar.render(d);
 }
+
+test('berakningskedja visar avrundat resultat, svagt ursprung och arvt antagande', () => {
+  const p={id:'r',typ:'beraknat',bolag:'Exempelbolag',matt:'Andel',period:'Q1 2026',
+    varde:100/3,enhet:'procent',formel:'Forsta ledet\nAndra ledet',kallor:[],
+    vilar_pa:{ursprung:'egen_uppgift',poster:['e'],antaganden:['Antalet antas oforandrat.']}};
+  const d=lasFaktasvar({version:1,block:[{typ:'post',id:'r'}]},{get:()=>p,poster:()=>[p]});
+  assert.ok(d.ok);
+  const html=render(d);
+  assert.match(html,/33,33 procent/);
+  assert.doesNotMatch(html,/33,333333/);
+  assert.match(html,/egen uppgift/);
+  assert.match(html,/Antalet antas oforandrat/);
+  assert.match(html,/Forsta ledet<br>Andra ledet/);
+});
+
+test('ett litet beraknat varde far inte visas som exakt noll', () => {
+  const p={id:'r',typ:'beraknat',matt:'Andel',varde:0.0004,enhet:'procent',kallor:[]};
+  const d=lasFaktasvar({version:1,block:[{typ:'post',id:'r'}]},{get:()=>p,poster:()=>[p]});
+  assert.match(d.answer,/0,0004 procent/);
+});
 
 test('faktablock visar kallcitat, sida och serverns ursprung', () => {
   const html = render({ block: [{ typ: 'rapporterat', etikett: 'Rapporterat',

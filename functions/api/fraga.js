@@ -65,17 +65,20 @@ const TAK_DYGN = 60;
 const TAK_GLOBALT = 400;
 
 const SYSTEM_BAS =
-  "Du ar Delagarens assistent, en lugn och saklig hjalp for en privatinvesterare i en kurs om fundamental aktieanalys.\n\n" +
+  "Du ar Delagarens analysbollplank, en lugn och saklig hjalp som undersoker fragor med anvandaren utifran tillgangliga data och kallor.\n\n" +
   "Regler:\n" +
   "- Svara pa svenska och konkret. Lat langden folja fragan: en enkel fraga far ett kort svar, en fraga som spanner over flera rapporter eller flera ar far det utrymme den behover.\n" +
-  "- Svara BARA pa fragor om anvandarens egna innehav och om kursens innehall (fundamental aktieanalys). Avboj vanligt annat.\n" +
-  "- Ge ALDRIG finansiell radgivning eller kop/salj-rekommendationer. Forklara mekanik och vad anvandaren sjalv kan titta pa. Besluten ar anvandarens.\n" +
+  "- Hjalp med fundamental aktieanalys, bolag i underlaget, anvandarens innehav och kursens metoder. Breda analysfragor och samband mellan rapporter ingar. Avboj amnen utanfor detta.\n" +
+  "- Besvara det anvandaren faktiskt vill undersoka. Utveckla bade mojligheter och risker nar kallorna ger stod, utan att tvinga fram lika manga argument pa varje sida.\n" +
+  "- Forklara sambandet mellan observation och tolkning: vad kan det betyda, vilka alternativa forklaringar finns, och vad skulle starka eller forsvaga tolkningen? Valj det som hjalper fragan, inte en checklista i varje svar.\n" +
+  "- Gor det arbete du kan gora nu. Erbjud dig inte bara att rakna eller leta vidare nar anvandaren redan bett om det och verktyg finns. Vid en lucka: besvara resten och precisera vilken uppgift som saknas.\n" +
+  "- Ge inga kop/salj-rekommendationer, personliga placeringsrad eller loften om avkastning. Du far forklara mekanik, analysera kallbelagda samband och diskutera villkorade tolkningar. Besluten ar anvandarens.\n" +
   "- Inga tankstreck. Anvand komma, kolon eller punkt.\n";
 
 /* Faktauppgifter och tolkningar har skilda svarstyper. */
 const SYSTEM_DOKUMENT =
   "\nDu har bolagens dokument och ett faktaregister. Anvand postreferenser for faktauppgifter.\n" +
-  "Resonera om vad underlaget stodjer, vad som talar emot och vad som saknas. " +
+  "Knyt ihop relevanta uppgifter och resonera om vad som stodjer en positiv utveckling, vad som talar emot och vad som saknas. Skilj en mojlig forklaring fran nagot som ar visat. " +
   "Markera tolkningar och ange stodreferenser. Faktapastaenden, aven utan siffror, kraver belagg.\n" +
   "Skilj perioder, bolag, rapporterat och antaganden. En jamforelse i parentes ar normalt samma period forra aret.\n";
 
@@ -234,7 +237,9 @@ export function kursText(lektioner) {
 /* Verktyg kan utoka underlaget under samma svar. Nya faktaposter skickas
    som deltan; slutkontrollen anvander samma requestlokala register. */
 
-const MAX_VARV = 2;              // alltsa hogst tre modellanrop
+const MAX_VARV = 2;
+const MAX_BERAKNINGAR = 6;
+const MAX_MODELLANROP = 10; // Hela requesten, inklusive fallback och granskning.
 
 const UTDRAG_PER_VERKTYG = 6;
 
@@ -243,11 +248,24 @@ export const SYSTEM_VERKTYG =
   "- las_mer: fler stycken ur det du redan har, sokta pa andra ord. Anvand den nar fragan galler nagot som borde sta i en rapport men inte kom med i utdragen.\n" +
   "- hamta_historik: hamtar bolagets egna dokument fran en aldre period, direkt fran kallan. Anvand den nar fragan galler ett ar du inte har.\n" +
   "- las_lektion: hela texten till en lektion ur registret ovan. Anvand den nar fragan galler metod.\n" +
+  "- berakna: bestall summa, differens, tillvaxt, andel eller per_manad med post-id:n. Anvand befintlig beraknad post om den redan besvarar fragan. Efter hamtning kan du rakna med de nya posterna.\n" +
   "- Hamta hellre en gang for mycket an svara att du inte vet. Men hamta inte i blindo: sag for dig sjalv vad du letar efter forst.\n" +
   "- Nya postreferenser kommer i verktygsresultaten. Aterge aldrig egna faktatal. Kursmaterial far inte bli bolagsfakta.\n";
 
 export function verktygsDefinitioner() {
   return [
+    {
+      name: "berakna",
+      description: "Rakna med registrerade faktaposter. Inga egna tal. differens och tillvaxt tar [senare, tidigare], andel tar [taljare, namnare]. summa tar angransande flodesperioder; per_manad tar en flodespost. Resultatet ar en ny postreferens.",
+      input_schema: {
+        type: "object", additionalProperties: false,
+        properties: {
+          operation: {type: "string", enum: ["summa", "differens", "tillvaxt", "andel", "per_manad"]},
+          indata: {type: "array", minItems: 1, maxItems: 16, items: {type: "string"}},
+        },
+        required: ["operation", "indata"],
+      },
+    },
     {
       name: "las_mer",
       description: "Fler stycken ur bolagets dokument som du redan har tillgang till, sokta pa dina egna ord i stallet for anvandarens fraga.",
@@ -322,6 +340,15 @@ export function byggKorVerktyg(ctx) {
 
   return async function kor(namn, indata) {
     try {
+      if (namn === "berakna") {
+        tackning.berakningar ||= [];
+        if (tackning.berakningar.length >= MAX_BERAKNINGAR) return "Berakningsbudgeten ar slut. Svara med befintliga poster.";
+        const dom = register ? register.laggBeraknad(indata) : {ok: false, skal: "Faktaregister saknas."};
+        tackning.berakningar.push({operation: String(indata?.operation || '').slice(0, 30), ...dom});
+        if (!dom.ok) return "Berakningen avslogs: " + dom.skal;
+        tackning.faktaregister = register.status();
+        return "Berakningen finns i post " + dom.id + ". Visa posten och forklaringen i svaret." + register.prompt(true);
+      }
       if (namn === "las_lektion") {
         const id = String(indata.id || "").trim();
         const text = LEKTIONER[id];
@@ -395,69 +422,53 @@ const MAX_REPARATION = 1;
 
 export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
   const meddelanden = [{ role: "user", content: kropp.fraga }];
-  let gravvarv = 0, reparationer = 0;
-  for (let steg = 0; steg <= MAX_VARV + MAX_REPARATION; steg++) {
-    // Utan nagot att grava i finns bara svara, och da tvingas det fram direkt.
-    const sista = gravvarv >= MAX_VARV || !verktyg.length;
-    /* Sista varvet erbjuder BARA svara, och tvingar fram det. Utan tvanget kan
-       det sista varvet ga ut utan svar, och da faller hela fragan pa "varv". */
+  tackning.modellanrop ||= 0;
+  tackning.berakningsforsok ||= 0;
+  tackning.gravvarv ||= 0;
+  let reparationer = 0;
+  // En plats reserveras alltid for granskaren. Budgeten overlever fallback.
+  while (tackning.modellanrop < MAX_MODELLANROP - 1) {
+    const masteSvara = tackning.modellanrop >= MAX_MODELLANROP - 3 || reparationer > 0;
+    const tillatna = masteSvara ? [] : verktyg.filter(t => t.name === 'berakna'
+      ? tackning.berakningsforsok < MAX_BERAKNINGAR : tackning.gravvarv < MAX_VARV);
     const svar = await anropa(apiKey, {
-      model: kropp.model,
-      max_tokens: kropp.max_tokens,
-      system: kropp.system,
+      model: kropp.model, max_tokens: kropp.max_tokens, system: kropp.system,
       messages: meddelanden,
-      /* type any, alltsa: anvand NAGOT av verktygen, aldrig fri text. Utan det
-         fanns halet att modellen tog bada gravverktygen i SAMMA varv, varpa
-         nasta varv varken var det sista eller tvingande, och den skrev prosa
-         som foll pa format. Nu ar svara alltid ett av alternativen, sa att
-         svara ar mojligt i varje varv, men text ar det aldrig. */
-      ...(sista
-        ? { tools: [SVARSVERKTYG], tool_choice: { type: "tool", name: "svara" } }
-        : { tools: verktyg.concat([SVARSVERKTYG]), tool_choice: { type: "any" } }),
-    });
+      tools: tillatna.concat([SVARSVERKTYG]),
+      tool_choice: tillatna.length ? {type:'any'} : {type:'tool',name:'svara'},
+    }, tackning);
     if (svar.fel) return svar;
-    if (svar.stopp !== "tool_use" || !svar.block) return svar;
-
-    /* Svarar modellen ar utredningen slut, aven om den samtidigt bad om mer.
-       Verktyget svara far sitt resultat tillbaka som vilket verktyg som helst:
-       godkant, eller vad som brast. Det ar reparationsrundan. */
-    const svaret = svar.block.find((b) => b && b.type === "tool_use" && b.name === "svara");
-    const anvandning = svar.block.filter((b) => b && b.type === "tool_use" && b.name !== "svara");
-    if (svaret) {
-      const dom = provaSvar ? provaSvar(svaret.input) : { ok: true };
-      if (dom.ok || reparationer >= MAX_REPARATION) return { ...svar, data: svaret.input };
-      reparationer++;
-      tackning.reparation = reparationer;
-      meddelanden.push({ role: "assistant", content: svar.block });
-      /* ALLA anrop i varvet maste besvaras, inte bara svara. tool_choice any
-         tillater flera verktyg i samma varv med flit, och ett tool_use utan
-         tool_result avvisas av API:t. Sa lange bara svara besvarades foll
-         alltsa hela reparationen sa fort modellen bad om mer underlag i samma
-         andetag som den svarade, alltsa i just de varv den behovdes mest. */
-      const svarat = [{ type: "tool_result", tool_use_id: svaret.id, is_error: true,
-        content: dom.klagan + " Svara igen med hela svaret, rattat." }];
-      for (const a of anvandning) {
-        tackning.verktyg.push(a.name);
-        svarat.push({ type: "tool_result", tool_use_id: a.id, content: await kor(a.name, a.input || {}) });
-      }
-      // Hamtningen kostar ett gravvarv aven nar den delar varv med ett svar.
-      if (anvandning.length) gravvarv++;
-      meddelanden.push({ role: "user", content: svarat });
-      continue;
-    }
-
-    if (!anvandning.length) return svar;
-
-    gravvarv++;
-    meddelanden.push({ role: "assistant", content: svar.block });
+    if (svar.stopp !== 'tool_use' || !svar.block) return svar;
+    const anrop = svar.block.filter(b => b?.type === 'tool_use');
+    const svaret = anrop.find(b => b.name === 'svara');
+    const dom = svaret && (provaSvar ? provaSvar(svaret.input) : {ok:true});
+    if (svaret && (dom.ok || reparationer >= MAX_REPARATION)) return {...svar,data:svaret.input};
+    if (!anrop.length) return svar;
     const resultat = [];
-    for (const a of anvandning) {
+    let gravde = false;
+    for (const a of anrop) {
+      if (a.name === 'svara') {
+        resultat.push({type:'tool_result',tool_use_id:a.id,is_error:true,
+          content:dom.klagan + ' Svara igen med hela svaret, rattat.'});
+        continue;
+      }
+      if (!tillatna.some(t => t.name === a.name) ||
+          (a.name === 'berakna' && tackning.berakningsforsok >= MAX_BERAKNINGAR)) {
+        resultat.push({type:'tool_result',tool_use_id:a.id,is_error:true,
+          content:'Verktyget ar inte tillgangligt eller budgeten ar slut. Svara med befintligt underlag.'});
+        continue;
+      }
+      if (a.name === 'berakna') tackning.berakningsforsok++;
+      else gravde = true;
       tackning.verktyg.push(a.name);
-      resultat.push({ type: "tool_result", tool_use_id: a.id, content: await kor(a.name, a.input || {}) });
+      resultat.push({type:'tool_result',tool_use_id:a.id,content:await kor(a.name,a.input || {})});
     }
-    meddelanden.push({ role: "user", content: resultat });
+    if (gravde) tackning.gravvarv++;
+    if (svaret) { reparationer++; tackning.reparation = reparationer; }
+    meddelanden.push({role:'assistant',content:svar.block});
+    meddelanden.push({role:'user',content:resultat});
   }
-  return { fel: "varv", status: 502, meddelande: "Kom inte fram till ett svar." };
+  return {fel:'budget',status:502,meddelande:'Kom inte fram till ett svar inom anropsbudgeten.'};
 }
 
 async function getUser(base, secret, token) {
@@ -585,7 +596,11 @@ async function stryp(kv, id) {
    "svarade inte i tid", vilket ledde fel i ett halvtimmes felsokande: modellen
    svarade pa 276 ms, med att kontot var slut pa krediter. Ett fel som pekar at
    fel hall ar samre an inget fel alls. */
-async function anropa(apiKey, kropp) {
+async function anropa(apiKey, kropp, tackning) {
+  if (tackning) {
+    if ((tackning.modellanrop || 0) >= MAX_MODELLANROP) return {fel:'budget',status:502,meddelande:'Anropsbudgeten ar slut.'};
+    tackning.modellanrop = (tackning.modellanrop || 0) + 1;
+  }
   const ctrl = new AbortController();
   const klocka = setTimeout(() => ctrl.abort(), TIMEOUT);
   try {
@@ -907,6 +922,7 @@ export async function onRequestPost(context) {
         ut.formel = p.formel;
         ut.indata = p.indata;
         ut.antagande = p.antagande;
+        ut.vilar_pa = p.vilar_pa;
       }
       return ut;
     });
@@ -929,7 +945,8 @@ export async function onRequestPost(context) {
   // Prosans innebord bevisas inte av korrekta referenser. En separat kontroll
   // kan stoppa ogrundade fakta, fel kategorisering och motsagelser.
   // Ett granskarfel far ALDRIG falla tillbaka till ett ogranskat svar.
-  if (kontrollerat.prosa.length) {
+  const behoverGranskning = kontrollerat.prosa.length > 0 || kontrollerat.block.some(b => b.typ === "beraknat");
+  if (behoverGranskning) {
     const granskning = await anropa(apiKey, {
       /* 80 rackte for {"godkand":true} men inte for ett nej med skal, sa
          granskarens svar klipptes av och blev ett nej av fel anledning. */
@@ -950,7 +967,7 @@ export async function onRequestPost(context) {
            som innehol prosa. */
         { role: "assistant", content: "{" },
       ],
-    });
+    }, tackning);
     if (granskning.fel || granskning.stopp === "max_tokens" || !godkandGranskning(granskning.text)) {
       return blockera(granskning.fel ? "granskarfel" : "semantik");
     }
@@ -960,7 +977,8 @@ export async function onRequestPost(context) {
     .map(k => [JSON.stringify([k.url, k.citat]), k])).values()];
   return json({ answer: kontrollerat.answer, block: kontrollerat.block,
     kallor, tackning, verifiering: { format: "dataposter-v1",
-      prosa: kontrollerat.prosa.length ? "modellgranskad" : "ingen" },
+      prosa: kontrollerat.prosa.length ? "modellgranskad" : "ingen",
+      berakningar: kontrollerat.block.some(b => b.typ === "beraknat") ? "modellgranskade" : "inga" },
     harlett: anvanda.filter(p => p.typ === "beraknat").map(p => ({
       metrik: p.matt, formel: p.formel, kallor: p.kallor.map(k => k.rubrik),
     })),

@@ -1,7 +1,12 @@
 /* Referenser renderas som fristaende fakta. Prosa granskas aven semantiskt. */
 import { utanDatum } from './_kallgrind.js';
+import { formateraTal } from './_talformat.js';
 export const SVAR_KONTRAKT = `
 SVARSFORMAT, galler ALLA slutliga svar, aven utan dokument:
+Nar fragan kraver en rakning: anvand befintlig beraknad post eller berakna.
+Visa resultatposten och forklara vad den betyder med ett tolkning-block som
+refererar till posten. Ett erbjudande att rakna senare ar inte ett svar pa en
+raknefraga. Vid avslag, forklara skalet och besvara det som gar.
 Lamna svaret genom att ANROPA VERKTYGET svara. Skriv aldrig svaret som fri text,
 och lagg det aldrig i en kodruta. Verktyget tar {"version":1,"block":[...]}.
 Varje block har exakt ett av dessa format:
@@ -97,6 +102,10 @@ Du stoppar det som ar osant, obelagt, felkategoriserat eller radgivning, aldrig
 det som ar kort. "Ofullstandigt" ar aldrig ett giltigt skal.
 
 Kontrollera varje prosablock och samspelet med faktablocken:
+Kontrollera aven att anvanda berakningar ar meningsfulla for fragan och
+perioden. Aritmetiken utfors i kod; kontrollera tolkningen och antagandena.
+Kallstodda positiva tolkningar ar lika tillatna som negativa. Ett villkorat
+resonemang ar inte ett lofte, men far inte presenteras som ett fastslaget faktum.
 Metod far endast vara generell undervisning, inte bolagsspecifika fakta.
 Tolkning far vara ett forsiktigt resonemang med stod i angivna poster.
 Pastaenden om verkliga handelser maste ha explicit stod, aven utan siffror.
@@ -268,10 +277,17 @@ function renderaPost(p) {
   let text;
   if (Number.isFinite(p.varde)) {
     text = [p.bolag, p.matt, p.period].filter(Boolean).join(', ') + ': ' +
-      String(p.varde).replace('.', ',') + ' ' + p.enhet + '.';
+      (p.typ === 'beraknat' ? formateraTal(p.varde, 2) : String(p.varde).replace('.', ',')) + ' ' + p.enhet + '.';
     if (p.formel) text += '\nSå räknades det: ' + p.formel;
     if (p.normalisering) text += '\nEnheter i beräkningen: ' + p.normalisering;
     if (p.antagande) text += '\nFörutsättning: ' + p.antagande;
+    if (p.vilar_pa) {
+      const ursprung = {egen_uppgift:'egen uppgift', antagande:'antagande', illustration:'illustration', kurs:'kursmaterial'}[p.vilar_pa.ursprung];
+      if (ursprung) text += '\nBeräkningen vilar på ' + ursprung + ', inte enbart rapporterade uppgifter.';
+      for (const antagande of new Set(p.vilar_pa.antaganden || [])) {
+        if (antagande !== p.antagande) text += '\nFörutsättning: ' + antagande;
+      }
+    }
   } else {
     text = [p.bolag, p.rubrik].filter(Boolean).join(', ');
     if (text) text += ':\n';

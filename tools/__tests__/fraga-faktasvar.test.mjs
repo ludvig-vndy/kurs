@@ -82,3 +82,9 @@ test('godkand metod fungerar utan dokument och blir tydligt markt', async t => {
   assert.notEqual(d.blockerat, true);
   assert.equal(d.answer, 'Metod: Läs även noterna.');
 });
+
+test('aven en ensam beraknad post granskas for meningsfullhet', async t => {
+  const {d,granskningar}=await kor(t,{raw:poster=>jsonSvar([{typ:'post',id:poster.find(p=>p.typ==='beraknat').id}]),granskat:false});
+  assert.equal(granskningar.length,1);
+  assert.equal(d.blockerat,true);
+});

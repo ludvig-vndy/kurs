@@ -98,7 +98,7 @@ test('ett bolag som byter skala mellan rapporter jamfors anda ratt', () => {
   assert.ok(steg, 'inget kvartalssteg hittades');
   assert.equal(steg.franVarde, 10, 'KSEK ska ha blivit MSEK, inte lasts som 10 000');
   assert.equal(steg.tillVarde, 12.4);
-  assert.equal(steg.forandring, 2.4);
+  assert.ok(Math.abs(steg.forandring - 2.4) < 1e-12);
 });
 
 test('bruttoresultat och de nya metrikerna lases', () => {
