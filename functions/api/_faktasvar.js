@@ -145,6 +145,9 @@ det innebär inte ett påstående att ökningen fortsätter i framtiden.
 Bedöm saklig innebörd. En stilistiskt kort formel är inte ett aritmetiskt fel.
 Pröva även metodblockens sakliga samband; etiketten metod är inget undantag.
 Bevara frågans mått och förutsättningar genom hela resonemanget:
+- ROIC gäller avkastning på totalt investerat rörelsekapital, medan ROE gäller
+  eget kapital. Ett byte från eget kapital till skuld höjer inte i sig ROIC.
+  Hävstång kan höja ROE utan bättre rörelse; tillskriv inte den effekten ROIC.
 - Kassaflöde från löpande verksamhet är inte fritt kassaflöde, förändring i
   kassan eller investeringskassaflöde. Normala köp av anläggningstillgångar
   hör till investeringsverksamheten och förklarar inte i sig svagare operativt
