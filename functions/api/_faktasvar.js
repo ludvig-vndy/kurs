@@ -76,9 +76,14 @@ export const SVARSVERKTYG = {
               + 'Perioder far du namnge (2022-12-31, december 2022, Q3 2022, kalenderaret 2022), '
               + 'men aldrig tidslangder som arton manader. '
               + 'Ett enda tal har gor att HELA svaret kastas och anvandaren far ingenting.' },
-            stod: { type: 'array', items: { type: 'string' }, description: 'Endast for tolkning: post-id:n som stodjer resonemanget.' },
+            stod: { type: 'array', minItems: 1, maxItems: 8, items: { type: 'string' }, description: 'OBLIGATORISKT for tolkning: exakta post-id:n som stodjer resonemanget. Om du tolkar ett berakningsresultat ska resultatpostens id inga, inte bara dess indata.' },
           },
           required: ['typ'],
+          anyOf: [
+            { properties: {typ:{enum:['post']}}, required:['typ','id'] },
+            { properties: {typ:{enum:['metod','saknas']}}, required:['typ','text'] },
+            { properties: {typ:{enum:['tolkning']}}, required:['typ','text','stod'] },
+          ],
         },
       },
     },
@@ -339,6 +344,9 @@ export function lasFaktasvar(raw, register) {
         return nej('blocktyp', iBlock(String(b?.typ).slice(0, 20)) + ' har en typ som inte finns. Tillatna typer ar post, metod, tolkning och saknas.');
       }
       if (!exakt(b, b.typ === 'tolkning' ? ['typ', 'text', 'stod'] : ['typ', 'text'])) {
+        if (b.typ === 'tolkning' && !Object.hasOwn(b, 'stod')) {
+          return nej('prosaformat', iBlock(b.typ) + ' saknar det obligatoriska faltet stod. Valj de exakta post-id:n ur FAKTAREGISTER som belagger tolkningen och skicka stod som en lista. Tolkar du en berakning ska resultatpostens id inga. Servern kan inte valja belagg at dig.');
+        }
         return nej('prosaformat', iBlock(b.typ) + ' hade fel falt. Ett tolkningsblock har typ, text och stod. Metod och saknas har bara typ och text.');
       }
       const funnet = talIProsa(b.text, lektionsnummer);

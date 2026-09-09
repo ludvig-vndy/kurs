@@ -20,6 +20,14 @@ function setup() {
 const svar = (...block) => JSON.stringify({ version: 1, block });
 const faktum = (r) => r.poster().find(p => p.typ === 'rapporterat' && p.matt === 'rörelseresultat');
 
+test('reparation namnger saknat stod och ber modellen valja verkliga referenser', () => {
+  const r=setup();
+  const dom=lasFaktasvar(svar({typ:'tolkning',text:'Det kan tyda pa en svagare utveckling.'}),r);
+  assert.equal(dom.ok,false);
+  assert.match(dom.klagan,/saknar.*stod/);
+  assert.match(dom.klagan,/FAKTAREGISTER/);
+});
+
 test('servern skriver hela faktauppgiften med minus, enhet, bolag och period', () => {
   const r = setup(), p = faktum(r);
   const s = lasFaktasvar(svar({ typ: 'post', id: p.id }), r);

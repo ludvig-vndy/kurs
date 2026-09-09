@@ -180,7 +180,8 @@ for (const [namn,fraga,enhet,varde] of [
     (enhet==='procent' ? /rörelsemarginal|rörelseresultat.*intäkter/i.test(b.text) && /Q4 2025/.test(b.text) : /intäkter|nettoomsättning/i.test(b.text) && /Q1.*Q4.*2025|4 kvartal.*Q4.*2025/.test(b.text)) &&
     b.text.includes(': '+varde+' '+enhet+'.'));
   if (!resultat) return 'saknar det begarda berakningsresultatet';
-  if (!(d.block || []).some(b=>b.typ==='tolkning' && b.stod?.includes(resultat.post))) return 'resultatet saknar kopplad tolkning';
+  if (!(d.block || []).some(b=>b.typ==='tolkning' && (b.stod?.includes(resultat.post) ||
+      resultat.indata?.length && resultat.indata.every(id=>b.stod?.includes(id))))) return 'resultatet saknar kopplad tolkning';
   return null;
 }});
 
@@ -195,10 +196,14 @@ for (const p of PROV) {
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
-      orsak:/refererade poster/.test(b.skal || '')?'okand_referens':
+      orsak:/inte plats/.test(b.skal || '')?'register_fullt':
+        /kanoniskt/.test(b.skal || '')?'otypad_operand':
+        /Okänd/.test(b.skal || '')?'okand_operation':
+        /refererade poster/.test(b.skal || '')?'okand_referens':
         /Beställningen/.test(b.skal || '')?'bestallningsformat':
         /period|jämför|summer/.test(b.skal || '')?'jamforbarhet':
         b.ok?'godkand':'annat_avslag'})),
+    register:d.tackning?.faktaregister,
     resultat:(d.block || []).filter(b=>b.typ==='beraknat').map(b=>({
       direktTolkat:(d.block || []).some(t=>t.typ==='tolkning' && t.stod?.includes(b.post)),
       allaIndataTolkade:(b.indata || []).every(id=>(d.block || []).some(t=>t.typ==='tolkning' && t.stod?.includes(id))),
