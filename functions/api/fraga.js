@@ -73,7 +73,7 @@ const SYSTEM_BAS =
   "- Svar först, belägg sedan. En enkel fråga behöver normalt bara den efterfrågade posten och högst en kort förklaring. En analysfråga behöver de viktigaste sambanden, inte en genomgång av allt du vet. Varje stycke ska tillföra ett svar, ett belägg eller en relevant osäkerhet.\n" +
   "- Visa bara relevanta poster. Välj typade faktaposter före långa dokumentcitat när de besvarar samma fråga. Upprepa inte tabellens eller posternas innehåll i prosa. Undvik inledningsfraser, avslutande sammanfattningar som upprepar svaret och rutinmässiga erbjudanden att fortsätta.\n" +
     "- Ange osäkerheten där den påverkar slutsatsen, en gång. Lista inte spekulativa orsaker utan nytta: välj högst de mest relevanta alternativa förklaringarna och säg vilket underlag som skulle skilja dem åt. En kort positiv tidsserie visar en förbättring under perioden, inte att förbättringen är varaktig. Upprepa inte samma lucka i både tolkning och saknas.\n" +
-    "- Bevara frågans begrepp: operativt kassaflöde är inte fritt kassaflöde eller förändring i kassan. Normala anläggningsinvesteringar hör till investeringskassaflödet. Ökad rörelsekapitalbindning kan samexistera med skalfördelar. Sjunkande avkastning på nya investeringar kan fortfarande överstiga kapitalkostnaden; anta inte att gränsen har passerats.\n" +
+    "- Bevara frågans begrepp: operativt kassaflöde är inte fritt kassaflöde eller förändring i kassan. Normala anläggningsinvesteringar hör till investeringskassaflödet. Ökad rörelsekapitalbindning kan samexistera med skalfördelar. Sjunkande avkastning på nya investeringar kan fortfarande överstiga kapitalkostnaden; anta inte att gränsen har passerats. Att närma sig kapitalkostnaden ovanifrån är inte värdeförstöring: över gränsen positivt ekonomiskt mervärde, lika neutralt, under negativt.\n" +
     "- För en avgränsad resonemangsfråga: ge din bedömning först, pröva de viktigaste alternativen och prioritera nästa kontroll. Normalt räcker ett kort stycke per del. Använd inte breda inledningar eller en avslutning som upprepar delarna.\n" +
   "- Skilj stigande nivå från accelererande tillväxt. Lika stora absoluta ökningar innebär inte att tillväxten accelererar. När du beskriver begränsad historik räcker 'perioderna i underlaget'; undvik räknade tidslängder i fri text.\n" +
   "- Hjalp med fundamental aktieanalys, bolag i underlaget, anvandarens innehav och kursens metoder. Breda analysfragor och samband mellan rapporter ingar. Avboj amnen utanfor detta.\n" +
@@ -918,7 +918,10 @@ export async function onRequestPost(context) {
   /* Kontrollen som utredningen far anvanda mitt i loppet. Samma funktion som
      provar svaret nedan, sa reparationsrundan kan omojligt vara slappare. */
   const provaSvar = (data) => lasFaktasvar(data, register);
-  const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: system, fraga: question };
+  const omfang = djup
+    ? '\nSVARSOMFÅNG: Sikta på högst tvåhundrafemtio ord fri förklaring. Visa centrala belägg separat. Utredningen behöver inte återberättas steg för steg.\n'
+    : '\nSVARSOMFÅNG: Sikta på högst etthundraåttio ord fri förklaring, ofta betydligt mindre. En avgränsad analys får normalt plats i tre korta stycken: bedömning, avgörande alternativ, nästa kontroll. Överskrid bara om användaren ber om utförlighet eller om nödvändiga belägg kräver det.\n';
+  const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: system + omfang, fraga: question };
   const undersokning = skapaUndersokning();
   const kor = async (namn, input, signal) => {
     if (namn === 'planera') {
@@ -1038,7 +1041,7 @@ export async function onRequestPost(context) {
     // Samma analysförmåga behövs för att granska en tolkning som för att
     // skriva den. Den snabba modellen misstolkade upprepade gånger uttryckliga
     // reservationer och missade en felaktig acceleration i skarpa prov.
-    const granskarModell = kontrollerat.block.some(b=>['tolkning','beraknat'].includes(b.typ))
+    const granskarModell = kontrollerat.block.some(b=>['metod','tolkning','beraknat'].includes(b.typ))
       ? MODEL_DJUP : MODEL_SNABB;
     tackning.granskarmodell = granskarModell;
     const granskning = await anropa(apiKey, {

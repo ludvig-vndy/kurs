@@ -129,6 +129,9 @@ Bevara frågans mått och förutsättningar genom hela resonemanget:
 - Sjunkande avkastning på nya investeringar betyder inte att avkastningen
   understiger kapitalkostnaden. Det kräver separat stöd. Avkastning kan falla
   och ändå skapa värde över kapitalkostnaden.
+  Att avkastningen närmar sig kapitalkostnaden ovanifrån betyder inte att
+  investeringen redan är värdeförstörande. Vid lika avkastning och kapitalkostnad
+  är det ekonomiska mervärdet neutralt, under gränsen negativt.
 - Ökad rörelsekapitalbindning kan förekomma samtidigt med verkliga
   skalfördelar. Den bevisar inte att skalfördelar saknas. Stigande marginal
   bevisar heller inte skalfördelar eller utesluter säsong och produktmix.

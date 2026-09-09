@@ -144,13 +144,21 @@ test('ett tal i fri prosa stoppas lika hart via verktyget', async () => {
 /* Granskaren har inga verktyg, sa den prefillas i stallet. Utan det foll aven
    den pa en fence och blockerade varje svar som innehold prosa. */
 test('granskaren prefillas sa dess svar inte kan kapslas in', async () => {
-  const anropen = stubbaFetch([svarar([{ typ: 'metod', text: 'Ett resonemang utan tal.' }])]);
+  const anropen = stubbaFetch([svarar([{ typ: 'saknas', text: 'Rapporten saknas i underlaget.' }])]);
   await (await anrop('vad ar en moat', { ...ENV, DATA: kv(ARKIV()) })).json();
   const granskning = anropen.find((k) => String(k.system).startsWith('Du granskar ett svar'));
   assert.ok(granskning, 'ingen granskning kordes');
   const sista = granskning.messages[granskning.messages.length - 1];
   assert.equal(sista.role, 'assistant');
   assert.equal(sista.content, '{');
+});
+
+test('metodresonemang granskas med analysmodellen aven utan tolkning', async () => {
+  const anropen = stubbaFetch([svarar([{typ:'metod',text:'Sjunkande avkastning kan fortfarande överstiga kapitalkostnaden.'}])]);
+  await anrop('Förklara avkastning och kapitalkostnad.',ENV);
+  const g=anropen.find(k=>String(k.system).startsWith('Du granskar ett svar'));
+  assert.match(g.model,/sonnet/);
+  assert.equal(g.output_config?.format.type,'json_schema');
 });
 
 test('granskaren godkanner ett svar som fortsatter pa prefillen', async () => {
