@@ -47,11 +47,15 @@ on:
         description: 'Experiment: granskaren motiverar även positiva beslut i samma anrop'
         type: boolean
         default: false
+      fryst_payload:
+        description: 'Fryst granskningsprov: gzip/base64 med offentliga eller fiktiva testdata, aldrig nycklar'
+        type: string
+        default: ''
 
 jobs:
   prov:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       FRAGA_AVANCERAT: ${{ inputs.avancerat }}
@@ -70,6 +74,7 @@ jobs:
         with:
           node-version: '22'
       - name: Prova Fragan
+        if: ${{ inputs.fryst_payload == '' }}
         run: |
           set +e
           node tools/prova-fraga.mjs 2>&1 | tee prov.log
@@ -86,6 +91,19 @@ jobs:
             echo
             echo '```'
             cat prov.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+      - name: Fryst granskningsforsok
+        if: ${{ inputs.fryst_payload != '' }}
+        run: |
+          set +e
+          node tools/prova-fraga-granskning.mjs 2>&1 | tee fryst.log
+          {
+            echo '## Fryst experiment: läs antal, bedömningar och fel separat'
+            echo 'Workflow-status är inte ett kvalitetsbesked. Inga kundanrop eller produktionsändringar.'
+            echo '```'
+            cat fryst.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit 0
