@@ -79,6 +79,38 @@ export function berakna(operation, indata) {
   if (!Array.isArray(indata) || !indata.length || indata.length > MAX_INDATA || indata.some(p => !p || typeof p !== 'object'))
     return avslag('Indata måste vara en begränsad lista med registerposter.');
   if (indata.some(p => !andlig(p) || !p.id)) return avslag('De valda posterna saknar typade tal med verifierad enhet och period. Dokumentcitat kan innehålla siffror men kan inte användas direkt som operander. Välj faktaposter med normaliserat värde, eller förklara att uppgifterna ännu inte kan kopplas säkert till beräkningen. Detta är ett avslag på underlaget, inte ett tekniskt verktygsfel.');
+  if (operation === 'utveckling') {
+    if (indata.length < 2 || indata.some(p=>varde(p)<=0 || !['flode','balans'].includes(p.slag)))
+      return avslag('Utveckling kräver minst två positiva flödes- eller balansposter.');
+    try { if (indata.slice(1).some(p=>!jamforbara(indata[0],p) || p.langd!==indata[0].langd))
+      return avslag('Utveckling kräver samma bolag, mått, slag, enhet och periodlängd.'); }
+    catch(e) { return avslag(e.message); }
+    const ps=[...indata].sort((a,b)=>kvartalsindex(a)-kvartalsindex(b));
+    if (ps.slice(1).some((p,i)=>kvartalsindex(p)-kvartalsindex(ps[i])!==p.langd))
+      return avslag('Serien måste bestå av angränsande perioder utan luckor eller överlapp.');
+    const jamforelser=ps.slice(1).map((p,i)=>({
+      fran:etikett(ps[i]),till:etikett(p),tillvaxt:(varde(p)/varde(ps[i])-1)*100,
+      // Beslut tas på kanoniska värden, inte avrundad procent i gränssnittet.
+      fordubbling:varde(p)===varde(ps[i])*2,halvering:varde(p)*2===varde(ps[i]),
+    }));
+    if (jamforelser.some(p=>!Number.isFinite(p.tillvaxt))) return avslag('Jämförelsen gav inget ändligt resultat.');
+    const acceleration=jamforelser.length<2 ? null : jamforelser.every(p=>p.tillvaxt>0) &&
+      jamforelser.slice(1).every((p,i)=>p.tillvaxt>jamforelser[i].tillvaxt);
+    const dubbla=jamforelser.filter(p=>p.fordubbling), halva=jamforelser.filter(p=>p.halvering);
+    const utsagor=[];
+    if(dubbla.length) utsagor.push('Fördubbling: '+dubbla.map(p=>p.fran+' till '+p.till).join('; ')+'.');
+    if(halva.length) utsagor.push('Halvering: '+halva.map(p=>p.fran+' till '+p.till).join('; ')+'.');
+    if(jamforelser.length>1 && dubbla.length!==jamforelser.length) utsagor.push('Värdet fördubblades inte mellan varje angränsande period i serien.');
+    if(acceleration!==null) utsagor.push(acceleration
+      ? 'Positiv procentuell tillväxt accelererar i varje jämförelse i serien.'
+      : 'Serien visar inte positiv procentuell tillväxt som accelererar i varje jämförelse.');
+    const total=(varde(ps.at(-1))/varde(ps[0])-1)*100;
+    return bas(ps,operation,total,'procent',{
+      matt:'Förändring i '+ps[0].matt,slag:'kvot',period:etikett(ps[0])+' till '+etikett(ps.at(-1)),
+      jamforelser,acceleration,utsaga:utsagor.join(' '),
+      formel:direktFormel(ps,jamforelser.map((p,i)=>`${p.fran} till ${p.till}: (${tal(varde(ps[i+1]))} / ${tal(varde(ps[i]))} - 1) × 100 = ${tal(p.tillvaxt)} procent`).join('\n')),
+    });
+  }
   if (operation === 'summa') {
     if (indata.length < 2) return avslag('Summa kräver minst två operander.');
     if (indata.some(p => p.slag !== 'flode')) return avslag('Bara flödesposter kan summeras över perioder.');

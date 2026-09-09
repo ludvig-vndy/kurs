@@ -13,6 +13,7 @@ import { hamtaPeriod } from "./_mfn.js";
 import { INDEX, REGISTER, LEKTIONER } from "./_kurskorpus.js";
 import { budgetFor, skapaUndersokning, PLANVERKTYG, SYSTEM_DJUP, giltigPeriod } from './_utredning.js';
 import { lasTrad, skrivTrad, skapaTur, samtalsText, routingUrTrad, periodUrPoster } from './_trad.js';
+import { redigeraSvar } from './_redigering.js';
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 /* Tva modeller, vald efter fragans storlek.
@@ -75,6 +76,7 @@ const SYSTEM_BAS =
     "- Ange osäkerheten där den påverkar slutsatsen, en gång. Lista inte spekulativa orsaker utan nytta: välj högst de mest relevanta alternativa förklaringarna och säg vilket underlag som skulle skilja dem åt. En kort positiv tidsserie visar en förbättring under perioden, inte att förbättringen är varaktig. Upprepa inte samma lucka i både tolkning och saknas.\n" +
     "- Bevara frågans begrepp: operativt kassaflöde är inte fritt kassaflöde eller förändring i kassan. Normala anläggningsinvesteringar hör till investeringskassaflödet. Ökad rörelsekapitalbindning kan samexistera med skalfördelar. Sjunkande avkastning på nya investeringar kan fortfarande överstiga kapitalkostnaden; anta inte att gränsen har passerats. Att närma sig kapitalkostnaden ovanifrån är inte värdeförstöring: över gränsen positivt ekonomiskt mervärde, lika neutralt, under negativt.\n" +
     "- För en avgränsad resonemangsfråga: ge din bedömning först, pröva de viktigaste alternativen och prioritera nästa kontroll. Normalt räcker ett kort stycke per del. Använd inte breda inledningar eller en avslutning som upprepar delarna.\n" +
+    "- Kontrollera dina premisser: utdelning betyder inte att lönsamma projekt saknas, hög historisk ROIC bevisar inte hög avkastning på nästa investering, och frånvaro i underlaget bevisar inte frånvaro i bolaget. Om en slutsats kräver en extra förutsättning, säg vilken och formulera sambandet villkorat.\n" +
   "- Skilj stigande nivå från accelererande tillväxt. Lika stora absoluta ökningar innebär inte att tillväxten accelererar. När du beskriver begränsad historik räcker 'perioderna i underlaget'; undvik räknade tidslängder i fri text.\n" +
   "- Hjalp med fundamental aktieanalys, bolag i underlaget, anvandarens innehav och kursens metoder. Breda analysfragor och samband mellan rapporter ingar. Avboj amnen utanfor detta.\n" +
   "- Besvara det anvandaren faktiskt vill undersoka. Utveckla bade mojligheter och risker nar kallorna ger stod, utan att tvinga fram lika manga argument pa varje sida.\n" +
@@ -256,7 +258,7 @@ export const SYSTEM_VERKTYG =
   "- las_mer: fler stycken ur det du redan har, sokta pa andra ord. Anvand den nar fragan galler nagot som borde sta i en rapport men inte kom med i utdragen.\n" +
   "- hamta_historik: hamtar bolagets egna dokument fran en aldre period, direkt fran kallan. Anvand den nar fragan galler ett ar du inte har.\n" +
   "- las_lektion: hela texten till en lektion ur registret ovan. Anvand den nar fragan galler metod.\n" +
-  "- berakna: bestall summa, differens, tillvaxt, andel eller per_manad med post-id:n. Anvand befintlig beraknad post om den redan besvarar fragan. Efter hamtning kan du rakna med de nya posterna.\n" +
+  "- berakna: bestall summa, differens, tillvaxt, andel, per_manad eller utveckling med post-id:n. Utveckling verifierar fördubbling, halvering och acceleration för en positiv serie angränsande perioder och skriver exakt omfattning. Visa posten, upprepa inte relationerna i prosa. Anvand befintlig beraknad post om den redan besvarar fragan. Efter hamtning kan du rakna med de nya posterna.\n" +
   "- Hamta hellre en gang for mycket an svara att du inte vet. Men hamta inte i blindo: sag for dig sjalv vad du letar efter forst.\n" +
   "- Nya postreferenser kommer i verktygsresultaten. Aterge aldrig egna faktatal. Kursmaterial far inte bli bolagsfakta.\n";
 
@@ -268,7 +270,7 @@ export function verktygsDefinitioner(djup = false) {
       input_schema: {
         type: "object", additionalProperties: false,
         properties: {
-          operation: {type: "string", enum: ["summa", "differens", "tillvaxt", "andel", "per_manad"]},
+          operation: {type: "string", enum: ["summa", "differens", "tillvaxt", "andel", "per_manad", "utveckling"]},
           indata: {type: "array", minItems: 1, maxItems: 16, items: {type: "string"}},
         },
         required: ["operation", "indata"],
@@ -648,13 +650,13 @@ async function stryp(kv, id) {
    "svarade inte i tid", vilket ledde fel i ett halvtimmes felsokande: modellen
    svarade pa 276 ms, med att kontot var slut pa krediter. Ett fel som pekar at
    fel hall ar samre an inget fel alls. */
-async function anropa(apiKey, kropp, tackning) {
+async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
   if (tackning) {
     if ((tackning.modellanrop || 0) >= budgetFor(tackning.djup).modellanrop || Date.now() >= tackning.deadline) return {fel:'budget',status:502,meddelande:'Anrops- eller tidsbudgeten ar slut.'};
     tackning.modellanrop = (tackning.modellanrop || 0) + 1;
   }
   const ctrl = new AbortController();
-  const klocka = setTimeout(() => ctrl.abort(), Math.max(1,Math.min(TIMEOUT,(tackning?.deadline || Date.now()+TIMEOUT)-Date.now())));
+  const klocka = setTimeout(() => ctrl.abort(), Math.max(1,Math.min(TIMEOUT,timeout,(tackning?.deadline || Date.now()+TIMEOUT)-Date.now())));
   try {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -969,7 +971,7 @@ export async function onRequestPost(context) {
   }
   if (svar.fel) return json({ error: svar.meddelande }, svar.status);
   /* data kommer fran verktyget, text ar reserven. Bada provas likadant. */
-  const kontrollerat = lasFaktasvar(svar.data !== undefined ? svar.data : svar.text, register);
+  let kontrollerat = lasFaktasvar(svar.data !== undefined ? svar.data : svar.text, register);
   /* TVA SORTERS NEJ, och de betyder helt olika saker for den som last fragan.
 
      Ett mekaniskt nej ar VART fel: modellen visste vad den ville saga men skrev
@@ -983,7 +985,7 @@ export async function onRequestPost(context) {
      Modellens ratext visas aldrig, oavsett vilket. Ett svar som inte holl ar
      inte battre for att lasaren far se det. */
   const MEKANISKT = new Set(["format", "postformat", "blocktyp", "prosaformat",
-    "fri_uppgift", "tolkningsstod", "referens", "avklippt"]);
+    "fri_uppgift", "relation", "tolkningsstod", "referens", "avklippt"]);
   /* Granskaren maste se INNEHALLET, inte bara etiketterna.
 
      Nar sammanfattningen bara bar id, matt, period och varde gick en av dess
@@ -1032,6 +1034,11 @@ export async function onRequestPost(context) {
   });
   if (!kontrollerat.ok) return blockera(kontrollerat.orsak);
   if (svar.stopp === "max_tokens") return blockera("avklippt");
+  let raw = svar.data !== undefined ? svar.data : JSON.parse(svar.text);
+  const redigerat = await redigeraSvar(raw,register,tackning,question,
+    (kropp,timeout)=>anropa(apiKey,kropp,tackning,timeout));
+  raw=redigerat.raw;
+  kontrollerat=redigerat.kontrollerat;
 
   // Prosans innebord bevisas inte av korrekta referenser. En separat kontroll
   // kan stoppa ogrundade fakta, fel kategorisering och motsagelser.
@@ -1066,6 +1073,7 @@ export async function onRequestPost(context) {
            anvandarens fraga och ett innehav. */
         { role: "user", content: JSON.stringify({
           fraga: question, svar: kontrollerat.block, tackning,
+          ...(redigerat.andrat ? {original:redigerat.original} : {}),
           samtal: samtal.slice(-6).map(t=>({fraga:t.fraga,block:t.block.filter(b=>['tolkning','saknas'].includes(b.typ))})),
           tillgangligt: granskarunderlag(register.poster()),
         }) },
@@ -1083,7 +1091,6 @@ export async function onRequestPost(context) {
   const anvanda = kontrollerat.referenser.map(id => register.get(id));
   const kallor = [...new Map(kontrollerat.block.flatMap(b => b.kallor)
     .map(k => [JSON.stringify([k.url, k.citat]), k])).values()];
-  const raw = svar.data !== undefined ? svar.data : JSON.parse(svar.text);
   const aktuellRouting = {bolag:(routing.bolag || []).map(h=>({id:h.id,name:h.name,ticker:h.ticker})),period:period || periodUrPoster(anvanda)};
   const trad = await skrivTrad([...turer,skapaTur(question,raw.block,register,aktuellRouting)],user?.id,tradSecret);
   return json({ answer: kontrollerat.answer, block: kontrollerat.block,

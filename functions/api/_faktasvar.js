@@ -15,6 +15,11 @@ Varje block har exakt ett av dessa format:
 {"typ":"tolkning","text":"Forsiktig tolkning utan tal.","stod":["id ur registret"]}
 {"typ":"saknas","text":"Vad som saknas for att svara, utan tal."}
 Postblock far aldrig ha text, rubrik, varde, bolag, enhet eller andra falt.
+Fördubbling, halvering och acceleration i en periodserie ska visas med en
+beräknad utvecklingspost: anropa berakna med operation utveckling och seriens
+post-id:n. Servern skriver vilka perioder relationen gäller. Skriv inte dessa
+kvantifierade relationer själv i prosa, inte heller som ett förnekande.
+Generell metod kan beskrivas som att jämföra procentuella förändringar.
 Servern skriver hela uppgiften med bolag, matt, period, tecken och enhet.
 Tal och utskrivna belopp visas bara genom postblock. Ett lektionsnummer far du
 skriva i text, men bara for en lektion du faktiskt fatt i FAKTAREGISTER.
@@ -110,6 +115,21 @@ svaret for att servern avslog en berakning. Kontrollera att forklaringen aterger
 avslagets verkliga skal, utan att hitta pa en saknad bolagsuppgift eller ett driftfel.
 
 Kontrollera varje prosablock och samspelet med faktablocken:
+PREMISSKONTROLL: Skilj vad frågan eller källan faktiskt anger från det svaret
+lägger till. En rimlig förklaring är inte en given förutsättning. Pröva om
+slutsatsen skulle kunna vara falsk trots att samtliga givna uppgifter stämmer.
+I så fall måste den vara villkorad, inte presenteras som säker.
+- Utdelning visar inte i sig att bolaget saknar lönsamma investeringsprojekt.
+- Hög redovisad ROIC visar inte i sig att nya investeringar tjänar över WACC.
+- En uppgift som saknas i underlaget är inte bevis för att fenomenet saknas.
+- Svagare operativt kassaflöde bevisar inte att en marginalförbättring är falsk.
+Tillåt de motsvarande uttryckligt villkorade resonemangen. Stoppa inte ett
+resonemang bara för att frågan gäller fiktiva bolag eller saknar siffror.
+Fältet original finns bara efter redigering och är INTE en källa till fakta.
+Kontrollera att svar bevarar originalets viktiga villkor, negationer, antaganden
+och osäkerheter. Kortning får inte göra en möjlighet till säker orsak, vända
+innebörden eller dölja en relevant lucka. Ta inte bort krav på belägg för att
+originalet också innehöll samma fel. Upprepningar och sidospår får tas bort.
 Kontrollera aven att anvanda berakningar ar meningsfulla for fragan och
 perioden. Aritmetiken utfors i kod; kontrollera tolkningen och antagandena.
 Kallstodda positiva tolkningar ar lika tillatna som negativa. Ett villkorat
@@ -314,6 +334,7 @@ function renderaPost(p) {
   if (Number.isFinite(p.varde)) {
     text = [p.bolag, p.matt, p.period].filter(Boolean).join(', ') + ': ' +
       (p.typ === 'beraknat' ? formateraTal(p.varde, 2) : String(p.varde).replace('.', ',')) + ' ' + p.enhet + '.';
+    if (p.utsaga) text += ' ' + p.utsaga;
     if (p.formel) text += '\nSå räknades det: ' + p.formel;
     if (p.normalisering) text += '\nEnheter i beräkningen: ' + p.normalisering;
     if (p.antagande) text += '\nFörutsättning: ' + p.antagande;
@@ -389,6 +410,9 @@ export function lasFaktasvar(raw, register) {
         return nej('prosaformat', iBlock(b.typ) + ' hade fel falt. Ett tolkningsblock har typ, text och stod. Metod och saknas har bara typ och text.');
       }
       const funnet = talIProsa(b.text, lektionsnummer);
+      const relation = String(b.text || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+        .match(/\b(?:fordubbl\p{L}*|halver\p{L}*|acceler\p{L}*|dubbelt\s+sa|halften\s+(?:av|sa))\b/u);
+      if (relation) return nej('relation','Kvantifierade relationer skrivs av servern. Använd berakna med operation utveckling och de relevanta periodernas post-id:n. Visa resultatposten; skriv resten utan orden för fördubbling, halvering eller acceleration. Finns inga operander, förklara metoden utan ett sådant påstående.');
       if (funnet) {
         return nej('fri_uppgift', iBlock(b.typ) + ' innehaller ' + funnet + '. Fri text far inte bara tal. Ta bort uppgiften eller visa den som ett postblock i stallet, och skriv meningen utan den.');
       }

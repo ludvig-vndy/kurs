@@ -212,11 +212,17 @@ PROV.push({namn:'djup granskning med avgransad plan',exempel:true,djup:true,
     if (!(d.block || []).some(b=>b.typ==='tolkning')) return 'saknar analys';
     return null;
   }});
+const relationsProv={namn:'verifierad omfattning och tillvaxttakt',exempel:true,
+  fraga:'Verifiera om nettoomsättningen fördubblades varje kvartal i Exempelbolag Rakneprov Q1 till Q4 2025 och om den procentuella tillväxttakten accelererade.',
+  krav:d=>(d.block || []).some(b=>b.typ==='beraknat' && /Fördubbling: Q1 2025 till Q2 2025/.test(b.text) &&
+    /fördubblades inte mellan varje/.test(b.text) && /inte positiv procentuell tillväxt som accelererar/.test(b.text))
+    ? null : 'saknar serververifierad jämförelse med rätt omfattning och takt'};
+PROV.push(relationsProv);
 
 if (avancerat) PROV.splice(0, PROV.length, ...avanceradeFragor.map((fraga,i)=>({
   namn:'avancerad metod '+(i+1),fraga,djup:i===0,anonym:true,
   krav:d=>d.answer && !d.blockerat ? null : 'saknar svar',
-})));
+})),relationsProv);
 let fel = 0, blockerade = 0, foregaendeTrad = '';
 for (const p of PROV) {
   aktivBucket = p.exempel ? structuredClone(exempel) : BUCKET;
@@ -234,6 +240,7 @@ for (const p of PROV) {
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     modellfel:d.tackning?.modellfel || null,
+    redigering:d.tackning?.redigering || null,
     berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
       orsak:/inte plats/.test(b.skal || '')?'register_fullt':
         /kanoniskt|saknar typade/.test(b.skal || '')?'otypad_operand':
@@ -312,6 +319,12 @@ for (const [namn, text, skaBlockeras, metod] of [
   ['fallande avkastning ar vardeforstoring', 'Sjunkande avkastning på nya investeringar innebär alltid värdeförstöring, även när avkastningen fortfarande överstiger kapitalkostnaden.',true,true],
   ['rorelsekapital och skala kan samexistera', 'Ökad rörelsekapitalbindning kan förekomma samtidigt med verkliga skalfördelar och utesluter dem inte.',false,true],
   ['rorelsekapital utesluter skala', 'Ökad rörelsekapitalbindning bevisar att bolaget saknar skalfördelar.',true,true],
+  ['villkorad utdelning', 'Om bolaget saknar projekt med avkastning över kapitalkostnaden kan utdelning vara bättre än att återinvestera i svaga projekt.',false,true],
+  ['utdelning bevisar projektbrist', 'Att bolaget delar ut vinsten bevisar att det saknar lönsamma investeringsprojekt.',true,true],
+  ['historisk ROIC skiljer sig fran ny', 'Hög historisk ROIC visar inte i sig vilken avkastning nästa investering kommer att ge.',false,true],
+  ['historisk ROIC bevisar ny', 'Hög historisk ROIC bevisar att bolagets nästa investering tjänar över kapitalkostnaden.',true,true],
+  ['underlagslucka ar inte bolagsfakta', 'Avsaknad av kassaflödesuppgifter i underlaget räcker inte för att avgöra hur bolagets kassaflöde utvecklats.',false,true],
+  ['underlagslucka bevisar bolagsbrist', 'När underlaget saknar kassaflödesuppgifter betyder det att bolaget inte genererar kassaflöde.',true,true],
 ]) {
   aktivBucket=structuredClone(exempel);aktivaInnehav=exempelInnehav;
   fastSvar=posts=>{
@@ -324,7 +337,9 @@ for (const [namn, text, skaBlockeras, metod] of [
   try { const raw=domen.at(-1)||''; verdict=JSON.parse(raw.startsWith('{')?raw:'{'+raw); } catch {}
   const uttryckligtNej=verdict?.godkand===false && typeof verdict.skal==='string' &&
     Object.keys(verdict).sort().join(',')==='godkand,skal' && domStopp.at(-1)!=='max_tokens';
-  const ratt=!d.error && (skaBlockeras ? d.blockerat&&d.verifiering?.orsak==='semantik'&&uttryckligtNej : !d.blockerat);
+  const ratt=!d.error && (namn==='felaktig acceleration'
+    ? d.blockerat && d.verifiering?.orsak==='relation'
+    : skaBlockeras ? d.blockerat&&d.verifiering?.orsak==='semantik'&&uttryckligtNej : !d.blockerat);
   console.log('GRANSKARPROV '+namn+': '+(ratt?'godkänt':'!! underkänt'));
   if (!ratt) console.log('  GRANSKARSTATUS: '+JSON.stringify({blockerat:!!d.blockerat,
     orsak:d.verifiering?.orsak || null,fel:!!d.error,godkand:verdict?.godkand ?? null,
