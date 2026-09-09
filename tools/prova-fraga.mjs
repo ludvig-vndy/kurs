@@ -350,7 +350,7 @@ for (const [namn, text, skaBlockeras, metod] of [
   ['betalning lyfter marginal', 'Uppskjutna leverantörsbetalningar höjer rörelsemarginalen och sänker periodens operativa kassaflöde.',true,true],
   ['utdelning tillater investering', 'Att nästan hela vinsten delas ut utesluter inte nyinvesteringar.',false,true],
   ['utdelning utesluter investering', 'Ett bolag som delar ut nästan hela vinsten får inget tillskott från nyinvesteringar.',true,true],
-  ['ROE och skuld', 'Skuldsättning kan höja ROE utan att den underliggande rörelsen förbättras. ROIC mäter avkastning på både eget och lånat rörelsekapital.',false,true],
+  ['ROE och skuld', 'Skuldsättning kan höja ROE utan att den underliggande rörelsen förbättras. ROIC mäter avkastning på investerat kapital i rörelsen, finansierat med både eget kapital och skuld.',false,true],
   ['ROIC och skuld', 'En hög ROIC kan vara lånad genom höga skulder i stället för intjänad, eftersom skuld krymper kapitalbasen i ROIC.',true,true],
   ['utdelning utan garanti', 'Hög utdelning visar inte att framtida avkastning är känd eller pålitlig. Aktieägarens avkastning beror också på priset som betalas.',false,true],
   ['utdelning ger känd avkastning', 'Utdelningsbolaget ger en känd och pålitlig framtida avkastning, ungefär lika med dess nuvarande ROIC, förutsatt att ROIC håller i sig.',true,true],
