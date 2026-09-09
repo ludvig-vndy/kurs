@@ -36,6 +36,20 @@ test('kortningen får samma prosakontrakt som den valideras mot',async()=>{
   assert.ok(skickat.system.includes(SVAR_KONTRAKT),'editorn saknar svarsgeneratorns kontrakt');
   assert.equal(t.redigering.status,'kortat');
 });
+
+test('kortning ser redan lästa lektioner som hänvisas till i metodtext',async()=>{
+  const r=skapaFaktaregister();
+  r.synka({lektioner:[{id:'5.1',titel:'Marginaler',text:'Kursens metod.'},{id:'7.2',titel:'Kapitalallokering',text:'En annan metod.'}]});
+  const original=raw(long.block[0].text+' Se lektion 5.1.');
+  assert.ok(lasFaktasvar(original,r).ok);
+  let data;
+  const result=await redigeraSvar(original,r,{modellanrop:0,deadline:Date.now()+90000},'fråga',async kropp=>{
+    data=JSON.parse(kropp.messages[0].content);
+    return {data:raw('Kontrollera underlaget. Se lektion 5.1.'),stopp:'tool_use'};
+  });
+  assert.deepEqual(data.poster.filter(p=>p.typ==='kurs').map(p=>p.lektion),['5.1']);
+  assert.ok(result.andrat);
+});
 test('kortning får inte tappa källreferenser, faktaposter eller alla reservationer',()=>{
   const r=skapaFaktaregister();
   r.synka({question:'Ett antagande om bolaget.',lektioner:[],holdings:[],teser:[],arkiv:[],utdrag:[]});

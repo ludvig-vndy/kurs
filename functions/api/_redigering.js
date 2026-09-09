@@ -60,13 +60,19 @@ export async function redigeraSvar(raw,register,tackning,fraga,call) {
     return unchanged;
   }
   tackning.redigering={status:'forsokt',ordFore:antal(original)};
+  // Metodblock kan hänvisa till en läst lektion utan postblock eller stod.
+  // Skicka även just dessa kursposter så editorn känner till giltiga hänvisningar.
+  const hanvisningar=new Set(original.prosa.flatMap(b=>b.text.match(/\b\d{1,2}\.\d{1,2}\b/g) || []));
+  const anvanda=new Set(original.referenser);
+  const poster=register.poster().filter(p=>anvanda.has(p.id) ||
+    (p.typ==='kurs' && hanvisningar.has(p.lektion)));
   let result;
   try {
     result=await call({model:'claude-sonnet-5',max_tokens:4096,output_config:{effort:'medium'},
       system:REDIGERA_SYSTEM + SVAR_KONTRAKT,
       messages:[{role:'user',content:JSON.stringify({fraga,djup:!!tackning.djup,original:raw,
         // Bara använda poster behövs; editorn får inte söka nya belägg.
-        poster:original.referenser.map(id=>register.get(id))})}],
+        poster})}],
       tools:[SVARSVERKTYG],tool_choice:{type:'tool',name:'svara'},
     },15000);
   } catch { result={fel:'nat'}; }
