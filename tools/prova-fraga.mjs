@@ -70,7 +70,7 @@ const DATA = {
    Modellens RATEXT sparas ocksa. Blockerar grinden ett svar ser man bara vilka
    tal som foll, aldrig meningen de stod i, och da gar det inte att avgora om
    grinden hade ratt eller ar for strang. */
-const ratext = [], domen = [], domStopp = [];
+const ratext = [], domen = [], domStopp = [], apiAnrop = [];
 let fastSvar = null;
 const riktigFetch = globalThis.fetch;
 globalThis.fetch = async (url, init) => {
@@ -108,6 +108,7 @@ globalThis.fetch = async (url, init) => {
       const posts = JSON.parse(requestBody.system.slice(requestBody.system.lastIndexOf(mark)+mark.length).split('\nRÄTTNINGSVARV:')[0]);
       return ok({content:[{type:'tool_use',id:'prov_svar',name:'svara',input:fastSvar(posts)}],stop_reason:'tool_use'});
     }
+    const apiStart=Date.now();
     const r = await riktigFetch(url, init);
     if (!r.ok) {
       if (r.status === 400) {
@@ -120,6 +121,12 @@ globalThis.fetch = async (url, init) => {
       return r;
     }
     const body = await r.json();
+    apiAnrop.push({modell:body.model || requestBody.model,
+      moment:requestBody.system.startsWith('Du granskar ett svar')?'granskning':
+        requestBody.system.startsWith('Du redigerar ett svar')?'kortning':'svar',
+      ms:Date.now()-apiStart,inputTokens:body.usage?.input_tokens,outputTokens:body.usage?.output_tokens,
+      cacheReadTokens:body.usage?.cache_read_input_tokens || 0,
+      cacheWriteTokens:body.usage?.cache_creation_input_tokens || 0});
     /* Svaret kommer numera som ett verktygsanrop, inte som text. Fangades bara
        texten sag man ingenting alls nar prosagrinden fallde ett block, och da
        gar det inte att avgora om grinden hade ratt eller ar for strang. */
@@ -154,6 +161,7 @@ async function fraga(text, options = {}) {
   ratext.length = 0;
   domen.length = 0;
   domStopp.length = 0;
+  apiAnrop.length = 0;
   const r = await onRequestPost({ request, env: ENV });
   const d = await r.json();
   return { status: r.status, ms: Date.now() - t0, ...d };
@@ -264,6 +272,7 @@ for (const p of PROV) {
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     modellfel:d.tackning?.modellfel || null,
     anropstider:d.tackning?.anropstider || [],
+    apiAnrop,
     redigering:d.tackning?.redigering || null,
     berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
       orsak:/inte plats/.test(b.skal || '')?'register_fullt':
