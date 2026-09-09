@@ -249,6 +249,7 @@ for (const p of PROV) {
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     modellfel:d.tackning?.modellfel || null,
+    anropstider:d.tackning?.anropstider || [],
     redigering:d.tackning?.redigering || null,
     berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
       orsak:/inte plats/.test(b.skal || '')?'register_fullt':

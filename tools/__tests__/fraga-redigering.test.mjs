@@ -18,6 +18,13 @@ test('kortare giltig prosa kan väljas men egna tal och längre text avslås',()
   assert.equal(valjRedigering(long,raw('Kassan är 12 MSEK.'),r),null);
   assert.equal(valjRedigering(raw('Kort text.'),long,r),null);
 });
+
+test('avvisad kortning anger fast orsakskod utan svarstext',async()=>{
+  const r=skapaFaktaregister(),t={djup:false,modellanrop:0,deadline:Date.now()+90000};
+  await redigeraSvar(long,r,t,'fråga',async()=>({data:raw('Kassan är 12 MSEK.'),stopp:'tool_use'}));
+  assert.equal(t.redigering.orsak,'fri_uppgift');
+  assert.ok(!JSON.stringify(t.redigering).includes('Kassan'));
+});
 test('kortning får inte tappa källreferenser, faktaposter eller alla reservationer',()=>{
   const r=skapaFaktaregister();
   r.synka({question:'Ett antagande om bolaget.',lektioner:[],holdings:[],teser:[],arkiv:[],utdrag:[]});

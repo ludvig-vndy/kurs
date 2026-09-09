@@ -681,6 +681,9 @@ async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
     tackning.modellanrop = (tackning.modellanrop || 0) + 1;
   }
   const ctrl = new AbortController();
+  const anropsstart=Date.now();
+  const anropsmatning={modell:kropp.model,moment:kropp.system?.startsWith('Du granskar ett svar')?'granskning':
+    kropp.system?.startsWith('Du redigerar ett svar')?'kortning':'svar',ms:0,utfall:'nat'};
   const avbryt=()=>ctrl.abort();
   signal?.addEventListener('abort',avbryt,{once:true});
   const klocka = setTimeout(() => ctrl.abort(), Math.max(1,Math.min(TIMEOUT,timeout,(tackning?.deadline || Date.now()+TIMEOUT)-Date.now())));
@@ -696,6 +699,7 @@ async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
       signal: ctrl.signal,
     });
     if (!r.ok) {
+      anropsmatning.utfall='http_'+r.status;
       const d = await r.json().catch(() => ({}));
       const m = (d && d.error && d.error.message) || "";
       // Slut pa krediter ar ett driftfel hos oss, inte ett fel anvandaren gjort.
@@ -709,6 +713,8 @@ async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
       return { fel: "http", status: 502, meddelande: "Modellen svarade med ett fel (" + r.status + ")." };
     }
     const d = await r.json();
+    anropsmatning.utfall=d.stop_reason || 'ok';
+    anropsmatning.outputTokens=d.usage?.output_tokens;
     // Blocken och stop_reason behovs for verktygsloopen; text for allt annat.
     const innehall = d.content || [];
     const svaret = innehall.find((b) => b && b.type === "tool_use" && b.name === "svara");
@@ -719,11 +725,14 @@ async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
       ...(svaret ? { data: svaret.input } : {}),
     };
   } catch (e) {
+    anropsmatning.utfall=e?.name==='AbortError'?'avbrutet':'nat';
     const avbruten = e && e.name === "AbortError";
     return avbruten
       ? { fel: "timeout", status: 504, meddelande: "Det tog for lang tid. Skicka fragan igen." }
       : { fel: "nat", status: 502, meddelande: "Kunde inte na modellen." };
   } finally {
+    anropsmatning.ms=Date.now()-anropsstart;
+    if(tackning)(tackning.anropstider ||= []).push(anropsmatning);
     clearTimeout(klocka);
     signal?.removeEventListener('abort',avbryt);
   }

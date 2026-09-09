@@ -22,16 +22,19 @@ export function kortningsbehov(d, djup) {
   return false;
 }
 
-export function valjRedigering(original, proposal, register) {
+export function valjRedigering(original, proposal, register,diagnostik={}) {
+  const nej=orsak=>{diagnostik.orsak=orsak;return null;};
   const before=lasFaktasvar(original,register), after=lasFaktasvar(proposal,register);
-  if(!before.ok || !after.ok || antal(after)>=antal(before)) return null;
+  if(!before.ok)return nej('original');
+  if(!after.ok)return nej(after.orsak);
+  if(antal(after)>=antal(before))return nej('inte_kortare');
   // Båda formerna är redan schemavaliderade. JSON-nycklarnas ordning har
   // ingen betydelse; posternas id, antal och inbördes ordning har det.
-  if(!lika(original.block.filter(b=>b.typ==='post').map(b=>b.id),proposal.block.filter(b=>b.typ==='post').map(b=>b.id))) return null;
-  if(!lika(stod(original),stod(proposal))) return null;
+  if(!lika(original.block.filter(b=>b.typ==='post').map(b=>b.id),proposal.block.filter(b=>b.typ==='post').map(b=>b.id))) return nej('andrade_poster');
+  if(!lika(stod(original),stod(proposal))) return nej('andrat_stod');
   const types=new Set(original.block.map(b=>b.typ));
-  if(proposal.block.some(b=>!types.has(b.typ))) return null;
-  if(types.has('saknas') && !proposal.block.some(b=>b.typ==='saknas')) return null;
+  if(proposal.block.some(b=>!types.has(b.typ))) return nej('ny_blocktyp');
+  if(types.has('saknas') && !proposal.block.some(b=>b.typ==='saknas')) return nej('saknas_borttaget');
   return {raw:proposal,kontrollerat:after};
 }
 
@@ -72,7 +75,7 @@ export async function redigeraSvar(raw,register,tackning,fraga,call) {
   }
   let proposal=result.data;
   if(!proposal) { try { proposal=JSON.parse(result.text); } catch {} }
-  const accepted=valjRedigering(raw,proposal,register);
+  const accepted=valjRedigering(raw,proposal,register,tackning.redigering);
   if(!accepted) { tackning.redigering.status='avvisad';return unchanged; }
   tackning.redigering={status:'kortat',ordFore:antal(original),ordEfter:antal(accepted.kontrollerat)};
   return {...accepted,andrat:true,original:original.block};
