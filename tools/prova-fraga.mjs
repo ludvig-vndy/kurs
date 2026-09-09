@@ -192,6 +192,18 @@ for (const p of PROV) {
   console.log(p.namn);
   console.log('FRÅGA: ' + p.fraga);
   const d = await fraga(p.fraga);
+  // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
+  console.log('DIAGNOSTIK: ' + JSON.stringify({
+    berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
+      orsak:/refererade poster/.test(b.skal || '')?'okand_referens':
+        /Beställningen/.test(b.skal || '')?'bestallningsformat':
+        /period|jämför|summer/.test(b.skal || '')?'jamforbarhet':
+        b.ok?'godkand':'annat_avslag'})),
+    resultat:(d.block || []).filter(b=>b.typ==='beraknat').map(b=>({
+      direktTolkat:(d.block || []).some(t=>t.typ==='tolkning' && t.stod?.includes(b.post)),
+      allaIndataTolkade:(b.indata || []).every(id=>(d.block || []).some(t=>t.typ==='tolkning' && t.stod?.includes(id))),
+    })),
+  }));
 
   if (d.error) {
     console.log('FEL (' + d.status + '): ' + d.error);
