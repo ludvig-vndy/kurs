@@ -61,6 +61,11 @@ function anrop(question, env) {
 const ENV = { ANTHROPIC_API_KEY: 'k', SUPABASE_SECRET_KEY: 's', SUPABASE_URL: 'https://sb.test' };
 
 /* ---------- valet ---------- */
+test('kursindex ger inte tillstand att citera olasta lektionsnummer', () => {
+  const t=kursText(valjLektioner('vad är ROIC'));
+  assert.match(t,/bara.*FAKTAREGISTER/i);
+  assert.doesNotMatch(t,/BARA till ett id som star i listan ovan/);
+});
 
 test('en metodfraga hittar sin lektion', () => {
   const ids = (f) => valjLektioner(f).map((l) => l.id);

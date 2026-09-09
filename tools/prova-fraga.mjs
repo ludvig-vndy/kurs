@@ -233,6 +233,7 @@ for (const p of PROV) {
   foregaendeTrad = !d.blockerat && !d.error ? d.trad || '' : '';
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
+    modellfel:d.tackning?.modellfel || null,
     berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
       orsak:/inte plats/.test(b.skal || '')?'register_fullt':
         /kanoniskt|saknar typade/.test(b.skal || '')?'otypad_operand':

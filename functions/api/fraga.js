@@ -237,7 +237,7 @@ export function valjLektioner(fraga, max = 2) {
 export function kursText(lektioner) {
   const valda = lektioner || [];
   let ut = "\n\nKURSENS LEKTIONER, alla som finns:\n" + INDEX +
-    "\n- Hanvisa garna till en lektion, men BARA till ett id som star i listan ovan. Hitta aldrig pa ett lektionsnummer och gissa aldrig en titel.\n";
+    "\n- Listan är en sökkatalog, inte läst källmaterial. I svaret får du bara namnge lektionsnummer som finns som kursposter i FAKTAREGISTER. Hänvisningar inuti kursmaterialet ger inte heller tillstånd att namnge olästa lektioner. Läs lektionen med las_lektion om verktyget finns, annars besvara metodfrågan utan den hänvisningen. Hitta aldrig pa ett lektionsnummer och gissa aldrig en titel.\n";
   if (valda.length) {
     ut += "\nMATERIALET UR DE LEKTIONER SOM LIGGER NARMAST FRAGAN:\n\n" +
       valda.map(function (l) { return l.text; }).join("\n\n---\n\n") +
