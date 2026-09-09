@@ -962,8 +962,8 @@ async function besvaraFraga(context) {
      provar svaret nedan, sa reparationsrundan kan omojligt vara slappare. */
   const provaSvar = (data) => lasFaktasvar(data, register);
   const omfang = djup
-    ? '\nSVARSOMFÅNG: Sikta på högst tvåhundrafemtio ord fri förklaring. Visa centrala belägg separat. Utredningen behöver inte återberättas steg för steg.\n'
-    : '\nSVARSOMFÅNG: Sikta på högst etthundraåttio ord fri förklaring, ofta betydligt mindre. En avgränsad analys får normalt plats i tre korta stycken: bedömning, avgörande alternativ, nästa kontroll. Överskrid bara om användaren ber om utförlighet eller om nödvändiga belägg kräver det.\n';
+    ? '\nSVARSOMFÅNG: Ge först den viktigaste bedömningen, sedan belägg och de alternativ som faktiskt ändrar bedömningen, sist nästa avgörande kontroll. Normalt högst fyra prosablock med högst två meningar i varje, totalt 160–220 ord. Faktaposter visas separat och räknas inte in. Lägg till utrymme bara när frågans delfrågor kräver det, inte för att återberätta din undersökning.\n'
+    : '\nSVARSOMFÅNG: Besvara frågan i normalt högst tre prosablock med högst två meningar i varje, totalt 100–150 ord. Börja med slutsatsen. Ge därefter det avgörande sambandet eller alternativet, och avsluta med den viktigaste konkreta kontrollen. En enkel fråga får gärna ett enda kort block. Faktaposter visas separat och räknas inte in. Lägg till utrymme bara om användaren ber om utförlighet eller fler delfrågor behöver besvaras.\n';
   const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: omfang + system, fraga: question };
   const undersokning = skapaUndersokning();
   const kor = async (namn, input, signal) => {
