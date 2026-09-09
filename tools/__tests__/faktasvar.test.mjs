@@ -20,6 +20,15 @@ function setup() {
 const svar = (...block) => JSON.stringify({ version: 1, block });
 const faktum = (r) => r.poster().find(p => p.typ === 'rapporterat' && p.matt === 'rörelseresultat');
 
+test('dubbelt kodade svenska bokstaver aterstalls fore samma prosagrind', () => {
+  const r=setup();
+  const dom=lasFaktasvar(svar({typ:'metod',text:String.raw`J\u00e4mf\u00f6r motsvarande perioder \u00f6ver flera \u00e5r.`}),r);
+  assert.equal(dom.ok,true,dom.klagan);
+  assert.equal(dom.block[0].text,'Jämför motsvarande perioder över flera år.');
+  for (const text of [String.raw`Kassan \u00e4r \u0033 miljarder kronor.`,String.raw`Kassan \u00e4r tvåhundra miljoner kronor.`,String.raw`Kassan \u00e4r 777 MSEK.`])
+    assert.equal(lasFaktasvar(svar({typ:'metod',text}),r).ok,false,text);
+});
+
 test('reparation namnger saknat stod och ber modellen valja verkliga referenser', () => {
   const r=setup();
   const dom=lasFaktasvar(svar({typ:'tolkning',text:'Det kan tyda pa en svagare utveckling.'}),r);

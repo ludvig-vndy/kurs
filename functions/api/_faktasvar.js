@@ -359,7 +359,14 @@ export function lasFaktasvar(raw, register) {
   const lektionsnummer = (typeof register.poster === 'function' ? register.poster() : [])
     .filter(p => p.typ === 'kurs' && p.lektion).map(p => p.lektion);
   const block = [], prosa = [], referenser = new Set();
-  for (const b of data.block) {
+  for (const rawBlock of data.block) {
+    // Riktiga API:t kan lämna bokstavliga \u00e4 etc i en redan JSON-avkodad
+    // sträng. Återställ endast svenska bokstäver, aldrig siffror, kontroller
+    // eller godtycklig kodning. Hela återställda texten granskas som vanligt.
+    const b = typeof rawBlock?.text === 'string' ? {...rawBlock,
+      text:rawBlock.text.replace(/\\u00(?:e4|e5|f6|c4|c5|d6)/gi,
+        kod=>String.fromCharCode(parseInt(kod.slice(2),16))),
+    } : rawBlock;
     nr++;
     if (b?.typ === 'post') {
       if (!exakt(b, ['typ', 'id']) || typeof b.id !== 'string') {
