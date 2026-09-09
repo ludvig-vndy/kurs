@@ -51,6 +51,14 @@ on:
         description: 'Fryst granskningsprov: gzip/base64 med offentliga eller fiktiva testdata, aldrig nycklar'
         type: string
         default: ''
+      publika_bolag:
+        description: 'Volvo/TRATON: hämta daterade offentliga rapporter, sex frågor, högst 5 USD'
+        type: boolean
+        default: false
+      public_receipt_key:
+        description: 'Publik RSA-nyckel i base64 för krypterade provsvar; aldrig privat nyckel'
+        type: string
+        default: ''
 
 jobs:
   prov:
@@ -74,7 +82,7 @@ jobs:
         with:
           node-version: '22'
       - name: Prova Fragan
-        if: ${{ inputs.fryst_payload == '' }}
+        if: ${{ inputs.fryst_payload == '' && !inputs.publika_bolag }}
         run: |
           set +e
           node tools/prova-fraga.mjs 2>&1 | tee prov.log
@@ -95,7 +103,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
           exit 0
       - name: Fryst granskningsforsok
-        if: ${{ inputs.fryst_payload != '' }}
+        if: ${{ inputs.fryst_payload != '' && !inputs.publika_bolag }}
         run: |
           set +e
           node tools/prova-fraga-granskning.mjs 2>&1 | tee fryst.log
@@ -106,4 +114,16 @@ jobs:
             cat fryst.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+      - name: Installera PDF-lasning for publikt prov
+        if: ${{ inputs.publika_bolag }}
+        run: python -m pip install pypdf==6.14.2
+      - name: Publika bolagsrapporter
+        if: ${{ inputs.publika_bolag }}
+        run: |
+          python tools/fraga-publika-kallor.py "$RUNNER_TEMP/publika-kallor"
+          set +e
+          node tools/prova-fraga-publikt.mjs "$RUNNER_TEMP/publika-kallor/sources.json" 2>&1 | tee publikt.log
+          echo '## Publikt experiment: workflow-status är inte kvalitetsbesked' >> "$GITHUB_STEP_SUMMARY"
+          grep '^PUBLIKT_RESULTAT\|^PUBLIKT_SLUT' publikt.log >> "$GITHUB_STEP_SUMMARY"
           exit 0
