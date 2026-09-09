@@ -245,7 +245,7 @@ for (const p of PROV) {
   const d = await fraga(p.fraga,{djup:!!p.djup,trad:p.foljd ? foregaendeTrad : '',...(p.anonym?{token:''}:{})});
   foregaendeTrad = !d.blockerat && !d.error ? d.trad || '' : '';
   console.log('MÄTNING: '+JSON.stringify({namn:p.namn,ms:d.ms,modellanrop:d.tackning?.modellanrop,
-    reparation:d.tackning?.reparation || 0,blockerat:!!d.blockerat,error:!!d.error}));
+    reparation:d.tackning?.reparation || 0,blockerat:!!d.blockerat,error:!!d.error,tider:d.tackning?.tider}));
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     modellfel:d.tackning?.modellfel || null,

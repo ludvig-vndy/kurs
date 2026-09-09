@@ -14,6 +14,7 @@ import { INDEX, REGISTER, LEKTIONER } from "./_kurskorpus.js";
 import { budgetFor, skapaUndersokning, PLANVERKTYG, SYSTEM_DJUP, giltigPeriod } from './_utredning.js';
 import { lasTrad, skrivTrad, skapaTur, samtalsText, routingUrTrad, periodUrPoster } from './_trad.js';
 import { redigeraSvar } from './_redigering.js';
+import {medStatus,registreraStatus,sattMoment,statusSignal} from './_fraga-status.js';
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 /* Tva modeller, vald efter fragans storlek.
@@ -517,6 +518,13 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
       tackning.verktygsanrop++;
       tackning.verktyg.push(a.name);
       const controller = new AbortController();
+      const requestSignal=statusSignal(tackning);
+      let avbrytVerktyg;
+      const avbrutet=new Promise(resolve=>{
+        avbrytVerktyg=()=>{controller.abort();resolve('Frågan avbröts.');};
+        requestSignal?.addEventListener('abort',avbrytVerktyg,{once:true});
+        if(requestSignal?.aborted)avbrytVerktyg();
+      });
       let timer;
       const kvar = Math.max(1,tackning.deadline-Date.now()-40000);
       const timeout = new Promise(resolve=>{timer=setTimeout(()=>{
@@ -524,9 +532,9 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
         resolve('Tidsbudgeten för fortsatt undersökning är slut. Svara med det verifierade underlaget som redan finns.');
       },kvar);});
       let content;
-      try { content = await Promise.race([kor(a.name,a.input || {},controller.signal),timeout]); }
+      try { content = await Promise.race([kor(a.name,a.input || {},controller.signal),timeout,avbrutet]); }
       catch { content = 'Verktyget kunde inte slutföras. Svara med befintligt underlag.'; }
-      finally { clearTimeout(timer); }
+      finally { clearTimeout(timer);requestSignal?.removeEventListener('abort',avbrytVerktyg); }
       resultat.push({type:'tool_result',tool_use_id:a.id,content});
     }
     if (gravde) tackning.gravvarv++;
@@ -663,11 +671,18 @@ async function stryp(kv, id) {
    svarade pa 276 ms, med att kontot var slut pa krediter. Ett fel som pekar at
    fel hall ar samre an inget fel alls. */
 async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
+  const signal=statusSignal(tackning);
+  if(signal?.aborted)return {fel:'avbruten',status:499,meddelande:'Frågan avbröts.'};
+  sattMoment(tackning,kropp.system?.startsWith('Du granskar ett svar')?'kontrollerar':
+    kropp.system?.startsWith('Du redigerar ett svar')?'kortar':
+      kropp.tool_choice?.name==='planera'?'planerar':'skriver');
   if (tackning) {
     if ((tackning.modellanrop || 0) >= budgetFor(tackning.djup).modellanrop || Date.now() >= tackning.deadline) return {fel:'budget',status:502,meddelande:'Anrops- eller tidsbudgeten ar slut.'};
     tackning.modellanrop = (tackning.modellanrop || 0) + 1;
   }
   const ctrl = new AbortController();
+  const avbryt=()=>ctrl.abort();
+  signal?.addEventListener('abort',avbryt,{once:true});
   const klocka = setTimeout(() => ctrl.abort(), Math.max(1,Math.min(TIMEOUT,timeout,(tackning?.deadline || Date.now()+TIMEOUT)-Date.now())));
   try {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
@@ -710,10 +725,12 @@ async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
       : { fel: "nat", status: 502, meddelande: "Kunde inte na modellen." };
   } finally {
     clearTimeout(klocka);
+    signal?.removeEventListener('abort',avbryt);
   }
 }
 
-export async function onRequestPost(context) {
+export function onRequestPost(context) {return medStatus(context,besvaraFraga);}
+async function besvaraFraga(context) {
   const { request, env } = context;
   const apiKey = env.ANTHROPIC_API_KEY;
   const secret = env.SUPABASE_SECRET_KEY;
@@ -793,6 +810,8 @@ export async function onRequestPost(context) {
     // Vad modellen sjalv bad om under utredningen, och vilka lektioner den fick.
     verktyg: [], lektioner: [],
   };
+  registreraStatus(tackning,context.fragaStatus);
+  sattMoment(tackning,'underlag');
 
   if (!holdings.length) {
     tackning.orsak = "inga innehav uppladdade";
@@ -939,6 +958,7 @@ export async function onRequestPost(context) {
   const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: omfang + system, fraga: question };
   const undersokning = skapaUndersokning();
   const kor = async (namn, input, signal) => {
+    sattMoment(tackning,namn==='berakna'?'beraknar':namn==='planera'?'planerar':'laser');
     if (namn === 'planera') {
       const resultat = undersokning.planera(input);
       tackning.utredning = undersokning.status();
