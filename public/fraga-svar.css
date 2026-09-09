@@ -5,3 +5,12 @@
 .fraga-kalla summary { cursor: pointer; }
 .fraga-kalla blockquote { margin: .6em 0 .8em .5em; padding-left: .8em; border-left: 2px solid currentColor; }
 .fraga-underlag { margin-top: 1.4em; padding-top: .8em; border-top: 1px solid currentColor; font-size: .8em; line-height: 1.6; }
+.fraga-val{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:12px 0;font-family:var(--mono,system-ui);font-size:12px;color:var(--muted,#6e6456)}
+.fraga-val label{display:flex;align-items:center;gap:7px;cursor:pointer}
+.fraga-val input{accent-color:var(--oxblood,#2c5646)}
+.fraga-val button{margin-left:auto;border:1px solid var(--rule,#c7bba6);border-radius:4px;padding:6px 10px;background:transparent;color:inherit;font:inherit;cursor:pointer}
+.fraga-val p{flex-basis:100%;margin:0;font-size:11px}
+.fraga-tidigare{display:block;font-size:11px;color:var(--muted,#6e6456);margin:4px 0}
+.askcard{max-height:calc(100dvh - 180px);overflow-y:auto;overscroll-behavior:contain}
+.askcard .qa+.qa{border-top:1px solid var(--rule,#c7bba6);margin-top:18px;padding-top:18px}
+[aria-busy="true"]{cursor:progress}

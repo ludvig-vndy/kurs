@@ -105,33 +105,52 @@ const KVARTALSORD = [
   [/(?:fjärde kvartalet|fourth quarter|\bQ4\b|bokslutskommuniké|year-end report)/i, 4],
 ];
 
-// "januari-juni 2026" och "January-September 2025": perioden loper fran arets
-// borjan, sa slutmanaden ger bade slutkvartalet och periodens langd.
-const MANADSSLUT = [
-  [/januari\s*[-–till ]{1,6}\s*mars|january\s*[-–to ]{1,6}\s*march/i, 1],
-  [/januari\s*[-–till ]{1,6}\s*juni|january\s*[-–to ]{1,6}\s*june/i, 2],
-  [/januari\s*[-–till ]{1,6}\s*september|january\s*[-–to ]{1,6}\s*september/i, 3],
-  [/januari\s*[-–till ]{1,6}\s*december|january\s*[-–to ]{1,6}\s*december/i, 4],
-];
-
 const MANADER = {
   januari: 1, february: 2, februari: 2, mars: 3, march: 3, april: 4, maj: 5, may: 5,
   juni: 6, june: 6, juli: 7, july: 7, augusti: 8, august: 8, september: 9,
   oktober: 10, october: 10, november: 11, december: 12, january: 1,
 };
+const MANAD = '(?:' + Object.keys(MANADER).join('|') + ')';
+const ARSTOKEN = '20\\d{2}(?:\\s*[/–—-]\\s*(?:20)?\\d{2})?';
 const MANADSSPANN = new RegExp(
-  '(' + Object.keys(MANADER).join('|') + ')\\s*[-–till to]{1,6}\\s*(' +
-  Object.keys(MANADER).join('|') + ')\\s+(20\\d{2})', 'i');
+  `\\b(${MANAD})(?:\\s+(${ARSTOKEN}))?\\s*(?:[-–—]|till|to)\\s*(${MANAD})(?:\\s+(${ARSTOKEN}))?\\b`, 'i');
+// Även ofullständiga/ogiltiga lokala perioder är avsnittsgränser. De får
+// blockera rubrikens period, men får aldrig kompletteras med ett gissat år.
+const KVARTALSTOKEN = '(?:Q\\d+|(?:första|andra|tredje|fjärde) kvartalet|(?:first|second|third|fourth) quarter|(?:bokslutskommuniké|year-end report)(?=\\s+20\\d{2}))';
+const OKAND_PERIOD = `\\b(?:(?:första|andra) halvåret|H\\d+|helår(?:et)?|full year|(?:first|second) half(?: year)?|kvartal\\s+\\d+)(?![a-zåäö\\d])(?:\\s+${ARSTOKEN})?|\\b20\\d{2}-\\d{2}-\\d{2}\\s*[-–—]\\s*20\\d{2}-\\d{2}-\\d{2}\\b`;
+const PERIODTOKEN = new RegExp(`${MANADSSPANN.source}|\\b${KVARTALSTOKEN}(?![a-zåäöé\\d])(?:\\s+(?:för\\s+)?${ARSTOKEN})?|${OKAND_PERIOD}`, 'gi');
+
+// Behåll exakt samma index i källtexten, även med nästlade parenteser.
+function utanParenteser(text) {
+  let djup = 0;
+  return String(text || '').replace(/[\s\S]/g, tecken => {
+    if (tecken === '(') { djup++; return ' '; }
+    if (tecken === ')') { djup = Math.max(0, djup - 1); return ' '; }
+    return djup ? ' ' : tecken;
+  });
+}
+
+function periodToken(token) {
+  if (/\b20\d{2}\s*[/–—-]\s*(?:20)?\d{2}/.test(token)) return null;
+  if (MANADSSPANN.test(token)) return periodUrSpann(token);
+  const ar = token.match(/\b(20\d{2})$/)?.[1];
+  if (!ar) return null;
+  const kvartal = KVARTALSORD.find(([re]) => re.test(token))?.[1];
+  return kvartal ? { ar: Number(ar), kvartal, langd: 1 } : null;
+}
 
 /** Ett manadsspann till { ar, kvartal, langd }, oavsett startmanad.
     "oktober - december 2023" ar ETT kvartal som slutar i Q4, inte helaret. */
 export function periodUrSpann(str) {
   const m = String(str || '').match(MANADSSPANN);
   if (!m) return null;
-  const fran = MANADER[m[1].toLowerCase()], till = MANADER[m[2].toLowerCase()];
-  if (!fran || !till || till < fran) return null;
+  const fran = MANADER[m[1].toLowerCase()], till = MANADER[m[3].toLowerCase()];
+  if (!/^20\d{2}$/.test(m[4] || '') || (m[2] && !/^20\d{2}$/.test(m[2]))) return null;
+  const slutAr = Number(m[4]), startAr = Number(m[2] || m[4]);
+  const manader = (slutAr - startAr) * 12 + till - fran + 1;
+  if (manader <= 0) return null;
   if (fran % 3 !== 1 || till % 3 !== 0) return null;   // inte ett helt kvartalsspann
-  return { ar: Number(m[3]), kvartal: till / 3, langd: (till - fran + 1) / 3 };
+  return { ar: slutAr, kvartal: till / 3, langd: manader / 3 };
 }
 
 /* PERIODEN MASTE LASAS DAR TALET STAR, inte i rubriken.
@@ -147,12 +166,27 @@ export function periodUrSpann(str) {
    ratt kalla, under fel period. Kallgrinden ser ingenting, for talet star ju
    dar. */
 export function periodVidTraff(text, index, rubrik) {
-  const fore = String(text || '').slice(Math.max(0, index - 400), index);
-  // Narmaste rubrik FORE talet vinner, darav sista traffen i fonstret.
+  const fore = utanParenteser(String(text || '').slice(0, index));
+  // Närmaste rubrik FÖRE talet vinner, även i långa avsnitt.
   let bast = null, m;
-  const re = new RegExp(MANADSSPANN.source, 'gi');
-  while ((m = re.exec(fore)) !== null) bast = m[0];
-  return (bast && periodUrSpann(bast)) || periodFor(rubrik, text);
+  const re = new RegExp(PERIODTOKEN.source, 'gi');
+  while ((m = re.exec(fore)) !== null) bast = m;
+  if (bast === null) return periodFor(rubrik);
+  const innan = fore.slice(0, bast.index);
+  const kopieradRubrik = String(rubrik || '').toLowerCase().startsWith(
+    fore.slice(0, bast.index + bast[0].length).trim().toLowerCase());
+  // Ett periodomnämnande mitt i en mening är ingen avsnittsrubrik. När
+  // radbrytningar saknas tillåts även gränsen efter datum eller måttets enhet.
+  // Vid tvetydighet utelämnas måttet; vi återgår inte till en äldre rubrik.
+  const rubrikgrans = !innan.trim() || /[.!?;:\n]\s*$/.test(innan) ||
+    /\b20\d{2}-\d{2}-\d{2}\s*$/.test(innan) ||
+    new RegExp(`\\b${ENHET}\\s*$`, 'i').test(innan) || kopieradRubrik;
+  const efter = fore.slice(bast.index + bast[0].length);
+  // "Q1 2026 väntas ..." är en mening även när den börjar på ny rad.
+  // Ett efterföljande mått får däremot börja med liten bokstav.
+  const fortsattMening = /^[ \t]*[a-zåäö]/.test(efter) &&
+    !METRIKER.some(matt => matt.re.exec(efter)?.index === efter.search(/\S/));
+  return rubrikgrans && !fortsattMening ? periodToken(bast[0]) : null;
 }
 
 /** Period ur en rapportrubrik, och som sista utvag ur brodtextens forsta rader.
@@ -161,14 +195,8 @@ export function periodVidTraff(text, index, rubrik) {
     och da anvands dokumentet inte alls: en siffra utan period ar oanvandbar. */
 export function periodFor(rubrik, text) {
   for (const kalla of [String(rubrik || ''), String(text || '').slice(0, 400)]) {
-    const ar = (kalla.match(/\b(20\d{2})\b/) || [])[1];
-    if (!ar) continue;
-    for (const [re, slut] of MANADSSLUT) {
-      if (re.test(kalla)) return { ar: Number(ar), kvartal: slut, langd: slut };
-    }
-    for (const [re, k] of KVARTALSORD) {
-      if (re.test(kalla)) return { ar: Number(ar), kvartal: k, langd: 1 };
-    }
+    const match = new RegExp(PERIODTOKEN.source, 'gi').exec(utanParenteser(kalla));
+    if (match) return periodToken(match[0]);
   }
   return null;
 }
@@ -214,6 +242,7 @@ export function extraheraNyckeltal(bolagsarkiv) {
      forst till kvarn vann, och det andra bolagets siffra forsvann tyst. En
      fraga far tva bolag i taget, sa laget var inte hypotetiskt. */
   const funna = new Map(); // "bolag|metrik|ar|kvartal|langd" -> post
+  const konflikter = new Set();
 
   // Pass 1: belagda fakta ur rapport-PDF:erna. Egen slinga over hela arkivet, sa
   // att de vinner over regexen aven nar regexdokumentet ligger forst.
@@ -229,7 +258,15 @@ export function extraheraNyckeltal(bolagsarkiv) {
         const norm = normaliseraFakta(f.nu, f.enhet);
         if (!norm) continue;
         const nyckel = JSON.stringify([ark.id || ark.namn, m.id, period.ar, period.kvartal, period.langd]);
-        if (funna.has(nyckel)) continue;
+        if (konflikter.has(nyckel)) continue;
+        const tidigare = funna.get(nyckel);
+        if (tidigare) {
+          if (tidigare.varde !== norm.varde || tidigare.enhet !== norm.enhet) {
+            funna.delete(nyckel);
+            konflikter.add(nyckel);
+          }
+          continue;
+        }
         funna.set(nyckel, {
           metrik: m.id, typ: m.typ,
           ar: period.ar, kvartal: period.kvartal, langd: period.langd,
@@ -248,32 +285,42 @@ export function extraheraNyckeltal(bolagsarkiv) {
   for (const ark of bolagsarkiv) {
     for (const dok of ark.dokument || []) {
       const text = (dok.bitar || []).join(' ');
-      if (!periodFor(dok.rubrik, text)) continue;   // gar perioden inte att avgora alls: hoppa
+      const utanJamforelser = utanParenteser(text);
       for (const m of METRIKER) {
-        const träff = text.match(m.re);
-        if (!träff) continue;
-        // Perioden lases dar talet star, inte i rubriken. Se periodVidTraff.
-        const period = periodVidTraff(text, träff.index, dok.rubrik);
-        if (!period) continue;
-        const varde = tolkaTal(träff[1]);
-        if (varde === null) continue;
-        // Samma skalomrakning som pass 1. Utan den hade KSEK lasts som om det
-        // vore MSEK, och ett bolag som byter skala mellan tva rapporter hade
-        // gett en tusenfaldig "forandring".
-        const norm = normaliseraFakta(varde, träff[2]);
-        if (!norm) continue;
-        const nyckel = JSON.stringify([ark.id || ark.namn, m.id, period.ar, period.kvartal, period.langd]);
-        if (funna.has(nyckel)) continue;
-        funna.set(nyckel, {
-          metrik: m.id, typ: m.typ,
-          ar: period.ar, kvartal: period.kvartal, langd: period.langd,
-          varde: norm.varde, enhet: norm.enhet,
-          rubrik: dok.rubrik, url: dok.url, bolag: ark.namn,
-          bolagId: ark.id || ark.namn,
-          original: { varde, enhet: träff[2] },
-          kalla: { url: dok.url, rubrik: dok.rubrik, datum: dok.datum,
-            citat: text, start: träff.index, slut: träff.index + träff[0].length, typ: 'text' },
-        });
+        for (const träff of text.matchAll(new RegExp(m.re.source, 'gi'))) {
+          if (utanJamforelser[träff.index] === ' ') continue;
+          // Perioden lases dar talet star, inte i rubriken. Se periodVidTraff.
+          const period = periodVidTraff(text, träff.index, dok.rubrik);
+          if (!period) continue;
+          const varde = tolkaTal(träff[1]);
+          if (varde === null) continue;
+          // Samma skalomrakning som pass 1. Utan den hade KSEK lasts som om det
+          // vore MSEK, och ett bolag som byter skala mellan tva rapporter hade
+          // gett en tusenfaldig "forandring".
+          const norm = normaliseraFakta(varde, träff[2]);
+          if (!norm) continue;
+          const nyckel = JSON.stringify([ark.id || ark.namn, m.id, period.ar, period.kvartal, period.langd]);
+          if (konflikter.has(nyckel)) continue;
+          const tidigare = funna.get(nyckel);
+          if (tidigare) {
+            if (tidigare.kalla.typ === 'text' &&
+                (tidigare.varde !== norm.varde || tidigare.enhet !== norm.enhet)) {
+              funna.delete(nyckel);
+              konflikter.add(nyckel);
+            }
+            continue;
+          }
+          funna.set(nyckel, {
+            metrik: m.id, typ: m.typ,
+            ar: period.ar, kvartal: period.kvartal, langd: period.langd,
+            varde: norm.varde, enhet: norm.enhet,
+            rubrik: dok.rubrik, url: dok.url, bolag: ark.namn,
+            bolagId: ark.id || ark.namn,
+            original: { varde, enhet: träff[2] },
+            kalla: { url: dok.url, rubrik: dok.rubrik, datum: dok.datum,
+              citat: text, start: träff.index, slut: träff.index + träff[0].length, typ: 'text' },
+          });
+        }
       }
     }
   }

@@ -307,6 +307,7 @@ function renderaPost(p) {
     text += '”' + p.text + '”';
   }
   return { typ: p.typ, etikett: ETIKETT[p.typ], text, post: p.id,
+    ...(p.tidigare ? {tidigare:true} : {}),
     kallor: kallorFor(p), ...(p.indata ? { indata: p.indata } : {}) };
 }
 

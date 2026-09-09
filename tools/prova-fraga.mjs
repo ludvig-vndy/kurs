@@ -104,10 +104,10 @@ const ENV = {
   DATA,
 };
 
-async function fraga(text) {
+async function fraga(text, options = {}) {
   const request = new Request('https://kurs.test/api/fraga', {
     method: 'POST',
-    body: JSON.stringify({ question: text, token: 'stubbad' }),
+    body: JSON.stringify({ question: text, token: 'stubbad', ...options }),
     headers: { 'Content-Type': 'application/json' },
   });
   const t0 = Date.now();
@@ -138,27 +138,15 @@ const PROV = [
     krav: (d) => (d.answer && d.answer.includes('41 900') ? null : 'talet ur arkivet kom inte med'),
   },
   {
-    /* FRAGAN SOM INTE HAR NAGOT SVAR, och som darfor prover nagot annat.
-
-       Unibap bytte till kalenderar via ett forlangt rakenskapsar juli 2021 till
-       december 2022. Det finns alltsa ingen rapporterad nettoomsattning for
-       kalenderaret 2022, bara kvartal och kumulativa perioder. Ett riktigt svar
-       ar antingen en forklaring av luckan eller en blockering, aldrig ett tal.
-
-       Provet uppstod ur en riktig korning dar modellen visade en Q4-post
-       tillsammans med en text om helaret, och granskaren stoppade det med orden
-       att anvandaren riskerar att lasa Q4-siffran som helaret. Den domen var
-       ratt, och det ar precis det beteendet som ska halla. */
-    namn: 'fraga utan rapporterat svar, far aldrig bli ett hittepatal',
+    // Kalenderåret ska härledas ur fyra kvartal. Ett avslag räcker inte längre
+    // för att provet ska godkännas: extraktionen ska göra källorna användbara.
+    namn: 'kalenderar fran hamtade kvartal trots forlangt rakenskapsar',
     fraga: 'hur stor var Unibaps nettoomsättning helåret 2022?',
-    farBlockeras: true,
     krav: (d) => {
       if (!/sonnet/.test(d.tackning.modell)) return 'gick inte pa den djupa modellen';
-      // Blockerat ar ett giltigt utfall. Svarar den maste svaret saga att
-      // kalenderaret saknas, inte presentera nagot som om det vore helaret.
-      if (d.blockerat) return null;
-      const saknas = (d.block || []).some((b) => b.typ === 'saknas');
-      return saknas ? null : 'svarade pa helaret utan att namna att perioden saknas';
+      const sum=(d.block || []).find(b=>b.typ==='beraknat' && /Unibap/.test(b.text) &&
+        /intäkter|nettoomsättning/i.test(b.text) && /Q1.*Q4.*2022/.test(b.text) && b.indata?.length===4);
+      return sum ? null : 'saknar en kallbunden kalenderarssumma fran fyra kvartal';
     },
   },
 ];
@@ -185,14 +173,28 @@ for (const [namn,fraga,enhet,varde] of [
   return null;
 }});
 
-let fel = 0, blockerade = 0;
+PROV.push({namn:'foljdfraga ateranvander summan utan bolagsnamn',exempel:true,foljd:true,
+  fraga:'Vad blir den summan per månad?',krav:d=>{
+    if (!d.tackning.samtal?.turer) return 'samtalet foljde inte med';
+    return (d.block || []).some(b=>b.typ==='beraknat' && /Exempelbolag Rakneprov/.test(b.text) &&
+      /8,33 MSEK/.test(b.text)) ? null : 'foljdfragan saknar korrekt manadstakt fran tidigare summa';
+  }});
+PROV.push({namn:'djup granskning med avgransad plan',exempel:true,djup:true,
+  fraga:'Granska Exempelbolag Rakneprov 2025. Hur utvecklades omsättning och marginal, vad stöder en positiv tolkning och vad kan underlaget inte avgöra?',krav:d=>{
+    if (!d.tackning.utredning?.length) return 'djupgranskningen saknar undersokningsplan';
+    if (!(d.block || []).some(b=>b.typ==='tolkning')) return 'saknar analys';
+    return null;
+  }});
+
+let fel = 0, blockerade = 0, foregaendeTrad = '';
 for (const p of PROV) {
   aktivBucket = p.exempel ? structuredClone(exempel) : BUCKET;
   aktivaInnehav = p.exempel ? exempelInnehav : HOLDINGS;
   console.log('\n' + '='.repeat(72));
   console.log(p.namn);
   console.log('FRÅGA: ' + p.fraga);
-  const d = await fraga(p.fraga);
+  const d = await fraga(p.fraga,{djup:!!p.djup,trad:p.foljd ? foregaendeTrad : ''});
+  if (!d.blockerat && !d.error) foregaendeTrad = d.trad || '';
   // Endast status och antal, inga nya kalltexter, post-id:n eller modellsvar.
   console.log('DIAGNOSTIK: ' + JSON.stringify({
     berakningar:(d.tackning?.berakningar || []).map(b=>({ok:b.ok,
@@ -245,6 +247,15 @@ for (const p of PROV) {
   const brist = p.krav(d);
   if (brist) {
     console.log('\n  !! ' + brist);
+    fel++;
+  }
+  // Kvalitet separat från sanningsgrinden: stoppa aldrig produktionssvar bara
+  // för att det är långt. Dessa gränser gäller de avgränsade provfrågorna.
+  const prosa=(d.block || []).filter(b=>['metod','tolkning','saknas'].includes(b.typ)).map(b=>b.text).join(' ');
+  const ord=prosa.trim().split(/\s+/).filter(Boolean).length;
+  console.log('  SVARSLÄNGD: '+ord+' ord fri prosa.');
+  if (ord > (p.djup ? 450 : p.foljd ? 100 : 220) || /vill du att jag/i.test(prosa)) {
+    console.log('  !! Svaret är för omständligt för denna provfråga eller skjuter upp beställt arbete.');
     fel++;
   }
 }

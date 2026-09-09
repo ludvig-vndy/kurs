@@ -31,6 +31,14 @@
     if (t.utelamnade?.length) rader.push('Inte undersökta i detta svar: ' + t.utelamnade.join(', ') + '.');
     if (t.modellfall) rader.push('Svaret togs fram med en enklare modell efter ett tekniskt fel.');
     if (t.faktaregister?.begransat) rader.push('Ett begränsat urval av faktaposter fick plats. Avgränsa frågan för att undersöka fler.');
+    if (t.samtal?.begransat) rader.push('Äldre delar av samtalet fick inte plats i underlaget för detta svar.');
+    if (Array.isArray(t.utredning) && t.utredning.length) {
+      for (const del of t.utredning) {
+        if (del.status === 'undersokt') rader.push('Sökningar gjorda: ' + del.rubrik + '.');
+        else if (del.status === 'ej_undersokt') rader.push('Inte undersökt: ' + del.rubrik + '.');
+      }
+      rader.push('En genomförd sökning betyder inte att frågan är besvarad. Svaret visar vad källorna ger stöd för.');
+    }
     return '<div class="fraga-underlag"><strong>Underlag och begränsningar</strong>' +
       rader.map(s => '<div>' + esc(s) + '</div>').join('') + '</div>';
   }
@@ -38,7 +46,8 @@
   function render(d) {
     const body = !d.blockerat && d.block?.length
       ? d.block.map(b => '<section class="fraga-block"><strong class="fraga-etikett">' +
-        esc(b.etikett) + '</strong><p>' + prosa(b.text) + '</p>' + kallor(b.kallor) + '</section>').join('')
+        esc(b.etikett) + '</strong>' + (b.tidigare ? '<span class="fraga-tidigare">Tidigare svar i samtalet</span>' : '') +
+        '<p>' + prosa(b.text) + '</p>' + kallor(b.kallor) + '</section>').join('')
       : '<p>' + prosa(d.answer || 'Inget svar kunde visas.') + '</p>';
     return body + tackning(d.tackning);
   }

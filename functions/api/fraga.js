@@ -11,6 +11,8 @@ import { SVAR_KONTRAKT, GRANSKA_SYSTEM, SVARSVERKTYG, lasFaktasvar, godkandGrans
 export { SVARSVERKTYG };
 import { hamtaPeriod } from "./_mfn.js";
 import { INDEX, REGISTER, LEKTIONER } from "./_kurskorpus.js";
+import { budgetFor, skapaUndersokning, PLANVERKTYG, SYSTEM_DJUP, giltigPeriod } from './_utredning.js';
+import { lasTrad, skrivTrad, skapaTur, samtalsText, routingUrTrad, periodUrPoster } from './_trad.js';
 
 const FALLBACK_URL = "https://xpxghvxrckpzbbkjmtcw.supabase.co";
 /* Tva modeller, vald efter fragans storlek.
@@ -68,6 +70,9 @@ const SYSTEM_BAS =
   "Du ar Delagarens analysbollplank, en lugn och saklig hjalp som undersoker fragor med anvandaren utifran tillgangliga data och kallor.\n\n" +
   "Regler:\n" +
   "- Svara pa svenska och konkret. Lat langden folja fragan: en enkel fraga far ett kort svar, en fraga som spanner over flera rapporter eller flera ar far det utrymme den behover.\n" +
+  "- Svar först, belägg sedan. En enkel fråga behöver normalt bara den efterfrågade posten och högst en kort förklaring. En analysfråga behöver de viktigaste sambanden, inte en genomgång av allt du vet. Varje stycke ska tillföra ett svar, ett belägg eller en relevant osäkerhet.\n" +
+  "- Visa bara relevanta poster. Välj typade faktaposter före långa dokumentcitat när de besvarar samma fråga. Upprepa inte tabellens eller posternas innehåll i prosa. Undvik inledningsfraser, avslutande sammanfattningar som upprepar svaret och rutinmässiga erbjudanden att fortsätta.\n" +
+  "- Ange osäkerheten där den påverkar slutsatsen, en gång. Lista inte spekulativa orsaker utan nytta: välj högst de mest relevanta alternativa förklaringarna och säg vilket underlag som skulle skilja dem åt. En kort positiv tidsserie visar en förbättring under perioden, inte att förbättringen är varaktig.\n" +
   "- Hjalp med fundamental aktieanalys, bolag i underlaget, anvandarens innehav och kursens metoder. Breda analysfragor och samband mellan rapporter ingar. Avboj amnen utanfor detta.\n" +
   "- Besvara det anvandaren faktiskt vill undersoka. Utveckla bade mojligheter och risker nar kallorna ger stod, utan att tvinga fram lika manga argument pa varje sida.\n" +
   "- Forklara sambandet mellan observation och tolkning: vad kan det betyda, vilka alternativa forklaringar finns, och vad skulle starka eller forsvaga tolkningen? Valj det som hjalper fragan, inte en checklista i varje svar.\n" +
@@ -237,10 +242,6 @@ export function kursText(lektioner) {
 /* Verktyg kan utoka underlaget under samma svar. Nya faktaposter skickas
    som deltan; slutkontrollen anvander samma requestlokala register. */
 
-const MAX_VARV = 2;
-const MAX_BERAKNINGAR = 6;
-const MAX_MODELLANROP = 10; // Hela requesten, inklusive fallback och granskning.
-
 const UTDRAG_PER_VERKTYG = 6;
 
 export const SYSTEM_VERKTYG =
@@ -252,8 +253,8 @@ export const SYSTEM_VERKTYG =
   "- Hamta hellre en gang for mycket an svara att du inte vet. Men hamta inte i blindo: sag for dig sjalv vad du letar efter forst.\n" +
   "- Nya postreferenser kommer i verktygsresultaten. Aterge aldrig egna faktatal. Kursmaterial far inte bli bolagsfakta.\n";
 
-export function verktygsDefinitioner() {
-  return [
+export function verktygsDefinitioner(djup = false) {
+  const lista = [
     {
       name: "berakna",
       description: "Rakna med registrerade faktaposter. Inga egna tal. differens och tillvaxt tar [senare, tidigare], andel tar [taljare, namnare]. summa tar angransande flodesperioder; per_manad tar en flodespost. Resultatet ar en ny postreferens.",
@@ -274,6 +275,8 @@ export function verktygsDefinitioner() {
         properties: {
           bolag: { type: "string", description: "Bolagets namn, precis som det star i underlaget." },
           sokord: { type: "string", description: "Orden du vill soka pa, till exempel 'kassaflode rorelsekapital'." },
+          fran: { type: "string", description: "Valfri periodstart YYYY-MM-DD, anges tillsammans med till." },
+          till: { type: "string", description: "Valfritt periodslut YYYY-MM-DD." },
         },
         required: ["bolag", "sokord"],
       },
@@ -301,6 +304,11 @@ export function verktygsDefinitioner() {
       },
     },
   ];
+  if (djup) {
+    for (const t of lista) t.input_schema.properties.del = {type:'string',enum:['d1','d2','d3','d4'],description:'Undersökningsfrågan som detta anrop gäller.'};
+    lista.unshift(PLANVERKTYG);
+  }
+  return lista;
 }
 
 /* Kor ett verktyg och lamnar text tillbaka till modellen. Allt som kommer ur
@@ -338,14 +346,16 @@ export function byggKorVerktyg(ctx) {
   const somText = (nya) =>
     nya.map((u) => "[" + u.bolag + " · " + u.rubrik + " · " + u.datum + "]\n" + u.text).join("\n\n---\n\n");
 
-  return async function kor(namn, indata) {
+  return async function kor(namn, indata, signal) {
     try {
+      signal?.throwIfAborted();
       if (namn === "berakna") {
         tackning.berakningar ||= [];
-        if (tackning.berakningar.length >= MAX_BERAKNINGAR) return "Berakningsbudgeten ar slut. Svara med befintliga poster.";
+        if (tackning.berakningar.length >= budgetFor(tackning.djup).berakningar) return "Berakningsbudgeten ar slut. Svara med befintliga poster.";
         const dom = register ? register.laggBeraknad(indata) : {ok: false, skal: "Faktaregister saknas."};
         tackning.berakningar.push({operation: String(indata?.operation || '').slice(0, 30), ...dom});
         if (!dom.ok) return "Berakningen avslogs: " + dom.skal + " Upprepa inte samma bestallning. Prova igen bara om du har andra giltiga operander eller nytt underlag. Aterge det faktiska skalet i saknas; kalla inte ett underlagsavslag for ett tekniskt fel.";
+        ctx.onUndersokt?.();
         tackning.faktaregister = register.status();
         return "Berakningen finns i post " + dom.id + ". Visa posten och forklaringen i svaret." + register.prompt(true);
       }
@@ -353,6 +363,7 @@ export function byggKorVerktyg(ctx) {
         const id = String(indata.id || "").trim();
         const text = LEKTIONER[id];
         if (!text) return "Det finns ingen lektion " + id + ". Anvand ett id ur registret.";
+        ctx.onUndersokt?.();
         if (tackning.lektioner.indexOf(id) < 0) tackning.lektioner.push(id);
         return medPoster(text.slice(0, MAX_LEKTIONSTEXT), [{ id, titel: id, text: text.slice(0, MAX_LEKTIONSTEXT) }]);
       }
@@ -361,7 +372,10 @@ export function byggKorVerktyg(ctx) {
       if (!b) return "Jag har inget arkiv for " + indata.bolag + ". Bolag jag har: " + arkiv.map((a) => a.namn).join(", ") + ".";
 
       if (namn === "las_mer") {
-        const nya = hamtaUtdrag(String(indata.sokord || question), [b], UTDRAG_PER_VERKTYG, Date.now(), null);
+        const period = indata.fran || indata.till ? {fran:indata.fran,till:indata.till} : null;
+        if (period && !giltigPeriod(period)) return 'Ange en giltig period med verkliga datum, från och till i rätt ordning.';
+        const nya = hamtaUtdrag(String(indata.sokord || question), [b], UTDRAG_PER_VERKTYG, Date.now(), period);
+        ctx.onUndersokt?.();
         if (!nya.length) return "Inget i " + b.namn + "s dokument matchar de orden.";
         lagg(nya);
         return medPoster(somText(nya));
@@ -369,19 +383,24 @@ export function byggKorVerktyg(ctx) {
 
       if (namn === "hamta_historik") {
         const period = { fran: String(indata.fran || ""), till: String(indata.till || "") };
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(period.fran)) return "Datumen ska skrivas YYYY-MM-DD.";
+        if (!giltigPeriod(period)) return "Datumen ska vara giltiga YYYY-MM-DD med start före slut.";
         const nyckel = "mfn:idx:" + b.id;
         let cachat = null;
         try { cachat = await env.DATA.get(nyckel, "json"); } catch (e) { /* utan cache: hamta */ }
+        signal?.throwIfAborted();
+        ctx.onUndersokt?.();
         const r = await hamtaPeriod({
           dokumentUrl: b.dokument[0] && b.dokument[0].url,
           period, termer: termer(String(indata.sokord || question)), max: MAX_HISTORIK,
           kanda: new Set(b.dokument.map((d) => d.url)),
           index: cachat,
+          hamta: (url, init) => fetch(url, {...init, signal: signal || AbortSignal.timeout(15000)}),
         });
+        signal?.throwIfAborted();
         if (!r.fransCache && r.index.length) {
           try { await env.DATA.put(nyckel, JSON.stringify(r.index), { expirationTtl: INDEX_TTL }); } catch (e) { /* ok */ }
         }
+        signal?.throwIfAborted();
         if (!r.dokument.length) return "Hittade inga dokument fran " + b.namn + " mellan " + period.fran + " och " + period.till + ".";
         b.dokument.push(...r.dokument);
         tackning.hamtade += r.dokument.length;
@@ -391,8 +410,10 @@ export function byggKorVerktyg(ctx) {
         });
         try {
           const hist = await env.DATA.get("arkiv:hist:" + b.id, "json");
+          signal?.throwIfAborted();
           await sparaHistorik(env.DATA, b.id, hist?.dokument || [], r.dokument);
         } catch (e) { /* cache, inte kritiskt */ }
+        signal?.throwIfAborted();
         const nya = hamtaUtdrag(question, [b], UTDRAG_PER_VERKTYG, Date.now(), period);
         lagg(nya);
         return medPoster("Hamtade " + r.dokument.length + " dokument.\n\n" + somText(nya));
@@ -425,17 +446,24 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
   tackning.modellanrop ||= 0;
   tackning.berakningsforsok ||= 0;
   tackning.gravvarv ||= 0;
+  tackning.verktygsanrop ||= 0;
+  const budget = budgetFor(tackning.djup);
+  tackning.deadline ??= Date.now() + budget.ms;
   let reparationer = 0;
   // En plats reserveras alltid for granskaren. Budgeten overlever fallback.
-  while (tackning.modellanrop < MAX_MODELLANROP - 1) {
-    const masteSvara = tackning.modellanrop >= MAX_MODELLANROP - 3 || reparationer > 0;
+  while (tackning.modellanrop < budget.modellanrop - 1) {
+    if (Date.now() >= tackning.deadline) return {fel:'budget',status:504,meddelande:'Utredningen hann inte bli klar inom tidsbudgeten.'};
+    const masteSvara = tackning.modellanrop >= budget.modellanrop - 3 || reparationer > 0 ||
+      Date.now() >= tackning.deadline - 40000 || tackning.verktygsanrop >= budget.verktyg;
     const tillatna = masteSvara ? [] : verktyg.filter(t => t.name === 'berakna'
-      ? tackning.berakningsforsok < MAX_BERAKNINGAR : tackning.gravvarv < MAX_VARV);
+      ? tackning.berakningsforsok < budget.berakningar : t.name === 'planera'
+        ? !tackning.verktyg.includes('planera') : tackning.gravvarv < budget.gravvarv);
     const svar = await anropa(apiKey, {
       model: kropp.model, max_tokens: kropp.max_tokens, system: kropp.system,
       messages: meddelanden,
       tools: tillatna.concat([SVARSVERKTYG]),
-      tool_choice: tillatna.length ? {type:'any'} : {type:'tool',name:'svara'},
+      tool_choice: tillatna.some(t=>t.name==='planera') ? {type:'tool',name:'planera'} :
+        tillatna.length ? {type:'any'} : {type:'tool',name:'svara'},
     }, tackning);
     if (svar.fel) return svar;
     if (svar.stopp !== 'tool_use' || !svar.block) return svar;
@@ -453,15 +481,28 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
         continue;
       }
       if (!tillatna.some(t => t.name === a.name) ||
-          (a.name === 'berakna' && tackning.berakningsforsok >= MAX_BERAKNINGAR)) {
+          tackning.verktygsanrop >= budget.verktyg || Date.now() >= tackning.deadline - 40000 ||
+          (a.name === 'berakna' && tackning.berakningsforsok >= budget.berakningar)) {
         resultat.push({type:'tool_result',tool_use_id:a.id,is_error:true,
           content:'Verktyget ar inte tillgangligt eller budgeten ar slut. Svara med befintligt underlag.'});
         continue;
       }
       if (a.name === 'berakna') tackning.berakningsforsok++;
-      else gravde = true;
+      else if (a.name !== 'planera') gravde = true;
+      tackning.verktygsanrop++;
       tackning.verktyg.push(a.name);
-      resultat.push({type:'tool_result',tool_use_id:a.id,content:await kor(a.name,a.input || {})});
+      const controller = new AbortController();
+      let timer;
+      const kvar = Math.max(1,tackning.deadline-Date.now()-40000);
+      const timeout = new Promise(resolve=>{timer=setTimeout(()=>{
+        controller.abort(); tackning.tidsbegransat=true;
+        resolve('Tidsbudgeten för fortsatt undersökning är slut. Svara med det verifierade underlaget som redan finns.');
+      },kvar);});
+      let content;
+      try { content = await Promise.race([kor(a.name,a.input || {},controller.signal),timeout]); }
+      catch { content = 'Verktyget kunde inte slutföras. Svara med befintligt underlag.'; }
+      finally { clearTimeout(timer); }
+      resultat.push({type:'tool_result',tool_use_id:a.id,content});
     }
     if (gravde) tackning.gravvarv++;
     if (svaret) { reparationer++; tackning.reparation = reparationer; }
@@ -598,11 +639,11 @@ async function stryp(kv, id) {
    fel hall ar samre an inget fel alls. */
 async function anropa(apiKey, kropp, tackning) {
   if (tackning) {
-    if ((tackning.modellanrop || 0) >= MAX_MODELLANROP) return {fel:'budget',status:502,meddelande:'Anropsbudgeten ar slut.'};
+    if ((tackning.modellanrop || 0) >= budgetFor(tackning.djup).modellanrop || Date.now() >= tackning.deadline) return {fel:'budget',status:502,meddelande:'Anrops- eller tidsbudgeten ar slut.'};
     tackning.modellanrop = (tackning.modellanrop || 0) + 1;
   }
   const ctrl = new AbortController();
-  const klocka = setTimeout(() => ctrl.abort(), TIMEOUT);
+  const klocka = setTimeout(() => ctrl.abort(), Math.max(1,Math.min(TIMEOUT,(tackning?.deadline || Date.now()+TIMEOUT)-Date.now())));
   try {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -660,11 +701,13 @@ export async function onRequestPost(context) {
   const origin = request.headers.get("Origin");
   if (origin && origin !== url.origin) return json({ error: "Fel ursprung." }, 403);
 
-  let question = "", token = "";
+  let question = "", token = "", tradToken = '', djup = false;
   try {
     const body = await request.json();
     question = String(body.question || "").trim();
     token = String(body.token || "").trim();
+    tradToken = typeof body.trad === 'string' ? body.trad : '';
+    djup = body.djup === true;
   } catch (e) { /* tom */ }
   if (!question) return json({ error: "Tom fraga." }, 400);
   if (question.length > MAX_FRAGA) return json({ error: "For lang fraga." }, 400);
@@ -676,6 +719,9 @@ export async function onRequestPost(context) {
     user = await getUser(base, secret, token);
     if (user) holdings = await getHoldings(base, secret, user.id);
   }
+  const tradSecret = env.FRAGA_TRAD_SECRET || secret;
+  const turer = await lasTrad(tradToken,user?.id,tradSecret);
+  const routing = routingUrTrad(question,holdings,turer);
 
   const stopp = await stryp(env.RL, user ? user.id : (request.headers.get("CF-Connecting-IP") || "okand"));
   if (stopp) return json({ error: stopp }, 429);
@@ -696,8 +742,14 @@ export async function onRequestPost(context) {
   // lasa mer och hamta historik pa modellens egen begaran.
   let utdrag = [], teser = [], arkivet = [];
   const register = skapaFaktaregister();
-
-  const period = periodIFragan(question);
+  const burna = [...new Map(turer.flatMap(t=>t.poster).map(p=>[p.id,p])).values()];
+  const gamlaIds = register.importeraTidigare(burna);
+  const samtal = turer.map(t=>({...t,block:t.block.flatMap(b=>{
+    if (b.typ === 'post') return gamlaIds.has(b.id) ? [{...b,id:gamlaIds.get(b.id)}] : [];
+    if (b.stod) return b.stod.every(id=>gamlaIds.has(id)) ? [{...b,stod:b.stod.map(id=>gamlaIds.get(id))}] : [];
+    return [b];
+  })}));
+  const period = routing.period;
 
   /* TACKNINGEN. Fore det har kunde Fraga svara med noll dokument pa fem olika
      satt, alla tysta: inga innehav, inget bolag matchat, inget arkiv-id, tomt
@@ -709,6 +761,8 @@ export async function onRequestPost(context) {
      gravverktyget atit upp forsakringen. Darfor redovisas alltid vad som lastes
      och vad som saknas. */
   const tackning = {
+    djup,
+    samtal: {turer:turer.length,poster:gamlaIds.size,begransat:turer.some(t=>t.begransat) || gamlaIds.size<burna.length},
     period: period ? { fran: period.fran, till: period.till } : null,
     bolag: [], utelamnade: [], lasta: 0, hamtade: 0, orsak: null,
     // Vad modellen sjalv bad om under utredningen, och vilka lektioner den fick.
@@ -718,7 +772,7 @@ export async function onRequestPost(context) {
   if (!holdings.length) {
     tackning.orsak = "inga innehav uppladdade";
   } else {
-    const alla = bolagIFragan(question, holdings) || [];
+    const alla = routing.bolag || [];
     const traffar = alla.slice(0, 2); // hogst tva bolag
     // Det slice(0, 2) tappade sades tidigare inte till nagon.
     tackning.utelamnade = alla.slice(2).map((h) => h.name || "");
@@ -828,12 +882,13 @@ export async function onRequestPost(context) {
   /* Kan den hamta sjalv har den dokument, aven om urvalet inte valde nagra.
      Med bara utdrag.length som villkor fick den registret "du har INGA dokument
      om bolagen" samtidigt som den satt med tre verktyg for att hamta dem. */
-  const harUnderlag = utdrag.length > 0 || kanGrava;
+  const harUnderlag = utdrag.length > 0 || kanGrava || burna.some(p=>['rapporterat','dokument','beraknat'].includes(p.typ));
 
   register.synka({ arkiv: arkivet, utdrag, holdings, teser, question, lektioner });
   tackning.faktaregister = register.status();
 
   const system = SYSTEM_BAS + SVAR_KONTRAKT +
+    (djup ? SYSTEM_DJUP : '') + samtalsText(samtal) +
     (kanGrava ? SYSTEM_VERKTYG : "") +
     (harUnderlag ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
     tackningText(tackning) +
@@ -847,12 +902,31 @@ export async function onRequestPost(context) {
         }).join("\n\n---\n\n")
       : "") + register.prompt();
 
-  const modell = valjModell({ period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
+  const modell = djup ? MODEL_DJUP : valjModell({ period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
   tackning.modell = modell;
   /* Kontrollen som utredningen far anvanda mitt i loppet. Samma funktion som
      provar svaret nedan, sa reparationsrundan kan omojligt vara slappare. */
   const provaSvar = (data) => lasFaktasvar(data, register);
-  const brev = { model: modell, max_tokens: 1600, system: system, fraga: question };
+  const brev = { model: modell, max_tokens: djup ? 2400 : 1600, system: system, fraga: question };
+  const undersokning = skapaUndersokning();
+  const kor = async (namn, input, signal) => {
+    if (namn === 'planera') {
+      const resultat = undersokning.planera(input);
+      tackning.utredning = undersokning.status();
+      return JSON.stringify(resultat);
+    }
+    const {del,...bestallning} = input;
+    if (del && !undersokning.har(del)) return 'Okänt del-id. Använd en fråga i undersökningsplanen.';
+    const fore = register.poster().length;
+    let undersokt = false;
+    const korGrund = byggKorVerktyg({arkiv:arkivet,env,utdrag,tackning,question,register,
+      onUndersokt:()=>{undersokt=true;}});
+    const resultat = await korGrund(namn,bestallning,signal);
+    if (signal?.aborted) return 'Undersökningen avbröts av tidsbudgeten.';
+    if (del && undersokt) undersokning.notera(del,namn,register.poster().length-fore);
+    if (djup) tackning.utredning = undersokning.status();
+    return resultat;
+  };
 
   /* AVEN UTAN ARKIV gar svaret genom utred, med en tom verktygslista. Da
      tvingas svara fram direkt, och vagen dar assistenten har minst att komma
@@ -861,11 +935,13 @@ export async function onRequestPost(context) {
   if (kanGrava) {
     svar = await utred(
       apiKey, brev,
-      verktygsDefinitioner(),
-      byggKorVerktyg({ arkiv: arkivet, env: env, utdrag: utdrag, tackning: tackning, question: question, register: register }),
+      verktygsDefinitioner(djup), kor,
       tackning, provaSvar);
   } else {
-    svar = await utred(apiKey, brev, [], async () => "", tackning, provaSvar);
+    const utanArkiv = verktygsDefinitioner(djup).filter(t=>
+      (t.name === 'berakna' && register.poster().some(p=>p.normaliserat)) ||
+      (djup && ['planera','las_lektion'].includes(t.name)));
+    svar = await utred(apiKey, brev, utanArkiv, kor, tackning, provaSvar);
   }
 
   /* Varken ett routningsbeslut eller en utredning far ta ner Fraga. Faller
@@ -959,6 +1035,7 @@ export async function onRequestPost(context) {
            anvandarens fraga och ett innehav. */
         { role: "user", content: JSON.stringify({
           fraga: question, svar: kontrollerat.block, tackning,
+          samtal: samtal.slice(-6).map(t=>({fraga:t.fraga,block:t.block.filter(b=>['tolkning','saknas'].includes(b.typ))})),
           tillgangligt: granskarunderlag(register.poster()),
         }) },
         /* Prefill. Granskaren kan inte erbjudas ett verktyg utan att bli en
@@ -975,7 +1052,11 @@ export async function onRequestPost(context) {
   const anvanda = kontrollerat.referenser.map(id => register.get(id));
   const kallor = [...new Map(kontrollerat.block.flatMap(b => b.kallor)
     .map(k => [JSON.stringify([k.url, k.citat]), k])).values()];
+  const raw = svar.data !== undefined ? svar.data : JSON.parse(svar.text);
+  const aktuellRouting = {bolag:(routing.bolag || []).map(h=>({id:h.id,name:h.name,ticker:h.ticker})),period:period || periodUrPoster(anvanda)};
+  const trad = await skrivTrad([...turer,skapaTur(question,raw.block,register,aktuellRouting)],user?.id,tradSecret);
   return json({ answer: kontrollerat.answer, block: kontrollerat.block,
+    ...(trad ? {trad} : {}),
     kallor, tackning, verifiering: { format: "dataposter-v1",
       prosa: kontrollerat.prosa.length ? "modellgranskad" : "ingen",
       berakningar: kontrollerat.block.some(b => b.typ === "beraknat") ? "modellgranskade" : "inga" },

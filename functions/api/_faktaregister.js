@@ -148,9 +148,48 @@ export function skapaFaktaregister() {
     const id = lagg(resultat.post);
     return id ? { ok: true, id } : { ok: false, skal: 'Faktaregistret har inte plats för fler poster.' };
   }
+  // Only call with server-authenticated history. Admit the complete graph or
+  // nothing; imported provenance is never promoted to reported evidence.
+  function importeraTidigare(lista) {
+    const ids = new Map();
+    if (!Array.isArray(lista) || !lista.length || lista.length > 10) return ids;
+    const gamla = new Map();
+    for (const p of lista) {
+      if (!p || typeof p.id !== 'string' || gamla.has(p.id)) return ids;
+      gamla.set(p.id, p);
+    }
+    const klara = new Set(), aktiva = new Set();
+    const refs = p => [...(p.indata || []), ...(p.vilar_pa?.poster || []), ...Object.keys(p.vilar_pa?.ursprung_per_post || {})];
+    const visit = id => {
+      if (aktiva.has(id) || !gamla.has(id)) return false;
+      if (klara.has(id)) return true;
+      aktiva.add(id);
+      if (!refs(gamla.get(id)).every(visit)) return false;
+      aktiva.delete(id); klara.add(id); return true;
+    };
+    if (![...gamla.keys()].every(visit)) return ids;
+    for (const p of lista) ids.set(p.id, prefix + (poster.size + ids.size + 1));
+    const nya = lista.map(original => {
+      const p = structuredClone(original);
+      p.id = ids.get(p.id); p.tidigare = true;
+      if (p.indata) p.indata = p.indata.map(id => ids.get(id));
+      if (p.vilar_pa) {
+        if (p.vilar_pa.poster) p.vilar_pa.poster = p.vilar_pa.poster.map(id => ids.get(id));
+        if (p.vilar_pa.ursprung_per_post) p.vilar_pa.ursprung_per_post = Object.fromEntries(
+          Object.entries(p.vilar_pa.ursprung_per_post).map(([id, ursprung]) => [ids.get(id), ursprung]));
+      }
+      return p;
+    });
+    const storlek = nya.reduce((n, p) => n + new TextEncoder().encode(JSON.stringify(p)).length + 1, 0);
+    if (bytes + storlek > tak) { begransat = true; return new Map(); }
+    for (const p of nya) poster.set(p.id, Object.freeze(p));
+    bytes += storlek;
+    return ids;
+  }
   return {
     synka,
     laggBeraknad,
+    importeraTidigare,
     get: id => poster.get(id),
     poster: () => [...poster.values()],
     status: () => ({ poster: poster.size, bytes, begransat }),

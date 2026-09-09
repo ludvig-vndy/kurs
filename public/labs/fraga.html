@@ -108,6 +108,7 @@
 <script src="/labs/site-masthead.js"></script>
 <link rel="stylesheet" href="/fraga-svar.css">
 <script src="/fraga-svar.js"></script>
+<script src="/fraga-trad.js"></script>
 </head>
 <body>
 
@@ -126,6 +127,11 @@
       <span class="kbd">⌘K</span>
       <button type="submit" aria-label="Fråga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
     </form>
+    <div class="fraga-val">
+      <label><input type="checkbox" id="fraga-djup" aria-describedby="fraga-djup-hjalp"> Djupgranskning</label>
+      <button type="button" id="fraga-reset">Börja om</button>
+      <p id="fraga-djup-hjalp">Undersöker fler delfrågor och källor. Kan ta längre tid.</p>
+    </div>
 
     <div class="seedh" data-reveal>Föreslagna frågor</div>
     <div class="seed" data-reveal id="seed"></div>
@@ -162,49 +168,10 @@ const SEEDS = [
 const seed=document.getElementById('seed'), thread=document.getElementById('thread'), inp=document.getElementById('askinput');
 seed.innerHTML = SEEDS.map(q=>'<button class="seedb" type="button">'+q+'</button>').join('');
 seed.querySelectorAll('.seedb').forEach((b,i)=>b.addEventListener('click',()=>ask(SEEDS[i])));
-// ── Hastighetsklamp mot rapid-fire (skript-bot) ──────────────────────────
-// VIKTIGT: detta är bara klient-friktion. Den riktiga gränsen MÅSTE sitta på
-// LLM-endpointen (per IP/konto/tokenbudget) eftersom en bot struntar i JS:et
-// här. Klampen finns för att fånga oavsiktlig spam och göra beteendet tydligt.
-const RL = { minMs:1500, perMin:10, perDay:60, key:'agarbrevet-fraga-rl' };
-function rlLoad(){ try{ return JSON.parse(localStorage.getItem(RL.key)||'[]'); }catch(e){ return []; } }
-function rlCheck(){
-  const now = Date.now();
-  const hist = rlLoad().filter(t => now - t < 864e5); // senaste dygnet
-  const last = hist.length ? hist[hist.length-1] : 0;
-  if (now - last < RL.minMs) return { ok:false, msg:'Du frågar väldigt snabbt. Ta en andning och prova igen om en stund.' };
-  if (hist.filter(t => now - t < 6e4).length >= RL.perMin) return { ok:false, msg:'Många frågor på kort tid. Vänta en minut, så öppnar det igen.' };
-  if (hist.length >= RL.perDay) return { ok:false, msg:'Du har nått dagens gräns för frågor i prototypen. Den återställs i morgon.' };
-  hist.push(now); try{ localStorage.setItem(RL.key, JSON.stringify(hist)); }catch(e){}
-  return { ok:true };
-}
-function rlNotice(msg){
-  const block = document.createElement('div'); block.className='qa';
-  block.innerHTML = '<div class="a"><p><span class="lab">gräns</span>'+msg+
-    ' <span style="color:var(--faint)">Skyddet mot skript sitter på riktigt på servern.</span></p></div>';
-  thread.appendChild(block);
-  requestAnimationFrame(()=>block.scrollIntoView({behavior:'smooth',block:'center'}));
-}
-
-function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-function fmt(t){return esc(t).split(/\n{2,}/).map(function(p){return '<p>'+p.replace(/\n/g,'<br>')+'</p>';}).join('');}
-async function ask(q){
-  const gate = rlCheck();
-  if(!gate.ok){ rlNotice(gate.msg); return; }
-  const block = document.createElement('div'); block.className='qa';
-  block.innerHTML = '<div class="q"><span class="who">Du</span><span class="qt">'+esc(q)+'</span></div><div class="a"><p class="thinking"><span class="lab">tänker</span> …</p></div>';
-  thread.appendChild(block);
-  const aEl = block.querySelector('.a');
-  requestAnimationFrame(function(){ block.scrollIntoView({behavior:'smooth',block:'center'}); });
-  let token=null;
-  try{ if(window.AB && window.AB.ready){ const ses=await window.AB.getSession(); token = ses && ses.access_token; } }catch(e){}
-  try{
-    const r = await fetch('/api/fraga',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q, token:token})});
-    const d = await r.json().catch(function(){return{};});
-    if(!r.ok){ aEl.innerHTML = '<p><span class="lab">'+(r.status===501?'ej på':'fel')+'</span>'+esc(d.error||'Något gick fel.')+'</p>'; return; }
-    aEl.innerHTML = FragaSvar.render(d) + (token?'':'<div class="foot"><a href="/labs/inbjudan.html">Logga in för att fråga om ditt innehav →</a></div>');
-  }catch(e){ aEl.innerHTML = '<p><span class="lab">fel</span>Kunde inte nå tjänsten just nu.</p>'; }
-}
+const conversation = FragaTrad.mount({ container: thread, form: document.getElementById('askform'),
+  deep: document.getElementById('fraga-djup'), reset: document.getElementById('fraga-reset'),
+  onPending: block => requestAnimationFrame(() => { if (block.isConnected) block.scrollIntoView({behavior:'smooth',block:'center'}); }) });
+function ask(q){ return conversation.ask(q); }
 document.getElementById('askform').addEventListener('submit',e=>{e.preventDefault();const v=inp.value.trim();if(v){ask(v);inp.value='';}});
 document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();inp.focus();}});
 (function(){const els=document.querySelectorAll('[data-reveal]');if(matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(el=>el.classList.add('on'));return;}

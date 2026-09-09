@@ -285,6 +285,7 @@
 <script src="/labs/site-masthead.js"></script>
 <link rel="stylesheet" href="/fraga-svar.css">
 <script src="/fraga-svar.js"></script>
+<script src="/fraga-trad.js"></script>
 </head>
 <body>
 
@@ -299,6 +300,11 @@
   <div class="inner" style="position:relative">
     <button class="askx" id="askx">Stäng · Esc</button>
     <div class="askcard">
+      <div class="fraga-val">
+      <label><input type="checkbox" id="fraga-djup" aria-describedby="fraga-djup-hjalp"> Djupgranskning</label>
+      <button type="button" id="fraga-reset">Börja om</button>
+      <p id="fraga-djup-hjalp">Undersöker fler delfrågor och källor. Kan ta längre tid.</p>
+    </div>
       <div class="seedh" id="seedh">Fråga om din portfölj</div>
       <div class="seed" id="seed"></div>
       <div class="ans" id="ans"></div>
@@ -350,46 +356,13 @@ function setAsk(ask){
   const seeds = ask ? ask.seeds : ['Vilket bolag behöver mig mest i dag?','Äger jag för mycket av samma sak?','Vad hände i natt?'];
   seed.innerHTML = seeds.map(q=>'<button class="seedb" type="button">'+q+'</button>').join('');
   seed.querySelectorAll('.seedb').forEach((b,i)=> b.addEventListener('click', ()=> answer(seeds[i])));
-  ansEl.classList.remove('show'); ansEl.innerHTML='';
+
 }
-// Riktig fraga mot /api/fraga: den kanner anvandarens egna innehav och far
-// utdrag ur bolagens dokument ur KV. Kallgrinden pa servern blockerar svar med
-// tal som inte star i utdragen, sa ett blockerat svar ar ett vantat utfall och
-// inte ett fel att dolja.
-let ASK_LOPNR = 0;
-async function answer(q){
-  const mitt = ++ASK_LOPNR;
-  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div><p class="thinking">Läser dina bolags dokument…</p>';
-  ansEl.classList.add('show');
-  openPanel();
-
-  let token=null;
-  try{ if(window.AB && window.AB.ready){ const ses=await window.AB.getSession(); token = ses && ses.access_token; } }catch(e){}
-
-  let d=null, status=0;
-  try{
-    const r = await fetch('/api/fraga',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({question:q, token:token})
-    });
-    status = r.status;
-    d = await r.json().catch(function(){return null;});
-  }catch(e){ /* natet */ }
-
-  if(mitt !== ASK_LOPNR) return; // en nyare fraga hann fore
-
-  if(!d || d.error){
-    const text = status===401 ? 'Logga in igen, sessionen har gått ut.'
-      : status===429 ? (d && d.error) || 'För många frågor just nu.'
-      : status===501 ? 'Fråga är inte påslagen just nu.'
-      : status===504 ? 'Det tog för lång tid. Skicka frågan igen.'
-      : (d && d.error) || 'Kunde inte nå tjänsten just nu.';
-    ansEl.innerHTML = '<div class="q">'+esc(q)+'</div><p>'+esc(text)+'</p>';
-    return;
-  }
-
-  ansEl.innerHTML = '<div class="q">'+esc(q)+'</div>'+FragaSvar.render(d);
-}
+const conversation = FragaTrad.mount({ container: ansEl, form: document.getElementById('askform'),
+  deep: document.getElementById('fraga-djup'), reset: document.getElementById('fraga-reset'),
+  onPending: () => { ansEl.classList.add('show'); openPanel(); },
+  onRender: count => ansEl.classList.toggle('show', count > 0) });
+function answer(q){ return conversation.ask(q); }
 function openPanel(){ panel.classList.add('show'); panel.setAttribute('aria-hidden','false'); }
 function closePanel(){ panel.classList.remove('show'); panel.setAttribute('aria-hidden','true'); }
 document.getElementById('askx').addEventListener('click', closePanel);
