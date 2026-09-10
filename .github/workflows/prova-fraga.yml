@@ -67,6 +67,10 @@ on:
         description: 'Publikt experiment: beställ nödvändig rapportläsning i samma svar som planeringen'
         type: boolean
         default: false
+      publik_inlasning:
+        description: 'Endast PDF-extraktion av två låsta rapporter, högst 0,50 USD; inga chattfrågor'
+        type: boolean
+        default: false
 
 jobs:
   prov:
@@ -131,7 +135,11 @@ jobs:
         run: |
           python tools/fraga-publika-kallor.py "$RUNNER_TEMP/publika-kallor"
           set +e
-          node tools/prova-fraga-publikt.mjs "$RUNNER_TEMP/publika-kallor/sources.json" 2>&1 | tee publikt.log
+          if [ "${{ inputs.publik_inlasning }}" = "true" ]; then
+            node tools/prova-fraga-inlasning.mjs "$RUNNER_TEMP/publika-kallor/sources.json" 2>&1 | tee publikt.log
+          else
+            node tools/prova-fraga-publikt.mjs "$RUNNER_TEMP/publika-kallor/sources.json" 2>&1 | tee publikt.log
+          fi
           echo '## Publikt experiment: workflow-status är inte kvalitetsbesked' >> "$GITHUB_STEP_SUMMARY"
           grep '^PUBLIKT_RESULTAT\|^PUBLIKT_SLUT' publikt.log >> "$GITHUB_STEP_SUMMARY"
           exit 0
