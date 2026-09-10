@@ -1,5 +1,5 @@
 // Riktiga, daterade bolagsrapporter. Inga gamla chatsvar, inget facit eller kundkonto.
-import { onRequestPost } from '../functions/api/fraga.js';
+import { onRequestPost, kursText, valjLektioner } from '../functions/api/fraga.js';
 import { bitar } from '../functions/api/_mfn.js';
 import { Budget } from './prova-fraga-granskning.mjs';
 import { readFileSync } from 'node:fs';
@@ -30,17 +30,28 @@ export function kryptera(data, pem) {
   return { key: publicEncrypt({ key: pem, oaepHash: 'sha256' }, key).toString('base64'),
     iv: iv.toString('base64'), tag: cipher.getAuthTag().toString('base64'), data: ciphertext.toString('base64') };
 }
+// Endast provtransporten: samma katalog, register, verktyg och rapporter.
+export function kursPaBegaran(request, question) {
+  if (/\b(?:lektion(?:en)?|avsnitt(?:et)?)\s+\d{1,2}\.\d{1,2}\b/i.test(question)) return request;
+  const selected = valjLektioner(question);
+  if (!selected.length) return request;
+  const full = kursText(selected);
+  if (typeof request.system !== 'string' || request.system.split(full).length !== 2)
+    throw new Error('oväntat kursavsnitt');
+  return { ...request, system: request.system.replace(full, kursText([])) };
+}
 async function main() {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('nyckel');
   const event = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
+  const lazyCourse = event.inputs.publik_kurs_pa_begaran === 'true' || event.inputs.publik_kurs_pa_begaran === true;
   const pem = Buffer.from(event.inputs.public_receipt_key || '', 'base64').toString('utf8');
   const pub = createPublicKey(pem);
   if (pub.asymmetricKeyType !== 'rsa' || pub.asymmetricKeyDetails.modulusLength < 2048) throw new Error('publik nyckel');
   const sources = JSON.parse(readFileSync(process.argv[2], 'utf8'));
   const base = byggArkiv(sources), budget = new Budget(2_000_000);
   const originalFetch = globalThis.fetch;
-  let calls = [], audit = [];
+  let calls = [], audit = [], question = '';
   globalThis.fetch = async (url, init = {}) => {
     const u = new URL(String(url));
     const json = data => new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json' } });
@@ -52,14 +63,20 @@ async function main() {
     }
     if (u.hostname !== 'api.anthropic.com' || u.pathname !== '/v1/messages')
       return new Response('Det daterade provarkivet tillåter ingen extern historik efter låsningen.', { status: 503 });
-    const body = JSON.parse(init.body);
+    let body = JSON.parse(init.body);
+    const moment = body.system.startsWith('Du granskar') ? 'granskning' : body.system.startsWith('Du redigerar') ? 'kortning' : 'svar';
+    const beforeChars = body.system.length;
+    if (lazyCourse && moment === 'svar') {
+      body = kursPaBegaran(body, question);
+      init = { ...init, body: JSON.stringify(body) };
+    }
     const price = body.model === 'claude-sonnet-5' ? [2, 10] : body.model === 'claude-haiku-4-5-20251001' ? [1, 5] : null;
     if (!price || !Number.isInteger(body.max_tokens) || body.max_tokens > 4096) throw new Error('modellbudget');
     const maximum = (Buffer.byteLength(init.body) + 16384) * price[0] + body.max_tokens * price[1];
     const ticket = budget.reservera(maximum);
     if (!ticket) throw new Error('provbudget');
     let actual = null; const start = Date.now(); let row = { model: body.model,
-      moment: body.system.startsWith('Du granskar') ? 'granskning' : body.system.startsWith('Du redigerar') ? 'kortning' : 'svar' };
+      moment, removedCourseChars: beforeChars - body.system.length };
     try {
       const response = await originalFetch(url, init);
       if (!response.ok) { row.status = response.status; return response; }
@@ -73,10 +90,10 @@ async function main() {
       return json(data);
     } finally { budget.avsluta(ticket, actual); calls.push({ ...row, ms: Date.now() - start, costUnknown: actual === null }); }
   };
-  console.log('PUBLIKT_START ' + JSON.stringify({ questions: fragor.length, repeats: 2, budgetUSD: 2, hashes }));
+  console.log('PUBLIKT_START ' + JSON.stringify({ questions: fragor.length, repeats: 2, budgetUSD: 2, hashes, lazyCourse }));
   try {
     for (let rep = 0; rep < 2; rep++) for (const p of fragor) {
-      const archive = structuredClone(base); calls = []; audit = [];
+      const archive = structuredClone(base); calls = []; audit = []; question = p.question;
       const env = { ANTHROPIC_API_KEY: apiKey, SUPABASE_SECRET_KEY: 'stubbad', SUPABASE_URL: 'https://sb.stub.test',
         DATA: { get: async (k, typ) => archive[k] == null ? null : typ === 'json' ? structuredClone(archive[k]) : JSON.stringify(archive[k]),
           put: async (k, v) => { archive[k] = JSON.parse(v); } } };

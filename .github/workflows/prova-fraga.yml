@@ -59,6 +59,10 @@ on:
         description: 'Publik RSA-nyckel i base64 för krypterade provsvar; aldrig privat nyckel'
         type: string
         default: ''
+      publik_kurs_pa_begaran:
+        description: 'Publikt experiment: korta kursposter och läsning på begäran i stället för automatiska långutdrag'
+        type: boolean
+        default: false
 
 jobs:
   prov:
