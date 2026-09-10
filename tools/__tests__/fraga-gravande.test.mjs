@@ -1,4 +1,4 @@
-import { svarJson, godkann } from './_fraga-fixtur.mjs';
+import {svarJson, godkann, sys } from './_fraga-fixtur.mjs';
 // Att Fraga far grava utan att borja hitta pa.
 //
 // Piloten beskrev assistenten som toklast. Den var det, men inte pa grund av
@@ -45,7 +45,7 @@ function stubbaFetch({ holdings = [UNIBAP], svar = svarJson('Ett lugnt svar.'), 
     if (u.includes('/rest/v1/holdings')) return ok(holdings);
     if (u.includes('/rest/v1/theses')) return ok([]);
     if (u.includes('api.anthropic.com')) {
-      if (JSON.parse(init.body).system.startsWith('Du granskar ett svar')) return ok(godkann());
+      if (sys(JSON.parse(init.body)).startsWith('Du granskar ett svar')) return ok(godkann());
       anrop.push(JSON.parse(init.body));
       raknare++;
       if (felForst && raknare === 1) return { ok: false, status: 404, text: async () => 'model not found' };
@@ -168,8 +168,8 @@ test('modellen far se hur sokningen gick', async () => {
   const r = await anrop('vad hander med Unibap', { ...ENV, DATA: kv({ 'arkiv:index': [] }) });
   await r.json();
   assert.equal(anropen.length, 1);
-  assert.match(anropen[0].system, /SA HAR GICK SOKNINGEN/);
-  assert.match(anropen[0].system, /Unibap Space Solutions: inget underlag/);
+  assert.match(sys(anropen[0]), /SA HAR GICK SOKNINGEN/);
+  assert.match(sys(anropen[0]), /Unibap Space Solutions: inget underlag/);
 });
 
 /* Sex bitar a 1200 tecken ar ungefar EN rapport. En fraga over ett helt ar fick
@@ -179,11 +179,11 @@ test('en periodfraga far mer underlag an en vanlig fraga', async () => {
 
   const a1 = stubbaFetch();
   await (await anrop('hur gick det for Unibap', { ...ENV, DATA: kv(JSON.parse(JSON.stringify(bucket))) })).json();
-  const vanlig = (a1[0].system.match(/\n---\n/g) || []).length;
+  const vanlig = (sys(a1[0]).match(/\n---\n/g) || []).length;
 
   const a2 = stubbaFetch();
   await (await anrop('hur gick Unibap under 2026', { ...ENV, DATA: kv(JSON.parse(JSON.stringify(bucket))) })).json();
-  const period = (a2[0].system.match(/\n---\n/g) || []).length;
+  const period = (sys(a2[0]).match(/\n---\n/g) || []).length;
 
   assert.ok(period > vanlig, 'periodfragan fick ' + period + ' utdrag, den vanliga ' + vanlig);
 });

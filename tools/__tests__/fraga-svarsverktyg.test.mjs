@@ -16,7 +16,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { onRequestPost, SVARSVERKTYG } from '../../functions/api/fraga.js';
-import { godkann, postSvar } from './_fraga-fixtur.mjs';
+import {godkann, postSvar, sys } from './_fraga-fixtur.mjs';
 
 const UID = 'u-1';
 const UNIBAP = { id: 'h-1', name: 'Unibap Space Solutions', ticker: 'UNIBAP', quantity: 100, gav: 20, relation: 'ager' };
@@ -60,7 +60,7 @@ function stubbaFetch(skript) {
          skillnaden lastes en funktion som en lista, `skript[0]` blev odefinierat
          och testet provade ingenting alls. */
       if (typeof skript === 'function') return ok(skript(kropp));
-      if (String(kropp.system).startsWith('Du granskar ett svar')) return ok(godkann());
+      if (sys(kropp).startsWith('Du granskar ett svar')) return ok(godkann());
       const nasta = skript[Math.min(i++, skript.length - 1)];
       return ok(typeof nasta === 'function' ? nasta(kropp) : nasta);
     }
@@ -103,17 +103,46 @@ test('verktyget svara erbjuds sa fort modellen far svara', async () => {
 });
 
 /* Kan modellen inte langre grava MASTE den svara, annars far vi ett tomt varv
-   som faller ut som ett fel for anvandaren. */
-test('efter sista hamtvarvet finns berakning och svar kvar', async () => {
+   som faller ut som ett fel for anvandaren.
+
+   Skyddet ligger inte langre i verktygslistan. Den ar last for prompt-cachens
+   skull: verktygen ligger forst i cacheprefixet, sa en lista som krympte for
+   varje varv invaliderade hela det 32 000 till 48 000 tecken langa
+   systemfaltet varje varv. Budgeten avgors nu dar anropet besvaras. */
+test('efter sista hamtvarvet avvisas ett gravanrop i stallet for att utforas', async () => {
+  const anropen = stubbaFetch([
+    laser('kassa'), laser('omsattning'), laser('skulder'),
+    svarar([{ typ: 'metod', text: 'Nu svarar jag pa det jag last.' }]),
+  ]);
+  const d = await (await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  const svaren = anropen.flatMap((k) => (k.messages || []).flatMap((m) =>
+    Array.isArray(m.content) ? m.content.filter((b) => b.type === 'tool_result') : []));
+  assert.ok(svaren.some((r) => String(r.content).includes('budgeten ar slut')),
+    'gravanropet efter budgeten utfordes i stallet for att avvisas');
+  assert.ok(!d.blockerat, 'blockerades: ' + (d.verifiering && d.verifiering.orsak));
+});
+
+/* CACHEPREFIXET. Leverantorens cache ar prefixbaserad, sa tools och den
+   stabila delen av system maste vara BYTE FOR BYTE lika mellan varven. Detta
+   var noll traffar i skarpt prov, och den mekaniska orsaken var att listan
+   filtrerades om. Provet ar mekaniskt med flit: det ar just identiteten som
+   ar hela poangen, inte att verktygen "ungefar" ar desamma. */
+test('verktyg och stabilt system ar identiska genom hela varvsslingan', async () => {
   const anropen = stubbaFetch([
     laser('kassa'), laser('omsattning'),
     svarar([{ typ: 'metod', text: 'Nu svarar jag pa det jag last.' }]),
   ]);
-  const d = await (await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
-  const sista = anropen[2];
-  assert.deepEqual((sista.tools || []).map((t) => t.name), ['berakna', 'svara'], 'graververktygen lag kvar');
-  assert.deepEqual(sista.tool_choice, { type: 'any' });
-  assert.ok(!d.blockerat);
+  await (await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
+  const generator = anropen.filter((k) => !sys(k).startsWith('Du granskar ett svar')
+    && !sys(k).startsWith('Du redigerar ett svar'));
+  assert.ok(generator.length >= 3, 'for fa generatoranrop for att prova prefixet');
+  for (const k of generator.slice(1)) {
+    assert.deepEqual(k.tools, generator[0].tools, 'verktygslistan andrades mellan varven');
+    assert.deepEqual(k.system[0], generator[0].system[0], 'det cachade systemblocket andrades');
+  }
+  const forsta = generator[0].system;
+  assert.ok(Array.isArray(forsta), 'systemet skickas inte som block, sa ingen brytpunkt finns');
+  assert.deepEqual(forsta[0].cache_control, { type: 'ephemeral' }, 'brytpunkten saknas');
 });
 
 /* Utan arkiv finns ingen verktygsloop alls, och just den vagen var helt
@@ -146,7 +175,7 @@ test('ett tal i fri prosa stoppas lika hart via verktyget', async () => {
 test('granskaren prefillas sa dess svar inte kan kapslas in', async () => {
   const anropen = stubbaFetch([svarar([{ typ: 'saknas', text: 'Rapporten saknas i underlaget.' }])]);
   await (await anrop('vad ar en moat', { ...ENV, DATA: kv(ARKIV()) })).json();
-  const granskning = anropen.find((k) => String(k.system).startsWith('Du granskar ett svar'));
+  const granskning = anropen.find((k) => sys(k).startsWith('Du granskar ett svar'));
   assert.ok(granskning, 'ingen granskning kordes');
   const sista = granskning.messages[granskning.messages.length - 1];
   assert.equal(sista.role, 'assistant');
@@ -156,13 +185,13 @@ test('granskaren prefillas sa dess svar inte kan kapslas in', async () => {
 test('metodresonemang granskas med analysmodellen aven utan tolkning', async () => {
   const anropen = stubbaFetch([svarar([{typ:'metod',text:'Sjunkande avkastning kan fortfarande överstiga kapitalkostnaden.'}])]);
   await anrop('Förklara avkastning och kapitalkostnad.',ENV);
-  const g=anropen.find(k=>String(k.system).startsWith('Du granskar ett svar'));
+  const g=anropen.find(k=>sys(k).startsWith('Du granskar ett svar'));
   assert.match(g.model,/sonnet/);
   assert.equal(g.output_config?.format.type,'json_schema');
 });
 
 test('granskaren godkanner ett svar som fortsatter pa prefillen', async () => {
-  stubbaFetch((kropp) => (String(kropp.system).startsWith('Du granskar ett svar')
+  stubbaFetch((kropp) => (sys(kropp).startsWith('Du granskar ett svar')
     ? { content: [{ type: 'text', text: '"godkand":true}' }], stop_reason: 'end_turn' }
     : svarar([{ typ: 'metod', text: 'Ett resonemang utan tal.' }])));
   const d = await (await anrop('vad ar en moat', { ...ENV, DATA: kv(ARKIV()) })).json();
@@ -245,7 +274,7 @@ test('reparationen ges en gang, sedan blockeras svaret', async () => {
   const d = await (await anrop('hur gick det for Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
   assert.ok(d.blockerat);
   assert.equal(d.verifiering.orsak, 'fri_uppgift');
-  const svarsanrop = anropen.filter((k) => !String(k.system).startsWith('Du granskar ett svar'));
+  const svarsanrop = anropen.filter((k) => !sys(k).startsWith('Du granskar ett svar'));
   assert.equal(svarsanrop.length, 2, 'skulle ha provat exakt en gang till');
 });
 
@@ -263,13 +292,13 @@ test('ett okant post-id gar att rätta i andra forsoket', async () => {
 /* GRANSKARENS NEJ REPARERAS ALDRIG. Att lata modellen skriva om tills granskaren
    slapper igenom vore att optimera mot domaren, inte att bli riktigare. */
 test('ett nej fran granskaren ger ingen andra chans', async () => {
-  const anropen = stubbaFetch((kropp) => (String(kropp.system).startsWith('Du granskar ett svar')
+  const anropen = stubbaFetch((kropp) => (sys(kropp).startsWith('Du granskar ett svar')
     ? { content: [{ type: 'text', text: '{"godkand":false,"skal":"pastaende utan stod"}' }], stop_reason: 'end_turn' }
     : svarar([{ typ: 'metod', text: 'Ett resonemang utan tal.' }])));
   const d = await (await anrop('vad ar en moat', { ...ENV, DATA: kv(ARKIV()) })).json();
   assert.ok(d.blockerat);
   assert.equal(d.verifiering.orsak, 'semantik');
-  const svarsanrop = anropen.filter((k) => !String(k.system).startsWith('Du granskar ett svar'));
+  const svarsanrop = anropen.filter((k) => !sys(k).startsWith('Du granskar ett svar'));
   assert.equal(svarsanrop.length, 1, 'skrev om svaret at granskaren');
 });
 
@@ -302,7 +331,7 @@ test('reparationen besvarar alla anrop i varvet, inte bara svara', async () => {
 test('granskaren far tesernas och de beraknade posternas innehall', async () => {
   const anropen = stubbaFetch([svarar([{ typ: 'saknas', text: 'Jag hittar ingen uppgift om det.' }])]);
   await (await anrop('vad tycker du om Unibap', { ...ENV, DATA: kv(ARKIV()) })).json();
-  const gransk = anropen.find((k) => String(k.system).startsWith('Du granskar ett svar'));
+  const gransk = anropen.find((k) => sys(k).startsWith('Du granskar ett svar'));
   assert.ok(gransk, 'granskaren anropades inte');
   const kropp = JSON.parse(gransk.messages[0].content);
   assert.ok(kropp.fraga, 'fragan skickas inte med');

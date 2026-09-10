@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { sys } from './_fraga-fixtur.mjs';
 import assert from 'node:assert/strict';
 import {onRequestPost,utred,verktygsDefinitioner} from '../../functions/api/fraga.js';
 import {skapaStatus,medStatus,registreraStatus} from '../../functions/api/_fraga-status.js';
@@ -8,7 +9,7 @@ test('status kommer före slutgranskning och råsvaret strömmas aldrig',async t
   const held=new Promise(resolve=>{release=resolve;});
   t.mock.method(globalThis,'fetch',async(url,init)=>{
     const b=JSON.parse(init.body);
-    if(b.system.startsWith('Du granskar ett svar')) {
+    if(sys(b).startsWith('Du granskar ett svar')) {
       await held;
       return new Response(JSON.stringify({content:[{type:'text',text:'{"godkand":false,"skal":"Saknar stöd."}'}],stop_reason:'end_turn'}));
     }

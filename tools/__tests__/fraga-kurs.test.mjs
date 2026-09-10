@@ -1,4 +1,4 @@
-import { svarJson, godkann } from './_fraga-fixtur.mjs';
+import {svarJson, godkann, sys } from './_fraga-fixtur.mjs';
 // Kursen som kalla i Fraga.
 //
 // FELET: prompten sa "Peka garna pa en lektion i kursen" medan modellen inte
@@ -40,7 +40,7 @@ function stubbaFetch({ holdings = [UNIBAP], svar = svarJson('Ett lugnt svar.') }
     if (u.includes('/rest/v1/holdings')) return ok(holdings);
     if (u.includes('/rest/v1/theses')) return ok([]);
     if (u.includes('api.anthropic.com')) {
-      if (JSON.parse(init.body).system.startsWith('Du granskar ett svar')) return ok(godkann());
+      if (sys(JSON.parse(init.body)).startsWith('Du granskar ett svar')) return ok(godkann());
       anropen.push(JSON.parse(init.body));
       return ok({ content: [{ type: 'text', text: svar }] });
     }
@@ -134,8 +134,8 @@ test('lektionstexten far uttryckligen inte bli bolagstal', () => {
 test('modellen far registret aven pa en ren bolagsfraga', async () => {
   const anropen = stubbaFetch();
   await (await anrop('vad hände med Unibap i går', { ...ENV, DATA: kv() })).json();
-  assert.match(anropen[0].system, /KURSENS LEKTIONER/);
-  assert.match(anropen[0].system, /0\.1 \| Oddsen/);
+  assert.match(sys(anropen[0]), /KURSENS LEKTIONER/);
+  assert.match(sys(anropen[0]), /0\.1 \| Oddsen/);
 });
 
 test('en metodfraga far lektionstexten med sig', async () => {
@@ -143,7 +143,7 @@ test('en metodfraga far lektionstexten med sig', async () => {
   const r = await anrop('vad är ROIC och varför spelar det roll', { ...ENV, DATA: kv() });
   const d = await r.json();
   assert.deepEqual(d.tackning.lektioner.slice(0, 1), ['5.1']);
-  assert.match(anropen[0].system, /## 5\.1 Marginaler och ROIC/);
+  assert.match(sys(anropen[0]), /## 5\.1 Marginaler och ROIC/);
 });
 
 test('en bolagsfraga betalar inte for lektionstext den inte ska anvanda', async () => {
@@ -151,5 +151,5 @@ test('en bolagsfraga betalar inte for lektionstext den inte ska anvanda', async 
   const r = await anrop('vad hände med Unibap i går', { ...ENV, DATA: kv() });
   const d = await r.json();
   assert.deepEqual(d.tackning.lektioner, []);
-  assert.ok(!/MATERIALET UR DE LEKTIONER/.test(anropen[0].system));
+  assert.ok(!/MATERIALET UR DE LEKTIONER/.test(sys(anropen[0])));
 });

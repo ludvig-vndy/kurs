@@ -1,4 +1,4 @@
-import { svarJson, godkann, postSvar } from './_fraga-fixtur.mjs';
+import {svarJson, godkann, postSvar, sys } from './_fraga-fixtur.mjs';
 // Fraga far hamta sjalv, och kallgrinden tacker det den hamtade.
 //
 // Fram till nu bestamde rorledningen vad modellen fick se INNAN modellen last en
@@ -52,7 +52,7 @@ function stubbaFetch(skript, { mfn = null } = {}) {
     if (u.includes('/rest/v1/holdings')) return ok([UNIBAP]);
     if (u.includes('/rest/v1/theses')) return ok([]);
     if (u.includes('api.anthropic.com')) {
-      if (JSON.parse(init.body).system.startsWith('Du granskar ett svar')) return ok(godkann());
+      if (sys(JSON.parse(init.body)).startsWith('Du granskar ett svar')) return ok(godkann());
       const kropp = JSON.parse(init.body);
       anropen.push(kropp);
       const nasta = skript[Math.min(i++, skript.length - 1)];
@@ -109,16 +109,21 @@ test('gravverktygen erbjuds bara nar det finns ett arkiv att grava i', async () 
 });
 
 test('sista varvet gar utan gravverktyg, sa den tvingas svara', async () => {
+  /* Skyddet ligger inte i verktygslistan langre. Den ar last for prompt-cachens
+     skull, sa ett gravanrop efter budgeten avvisas dar det besvaras i stallet
+     for att aldrig erbjudas. Provet later modellen forsoka en tredje gang. */
   const anropen = stubbaFetch([
     verktyg('las_mer', { bolag: 'Unibap Space Solutions', sokord: 'kassa' }),
     verktyg('las_mer', { bolag: 'Unibap Space Solutions', sokord: 'omsattning' }),
+    verktyg('las_mer', { bolag: 'Unibap Space Solutions', sokord: 'skulder' }),
     kropp => postSvar(kropp, p => p.typ === 'dokument' && p.text.includes('12 400')),
   ]);
   const r = await anrop('hur ser kassan ut for Unibap', { ...ENV, DATA: kv(ARKIV()) });
   const d = await r.json();
-  assert.equal(anropen.length, 3);
-  const namn = (anropen[2].tools || []).map((t) => t.name);
-  assert.deepEqual(namn, ['berakna', 'svara'], 'sista anropet kunde fortfarande hamta: ' + namn.join(', '));
+  const svaren = anropen.flatMap((k) => (k.messages || []).flatMap((m) =>
+    Array.isArray(m.content) ? m.content.filter((b) => b.type === 'tool_result') : []));
+  assert.ok(svaren.some((x) => String(x.content).includes('budgeten ar slut')),
+    'det tredje gravanropet utfordes i stallet for att avvisas');
   assert.match(d.answer, /12 400/);
 });
 

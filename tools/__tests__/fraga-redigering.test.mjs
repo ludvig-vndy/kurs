@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { sys } from './_fraga-fixtur.mjs';
 import assert from 'node:assert/strict';
 import {kortningsbehov, valjRedigering, redigeraSvar} from '../../functions/api/_redigering.js';
 import {skapaFaktaregister} from '../../functions/api/_faktaregister.js';
@@ -33,7 +34,7 @@ test('kortningen får samma prosakontrakt som den valideras mot',async()=>{
     skickat=kropp;
     return {data:raw('Kontrollera underlaget.'),stopp:'tool_use'};
   });
-  assert.ok(skickat.system.includes(SVAR_KONTRAKT),'editorn saknar svarsgeneratorns kontrakt');
+  assert.ok(sys(skickat).includes(SVAR_KONTRAKT),'editorn saknar svarsgeneratorns kontrakt');
   assert.equal(t.redigering.status,'kortat');
 });
 

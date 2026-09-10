@@ -132,3 +132,23 @@ export async function verifieraSession(request) {
     return null;
   }
 }
+
+/* Cache-brytpunkt i systemfältet.
+
+   Leverantörens prompt-cache är prefixbaserad: tools, sedan system, sedan
+   messages. Den stabila delen av systemet läggs i ett eget textblock med
+   cache_control; allt som varierar mellan varven skickas som ett block EFTER
+   det och påverkar därför inte cachenyckeln.
+
+   Under MINSTA_CACHE cachar leverantören inte, och då vore en brytpunkt bara
+   en dyrare skrivning. 4 000 tecken svarar ungefär mot 1 024 token svensk text. */
+export const MINSTA_CACHE = 4000;
+export function cachat(stabil, rorlig = '') {
+  if (typeof stabil !== 'string' || stabil.length < MINSTA_CACHE) return stabil + rorlig;
+  return [{ type: 'text', text: stabil, cache_control: { type: 'ephemeral' } },
+    ...(rorlig ? [{ type: 'text', text: rorlig }] : [])];
+}
+
+/* Systemfältet kan vara en sträng eller block. Momentgissningen läser texten. */
+export const systemText = s => typeof s === 'string' ? s
+  : Array.isArray(s) ? s.map(b => b?.text || '').join('') : '';

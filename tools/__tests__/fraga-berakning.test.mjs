@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { sys } from './_fraga-fixtur.mjs';
 import assert from 'node:assert/strict';
 import { utred, verktygsDefinitioner, byggKorVerktyg, onRequestPost } from '../../functions/api/fraga.js';
 import { skapaFaktaregister } from '../../functions/api/_faktaregister.js';
@@ -24,8 +25,12 @@ test('berakningar forbrukar inte hamtvarv och hamtbudget stoppar inte berakninga
   };
   try {
     await utred('k',brev,verktygsDefinitioner(),async n=>{executed.push(n);return 'ok';},{verktyg:[]},()=>({ok:true}));
+    /* Vad som faktiskt KORDES ar garantin: hamtbudgeten tog slut efter tva
+       las_mer, men berakningarna fortsatte anda. Verktygslistan sager inget
+       om det langre, den ar last for prompt-cachens skull. */
     assert.deepEqual(executed,['las_mer','las_mer','berakna','berakna']);
-    assert.deepEqual(bodies[2].tools.map(t=>t.name),['berakna','svara']);
+    for(const b of bodies.slice(1))
+      assert.deepEqual(b.tools,bodies[0].tools,'verktygslistan andrades mellan varven');
   } finally { globalThis.fetch=original; }
 });
 
@@ -73,7 +78,7 @@ test('API hamtar, summerar och kedjar per manad innan ett kallbelagt svar render
     if(String(url).includes('/holdings')) return ok([{id:'h',name:'Exempelbolag Alfa',quantity:1,gav:1}]);
     if(String(url).includes('/theses')) return ok([]);
     const body=JSON.parse(init.body);
-    if(body.system.startsWith('Du granskar')) {
+    if(sys(body).startsWith('Du granskar')) {
       granskningar++;
       assert.match(body.model,/sonnet/, 'beräknad analys behöver granskas med analysmodellen');
       assert.equal(body.messages.at(-1).role,'user','Sonnet stöder inte assistant-prefill');
@@ -82,7 +87,7 @@ test('API hamtar, summerar och kedjar per manad innan ett kallbelagt svar render
       assert.ok(review.tillgangligt.some(p=>p.typ==='beraknat' && p.indata.length && p.formel && p.vilar_pa));
       return ok({content:[{type:'text',text:'{"godkand":true}'}],stop_reason:'end_turn'});
     }
-    const texts=[body.system,...body.messages.flatMap(m=>Array.isArray(m.content)?m.content.map(c=>c.content):[])];
+    const texts=[sys(body),...body.messages.flatMap(m=>Array.isArray(m.content)?m.content.map(c=>c.content):[])];
     for(const text of texts) if(typeof text==='string' && text.includes(marker)) {
       for(const p of JSON.parse(text.slice(text.lastIndexOf(marker)+marker.length))) seen.set(p.id,p);
     }

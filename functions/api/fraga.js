@@ -4,7 +4,7 @@
    Fri prosa granskas mekaniskt och separat semantiskt. Det senare ar ett
    extra skydd, inte en garanti for att varje tolkning ar riktig. */
 
-import { secureJson as json } from "./_lib.js";
+import { secureJson as json, cachat, systemText } from "./_lib.js";
 import { hamtaUtdrag, bolagIFragan, termer, periodIFragan } from "./_kallgrind.js";
 import { skapaFaktaregister } from "./_faktaregister.js";
 import { SVAR_KONTRAKT, GRANSKA_SYSTEM, SVARSVERKTYG, lasFaktasvar, godkandGranskning } from "./_faktasvar.js";
@@ -455,6 +455,7 @@ export function byggKorVerktyg(ctx) {
    granskaren slapper igenom ar att optimera mot domaren, inte att bli riktigare. */
 const MAX_REPARATION = 1;
 
+
 export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
   const meddelanden = [{ role: "user", content: kropp.fraga }];
   tackning.modellanrop ||= 0;
@@ -474,14 +475,30 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
       (reparationsOrsak==='relation' && !reparationsBerakning && t.name==='berakna')).filter(t => t.name === 'berakna'
       ? tackning.berakningsforsok < budget.berakningar : t.name === 'planera'
         ? !tackning.verktyg.includes('planera') : tackning.gravvarv < budget.gravvarv);
+    /* VERKTYGSLISTAN AR LAST, och det ar en kostnadsatgard, inte en smaksak.
+
+       Leverantorens cache ar prefixbaserad: tools, sedan system, sedan
+       messages. Nar tillatna filtrerades bort ur tools krympte listan for
+       varje varv (4 161 -> 3 545 -> 1 197 tecken i det matta provet), och
+       eftersom den ligger FORST invaliderades hela prefixet varje varv. Alla
+       registrerade cachetraffar var noll trots att systemfaltet ar 99,2 till
+       100 procent identiskt mellan varven.
+
+       Vad ett verktyg FAR anvandas till avgors darfor nedan, dar anropet
+       besvaras, inte av vad som star i listan. Den vagen fanns redan: se
+       kontrollen mot tillatna i slingan. tool_choice tvingar fortfarande
+       planera forst och svara sist, sa forloppet ar oforandrat. */
     const svar = await anropa(apiKey, {
       model: kropp.model, max_tokens: kropp.max_tokens,
       // Sonnet 5 räknar även tänkandet mot max_tokens. Medium begränsar
       // arbetet per varv; tids- och anropsbudgeterna gäller fortfarande.
       ...(kropp.model === MODEL_DJUP ? {output_config:{effort:'medium'}} : {}),
-      system: kropp.system + (reparationer ? '\nRÄTTNINGSVARV: Behåll relevanta postreferenser. Skriv om förklaringen kort, högst ett par meningar per prosablock. Kontrollera hela texten mot felmeddelandet, inte bara första förekomsten. Beskriv rapportperioderna utan att ange deras antal eller en tidslängd i prosa.\n' : ''),
+      /* Brytpunkten ligger sist i det stabila systemet. Rattningsvarvets
+         tillagg hamnar EFTER den, sa reparationen laser samma cache i
+         stallet for att skriva en ny. */
+      system: cachat(kropp.system, reparationer ? '\nRÄTTNINGSVARV: Behåll relevanta postreferenser. Skriv om förklaringen kort, högst ett par meningar per prosablock. Kontrollera hela texten mot felmeddelandet, inte bara första förekomsten. Beskriv rapportperioderna utan att ange deras antal eller en tidslängd i prosa.\n' : ''),
       messages: meddelanden,
-      tools: tillatna.concat([SVARSVERKTYG]),
+      tools: verktyg.concat([SVARSVERKTYG]),
       tool_choice: tillatna.some(t=>t.name==='planera') ? {type:'tool',name:'planera'} :
         tillatna.length ? {type:'any'} : {type:'tool',name:'svara'},
     }, tackning);
@@ -674,8 +691,9 @@ async function stryp(kv, id) {
 async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
   const signal=statusSignal(tackning);
   if(signal?.aborted)return {fel:'avbruten',status:499,meddelande:'Frågan avbröts.'};
-  sattMoment(tackning,kropp.system?.startsWith('Du granskar ett svar')?'kontrollerar':
-    kropp.system?.startsWith('Du redigerar ett svar')?'kortar':
+  const sys = systemText(kropp.system);
+  sattMoment(tackning,sys.startsWith('Du granskar ett svar')?'kontrollerar':
+    sys.startsWith('Du redigerar ett svar')?'kortar':
       kropp.tool_choice?.name==='planera'?'planerar':'skriver');
   if (tackning) {
     if ((tackning.modellanrop || 0) >= budgetFor(tackning.djup).modellanrop || Date.now() >= tackning.deadline) return {fel:'budget',status:502,meddelande:'Anrops- eller tidsbudgeten ar slut.'};
@@ -683,8 +701,8 @@ async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
   }
   const ctrl = new AbortController();
   const anropsstart=Date.now();
-  const anropsmatning={modell:kropp.model,moment:kropp.system?.startsWith('Du granskar ett svar')?'granskning':
-    kropp.system?.startsWith('Du redigerar ett svar')?'kortning':'svar',ms:0,utfall:'nat'};
+  const anropsmatning={modell:kropp.model,moment:sys.startsWith('Du granskar ett svar')?'granskning':
+    sys.startsWith('Du redigerar ett svar')?'kortning':'svar',ms:0,utfall:'nat'};
   const avbryt=()=>ctrl.abort();
   signal?.addEventListener('abort',avbryt,{once:true});
   const klocka = setTimeout(() => ctrl.abort(), Math.max(1,Math.min(TIMEOUT,timeout,(tackning?.deadline || Date.now()+TIMEOUT)-Date.now())));
@@ -715,7 +733,16 @@ async function anropa(apiKey, kropp, tackning, timeout = TIMEOUT) {
     }
     const d = await r.json();
     anropsmatning.utfall=d.stop_reason || 'ok';
+    /* HELA anvandningen, inte bara output.
+
+       Tidigare sparades endast output_tokens. Da gick det inte att se vad en
+       riktig fraga kostar, for input ar cirka 89 procent av notan, och det
+       gick inte heller att se om cachen traffar. Alla fyra falten kommer fran
+       leverantorens usage och lagras per moment i tackning.anropstider. */
     anropsmatning.outputTokens=d.usage?.output_tokens;
+    anropsmatning.inputTokens=d.usage?.input_tokens;
+    anropsmatning.cacheLast=d.usage?.cache_read_input_tokens;
+    anropsmatning.cacheSkrivet=d.usage?.cache_creation_input_tokens;
     // Blocken och stop_reason behovs for verktygsloopen; text for allt annat.
     const innehall = d.content || [];
     const svaret = innehall.find((b) => b && b.type === "tool_use" && b.name === "svara");
@@ -1098,7 +1125,7 @@ async function besvaraFraga(context) {
     const granskning = await anropa(apiKey, {
       /* 80 rackte for {"godkand":true} men inte for ett nej med skal, sa
          granskarens svar klipptes av och blev ett nej av fel anledning. */
-      model: granskarModell, max_tokens: granskarModell === MODEL_DJUP ? 2048 : 320, system: GRANSKA_SYSTEM,
+      model: granskarModell, max_tokens: granskarModell === MODEL_DJUP ? 2048 : 320, system: cachat(GRANSKA_SYSTEM),
       // Sonnet 5 stöder inte assistant-prefill. JSON-format ersätter prefixet.
       // https://platform.claude.com/docs/en/models/sonnet-5/migration-guide
       ...(granskarModell === MODEL_DJUP ? {output_config:{effort:'medium',format:{type:'json_schema',schema:{

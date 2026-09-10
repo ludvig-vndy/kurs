@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { sys } from './_fraga-fixtur.mjs';
 import assert from 'node:assert/strict';
 import {valjLektioner,onRequestPost,utred,verktygsDefinitioner} from '../../functions/api/fraga.js';
 import {valjRedigering} from '../../functions/api/_redigering.js';
@@ -10,8 +11,10 @@ test('steg 6: relationsrättning får utföra beräkningen den uppmanas att gör
   let n=0,executed=0;
   t.mock.method(globalThis,'fetch',async(url,init)=>{
     const b=JSON.parse(init.body);n++;
-    if(n===2) assert.deepEqual(b.tools.map(x=>x.name),['berakna','svara']);
-    if(n===3) assert.deepEqual(b.tools.map(x=>x.name),['svara']);
+    /* Verktygslistan ar last genom hela slingan, annars invalideras
+       prompt-cachens prefix varje varv. Vad rattningsvarvet FAR gora provas
+       nedan pa vad som faktiskt kordes: exakt en berakning. */
+    assert.deepEqual(b.tools.map(x=>x.name),['berakna','las_mer','hamta_historik','las_lektion','svara']);
     return new Response(JSON.stringify({content:[{type:'tool_use',id:'t'+n,name:n===2?'berakna':'svara',input:{}}],stop_reason:'tool_use'}));
   });
   const tackning={verktyg:[]};
@@ -41,15 +44,25 @@ test('steg 6: parallella rättningsanrop får bara utföra en beräkning',async 
   assert.equal(executed,1);
 });
 
+/* En rattning som inte handlar om en relation far inte oppna nagon ny
+   undersokning. Verktygen ligger kvar i listan for cachens skull, sa provet
+   later modellen FORSOKA hamta pa rattningsvarvet och kraver att forsoket
+   avvisas utan att kor() ens rors. */
 test('steg 6: övriga rättningar öppnar inga nya läs- eller beräkningsverktyg',async t=>{
-  let n=0,offered;
+  let n=0,avvisat=null;
   t.mock.method(globalThis,'fetch',async(url,init)=>{
-    if(++n===2) offered=JSON.parse(init.body).tools.map(x=>x.name);
-    return new Response(JSON.stringify({content:[{type:'tool_use',id:'s'+n,name:'svara',input:{}}],stop_reason:'tool_use'}));
+    const b=JSON.parse(init.body);
+    if(n>=2){ const sista=b.messages.at(-1).content;
+      avvisat=Array.isArray(sista)&&sista.find(x=>x.tool_use_id==='las2'); }
+    n++;
+    const namn=n===2?'las_mer':'svara';
+    return new Response(JSON.stringify({content:[{type:'tool_use',id:n===2?'las2':'s'+n,name:namn,input:{}}],stop_reason:'tool_use'}));
   });
   await utred('k',{system:'test',fraga:'test',model:'test',max_tokens:100},verktygsDefinitioner(),async()=>assert.fail('ska inte köras'),{verktyg:[]},
     ()=>n===1?{ok:false,orsak:'fri_uppgift',klagan:'Rätta text.'}:{ok:true});
-  assert.deepEqual(offered,['svara']);
+  assert.ok(avvisat,'lasforsoket pa rattningsvarvet besvarades inte alls');
+  assert.equal(avvisat.is_error,true);
+  assert.match(String(avvisat.content),/inte tillganglig|budgeten ar slut/);
 });
 
 test('steg 5: samma relationsord granskas även med osynliga eller kompatibla tecken',()=>{
@@ -84,7 +97,7 @@ test('steg 3: metodfråga utan arkiv kan läsa en vald fördjupning',async t=>{
   let n=0;
   t.mock.method(globalThis,'fetch',async(url,init)=>{
     const body=JSON.parse(init.body);
-    if(body.system.startsWith('Du granskar ett svar'))
+    if(sys(body).startsWith('Du granskar ett svar'))
       return new Response(JSON.stringify({content:[{type:'text',text:'{"godkand":true}'}],stop_reason:'end_turn'}));
     n++;
     if(n===1) {

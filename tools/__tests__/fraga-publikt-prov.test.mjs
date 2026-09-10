@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { sys } from './_fraga-fixtur.mjs';
 import assert from 'node:assert/strict';
 import { generateKeyPairSync, privateDecrypt, createDecipheriv } from 'node:crypto';
 import { kryptera, byggArkiv, kursPaBegaran, samladStart } from '../prova-fraga-publikt.mjs';
@@ -45,7 +46,7 @@ test('samlad start ändrar bara instruktionen i det tvingade planeringsanropet',
   const saved = structuredClone(request);
   const changed = samladStart(request);
   assert.deepEqual(request, saved);
-  assert.ok(changed.system.startsWith(saved.system));
+  assert.ok(sys(changed).startsWith(saved.system));
   assert.match(changed.system, /samma modellsvar/);
   assert.deepEqual({ ...changed, system: saved.system }, saved);
   const later = { ...saved, tool_choice: { type: 'any' } };
