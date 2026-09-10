@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { generateKeyPairSync, privateDecrypt, createDecipheriv } from 'node:crypto';
-import { kryptera, byggArkiv, kursPaBegaran } from '../prova-fraga-publikt.mjs';
+import { kryptera, byggArkiv, kursPaBegaran, samladStart } from '../prova-fraga-publikt.mjs';
 import { kursText, valjLektioner } from '../../functions/api/fraga.js';
 test('hela svar kan bara läsas med den lokala privata nyckeln', () => {
   const { publicKey, privateKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
@@ -37,4 +37,17 @@ test('kursprovet avvisar oväntad prompt och lämnar uttryckliga lektionsfrågor
   assert.throws(() => kursPaBegaran({ system: 'fel prompt' }, question), /kursavsnitt/);
   const request = { system: 'Lektionsfråga' };
   assert.deepEqual(kursPaBegaran(request, 'Förklara lektion 5.1'), request);
+});
+
+test('samlad start ändrar bara instruktionen i det tvingade planeringsanropet', () => {
+  const request = { system: 'Källregler och rapporter', tool_choice: { type: 'tool', name: 'planera' },
+    tools: [{ name: 'planera' }, { name: 'las_mer' }], messages: [{ role: 'user', content: 'Fråga' }] };
+  const saved = structuredClone(request);
+  const changed = samladStart(request);
+  assert.deepEqual(request, saved);
+  assert.ok(changed.system.startsWith(saved.system));
+  assert.match(changed.system, /samma modellsvar/);
+  assert.deepEqual({ ...changed, system: saved.system }, saved);
+  const later = { ...saved, tool_choice: { type: 'any' } };
+  assert.deepEqual(samladStart(later), later);
 });

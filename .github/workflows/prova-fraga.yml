@@ -63,6 +63,10 @@ on:
         description: 'Publikt experiment: korta kursposter och läsning på begäran i stället för automatiska långutdrag'
         type: boolean
         default: false
+      publik_samlad_start:
+        description: 'Publikt experiment: beställ nödvändig rapportläsning i samma svar som planeringen'
+        type: boolean
+        default: false
 
 jobs:
   prov:

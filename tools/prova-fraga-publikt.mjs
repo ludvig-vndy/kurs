@@ -40,11 +40,17 @@ export function kursPaBegaran(request, question) {
     throw new Error('oväntat kursavsnitt');
   return { ...request, system: request.system.replace(full, kursText([])) };
 }
+export function samladStart(request) {
+  if (request.tool_choice?.type !== 'tool' || request.tool_choice.name !== 'planera') return request;
+  return { ...request, system: request.system + '\nFÖRSTA VERKTYGSVARVET: När rapportutdragen behöver kompletteras, beställ planera och den första nödvändiga las_mer-läsningen i samma modellsvar. Lägg planera först; del-id d1, d2 och så vidare följer ordningen i planens delar och kan användas direkt i läsbeställningen. Vänta inte på planens kvitto för att beställa den läsningen. Läs bara det frågan behöver.\n' };
+}
 async function main() {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('nyckel');
   const event = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
   const lazyCourse = event.inputs.publik_kurs_pa_begaran === 'true' || event.inputs.publik_kurs_pa_begaran === true;
+  const combinedStart = event.inputs.publik_samlad_start === 'true' || event.inputs.publik_samlad_start === true;
+  if (lazyCourse && combinedStart) throw new Error('prova en ändring åt gången');
   const pem = Buffer.from(event.inputs.public_receipt_key || '', 'base64').toString('utf8');
   const pub = createPublicKey(pem);
   if (pub.asymmetricKeyType !== 'rsa' || pub.asymmetricKeyDetails.modulusLength < 2048) throw new Error('publik nyckel');
@@ -70,13 +76,18 @@ async function main() {
       body = kursPaBegaran(body, question);
       init = { ...init, body: JSON.stringify(body) };
     }
+    const removedCourseChars = beforeChars - body.system.length;
+    if (combinedStart && moment === 'svar') {
+      body = samladStart(body);
+      init = { ...init, body: JSON.stringify(body) };
+    }
     const price = body.model === 'claude-sonnet-5' ? [2, 10] : body.model === 'claude-haiku-4-5-20251001' ? [1, 5] : null;
     if (!price || !Number.isInteger(body.max_tokens) || body.max_tokens > 4096) throw new Error('modellbudget');
     const maximum = (Buffer.byteLength(init.body) + 16384) * price[0] + body.max_tokens * price[1];
     const ticket = budget.reservera(maximum);
     if (!ticket) throw new Error('provbudget');
     let actual = null; const start = Date.now(); let row = { model: body.model,
-      moment, removedCourseChars: beforeChars - body.system.length };
+      moment, removedCourseChars, combinedStart: combinedStart && body.tool_choice?.name === 'planera' };
     try {
       const response = await originalFetch(url, init);
       if (!response.ok) { row.status = response.status; return response; }
@@ -90,7 +101,7 @@ async function main() {
       return json(data);
     } finally { budget.avsluta(ticket, actual); calls.push({ ...row, ms: Date.now() - start, costUnknown: actual === null }); }
   };
-  console.log('PUBLIKT_START ' + JSON.stringify({ questions: fragor.length, repeats: 2, budgetUSD: 2, hashes, lazyCourse }));
+  console.log('PUBLIKT_START ' + JSON.stringify({ questions: fragor.length, repeats: 2, budgetUSD: 2, hashes, lazyCourse, combinedStart }));
   try {
     for (let rep = 0; rep < 2; rep++) for (const p of fragor) {
       const archive = structuredClone(base); calls = []; audit = []; question = p.question;
