@@ -56,12 +56,13 @@ kan också öka svarstid och kostnad, inom oförändrade tak.
 
 ## Skarpa prov och nästa mätning
 
-Inga nya betalda modellanrop gjordes i denna kedja. Nyckeln finns varken i
+Under den första, lokala delen gjordes inga nya betalda modellanrop. Nyckeln fanns varken i
 processmiljön eller i projektets `.env`. Det befintliga GitHub-jobbet kan
 använda sin hemlighet utan att nyckeln hämtas ut. Automatisk
 godkännandegranskning avvisade dock tidigare push till det offentliga repoet
 och krävde uttrycklig publiceringstillåtelse. En sådan fråga är ställd och
-väntar på svar. Denna kedjas ändringar har inte pushats som en alternativ väg.
+väntade då på svar. Uppföljningen nedan beskriver godkännandet och de
+genomförda skarpa proven; ingen alternativ överföringsväg användes.
 
 Efter publiceringstillåtelsen:
 
@@ -82,3 +83,128 @@ Efter publiceringstillåtelsen:
 Ingen större arkitekturändring behövdes för de fem behållna rättningarna.
 En mer omfattande omläggning av sökningen bör presenteras separat om de
 skarpa proven visar att det behövs.
+
+## Uppföljning: godkända jämförande API-prov
+
+Användaren godkände publicering och API-prov efter rapporten ovan. Testgrenen
+är pushad. Samma provskript på `1ee3ea4` kör sex frågor och tjugotvå kontrollfall
+mot dels baslinjens chatbotkod (`69de416`), dels kandidatens (`658b903`).
+Arbetsflödet väljer baslinjen med en fast commit och behåller provskriptet.
+Två upprepningar per version:
+
+| Version | Körning 1 | Körning 2 |
+| --- | --- | --- |
+| Baslinje | 34367919071 | 34367952253 |
+| Kandidat | 34367935819 | 34367968339 |
+
+Frågorna är de tre tidigare avancerade metodfrågorna, den fiktiva
+periodjämförelsen, en direkt fråga om lektion 5.3 och en begäran att använda
+läsverktyget för kursavsnitt 7.2. Den sista frågan testar uttrycklig
+verktygsanvändning, inte spontan förmåga att välja rätt fördjupning.
+
+Bedömningen skiljer användbara svar från blockeringar och granskarens
+kontrollfall från faktiska svarsfel. Svarstid och modellanrop redovisas utan
+att uppskattas som pengar, eftersom faktisk fakturering inte hämtas.
+
+### Uppmätt utfall
+
+Alla fyra körningar slutfördes. Jobbloggarna verifierar att de två
+baslinjekörningarna återställde `functions/api` från `69de416`.
+Provjobbets gröna status är inte ett godkänt kvalitetsresultat.
+
+| Mått, två körningar per version | Baslinje | Kandidat |
+| --- | ---: | ---: |
+| Frågor som fick svar, oavsett innehållets kvalitet | 7/12 | 10/12 |
+| Direkta lektionsfrågor med läst lektion och svar | 0/2 | 2/2 |
+| Begärd kursfördjupning med verktyg och svar | 0/2 | 2/2 |
+| Öppna metodfrågor som fick svar | 6/6 | 6/6 |
+| Periodjämförelsen som fick svar | 1/2 | 0/2 |
+| Kontrollfall med förväntat gransknings-/grindbeslut | 43/44 | 42/44 |
+| Genomsnittlig svarstid, även blockerade svar | 24,4 s | 28,1 s |
+| Modellanrop för de tolv frågorna, kontrollfall exkluderade | 35 | 42 |
+
+Alla frågor och mått finns i `fraga-ab-resultat-2026-09-09.json`, inklusive
+den text som användaren skulle ha fått. Jobbloggar:
+[baslinje 1](https://github.com/ludvig-vndy/kurs/actions/runs/34367919071),
+[baslinje 2](https://github.com/ludvig-vndy/kurs/actions/runs/34367952253),
+[kandidat 1](https://github.com/ludvig-vndy/kurs/actions/runs/34367935819),
+[kandidat 2](https://github.com/ludvig-vndy/kurs/actions/runs/34367968339).
+
+### Vad som faktiskt förbättrades
+
+Kursåtkomsten klarade båda upprepningarna på båda riktade frågorna.
+Baslinjen saknade rätt material och blockerade samtliga fyra försök.
+Kandidaten läste rätt material och lämnade svar i samtliga fyra försök.
+Det stöder att steg 1 och 3 fungerar i skarp körning, inte bara med skriptad
+modell. Det betyder inte att varje formulering i svaren är riktig.
+
+Även den öppna ROIC-frågan ledde till spontan extra läsning i kandidaten:
+i ena försöket 7.2, i det andra både 7.2 och 5.3. Baslinjen stannade vid
+2.3/4.1 i båda försöken. Möjligheten till fördjupning används alltså även utan
+en uttrycklig verktygsorder i just dessa två prov.
+
+Kortningssteget gav inte stabilt korta svar. Den begärda fördjupningen gav
+307 respektive 191 ord i kandidaten. ROIC-svaren gav 284 respektive 182.
+Det längre ROIC-svaret följde på timeout och fallback till den snabbare
+modellen; kortning hoppades över på grund av budget. Ett annat
+kortningsförslag avvisades. JSON-ordningsrättningen är mekaniskt verifierad,
+men dessa körningar isolerar inte dess effekt på svarslängd.
+
+### Kvarvarande fel, manuellt lästa
+
+- Båda kandidatförsöken räknade periodserien korrekt, men publiceringen
+  stoppades efter trasig prosa i rättningsvarvet. Ett försök innehöll
+  backspace-tecken och det andra trasiga escape-sekvenser. Det var inte ett
+  beräkningsfel. Samma problem förekom i en baslinjekörning. Steg 6:s
+  specifika fall, saknad beräkning vid rättning, isolerades inte här eftersom
+  beräkningen redan var utförd. Det steget har därför fortsatt bara lokalt
+  belägg för sin effekt.
+- Ett kandidat-ROIC-svar skrev att avkastning som sjunker **mot eller under**
+  kapitalkostnaden är värdeförstörande och förklarade längre ned korrekt att
+  avkastning över kostnaden fortfarande skapar värde. Granskaren missade
+  motsägelsen. Ett annat skrev att återinvestering blir sämre redan när
+  avkastningen **närmar sig** kapitalkostnaden, utan tillräckliga villkor.
+- Båda baslinje-ROIC-svaren använde **underifrån** i en riktning som gav
+  fel slutsats om värdeförstöring. Felet är alltså inte unikt för kandidaten.
+- Kandidatens resonemang om rörelsekapital ställde återkommande
+  kapitalbindning mot skalfördelar på ett sätt som inte följer av
+  beskrivningen. Dessa kan samexistera. Baslinjen uttryckte den åtskillnaden
+  tydligare i de två lästa svaren.
+- I ett kandidatkontrollprov godkändes både sammanblandning av operativt och
+  investeringskassaflöde och påståendet att uppskjutna leverantörsbetalningar
+  höjer marginalen och sänker operativt kassaflöde. Ett baslinjeprov missade
+  också det senare. Det är falska godkännanden, inte felaktiga blockeringar.
+
+Skillnaden 43/44 mot 42/44 visar inte att kodändringarna försämrade
+granskaren: dess instruktion är densamma, stickprovet är litet och modellen
+varierar. Resultatet visar däremot att granskningen inte är tillräcklig som
+garanti. Inte heller svarstiderna kan skiljas helt från variation i API-last;
+de fyra jobben kördes överlappande.
+
+### Beslut och konkreta nästa prov
+
+Behåll de fem avgränsade kodrättningarna på testgrenen. Kursåtkomsten har nu
+även skarpt stöd. Ingen produktionsdeploy gjordes. Hela paketet ska inte
+beskrivas som verifierat bättre analyskvalitet: svaren blev mer tillgängliga,
+men kvarvarande sakfel och ostabil rättning hindrar den slutsatsen.
+
+Nästa prioriteringar, med prövbara hypoteser:
+
+1. **Stabilisera reparationen för beräkningssvar.** Prova separat om ett
+   kort rättningskontrakt som använder den befintliga resultatposten och
+   tillåter att den redan besvarar frågan minskar trasig prosa. Samma fasta
+   serie och flera upprepningar; godkänt kräver korrekt serverpost, giltig
+   text och bibehållen slutgranskning. Gissa aldrig fram skadade ord genom
+   strängersättning. Om detta kräver att vi ändrar principen om när prosa
+   måste finnas ska designen tas upp före implementation.
+2. **Pröva granskning av samband med isolerade kontrastpar.** Utöka proven
+   med närmar sig/passerar ovanifrån/passerar underifrån, en text med
+   intern motsägelse samt rörelsekapital och skalfördelar samtidigt. Prova
+   en ändring i granskningen i taget mot både gamla och nya par. Godkänt
+   kräver färre falska godkännanden utan fler felblockeringar. Ytterligare
+   en allmän försiktighetsregel är inte i sig evidens för förbättring.
+3. **Mät om rätt kursutdrag förbättrar resonemanget.** Kör ROIC-frågan med
+   kontrollerat underlag 5.3/7.2 jämfört med det nuvarande första urvalet,
+   med samma övriga inställningar. Bedöm de konkreta felsluten ovan och
+   svarstid. Det avgör om nästa insats bör ligga i urvalet, modellens
+   resonemang eller granskningen, innan sökningen byggs om.
