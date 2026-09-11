@@ -96,12 +96,17 @@ export function skapaFaktaregister() {
        API-svar, inte en mening. Darfor bar posten sin harkomst i klartext i
        stallet, sa bade granskaren och lasaren ser var talet kommer ifran. */
     for (const b of nyckeltal) {
-      if (!b || typeof b.bolag !== 'string' || !Array.isArray(b.nyckeltal)) continue;
+      /* ETT AV TVA racker. Ett bolag kan ha kvartalsrakenskaper utan
+         arsnyckeltal, till exempel nar sparren pa medianen fallt eller nar
+         summary-anropet gav tomt. Kravde vi bada foll rakenskaperna bort tyst. */
+      if (!b || typeof b.bolag !== 'string') continue;
+      const talen = Array.isArray(b.nyckeltal) ? b.nyckeltal : [];
+      if (!talen.length && !Array.isArray(b.rakenskaper)) continue;
       // Utan bolagsidentitet kan jamforbara() inte halla isar tva bolag, och
       // da ar posterna inte berakningsbara. Namnet duger som identitet har:
       // det ar arkivets egen nyckel och det ar det som routningen matchat pa.
       const bolagId = b.bolagId || b.bolag;
-      for (const t of b.nyckeltal) {
+      for (const t of talen) {
         if (!t || typeof t.namn !== 'string' || !Number.isFinite(t.varde)) continue;
         const enhet = t.enhet === 'procent' ? 'procent' : 'gånger';
         const arsrad = (ar, varde) => lagg({
@@ -113,10 +118,24 @@ export function skapaFaktaregister() {
              fyra kvartal till och med Q4. Se periodNyckel i _berakning.js. */
           ar: Number.isInteger(ar) ? ar : null, arsperiod: Number.isInteger(ar),
           kvartal: null, langd: null, djup: 0,
+          /* DEFINITIONEN MASTE STA UT.
+
+             Borsdatas tal ar DERAS normalisering av bolagets rapport, inte
+             bolagets egen rad. Frangar nagon efter Volvos operativa
+             kassaflode for industriverksamheten och far Borsdatas
+             standardiserade matt tillbaka, ar svaret ratt tal pa fel
+             definition, och det ser fullt trovardigt ut. Det ar samma sorts
+             fel som granskaren redan faller: sant, valciterat och om fel sak.
+
+             Posten sager darfor bade var talet kommer ifran och att det ar en
+             standardiserad koncernsiffra, sa modellen kan avsta i stallet for
+             att svara pa nagot narliggande. */
           kallor: [{ url: 'https://borsdata.se', typ: 'borsdata',
             rubrik: 'Börsdata, ' + t.namn + (ar ? ' ' + ar : ''),
             citat: b.bolag + ', ' + t.namn + (ar ? ' ' + ar : '') + ': ' +
-              String(varde).replace('.', ',') + ' ' + enhet + '. Hämtat från Börsdatas API, inte uträknat här.' }],
+              String(varde).replace('.', ',') + ' ' + enhet +
+              '. Hämtat från Börsdatas API, inte uträknat här. Börsdatas standardiserade ' +
+              'definition för hela koncernen, inte bolagets egen rad och inte ett segment.' }],
         });
         arsrad(t.ar, t.varde);
         for (const h of t.historik || []) {
@@ -139,6 +158,38 @@ export function skapaFaktaregister() {
                 t.median.till + ': ' + String(t.median.median).replace('.', ',') + ' ' + enhet +
                 '. Medianen räknas i kod över bolagets egna avslutade år och visas bara när varje år i fönstret var positivt.' }] });
         }
+      }
+
+      /* RAKENSKAPSRADERNA, och det ar de som gor skillnad for en riktig fraga.
+
+         Nyckeltalen ovan ar kvoter for ett helt ar. De har ar radposter per
+         kvartal: omsattning, bruttoresultat, fritt kassaflode, kassa,
+         nettoskuld och antal aktier, med ar, kvartal och langd 1. Alltsa
+         riktiga perioder, vilket gor floden summerbara. Halvaret behover
+         darfor inte lasas ur en PDF-tabell, det raknas ur Q1 plus Q2 av
+         berakningsverktyget, med kallan kvar hela vagen.
+
+         Antal aktier ar med med flit: det ar faltet var egen extraktion hade
+         ratt i noll fall av 22 i tools/matning-borsdata.mjs.
+
+         Valutan kommer fran instrumentet och aldrig fran en gissning; utan
+         den skickar motor/borsdata.mjs inga rader alls. */
+      for (const rad of b.rakenskaper || []) {
+        if (!rad || !Number.isFinite(rad.varde) || typeof rad.matt !== 'string' ||
+            typeof rad.enhet !== 'string' || !['flode', 'balans'].includes(rad.slag) ||
+            !Number.isInteger(rad.ar) || !Number.isInteger(rad.kvartal) ||
+            rad.kvartal < 1 || rad.kvartal > 4 || rad.langd !== 1) continue;
+        const periodtext = 'Q' + rad.kvartal + ' ' + rad.ar;
+        lagg({ typ: 'rapporterat', bolagId, bolag: b.bolag, matt: rad.matt,
+          period: periodtext, varde: rad.varde, enhet: rad.enhet,
+          normaliserat: { varde: rad.varde, enhet: rad.enhet }, slag: rad.slag,
+          ar: rad.ar, kvartal: rad.kvartal, langd: 1, djup: 0,
+          kallor: [{ url: 'https://borsdata.se', typ: 'borsdata',
+            rubrik: 'Börsdata, ' + rad.matt + ' ' + periodtext,
+            citat: b.bolag + ', ' + rad.matt + ' ' + periodtext + ': ' +
+              String(rad.varde).replace('.', ',') + ' ' + rad.enhet +
+              '. Hämtat från Börsdatas kvartalsräkenskaper, inte uträknat här. ' +
+              'Börsdatas standardiserade definition för hela koncernen, inte bolagets egen rad och inte ett segment.' }] });
       }
     }
 

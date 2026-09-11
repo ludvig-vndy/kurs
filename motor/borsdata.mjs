@@ -245,6 +245,75 @@ export async function hamtaVardering(insId) {
   return { pe, evEbit, nyckeltal };
 }
 
+/* RAKENSKAPERNA PER KVARTAL.
+
+   Skillnaden mot nyckeltalen ovan ar att detta ar radposter, inte kvoter:
+   omsattning, bruttoresultat, fritt kassaflode, kassa, nettoskuld och antal
+   aktier, tolv kvartal bakat. De ar flodesposter och balansposter med riktig
+   kvartalsperiod, vilket gor dem summerbara. Darfor kan halvaret raknas fram
+   ur Q1 plus Q2 i stallet for att lasas ur en tabell i en PDF.
+
+   Faltnamnen nedan ar de som redan ar verifierade i
+   motor/vigilans/ingest-borsdata.mjs. Fler finns nastan sakert i svaret, men
+   vi gissar inte: okanda falt loggas i stallet, sa nasta korning sager vilka
+   som faktiskt finns och listan kan utokas pa ett belagg. */
+const RAKENSKAPSFALT = [
+  { falt: 'revenues',              matt: 'Omsättning',        slag: 'flode',  valuta: true },
+  { falt: 'gross_Income',          matt: 'Bruttoresultat',    slag: 'flode',  valuta: true },
+  { falt: 'free_Cash_Flow',        matt: 'Fritt kassaflöde',  slag: 'flode',  valuta: true },
+  { falt: 'cash_And_Equivalents',  matt: 'Kassa',             slag: 'balans', valuta: true },
+  { falt: 'net_Debt',              matt: 'Nettoskuld',        slag: 'balans', valuta: true },
+  { falt: 'number_Of_Shares',      matt: 'Antal aktier',      slag: 'balans', valuta: false, enhet: 'aktier' },
+];
+
+export const MAX_KVARTAL = 12;
+
+/* SKALSPARREN. Borsdata redovisar i miljoner, och hela var egen extraktions
+   varsta felklass var just skala: 25 rena skalfel av 131 jamforelser. Ett
+   kvartals omsattning over femtio miljarder i den enhet vi tror oss lasa
+   betyder att vi laser fel enhet, inte att bolaget ar ofattbart stort. Da
+   slapper vi bolaget hellre an att skicka ett tal med fel storleksordning
+   vidare till ett faktaregister som kommer behandla det som belagt. */
+const RIMLIG_MILJON = 5e7;
+
+/* Valutan kommer fran instrumentet, aldrig fran en gissning. Ett TRATON-tal
+   markt MSEK ar ett sakfel som ser ut som en siffra, och exakt det gjorde var
+   LLM-extraktion: den markte eurobelopp som Mkr. Saknas valutan hoppar vi over
+   bolaget. */
+export function valutaFor(instrument) {
+  const v = instrument && (instrument.reportCurrency || instrument.stockPriceCurrency);
+  return typeof v === 'string' && /^[A-Z]{3}$/.test(v.toUpperCase()) ? v.toUpperCase() : null;
+}
+
+export async function hamtaRakenskaper(insId, valuta, { tyst = false } = {}) {
+  if (!valuta) return { rader: [], av: 'okänd valuta' };
+  const j = await bd('/instruments/' + insId + '/reports/quarter?maxCount=' + MAX_KVARTAL);
+  const rapporter = (j && (j.reports || j.reportsQuarter)) || [];
+  if (!rapporter.length) return { rader: [], av: 'inga kvartalsrapporter' };
+
+  /* Vad svaret faktiskt bar. Loggas en gang per korning sa listan ovan kan
+     utokas pa ett belagg i stallet for pa en gissning. */
+  const falten = Object.keys(rapporter[0] || {});
+  const saknade = RAKENSKAPSFALT.map(f => f.falt).filter(f => !falten.includes(f));
+  if (!tyst && saknade.length) console.log(`  börsdata: kvartalsfält saknas i svaret: ${saknade.join(', ')}`);
+
+  const senaste = [...rapporter].sort((a, b) => (b.year - a.year) || (b.period - a.period))[0];
+  if (Math.abs(Number(senaste?.revenues) || 0) > RIMLIG_MILJON)
+    return { rader: [], av: 'orimlig skala, talen är inte miljoner', falten };
+
+  const rader = [];
+  for (const r of rapporter) {
+    if (!Number.isInteger(r.year) || !Number.isInteger(r.period) || r.period < 1 || r.period > 4) continue;
+    for (const f of RAKENSKAPSFALT) {
+      const v = r[f.falt];
+      if (typeof v !== 'number' || !Number.isFinite(v)) continue;
+      rader.push({ matt: f.matt, slag: f.slag, ar: r.year, kvartal: r.period, langd: 1,
+        varde: Math.round(v * 100) / 100, enhet: f.valuta ? 'M' + valuta : f.enhet });
+    }
+  }
+  return { rader, av: null, falten };
+}
+
 /* Hela blocket för brevet: en rad per bolag med nästa rapport, och värdering
    där den är jämförbar. Kastar aldrig: ett trasigt Börsdata ska inte kunna
    stoppa morgonbrevet. */
@@ -263,8 +332,17 @@ export async function byggBorsdata(bolagsnamn, { idag = new Date(), tyst = false
       let vardering = null;
       try { vardering = await hamtaVardering(t.i.insId); } catch { /* hoppa bolaget */ }
       await paus();
+      /* Rakenskaperna per kvartal. Valutan tas ur instrumentet; saknas den
+         hoppas bolaget over i stallet for att fa ett gissat enhetsnamn. */
+      let rakenskaper = { rader: [], av: 'ej hämtat' };
+      const valuta = valutaFor(t.i);
+      try { rakenskaper = await hamtaRakenskaper(t.i.insId, valuta, { tyst }); }
+      catch (e) { rakenskaper = { rader: [], av: e.message.slice(0, 60) }; }
+      await paus();
+      if (!tyst && rakenskaper.av) console.log(`  börsdata: ${t.namn} utan kvartalsräkenskaper (${rakenskaper.av})`);
       const k = kalender[t.i.insId] || null;
-      if (k || vardering) rader.push({ bolag: t.namn, kalender: k, vardering });
+      if (k || vardering || rakenskaper.rader.length)
+        rader.push({ bolag: t.namn, kalender: k, vardering, valuta, rakenskaper: rakenskaper.rader });
     }
     rader.sort((a, b) => (a.kalender?.dagar ?? 9e9) - (b.kalender?.dagar ?? 9e9));
     const utan = bolagsnamn.filter(n => !traffar.some(t => t.namn === n));

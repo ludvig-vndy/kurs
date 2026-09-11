@@ -197,3 +197,107 @@ test('utan nyckeln i KV svarar Fraga som forut', async () => {
     assert.equal(d.tackning.nyckeltal, undefined);
   } finally { globalThis.fetch = original; }
 });
+
+/* ---------- kvartalsrakenskaperna ---------- */
+
+import { hamtaRakenskaper, valutaFor, MAX_KVARTAL } from '../../motor/borsdata.mjs';
+
+const svar = (reports) => {
+  const original = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => ({ reports }) });
+  return () => { globalThis.fetch = original; };
+};
+const rapport = (ar, q, extra = {}) => ({ year: ar, period: q, revenues: 100,
+  gross_Income: 30, free_Cash_Flow: 10, cash_And_Equivalents: 50,
+  net_Debt: 20, number_Of_Shares: 2033, ...extra });
+
+test('valutan tas ur instrumentet och gissas aldrig', () => {
+  assert.equal(valutaFor({ reportCurrency: 'SEK' }), 'SEK');
+  assert.equal(valutaFor({ stockPriceCurrency: 'eur' }), 'EUR');
+  assert.equal(valutaFor({ reportCurrency: 'EUR', stockPriceCurrency: 'SEK' }), 'EUR');
+  for (const i of [null, {}, { reportCurrency: '' }, { reportCurrency: 'kronor' }, { reportCurrency: 12 }])
+    assert.equal(valutaFor(i), null, JSON.stringify(i));
+});
+
+test('utan valuta hamtas inga rader alls', async () => {
+  const nyckel = process.env.BORSDATA_API; process.env.BORSDATA_API = 'x';
+  const ater = svar([rapport(2025, 1)]);
+  try {
+    const r = await hamtaRakenskaper(1, null, { tyst: true });
+    assert.deepEqual(r.rader, []);
+    assert.match(r.av, /valuta/);
+  } finally { ater(); process.env.BORSDATA_API = nyckel; }
+});
+
+/* SKALSPARREN. Var egen extraktion hade 25 rena skalfel av 131 jamforelser.
+   Kommer talen i kronor i stallet for miljoner ska bolaget slappas, inte
+   skickas vidare till ett register som kommer behandla dem som belagda. */
+test('orimlig skala stoppar hela bolaget', async () => {
+  const nyckel = process.env.BORSDATA_API; process.env.BORSDATA_API = 'x';
+  const ater = svar([rapport(2025, 2, { revenues: 120_483_000_000 })]);
+  try {
+    const r = await hamtaRakenskaper(1, 'SEK', { tyst: true });
+    assert.deepEqual(r.rader, []);
+    assert.match(r.av, /skala/);
+  } finally { ater(); process.env.BORSDATA_API = nyckel; }
+});
+
+test('rakenskaperna blir kvartalsrader med enhet ur valutan', async () => {
+  const nyckel = process.env.BORSDATA_API; process.env.BORSDATA_API = 'x';
+  const ater = svar([rapport(2025, 1), rapport(2025, 2), { year: 2025, period: 9, revenues: 1 }]);
+  try {
+    const r = await hamtaRakenskaper(1, 'EUR', { tyst: true });
+    assert.equal(r.av, null);
+    assert.ok(r.rader.every(x => x.langd === 1 && x.kvartal >= 1 && x.kvartal <= 4), 'ogiltigt kvartal slapptes in');
+    const oms = r.rader.filter(x => x.matt === 'Omsättning');
+    assert.equal(oms.length, 2, 'kvartal 9 borde ha hoppats over');
+    assert.equal(oms[0].enhet, 'MEUR');
+    assert.equal(oms[0].slag, 'flode');
+    assert.equal(r.rader.find(x => x.matt === 'Antal aktier').enhet, 'aktier');
+    assert.equal(r.rader.find(x => x.matt === 'Kassa').slag, 'balans');
+    assert.equal(MAX_KVARTAL, 12);
+  } finally { ater(); process.env.BORSDATA_API = nyckel; }
+});
+
+/* KARNAN I HELA KOPPLINGEN. Halvaret behover inte lasas ur en PDF-tabell.
+   Q1 plus Q2 ar en summa av tva floden med riktig kvartalsperiod, och talet
+   nedan ar facitsiffran ur det frysta Volvo-provet. */
+test('halvaret raknas ur tva kvartal och landar pa facit', () => {
+  const r = skapaFaktaregister();
+  r.synka({ nyckeltal: [{ bolagId: 'volvo', bolag: 'Volvo Group', valuta: 'SEK', nyckeltal: [],
+    rakenskaper: [
+      { matt: 'Omsättning', slag: 'flode', ar: 2025, kvartal: 1, langd: 1, varde: 124204, enhet: 'MSEK' },
+      { matt: 'Omsättning', slag: 'flode', ar: 2025, kvartal: 2, langd: 1, varde: 120483, enhet: 'MSEK' },
+    ] }] });
+  const ids = r.poster().filter(p => p.matt === 'Omsättning').map(p => p.id);
+  const d = r.laggBeraknad({ operation: 'summa', indata: ids });
+  assert.equal(d.ok, true, d.skal);
+  const h1 = r.get(d.id);
+  assert.equal(h1.varde, 244687, 'halvaret stammer inte med facit');
+  assert.equal(h1.langd, 2);
+  assert.equal(h1.enhet, 'MSEK');
+  assert.match(h1.formel, /124204 MSEK \(Q1 2025\) \+ 120483 MSEK \(Q2 2025\)/);
+});
+
+/* Kvartalsposter och arsnyckeltal ar olika periodsorter och far inte blandas. */
+test('en kvartalspost kan inte jamforas med ett arsnyckeltal', () => {
+  const r = skapaFaktaregister();
+  r.synka({ nyckeltal: [{ bolagId: 'x', bolag: 'X', nyckeltal: [
+      { kpi: 29, namn: 'Omsättning', enhet: 'procent', ar: 2025, varde: 10, historik: [], median: null }],
+    rakenskaper: [
+      { matt: 'Omsättning', slag: 'flode', ar: 2025, kvartal: 2, langd: 1, varde: 100, enhet: 'MSEK' }] }] });
+  const ars = r.poster().find(p => p.period === '2025');
+  const kvartal = r.poster().find(p => p.period === 'Q2 2025');
+  assert.equal(r.laggBeraknad({ operation: 'differens', indata: [ars.id, kvartal.id] }).ok, false);
+});
+
+/* Posten ska saga att definitionen ar Borsdatas och koncernens, annars kan en
+   segmentfraga besvaras med ett koncerntal som ser riktigt ut. */
+test('rakenskapsposten sager vems definition det ar', () => {
+  const r = skapaFaktaregister();
+  r.synka({ nyckeltal: [{ bolagId: 'v', bolag: 'Volvo', rakenskaper: [
+    { matt: 'Fritt kassaflöde', slag: 'flode', ar: 2025, kvartal: 2, langd: 1, varde: 2948, enhet: 'MSEK' }] }] });
+  const p = r.poster().find(x => x.matt === 'Fritt kassaflöde');
+  assert.match(p.kallor[0].citat, /standardiserade definition för hela koncernen/);
+  assert.match(p.kallor[0].citat, /inte ett segment/);
+});

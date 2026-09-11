@@ -317,12 +317,14 @@ writeFileSync(p('./out/nyckeltal.json'), JSON.stringify({
   uppdaterad: new Date().toISOString(),
   kalla: 'borsdata',
   bolag: borsdata.rader
-    .filter(r => r.vardering && (r.vardering.nyckeltal || []).length)
+    .filter(r => (r.vardering && (r.vardering.nyckeltal || []).length) || (r.rakenskaper || []).length)
     .map(r => ({
       // Arkivets id, samma nyckel som arkiv:<id>, sa faktaregistret kan halla
       // isar tva bolag i samma fraga.
       bolagId: (konf.bolag.find(b => b.namn === r.bolag) || {}).id || r.bolag,
-      bolag: r.bolag, nyckeltal: r.vardering.nyckeltal,
+      bolag: r.bolag, valuta: r.valuta || null,
+      nyckeltal: (r.vardering && r.vardering.nyckeltal) || [],
+      rakenskaper: r.rakenskaper || [],
     })),
 }, null, 1), 'utf8');
 
