@@ -32,10 +32,13 @@ jobs:
           # Utfallet i jobbsammanfattningen, inte bara i loggen, så det går att
           # läsa utan att öppna körningen. Inga hemligheter skrivs: skriptet
           # skickar nyckeln i en URL men skriver aldrig ut den.
+          # tee, inte bara omdirigering: jobbsammanfattningen gar inte att hamta
+          # via API:et, sa utfallet maste finnas i loggen ocksa. Inga hemligheter
+          # skrivs; skriptet skickar nyckeln i en URL men skriver aldrig ut den.
           {
             echo '## Börsdatas kvartalsfält'
             echo
             echo '```'
             node tools/borsdata-schema.mjs 2>&1
             echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
