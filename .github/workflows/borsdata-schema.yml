@@ -1,0 +1,41 @@
+# Läser vilka fält Börsdatas kvartalsrapporter bär, och i vilken valuta och
+# skala. Enbart läsning: ingen modell, ingen KV-skrivning, ingen deploy.
+#
+# Finns för att RAKENSKAPSFALT i motor/borsdata.mjs bara innehåller de fältnamn
+# som redan var verifierade. Att gissa ett fältnamn i kod som faller tyst
+# betyder att felet aldrig upptäcks, så listan ska utökas på ett belägg.
+#
+# Kostar ungefär sju Börsdata-anrop och noll kronor hos Anthropic.
+
+name: Börsdata, fältschema
+
+on:
+  workflow_dispatch:
+
+jobs:
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Läs fältschemat
+        env:
+          BORSDATA_API: ${{ secrets.BORSDATA_API }}
+        run: |
+          if [ -z "$BORSDATA_API" ]; then
+            echo "BORSDATA_API saknas som secret." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          # Utfallet i jobbsammanfattningen, inte bara i loggen, så det går att
+          # läsa utan att öppna körningen. Inga hemligheter skrivs: skriptet
+          # skickar nyckeln i en URL men skriver aldrig ut den.
+          {
+            echo '## Börsdatas kvartalsfält'
+            echo
+            echo '```'
+            node tools/borsdata-schema.mjs 2>&1
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
