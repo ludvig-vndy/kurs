@@ -309,8 +309,9 @@ VARNING: insynsregistret kunde inte läsas för ${insynsbortfall.join(', ')}. `
    men arkivet ar gemensamt, och Fraga grindar redan pa vilka bolag fragan
    handlar om. Publiceras av motor/publicera-brev.mjs.
 
-   LICENS: samma retail-nyckel som brevet. Se huvudet i motor/borsdata.mjs och
-   LAUNCH.md:s forsta P0. Ta bort denna fil ur publiceringen for att stanga av
+   LICENS: samma retail-nyckel som brevet, och samma villkor. Anvandningen ar
+   klar, fragor om egna innehav ryms i avtalet; det som aterstar ar tier, se
+   huvudet i motor/borsdata.mjs och LAUNCH.md:s forsta P0. Ta bort denna fil ur publiceringen for att stanga av
    vagen till chatten utan att rora brevet. */
 writeFileSync(p('./out/nyckeltal.json'), JSON.stringify({
   uppdaterad: new Date().toISOString(),

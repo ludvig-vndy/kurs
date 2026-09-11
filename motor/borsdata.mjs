@@ -14,6 +14,12 @@
 // betalande kunder, så utvärdering är i sin ordning, men det här blocket måste
 // stängas av eller licensen uppgraderas innan någon betalar för brevet.
 //
+// ANVÄNDNINGEN är däremot utredd och klar: frågor om användarens egna innehav
+// ryms i det Börsdata tillåter. Det var screenern de sa nej till, alltså att
+// söka fram bolag ur hela universumet på kriterier. Fråga läser bara nyckeltal
+// för bolag användaren redan har, och det är samma sorts bevakning som brevet.
+// Ta inte upp den frågan igen; det som återstår är tier, inte use case.
+//
 // Nyckelnamn: BORSDATA_API är det som ligger i .env. motor/vigilans/
 // ingest-borsdata.mjs läser BORSDATA_API_KEY. Båda godtas här tills de slagits
 // ihop, så att en körning inte tystnar för att namnet skiljer sig.

@@ -19,6 +19,10 @@ SMTP). **[Jag]** = kod jag gör på ditt ord. **[Beslut]** = val som ska tas.
       FMP Starter) är privat bruk och får INTE visas för betalande kunder. Skarp tjänst
       kräver Börsdata Enterprise eller FMP:s Data Display-avtal. **Detta grindar allt
       annat i vaksamheten.** (Gratis och ok nu: FI-insynsregistret.)
+      Frågan om *användningen* är utredd 2026-09-11 och behöver inte tas igen: frågor
+      om användarens egna innehav ryms i det Börsdata tillåter, både i brevet och i
+      Fråga. Det var screenern de sa nej till, alltså att söka fram bolag ur hela
+      universumet på kriterier. Kvar står alltså tier, inte use case.
 - [ ] **[Jag+Du] Vaksamheten live på ETT riktigt innehav (Fas 2).** Rapportkollen ->
       holding_figures -> tripwire-eval -> briefs/tidslinje, på skarp data. Utan detta är
       flaggskeppet en demo och premiumpriset oärligt. Kräver datakällan ovan.

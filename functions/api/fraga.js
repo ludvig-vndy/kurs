@@ -927,7 +927,8 @@ async function besvaraFraga(context) {
              routats. Faller lasningen tyst svarar Fraga precis som forut:
              detta ar ett tillskott till underlaget, aldrig ett villkor.
 
-             LICENS: retail-nyckel. Se huvudet i motor/borsdata.mjs och
+             LICENS: retail-nyckel. Fragor om egna innehav ryms i avtalet;
+             det som aterstar ar tier. Se huvudet i motor/borsdata.mjs och
              LAUNCH.md:s forsta P0. Slutar nattjobbet publicera nyckeln ar
              vagen stangd harifran utan nagon kodandring. */
           try {
