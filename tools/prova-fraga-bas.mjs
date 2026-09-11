@@ -230,6 +230,12 @@ for (const p of PROV) {
   console.log('      nyckeltal ' + (t.nyckeltal?.length ? t.nyckeltal.join(' | ') : '(inga, Börsdata nådde inte fram)'));
   console.log('      beräkningar ' + (t.berakningar || []).filter(x => x.ok).length + ' godkända, '
     + (t.berakningar || []).filter(x => !x.ok).length + ' avslagna');
+  /* Avgorande, och den var osynlig i forsta korningen: registret har ett tak
+     pa 40 kB och halverar det under starten. Slar det i taket faller poster
+     bort TYST, och modellen ser aldrig att de funnits. */
+  const reg = t.faktaregister || {};
+  console.log('      register  ' + (reg.poster ?? '?') + ' poster, ' + (reg.bytes ?? '?') + ' byte'
+    + (reg.begransat ? '   <-- TAKET SLOG I, poster foll bort' : ''));
   for (const b of (t.berakningar || []).filter(x => !x.ok))
     console.log('        avslag: ' + String(b.skal || '').slice(0, 140));
 
