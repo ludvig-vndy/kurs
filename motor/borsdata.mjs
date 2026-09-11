@@ -247,68 +247,102 @@ export async function hamtaVardering(insId) {
 
 /* RAKENSKAPERNA PER KVARTAL.
 
-   Skillnaden mot nyckeltalen ovan ar att detta ar radposter, inte kvoter:
-   omsattning, bruttoresultat, fritt kassaflode, kassa, nettoskuld och antal
-   aktier, tolv kvartal bakat. De ar flodesposter och balansposter med riktig
-   kvartalsperiod, vilket gor dem summerbara. Darfor kan halvaret raknas fram
-   ur Q1 plus Q2 i stallet for att lasas ur en tabell i en PDF.
+   Skillnaden mot nyckeltalen ovan ar att detta ar radposter, inte kvoter, med
+   riktig kvartalsperiod. Alltsa summerbara: halvaret raknas ur Q1 plus Q2 i
+   stallet for att lasas ur en tabell i en PDF.
 
-   Faltnamnen nedan ar de som redan ar verifierade i
-   motor/vigilans/ingest-borsdata.mjs. Fler finns nastan sakert i svaret, men
-   vi gissar inte: okanda falt loggas i stallet, sa nasta korning sager vilka
-   som faktiskt finns och listan kan utokas pa ett belagg. */
+   FALTNAMNEN AR LASTA, INTE GISSADE. tools/borsdata-schema.mjs hamtade dem ur
+   svaret 2026-09-11, och sonden fallde tva av mina antaganden pa en gang: ett
+   insId jag trodde var Volvo var ett norskt bolag, och number_Of_Shares star i
+   MILJONER, inte i aktier. Den andra hade blivit en faktor en miljon fel i ett
+   register som behandlar talet som belagt, alltsa exakt den felklass vi bygger
+   for att stoppa. Lagg inte till ett falt utan att kora sonden igen.
+
+   revenues och net_Sales ar INTE samma sak. For Lifco ar de lika, for Unibap
+   star net_Sales pa 21,204 och revenues pa 35,296. Nettoomsattning ar
+   net_Sales; revenues bar ocksa ovriga rorelseintakter. Bada foljer med, med
+   var sitt namn, sa modellen inte kan valja fel utan att det syns. */
 const RAKENSKAPSFALT = [
-  { falt: 'revenues',              matt: 'Omsättning',        slag: 'flode',  valuta: true },
-  { falt: 'gross_Income',          matt: 'Bruttoresultat',    slag: 'flode',  valuta: true },
-  { falt: 'free_Cash_Flow',        matt: 'Fritt kassaflöde',  slag: 'flode',  valuta: true },
-  { falt: 'cash_And_Equivalents',  matt: 'Kassa',             slag: 'balans', valuta: true },
-  { falt: 'net_Debt',              matt: 'Nettoskuld',        slag: 'balans', valuta: true },
-  { falt: 'number_Of_Shares',      matt: 'Antal aktier',      slag: 'balans', valuta: false, enhet: 'aktier' },
+  { falt: 'net_Sales',                          matt: 'Nettoomsättning',                 slag: 'flode',  valuta: true },
+  { falt: 'revenues',                           matt: 'Totala intäkter',                 slag: 'flode',  valuta: true },
+  { falt: 'gross_Income',                       matt: 'Bruttoresultat',                  slag: 'flode',  valuta: true },
+  { falt: 'operating_Income',                   matt: 'Rörelseresultat',                 slag: 'flode',  valuta: true },
+  { falt: 'profit_Before_Tax',                  matt: 'Resultat före skatt',             slag: 'flode',  valuta: true },
+  { falt: 'profit_To_Equity_Holders',           matt: 'Resultat hänförligt till moderbolagets ägare', slag: 'flode', valuta: true },
+  { falt: 'cash_Flow_From_Operating_Activities', matt: 'Kassaflöde från löpande verksamheten', slag: 'flode', valuta: true },
+  { falt: 'cash_Flow_From_Investing_Activities', matt: 'Kassaflöde från investeringsverksamheten', slag: 'flode', valuta: true },
+  { falt: 'cash_Flow_From_Financing_Activities', matt: 'Kassaflöde från finansieringsverksamheten', slag: 'flode', valuta: true },
+  { falt: 'free_Cash_Flow',                     matt: 'Fritt kassaflöde',                slag: 'flode',  valuta: true },
+  { falt: 'cash_And_Equivalents',               matt: 'Kassa och likvida medel',         slag: 'balans', valuta: true },
+  { falt: 'net_Debt',                           matt: 'Nettoskuld',                      slag: 'balans', valuta: true },
+  { falt: 'total_Equity',                       matt: 'Eget kapital',                    slag: 'balans', valuta: true },
+  { falt: 'total_Assets',                       matt: 'Totala tillgångar',               slag: 'balans', valuta: true },
+  { falt: 'current_Assets',                     matt: 'Omsättningstillgångar',           slag: 'balans', valuta: true },
+  { falt: 'current_Liabilities',                matt: 'Kortfristiga skulder',            slag: 'balans', valuta: true },
+  // Star i MILJONER i svaret. Enheten sager det; vardet raknas inte om, sa det
+  // som visas ar exakt det kallan lamnade.
+  { falt: 'number_Of_Shares',                   matt: 'Antal aktier',                    slag: 'balans', valuta: false, enhet: 'miljoner aktier' },
+  { falt: 'earnings_Per_Share',                 matt: 'Resultat per aktie',              slag: 'flode',  valuta: false, enhetSuffix: ' per aktie' },
 ];
 
 export const MAX_KVARTAL = 12;
 
 /* SKALSPARREN. Borsdata redovisar i miljoner, och hela var egen extraktions
    varsta felklass var just skala: 25 rena skalfel av 131 jamforelser. Ett
-   kvartals omsattning over femtio miljarder i den enhet vi tror oss lasa
-   betyder att vi laser fel enhet, inte att bolaget ar ofattbart stort. Da
-   slapper vi bolaget hellre an att skicka ett tal med fel storleksordning
-   vidare till ett faktaregister som kommer behandla det som belagt. */
+   kvartals omsattning over femtio miljoner i den enhet vi tror oss lasa
+   betyder att vi laser fel enhet, inte att bolaget ar ofattbart stort. */
 const RIMLIG_MILJON = 5e7;
 
-/* Valutan kommer fran instrumentet, aldrig fran en gissning. Ett TRATON-tal
-   markt MSEK ar ett sakfel som ser ut som en siffra, och exakt det gjorde var
-   LLM-extraktion: den markte eurobelopp som Mkr. Saknas valutan hoppar vi over
-   bolaget. */
+const DATUM = /^\d{4}-\d{2}-\d{2}/;
+const datumdel = v => typeof v === 'string' && DATUM.test(v) ? v.slice(0, 10) : null;
+
+/* Valutan star i rapportraden (faltet currency) och sekundart i instrumentet.
+   Den gissas aldrig: ett TRATON-tal markt MSEK ar ett sakfel som ser ut som en
+   siffra, och exakt det gjorde var LLM-extraktion. Saknas valutan hoppar vi
+   over bolaget. */
 export function valutaFor(instrument) {
   const v = instrument && (instrument.reportCurrency || instrument.stockPriceCurrency);
   return typeof v === 'string' && /^[A-Z]{3}$/.test(v.toUpperCase()) ? v.toUpperCase() : null;
 }
 
 export async function hamtaRakenskaper(insId, valuta, { tyst = false } = {}) {
-  if (!valuta) return { rader: [], av: 'okänd valuta' };
   const j = await bd('/instruments/' + insId + '/reports/quarter?maxCount=' + MAX_KVARTAL);
   const rapporter = (j && (j.reports || j.reportsQuarter)) || [];
   if (!rapporter.length) return { rader: [], av: 'inga kvartalsrapporter' };
 
-  /* Vad svaret faktiskt bar. Loggas en gang per korning sa listan ovan kan
-     utokas pa ett belagg i stallet for pa en gissning. */
   const falten = Object.keys(rapporter[0] || {});
   const saknade = RAKENSKAPSFALT.map(f => f.falt).filter(f => !falten.includes(f));
   if (!tyst && saknade.length) console.log(`  börsdata: kvartalsfält saknas i svaret: ${saknade.join(', ')}`);
 
   const senaste = [...rapporter].sort((a, b) => (b.year - a.year) || (b.period - a.period))[0];
-  if (Math.abs(Number(senaste?.revenues) || 0) > RIMLIG_MILJON)
+  if (Math.abs(Number(senaste?.net_Sales ?? senaste?.revenues) || 0) > RIMLIG_MILJON)
     return { rader: [], av: 'orimlig skala, talen är inte miljoner', falten };
 
   const rader = [];
   for (const r of rapporter) {
-    if (!Number.isInteger(r.year) || !Number.isInteger(r.period) || r.period < 1 || r.period > 4) continue;
+    // Valutan per rad gar fore instrumentets. Utan nagon av dem: ingen rad.
+    const val = (typeof r.currency === 'string' && /^[A-Z]{3}$/i.test(r.currency)
+      ? r.currency.toUpperCase() : null) || valuta;
+    if (!val) continue;
+    const fran = datumdel(r.report_Start_Date), till = datumdel(r.report_End_Date);
+    /* BRUTET RAKENSKAPSAR. broken_Fiscal_Year sager det rakt ut, sa vi behover
+       inte gissa. Ar det brutet betyder "period 2" inte kalenderns andra
+       kvartal, och da far posten INTE kvartalsfalten. Den behaller sina datum
+       och kan visas och lasas, men operationer som kraver kvartalslangd avslas
+       i stallet for att rakna pa en period vi hittat pa. */
+    const kalender = r.broken_Fiscal_Year !== true &&
+      Number.isInteger(r.year) && Number.isInteger(r.period) && r.period >= 1 && r.period <= 4;
+    if (!kalender && !(fran && till)) continue;
     for (const f of RAKENSKAPSFALT) {
       const v = r[f.falt];
       if (typeof v !== 'number' || !Number.isFinite(v)) continue;
-      rader.push({ matt: f.matt, slag: f.slag, ar: r.year, kvartal: r.period, langd: 1,
-        varde: Math.round(v * 100) / 100, enhet: f.valuta ? 'M' + valuta : f.enhet });
+      rader.push({
+        matt: f.matt, slag: f.slag,
+        ...(kalender ? { ar: r.year, kvartal: r.period, langd: 1 } : { ar: null, kvartal: null, langd: null }),
+        fran, till, brutet: r.broken_Fiscal_Year === true,
+        varde: Math.round(v * 10000) / 10000,
+        enhet: f.valuta ? 'M' + val : (f.enhetSuffix ? val + f.enhetSuffix : f.enhet),
+      });
     }
   }
   return { rader, av: null, falten };

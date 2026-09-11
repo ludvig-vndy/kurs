@@ -20,13 +20,18 @@ const B = 'https://apiservice.borsdata.se/v1';
 const PAUS = 150;
 const paus = () => new Promise(r => setTimeout(r, PAUS));
 
-// Ett svenskt, ett med euro och ett litet. Skillnaden i valuta och storlek är
-// själva poängen: ett fält som finns för Volvo kan vara null för Unibap.
-const PROV = [
-  { namn: 'Volvo', insId: 1027 },
-  { namn: 'Lifco', insId: 440 },
-  { namn: 'Unibap', insId: 1431 },
-];
+// SLÅS UPP PÅ NAMN, inte på hårdkodat id. Första körningen hade insId 1027 som
+// "Volvo"; det är ett norskt bolag med reportCurrency NOK. Sonden fällde alltså
+// sin egen författare, vilket är precis vad den finns till för, men ett gissat
+// id i ett verktyg som ska bevisa saker är inte acceptabelt.
+//
+// Ett stort, ett medelstort och ett litet: skillnaden i storleksordning är
+// själva poängen, och ett fält som finns för det ena kan vara tomt för det andra.
+const PROV = ['Volvo B', 'Lifco B', 'Unibap'];
+
+/* Samma avskalning som motor/borsdata.mjs: bolagsformen bort före matchning. */
+const skala = namn => String(namn).toLowerCase()
+  .replace(/\s*\((?:publ|ser\.?\s*[ab])\)/g, '').replace(/\s+(?:ab|asa|oyj|plc|inc)/g, '').trim();
 
 async function bd(vag, nyckel) {
   const r = await fetch(B + vag + (vag.includes('?') ? '&' : '?') + 'authKey=' + nyckel);
@@ -41,14 +46,17 @@ export async function sondera(nyckel) {
   const instrument = (await bd('/instruments', nyckel)).instruments || [];
   await paus();
   const ut = [];
-  for (const p of PROV) {
-    const i = instrument.find(x => x.insId === p.insId);
+  for (const namn of PROV) {
+    const i = instrument.find(x => skala(x.name) === skala(namn))
+      || instrument.find(x => skala(x.name).startsWith(skala(namn)));
+    if (!i) { ut.push({ namn, saknas: true }); continue; }
+    const p = { namn, insId: i.insId };
     const j = await bd('/instruments/' + p.insId + '/reports/quarter?maxCount=4', nyckel);
     await paus();
     const rapporter = j.reports || j.reportsQuarter || [];
     const senaste = [...rapporter].sort((a, b) => (b.year - a.year) || (b.period - a.period))[0] || {};
     ut.push({
-      namn: p.namn,
+      namn: p.namn + ' (' + i.name + ', insId ' + i.insId + ')',
       // Valutan är det enda som avgör om ett belopp får heta MSEK eller MEUR.
       reportCurrency: i && i.reportCurrency, stockPriceCurrency: i && i.stockPriceCurrency,
       kvartal: rapporter.length,
@@ -65,6 +73,7 @@ async function main() {
   const bolag = await sondera(nyckel);
 
   for (const b of bolag) {
+    if (b.saknas) { console.log(`\n${b.namn}: HITTADES INTE i instrumentlistan.`); continue; }
     console.log(`\n${b.namn}: ${b.kvartal} kvartal, senast ${b.period}, ` +
       `reportCurrency=${b.reportCurrency ?? 'SAKNAS'} stockPriceCurrency=${b.stockPriceCurrency ?? 'SAKNAS'}`);
   }
@@ -72,10 +81,11 @@ async function main() {
   // Ett fält per rad, med värdet för varje bolag. Det gör både namnet och
   // storleksordningen läsbar i samma blick: står Volvos omsättning i
   // hundratusental är talen inte miljoner, och då är hela enhetsvalet fel.
-  const alla = [...new Set(bolag.flatMap(b => Object.keys(b.falt)))].sort();
-  console.log('\n' + 'fält'.padEnd(34) + bolag.map(b => b.namn.padEnd(18)).join(''));
+  const funna = bolag.filter(b => !b.saknas);
+  const alla = [...new Set(funna.flatMap(b => Object.keys(b.falt)))].sort();
+  console.log('\n' + 'fält'.padEnd(34) + funna.map(b => b.namn.split(' (')[0].slice(0, 17).padEnd(18)).join(''));
   for (const f of alla) {
-    const celler = bolag.map(b => {
+    const celler = funna.map(b => {
       const c = b.falt[f];
       return (c ? (c.sort === 'tomt' ? 'tomt' : String(c.varde)) : '-').slice(0, 17).padEnd(18);
     });

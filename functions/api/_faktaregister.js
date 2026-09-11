@@ -176,18 +176,33 @@ export function skapaFaktaregister() {
          den skickar motor/borsdata.mjs inga rader alls. */
       for (const rad of b.rakenskaper || []) {
         if (!rad || !Number.isFinite(rad.varde) || typeof rad.matt !== 'string' ||
-            typeof rad.enhet !== 'string' || !['flode', 'balans'].includes(rad.slag) ||
-            !Number.isInteger(rad.ar) || !Number.isInteger(rad.kvartal) ||
-            rad.kvartal < 1 || rad.kvartal > 4 || rad.langd !== 1) continue;
-        const periodtext = 'Q' + rad.kvartal + ' ' + rad.ar;
+            typeof rad.enhet !== 'string' || !['flode', 'balans'].includes(rad.slag)) continue;
+        /* KVARTALSFALTEN BARA NAR DE BETYDER KALENDERKVARTAL.
+
+           Borsdatas svar bar broken_Fiscal_Year, sa vi behover inte gissa. Ar
+           aret brutet ar "period 2" inte kalenderns andra kvartal, och da far
+           posten sina datum men inga kvartalsfalt. Den gar att lasa och citera,
+           men jamforbara() avslar den, sa ingen operation kan rakna pa en
+           periodlangd vi hittat pa. */
+        const kalender = Number.isInteger(rad.ar) && Number.isInteger(rad.kvartal) &&
+          rad.kvartal >= 1 && rad.kvartal <= 4 && rad.langd === 1 && rad.brutet !== true;
+        const datum = rad.fran && rad.till ? rad.fran + ' till ' + rad.till : null;
+        if (!kalender && !datum) continue;
+        const periodtext = kalender ? 'Q' + rad.kvartal + ' ' + rad.ar : datum;
         lagg({ typ: 'rapporterat', bolagId, bolag: b.bolag, matt: rad.matt,
           period: periodtext, varde: rad.varde, enhet: rad.enhet,
           normaliserat: { varde: rad.varde, enhet: rad.enhet }, slag: rad.slag,
-          ar: rad.ar, kvartal: rad.kvartal, langd: 1, djup: 0,
+          ...(kalender ? { ar: rad.ar, kvartal: rad.kvartal, langd: 1 }
+            : { ar: null, kvartal: null, langd: null }),
+          ...(datum ? { fran: rad.fran, till: rad.till } : {}),
+          ...(rad.brutet === true ? { brutet_rakenskapsar: true } : {}),
+          djup: 0,
           kallor: [{ url: 'https://borsdata.se', typ: 'borsdata',
             rubrik: 'Börsdata, ' + rad.matt + ' ' + periodtext,
             citat: b.bolag + ', ' + rad.matt + ' ' + periodtext + ': ' +
               String(rad.varde).replace('.', ',') + ' ' + rad.enhet +
+              (datum && kalender ? ' (rapportperiod ' + datum + ')' : '') +
+              (rad.brutet === true ? ' Bolaget har brutet räkenskapsår, så perioden anges med datum.' : '') +
               '. Hämtat från Börsdatas kvartalsräkenskaper, inte uträknat här. ' +
               'Börsdatas standardiserade definition för hela koncernen, inte bolagets egen rad och inte ett segment.' }] });
       }
