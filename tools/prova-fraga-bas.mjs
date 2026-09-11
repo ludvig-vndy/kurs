@@ -1,0 +1,288 @@
+/* BASFRAGOR: det som Borsdata faktiskt bar, och vad de kostar och tar for tid.
+
+   Varfor den finns
+   ----------------
+   De sex frusna provfragorna i prova-fraga-avancerat.mjs ligger alla pa lager 2
+   och 3: segment, justerat mot rapporterat, bolagets egna matt, orsakssamband.
+   Ingen datakalla i varlden loser dem, och vi har anda last 0 av 6 som om det
+   vore produktens kvalitet. Det har provet mater den andra andan: gruppnivans
+   standardiserade tal, alltsa exakt det Borsdata levererar med period, enhet
+   och matt fran kallan. Gar de inte igenom ar det vart fel, inte underlagets.
+
+   Vad som ar riktigt har
+   ----------------------
+     arkivet      laser produktionens KV, samma dokument som en kund far
+     nyckeltalen  hamtas live fran Borsdata, samma kod som nattjobbet kor
+     modellen     riktiga Anthropic, riktig verktygsloop, riktig granskare
+     Supabase     stubbad. Vi behover ingen session for att prova modellen.
+
+   Nyckeltalen hamtas live i stallet for att lasas ur arkiv:nyckeltal, eftersom
+   den nyckeln skrivs forst av nasta nattjobb. Bygget ar identiskt med
+   natt.mjs, sa det som provas ar den vag chatten kommer att ha.
+
+   INGET SKRIVS. Ingen KV-put, inget brev, inget mejl. Bara lasningar.
+
+   Kostar modellanrop, cirka 25 ore per fraga. Ingar darfor inte i
+   `npm run check`. Kors via .github/workflows/prova-fraga.yml (basfragor).
+*/
+
+import { execFileSync } from 'node:child_process';
+import { onRequestPost } from '../functions/api/fraga.js';
+import { byggBorsdata } from '../motor/borsdata.mjs';
+
+const NYCKEL = process.env.ANTHROPIC_API_KEY;
+if (!NYCKEL) { console.error('ANTHROPIC_API_KEY saknas.'); process.exit(1); }
+if (!process.env.BORSDATA_API) { console.error('BORSDATA_API saknas.'); process.exit(1); }
+
+const NS = '97d78256ff664c54a724878034c8f0fd'; // upptack-data, samma som motor/state-kv.mjs
+const ANTAL_BOLAG = Number(process.env.FRAGA_BAS_BOLAG || 2);
+
+/* Prislista, USD per miljon token. Lokal konstant, ingen API-uppgift: andras
+   priserna blir siffran nedan fel utan att nagot larmar. Cache-lasning kostar
+   0,1x och cache-skrivning 1,25x av inpriset. */
+const PRIS = {
+  'claude-sonnet-5': { in: 2, ut: 10 },
+  'claude-haiku-4-5-20251001': { in: 1, ut: 5 },
+};
+const USD_SEK = 10.5; // ungefarlig kurs, for att gora talen lasbara i kronor
+
+function kostnad(anrop) {
+  const p = PRIS[anrop.modell];
+  if (!p) return null;
+  return ((anrop.inputTokens || 0) * p.in
+    + (anrop.cacheSkrivet || 0) * p.in * 1.25
+    + (anrop.cacheLast || 0) * p.in * 0.1
+    + (anrop.outputTokens || 0) * p.ut) / 1e6;
+}
+
+/* ---- produktionens arkiv, last ur KV ---- */
+
+function kv(nyckel) {
+  const ut = execFileSync('npx', ['--yes', 'wrangler@4', 'kv', 'key', 'get',
+    '--namespace-id=' + NS, nyckel, '--remote'], {
+    encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    shell: process.platform === 'win32',
+  });
+  // Wrangler skriver vardet ratt ut, men en banner kan smita med fore det.
+  const start = [ut.indexOf('{'), ut.indexOf('[')].filter(i => i >= 0).sort((a, b) => a - b)[0];
+  if (start === undefined) return null;
+  try { return JSON.parse(ut.slice(start)); } catch { return null; }
+}
+
+console.log('Laser produktionens arkivindex ur KV.');
+const index = kv('arkiv:index') || [];
+if (!index.length) { console.error('arkiv:index ar tomt eller gick inte att lasa.'); process.exit(1); }
+console.log(`  ${index.length} bolag i indexet.`);
+
+/* Valj de forsta bolagen som BADE har dokument i arkivet OCH traff hos
+   Borsdata. Bada kraven ar produktionens: utan dokument slapps bolaget innan
+   nyckeltalen ens lases, sa ett bolag med bara Borsdata-tal ger inget svar. */
+const kandidater = [];
+for (const post of index) {
+  if (kandidater.length >= ANTAL_BOLAG * 3) break;
+  const a = kv('arkiv:' + post.id);
+  if (a && (a.dokument || []).length) kandidater.push({ id: post.id, namn: a.namn || post.namn, arkiv: a });
+}
+console.log(`  ${kandidater.length} av dem har dokument i arkivet.`);
+
+console.log('\nHamtar nyckeltal och kvartalsrakenskaper fran Borsdata.');
+const borsdata = await byggBorsdata(kandidater.map(k => k.namn));
+if (borsdata.av) { console.error('Borsdata av: ' + borsdata.av); process.exit(1); }
+
+const bolagen = kandidater
+  .map(k => ({ ...k, rad: borsdata.rader.find(r => r.bolag === k.namn) }))
+  .filter(k => k.rad && ((k.rad.vardering?.nyckeltal || []).length || (k.rad.rakenskaper || []).length))
+  .slice(0, ANTAL_BOLAG);
+
+if (!bolagen.length) { console.error('Inget bolag har bade arkivdokument och Borsdata-tal.'); process.exit(1); }
+for (const b of bolagen) {
+  console.log(`  ${b.namn}: ${b.arkiv.dokument.length} dokument, `
+    + `${(b.rad.vardering?.nyckeltal || []).length} nyckeltal, `
+    + `${(b.rad.rakenskaper || []).length} kvartalsposter, valuta ${b.rad.valuta || 'okand'}`);
+}
+
+/* Samma form som natt.mjs skriver till arkiv:nyckeltal. */
+const NYCKELTALSBOK = {
+  uppdaterad: new Date().toISOString(),
+  kalla: 'borsdata',
+  bolag: bolagen.map(b => ({
+    bolagId: b.id, bolag: b.namn, valuta: b.rad.valuta || null,
+    nyckeltal: b.rad.vardering?.nyckeltal || [],
+    rakenskaper: b.rad.rakenskaper || [],
+  })),
+};
+
+const BUCKET = {
+  'arkiv:index': index,
+  'arkiv:nyckeltal': NYCKELTALSBOK,
+  ...Object.fromEntries(bolagen.map(b => ['arkiv:' + b.id, b.arkiv])),
+};
+
+/* ---- stubbad omgivning, riktig modell ---- */
+
+const UID = '00000000-0000-4000-8000-000000000000';
+const HOLDINGS = bolagen.map((b, i) => ({
+  id: 'h-' + i, name: b.namn, quantity: 100, gav: 100, relation: 'ager',
+}));
+
+const skrivningar = [];
+const DATA = {
+  async get(k, typ) {
+    const v = BUCKET[k];
+    if (v === undefined) return null;
+    return typ === 'json' ? structuredClone(v) : v;
+  },
+  // Provet skriver inte till produktionens KV. Put fangas och raknas.
+  async put(k, v) { skrivningar.push(k); try { BUCKET[k] = JSON.parse(v); } catch { BUCKET[k] = v; } },
+};
+
+const riktigFetch = globalThis.fetch;
+globalThis.fetch = async (url, init) => {
+  const u = String(url);
+  const ok = body => ({ ok: true, status: 200, json: async () => body, text: async () => JSON.stringify(body) });
+  if (u.includes('/auth/v1/user')) return ok({ id: UID });
+  if (u.includes('/rest/v1/holdings')) return ok(HOLDINGS);
+  if (u.includes('/rest/v1/theses')) return ok([]);
+  if (u.includes('api.anthropic.com')) {
+    const r = await riktigFetch(url, init);
+    if (!r.ok && r.status === 400) {
+      const fel = await r.clone().json().catch(() => ({}));
+      // Skriv aldrig ut nyckeln, aven om leverantoren speglar tillbaka den.
+      console.error('API-KONTRAKTSFEL: ' + String(fel.error?.message || 'HTTP 400').split(NYCKEL).join('[hemlighet]').slice(0, 800));
+      process.exit(2);
+    }
+    return r;
+  }
+  return riktigFetch(url, init);
+};
+
+const ENV = {
+  ANTHROPIC_API_KEY: NYCKEL,
+  SUPABASE_SECRET_KEY: 'stubbad',
+  SUPABASE_URL: 'https://sb.stub.test',
+  DATA,
+};
+
+async function fraga(text) {
+  const request = new Request('https://kurs.test/api/fraga', {
+    method: 'POST',
+    body: JSON.stringify({ question: text, token: 'stubbad' }),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const t0 = Date.now();
+  const r = await onRequestPost({ request, env: ENV });
+  const d = await r.json();
+  return { status: r.status, ms: Date.now() - t0, ...d };
+}
+
+/* ---- fragorna ----
+
+   Var och en ar en LAGER 1-fraga: svaret star i Borsdatas standardiserade tal
+   for hela koncernen, med period och enhet fran kallan. Ingen av dem kraver
+   segment, justerade matt eller orsaksforklaring. Gar de inte igenom ar det
+   var brist.
+
+   {b} ar forsta bolaget, {b2} det andra. Ar bara ett bolag valt hoppas de
+   fragor over som behover tva. */
+const MALLAR = [
+  ['marginalserie',     'Hur har rörelsemarginalen i {b} utvecklats de senaste åren?'],
+  ['halvarssumma',      'Vad blev {b}:s nettoomsättning under första halvåret det senaste hela året, och hur räknade du fram den?'],
+  ['kvartalsforandring','Hur stor var {b}:s nettoomsättning det senaste rapporterade kvartalet, och hur mycket ändrades den mot kvartalet före?'],
+  ['vardering',         'Vad ligger {b} på för P/E i dag jämfört med sin egen historiska median?'],
+  ['kassaflode',        'Hur mycket fritt kassaflöde genererade {b} under de fyra senaste kvartalen?'],
+  ['aktier',            'Hur många aktier har {b}, och har antalet förändrats under de kvartal du har underlag för?'],
+  ['skuldsattning',     'Hur stor är {b}:s nettoskuld, och hur ser den ut i förhållande till eget kapital?'],
+  ['roic',              'Hur har {b}:s ROIC och soliditet utvecklats de senaste åren?'],
+  ['jamforelse',        'Jämför rörelsemarginalen i {b} och {b2} för det senaste hela året. Vilken skillnad är det, i procentenheter?', 2],
+];
+
+const b1 = bolagen[0].namn, b2 = bolagen[1]?.namn;
+const PROV = MALLAR
+  .filter(m => (m[2] || 1) <= bolagen.length)
+  .map(([namn, mall]) => ({ namn, fraga: mall.split('{b2}').join(b2 || '').split('{b}').join(b1) }));
+
+/* ---- korningen ---- */
+
+const utfall = [];
+for (const p of PROV) {
+  console.log('\n' + '='.repeat(74));
+  console.log(p.namn.toUpperCase());
+  console.log('FRÅGA: ' + p.fraga);
+  const d = await fraga(p.fraga);
+  const t = d.tackning || {};
+  const anrop = t.anropstider || [];
+  const usd = anrop.reduce((s, a) => s + (kostnad(a) || 0), 0);
+  const okand = anrop.filter(a => kostnad(a) === null).map(a => a.modell);
+
+  if (d.error) {
+    console.log('FEL (' + d.status + '): ' + d.error);
+    utfall.push({ ...p, fel: true, ms: d.ms, usd });
+    continue;
+  }
+
+  console.log('\nSVAR:\n' + (d.answer || '(inget svar)'));
+  if (d.blockerat) console.log('\n!! BLOCKERAT: ' + (d.verifiering?.orsak || 'okant'));
+
+  console.log('\nVAG:  modell ' + t.modell + (t.modellfall ? '  <-- FALL TILLBAKA' : '')
+    + ', ' + (t.modellanrop || 0) + ' modellanrop, ' + (t.gravvarv || 0) + ' gravvarv'
+    + ', ' + (t.reparation || 0) + ' reparationer');
+  console.log('      verktyg   ' + (t.verktyg?.length ? t.verktyg.join(', ') : '(inga)'));
+  console.log('      nyckeltal ' + (t.nyckeltal?.length ? t.nyckeltal.join(' | ') : '(inga, Börsdata nådde inte fram)'));
+  console.log('      beräkningar ' + (t.berakningar || []).filter(x => x.ok).length + ' godkända, '
+    + (t.berakningar || []).filter(x => !x.ok).length + ' avslagna');
+  for (const b of (t.berakningar || []).filter(x => !x.ok))
+    console.log('        avslag: ' + String(b.skal || '').slice(0, 140));
+
+  const moment = Object.entries(t.tider?.moment || {}).sort((a, b) => b[1] - a[1]);
+  console.log('\nTID:  ' + d.ms + ' ms totalt');
+  for (const [m, ms] of moment)
+    console.log('      ' + m.padEnd(14) + String(ms).padStart(6) + ' ms   ' + Math.round(ms / d.ms * 100) + ' %');
+  console.log('      varav modellanrop: ' + anrop.map(a => a.moment + ' ' + a.ms + 'ms').join(', '));
+
+  console.log('\nKOST: ' + usd.toFixed(4) + ' USD, ' + (usd * USD_SEK).toFixed(2) + ' kr'
+    + (okand.length ? '  (okänd prislista för ' + [...new Set(okand)].join(', ') + ')' : ''));
+  for (const [m, v] of Object.entries(t.tokens || {}))
+    console.log('      ' + m.padEnd(12) + v.anrop + ' anrop, in ' + v.in + ', ut ' + v.ut
+      + ', cache läst ' + v.cacheLast + ', cache skrivet ' + v.cacheSkrivet);
+  const cacheLast = anrop.reduce((s, a) => s + (a.cacheLast || 0), 0);
+  const cacheBas = cacheLast + anrop.reduce((s, a) => s + (a.inputTokens || 0) + (a.cacheSkrivet || 0), 0);
+  console.log('      cacheträff: ' + (cacheBas ? Math.round(cacheLast / cacheBas * 100) : 0) + ' % av all input');
+
+  utfall.push({ ...p, ms: d.ms, usd, blockerat: !!d.blockerat, modell: t.modell,
+    modellanrop: t.modellanrop, cache: cacheBas ? cacheLast / cacheBas : 0,
+    nyckeltal: !!t.nyckeltal?.length, moment });
+}
+
+/* ---- sammanfattning ---- */
+
+console.log('\n' + '='.repeat(74));
+console.log('BASFRÅGOR, SAMMANFATTNING\n');
+console.log('fråga'.padEnd(20) + 'modell'.padEnd(10) + 'anrop'.padEnd(7)
+  + 'ms'.padStart(7) + 'kr'.padStart(8) + 'cache'.padStart(8) + '  utfall');
+for (const u of utfall) {
+  console.log(u.namn.padEnd(20)
+    + String(u.modell || '-').replace('claude-', '').replace('-4-5-20251001', '').replace('-5', '').padEnd(10)
+    + String(u.modellanrop ?? '-').padEnd(7)
+    + String(u.ms).padStart(7)
+    + (u.usd * USD_SEK).toFixed(2).padStart(8)
+    + (Math.round((u.cache || 0) * 100) + '%').padStart(8)
+    + '  ' + (u.fel ? 'FEL' : u.blockerat ? 'BLOCKERAT' : 'svar'));
+}
+const total = utfall.reduce((s, u) => s + u.usd, 0);
+const medel = utfall.length ? total / utfall.length : 0;
+console.log('\nTotalt ' + total.toFixed(3) + ' USD, ' + (total * USD_SEK).toFixed(2) + ' kr för '
+  + utfall.length + ' frågor. Medel ' + (medel * USD_SEK).toFixed(2) + ' kr per fråga.');
+console.log('Blockerade: ' + utfall.filter(u => u.blockerat).length + '. Fel: ' + utfall.filter(u => u.fel).length + '.');
+console.log('Med Börsdata-tal i registret: ' + utfall.filter(u => u.nyckeltal).length + ' av ' + utfall.length + '.');
+
+/* Vad som tog tid, sammanraknat over alla fragor. Det ar den siffran som sager
+   var en optimering skulle gora nytta, inte enskilda utslag. */
+const summerat = {};
+for (const u of utfall) for (const [m, ms] of u.moment || []) summerat[m] = (summerat[m] || 0) + ms;
+const totalMs = Object.values(summerat).reduce((a, b) => a + b, 0);
+console.log('\nTid per moment, alla frågor:');
+for (const [m, ms] of Object.entries(summerat).sort((a, b) => b[1] - a[1]))
+  console.log('  ' + m.padEnd(14) + String(ms).padStart(7) + ' ms   ' + Math.round(ms / totalMs * 100) + ' %');
+
+if (skrivningar.length) console.log('\nKV-skrivningar fångades (aldrig skickade): ' + skrivningar.join(', '));
+console.log('\nDetta provar dessa frågor mot dessa bolag, inte alla möjliga svar.');
