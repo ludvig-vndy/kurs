@@ -49,7 +49,7 @@ export function skapaFaktaregister() {
     return id;
   };
 
-  function synka({ arkiv = [], utdrag = [], holdings = [], teser = [], question = '', lektioner = [], illustrationer = [] } = {}) {
+  function synka({ arkiv = [], utdrag = [], holdings = [], teser = [], question = '', lektioner = [], illustrationer = [], nyckeltal = [] } = {}) {
     // Urvalets dokument gar fore ovrig historik. Verktygsvarv far ett eget
     // reserverat utrymme, sa aldre nyhamtade poster inte trangs ut av starten.
     const ordinarieTak = tak;
@@ -79,6 +79,69 @@ export function skapaFaktaregister() {
       lagg({ typ: 'dokument', bolag: u.bolag, text: u.text,
         kallor: [{ url: u.url, rubrik: u.rubrik, datum: u.datum, typ: 'text' }] });
     }
+    /* STRUKTURERADE NYCKELTAL FRAN BORSDATA.
+
+       Skillnaden mot den andra vagen in ar inte att talen ar finare, utan att
+       de bar sin egen metadata. Ett P/E for 2025 kommer markt med bolag, matt,
+       ar och enhet fran kallan. Var egen extraktion laser samma sak ur en
+       PDF-tabell och tappar period eller skala pa vagen: 25 rena skalfel av
+       131 jamforelser i tools/matning-borsdata.mjs.
+
+       ALLA ar kvoter, och slaget foljer med. Berakningsverktyget vagrar
+       summera kvoter, sa modellen kan inte lagga ihop tva marginaler till ett
+       tal som ser ut att betyda nagot. Den kan dock jamfora dem, och det ar
+       hela poangen med att ha tva ar per nyckeltal.
+
+       Inget citat finns att kraftmata mot, som for PDF-vagen: kallan ar ett
+       API-svar, inte en mening. Darfor bar posten sin harkomst i klartext i
+       stallet, sa bade granskaren och lasaren ser var talet kommer ifran. */
+    for (const b of nyckeltal) {
+      if (!b || typeof b.bolag !== 'string' || !Array.isArray(b.nyckeltal)) continue;
+      // Utan bolagsidentitet kan jamforbara() inte halla isar tva bolag, och
+      // da ar posterna inte berakningsbara. Namnet duger som identitet har:
+      // det ar arkivets egen nyckel och det ar det som routningen matchat pa.
+      const bolagId = b.bolagId || b.bolag;
+      for (const t of b.nyckeltal) {
+        if (!t || typeof t.namn !== 'string' || !Number.isFinite(t.varde)) continue;
+        const enhet = t.enhet === 'procent' ? 'procent' : 'gånger';
+        const arsrad = (ar, varde) => lagg({
+          typ: 'rapporterat', bolagId, bolag: b.bolag, matt: t.namn,
+          period: ar ? String(ar) : 'senast rapporterade', varde, enhet,
+          normaliserat: { varde, enhet }, slag: 'kvot',
+          /* Arsperiod, inte kvartal. Kallan sager "2025" och inget mer, och
+             for ett bolag med brutet rakenskapsar ar det inte samma sak som
+             fyra kvartal till och med Q4. Se periodNyckel i _berakning.js. */
+          ar: Number.isInteger(ar) ? ar : null, arsperiod: Number.isInteger(ar),
+          kvartal: null, langd: null, djup: 0,
+          kallor: [{ url: 'https://borsdata.se', typ: 'borsdata',
+            rubrik: 'Börsdata, ' + t.namn + (ar ? ' ' + ar : ''),
+            citat: b.bolag + ', ' + t.namn + (ar ? ' ' + ar : '') + ': ' +
+              String(varde).replace('.', ',') + ' ' + enhet + '. Hämtat från Börsdatas API, inte uträknat här.' }],
+        });
+        arsrad(t.ar, t.varde);
+        for (const h of t.historik || []) {
+          if (Number.isFinite(h.varde)) arsrad(h.ar, h.varde);
+        }
+        /* Medianen ar raknad i kod i motor/borsdata.mjs, over bolagets egna
+           avslutade ar, och bara nar varje ar i fonstret var positivt. Den ar
+           darfor en beraknad post och inte en rapporterad. */
+        if (t.median && Number.isFinite(t.median.median)) {
+          lagg({ typ: 'beraknat', bolagId, bolag: b.bolag,
+            matt: t.namn + ', median', period: t.median.fran + ' till ' + t.median.till,
+            varde: t.median.median, enhet, normaliserat: { varde: t.median.median, enhet },
+            slag: 'kvot', djup: 1, indata: [],
+            formel: 'Median av ' + t.namn + ' för ' + t.median.ar + ' avslutade år, ' +
+              t.median.fran + ' till ' + t.median.till + '.',
+            vilar_pa: { ursprung: 'rapporterat', poster: [], antaganden: [] },
+            kallor: [{ url: 'https://borsdata.se', typ: 'borsdata',
+              rubrik: 'Börsdata, ' + t.namn + ' ' + t.median.fran + ' till ' + t.median.till,
+              citat: b.bolag + ', median för ' + t.namn + ' ' + t.median.fran + ' till ' +
+                t.median.till + ': ' + String(t.median.median).replace('.', ',') + ' ' + enhet +
+                '. Medianen räknas i kod över bolagets egna avslutade år och visas bara när varje år i fönstret var positivt.' }] });
+        }
+      }
+    }
+
     tak = ordinarieTak;
     const valda = new Set(utdrag.map(u => u.url));
     const fakta = extraheraNyckeltal(arkiv).filter(n => Number.isFinite(n.varde) && kallstalle(n));

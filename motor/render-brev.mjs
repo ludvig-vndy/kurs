@@ -40,6 +40,47 @@ function narmast(rader) {
   return `Närmast är ${f.bolag}, om ${veckor} ${veckor === 1 ? 'vecka' : 'veckor'}`;
 }
 
+/* VILKA nyckeltal som far plats i brevet, i lasordning. Hela listan pa femton
+   ar ratt i faktaregistret, dar modellen valjer sjalv, men en tabell med
+   femton kolumner ar ingen morgonlasning. Har star de fem som sager mest om
+   ett bolag pa tio sekunder: vad det kostar, vad det tjanar, vad det ger
+   tillbaka pa kapitalet, och hur det star sig. */
+const I_BREVET = [29, 37, 2, 10, 39];
+
+/* Procent far sitt tecken. Multiplar skrivs utan suffix: namnet sager redan
+   att det ar en kvot, och "P/E 100,8" ar sa en lasare skriver det sjalv. */
+const fmtTal = (v, enhet) => enhet === 'procent' ? `${fmt(v)} %` : fmt(v);
+
+/* En nyckeltalsrad under bolagsnamnet. Medianjamforelsen visas bara dar
+   sparren i borsdata.mjs slappt igenom den, alltsa dar bolaget gatt med vinst
+   varje ar i fonstret. For ovriga star talet ensamt, utan forklaring till
+   varfor jamforelsen saknas: ett tomrum ar lattare att lasa an en ursakt. */
+function nyckeltalstext(r, s) {
+  /* RESERVEN. Ett brev kan renderas ur ett arkiv som skrevs fore breddningen,
+     och da finns bara det gamla pe-faltet. Utan reserven forsvann P/E-raden
+     tyst ur gamla brev i stallet for att bara sakna de nya talen. */
+  const lista = r.vardering?.nyckeltal
+    || (r.vardering?.pe ? [{ kpi: 2, namn: 'P/E', enhet: 'gånger',
+      varde: r.vardering.pe.nu, median: r.vardering.pe }] : []);
+  if (!lista.length) return '';
+  const valda = I_BREVET.map(k => lista.find(t => t.kpi === k)).filter(Boolean);
+  if (!valda.length) return '';
+  return valda.map(t => {
+    /* AVVIKELSEN I RATT ENHET. En marginal pa 21,4 mot medianen 18,9 ligger
+       2,5 procentenheter over, inte 13 procent over. Bada talen ar riktiga men
+       de sager olika saker, och procenttalet ar det som lases fel. En multipel
+       som P/E har ingen sadan tolkning: dar ar 20 procent over medianen bade
+       riktigt och det satt en lasare sjalv skulle uttrycka det. */
+    const avvikelse = t.median && (t.enhet === 'procent'
+      ? `${fmt(Math.abs(Math.round((t.median.nu - t.median.median) * 10) / 10))} procentenheter`
+      : `${Math.abs(t.median.avvikelse)} %`);
+    const m = t.median
+      ? ` <span style="color:#8A8172">(median ${fmtTal(t.median.median, t.enhet)}, ${avvikelse} ${t.median.avvikelse > 0 ? 'över' : 'under'})</span>`
+      : '';
+    return `<span style="white-space:nowrap">${t.namn} ${fmtTal(t.varde, t.enhet)}${m}</span>`;
+  }).join('<span style="color:#C9C0AD"> · </span>');
+}
+
 function radBorsdata(r, s) {
   const nar = r.kalender
     ? (r.kalender.dagar === 0 ? 'i dag'
@@ -49,14 +90,13 @@ function radBorsdata(r, s) {
   const datumtext = r.kalender
     ? new Date(r.kalender.datum + 'T12:00:00').toLocaleDateString('sv-SE', { day: 'numeric', month: 'long' })
     : null;
-  const v = r.vardering?.pe;
-  const rikt = v ? (v.avvikelse > 0 ? 'över' : 'under') : null;
+  const tal = nyckeltalstext(r, s);
   return `<tr>
-    <td style="${s.td};font-weight:600">${r.bolag}</td>
-    <td style="${s.td}">${r.kalender ? `${r.kalender.typ} ${nar}<span style="color:#8A8172"> · ${datumtext}</span>` : '<span style="color:#8A8172">inget satt datum</span>'}</td>
-    <td style="${s.td}">${v
-      ? `P/E ${fmt(v.nu)} mot ${fmt(v.median)} <span style="color:#8A8172">(medianen ${v.fran} till ${v.till}, ${Math.abs(v.avvikelse)}% ${rikt})</span>`
-      : ''}</td>
+    <td style="${s.td};font-weight:600;vertical-align:top;white-space:nowrap">${r.bolag}</td>
+    <td style="${s.td}">
+      ${r.kalender ? `${r.kalender.typ} ${nar}<span style="color:#8A8172"> · ${datumtext}</span>` : '<span style="color:#8A8172">inget satt datum</span>'}
+      ${tal ? `<div style="font-size:12px;color:#5C544A;margin-top:3px;line-height:1.8">${tal}</div>` : ''}
+    </td>
   </tr>`;
 }
 
@@ -109,7 +149,7 @@ export function renderDagsbrev({ datum, poster, lugna, borsdata = [] }) {
       <p style="${s.et}">Kalendern</p>
       <h2 style="${s.h2}">${narmast(borsdata)}</h2>
       <table style="width:100%;border-collapse:collapse;margin-top:8px">${borsdata.map(r => radBorsdata(r, s)).join('')}</table>
-      <p style="${s.p};margin-top:8px;color:#8A8172">Rapportdatum och nyckeltal från Börsdata. Medianen räknas på bolagets egna avslutade år, och visas bara när bolaget gått med vinst hela vägen.</p>
+      <p style="${s.p};margin-top:8px;color:#8A8172">Rapportdatum och nyckeltal från Börsdata. Medianen räknas på bolagets egna avslutade år, och visas bara när bolaget gått med vinst hela vägen. Talen är hämtade, inte uträknade av en modell.</p>
     </div>` : ''}
     ${lugna.length ? `<div style="${s.sek};border-top:2px solid #2E6B4C"><p style="${s.et}">Lugnt</p><p style="${s.p}">Inget nytt i: ${lugna.join(', ')}.</p></div>` : ''}
     <p style="font-family:monospace;font-size:10px;color:#6E6456;text-align:center;margin-top:20px;line-height:1.7">Nästa brev i morgon bitti · passeras en gräns säger vi till direkt<br>Maskinläst, mänskligt ogranskad · aldrig råd · Ägarkollen är arbetsnamn</p>

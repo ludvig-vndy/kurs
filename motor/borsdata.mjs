@@ -117,6 +117,38 @@ export async function hamtaKalender(insIder, idag = new Date()) {
    som åttiofyra procent under det normala. Medianen för samma tio år är 35,
    alltså precis där bolaget står. Medianen räknas här i kod, inte av Börsdata
    och inte av en modell, så vi vet exakt vad som ingår. */
+/* NYCKELTALEN vi hamtar, niva 1 och 2 ur matningen i motor/out/kpi-tackning.json.
+   Alla femton svarade for samtliga femton provade bolag; de elva med summary
+   har dessutom sex till nio ars historik.
+
+   ALLA AR KVOTER, och det ar inte en detalj. Slaget foljer med till
+   faktaregistret, dar berakningsverktyget vagrar summera kvoter. En marginal
+   plus en marginal ar inget tal, och den regeln ska galla aven nar talen kommer
+   fran en strukturerad kalla i stallet for ur en rapport. */
+export const NYCKELTAL = [
+  { kpi: 2,  namn: 'P/E',                        enhet: 'gånger',  summary: true,  median: true },
+  { kpi: 10, namn: 'EV/EBIT',                    enhet: 'gånger',  summary: true,  median: true },
+  { kpi: 11, namn: 'EV/EBITDA',                  enhet: 'gånger',  summary: true,  median: true },
+  { kpi: 3,  namn: 'P/S',                        enhet: 'gånger',  summary: true,  median: false },
+  { kpi: 4,  namn: 'P/B',                        enhet: 'gånger',  summary: true,  median: false },
+  { kpi: 1,  namn: 'Direktavkastning',           enhet: 'procent', summary: true,  median: false },
+  { kpi: 33, namn: 'Avkastning på eget kapital', enhet: 'procent', summary: true,  median: true },
+  { kpi: 29, namn: 'Rörelsemarginal',            enhet: 'procent', summary: true,  median: true },
+  { kpi: 28, namn: 'Bruttomarginal',             enhet: 'procent', summary: true,  median: false },
+  { kpi: 24, namn: 'FCF-marginal',               enhet: 'procent', summary: true,  median: false },
+  { kpi: 39, namn: 'Soliditet',                  enhet: 'procent', summary: true,  median: false },
+  { kpi: 37, namn: 'ROIC',                       enhet: 'procent', summary: false, median: false },
+  { kpi: 94, namn: 'Omsättningstillväxt',        enhet: 'procent', summary: false, median: false },
+  { kpi: 97, namn: 'Vinsttillväxt',              enhet: 'procent', summary: false, median: false },
+  { kpi: 42, namn: 'Nettoskuld/EBITDA',          enhet: 'gånger',  summary: false, median: false },
+];
+
+/* Hur manga avslutade ar som foljer med till faktaregistret per nyckeltal.
+   Hela serien ar nio ar, men registret har ett tak pa 40 kB for HELA fragan
+   och delar det med rapportutdrag, innehav och kurscitat. Tva ar racker for
+   den vanligaste fragan, "hur har det utvecklats", utan att tranga ut resten. */
+export const AR_TILL_REGISTRET = 2;
+
 export const MIN_AR = 5;
 export const FONSTER = 10;
 
@@ -147,20 +179,64 @@ export function jamforbarHistorik(nu, serie, { minAr = MIN_AR, fonster = FONSTER
 }
 
 /** Värderingen för ett bolag, eller null om den inte går att jämföra ärligt. */
+/* Ett nyckeltal ur summary-serien: senaste avslutade aret, foregaende ar, och
+   medianen over fonstret nar sparren nedan slapper igenom den. */
+function urSerie(rad, serie) {
+  const iAr = new Date().getFullYear();
+  const rena = (serie || []).filter(v => typeof v.v === 'number' && Number.isFinite(v.v));
+  const historik = rena.filter(v => v.y < iAr);
+  const nu = (rena.find(v => v.y === iAr) || rena[0] || {}).v;
+  if (nu === undefined) return null;
+  const arNu = (rena.find(v => v.y === iAr) || rena[0]).y;
+  return {
+    kpi: rad.kpi, namn: rad.namn, enhet: rad.enhet,
+    ar: arNu, varde: avrunda(nu),
+    historik: historik.slice(0, AR_TILL_REGISTRET).map(v => ({ ar: v.y, varde: avrunda(v.v) })),
+    median: rad.median ? jamforbarHistorik(nu, historik) : null,
+  };
+}
+
+const avrunda = v => Math.round(v * 10) / 10;
+
+/* De fyra som inte ryms i summary kraver ett eget anrop per bolag och ger bara
+   senaste vardet, ingen historik. ROIC ar vart anropet: det ar kursens
+   centrala matt och var egen extraktion far det aldrig ratt. */
+async function hamtaLosa(insId) {
+  const ut = [];
+  for (const rad of NYCKELTAL.filter(r => !r.summary)) {
+    let j = null;
+    try { j = await bd('/instruments/' + insId + '/kpis/' + rad.kpi + '/last/latest'); }
+    catch { /* ett uteblivet nyckeltal far inte stoppa de ovriga */ }
+    await paus();
+    const v = j && j.value && typeof j.value.n === 'number' && Number.isFinite(j.value.n) ? j.value.n : null;
+    if (v !== null) ut.push({ kpi: rad.kpi, namn: rad.namn, enhet: rad.enhet,
+      ar: null, varde: avrunda(v), historik: [], median: null });
+  }
+  return ut;
+}
+
+/* Hela nyckeltalsbilden for ett bolag: ett summary-anrop plus fyra losa.
+   Det forsta anropet gjordes redan tidigare, men elva av tolv nyckeltal i
+   svaret kastades. Nu anvands de. */
 export async function hamtaVardering(insId) {
   const sum = await bd('/instruments/' + insId + '/kpis/year/summary');
   if (!sum) return null;
-  const serie = id => ((sum.kpis || []).find(k => k.KpiId === id) || {}).values || [];
+  const serier = new Map((sum.kpis || []).map(k => [k.KpiId, k.values || []]));
 
-  // Innevarande år är en pågående period och hör inte hemma i historiken.
-  const iAr = new Date().getFullYear();
-  const historik = serie(KPI_PE).filter(v => v.y < iAr);
-  const nu = (serie(KPI_PE).find(v => v.y === iAr) || serie(KPI_PE)[0] || {}).v;
+  const nyckeltal = [];
+  for (const rad of NYCKELTAL.filter(r => r.summary)) {
+    const t = urSerie(rad, serier.get(rad.kpi));
+    if (t) nyckeltal.push(t);
+  }
+  nyckeltal.push(...await hamtaLosa(insId));
+  if (!nyckeltal.length) return null;
 
-  const pe = jamforbarHistorik(nu, historik);
-  if (!pe) return null;
-  const evEbit = (serie(KPI_EV_EBIT)[0] || {}).v;
-  return { pe, evEbit: typeof evEbit === 'number' && evEbit > 0 ? Math.round(evEbit * 10) / 10 : null };
+  /* pe behalls som eget falt: brevets befintliga rad och dess sparr ar
+     oforandrade, och tva provkorningar av brevet vilar pa formen. */
+  const pe = (nyckeltal.find(t => t.kpi === 2) || {}).median || null;
+  const evEbitRad = nyckeltal.find(t => t.kpi === 10);
+  const evEbit = evEbitRad && evEbitRad.varde > 0 ? evEbitRad.varde : null;
+  return { pe, evEbit, nyckeltal };
 }
 
 /* Hela blocket för brevet: en rad per bolag med nästa rapport, och värdering

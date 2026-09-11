@@ -297,6 +297,34 @@ for (const namn of bevakade)
 if (insynsbortfall.length) console.log(`
 VARNING: insynsregistret kunde inte läsas för ${insynsbortfall.join(', ')}. `
   + 'De bolagen kan ha insynshandel som inte står i brevet.');
+/* NYCKELTALEN TILL CHATTEN, inte bara till brevet.
+
+   Fraga har hittills raknat pa tal som en sprakmodell last ur PDF-tabeller.
+   Matningen i tools/matning-borsdata.mjs sager hur det gar: 51 av 131
+   jamforelser lika, 25 rena skalfel, och antal aktier ratt i noll fall av 22.
+   Borsdatas tal bar sin period, sin enhet och sitt matt fran kallan, alltsa
+   exakt den metadata som faller bort i var egen vag.
+
+   Delad nyckel som resten av arkivet, inte per anvandare: brevet ar personligt
+   men arkivet ar gemensamt, och Fraga grindar redan pa vilka bolag fragan
+   handlar om. Publiceras av motor/publicera-brev.mjs.
+
+   LICENS: samma retail-nyckel som brevet. Se huvudet i motor/borsdata.mjs och
+   LAUNCH.md:s forsta P0. Ta bort denna fil ur publiceringen for att stanga av
+   vagen till chatten utan att rora brevet. */
+writeFileSync(p('./out/nyckeltal.json'), JSON.stringify({
+  uppdaterad: new Date().toISOString(),
+  kalla: 'borsdata',
+  bolag: borsdata.rader
+    .filter(r => r.vardering && (r.vardering.nyckeltal || []).length)
+    .map(r => ({
+      // Arkivets id, samma nyckel som arkiv:<id>, sa faktaregistret kan halla
+      // isar tva bolag i samma fraga.
+      bolagId: (konf.bolag.find(b => b.namn === r.bolag) || {}).id || r.bolag,
+      bolag: r.bolag, nyckeltal: r.vardering.nyckeltal,
+    })),
+}, null, 1), 'utf8');
+
 const datum = new Date().toISOString().slice(0, 10);
 const brevHtml = renderDagsbrev({ datum, poster: dagensPoster, lugna, borsdata: borsdata.rader });
 const brevFil = p(`./out/brev-${datum}.html`);

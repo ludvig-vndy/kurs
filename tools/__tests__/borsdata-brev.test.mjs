@@ -97,8 +97,9 @@ test('renderDagsbrev: kalenderblocket skrivs ut med datum och avvikelse', () => 
   assert.match(html, /Kalendern/);
   assert.match(html, /Sectra rapporterar på fredag/);
   assert.match(html, /4 september/);
-  assert.match(html, /P\/E 100,8 mot 86,4/);
-  assert.match(html, /17% över/);
+  assert.match(html, /P\/E 100,8/);
+  assert.match(html, /median 86,4/);
+  assert.match(html, /17 % över/);
 });
 
 /* Ett bolag utan jamforbar vardering ska lamna cellen tom. Att skriva ut varfor

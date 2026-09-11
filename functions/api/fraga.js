@@ -819,7 +819,7 @@ async function besvaraFraga(context) {
   // for ett bolag vi inte har ett enda dokument om.
   // Arkivet lyfts ut ur blocket: verktygsloopen nedan behover det for att kunna
   // lasa mer och hamta historik pa modellens egen begaran.
-  let utdrag = [], teser = [], arkivet = [];
+  let utdrag = [], teser = [], arkivet = [], nyckeltal = [];
   const register = skapaFaktaregister();
   const burna = [...new Map(turer.flatMap(t=>t.poster).map(p=>[p.id,p])).values()];
   const gamlaIds = register.importeraTidigare(burna);
@@ -921,6 +921,22 @@ async function besvaraFraga(context) {
         if (arkiv.length) {
           utdrag = hamtaUtdrag(question, arkiv, period ? MAX_UTDRAG_PERIOD : MAX_UTDRAG, Date.now(), period);
           tackning.lasta = utdrag.length;
+          /* Strukturerade nyckeltal fran Borsdata, skrivna av nattjobbet.
+             EN nyckel for alla bolag, alltsa en KV-lasning oavsett hur manga
+             bolag fragan ror, och de filtreras till de bolag som faktiskt
+             routats. Faller lasningen tyst svarar Fraga precis som forut:
+             detta ar ett tillskott till underlaget, aldrig ett villkor.
+
+             LICENS: retail-nyckel. Se huvudet i motor/borsdata.mjs och
+             LAUNCH.md:s forsta P0. Slutar nattjobbet publicera nyckeln ar
+             vagen stangd harifran utan nagon kodandring. */
+          try {
+            const bok = await env.DATA.get("arkiv:nyckeltal", "json");
+            const namnen = new Set(arkiv.map((a) => a.namn));
+            nyckeltal = ((bok && bok.bolag) || []).filter((b) => namnen.has(b.bolag));
+            if (nyckeltal.length) tackning.nyckeltal = nyckeltal
+              .map((b) => b.bolag + ": " + (b.nyckeltal || []).length);
+          } catch (e) { /* utan nyckeltal svarar vi som forut */ }
         } else if (!tackning.orsak) {
           tackning.orsak = "inga dokument for bolaget i fragan";
         }
@@ -965,7 +981,7 @@ async function besvaraFraga(context) {
      om bolagen" samtidigt som den satt med tre verktyg for att hamta dem. */
   const harUnderlag = utdrag.length > 0 || kanGrava || burna.some(p=>['rapporterat','dokument','beraknat'].includes(p.typ));
 
-  register.synka({ arkiv: arkivet, utdrag, holdings, teser, question, lektioner });
+  register.synka({ arkiv: arkivet, utdrag, holdings, teser, question, lektioner, nyckeltal });
   tackning.faktaregister = register.status();
 
   const system = SYSTEM_BAS + SVAR_KONTRAKT +

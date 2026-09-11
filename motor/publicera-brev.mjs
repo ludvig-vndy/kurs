@@ -37,6 +37,15 @@ if (!filer.length) {
   process.exit(1);
 }
 
+/* Nyckeltalen till Fraga. Delad nyckel, samma form som resten av arkivet.
+   Saknas filen hoppas den over: brevet ska publiceras anda. Ta bort detta
+   block for att stanga av Borsdata-vagen till chatten men behalla brevet. */
+const nyckeltalFil = `${utDir}/nyckeltal.json`;
+if (existsSync(nyckeltalFil)) {
+  wrangler(['kv', 'key', 'put', '--namespace-id=' + NS, 'arkiv:nyckeltal', '--path=' + nyckeltalFil, '--remote']);
+  console.log('Publicerat nyckeltal till arkiv:nyckeltal.');
+} else console.log('Inga nyckeltal att publicera (out/nyckeltal.json saknas).');
+
 for (const fil of filer) {
   const uid = fil.replace(/^brev-/, '').replace(/\.json$/, '');
   wrangler(['kv', 'key', 'put', '--namespace-id=' + NS, `brev:${uid}`, '--path=' + `${utDir}/${fil}`, '--remote']);

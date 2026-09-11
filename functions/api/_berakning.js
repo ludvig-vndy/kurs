@@ -6,9 +6,19 @@ import { formateraTal } from './_talformat.js';
 
 const RANG = { illustration: 0, antagande: 1, egen_uppgift: 2, kurs: 3, dokument: 4, rapporterat: 5 };
 const MAX_INDATA = 16;
-const periodNyckel = p => Number.isInteger(p.ar) && Number.isInteger(p.kvartal) &&
-  p.kvartal >= 1 && p.kvartal <= 4 && Number.isInteger(p.langd) && p.langd > 0 && p.langd <= 16
-  ? [p.ar, p.kvartal, p.langd] : null;
+/* TVA SORTERS PERIOD, och de far aldrig blandas.
+
+   Kvartalsperioden ar den vanliga: ar, kvartal och langd i kvartal. Arsperioden
+   kommer med de strukturerade nyckeltalen, dar kallan sager "2025" och inget
+   mer. Frestelsen ar att skriva ar 2025, kvartal 4, langd 4 och lata det se
+   jamforbart ut, men det ar inte sant for ett bolag med brutet rakenskapsar:
+   Sectras ar slutar i april. Vi hittar darfor inte pa kvartalen, utan later
+   arsperioden vara sin egen sort som bara kan jamforas med sin egen sort. */
+const periodNyckel = p => p.arsperiod === true
+  ? (Number.isInteger(p.ar) ? ['ar', p.ar] : null)
+  : Number.isInteger(p.ar) && Number.isInteger(p.kvartal) &&
+    p.kvartal >= 1 && p.kvartal <= 4 && Number.isInteger(p.langd) && p.langd > 0 && p.langd <= 16
+    ? [p.ar, p.kvartal, p.langd] : null;
 const varde = p => p?.normaliserat?.varde;
 const enhet = p => p?.normaliserat?.enhet;
 const andlig = p => Number.isFinite(varde(p));
@@ -42,6 +52,8 @@ export function jamforbara(a, b) {
   if (!a.matt || a.matt !== b.matt || a.slag !== b.slag || !enhet(a) || enhet(a) !== enhet(b)) return false;
   const ap = periodNyckel(a), bp = periodNyckel(b);
   if (!ap || !bp) return false;
+  // Ett rapporterat ar och ett kvartalsintervall ar inte samma sorts period.
+  if (Boolean(a.arsperiod) !== Boolean(b.arsperiod)) return false;
   if (a.slag === 'flode' && a.langd !== b.langd) return false;
   return true;
 }
@@ -129,6 +141,11 @@ export function berakna(operation, indata) {
   if (operation === 'summa') {
     if (indata.length < 2) return avslag('Summa kräver minst två operander.');
     if (indata.some(p => p.slag !== 'flode')) return avslag('Bara flödesposter kan summeras över perioder.');
+    /* Summan raknar i kvartal: angransning, overlapp och resultatets langd.
+       En arsperiod saknar de falten och far darfor inte summeras forran ett
+       periodkontrakt stoder den. Att lata den passera hade gett ett tal med
+       pahittad kvartalsmarkning. */
+    if (indata.some(p => p.arsperiod)) return avslag('Årsperioder kan inte summeras förrän periodkontraktet stödjer dem.');
     try { if (indata.slice(1).some(p => !jamforbara(indata[0], p))) return avslag('Poster med olika bolag, mått, slag, enhet eller periodlängd kan inte summeras.'); }
     catch (e) { return avslag(e.message); }
     const ordnade = [...indata].sort((a, b) => periodstart(a) - periodstart(b));
@@ -151,18 +168,25 @@ export function berakna(operation, indata) {
     try { if (!jamforbara(indata[0], indata[1])) return avslag('Poster med olika bolag, mått, slag, enhet eller period kan inte jämföras.'); }
     catch (e) { return avslag(e.message); }
     const [efter, fore] = indata;
-    if (operation === 'differens' && !['balans', 'flode'].includes(fore.slag))
+    /* PROCENTENHETER, inte procent. En marginal som gar fran 20,1 till 21,4
+       har stigit 1,3 procentenheter, inte 6,5 procent, och de tva talen
+       betyder helt olika saker. Differensen var forbjuden for alla kvoter, sa
+       det enda tillatna sattet att jamfora tva marginaler var den relativa
+       tillvaxten, alltsa just det tal som latt lases fel. Nu far en kvot i
+       procent sin ratta differens, med en enhet som sager vad den ar. */
+    const procentenheter = operation === 'differens' && fore.slag === 'kvot' && enhet(fore) === 'procent';
+    if (operation === 'differens' && !procentenheter && !['balans', 'flode'].includes(fore.slag))
       return avslag('Kvoter och takter kan inte användas i en differens.');
     if (operation === 'tillvaxt' && varde(fore) <= 0) return avslag('Tillväxt kräver en positiv nämnare.');
     const resultat = operation === 'differens' ? varde(efter) - varde(fore) : (varde(efter) / varde(fore) - 1) * 100;
-    const resEnhet = operation === 'differens' ? enhet(fore) : 'procent';
+    const resEnhet = operation === 'differens' ? (procentenheter ? 'procentenheter' : enhet(fore)) : 'procent';
     const formel = operation === 'differens'
       ? `${tal(varde(efter))} minus ${tal(varde(fore))} ${enhet(fore)} = ${tal(resultat)} ${resEnhet}`
       : `(${tal(varde(efter))} delat på ${tal(varde(fore))} minus 1) gånger 100 = ${tal(resultat)} procent`;
     // En ändpunktsdifferens är inte ett rapporterat flödesintervall och får
     // därför inga maskinläsbara periodfält som kan göra den jämförbar igen.
     return bas(indata, operation, resultat, resEnhet, { matt: operation === 'differens' ? fore.matt : `Tillväxt i ${fore.matt}`,
-      slag: operation === 'differens' ? fore.slag : 'kvot', period: `${etikett(fore)} till ${etikett(efter)}`,
+      slag: operation === 'differens' ? (procentenheter ? 'kvot' : fore.slag) : 'kvot', period: `${etikett(fore)} till ${etikett(efter)}`,
       formel: direktFormel(indata, formel) });
   }
   if (operation === 'andel') {

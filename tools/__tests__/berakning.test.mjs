@@ -75,9 +75,52 @@ test('division avslås för noll eller negativ tillväxtbas och per månad kräv
   assert.equal(takt.post.enhet, 'MSEK per månad');
 });
 
-test('differens tillåter inte kvoter eller takter som operander', () => {
-  const kvot = post({ slag: 'kvot', enhet: 'procent', normaliserat: { varde: 10, enhet: 'procent' } });
-  assert.equal(berakna('differens', [{ ...kvot, id: 'ny' }, { ...kvot, id: 'gammal' }]).ok, false);
+/* PROCENTENHETER, inte procent. En marginal fran 20,1 till 21,4 har stigit 1,3
+   procentenheter. Skriver man 6,5 procent sager man nagot annat, och den
+   forvaxlingen ar ett av de fel granskaren har fallt i skarpa prov.
+
+   Differensen var forbjuden for ALLA kvoter, sa det enda sattet att jamfora
+   tva marginaler var den relativa tillvaxten, alltsa just det missvisande
+   talet. En kvot i procent far darfor nu sin ratta differens, med en enhet som
+   sager vad den ar. Kvoter i ganger, som P/E, saknar den tolkningen och ar
+   fortsatt forbjudna, liksom takter. */
+test('differens ger procentenheter for kvoter i procent', () => {
+  const kvot = p => post({ slag: 'kvot', enhet: 'procent', varde: p,
+    normaliserat: { varde: p, enhet: 'procent' } });
+  const d = berakna('differens', [{ ...kvot(21.4), id: 'ny' }, { ...kvot(20.1), id: 'gammal', ar: 2024 }]);
+  assert.equal(d.ok, true, d.skal);
+  assert.equal(d.post.enhet, 'procentenheter');
+  assert.equal(Math.round(d.post.varde * 10) / 10, 1.3);
+  assert.equal(d.post.slag, 'kvot');
+});
+
+test('differens tillåter fortfarande inte multiplar eller takter', () => {
+  for (const fel of [{ slag: 'kvot', enhet: 'gånger', normaliserat: { varde: 10, enhet: 'gånger' } },
+    { slag: 'takt', enhet: 'MSEK per månad', normaliserat: { varde: 10, enhet: 'MSEK per månad' } }]) {
+    const q = post(fel);
+    assert.equal(berakna('differens', [{ ...q, id: 'ny' }, { ...q, id: 'gammal', ar: 2024 }]).ok, false,
+      fel.enhet + ' gick att differensberakna');
+  }
+});
+
+/* ARSPERIODEN ar sin egen sort. Frestelsen var att skriva ar 2025, kvartal 4,
+   langd 4 och lata Borsdatas arstal se jamforbara ut med kvartalsposter. Det
+   ar inte sant for ett bolag med brutet rakenskapsar. */
+test('arsperioder jamfors bara med arsperioder och kan inte summeras', () => {
+  const ar = (a, v) => post({ id: 'y' + a, slag: 'kvot', enhet: 'procent', arsperiod: true,
+    ar: a, kvartal: null, langd: null, period: String(a), varde: v,
+    normaliserat: { varde: v, enhet: 'procent' } });
+  assert.equal(jamforbara(ar(2025, 21.4), ar(2024, 20.1)), true);
+  // Samma bolag, matt, slag och enhet, men en kvartalsperiod: inte jamforbart.
+  const kvartal = post({ id: 'q', slag: 'kvot', enhet: 'procent', matt: 'intäkter',
+    normaliserat: { varde: 20, enhet: 'procent' } });
+  assert.equal(jamforbara(ar(2025, 21.4), { ...kvartal, matt: ar(2025, 1).matt }), false);
+  // Ett arsflode far inte summeras: summan raknar i kvartal.
+  const flode = a => ({ ...ar(a, 100), slag: 'flode', enhet: 'MSEK',
+    normaliserat: { varde: 100, enhet: 'MSEK' } });
+  const d = berakna('summa', [flode(2025), flode(2024)]);
+  assert.equal(d.ok, false);
+  assert.match(d.skal, /Årsperioder/);
 });
 
 test('kedjor plattar lövproveniens, antaganden och formler men stoppar djup tre', () => {
