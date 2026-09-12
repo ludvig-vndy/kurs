@@ -338,6 +338,14 @@ const MALLAR = [
   ['tesstarkande',      'Kunden säger sig se fram emot att använda {b}:s produkter i kommande ' +
     'konstellationer. Vad talar i bolagets egen kommunikation för fortsatta affärer med ' +
     (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') + ', och vad är fortfarande bara en avsiktsförklaring?'],
+  /* KORPUSENS GRANS. Piloten fragade om {b}:s koppling till ett avtal
+     motparten slutit med en tredje part, kommunicerat av MOTPARTEN och inte av
+     {b}. Svaret sa att "dokumentet saknas i det tillgangliga underlaget",
+     vilket lat som en lucka i en heltackande samling. Ratt svar ar att
+     motpartens egen kommunikation aldrig ingar, och sedan redovisa vad {b}
+     faktiskt sagt. Fragan provar om boten sager var dess arkiv slutar. */
+  ['korpusgrans',       'Har {b} några kopplingar till det avtal ' +
+    (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') + ' nyligen slöt med Frankrike?'],
   ['koppling',          'Finns det några kopplingar mellan {b} och ' +
     (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') +
     '? Sök i bolagets egen kommunikation och visa vad som faktiskt står där.'],

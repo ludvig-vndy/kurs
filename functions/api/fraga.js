@@ -964,7 +964,23 @@ async function besvaraFraga(context) {
         return "- " + b.namn + ": " + b.dokument + " dokument, " + b.aldst + " till " + b.nyast + ".";
       }).join("\n") +
       "\n- Saknas fragans period: beskriv luckan i ett saknas-block utan egna datum. Servern visar horisonten. Verktygsresultat kan uppdatera den har initiala horisonten.\n" +
-      "- Pasta aldrig att en period saknas nar den finns, och tig aldrig om att den saknas nar den gor det.\n"
+      "- Pasta aldrig att en period saknas nar den finns, och tig aldrig om att den saknas nar den gor det.\n" +
+      /* KORPUSENS GRANS, inte bara periodens.
+
+         Piloten fragade om Unibaps koppling till ett avtal Loft Orbital slutit
+         med Frankrike. Svaret sa att "det dokumentet saknas i det tillgangliga
+         underlaget", vilket later som en lucka i en i ovrigt heltackande
+         samling. Sanningen ar en annan: motpartens EGEN kommunikation finns
+         aldrig i arkivet, hur mycket som an skrivits om saken pa annat hall.
+
+         Skillnaden mellan "jag hittar inte dokumentet" och "den aktoren
+         bevakar jag inte" ar hela skillnaden for den som ska veta om det ar
+         lont att leta vidare sjalv.
+
+         Sista raden ar pilotens egen begaran, i sak ordagrant: "sa far man
+         gora slutsatsen sjalv i stallet for att AI gor slutsatsen." */
+      "- Arkivet innehaller BARA dessa bolags EGEN kommunikation. Andra bolag, kunder, motparter, partners och myndigheter finns inte i det, aven nar de namns i fragan och aven om mycket skrivits om dem pa annat hall.\n" +
+      "- Galler fragan en sadan aktor: sag rakt ut att du inte har den aktorens egen kommunikation, redovisa sedan vad de bolag du FAKTISKT har arkiv for sager om saken, och lat lasaren dra slutsatsen. Dra den inte at lasaren, och antyd aldrig att nagot inte har hant bara for att du saknar dokumentet.\n"
     : "";
 
   /* Kursen som kalla. Registret ligger alltid med, sa ett pahittat
