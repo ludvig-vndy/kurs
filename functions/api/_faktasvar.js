@@ -288,7 +288,61 @@ const LEKTIONSORD = /(?:lektion(?:en|er|erna)?|avsnitt(?:et)?|kapitel|kapitlet|l
    otillatenProsa ar kvar som ja eller nej och ar bokstavligen samma prov. */
 export const otillatenProsa = (text, lektioner = []) => talIProsa(text, lektioner) !== '';
 
-export function talIProsa(text, lektioner = []) {
+/* ETT TAL SOM STAR I KALLAN AR ETT CITAT, INTE EN UPPFINNING.
+
+   Grinden forbjod varje tal i prosa, och skalet var riktigt: ett matt ska
+   renderas av servern ur en typad post, inte skrivas av modellen. Men ett
+   dokument bar tva sorters tal, och bara den ena har en post:
+
+     matt        omsattning, marginal, kassaflode. Typade, med period och
+                 enhet. De ska visas som postblock, precis som forut.
+     saklara     ordervardet i ett pressmeddelande, ett ramavtals langd,
+                 antalet avrop. De finns BARA som text inne i ett citat.
+
+   For den andra sorten kunde modellen omojligt lyda: det fanns ingen post att
+   peka pa, sa enda lagliga draget var att inte namna saken alls. Darfor foll
+   Loft Orbital-fragan gang pa gang, med "1,2 MEUR" och "tre ar" som brott,
+   fast bada stod ordagrant i Unibaps egen MAR-pliktiga release.
+
+   Losningen kraver inget omdome: talet far sta i prosan OM samma tal, med
+   samma enhet, star i en av de kallor blocket sjalvt aberopar. Servern letar
+   upp det. En uppfunnen siffra finns inte i kallan och faller som forut, och
+   ett tal vars ENHET inte stammer faller ocksa, sa "1,2 procent" gar inte att
+   smuggla in bara for att kallan namner "1,2 MEUR".
+
+   Galler bara tolkningsblock, som ar de enda med stod. Metod och saknas har
+   inga kallor och ar darfor lika strikta som forut.
+
+   Och bara SIFFROR, aldrig utskrivna rakneord. Se spaerren langre ner: "tre
+   ar" star i kallan om ramavtalet och skulle da ha slappt igenom ett pastaende
+   om kassans rackvidd. Enheten efter en siffra bar betydelsen, ordet "ar" gor
+   det inte. */
+const talform = t => String(t).normalize('NFKC').toLowerCase()
+  .replace(/[  \s]+/g, ' ')
+  .replace(/[−–—]/g, '-')                         // minus skrivs pa flera satt
+  .replace(/(\p{N})\s*[.,]\s*(\p{N})/gu, '$1,$2')  // 1.39 och 1,39 ar samma tal
+  .trim();
+
+/* Fragmentet ar talet PLUS enheten efter det, sa adjacensen maste stamma i
+   kallan ocksa. Utan enheten hade varje fyrsiffrigt tal i ett citat blivit en
+   fribiljett for vilket pastaende som helst med samma siffror. */
+const ENHETSORD = /^[   ]*(?:%|‰|\p{L}+)/u;
+function belagtIKalla(frasIProsa, kalla) {
+  if (!kalla) return false;
+  const f = talform(frasIProsa);
+  if (f === '') return false;
+  /* TECKNET AR EN DEL AV TALET, och ett gammalt prov fick avgora det.
+     Kallan sade "-85 MSEK" och prosan "Resultatet ar 85 MSEK". Med en ren
+     delstrangssokning gick det igenom, alltsa ett minusresultat presenterat
+     som ett plusresultat: samma siffror, motsatt innebord. Grans behovs at
+     bada hallen, sa "85" varken traffar inuti "-85" eller inuti "185". */
+  const flykt = f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const fore = /^-/.test(f) ? '(?<![\\p{N}\\p{L}])' : '(?<![\\p{N}\\p{L}-])';
+  const efter = /\p{N}$/u.test(f) ? '(?![\\p{N}])' : '';
+  return new RegExp(fore + flykt + efter, 'u').test(talform(kalla));
+}
+
+export function talIProsa(text, lektioner = [], kalla = '') {
   if (typeof text !== 'string' || !text.trim()) return 'texten ar tom';
   if (text.length > 1800) return 'texten ar for lang';
   if (text.includes('\\')) return 'texten innehaller trasig kodning; skriv om med vanliga svenska bokstaver';
@@ -314,8 +368,18 @@ export function talIProsa(text, lektioner = []) {
       return LEKTIONSORD.test(hela.slice(Math.max(0, i - 40), i)) ? ' ' : m;
     });
   }
+  /* Talet plockas ur utanPeriod men fragmentet byggs ur s: det ar den
+     ostadade texten som bar enheten efter talet. */
   const siffra = utanPeriod.match(/[\p{N}][\p{N}\u00a0\u202f ,.]*/u);
-  if (siffra) return 'siffran "' + siffra[0].trim() + '"';
+  if (siffra) {
+    const tal = siffra[0].trim();
+    const vid = s.indexOf(tal);
+    const efter = vid < 0 ? '' : (s.slice(vid + tal.length).match(ENHETSORD) || [''])[0];
+    // Minustecknet direkt fore talet hor till talet, annars kan ett negativt
+    // resultat i kallan belagga ett positivt pastaende i prosan.
+    const tecken = vid > 0 && /[-−–—]/.test(s[vid - 1]) ? '-' : '';
+    if (!belagtIKalla(tecken + tal + efter, kalla)) return 'siffran "' + tal + '"';
+  }
   if (/[\u2013\u2014<>\[\]{}]/u.test(s)) return 'ett otillatet tecken, tankstreck eller klammer';
   if (/https?:|&#|\\u[0-9a-f]/i.test(s)) return 'en lank eller en teckenkodning';
   /* "en krona" ar ett IDIOM, inte ett belopp. Regeln fallde "hur lite kapital
@@ -334,6 +398,17 @@ export function talIProsa(text, lektioner = []) {
   const krona = s.match(/(?<!\p{L})(?:en|ett)\s+(?:enda\s+)?(?:krona|kronor|öre)(?!\p{L})/u);
   if (krona && !/(?:tjäna|tjänar|tjänat|binda|binder|bundit|bunden|investera(?:r|t|d|de)?|satsa(?:r|t|d|de)?|generera(?:r|t)?|omsätta|omsätter|per|varje)\s+(?:\p{L}+\s+){0,2}$/u
     .test(s.slice(0, krona.index))) return 'beloppet "' + krona[0] + '"';
+  /* UTSKRIVNA RAKNEORD FAR INGEN KALLDISPENS, och det var ett prov som fick
+     avgora det. "Ramavtalet loper over tre ar" star i kallan, alltsa slapptes
+     ocksa "Kassan racker i tre ar med nuvarande forbrukning" igenom: samma tal,
+     samma enhet, helt annat amne. Talet var akta och pastaendet pahittat, och
+     det ar just den felklassen hela grinden finns for.
+
+     Siffror klarar sig for att enheten bar betydelsen: "1,2 MEUR" gar inte att
+     forvaxla med "1,2 procent". Ett utskrivet rakneord plus "ar" eller "ganger"
+     ar for vagt for att en traff i kallan ska betyda samma sak. Vill modellen
+     namna avtalets langd far den visa dokumentposten, dar orden star kvar i
+     sitt sammanhang. */
   const medEnhet = s.match(ENHET_EFTER);
   if (medEnhet) return 'beloppet "' + medEnhet[0] + '"';
   const tid = s.match(RAKNEORD_TID);
@@ -428,7 +503,15 @@ export function lasFaktasvar(raw, register) {
         }
         return nej('prosaformat', iBlock(b.typ) + ' hade fel falt. Ett tolkningsblock har typ, text och stod. Metod och saknas har bara typ och text.');
       }
-      const funnet = talIProsa(b.text, lektionsnummer);
+      /* Kallorna blocket SJALVT aberopar, inte hela registret. Ett tal far
+         beslaggas av det stod modellen faktiskt pekat pa, annars hade varje
+         siffra nagonstans i underlaget blivit en fribiljett. Stodet provas
+         nedan anda, sa ett hittat id ger ingen kalltext. */
+      const kalltext = (b.typ === 'tolkning' && Array.isArray(b.stod) ? b.stod : [])
+        .map(id => register.get(id)).filter(Boolean)
+        .flatMap(p => [p.text || '', ...(p.kallor || []).map(k => k.citat || '')])
+        .join('\n');
+      const funnet = talIProsa(b.text, lektionsnummer, kalltext);
       const relation = String(b.text || '').normalize('NFKD').replace(/[\p{M}\p{Cf}]/gu,'').toLowerCase()
         .match(/\b(?:fordubbl\p{L}*|halver\p{L}*|acceler\p{L}*|dubbelt\s+sa|halften\s+(?:av|sa))\b/u);
       if (relation) return nej('relation','Kvantifierade relationer skrivs av servern. Använd berakna med operation utveckling och de relevanta periodernas post-id:n. Visa resultatposten; skriv resten utan orden för fördubbling, halvering eller acceleration. Finns inga operander, förklara metoden utan ett sådant påstående.');
