@@ -29,6 +29,7 @@
 import { execFileSync } from 'node:child_process';
 import { onRequestPost } from '../functions/api/fraga.js';
 import { byggBorsdata } from '../motor/borsdata.mjs';
+import { skapaFaktaregister } from '../functions/api/_faktaregister.js';
 
 const NYCKEL = process.env.ANTHROPIC_API_KEY;
 if (!NYCKEL) { console.error('ANTHROPIC_API_KEY saknas.'); process.exit(1); }
@@ -118,6 +119,38 @@ const BUCKET = {
   ...Object.fromEntries(bolagen.map(b => ['arkiv:' + b.id, b.arkiv])),
 };
 
+/* ---- ryms posterna over huvud taget? ----
+
+   Faktaregistret har ett tak pa 40 kB och halverar det under starten, sa
+   Borsdatas poster far cirka 20 kB. Slar det i taket faller resten bort TYST:
+   modellen ser aldrig att de funnits, och loggen sa det inte heller. Utan den
+   har listan gar det inte att skilja "modellen skrev fel" fran "talet fanns
+   aldrig att referera till". Ingen modell, inga pengar. */
+function registeranalys(bok, fragetext) {
+  const r = skapaFaktaregister();
+  r.synka({ question: fragetext, holdings: HOLDINGS, arkiv: [], utdrag: [], nyckeltal: bok.bolag });
+  const poster = r.poster().filter(p => (p.kallor || []).some(k => k.typ === 'borsdata'));
+  const erbjudna = bok.bolag.reduce((sum, b) => sum
+    + (b.nyckeltal || []).reduce((a, t) => a + 1 + (t.historik || []).length + (t.median ? 1 : 0), 0)
+    + (b.rakenskaper || []).length, 0);
+  return { poster, erbjudna, status: r.status(),
+    kvartal: poster.filter(p => Number.isInteger(p.kvartal)),
+    matt: [...new Set(poster.map(p => p.matt))] };
+}
+
+console.log('\nRYMS BORSDATA-POSTERNA I FAKTAREGISTRET?');
+{
+  const a = registeranalys(NYCKELTALSBOK, 'Hur har rorelsemarginalen utvecklats?');
+  console.log(`  ${a.erbjudna} poster erbjudna, ${a.poster.length} kom in, varav `
+    + `${a.kvartal.length} kvartalsposter. Registret: ${a.status.bytes} byte`
+    + (a.status.begransat ? '  <-- TAKET SLOG I' : ''));
+  console.log('  matt som overlevde: ' + (a.matt.join(', ') || '(inga)'));
+  const perBolag = {};
+  for (const p of a.poster) (perBolag[p.bolag] ||= []).push(p.matt);
+  for (const [b, m] of Object.entries(perBolag))
+    console.log(`    ${b}: ${m.length} poster, ${new Set(m).size} olika matt`);
+}
+
 /* ---- stubbad omgivning, riktig modell ---- */
 
 const UID = '00000000-0000-4000-8000-000000000000';
@@ -136,6 +169,13 @@ const DATA = {
   async put(k, v) { skrivningar.push(k); try { BUCKET[k] = JSON.parse(v); } catch { BUCKET[k] = v; } },
 };
 
+/* Modellens RATEXT och granskarens SKAL, och reparationsbeskedet den fick.
+
+   Forsta korningen sa att sex fragor blockerades men inte varfor. Ett
+   blockerat svar visar bara etiketten, aldrig meningen som fallde, och da gar
+   det inte att avgora om det var ett formatfel eller en verklig lucka i
+   underlaget. Ratexten lamnar aldrig provet. */
+const ratext = [], domen = [], reparationsbesked = [];
 const riktigFetch = globalThis.fetch;
 globalThis.fetch = async (url, init) => {
   const u = String(url);
@@ -144,14 +184,30 @@ globalThis.fetch = async (url, init) => {
   if (u.includes('/rest/v1/holdings')) return ok(HOLDINGS);
   if (u.includes('/rest/v1/theses')) return ok([]);
   if (u.includes('api.anthropic.com')) {
+    const begaran = JSON.parse(init.body);
+    const systemtext = typeof begaran.system === 'string' ? begaran.system
+      : (begaran.system || []).map(b => b?.text || '').join('');
+    const granskar = systemtext.startsWith('Du granskar ett svar');
+    // Serverns eget nej till modellen kommer tillbaka som ett tool_result med
+    // is_error. Det ar exakt beskedet modellen fick chansen att rata sig pa.
+    for (const m of begaran.messages || [])
+      for (const b of Array.isArray(m.content) ? m.content : [])
+        if (b.type === 'tool_result' && b.is_error) reparationsbesked.push(String(b.content).slice(0, 400));
     const r = await riktigFetch(url, init);
-    if (!r.ok && r.status === 400) {
-      const fel = await r.clone().json().catch(() => ({}));
-      // Skriv aldrig ut nyckeln, aven om leverantoren speglar tillbaka den.
-      console.error('API-KONTRAKTSFEL: ' + String(fel.error?.message || 'HTTP 400').split(NYCKEL).join('[hemlighet]').slice(0, 800));
-      process.exit(2);
+    if (!r.ok) {
+      if (r.status === 400) {
+        const fel = await r.clone().json().catch(() => ({}));
+        // Skriv aldrig ut nyckeln, aven om leverantoren speglar tillbaka den.
+        console.error('API-KONTRAKTSFEL: ' + String(fel.error?.message || 'HTTP 400').split(NYCKEL).join('[hemlighet]').slice(0, 800));
+        process.exit(2);
+      }
+      return r;
     }
-    return r;
+    const kropp = await r.json();
+    const svara = (kropp.content || []).find(b => b.type === 'tool_use' && b.name === 'svara');
+    const text = svara ? JSON.stringify(svara.input) : (kropp.content || []).map(b => b.text || '').join('').trim();
+    if (granskar) domen.push(text); else if (text) ratext.push(text);
+    return ok(kropp);
   }
   return riktigFetch(url, init);
 };
@@ -170,6 +226,7 @@ async function fraga(text) {
     headers: { 'Content-Type': 'application/json' },
   });
   const t0 = Date.now();
+  ratext.length = 0; domen.length = 0; reparationsbesked.length = 0;
   const r = await onRequestPost({ request, env: ENV });
   const d = await r.json();
   return { status: r.status, ms: Date.now() - t0, ...d };
@@ -197,9 +254,15 @@ const MALLAR = [
 ];
 
 const b1 = bolagen[0].namn, b2 = bolagen[1]?.namn;
+/* FRAGA_BAS_URVAL=marginalserie,roic kor bara de namngivna. Finns for att en
+   uppfoljning pa de blockerade fragorna inte ska behova betala for de som
+   redan svarat. Tomt varde kor allihop. */
+const urval = (process.env.FRAGA_BAS_URVAL || '').split(',').map(s => s.trim()).filter(Boolean);
 const PROV = MALLAR
   .filter(m => (m[2] || 1) <= bolagen.length)
+  .filter(m => !urval.length || urval.includes(m[0]))
   .map(([namn, mall]) => ({ namn, fraga: mall.split('{b2}').join(b2 || '').split('{b}').join(b1) }));
+if (!PROV.length) { console.error('FRAGA_BAS_URVAL matchade ingen fraga.'); process.exit(1); }
 
 /* ---- korningen ---- */
 
@@ -221,7 +284,15 @@ for (const p of PROV) {
   }
 
   console.log('\nSVAR:\n' + (d.answer || '(inget svar)'));
-  if (d.blockerat) console.log('\n!! BLOCKERAT: ' + (d.verifiering?.orsak || 'okant'));
+  if (d.blockerat) {
+    console.log('\n!! BLOCKERAT: ' + (d.verifiering?.orsak || 'okant'));
+    // Serverns nej, granskarens skal och modellens ratext. Etiketten ensam gor
+    // det omojligt att skilja ett formatfel fran en verklig lucka i underlaget.
+    for (const besked of reparationsbesked)
+      console.log('   SERVERNS NEJ TILL MODELLEN: ' + besked);
+    if (domen.length) console.log('   GRANSKARENS SKAL: ' + domen.at(-1).slice(0, 600));
+    if (ratext.length) console.log('   MODELLENS STOPPADE SVAR: ' + ratext.at(-1).slice(0, 1600));
+  }
 
   console.log('\nVAG:  modell ' + t.modell + (t.modellfall ? '  <-- FALL TILLBAKA' : '')
     + ', ' + (t.modellanrop || 0) + ' modellanrop, ' + (t.gravvarv || 0) + ' gravvarv'

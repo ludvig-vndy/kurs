@@ -75,6 +75,10 @@ on:
         description: 'Basfrågor (lager 1): riktigt arkiv ur KV, riktiga Börsdata-tal, mäter kostnad och tid per moment'
         type: boolean
         default: false
+      bas_urval:
+        description: 'Basfrågor: kommaseparerat urval, t.ex. marginalserie,roic. Tomt kör alla nio.'
+        type: string
+        default: ''
 
 jobs:
   prov:
@@ -154,6 +158,8 @@ jobs:
 
       - name: Basfragor mot riktigt arkiv och riktiga Borsdata-tal
         if: ${{ inputs.basfragor }}
+        env:
+          FRAGA_BAS_URVAL: ${{ inputs.bas_urval }}
         run: |
           set +e
           node tools/prova-fraga-bas.mjs 2>&1 | tee bas.log
