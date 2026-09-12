@@ -327,6 +327,17 @@ const MALLAR = [
   ['beroende',          'Hur beroende är {b} av ' + (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') +
     ' som kund? Gå igenom vad bolagets egen kommunikation faktiskt säger, och var tydlig med ' +
     'vad som inte går att avgöra ur underlaget.'],
+  /* TESSTARKANDE SLUTLEDNING, piloten bad om den uttryckligen:
+     "vore trevligt om AI lagger ihop 1+1 utifran det som har kommunicerats.
+     Inte med for mycket positiv tolkning men bara utifran det som ar
+     kommunicerat."
+
+     Det ar precis vad ett tolkningsblock ar till for: ett resonemang med stod
+     i namngivna poster. Fragan provar om boten VAGAR dra slutsatsen alls, och
+     om granskaren later den sta nar den ar villkorad. */
+  ['tesstarkande',      'Kunden säger sig se fram emot att använda {b}:s produkter i kommande ' +
+    'konstellationer. Vad talar i bolagets egen kommunikation för fortsatta affärer med ' +
+    (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') + ', och vad är fortfarande bara en avsiktsförklaring?'],
   ['koppling',          'Finns det några kopplingar mellan {b} och ' +
     (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') +
     '? Sök i bolagets egen kommunikation och visa vad som faktiskt står där.'],
