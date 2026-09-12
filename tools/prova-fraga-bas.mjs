@@ -70,8 +70,12 @@ const PRIS = {
 };
 const USD_SEK = 10.5; // ungefarlig kurs, for att gora talen lasbara i kronor
 
+/* Modellbytet sker i fetch-lagret, men fraga.js loggar den modell den SJALV
+   valde, innan dess. Forsta jamforelsen prissatte darfor en Sonnet-korning som
+   Haiku, alltsa halva notan. Overskrivningen galler exakt momentet "svar", som
+   ar det enda som byts, sa prissattningen foljer samma regel. */
 function kostnad(anrop) {
-  const p = PRIS[anrop.modell];
+  const p = PRIS[MODELL && anrop.moment === 'svar' ? MODELL : anrop.modell];
   if (!p) return null;
   return ((anrop.inputTokens || 0) * p.in
     + (anrop.cacheSkrivet || 0) * p.in * 1.25
@@ -208,6 +212,10 @@ const DATA = {
    det inte att avgora om det var ett formatfel eller en verklig lucka i
    underlaget. Ratexten lamnar aldrig provet. */
 const ratext = [], domen = [], reparationsbesked = [];
+/* Bevis att modellbytet faktiskt skedde. Utan raknaren gick det inte att skilja
+   "Sonnet svarade" fran "overskrivningen tog aldrig", och i forsta jamforelsen
+   sa loggen "haiku" i bada korningarna. */
+let bytta = 0;
 const riktigFetch = globalThis.fetch;
 globalThis.fetch = async (url, init) => {
   const u = String(url);
@@ -223,8 +231,10 @@ globalThis.fetch = async (url, init) => {
     const redigerar = systemtext.startsWith('Du redigerar ett svar');
     // Bara svarsgeneratorn byts. Granskaren valjer redan modell efter vad den
     // ska bedoma, och att rora den hade gjort jamforelsen omojlig att tolka.
-    if (MODELL && !granskar && !redigerar && begaran.model !== MODELL)
+    if (MODELL && !granskar && !redigerar && begaran.model !== MODELL) {
       init = { ...init, body: JSON.stringify({ ...begaran, model: MODELL }) };
+      bytta++;
+    }
     /* EXPERIMENT: temperature.
 
        functions/api/fraga.js satter ingen temperature alls, sa varje anrop gar
@@ -273,7 +283,7 @@ async function fraga(text) {
     headers: { 'Content-Type': 'application/json' },
   });
   const t0 = Date.now();
-  ratext.length = 0; domen.length = 0; reparationsbesked.length = 0;
+  ratext.length = 0; domen.length = 0; reparationsbesked.length = 0; bytta = 0;
   const r = await onRequestPost({ request, env: ENV });
   const d = await r.json();
   return { status: r.status, ms: Date.now() - t0, ...d };
@@ -390,6 +400,8 @@ for (const p of korningar) {
     console.log('      ' + m.padEnd(14) + String(ms).padStart(6) + ' ms   ' + Math.round(ms / d.ms * 100) + ' %');
   console.log('      varav modellanrop: ' + anrop.map(a => a.moment + ' ' + a.ms + 'ms').join(', '));
 
+  if (MODELL) console.log('      modellbyten ' + bytta + ' av '
+    + anrop.filter(a => a.moment === 'svar').length + ' svarsanrop gick till ' + MODELL);
   console.log('\nKOST: ' + usd.toFixed(4) + ' USD, ' + (usd * USD_SEK).toFixed(2) + ' kr'
     + (okand.length ? '  (okänd prislista för ' + [...new Set(okand)].join(', ') + ')' : ''));
   for (const [m, v] of Object.entries(t.tokens || {}))
