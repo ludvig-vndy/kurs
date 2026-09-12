@@ -119,6 +119,13 @@ const BUCKET = {
   ...Object.fromEntries(bolagen.map(b => ['arkiv:' + b.id, b.arkiv])),
 };
 
+/* ---- stubbad omgivning, riktig modell ---- */
+
+const UID = '00000000-0000-4000-8000-000000000000';
+const HOLDINGS = bolagen.map((b, i) => ({
+  id: 'h-' + i, name: b.namn, quantity: 100, gav: 100, relation: 'ager',
+}));
+
 /* ---- ryms posterna over huvud taget? ----
 
    Faktaregistret har ett tak pa 40 kB och halverar det under starten, sa
@@ -150,13 +157,6 @@ console.log('\nRYMS BORSDATA-POSTERNA I FAKTAREGISTRET?');
   for (const [b, m] of Object.entries(perBolag))
     console.log(`    ${b}: ${m.length} poster, ${new Set(m).size} olika matt`);
 }
-
-/* ---- stubbad omgivning, riktig modell ---- */
-
-const UID = '00000000-0000-4000-8000-000000000000';
-const HOLDINGS = bolagen.map((b, i) => ({
-  id: 'h-' + i, name: b.namn, quantity: 100, gav: 100, relation: 'ager',
-}));
 
 const skrivningar = [];
 const DATA = {
