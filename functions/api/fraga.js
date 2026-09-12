@@ -819,7 +819,7 @@ async function besvaraFraga(context) {
   // for ett bolag vi inte har ett enda dokument om.
   // Arkivet lyfts ut ur blocket: verktygsloopen nedan behover det for att kunna
   // lasa mer och hamta historik pa modellens egen begaran.
-  let utdrag = [], teser = [], arkivet = [], nyckeltal = [];
+  let utdrag = [], teser = [], arkivet = [], nyckeltal = [], motparter = [];
   const register = skapaFaktaregister();
   const burna = [...new Map(turer.flatMap(t=>t.poster).map(p=>[p.id,p])).values()];
   const gamlaIds = register.importeraTidigare(burna);
@@ -938,6 +938,25 @@ async function besvaraFraga(context) {
             if (nyckeltal.length) tackning.nyckeltal = nyckeltal
               .map((b) => b.bolag + ": " + (b.nyckeltal || []).length);
           } catch (e) { /* utan nyckeltal svarar vi som forut */ }
+
+          /* MOTPARTERNAS EGEN KOMMUNIKATION, handplockad lista.
+
+             Arkivet bar bara de bevakade bolagens egna pressmeddelanden. En
+             pilot fragade om Unibaps koppling till ett avtal Loft Orbital slot
+             med Frankrike; den nyheten kom fran Loft Orbital och kunde aldrig
+             finnas i arkivet. Svaret han ville ha var tva belagda uppgifter
+             bredvid varandra, med slutsatsen lamnad at lasaren.
+
+             En KV-lasning for alla motparter, filtrerad till de bolag fragan
+             faktiskt routats till. Faller lasningen tyst svarar Fraga precis
+             som forut: ett tillskott, aldrig ett villkor. Se motor/motparter.json
+             och motor/bygg-motparter.mjs; tas filen ur nattjobbet stangs vagen. */
+          try {
+            const bok = await env.DATA.get("arkiv:motpart", "json");
+            const namnen = new Set(arkiv.map((a) => a.namn));
+            motparter = ((bok && bok.motparter) || []).filter((m) => namnen.has(m.bolag));
+            if (motparter.length) tackning.motparter = motparter.map((m) => m.motpart);
+          } catch (e) { /* utan motparter svarar vi som forut */ }
         } else if (!tackning.orsak) {
           tackning.orsak = "inga dokument for bolaget i fragan";
         }
@@ -980,7 +999,13 @@ async function besvaraFraga(context) {
          Sista raden ar pilotens egen begaran, i sak ordagrant: "sa far man
          gora slutsatsen sjalv i stallet for att AI gor slutsatsen." */
       "- Arkivet innehaller BARA dessa bolags EGEN kommunikation. Andra bolag, kunder, motparter, partners och myndigheter finns inte i det, aven nar de namns i fragan och aven om mycket skrivits om dem pa annat hall.\n" +
-      "- Galler fragan en sadan aktor: sag rakt ut att du inte har den aktorens egen kommunikation, redovisa sedan vad de bolag du FAKTISKT har arkiv for sager om saken, och lat lasaren dra slutsatsen. Dra den inte at lasaren, och antyd aldrig att nagot inte har hant bara for att du saknar dokumentet.\n"
+      "- Galler fragan en sadan aktor: sag rakt ut att du inte har den aktorens egen kommunikation, redovisa sedan vad de bolag du FAKTISKT har arkiv for sager om saken, och lat lasaren dra slutsatsen. Dra den inte at lasaren, och antyd aldrig att nagot inte har hant bara for att du saknar dokumentet.\n" +
+      /* NAGRA motparter bevakas, och da ska modellen veta vilka. Listan ar
+         handplockad i motor/motparter.json, sa den ar kort och kand. */
+      (motparter.length
+        ? "- For dessa motparter HAR du deras egen kommunikation: " + motparter.map(m => m.motpart).join(", ") +
+          ". Den ar niva 2, alltsa bolagets egen marknadsforing och inte reglerad information: ett belopp de sjalva anger ar deras uppgift, inte en reviderad siffra. Visa den som postblock med sin egen etikett, och bind aldrig ihop den med ett av dina bolags uppgifter till en slutsats som ingen kalla sager. Lagg uppgifterna bredvid varandra och lat lasaren dra slutsatsen.\n"
+        : "")
     : "";
 
   /* Kursen som kalla. Registret ligger alltid med, sa ett pahittat
@@ -998,7 +1023,7 @@ async function besvaraFraga(context) {
      om bolagen" samtidigt som den satt med tre verktyg for att hamta dem. */
   const harUnderlag = utdrag.length > 0 || kanGrava || burna.some(p=>['rapporterat','dokument','beraknat'].includes(p.typ));
 
-  register.synka({ arkiv: arkivet, utdrag, holdings, teser, question, lektioner, nyckeltal });
+  register.synka({ arkiv: arkivet, utdrag, holdings, teser, question, lektioner, nyckeltal, motparter });
   tackning.faktaregister = register.status();
 
   const system = SYSTEM_BAS + SVAR_KONTRAKT +

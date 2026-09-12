@@ -103,7 +103,7 @@ export function skapaFaktaregister() {
     return [...poster].sort((a, b) => poang(b) - poang(a));
   };
 
-  function synka({ arkiv = [], utdrag = [], holdings = [], teser = [], question = '', lektioner = [], illustrationer = [], nyckeltal = [] } = {}) {
+  function synka({ arkiv = [], utdrag = [], holdings = [], teser = [], question = '', lektioner = [], illustrationer = [], nyckeltal = [], motparter = [] } = {}) {
     // Urvalets dokument gar fore ovrig historik. Verktygsvarv far ett eget
     // reserverat utrymme, sa aldre nyhamtade poster inte trangs ut av starten.
     const ordinarieTak = tak;
@@ -259,6 +259,34 @@ export function skapaFaktaregister() {
               (rad.brutet === true ? ' Bolaget har brutet räkenskapsår, så perioden anges med datum.' : '') +
               '. Hämtat från Börsdatas kvartalsräkenskaper, inte uträknat här. ' +
               'Börsdatas standardiserade definition för hela koncernen, inte bolagets egen rad och inte ett segment.' }] });
+      }
+    }
+
+    /* MOTPARTENS EGEN KOMMUNIKATION.
+
+       Arkivet bar bara de bevakade bolagens egna pressmeddelanden. En pilot
+       fragade om Unibaps koppling till ett avtal Loft Orbital slot med
+       Frankrike; nyheten kom fran Loft Orbital, inte fran Unibap, sa den kunde
+       aldrig finnas i arkivet. Det efterfragade svaret var inte en gissning
+       utan tva belagda uppgifter bredvid varandra, dar lasaren drar slutsatsen.
+
+       EGEN TYP hela vagen ut. Ett onoterat bolags nyhetsrum ar marknadsforing,
+       inte reglerad information, och etiketten sager det i svaret utan att
+       lasaren behover klicka pa kallan. I berakningskedjan rankas den under
+       vart eget arkiv.
+
+       Handplockad lista, se motor/motparter.json. Ingen sokning och inga
+       gissade domaner. Faller lasningen bort svarar Fraga precis som forut. */
+    for (const m of motparter) {
+      if (!m || typeof m.motpart !== 'string') continue;
+      for (const dok of m.dokument || []) {
+        if (!sakerUrl(dok?.url)) continue;
+        for (const bit of (dok.bitar || []).slice(0, 3)) {
+          if (typeof bit !== 'string' || !bit.trim()) continue;
+          lagg({ typ: 'motpart', bolag: m.motpart, text: bit.slice(0, MAX_KURSCITAT),
+            rubrik: m.motpart + ', egen kommunikation om sig sjalvt',
+            kallor: [{ url: dok.url, rubrik: dok.rubrik || m.motpart, typ: 'motpart' }] });
+        }
       }
     }
 

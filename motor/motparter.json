@@ -1,0 +1,35 @@
+{
+  "_om": [
+    "Motparter vars EGEN kommunikation ska följa med in i Frågas underlag.",
+    "",
+    "Varför listan finns: arkivet innehåller bara de bevakade bolagens egna",
+    "pressmeddelanden från MFN. En pilot frågade om Unibaps koppling till ett",
+    "avtal Loft Orbital slöt med Frankrike, och svaret blev att dokumentet",
+    "saknades. Nyheten kom från Loft Orbital och Orbitworks, inte från Unibap,",
+    "så den kunde aldrig finnas i arkivet oavsett hur mycket som skrevs om den.",
+    "",
+    "Listan är HANDPLOCKAD med flit. Det är ingen sökning och ingen gissning:",
+    "du pekar ut vilka motparter som är värda att bevaka för ett innehav, och",
+    "bara de hämtas. Domänen är känd, formen är känd, och källan syns i svaret.",
+    "",
+    "NIVÅ 2, inte nivå 1. Ett onoterat bolags nyhetsrum är marknadsföring, inte",
+    "reglerad information. Ett avtal de själva säger är värt en miljard dollar",
+    "är deras uppgift, inte en reviderad siffra. Det märks i svaret och ska så",
+    "förbli: posterna får etiketten 'Motpartens egen kommunikation'.",
+    "",
+    "Fälten: bolag måste stämma med namnet i arkiv:index. motpart är namnet som",
+    "visas. urler är sidor att hämta, helst ett nyhetsrum eller en pressida."
+  ],
+  "motparter": [
+    {
+      "bolag": "Unibap Space Solutions",
+      "motpart": "Loft Orbital",
+      "urler": ["https://www.loftorbital.com/newsroom"]
+    },
+    {
+      "bolag": "Unibap Space Solutions",
+      "motpart": "Orbitworks",
+      "urler": ["https://www.orbitworks.ae/news"]
+    }
+  ]
+}

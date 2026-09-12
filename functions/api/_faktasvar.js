@@ -192,6 +192,11 @@ Skalet nar aldrig anvandaren. Det finns for att en blockering ska ga att granska
 
 const ETIKETT = {
   rapporterat: 'Rapporterat', beraknat: 'Beräknat', dokument: 'Citat ur dokument',
+  /* MOTPARTEN ar inte bolaget, och inte reglerad information.
+     Ett onoterat bolags nyhetsrum ar marknadsforing. Sager de sjalva att ett
+     avtal ar vart en miljard dollar ar det deras uppgift, inte en reviderad
+     siffra, och etiketten maste saga det utan att lasaren behover klicka. */
+  motpart: 'Citat ur motpartens egen kommunikation, inte reglerad information',
   egen_uppgift: 'Din uppgift, inte verifierad bolagsdata', antagande: 'Ditt antagande',
   kurs: 'Kursmaterial, inte bolagsdata', illustration: 'Illustrativt exempel',
   metod: 'Metod', tolkning: 'Tolkning', saknas: 'Saknar underlag',

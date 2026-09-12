@@ -4,7 +4,10 @@
    vara irrelevant för frågan, vilket bedöms efteråt. */
 import { formateraTal } from './_talformat.js';
 
-const RANG = { illustration: 0, antagande: 1, egen_uppgift: 2, kurs: 3, dokument: 4, rapporterat: 5 };
+/* Motparten hamnar mellan kursmaterial och vart eget dokumentarkiv: den ar en
+   verklig kalla om ett verkligt bolag, men den ar inte reglerad information och
+   inte bolagets eget besked om sig sjalvt. */
+const RANG = { illustration: 0, antagande: 1, egen_uppgift: 2, kurs: 3, motpart: 4, dokument: 5, rapporterat: 6 };
 const MAX_INDATA = 16;
 /* TVA SORTERS PERIOD, och de far aldrig blandas.
 

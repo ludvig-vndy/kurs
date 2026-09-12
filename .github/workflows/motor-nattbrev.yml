@@ -73,5 +73,13 @@ jobs:
       - name: Uppdatera Frågas dokumentarkiv
         run: node motor/bygg-arkiv.mjs --kor
 
+      # Motparternas egen kommunikation, handplockad lista i motor/motparter.json.
+      # Nivå 2: onoterade bolags nyhetsrum är marknadsföring, inte reglerad
+      # information, och posterna bär en egen etikett hela vägen ut i svaret.
+      # Får aldrig ta ner brevet: faller hämtningen står arkivet kvar som det är.
+      - name: Hämta motparternas egen kommunikation
+        continue-on-error: true
+        run: node motor/bygg-motparter.mjs --kor
+
       - name: Spara motorns minne till KV
         run: node motor/state-kv.mjs spara
