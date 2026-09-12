@@ -87,6 +87,14 @@ on:
         description: 'Basfrågor: antal varv per fråga. Krävs för att mäta om ett utfall är stabilt eller slump.'
         type: string
         default: '1'
+      bas_bolag_namn:
+        description: 'Basfrågor: peka ut bolag ur arkivindexet, t.ex. Unibap. Tomt tar de första som har både dokument och Börsdata-träff.'
+        type: string
+        default: ''
+      bas_motpart:
+        description: 'Basfrågor: motpart i kopplingsfrågan, t.ex. Loft Orbital.'
+        type: string
+        default: ''
 
 jobs:
   prov:
@@ -170,6 +178,8 @@ jobs:
           FRAGA_BAS_URVAL: ${{ inputs.bas_urval }}
           FRAGA_BAS_TEMP: ${{ inputs.bas_temp }}
           FRAGA_BAS_UPPREPA: ${{ inputs.bas_upprepa }}
+          FRAGA_BAS_BOLAG_NAMN: ${{ inputs.bas_bolag_namn }}
+          FRAGA_BAS_MOTPART: ${{ inputs.bas_motpart }}
         run: |
           set +e
           node tools/prova-fraga-bas.mjs 2>&1 | tee bas.log

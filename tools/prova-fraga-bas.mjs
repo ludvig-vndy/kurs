@@ -91,9 +91,18 @@ console.log(`  ${index.length} bolag i indexet.`);
 
 /* Valj de forsta bolagen som BADE har dokument i arkivet OCH traff hos
    Borsdata. Bada kraven ar produktionens: utan dokument slapps bolaget innan
-   nyckeltalen ens lases, sa ett bolag med bara Borsdata-tal ger inget svar. */
+   nyckeltalen ens lases, sa ett bolag med bara Borsdata-tal ger inget svar.
+
+   FRAGA_BAS_BOLAG_NAMN=Unibap pekar ut bolag i stallet for att ta de forsta.
+   Behovs for fragor som handlar om ett visst bolag, till exempel en relation
+   till en motpart som bara namns i det bolagets egen kommunikation. */
+const onskade = (process.env.FRAGA_BAS_BOLAG_NAMN || '').split(',').map(s => s.trim()).filter(Boolean);
+const ordning = onskade.length
+  ? index.filter(p => onskade.some(o => (p.namn || p.id || '').toLowerCase().includes(o.toLowerCase())))
+  : index;
+if (onskade.length && !ordning.length) { console.error('FRAGA_BAS_BOLAG_NAMN matchade inget bolag i arkivindexet.'); process.exit(1); }
 const kandidater = [];
-for (const post of index) {
+for (const post of ordning) {
   if (kandidater.length >= ANTAL_BOLAG * 3) break;
   const a = kv('arkiv:' + post.id);
   if (a && (a.dokument || []).length) kandidater.push({ id: post.id, namn: a.namn || post.namn, arkiv: a });
@@ -275,6 +284,16 @@ const MALLAR = [
   ['skuldsattning',     'Hur stor är {b}:s nettoskuld, och hur ser den ut i förhållande till eget kapital?'],
   ['roic',              'Hur har {b}:s ROIC och soliditet utvecklats de senaste åren?'],
   ['jamforelse',        'Jämför rörelsemarginalen i {b} och {b2} för det senaste hela året. Vilken skillnad är det, i procentenheter?', 2],
+  /* RELATIONSFRAGAN, och den ar inte en sifferfraga alls.
+
+     Sebastian bad om att fa se kopplingar mellan tva bolag och foreslog
+     LinkedIn. Svaret star i stallet i bolagets egen reglerade kommunikation:
+     nio av fyrtio Unibap-dokument i vart arkiv namner Loft Orbital. Fragan
+     provar om boten hittar dit med las_mer och sokord, utan att rakna pa
+     nagot. Motparten satts med FRAGA_BAS_MOTPART. */
+  ['koppling',          'Finns det några kopplingar mellan {b} och ' +
+    (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') +
+    '? Sök i bolagets egen kommunikation och visa vad som faktiskt står där.'],
 ];
 
 const b1 = bolagen[0].namn, b2 = bolagen[1]?.namn;
