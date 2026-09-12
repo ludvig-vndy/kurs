@@ -1222,10 +1222,14 @@ async function besvaraFraga(context) {
      granskas inte och kan inte bara ett pastaende om bolaget. Den laggs forst,
      eftersom den andrar hur allt under den ska lasas, och den foljer inte med
      in i samtalstraden: det ar posterna som ar samtalets innehall. */
+  /* ETIKETTEN LOG. Forsta versionen satte "Saknar underlag" over noten, och
+     piloten last den precis som den star: att uppgifterna saknades. De lag
+     rakt under. Underlaget saknas inte, det ar KOMMENTAREN som togs bort, och
+     det ar tva helt olika besked till den som last fragan. */
   const block = tackning.partiellt
-    ? [{ typ: 'saknas', etikett: 'Saknar underlag', stod: [], kallor: [],
-        text: 'Jag hade en kommentar till uppgifterna nedan men kunde inte belägga den mot '
-          + 'underlaget, så den är borttagen. Det här är alltså källmaterialet och inte en '
+    ? [{ typ: 'saknas', etikett: 'Kommentaren togs bort', stod: [], kallor: [],
+        text: 'Underlaget nedan står i källan, men min kommentar till det kunde jag inte '
+          + 'belägga, så den är borttagen. Det här är alltså källmaterialet och inte en '
           + 'färdig analys. Vilka poster som visas är modellens urval, så fråga gärna vidare '
           + 'om en enskild uppgift om du vill ha den prövad.' },
       ...kontrollerat.block]

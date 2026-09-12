@@ -69,7 +69,11 @@ test('postblocken levereras nar prosan faller mekaniskt', async () => {
     assert.equal(d.tackning.partiellt.poster, 1);
     // Prosan ska vara borta, posten kvar.
     assert.ok(!/12 procent/.test(d.answer), 'den obelagda prosan foljde med ut');
-    assert.ok(/Saknar underlag/.test(d.answer), 'noten om att kommentaren togs bort saknas');
+    // Etiketten ska saga att KOMMENTAREN togs bort, inte att underlaget saknas.
+    // Piloten last forsta versionen ("Saknar underlag") precis som den stod och
+    // trodde att uppgifterna fattades. De lag rakt under noten.
+    assert.ok(/Kommentaren togs bort/.test(d.answer), 'noten om att kommentaren togs bort saknas');
+    assert.ok(!/^Saknar underlag/m.test(d.answer), 'noten pastar fortfarande att underlaget saknas');
     assert.ok(/urval/.test(d.answer), 'noten sager inte att urvalet ar modellens');
     assert.equal(d.block[0].typ, 'saknas', 'noten ska sta forst, den andrar hur resten lases');
     assert.ok(d.block.length > 1, 'inget postblock levererades');
@@ -122,7 +126,7 @@ test('ett godkant svar ar oforandrat, ingen not och inget partiellt', async () =
     const d = await (await anrop()).json();
     assert.ok(!d.blockerat, JSON.stringify(d.verifiering));
     assert.equal(d.verifiering.partiellt, undefined, 'ett helt svar markerades som partiellt');
-    assert.ok(!/Saknar underlag/.test(d.answer), 'noten kom med i ett svar som inte behovde den');
+    assert.ok(!/Kommentaren togs bort/.test(d.answer), 'noten kom med i ett svar som inte behovde den');
     assert.ok(/blir kvar i rorelsen/.test(d.answer), 'prosan foll bort ur ett godkant svar');
   } finally { k.ater(); }
 });

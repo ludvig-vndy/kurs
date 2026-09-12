@@ -232,6 +232,50 @@ export function iPerioden(datum, period) {
   return (!period.fran || d >= period.fran) && (!till || d <= till);
 }
 
+/* MFN:S SIDNAVIGERING AR INTE BOLAGETS KOMMUNIKATION.
+
+   Skrapningen tar med hela sidans ram: menyrader, "Logga in med X", listan
+   over tangentbordsgenvagar, och sist bolagsrutan som slutar med "Vem ager
+   bolaget? All agardata du vill ha finns i Holdings !". Allt det ligger FORE
+   pressmeddelandets text i varje bit.
+
+   Det kostar tre ganger: lasaren far en vagg av skrap innan den mening som
+   svarar pa fragan, registret som redan slar i taket fylls med det, och vi
+   betalar for det i varje modellanrop eftersom registret ar input.
+
+   Piloten sa det rakt ut efter forsta provet: "blir lite mycket text och for
+   lite slutsatser". Det har ar en del av den texten.
+
+   Stadningen sker vid LASNING, inte vid inlasning, sa den galler arkivet som
+   redan ligger i KV utan att nagot behover skrapas om. Hittas ingen brytpunkt
+   lamnas biten orord: hellre lite skrap an en bortklippt rapport. */
+const MFN_RAM = /^[\s\S]{0,1200}?Vem äger bolaget\?\s*All ägardata du vill ha finns i Holdings\s*!?\s*/;
+const MFN_TOPP = /^\s*MFN\.se\s*>[^\n]*\n+/;
+export function stadaBit(bit) {
+  const t = String(bit || '');
+  const utan = t.replace(MFN_RAM, '');
+  return (utan === t ? t.replace(MFN_TOPP, '') : utan).trim();
+}
+
+/* HELA BITAR SOM AR SIDRAM, inte bolagets text alls.
+
+   Dokumenten styckas i bitar, och tre av fem bitar i ett typiskt
+   MFN-pressmeddelande ar sajtens ram: brodsmula och meny, en kurswidget, och
+   en inloggningsinstruktion. Matt over arkivet 2026-09-12: 921 av 2285 bitar,
+   alltsa 40 procent av bitarna och 55 procent av alla tecken.
+
+   Det ar inte bara sloseri. SAMTLIGA 921 innehaller siffror, och de ser ut som
+   bolagsdata: kurswidgeten skriver "Antal aktier 265 029" och "Rel. mcap
+   0,24%". En fraga om antalet aktier kan alltsa traffa MFN:s widget och fa ett
+   tal som inte kommer ur nagon rapport. Det ar samma felklass som allt annat
+   har ar byggt for att stoppa, och den hade legat i underlaget hela tiden.
+
+   Markorerna ar medvetet fa och bokstavliga. Tolv traffar innehaller ocksa
+   rapportsprak, men bara for att dokumentets rubrik star i brodsmulan; deras
+   brodtext ar likafullt ram. */
+const SIDRAM = [/^\s*MFN\.se\s*>/, /Rel\. mcap/, /För att logga in, klicka på/, /Short keys for navigating/];
+export const arSidram = bit => SIDRAM.some(r => r.test(String(bit || '')));
+
 export function hamtaUtdrag(fraga, bolagsarkiv, max = 6, nu = Date.now(), period) {
   const t = termer(fraga);
   if (!t.length) return [];
@@ -247,6 +291,7 @@ export function hamtaUtdrag(fraga, bolagsarkiv, max = 6, nu = Date.now(), period
       const fars = farskhet(dok.datum, nu);
       const inne = p ? iPerioden(dok.datum, p) : true;
       for (const bit of dok.bitar || []) {
+        if (arSidram(bit)) continue;   // sajtens ram, aldrig bolagets text
         const lc = bit.toLowerCase();
         let poang = 0;
         for (const term of t) {
@@ -263,7 +308,10 @@ export function hamtaUtdrag(fraga, bolagsarkiv, max = 6, nu = Date.now(), period
           if (p) poang *= inne ? 1.4 : 0.15;
           else poang *= (0.6 + 0.8 * fars); // farskt vager tyngre, gammalt racker anda
           if (tunn) poang *= 0.4;
-          kandidater.push({ poang, text: bit, rubrik: dok.rubrik, url: dok.url, datum: dok.datum, bolag: ark.namn });
+          // Poangen raknas pa hela biten, texten som visas ar stadad: en term
+          // som bara traffar i menyraden ska inte heller ge poang, men den
+          // traffen ar redan sa svag att stadningen inte andrar ordningen.
+          kandidater.push({ poang, text: stadaBit(bit), rubrik: dok.rubrik, url: dok.url, datum: dok.datum, bolag: ark.namn });
         }
       }
     }

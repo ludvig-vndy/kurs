@@ -39,6 +39,7 @@
    Inga beroenden har, sa allt gar att prova med node --test. */
 import { jamforbara as fullstandigtJamforbara } from './_berakning.js';
 import { formateraTal } from './_talformat.js';
+import { arSidram } from './_kallgrind.js';
 
 // Tusentalsavgransare: vanligt mellanslag, hart mellanslag och smalt hart
 // mellanslag. Det vanliga saknades i forsta versionen, och "27 489" lastes da
@@ -244,6 +245,11 @@ function normaliseraFakta(nu, rå) {
 }
 
 /** Alla nyckeltal vi kan lasa ur ett bolagsarkiv, ett per metrik och period. */
+/* MFN:s sidram bar siffror som ser ut som bolagsdata: kurswidgeten skriver
+   "Antal aktier 265 029" och "Rel. mcap 0,24%". Lases de som rapporttext blir
+   ett widgetvarde ett belagt faktum. 921 av arkivets 2285 bitar ar sadan ram. */
+const brodtext = dok => (dok.bitar || []).filter(b => !arSidram(b)).join(' ');
+
 export function extraheraNyckeltal(bolagsarkiv) {
   /* BOLAGET AR EN DEL AV NYCKELN. Utan det slog tva bolags varde for samma
      metrik och period ut varandra: `if (funna.has(nyckel)) continue` gjorde att
@@ -257,7 +263,7 @@ export function extraheraNyckeltal(bolagsarkiv) {
   for (const ark of bolagsarkiv) {
     for (const dok of ark.dokument || []) {
       if (!dok.fakta) continue;
-      const period = periodFor(dok.rubrik, (dok.bitar || []).join(' '));
+      const period = periodFor(dok.rubrik, brodtext(dok));
       if (!period) continue;
       for (const [faltId, m] of Object.entries(FRAN_FAKTA)) {
         const f = dok.fakta[faltId];
@@ -292,7 +298,7 @@ export function extraheraNyckeltal(bolagsarkiv) {
   // Pass 2: regexen over pressmeddelandets text, fyller det fakta inte tackte.
   for (const ark of bolagsarkiv) {
     for (const dok of ark.dokument || []) {
-      const text = (dok.bitar || []).join(' ');
+      const text = brodtext(dok);
       const utanJamforelser = utanParenteser(text);
       for (const m of METRIKER) {
         for (const träff of text.matchAll(new RegExp(m.re.source, 'gi'))) {
