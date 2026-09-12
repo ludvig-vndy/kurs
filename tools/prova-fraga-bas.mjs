@@ -52,6 +52,15 @@ const TEMP = process.env.FRAGA_BAS_TEMP === '' || process.env.FRAGA_BAS_TEMP ===
 if (TEMP !== null && !Number.isFinite(TEMP)) { console.error('FRAGA_BAS_TEMP maste vara ett tal.'); process.exit(1); }
 const UPPREPA = Math.max(1, Number(process.env.FRAGA_BAS_UPPREPA || 1));
 
+/* FRAGA_BAS_MODELL=claude-sonnet-5 tvingar svarsgeneratorn till en viss modell.
+   Routningen valjer annars Haiku for det mesta, av kostnadsskal.
+
+   Granskaren och redigeraren lamnas ORORDA: provet ska mata vad en starkare
+   SVARSMODELL gor med samma underlag och samma grindar, inte byta ut hela
+   kedjan. Sonnet kostar exakt 2x Haiku per token, sa fragan ar om den behover
+   farre varv och haller kontraktet oftare, alltsa betalar en del av sig sjalv. */
+const MODELL = process.env.FRAGA_BAS_MODELL || '';
+
 /* Prislista, USD per miljon token. Lokal konstant, ingen API-uppgift: andras
    priserna blir siffran nedan fel utan att nagot larmar. Cache-lasning kostar
    0,1x och cache-skrivning 1,25x av inpriset. */
@@ -211,6 +220,11 @@ globalThis.fetch = async (url, init) => {
     const systemtext = typeof begaran.system === 'string' ? begaran.system
       : (begaran.system || []).map(b => b?.text || '').join('');
     const granskar = systemtext.startsWith('Du granskar ett svar');
+    const redigerar = systemtext.startsWith('Du redigerar ett svar');
+    // Bara svarsgeneratorn byts. Granskaren valjer redan modell efter vad den
+    // ska bedoma, och att rora den hade gjort jamforelsen omojlig att tolka.
+    if (MODELL && !granskar && !redigerar && begaran.model !== MODELL)
+      init = { ...init, body: JSON.stringify({ ...begaran, model: MODELL }) };
     /* EXPERIMENT: temperature.
 
        functions/api/fraga.js satter ingen temperature alls, sa varje anrop gar
