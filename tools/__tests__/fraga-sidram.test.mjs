@@ -67,3 +67,45 @@ test('bolagets text overlever nar ramen tas bort', () => {
   assert.equal(utdrag.length, 1, 'fel antal bitar overlevde: ' + utdrag.length);
   assert.match(utdrag[0].text, /Ordervärdet är 1,2 MEUR/);
 });
+
+/* ARKIVETS DATUM AR OFTA INLASNINGSDAGEN.
+
+   Matt 2026-09-12: atta bolag hade varenda dokument stamplat samma dag, den
+   dag bevakningen startade. En delarsrapport for januari till september 2024
+   bar datumet 2026-07-08; den publicerades 2024-11-07, alltsa 608 dagar fel.
+
+   Det ar inte kosmetiskt. Datumet styr farskhetspoangen i urvalet, avgor om
+   ett dokument ligger inom en efterfragad period, och visas for anvandaren som
+   pressmeddelandets datum. Ett svar kunde saga att en uppgift var farsk nar den
+   var nastan tva ar gammal, med kalla och allt.
+
+   Ratt datum star i texten. 292 av 308 dokument rattas, och samtliga 22
+   rapporter med lasbar period far ett datum EFTER sin egen period. */
+test('publiceringsdatumet lases ur texten, inte ur inlasningen', async () => {
+  const { publiceringsdatum } = await import('../../functions/api/_kallgrind.js');
+  const nu = Date.parse('2026-09-12');
+  // MAR-raden gar forst, den ar den juridiska uppgiften.
+  assert.equal(publiceringsdatum({ datum: '2026-08-30', bitar: [
+    'Informationen lämnades, genom ovanstående kontaktperson(er)s försorg, för offentliggörande den 2026-03-16 08:30 CET.',
+  ] }, nu), '2026-03-16');
+  // Huvudets tidsstampel duger nar MAR-raden saknas.
+  assert.equal(publiceringsdatum({ datum: '2026-08-30', bitar: [
+    'Ferroamp AB (publ) Delårsrapport Q2 2026 \n\n 2026-08-19 07:30:14 \n\n Perioden i sammandrag',
+  ] }, nu), '2026-08-19');
+  // Sidramen far inte tranga undan huvudet: tidsstampeln ligger efter
+  // tusentals tecken meny och kurswidget i ett verkligt dokument.
+  assert.equal(publiceringsdatum({ datum: '2026-08-30', bitar: [
+    BRODSMULA, WIDGET, 'Rubrik \n\n 2026-08-19 07:30:14 \n\n Perioden i sammandrag',
+  ] }, nu), '2026-08-19');
+  // Utan lasbart datum behalls arkivets, och ett datum i framtiden godtas aldrig.
+  assert.equal(publiceringsdatum({ datum: '2026-08-30', bitar: ['Ingen tidsstämpel här.'] }, nu), '2026-08-30');
+  assert.equal(publiceringsdatum({ datum: '2026-08-30', bitar: ['Rubrik \n\n 2099-01-01 07:30:14 \n\n text'] }, nu), '2026-08-30');
+});
+
+test('ett utdrag bar publiceringsdatumet, inte inlasningsdagen', () => {
+  const dokument = [{ url: 'https://mfn.se/a/unibap/x', rubrik: 'Avropsorder', datum: '2026-08-30',
+    bitar: ['Avropsorder från Loft Orbital \n\n 2026-03-16 08:30:00 \n\n Ordervärdet är 1,2 MEUR.'] }];
+  const u = hamtaUtdrag('avropsorder Loft Orbital', [{ id: 'unibap', namn: 'Unibap', dokument }], 6, Date.parse('2026-09-12'));
+  assert.equal(u.length, 1);
+  assert.equal(u[0].datum, '2026-03-16', 'inlasningsdagen foljde med ut som kalldatum');
+});

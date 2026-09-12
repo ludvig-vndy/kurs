@@ -273,8 +273,88 @@ export function stadaBit(bit) {
    Markorerna ar medvetet fa och bokstavliga. Tolv traffar innehaller ocksa
    rapportsprak, men bara for att dokumentets rubrik star i brodsmulan; deras
    brodtext ar likafullt ram. */
-const SIDRAM = [/^\s*MFN\.se\s*>/, /Rel\. mcap/, /För att logga in, klicka på/, /Short keys for navigating/];
+const SIDRAM = [/^\s*MFN\.se\s*>/, /Rel\. mcap/, /För att logga in, klicka på/, /Short keys for navigating/,
+  // Tidszonsvaljaren och mejlkvittot i sidfoten. Den biten matchade en fraga om
+  // Loft Orbital pa ett PDF-FILNAMN och kom med som "underlag".
+  /New York \/ Eastern/, /Ett mail har skickats till den givna adressen/];
 export const arSidram = bit => SIDRAM.some(r => r.test(String(bit || '')));
+
+/* ARKIVETS DATUM AR OFTA INLASNINGSDAGEN, INTE PUBLICERINGSDAGEN.
+
+   Matt 2026-09-12: 113 av 308 dokument bar ett datum som delas av hela
+   bolagets arkiv, alltsa dagen bevakningen startade. Atta bolag hade varenda
+   dokument stamplat 2026-08-30. Ett dokument stamplat 2026-07-08 var i
+   sjalva verket publicerat 2025-09-18, nastan ett ar fel.
+
+   Det ar inte kosmetiskt. Datumet styr farskhetspoangen i urvalet, avgor om
+   ett dokument ligger inom en efterfragad period, och visas for anvandaren som
+   pressmeddelandets datum. Ett svar kan alltsa saga att en uppgift ar farsk
+   nar den ar ett ar gammal, med kalla och allt.
+
+   Ratt datum star i texten: MFN skriver bade en tidsstampel i huvudet och
+   MAR-raden "for offentliggorande den ...". 307 av 308 dokument har minst en
+   av dem. MAR-raden gar forst, den ar den juridiska uppgiften. Tidsstampeln
+   godtas bara tidigt i texten, dar huvudet star, och ett datum i framtiden
+   godtas aldrig.
+
+   Rattningen sker vid LASNING, sa den galler arkivet som redan ligger i KV.
+   Ingesten bor rattas ocksa, men det kraver en omskrapning. */
+const MAR_DATUM = /offentliggörande den (\d{4}-\d{2}-\d{2})/i;
+const HUVUD_DATUM = /(?:^|\n)\s*(\d{4}-\d{2}-\d{2})[ T]\d{2}:\d{2}/;
+export function publiceringsdatum(dok, idag = Date.now()) {
+  const arkivdatum = String(dok?.datum || '').slice(0, 10);
+  /* Sidramen raknas bort FORST. Tidsstampeln star i huvudet pa sjalva
+     pressmeddelandet, och med menyn och kurswidgeten kvar lag den bortom
+     fonstret nedan, sa bara 19 av 308 dokument rattades i stallet for 113. */
+  const text = (dok?.bitar || []).filter(b => !arSidram(b)).join('\n');
+  const mar = text.match(MAR_DATUM);
+  const huvud = text.slice(0, 1500).match(HUVUD_DATUM);
+  const kandidat = (mar && mar[1]) || (huvud && huvud[1]) || null;
+  if (!kandidat) return arkivdatum;
+  const t = Date.parse(kandidat + 'T00:00:00Z');
+  // Ett datum i framtiden ar ett lasfel, inte en publicering.
+  if (!Number.isFinite(t) || t > idag + 86400000) return arkivdatum;
+  return kandidat;
+}
+
+/* FONSTRET RUNT DET SOM FAKTISKT MATCHADE.
+
+   En bit ar ofta en hel avdelning ur en rapport. "Vasentliga handelser" i
+   Unibaps Q3 rader upp Loft Orbital, Argotec, Scanway och Leonardo i samma
+   stycke. Fragade nagon om Loft Orbital kom alla fyra med, och piloten sa det
+   rakt ut: "den spottar ur citat fran olika pressmeddelanden som ibland inte
+   heller handlar om specifikt det jag fragat".
+
+   Fonstret laggs runt forsta och sista traffen och klipps vid meningsgrans, sa
+   citatet borjar och slutar dar en mening gor. Hittas ingen trafF lamnas biten
+   orord: hellre for mycket text an ett godtyckligt klipp.
+
+   Vinsten ar tredubbel, samma som for sidramen: kortare svar, fler poster
+   under registrets tak, och lagre tokenkostnad i varje anrop. */
+const FONSTER_MARGINAL = 260;
+const MAX_FONSTER = 900;
+export function fonster(text, termer) {
+  const hel = String(text || '');
+  if (hel.length <= MAX_FONSTER) return hel;
+  const lc = hel.toLowerCase();
+  let forst = Infinity, sist = -1;
+  for (const term of termer) {
+    const i = lc.indexOf(term);
+    if (i < 0) continue;
+    forst = Math.min(forst, i);
+    sist = Math.max(sist, lc.lastIndexOf(term) + term.length);
+  }
+  if (sist < 0) return hel;
+  let fran = Math.max(0, forst - FONSTER_MARGINAL);
+  let till = Math.min(hel.length, Math.max(sist + FONSTER_MARGINAL, fran + MAX_FONSTER));
+  if (till - fran > MAX_FONSTER) till = fran + MAX_FONSTER;
+  // Snappa till meningsgrans sa citatet inte borjar eller slutar mitt i ett ord.
+  const start = hel.slice(fran, Math.min(hel.length, fran + 160)).search(/[.!?]\s/);
+  if (fran > 0 && start >= 0) fran += start + 2;
+  const slut = hel.slice(Math.max(fran, till - 160), till).lastIndexOf('. ');
+  if (till < hel.length && slut >= 0) till = Math.max(fran, till - 160) + slut + 1;
+  return hel.slice(fran, till).trim() || hel.slice(0, MAX_FONSTER);
+}
 
 export function hamtaUtdrag(fraga, bolagsarkiv, max = 6, nu = Date.now(), period) {
   const t = termer(fraga);
@@ -285,21 +365,41 @@ export function hamtaUtdrag(fraga, bolagsarkiv, max = 6, nu = Date.now(), period
   const p = period === undefined ? periodIFragan(fraga, nu) : period;
   const kandidater = [];
   for (const ark of bolagsarkiv) {
+    /* BOLAGETS EGET NAMN SKILJER INGENTING.
+       Routningen har redan valt bolaget, sa "unibap" star i varje dokument och
+       ger poang overallt utan att saga nagot om amnet. Med namnet raknat som
+       en vanlig term rackte det for att en bit skulle valjas, och i pilotens
+       fraga om Loft Orbital kom ett utdrag med som inte namnde Loft alls.
+       Namnet far fortfarande ge poang, men det far inte ensamt kvalificera. */
+    const bolagsord = new Set((String(ark.namn || '').toLowerCase().match(/[a-zåäö0-9]{3,}/g) || []));
+    const sarskiljande = t.filter(term => !bolagsord.has(term));
     for (const dok of ark.dokument || []) {
       const rubrikLc = String(dok.rubrik || '').toLowerCase();
       const tunn = TUNN.test(String(dok.rubrik || '').trim());
-      const fars = farskhet(dok.datum, nu);
-      const inne = p ? iPerioden(dok.datum, p) : true;
+      // Publiceringsdagen, inte inlasningsdagen. Se publiceringsdatum ovan.
+      const datum = publiceringsdatum(dok, nu);
+      const fars = farskhet(datum, nu);
+      const inne = p ? iPerioden(datum, p) : true;
       for (const bit of dok.bitar || []) {
         if (arSidram(bit)) continue;   // sajtens ram, aldrig bolagets text
-        const lc = bit.toLowerCase();
-        let poang = 0;
+        const hel = stadaBit(bit);
+        const lc = hel.toLowerCase();
+        let poang = 0, kropp = 0;
         for (const term of t) {
-          if (lc.includes(term)) poang += term.length;
+          if (lc.includes(term) && !bolagsord.has(term)) { poang += term.length; kropp++; }
+          else if (lc.includes(term)) poang += Math.ceil(term.length / 3);
           // Rubriken vager, men lite. Med tung rubrikvikt vann inbjudan till
           // kvartalssamtalet over sjalva kvartalsrapporten, som bar talet.
           if (rubrikLc.includes(term)) poang += Math.ceil(term.length / 2);
         }
+        /* RUBRIKEN ENSAM RACKER INTE.
+           Poangen kunde komma enbart fran rubriken, sa en bit vars brodtext
+           inte namnde fragans amne med ett ord valdes anda, bara for att
+           dokumentet hette ratt. Piloten sag det direkt: "den spottar ur citat
+           fran olika pressmeddelanden som ibland inte heller handlar om
+           specifikt det jag fragat". Ett av sex utdrag i hans fraga om Loft
+           Orbital namnde inte Loft Orbital. */
+        if (kropp === 0 && sarskiljande.length) continue;
         if (poang > 0) {
           // Med en period i fragan ar aldern inte langre ett kvalitetsmatt utan
           // ett krav: pa "sedan 2022" ar ett dokument fran 2026 inte battre an
@@ -311,7 +411,11 @@ export function hamtaUtdrag(fraga, bolagsarkiv, max = 6, nu = Date.now(), period
           // Poangen raknas pa hela biten, texten som visas ar stadad: en term
           // som bara traffar i menyraden ska inte heller ge poang, men den
           // traffen ar redan sa svag att stadningen inte andrar ordningen.
-          kandidater.push({ poang, text: stadaBit(bit), rubrik: dok.rubrik, url: dok.url, datum: dok.datum, bolag: ark.namn });
+          // Fonstret centreras pa de SARSKILJANDE termerna. Med bolagsnamnet
+          // med blev fonstret lagt runt forsta "unibap", alltsa runt den
+          // juridiska foten, medan meningen om Loft Orbital hamnade utanfor.
+          kandidater.push({ poang, text: fonster(hel, sarskiljande.length ? sarskiljande : t),
+            rubrik: dok.rubrik, url: dok.url, datum, bolag: ark.namn });
         }
       }
     }
