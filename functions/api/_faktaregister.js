@@ -5,10 +5,31 @@ import { berakna } from './_berakning.js';
 
 const MAX_KURSCITAT = 900;
 
-const period = n => n.langd === 1 ? `Q${n.kvartal} ${n.ar}` : `${n.langd} kvartal till och med Q${n.kvartal} ${n.ar}`;
+/* En handelse har ingen period, den annonserades. Etiketten pekar pa
+   dokumentet i stallet, och kallan bar rubrik och url som vanligt. Att skriva
+   ut ett kvartal den inte tillhor vore ett pahittat faktum. */
+const period = n => n.typ === 'handelse' ? 'annonserat i ' + (n.rubrik || 'ett pressmeddelande')
+  : n.langd === 1 ? `Q${n.kvartal} ${n.ar}` : `${n.langd} kvartal till och med Q${n.kvartal} ${n.ar}`;
 const tal = n => String(n).replace('.', ',');
 const faktanyckel = n => JSON.stringify([n.bolagId, n.metrik, n.ar, n.kvartal, n.langd, n.varde, n.enhet, n.kalla]);
 const sakerUrl = url => { try { return /^https?:$/.test(new URL(url).protocol) ? url : ''; } catch { return ''; } };
+
+/* CITATFONSTRET, och det ar registrets storsta enskilda kostnad.
+
+   Varje faktapost bar ett citat runt talet. Fonstret var 350 tecken at varje
+   hall, alltsa 700 per post, och da rymdes 22 poster innan taket pa 40 kB slog
+   i. Matt 2026-09-12: 506 poster erbjods, 30 kom in, noll kvartalsposter, och
+   ordervardena fick aldrig plats alls.
+
+   Kortare fonster ger fler poster OCH mer traffsakra citat. Piloten klagade
+   pa bada halvorna samtidigt: "blir lite mycket text och for lite slutsatser"
+   och "den spottar ur citat som ibland inte handlar om det jag fragat". Ett
+   snavare fonster runt sjalva talet svarar mot bada.
+
+   180 tecken ar ungefar en mening at vardera hallet, vilket racker for att se
+   vilket matt och vilken period talet hor till. Kortare an sa borjar citatet
+   klippa mitt i den mening som bar uppgiften. */
+const CITATFONSTER = 180;
 
 function kallstalle(n) {
   const k = n.kalla;
@@ -24,11 +45,11 @@ function kallstalle(n) {
       Number(m[0].replace(/\s/g, '').replace(/\u2212/g, '-').replace(',', '.')) === n.original.varde &&
       efter.test(text.slice(m.index + m[0].length)));
     if (!match) return null;
-    const fran = Math.max(0, match.index - 350);
-    return { ...k, citat: k.citat.slice(fran, match.index + match[0].length + 350), offset: fran };
+    const fran = Math.max(0, match.index - CITATFONSTER);
+    return { ...k, citat: k.citat.slice(fran, match.index + match[0].length + CITATFONSTER), offset: fran };
   }
-  const fran = Number.isInteger(k.start) ? Math.max(0, k.start - 350) : 0;
-  const till = Number.isInteger(k.slut) ? k.slut + 350 : 1500;
+  const fran = Number.isInteger(k.start) ? Math.max(0, k.start - CITATFONSTER) : 0;
+  const till = Number.isInteger(k.slut) ? k.slut + CITATFONSTER : 1500;
   return { ...k, citat: k.citat.slice(fran, till), offset: fran };
 }
 

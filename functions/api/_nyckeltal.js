@@ -88,6 +88,19 @@ const METRIKER = [
     re: matt('kassaflödet från den löpande verksamheten uppgick till|kassaflöde från den löpande verksamheten uppgick till') },
   { id: 'orderingång', typ: 'flode',
     re: matt('orderingången uppgick till|orderingång uppgick till') },
+  /* ORDERVARDET, en PUNKTHANDELSE och inte ett periodmatt.
+
+     Ett avrop i ett pressmeddelande hor inte till ett kvartal, det intraffade
+     en viss dag. Det ar darfor slaget 'handelse', med dokumentets datum som
+     period. Utan posten kunde boten visa bada avropen pa skarmen och anda inte
+     lagga ihop dem, vilket var det forsta en pilot bad om: "tva avropsorders
+     1,39 plus 1,2 miljoner euro, borde han inte bara kunna plussa?"
+
+     Formuleringarna ar hamtade ur Unibaps egna releaser. Engelskan ar med for
+     att MFN bar bada spraken for samma bolag. */
+  { id: 'ordervärde', typ: 'handelse',
+    re: matt('ordervärdet är|ordervärdet uppgår till|ordervärdet uppgick till|ordern är värd'
+      + '|order om|avrop om|ett första avrop om|call-off order value is|order value is') },
 ];
 
 // mkr och msek ar samma sak (miljoner kronor). Normaliseras sa att tva rapporter
@@ -304,8 +317,11 @@ export function extraheraNyckeltal(bolagsarkiv) {
         for (const träff of text.matchAll(new RegExp(m.re.source, 'gi'))) {
           if (utanJamforelser[träff.index] === ' ') continue;
           // Perioden lases dar talet star, inte i rubriken. Se periodVidTraff.
+          /* En handelse KRAVER ingen period: den annonserades i ett dokument
+             och det ar hela dess forankring. Kravet pa en lasbar kvartalsperiod
+             var det som fick alla ordervarden att falla tyst. */
           const period = periodVidTraff(text, träff.index, dok.rubrik);
-          if (!period) continue;
+          if (!period && m.typ !== 'handelse') continue;
           const varde = tolkaTal(träff[1]);
           if (varde === null) continue;
           // Samma skalomrakning som pass 1. Utan den hade KSEK lasts som om det
@@ -313,7 +329,14 @@ export function extraheraNyckeltal(bolagsarkiv) {
           // gett en tusenfaldig "forandring".
           const norm = normaliseraFakta(varde, träff[2]);
           if (!norm) continue;
-          const nyckel = JSON.stringify([ark.id || ark.namn, m.id, period.ar, period.kvartal, period.langd]);
+          /* HANDELSER KONKURRERAR INTE OM EN PERIOD.
+             Flera avrop kan annonseras i samma rapport, och med den vanliga
+             nyckeln blev de motstridiga varden for samma kvartal: bada foll
+             tyst som konflikt. En handelse nycklas darfor pa dokumentet och
+             beloppet, alltsa pa sig sjalv. */
+          const nyckel = m.typ === 'handelse'
+            ? JSON.stringify([ark.id || ark.namn, m.id, dok.url, varde, träff[2]])
+            : JSON.stringify([ark.id || ark.namn, m.id, period.ar, period.kvartal, period.langd]);
           if (konflikter.has(nyckel)) continue;
           const tidigare = funna.get(nyckel);
           if (tidigare) {
@@ -326,7 +349,7 @@ export function extraheraNyckeltal(bolagsarkiv) {
           }
           funna.set(nyckel, {
             metrik: m.id, typ: m.typ,
-            ar: period.ar, kvartal: period.kvartal, langd: period.langd,
+            ar: period?.ar ?? null, kvartal: period?.kvartal ?? null, langd: period?.langd ?? null,
             varde: norm.varde, enhet: norm.enhet,
             rubrik: dok.rubrik, url: dok.url, bolag: ark.namn,
             bolagId: ark.id || ark.namn,

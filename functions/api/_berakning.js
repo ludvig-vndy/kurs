@@ -14,7 +14,24 @@ const MAX_INDATA = 16;
    jamforbart ut, men det ar inte sant for ett bolag med brutet rakenskapsar:
    Sectras ar slutar i april. Vi hittar darfor inte pa kvartalen, utan later
    arsperioden vara sin egen sort som bara kan jamforas med sin egen sort. */
-const periodNyckel = p => p.arsperiod === true
+/* TREDJE SORTEN: 'handelse'.
+
+   Ett ordervarde i ett pressmeddelande hor inte till ett kvartal, det
+   annonserades. Utan den sorten kunde tva avrop inte laggas ihop, och det var
+   det forsta en pilot bad om: "tva avropsorders 1,39 plus 1,2 miljoner euro,
+   borde han inte bara kunna plussa?"
+
+   Handelsen har ingen periodlangd att jamfora. Nyckeln ar
+   darfor konstant: det som avgor om tva handelser far laggas ihop ar bolag,
+   matt och enhet, plus sparren mot dubbelraknade belopp i summa.
+
+   Dokumentets datum anvands MEDVETET INTE. Matt 2026-09-12 bar 113 av 308
+   arkivdokument inlasningsdatumet i stallet for publiceringsdatumet, och ett
+   avrop som pastas ha skett en dag det inte skedde ar ett sakfel som ser lika
+   belagt ut som ett sant. Handelsen bar sitt dokument i kallan i stallet. */
+const periodNyckel = p => p.slag === 'handelse'
+  ? ['handelse']
+  : p.arsperiod === true
   ? (Number.isInteger(p.ar) ? ['ar', p.ar] : null)
   : Number.isInteger(p.ar) && Number.isInteger(p.kvartal) &&
     p.kvartal >= 1 && p.kvartal <= 4 && Number.isInteger(p.langd) && p.langd > 0 && p.langd <= 16
@@ -55,6 +72,8 @@ export function jamforbara(a, b) {
   // Ett rapporterat ar och ett kvartalsintervall ar inte samma sorts period.
   if (Boolean(a.arsperiod) !== Boolean(b.arsperiod)) return false;
   if (a.slag === 'flode' && a.langd !== b.langd) return false;
+  // Handelser har inga kvartalsfalt att jamfora; datumet ar hela perioden och
+  // det provades redan av periodNyckel.
   return true;
 }
 
@@ -140,6 +159,35 @@ export function berakna(operation, indata) {
   }
   if (operation === 'summa') {
     if (indata.length < 2) return avslag('Summa kräver minst två operander.');
+    /* HANDELSER SUMMERAS FOR SIG.
+
+       Annonserade avrop har datum, inte kvartal, sa angransning och
+       periodlangd betyder ingenting for dem. Det som daremot betyder allt ar
+       DUBBELRAKNINGEN: Unibaps order om 1,39 MEUR annonserades forst villkorat
+       av exporttillstand och sedan igen nar tillstandet kom, alltsa tva
+       pressmeddelanden om EN order. Lades bada till gav summan 3,98 MEUR i
+       stallet for 2,59, och talet hade sett lika belagt ut som ett sant.
+
+       Tva belopp som ar exakt lika stora ar darfor samma handelse tills nagon
+       visar motsatsen, och da avslas summan hellre an att den gissar. Att
+       rakna for lagt ar illa, att rakna for hogt och kalla det belagt ar varre. */
+    if (indata.every(p => p.slag === 'handelse')) {
+      try { if (indata.slice(1).some(p => !jamforbara(indata[0], p))) return avslag('Poster med olika bolag, mått, slag eller enhet kan inte summeras.'); }
+      catch (e) { return avslag(e.message); }
+      const belopp = indata.map(varde);
+      if (new Set(belopp).size !== belopp.length)
+        return avslag('Två av posterna har exakt samma belopp och är sannolikt samma händelse annonserad två gånger. Summera bara belopp du kan skilja åt.');
+      const ordnade = [...indata].sort((a, b) => varde(a) - varde(b));
+      const summa = ordnade.reduce((s, p) => s + varde(p), 0);
+      const forsta = ordnade[0];
+      // Varje del star med sin egen kalla i formeln, sa lasaren kan se exakt
+      // vilka annonseringar som lagts ihop och upptacka en som inte hor dit.
+      const formel = `${ordnade.map(p => `${tal(varde(p))} ${enhet(p)} (${p.period || 'annonserat'})`).join(' + ')} = ${tal(summa)} ${enhet(forsta)}`;
+      return bas(ordnade, operation, summa, enhet(forsta), { matt: forsta.matt, slag: 'handelse',
+        period: `${ordnade.length} annonserade belopp`,
+        antagande: 'Summan gäller de annonserade beloppen som valts här, inte nödvändigtvis alla som förekommit.',
+        formel: direktFormel(ordnade, formel) });
+    }
     if (indata.some(p => p.slag !== 'flode')) return avslag('Bara flödesposter kan summeras över perioder.');
     /* Summan raknar i kvartal: angransning, overlapp och resultatets langd.
        En arsperiod saknar de falten och far darfor inte summeras forran ett
