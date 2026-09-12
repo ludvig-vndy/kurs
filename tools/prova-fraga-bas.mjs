@@ -38,6 +38,15 @@ if (!process.env.BORSDATA_API) { console.error('BORSDATA_API saknas.'); process.
 const NS = '97d78256ff664c54a724878034c8f0fd'; // upptack-data, samma som motor/state-kv.mjs
 const ANTAL_BOLAG = Number(process.env.FRAGA_BAS_BOLAG || 2);
 
+/* FRAGA_BAS_TEMP=0 injicerar temperature i varje modellanrop. Tomt lamnar
+   begaran orord, alltsa leverantorens standard, vilket ar vad produktionen
+   kor i dag. FRAGA_BAS_UPPREPA=3 staller samma fraga tre ganger, vilket ar
+   det enda satt att mata om ett utfall ar stabilt eller en slump. */
+const TEMP = process.env.FRAGA_BAS_TEMP === '' || process.env.FRAGA_BAS_TEMP === undefined
+  ? null : Number(process.env.FRAGA_BAS_TEMP);
+if (TEMP !== null && !Number.isFinite(TEMP)) { console.error('FRAGA_BAS_TEMP maste vara ett tal.'); process.exit(1); }
+const UPPREPA = Math.max(1, Number(process.env.FRAGA_BAS_UPPREPA || 1));
+
 /* Prislista, USD per miljon token. Lokal konstant, ingen API-uppgift: andras
    priserna blir siffran nedan fel utan att nagot larmar. Cache-lasning kostar
    0,1x och cache-skrivning 1,25x av inpriset. */
@@ -188,6 +197,16 @@ globalThis.fetch = async (url, init) => {
     const systemtext = typeof begaran.system === 'string' ? begaran.system
       : (begaran.system || []).map(b => b?.text || '').join('');
     const granskar = systemtext.startsWith('Du granskar ett svar');
+    /* EXPERIMENT: temperature.
+
+       functions/api/fraga.js satter ingen temperature alls, sa varje anrop gar
+       pa leverantorens standard 1,0: generatorn, reparationsvarvet OCH
+       granskaren. motor/llm.mjs, som skriver nattbrevet, kor temperatur 0.
+       Skillnaden ar oavsiktlig, och den ar den troliga orsaken till att samma
+       fraga med samma underlag blockerades i ena korningen och svarade i
+       nasta. Provet injicerar vardet har i stallet for i produktionskoden, sa
+       ingenting andras skarpt forran matningen sagt nagot. */
+    if (TEMP !== null) init = { ...init, body: JSON.stringify({ ...begaran, temperature: TEMP }) };
     // Serverns eget nej till modellen kommer tillbaka som ett tool_result med
     // is_error. Det ar exakt beskedet modellen fick chansen att rata sig pa.
     for (const m of begaran.messages || [])
@@ -266,10 +285,14 @@ if (!PROV.length) { console.error('FRAGA_BAS_URVAL matchade ingen fraga.'); proc
 
 /* ---- korningen ---- */
 
+console.log('\nTEMPERATURE: ' + (TEMP === null ? 'orord, leverantorens standard (som i produktion)' : TEMP)
+  + '.  UPPREPNINGAR: ' + UPPREPA + ' per fraga.');
+
 const utfall = [];
-for (const p of PROV) {
+const korningar = PROV.flatMap(p => Array.from({ length: UPPREPA }, (_, i) => ({ ...p, varv: i + 1 })));
+for (const p of korningar) {
   console.log('\n' + '='.repeat(74));
-  console.log(p.namn.toUpperCase());
+  console.log(p.namn.toUpperCase() + (UPPREPA > 1 ? '  (varv ' + p.varv + ' av ' + UPPREPA + ')' : ''));
   console.log('FRÅGA: ' + p.fraga);
   const d = await fraga(p.fraga);
   const t = d.tackning || {};
@@ -337,7 +360,7 @@ console.log('BASFRÅGOR, SAMMANFATTNING\n');
 console.log('fråga'.padEnd(20) + 'modell'.padEnd(10) + 'anrop'.padEnd(7)
   + 'ms'.padStart(7) + 'kr'.padStart(8) + 'cache'.padStart(8) + '  utfall');
 for (const u of utfall) {
-  console.log(u.namn.padEnd(20)
+  console.log((u.namn + (UPPREPA > 1 ? ' #' + u.varv : '')).padEnd(20)
     + String(u.modell || '-').replace('claude-', '').replace('-4-5-20251001', '').replace('-5', '').padEnd(10)
     + String(u.modellanrop ?? '-').padEnd(7)
     + String(u.ms).padStart(7)
@@ -351,6 +374,33 @@ console.log('\nTotalt ' + total.toFixed(3) + ' USD, ' + (total * USD_SEK).toFixe
   + utfall.length + ' frågor. Medel ' + (medel * USD_SEK).toFixed(2) + ' kr per fråga.');
 console.log('Blockerade: ' + utfall.filter(u => u.blockerat).length + '. Fel: ' + utfall.filter(u => u.fel).length + '.');
 console.log('Med Börsdata-tal i registret: ' + utfall.filter(u => u.nyckeltal).length + ' av ' + utfall.length + '.');
+
+/* STABILITETEN, och den ar hela poangen med upprepningen.
+
+   Ett blockerat svar sager ingenting om fragan om samma fraga svarar nasta
+   gang. Vaxlar utfallet mellan varven ar det inte underlaget som avgor om
+   anvandaren far ett svar, utan slumpen i samplingen, och det ar ett annat
+   och varre problem an en datalucka. */
+if (UPPREPA > 1) {
+  console.log('\nSTABILITET (temperature ' + (TEMP === null ? 'orord' : TEMP) + '):');
+  console.log('fråga'.padEnd(20) + 'blockerade'.padEnd(13) + 'kr, lägst till högst'.padEnd(24) + 'ms, lägst till högst');
+  for (const p of PROV) {
+    const v = utfall.filter(u => u.namn === p.namn);
+    const kr = v.map(u => u.usd * USD_SEK), ms = v.map(u => u.ms);
+    const blockerade = v.filter(u => u.blockerat).length;
+    console.log(p.namn.padEnd(20)
+      + (blockerade + ' av ' + v.length).padEnd(13)
+      + (Math.min(...kr).toFixed(2) + ' till ' + Math.max(...kr).toFixed(2)).padEnd(24)
+      + Math.min(...ms) + ' till ' + Math.max(...ms)
+      + (blockerade && blockerade < v.length ? '   <-- VÄXLAR' : ''));
+  }
+  const vaxlande = PROV.filter(p => {
+    const v = utfall.filter(u => u.namn === p.namn).filter(u => !u.fel);
+    return v.some(u => u.blockerat) && v.some(u => !u.blockerat);
+  });
+  console.log('\nFrågor som växlar mellan blockerat och svar: ' + vaxlande.length + ' av ' + PROV.length
+    + (vaxlande.length ? ' (' + vaxlande.map(p => p.namn).join(', ') + ')' : '') + '.');
+}
 
 /* Vad som tog tid, sammanraknat over alla fragor. Det ar den siffran som sager
    var en optimering skulle gora nytta, inte enskilda utslag. */

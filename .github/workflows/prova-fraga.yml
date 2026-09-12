@@ -79,6 +79,14 @@ on:
         description: 'Basfrågor: kommaseparerat urval, t.ex. marginalserie,roic. Tomt kör alla nio.'
         type: string
         default: ''
+      bas_temp:
+        description: 'Basfrågor: temperature i varje modellanrop, t.ex. 0. Tomt = leverantörens standard, som i produktion.'
+        type: string
+        default: ''
+      bas_upprepa:
+        description: 'Basfrågor: antal varv per fråga. Krävs för att mäta om ett utfall är stabilt eller slump.'
+        type: string
+        default: '1'
 
 jobs:
   prov:
@@ -160,6 +168,8 @@ jobs:
         if: ${{ inputs.basfragor }}
         env:
           FRAGA_BAS_URVAL: ${{ inputs.bas_urval }}
+          FRAGA_BAS_TEMP: ${{ inputs.bas_temp }}
+          FRAGA_BAS_UPPREPA: ${{ inputs.bas_upprepa }}
         run: |
           set +e
           node tools/prova-fraga-bas.mjs 2>&1 | tee bas.log
