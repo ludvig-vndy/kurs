@@ -1120,6 +1120,43 @@ async function besvaraFraga(context) {
     blockerat: true, verifiering: { format: "dataposter-v1", orsak },
     block: [], kallor: [], tackning,
   });
+  /* HELLRE UNDERLAGET AN TOMMA HANDER.
+
+     Ett mekaniskt nej betyder att modellen skrev PROSAN fel, till exempel
+     satte en siffra i lopande text i stallet for i ett postblock. Postblocken
+     i samma svar ar da ororda: servern renderar dem sjalv ur registret, med
+     varde, period, enhet och kallcitat fran kallan, och modellen har bara
+     pekat pa ett id. Att kasta bort dem for att kommentaren foll ar att
+     slanga det enda i svaret som var bevisat.
+
+     Matningen 2026-09-12: 21 av 30 fragor blockerades, och 60 procent av
+     modellnotan gick till svar ingen sag. I tre korningar av samma P/E-fraga
+     refererade modellen SAMMA tre poster varje gang; bara prosan runt dem
+     skilde sig, och tva av tre blockerades. Anvandaren kunde ha fatt talen
+     alla tre gangerna.
+
+     Ingen kontroll mjukas upp. Posterna kors genom lasFaktasvar en gang till,
+     med exakt samma krav, och ett avklippt svar raddas inte: da vet vi inte
+     vad modellen tankte skriva. Granskaren kors vidare enligt samma regel som
+     forut, alltsa alltid nar en beraknad post ar med.
+
+     KVAR STAR URVALET. Vilka poster som visas ar fortfarande modellens val,
+     och tre sanna tal kan utelamna ett fjarde. Darfor sager noten rakt ut att
+     det har ar underlaget och inte ett svar, sa det inte lases som ett besked. */
+  if (!kontrollerat.ok && MEKANISKT.has(kontrollerat.orsak) && svar.stopp !== "max_tokens") {
+    let forsta = svar.data;
+    if (forsta === undefined) { try { forsta = JSON.parse(svar.text); } catch { forsta = null; } }
+    const poster = forsta && Array.isArray(forsta.block)
+      ? forsta.block.filter(b => b && b.typ === "post") : [];
+    if (poster.length) {
+      const bara = lasFaktasvar({ version: 1, block: poster }, register);
+      if (bara.ok) {
+        tackning.partiellt = { orsak: kontrollerat.orsak, poster: bara.block.length };
+        kontrollerat = bara;
+        svar = { ...svar, data: { version: 1, block: poster }, text: undefined };
+      }
+    }
+  }
   if (!kontrollerat.ok) return blockera(kontrollerat.orsak);
   if (svar.stopp === "max_tokens") return blockera("avklippt");
   let raw = svar.data !== undefined ? svar.data : JSON.parse(svar.text);
@@ -1181,9 +1218,22 @@ async function besvaraFraga(context) {
     .map(k => [JSON.stringify([k.url, k.citat]), k])).values()];
   const aktuellRouting = {bolag:(routing.bolag || []).map(h=>({id:h.id,name:h.name,ticker:h.ticker})),period:period || periodUrPoster(anvanda)};
   const trad = await skrivTrad([...turer,skapaTur(question,raw.block,register,aktuellRouting)],user?.id,tradSecret);
-  return json({ answer: kontrollerat.answer, block: kontrollerat.block,
+  /* Noten om ett partiellt svar ar SERVERNS text, inte modellens, sa den
+     granskas inte och kan inte bara ett pastaende om bolaget. Den laggs forst,
+     eftersom den andrar hur allt under den ska lasas, och den foljer inte med
+     in i samtalstraden: det ar posterna som ar samtalets innehall. */
+  const block = tackning.partiellt
+    ? [{ typ: 'saknas', etikett: 'Saknar underlag', stod: [], kallor: [],
+        text: 'Jag hade en kommentar till uppgifterna nedan men kunde inte belägga den mot '
+          + 'underlaget, så den är borttagen. Det här är alltså källmaterialet och inte en '
+          + 'färdig analys. Vilka poster som visas är modellens urval, så fråga gärna vidare '
+          + 'om en enskild uppgift om du vill ha den prövad.' },
+      ...kontrollerat.block]
+    : kontrollerat.block;
+  return json({ answer: block.map(b => b.etikett + ': ' + b.text).join('\n\n'), block,
     ...(trad ? {trad} : {}),
     kallor, tackning, verifiering: { format: "dataposter-v1",
+      ...(tackning.partiellt ? { partiellt: tackning.partiellt.orsak } : {}),
       prosa: kontrollerat.prosa.length ? "modellgranskad" : "ingen",
       berakningar: kontrollerat.block.some(b => b.typ === "beraknat") ? "modellgranskade" : "inga" },
     harlett: anvanda.filter(p => p.typ === "beraknat").map(p => ({
