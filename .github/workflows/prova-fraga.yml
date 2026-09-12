@@ -95,6 +95,10 @@ on:
         description: 'Basfrågor: motpart i kopplingsfrågan, t.ex. Loft Orbital.'
         type: string
         default: ''
+      bas_modell:
+        description: 'Basfrågor: tvinga svarsgeneratorn till en modell, t.ex. claude-sonnet-5. Tomt låter routningen välja.'
+        type: string
+        default: ''
 
 jobs:
   prov:
@@ -180,6 +184,7 @@ jobs:
           FRAGA_BAS_UPPREPA: ${{ inputs.bas_upprepa }}
           FRAGA_BAS_BOLAG_NAMN: ${{ inputs.bas_bolag_namn }}
           FRAGA_BAS_MOTPART: ${{ inputs.bas_motpart }}
+          FRAGA_BAS_MODELL: ${{ inputs.bas_modell }}
         run: |
           set +e
           node tools/prova-fraga-bas.mjs 2>&1 | tee bas.log

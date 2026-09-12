@@ -291,6 +291,18 @@ const MALLAR = [
      nio av fyrtio Unibap-dokument i vart arkiv namner Loft Orbital. Fragan
      provar om boten hittar dit med las_mer och sokord, utan att rakna pa
      nagot. Motparten satts med FRAGA_BAS_MOTPART. */
+  /* DEN TYNGRE FRAGAN, i Sebastians anda.
+
+     Kravet ar inte att hitta en uppgift utan att lagga ihop flera dokument
+     till en rod trad, OCH att sjalv namna var traden slutar. Den har inget
+     facit i en tabell: den provar omdome, och den provar om modellen kan skilja
+     det bolaget faktiskt skrivit fran det som later rimligt.
+
+     Darfor ar den ocksa ratt fraga att jamfora Haiku och Sonnet pa. En starkare
+     modell borde synas har, inte pa "vad blev omsattningen". */
+  ['beroende',          'Hur beroende är {b} av ' + (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') +
+    ' som kund? Gå igenom vad bolagets egen kommunikation faktiskt säger, och var tydlig med ' +
+    'vad som inte går att avgöra ur underlaget.'],
   ['koppling',          'Finns det några kopplingar mellan {b} och ' +
     (process.env.FRAGA_BAS_MOTPART || 'Loft Orbital') +
     '? Sök i bolagets egen kommunikation och visa vad som faktiskt står där.'],
@@ -310,7 +322,8 @@ if (!PROV.length) { console.error('FRAGA_BAS_URVAL matchade ingen fraga.'); proc
 /* ---- korningen ---- */
 
 console.log('\nTEMPERATURE: ' + (TEMP === null ? 'orord, leverantorens standard (som i produktion)' : TEMP)
-  + '.  UPPREPNINGAR: ' + UPPREPA + ' per fraga.');
+  + '.  UPPREPNINGAR: ' + UPPREPA + ' per fraga.'
+  + (MODELL ? '\nSVARSMODELL TVINGAD TILL: ' + MODELL + ' (granskare och redigerare oforandrade).' : ''));
 
 const utfall = [];
 const korningar = PROV.flatMap(p => Array.from({ length: UPPREPA }, (_, i) => ({ ...p, varv: i + 1 })));
