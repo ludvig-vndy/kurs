@@ -2,6 +2,7 @@
    Inga uppgifter eller id:n accepteras fran klienten/modellens slutliga svar. */
 import { extraheraNyckeltal, harled } from './_nyckeltal.js';
 import { berakna } from './_berakning.js';
+import { termer } from './_kallgrind.js';
 
 const MAX_KURSCITAT = 900;
 
@@ -70,6 +71,38 @@ export function skapaFaktaregister() {
     return id;
   };
 
+  /* URVALET VAR FRAGEOBEROENDE, och det var registrets storsta fel.
+
+     Taket pa 40 kB slar i vid varje fraga: matt 2026-09-12 rymdes 29 av flera
+     hundra erbjudna poster. Vilka 29 avgjordes av ORDNINGEN i koden, inte av
+     fragan, sa "hur har rorelsemarginalen utvecklats" och "finns det
+     kopplingar till Loft Orbital" fick exakt samma register. P/E kom alltid
+     med for att det star forst i NYCKELTAL-tabellen; ROIC, soliditet och
+     nettoskuld kom aldrig med for att de star sist.
+
+     Nu vager fragans egna ord. Poster vars matt fragan namner laggs FORST, sa
+     de ryms innan taket slar i. Ingenting utesluts av relevansen: den avgor
+     bara koordningen, och allt som far plats kommer med som forut. */
+  const relevansOrdning = (poster, namnAv, fraga) => {
+    const t = termer(fraga);
+    /* ALLTID EN KOPIA. Returnerades listan orord vid tom fraga muterade
+       anroparens .sort() originalet, och harled() langre ner laste da en annan
+       ordning an den fick. Ett prov pa berakningarnas kronologi foll direkt. */
+    if (!t.length) return [...poster];
+    /* Bada hallen, for svenskans bestamda form. Fragan sager
+       "rorelsemarginalen" medan mattet heter "Rorelsemarginal", sa ett rent
+       delstrangstest at ett hall missar precis de fragor det ar till for.
+       Poangen ar den kortares langd, sa en lang traff inte vager mer bara for
+       att anvandaren skrev ordet i en langre form. */
+    const poang = x => {
+      const namn = String(namnAv(x) || '').toLowerCase();
+      if (!namn) return 0;
+      return t.reduce((s, term) => s +
+        (namn.includes(term) || term.includes(namn) ? Math.min(term.length, namn.length) : 0), 0);
+    };
+    return [...poster].sort((a, b) => poang(b) - poang(a));
+  };
+
   function synka({ arkiv = [], utdrag = [], holdings = [], teser = [], question = '', lektioner = [], illustrationer = [], nyckeltal = [] } = {}) {
     // Urvalets dokument gar fore ovrig historik. Verktygsvarv far ett eget
     // reserverat utrymme, sa aldre nyhamtade poster inte trangs ut av starten.
@@ -127,7 +160,7 @@ export function skapaFaktaregister() {
       // da ar posterna inte berakningsbara. Namnet duger som identitet har:
       // det ar arkivets egen nyckel och det ar det som routningen matchat pa.
       const bolagId = b.bolagId || b.bolag;
-      for (const t of talen) {
+      for (const t of relevansOrdning(talen, x => x.namn, question)) {
         if (!t || typeof t.namn !== 'string' || !Number.isFinite(t.varde)) continue;
         const enhet = t.enhet === 'procent' ? 'procent' : 'gånger';
         const arsrad = (ar, varde) => lagg({
@@ -232,7 +265,9 @@ export function skapaFaktaregister() {
     tak = ordinarieTak;
     const valda = new Set(utdrag.map(u => u.url));
     const fakta = extraheraNyckeltal(arkiv).filter(n => Number.isFinite(n.varde) && kallstalle(n));
-    const prioriterade = [...fakta].sort((a, b) => Number(valda.has(b.url)) - Number(valda.has(a.url)));
+    // Fragans ord forst, urvalets dokument som andrahandsordning.
+    const prioriterade = relevansOrdning(fakta, f => f.metrik, question)
+      .sort((a, b) => Number(valda.has(b.url)) - Number(valda.has(a.url)));
     const ids = new Map();
     const registreraFakta = n => {
       const original = n.original || { varde: n.varde, enhet: n.enhet };
