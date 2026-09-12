@@ -38,10 +38,15 @@ if (!process.env.BORSDATA_API) { console.error('BORSDATA_API saknas.'); process.
 const NS = '97d78256ff664c54a724878034c8f0fd'; // upptack-data, samma som motor/state-kv.mjs
 const ANTAL_BOLAG = Number(process.env.FRAGA_BAS_BOLAG || 2);
 
-/* FRAGA_BAS_TEMP=0 injicerar temperature i varje modellanrop. Tomt lamnar
-   begaran orord, alltsa leverantorens standard, vilket ar vad produktionen
-   kor i dag. FRAGA_BAS_UPPREPA=3 staller samma fraga tre ganger, vilket ar
-   det enda satt att mata om ett utfall ar stabilt eller en slump. */
+/* FRAGA_BAS_TEMP injicerar temperature i varje modellanrop.
+
+   AVFARDAT 2026-09-12, lamnat kvar sa ingen provar igen: bade Haiku 4.5 och
+   Sonnet 5 svarar "`temperature` is deprecated for this model" med HTTP 400.
+   Samplingen gar alltsa inte att skruva ner, och variationen mellan tva
+   korningar av samma fraga maste tas om hand nagon annanstans an i modellen.
+
+   FRAGA_BAS_UPPREPA=3 staller samma fraga tre ganger. Det ar det enda sattet
+   att mata om ett utfall ar stabilt eller en slump. */
 const TEMP = process.env.FRAGA_BAS_TEMP === '' || process.env.FRAGA_BAS_TEMP === undefined
   ? null : Number(process.env.FRAGA_BAS_TEMP);
 if (TEMP !== null && !Number.isFinite(TEMP)) { console.error('FRAGA_BAS_TEMP maste vara ett tal.'); process.exit(1); }
