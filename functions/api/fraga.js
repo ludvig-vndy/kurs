@@ -1025,12 +1025,16 @@ async function besvaraFraga(context) {
 
   register.synka({ arkiv: arkivet, utdrag, holdings, teser, question, lektioner, nyckeltal, motparter });
   tackning.faktaregister = register.status();
+  // Trusted local test-server capability. A client body or production env flag
+  // cannot enable external research. The normal answer and review gates remain.
+  const research = typeof context.researchPilot === 'function'
+    ? context.researchPilot({question,register,tackning}) : null;
 
   const system = SYSTEM_BAS + SVAR_KONTRAKT +
-    (djup ? SYSTEM_DJUP : '') + samtalsText(samtal) +
+    (djup ? SYSTEM_DJUP : '') + (research?.instructions || '') + samtalsText(samtal) +
     (kanGrava ? SYSTEM_VERKTYG : "") +
     (!kanGrava && lektioner.length ? '\nDu kan läsa en relevant fördjupning med las_lektion när de valda kursutdragen inte räcker. Välj id ur kurskatalogen. Läs bara när det behövs för frågan.\n' : '') +
-    (harUnderlag ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
+    (harUnderlag || research ? SYSTEM_DOKUMENT + horisontText : SYSTEM_UTAN_DOKUMENT) +
     tackningText(tackning) +
     kursText(lektioner) +
     (teser.length ? SYSTEM_TES : "") +
@@ -1054,6 +1058,12 @@ async function besvaraFraga(context) {
   const undersokning = skapaUndersokning();
   const kor = async (namn, input, signal) => {
     sattMoment(tackning,namn==='berakna'?'beraknar':namn==='planera'?'planerar':'laser');
+    if (research?.tools.some(t=>t.name===namn)) {
+      const resultat = await research.run(namn,input,signal);
+      tackning.research = research.status();
+      tackning.faktaregister = register.status();
+      return resultat;
+    }
     if (namn === 'planera') {
       const resultat = undersokning.planera(input);
       tackning.utredning = undersokning.status();
@@ -1079,14 +1089,14 @@ async function besvaraFraga(context) {
   if (kanGrava) {
     svar = await utred(
       apiKey, brev,
-      verktygsDefinitioner(djup), kor,
+      verktygsDefinitioner(djup).concat(research?.tools || []), kor,
       tackning, provaSvar);
   } else {
     const utanArkiv = verktygsDefinitioner(djup).filter(t=>
       (t.name === 'berakna' && register.poster().some(p=>p.normaliserat)) ||
       (t.name === 'las_lektion' && lektioner.length > 0) ||
       (djup && ['planera','las_lektion'].includes(t.name)));
-    svar = await utred(apiKey, brev, utanArkiv, kor, tackning, provaSvar);
+    svar = await utred(apiKey, brev, utanArkiv.concat(research?.tools || []), kor, tackning, provaSvar);
   }
 
   /* Varken ett routningsbeslut eller en utredning far ta ner Fraga. Faller
@@ -1242,6 +1252,10 @@ async function besvaraFraga(context) {
           ...(redigerat.andrat ? {original:redigerat.original} : {}),
           samtal: samtal.slice(-6).map(t=>({fraga:t.fraga,block:t.block.filter(b=>['tolkning','saknas'].includes(b.typ))})),
           tillgangligt: granskarunderlag(register.poster()),
+          // The pilot reviewer must see read external counterevidence even
+          // when the answer generator did not choose it as support.
+          ...(research ? {researchUnderlag: register.poster().filter(p=>
+            research.status().sources?.some(s=>p.kallor?.some(k=>k.url===s.url)))} : {}),
         }) },
         /* Prefill. Granskaren kan inte erbjudas ett verktyg utan att bli en
            andra svarsmodell, sa i stallet borjar vi objektet at den. Utan det

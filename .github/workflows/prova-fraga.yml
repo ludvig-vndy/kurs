@@ -23,6 +23,10 @@ name: Prova Fragan (kostar pengar)
 on:
   workflow_dispatch:
     inputs:
+      kundpilot:
+        description: 'Lokal kundpilot i CI: tomt av, annars unibap-bifrost, sivers-poet, aac-maritime eller unibap-unproven. Max 2 USD.'
+        type: string
+        default: ''
       avancerat:
         description: 'Kör avancerade metodfrågor med intern diagnostik'
         type: boolean
@@ -101,7 +105,34 @@ on:
         default: ''
 
 jobs:
+  kundpilot:
+    if: ${{ inputs.kundpilot != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CHAT_API: ${{ secrets.KUNDPILOT_CHAT_API }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      PILOT_CASE: ${{ inputs.kundpilot }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - name: Complete testchat comparison, read-only production archive
+        run: node tools/prova-fraga-kundpilot.mjs --run --from-kv --case "$PILOT_CASE" --repeats 2 --budget-usd 2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kundpilot-results
+          path: motor/out/researchpilot/customer-comparison-*/
+          retention-days: 7
   prov:
+    if: ${{ inputs.kundpilot == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
