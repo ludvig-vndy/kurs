@@ -60,7 +60,8 @@ export function createPilotResearch({key,register,onEvent=()=>{},onDocument=()=>
     // The provider has returned more records than max_tool_calls in a live
     // probe. Account for every record, retain useful discovery, stop new work.
     // This is a local stop threshold, not a provider-enforced invoice cap.
-    if(response.status!=='completed')throw Error('Sökningen blev ofullständig');
+    const clippedSummary=response.status==='incomplete'&&response.incomplete_details?.reason==='max_output_tokens'&&web.some(w=>w.status==='completed'&&w.action?.sources?.length);
+    if(response.status!=='completed'&&!clippedSummary)throw Error('Sökningen blev ofullständig');
     const found=[];
     for(const w of web.filter(w=>w.status==='completed'))for(const s of w.action?.sources||[]){const c=add(s.url,s.title);if(c)found.push(c);}
     // Prefer the model's cited selection, but only within provider-reported search sources.

@@ -68,3 +68,9 @@ test('identical text attributed to different sources is not replaced with an arb
  register.synka({utdrag:[{bolag:'A',url:'https://a.example/original',text},{bolag:'B',url:'https://b.example/original',text}]});
  assert.equal(compactRegisteredText(text,register),text);
 });
+test('completed search candidates survive a clipped optional summary without becoming evidence',async()=>{
+ const response=structuredClone(searched);response.status='incomplete';response.incomplete_details={reason:'max_output_tokens'};
+ const register=skapaFaktaregister(),p=createPilotResearch({key:'test',register,search:async()=>response});
+ const result=JSON.parse(await p.run('sok_kallor',{fraga:'question'}));
+ assert.equal(result.kandidater.length,1);assert.equal(register.poster().length,0);
+});
