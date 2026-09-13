@@ -1,40 +1,22 @@
-# Kundpilot: byggd koppling, svarjämförelse återstår
+# Kundpilot: byggd och provad, inte klar f?r utrullning
 
-Bas: driftsatt 2253ea7. Separat arbetsgren fraga-kundpilot. Ingen produktionsändring eller deploy.
+Bas: driftsatt 2253ea7. Separat arbetsgren fraga-kundpilot, kod pushad till och med 3906e97. Ingen merge eller deploy.
 
-## Vad som finns
+Se [resultatrapporten](fraga-kundpilot-resultat-2026-09-14.md) och [alla faktiska svar](fraga-kundpilot-svar-2026-09-14.md).
 
-Lokal testchatt på samma `onRequestPost`, svarsgranskning, signerade samtal och `FragaSvar`-rendering som produktionen. Baslinje och pilot väljs i gränssnittet. Research är en serverägd callback, inte en flagga som klienten kan aktivera i produktionen. Piloten får söka kandidater och läsa valda HTML-original. Sökutdrag registreras aldrig som fakta.
+## Levererat
 
-HTML-läsningen kontrollerar DNS och varje omdirigering, låser destinationens adress, begränsar bytes/tid och behåller dokumenttext, hash och hämtningstid för revision. Endast hela meningsfönster registreras som neutrala dokumentcitat. Publiceringsdatum och avsändare uppfinns inte. Tidigare försök att återanvända motpartstypen och kapa fasta textlängder underkändes i kodgranskningen och är borttagna.
+Lokal testchatt genom samma onRequestPost, postregister, svarsgranskning, signerade samtal och FragaSvar-rendering som produktionen. Baslinje och pilot v?ljs i gr?nssnittet. Extern research aktiveras av en server?gd callback, inte av klienten. Piloten s?ker kandidater och l?ser valda HTML-original. S?kutdrag registreras aldrig som fakta.
 
-Granskaren får även registrerade externa dokument som generatorn inte valde i svaret. Det är ett underlag för modellgranskning, ingen sanningsgaranti.
+HTML-l?sningen kontrollerar DNS och omdirigeringar, l?ser destinationens adress och begr?nsar bytes/tid. Dokumenttext, hash och h?mtningstid sparas. Hela meningsf?nster registreras som neutrala dokumentcitat. Granskaren f?r ocks? registrerade externa dokument som generatorn inte valde. Detta ger sp?rbarhet, ingen sanningsgaranti.
 
-## Utförda prov
+## Verifierat och begr?nsningar
 
-- Sista hela kodsviten: 681 godkända, 3 överhoppade, inga fel. Fokuserad pilotsvit: 21/21.
-- `npm run check` godkänd. Bygge: 278 sidor.
-- Lokal webbläsarkontroll: sidan laddar, saknad nyckel ger begripligt fel, knappar återaktiveras, modelltext renderas med befintlig escaping. Signerad följdfråga provad med modellstubbar, inte skarpt.
-- Skarpt API-prov 1: sökning 8,934 s, uppskattat 0,02340650 USD. Leverantören returnerade två webbposter trots begärt max_tool_calls=1; första implementationen avvisade resultatet.
-- Skarpt API-prov 2 efter korrigerad redovisning: sökning 8,205 s + läsning 0,641 s, 0,02241636 USD. Första hittade kandidaten var Unibaps Bifrost-original. Läsningen bevarade iX5-105, LOOM, utvecklingsstöd och partnerlista. Detta bevisar API-kopplingen, inte självständig extern grävning eller svarskvalitet.
-- Totalt betalda API-prov hittills: 0,04582286 USD, cirka 46 öre med bokföringsantagandet 10 SEK/USD. Inte faktisk växelkurs eller fakturakvitto.
+- Kodsviten efter sista kod?ndringen: 684 godk?nda, 3 ?verhoppade, inga fel. Check godk?nd, bygge 278 sidor.
+- Lokal webbl?sarkontroll och signerad f?ljdfr?ga med modellstubbar genomf?rda. F?ljdfr?gor ?r inte skarpt j?mf?rda.
+- Tio skarpa fr?gek?rningar p? Unibap/Bifrost och Sivers/POET, samma publika arkivhash. AAC och BEACONSAT-f?llan ?r f?rberedda men inte k?rda.
+- Ludvig godk?nde nyckel?verf?ringen. KUNDPILOT_CHAT_API ?r konfigurerad i Actions och jobbet har k?rts fyra g?nger. Det tidigare godk?nnandehindret ?r l?st.
+- Extern h?mtning fungerar i flera prov, men analysfel, tappad relevant information, formatblockeringar och l?nga svar ?terst?r. Piloten ?r inte produktionsklar.
+- Fyra h?mtningsvarv i djupa l?get ?r of?r?ndrade. Fulla dokument/kandidatlistor ?teranv?nds inte mellan fr?gor. HTML, UTF-8 och okomprimerade svar st?ds; ingen PDF-utbyggnad.
 
-Prisunderlag kontrollerat mot [OpenAI](https://developers.openai.com/api/docs/pricing) och [Anthropic](https://platform.claude.com/docs/en/about-claude/pricing). Alla webbposter räknas konservativt som debiterade anrop. Tre webbposter är en lokal stopptröskel; leverantören har redan visat att ett anrop kan ge fler än det begärda antalet. Ingen garanti om ett hårt leverantörstak.
-
-## Nästa körning förberedd
-
-`tools/prova-fraga-kundpilot.mjs` kör samma frågor genom testchattens HTTP-gränssnitt, i båda lägen och omvänd ordning vid upprepning. Fyra utvecklingsfrågor: Unibap/Bifrost, Sivers/POET, AAC/sjöfart och obestyrkt Unibap/BEACONSAT-order. Gemensam batchbudget 2 USD; okänd användning behåller reservationen och stoppar fler betalda anrop. Fulla API-svar, lästa dokument, kundsvar och tids-/kostnadsdata sparas lokalt.
-
-`--from-kv` läser en fryst kopia av relevanta publika bolagsarkiv från produktion, utan KV-skrivningar eller privata användardata. Den kopian används lika i båda varianter. Ingen jämförelse mot en avsiktligt tom baslinje.
-
-GitHub-jobbet `kundpilot` i befintliga `prova-fraga.yml` använder en separat input och kör inte de gamla proven samtidigt. Kod och jobb är ännu inte pushade eller körda.
-
-## Återstående begränsningar
-
-- Ingen komplett skarp svarjämförelse har körts. Kvalitet, total svarstid och styckkostnad är fortfarande okända.
-- Lokal Anthropic-nyckel saknas. Befintlig nyckel finns i Actions. Försöket att lägga OpenAI-nyckeln som ny Actions-hemlighet avvisades av automatisk godkännandegranskning eftersom extern lagring inte var uttryckligen godkänd. Ingen nyckel överfördes. Ludvig har fått frågan om godkännande; alternativt kan han lägga ANTHROPIC_API_KEY lokalt.
-- Djupa lägets fyra hämtningsvarv är oförändrade. De kan visa sig otillräckliga; högre tak ska grundas i kompletta resultat.
-- Samtal återanvänder signerade valda poster. Fulla dokument och kandidatlistor återanvänds ännu inte mellan frågor, och den automatiska jämförelsen provar inte följdfrågor ännu.
-- HTML, UTF-8 och okomprimerade svar stöds; oläsbara original ger en lucka. Ingen PDF-utbyggnad ingår.
-
-Starta lokalt: `node tools/fraga-kundpilot-server.mjs --env C:/dev/kurs/.env --port 8789`. Utan `--fixture` är arkivet uttryckligen tomt och får inte kallas produktionsbaslinje.
+Starta lokalt: node tools/fraga-kundpilot-server.mjs --env C:/dev/kurs/.env --port 8789. Utan --fixture ?r arkivet uttryckligen tomt och f?r inte kallas produktionsbaslinje. Den lokala milj?n saknar Anthropic-nyckel; de skarpa proven k?rdes i Actions med befintlig hemlighet.
