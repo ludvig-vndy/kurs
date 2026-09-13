@@ -31,6 +31,7 @@
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
 import { execFileSync } from 'child_process';
 import { pathToFileURL } from 'url';
+import {partnerHtmlText} from './lib/motpart-html-text.mjs';
 
 const p = rel => new URL(rel, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const NS = '97d78256ff664c54a724878034c8f0fd'; // upptack-data, samma som bygg-arkiv.mjs
@@ -58,15 +59,7 @@ function kvSkriv(nyckel, varde) {
 /* Bara ren text, och bara det som ser ut som innehåll. Script och style måste
    bort FÖRE taggarna, annars blir deras innehåll till "text". */
 export function textUrHtml(html) {
-  return String(html || '')
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/gi, ' ').replace(/&amp;/gi, '&').replace(/&#39;/g, "'")
-    .replace(/&quot;/gi, '"').replace(/&lt;/gi, '<').replace(/&gt;/gi, '>')
-    .replace(/[ \t ]+/g, ' ')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
+  return partnerHtmlText(html);
 }
 
 export function bitar(text, max = MAX_BITAR) {

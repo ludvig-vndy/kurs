@@ -33,6 +33,11 @@ on:
     # 23:xx UTC skulle datera natten till fel dag for en svensk lasare.
     - cron: '7 0 * * *'
   workflow_dispatch:
+    inputs:
+      motparter_only:
+        description: 'Uppdatera bara motpartskällor, utan att bygga eller skicka brev'
+        type: boolean
+        default: false
 
 # Två körningar samtidigt skulle skriva över varandras minne i KV.
 concurrency:
@@ -40,7 +45,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  motparter:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.motparter_only == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installera låsta beroenden
+        run: npm ci --omit=dev --ignore-scripts
+      - name: Uppdatera enbart motpartskällor
+        run: node motor/bygg-motparter.mjs --kor
+
   brev:
+    if: ${{ inputs.motparter_only != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -56,7 +79,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Motorn använder bara Nodes egna moduler, så inget npm ci behövs.
+      # Brevmotorn använder Nodes egna moduler. HTML-parsern installeras
+      # i motpartsläsarens isolerade steg nedan.
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -79,7 +103,9 @@ jobs:
       # Får aldrig ta ner brevet: faller hämtningen står arkivet kvar som det är.
       - name: Hämta motparternas egen kommunikation
         continue-on-error: true
-        run: node motor/bygg-motparter.mjs --kor
+        run: |
+          npm ci --omit=dev --ignore-scripts
+          node motor/bygg-motparter.mjs --kor
 
       - name: Spara motorns minne till KV
         run: node motor/state-kv.mjs spara
