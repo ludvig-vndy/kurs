@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createPilotResearch} from '../lib/pilot-research.mjs';
+import {createPilotResearch,compactRegisteredText} from '../lib/pilot-research.mjs';
 import {skapaFaktaregister} from '../../functions/api/_faktaregister.js';
 
 const searched={status:'completed',usage:{input_tokens:100,output_tokens:20},output:[{type:'web_search_call',status:'completed',action:{type:'search',sources:[{url:'https://partner.example/project',title:'Project'}]}},{type:'message',content:[{type:'output_text',text:'UNVERIFIED SEARCH CLAIM'}]}]};
@@ -54,4 +54,17 @@ test('all provider web records are charged and stop further search at reached bu
  assert.equal(JSON.parse(await p.run('sok_kallor',{fraga:'question'})).kandidater.length,1);
  await p.run('sok_kallor',{fraga:'followup'});await p.run('sok_kallor',{fraga:'stop'});
  assert.equal(calls,2);assert.equal(p.status().webActions,4);assert.ok(p.status().estimatedSearchUSD>.04);
+});
+test('compaction substitutes only complete text already present in the server register',()=>{
+ const source='The platform is tested. AI target detection remains planned. '.repeat(5);
+ const register=skapaFaktaregister();register.synka({utdrag:[{url:'https://example.com/original',text:source}]});
+ const before=JSON.stringify(register.poster());
+ const result=compactRegisteredText('Original:\n'+source+'\nAdditional evidence not registered.',register);
+ assert.ok(result.length<source.length);assert.match(result,/post p_/i);assert.match(result,/Additional evidence not registered/);
+ assert.equal(JSON.stringify(register.poster()),before);assert.equal(register.poster()[0].text,source);
+});
+test('identical text attributed to different sources is not replaced with an arbitrary source id',()=>{
+ const text='The company has received a follow-up order. '.repeat(5),register=skapaFaktaregister();
+ register.synka({utdrag:[{bolag:'A',url:'https://a.example/original',text},{bolag:'B',url:'https://b.example/original',text}]});
+ assert.equal(compactRegisteredText(text,register),text);
 });

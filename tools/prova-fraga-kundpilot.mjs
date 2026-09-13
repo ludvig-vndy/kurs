@@ -13,6 +13,7 @@ const cases=[
  {id:'unibap-unproven',question:'Hur stor order har Unibap fått till BEACONSAT? Kontrollera först om en sådan order verkligen är offentliggjord och förklara vad källorna faktiskt visar om kopplingen.',critical:'Do not presume an order. Missing searched evidence does not prove no order exists.'},
 ];
 const selected=arg('--case',null),jobs=selected===null?cases:cases.filter(c=>c.id===selected);
+const modeArg=arg('--mode','both');if(!['both','pilot','baseline'].includes(modeArg))throw Error('Invalid mode');
 const repeats=Number(arg('--repeats',2)),limit=Number(arg('--budget-usd',2));
 if(!jobs.length||!Number.isInteger(repeats)||repeats<1||repeats>2||!Number.isFinite(limit)||limit<=0||limit>2)throw Error('Invalid bounded test settings');
 if(!process.argv.includes('--run')){console.log(JSON.stringify({dry:true,cases:jobs,repeats,budgetUSD:limit,criteria:['relevant external original independently found and read','key facts retained','conditional analytical value','no critical unsupported inference','complete time and cost including errors'],scope:'Development comparison, not held-out evaluation or ChatGPT benchmark'}));process.exit(0);}
@@ -50,7 +51,7 @@ const {createCustomerPilot}=await import('./fraga-kundpilot-server.mjs');
 const server=await createCustomerPilot({envFile,fixture,outDir:folder,port:0});const origin='http://127.0.0.1:'+server.address().port;
 const save=()=>writeFileSync(folder+'/comparison.json',JSON.stringify({created:new Date().toISOString(),fixtureHash,cases:jobs,repeats,budgetUSD:limit,chargedUSD:charged,stopped,accountingSEKperUSD:10,priceBasis:'Repository test prices; estimate, not invoice',rows,calls},null,2));
 try{
- outer:for(let repeat=1;repeat<=repeats;repeat++)for(const c of jobs)for(const mode of repeat%2?['baseline','pilot']:['pilot','baseline']){
+ outer:for(let repeat=1;repeat<=repeats;repeat++)for(const c of jobs)for(const mode of modeArg==='both'?(repeat%2?['baseline','pilot']:['pilot','baseline']):[modeArg]){
   if(stopped)break outer;const start=Date.now();
   const r=await nativeFetch(origin+'/api/fraga',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json'},body:JSON.stringify({question:c.question,mode}),signal:AbortSignal.timeout(180000)});
   const messages=(await r.text()).trim().split('\n').filter(Boolean).map(line=>JSON.parse(line)),result=messages.findLast(m=>m.type==='result');

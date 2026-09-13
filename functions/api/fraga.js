@@ -337,7 +337,7 @@ export function byggKorVerktyg(ctx) {
     if (!register) return text;
     register.synka({ arkiv, utdrag, lektioner });
     tackning.faktaregister = register.status();
-    return text + "\nUppdaterad dokumenthorisont efter verktyget (ersatter den tidigare):\n" +
+    return (ctx.compactText ? ctx.compactText(text) : text) + "\nUppdaterad dokumenthorisont efter verktyget (ersatter den tidigare):\n" +
       JSON.stringify(tackning.bolag) + register.prompt(true);
   };
   const hitta = (namn) => {
@@ -1029,6 +1029,7 @@ async function besvaraFraga(context) {
   // cannot enable external research. The normal answer and review gates remain.
   const research = typeof context.researchPilot === 'function'
     ? context.researchPilot({question,register,tackning}) : null;
+  const dokumentText = utdrag.map(u=>"[" + u.bolag + " · " + u.rubrik + " · " + u.datum + "]\n" + u.text).join("\n\n---\n\n");
 
   const system = SYSTEM_BAS + SVAR_KONTRAKT +
     (djup ? SYSTEM_DJUP : '') + (research?.instructions || '') + samtalsText(samtal) +
@@ -1041,9 +1042,7 @@ async function besvaraFraga(context) {
     "\nAnvandarens innehav:\n" + holdingsText +
     tesText +
     (utdrag.length
-      ? "\n\nUtdrag ur bolagens egna dokument:\n\n" + utdrag.map(function (u) {
-          return "[" + u.bolag + " · " + u.rubrik + " · " + u.datum + "]\n" + u.text;
-        }).join("\n\n---\n\n")
+      ? "\n\nUtdrag ur bolagens egna dokument:\n\n" + (research?.compactText ? research.compactText(dokumentText) : dokumentText)
       : "") + register.prompt();
 
   const modell = djup ? MODEL_DJUP : valjModell({ fraga: question, period: period, bolag: tackning.bolag.length, utdrag: utdrag.length });
@@ -1074,6 +1073,7 @@ async function besvaraFraga(context) {
     const fore = register.poster().length;
     let undersokt = false;
     const korGrund = byggKorVerktyg({arkiv:arkivet,env,utdrag,tackning,question,register,
+      compactText:research?.compactText,
       onUndersokt:()=>{undersokt=true;}});
     const resultat = await korGrund(namn,bestallning,signal);
     if (signal?.aborted) return 'Undersökningen avbröts av tidsbudgeten.';
@@ -1230,7 +1230,7 @@ async function besvaraFraga(context) {
     const granskning = await anropa(apiKey, {
       /* 80 rackte for {"godkand":true} men inte for ett nej med skal, sa
          granskarens svar klipptes av och blev ett nej av fel anledning. */
-      model: granskarModell, max_tokens: granskarModell === MODEL_DJUP ? 2048 : 320, system: cachat(GRANSKA_SYSTEM),
+      model: granskarModell, max_tokens: granskarModell === MODEL_DJUP ? 2048 : 320, system: cachat(GRANSKA_SYSTEM+(research?.reviewInstructions || '')),
       // Sonnet 5 stöder inte assistant-prefill. JSON-format ersätter prefixet.
       // https://platform.claude.com/docs/en/models/sonnet-5/migration-guide
       ...(granskarModell === MODEL_DJUP ? {output_config:{effort:'medium',format:{type:'json_schema',schema:{

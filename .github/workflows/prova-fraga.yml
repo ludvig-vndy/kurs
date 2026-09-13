@@ -27,6 +27,15 @@ on:
         description: 'Lokal kundpilot i CI: tomt av, annars unibap-bifrost, sivers-poet, aac-maritime eller unibap-unproven. Max 2 USD.'
         type: string
         default: ''
+      kundpilot_mode:
+        description: 'Jämför båda lägen eller kör enbart uppföljande pilot'
+        type: choice
+        options: [both, pilot, baseline]
+        default: both
+      kundpilot_repeats:
+        description: 'Upprepningar, 1 eller 2'
+        type: number
+        default: 2
       avancerat:
         description: 'Kör avancerade metodfrågor med intern diagnostik'
         type: boolean
@@ -117,6 +126,8 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       PILOT_CASE: ${{ inputs.kundpilot }}
+      PILOT_MODE: ${{ inputs.kundpilot_mode || 'both' }}
+      PILOT_REPEATS: ${{ inputs.kundpilot_repeats || 2 }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -124,7 +135,7 @@ jobs:
           node-version: '24'
       - run: npm ci --ignore-scripts
       - name: Complete testchat comparison, read-only production archive
-        run: node tools/prova-fraga-kundpilot.mjs --run --from-kv --case "$PILOT_CASE" --repeats 2 --budget-usd 2
+        run: node tools/prova-fraga-kundpilot.mjs --run --from-kv --case "$PILOT_CASE" --mode "$PILOT_MODE" --repeats "$PILOT_REPEATS" --budget-usd 2
       - uses: actions/upload-artifact@v4
         if: always()
         with:

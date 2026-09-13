@@ -17,6 +17,14 @@ function windows(text){
  if(current)result.push({offset:start,text:current});
  return result;
 }
+export function compactRegisteredText(text,register){
+ let result=text;
+ const posts=register.poster().filter(p=>p.typ==='dokument'&&typeof p.text==='string'&&p.text.length>=100);
+ for(const p of posts.filter(p=>posts.filter(other=>other.text===p.text).length===1).sort((a,b)=>b.text.length-a.text.length))
+  result=result.replaceAll(p.text,'[Fullständig oförändrad text i post '+p.id+']');
+ return result;
+}
+const PROJECT_STATUS=' Projektstatus: lyckad driftsättning av en plattform eller verifiering av en viss sensor bevisar inte att varje komponent, AI-funktion eller senare demonstration fungerar. Följ exakt vad som har provats respektive fortfarande planeras. Flytta inte finansiering av det nuvarande projektet till framtida uppdrag. Ett daterat äldre statusbesked är inte automatiskt dagens status. Använd formuleringen i källan och ange kvarvarande steg utan att gissa resultat.';
 
 export function createPilotResearch({key,register,onEvent=()=>{},onDocument=()=>{},search,read}={}) {
  if(!key||!register)throw Error('Research requires server key and register');
@@ -83,5 +91,6 @@ export function createPilotResearch({key,register,onEvent=()=>{},onDocument=()=>
    return JSON.stringify({error:'Okänt researchverktyg'});
   }catch(e){return JSON.stringify({error:String(e.message).slice(0,160),notering:'Hämtningsfel är inte belägg för frånvaro. Besvara det lästa underlaget.'});}
  }
- return {tools:RESEARCH_TOOLS,instructions:RESEARCH_INSTRUCTIONS,run,status:()=>({searches,webActions,providerToolThresholdExceeded:webActions>3,read:documents.size,attempts,failed:[...failed],estimatedSearchUSD:cost,unknownCost,calls:[...calls],sources:[...documents.entries()].map(([id,d])=>({id,url:d.finalUrl||d.url,sha256:d.sha256,readAt:d.readAt,chars:d.text.length}))})};
+ return {tools:RESEARCH_TOOLS,instructions:RESEARCH_INSTRUCTIONS+PROJECT_STATUS,reviewInstructions:PROJECT_STATUS,
+  compactText:text=>compactRegisteredText(text,register),run,status:()=>({searches,webActions,providerToolThresholdExceeded:webActions>3,read:documents.size,attempts,failed:[...failed],estimatedSearchUSD:cost,unknownCost,calls:[...calls],sources:[...documents.entries()].map(([id,d])=>({id,url:d.finalUrl||d.url,sha256:d.sha256,readAt:d.readAt,chars:d.text.length}))})};
 }
