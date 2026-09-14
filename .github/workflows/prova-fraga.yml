@@ -23,6 +23,10 @@ name: Prova Fragan (kostar pengar)
 on:
   workflow_dispatch:
     inputs:
+      skrivkostnad:
+        description: 'Fryst skriv- och granskningsprov, Sonnet, max 0.60 USD. Publika poster i fryst_payload.'
+        type: boolean
+        default: false
       kundpilot:
         description: 'Lokal kundpilot i CI: tomt av, annars unibap-bifrost, sivers-poet, aac-maritime eller unibap-unproven. Max 2 USD.'
         type: string
@@ -114,8 +118,29 @@ on:
         default: ''
 
 jobs:
+  skrivkostnad:
+    if: ${{ inputs.skrivkostnad }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      FROZEN_PAYLOAD: ${{ inputs.fryst_payload }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node tools/prova-fraga-skrivkostnad.mjs --run --model claude-sonnet-5 --budget-usd 0.6
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: skrivkostnad-results
+          path: motor/out/researchpilot/writer-cost-*/result.json
+          retention-days: 7
   kundpilot:
-    if: ${{ inputs.kundpilot != '' }}
+    if: ${{ inputs.kundpilot != '' && !inputs.skrivkostnad }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -143,7 +168,7 @@ jobs:
           path: motor/out/researchpilot/customer-comparison-*/
           retention-days: 7
   prov:
-    if: ${{ inputs.kundpilot == '' }}
+    if: ${{ inputs.kundpilot == '' && !inputs.skrivkostnad }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
