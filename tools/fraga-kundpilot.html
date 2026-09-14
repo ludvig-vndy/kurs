@@ -5,7 +5,7 @@
 </style><script src="/fraga-svar.js" defer></script></head><body>
 <h1>Fråga · lokal kundpilot</h1><p class="note">Testa med publika bolagsfrågor. Frågor och fullständiga resultat sparas lokalt. Svarsmotorn anropar Anthropic; pilotläget kan också söka externa källor.</p>
 <p id="context" class="note"></p><p id="model" class="note"></p><p id="keys" class="note"></p>
-<div class="toolbar"><label for="mode">Läge</label><select id="mode"><option value="baseline">Baslinje · befintlig motor</option><option value="pilot">Pilot · befintlig motor + research</option></select><button id="reset" type="button">Nytt samtal</button></div>
+<div class="toolbar"><label for="mode">Läge</label><select id="mode"><option value="baseline">Baslinje · befintlig motor</option><option value="pilot">Pilot · befintlig motor + research</option><option value="pilot-cache">Experiment · research med historikcache</option></select><button id="reset" type="button">Nytt samtal</button></div>
 <div id="conversation" aria-live="polite"></div>
 <form id="form"><label for="question">Din fråga eller följdfråga</label><textarea id="question" maxlength="1000" required placeholder="Vad behöver jag kontrollera för att bedöma om marginalförbättringen är uthållig?"></textarea><button id="send">Skicka fråga</button></form>
 <p id="status" role="status"></p><p id="error" role="alert"></p>

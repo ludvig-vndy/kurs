@@ -492,7 +492,9 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
       model: kropp.model, max_tokens: kropp.max_tokens,
       // Trusted testpilot only. Preserve every source and instruction; cache
       // the growing conversation as well as the existing stable system prefix.
-      ...(kropp.cacheMessages === true ? {cache_control:{type:'ephemeral'}} : {}),
+      // Repair changes the system prefix and normally ends the investigation.
+      // Keep the existing system cache, without paying to rewrite all history.
+      ...(kropp.cacheMessages === true && reparationer === 0 ? {cache_control:{type:'ephemeral'}} : {}),
       // Sonnet 5 räknar även tänkandet mot max_tokens. Medium begränsar
       // arbetet per varv; tids- och anropsbudgeterna gäller fortfarande.
       ...(kropp.model === MODEL_DJUP ? {output_config:{effort:'medium'}} : {}),

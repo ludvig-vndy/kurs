@@ -25,3 +25,17 @@ test('message caching changes only cache metadata, preserving full tool history 
   assert.match(JSON.stringify(cached.requests[1].messages),/verifiering återstår/);
  }finally{globalThis.fetch=original;}
 });
+
+test('terminal repair does not pay to cache a changed prefix that will not be reused',async()=>{
+ const original=globalThis.fetch,requests=[];let attempt=0;
+ globalThis.fetch=async(url,init)=>{requests.push(JSON.parse(init.body));return Response.json({stop_reason:'tool_use',content:[{type:'tool_use',id:'answer'+requests.length,name:'svara',input:{version:1,block:[{typ:'metod',text:'En plan är inte ett utfall.'}]}}]});};
+ try{
+  await utred('test',{model:'claude-sonnet-5',max_tokens:4096,system:'Alla regler',fraga:'Fråga',cacheMessages:true},
+   [{name:'read',description:'read',input_schema:{type:'object',properties:{}}}],async()=>'',{djup:true,verktyg:[]},()=>attempt++?{ok:true}:{ok:false,orsak:'format',klagan:'Rätta formen'});
+  assert.equal(requests.length,2);
+  assert.deepEqual(requests[0].cache_control,{type:'ephemeral'});
+  assert.equal(requests[1].cache_control,undefined);
+  assert.match(JSON.stringify(requests[1].messages),/Rätta formen/);
+  assert.match(JSON.stringify(requests[1].system),/RÄTTNINGSVARV/);
+ }finally{globalThis.fetch=original;}
+});
