@@ -132,7 +132,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: node tools/prova-fraga-skrivkostnad.mjs --run --model claude-sonnet-5 --budget-usd 0.6
+      - run: node tools/prova-fraga-skrivkostnad.mjs --run --model claude-sonnet-5 --strict --budget-usd 0.6
       - uses: actions/upload-artifact@v4
         if: always()
         with:
