@@ -68,10 +68,10 @@ export async function createCustomerPilot({ envFile = 'C:/dev/kurs/.env', fixtur
         }
         let input;
         try { input = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { return json(400, { error: 'Ogiltig JSON.' }); }
-        if (!input || typeof input.question !== 'string' || !['baseline', 'pilot'].includes(input.mode) || (input.trad !== undefined && typeof input.trad !== 'string')) return json(400, { error: 'Fråga och giltigt läge krävs.' });
+        if (!input || typeof input.question !== 'string' || !['baseline', 'pilot', 'pilot-cache'].includes(input.mode) || (input.trad !== undefined && typeof input.trad !== 'string')) return json(400, { error: 'Fråga och giltigt läge krävs.' });
         const keys = await readKeys(envFile);
         if (!keys.ANTHROPIC_API_KEY) return json(501, { error: 'ANTHROPIC_API_KEY saknas i lokal .env. Lägg till nyckeln och försök igen; filen läses om vid varje fråga.' });
-        if (input.mode === 'pilot' && !keys.CHAT_API) return json(501, { error: 'CHAT_API saknas i lokal .env för researchpiloten.' });
+        if (input.mode !== 'baseline' && !keys.CHAT_API) return json(501, { error: 'CHAT_API saknas i lokal .env för researchpiloten.' });
         const bucket = structuredClone(sourceBucket), events = [], documents = [], started = Date.now();
         const env = { ANTHROPIC_API_KEY: keys.ANTHROPIC_API_KEY, SUPABASE_URL: 'https://kundpilot.invalid', SUPABASE_SECRET_KEY: 'local-stub', FRAGA_TRAD_SECRET: tradSecret,
           DATA: { async get(key, type) { const value = bucket[key]; return value === undefined ? null : type === 'json' ? structuredClone(value) : typeof value === 'string' ? value : JSON.stringify(value); }, async put(key, value) { try { bucket[key] = JSON.parse(value); } catch { bucket[key] = value; } } } };
@@ -79,9 +79,9 @@ export async function createCustomerPilot({ envFile = 'C:/dev/kurs/.env', fixtur
         res.on('close', () => { if (!res.writableEnded) controller.abort(); });
         const request = new Request(origin + '/api/fraga', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/x-ndjson', Origin: origin }, body: JSON.stringify({ question: input.question, trad: input.trad || '', token: 'local-test', djup: true }), signal: controller.signal });
         const context = { request, env };
-        if (input.mode === 'pilot') {
+        if (input.mode !== 'baseline') {
           const { createPilotResearch } = await import('./lib/pilot-research.mjs');
-          context.researchPilot = ({ question, register, tackning }) => createPilotResearch({ key: keys.CHAT_API, register, question, tackning, onEvent: event => events.push(event), onDocument: document => documents.push(document) });
+          context.researchPilot = ({ question, register, tackning }) => ({...createPilotResearch({ key: keys.CHAT_API, register, question, tackning, onEvent: event => events.push(event), onDocument: document => documents.push(document) }),cacheMessages:input.mode==='pilot-cache'});
         }
         await local.run({ holdings: publicWatchlist }, async () => {
           const response = await onRequestPost(context);

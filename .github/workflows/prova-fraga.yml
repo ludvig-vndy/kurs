@@ -34,7 +34,7 @@ on:
       kundpilot_mode:
         description: 'Jämför båda lägen eller kör enbart uppföljande pilot'
         type: choice
-        options: [both, pilot, baseline]
+        options: [both, pilot, baseline, pilot-cache, cache-pair]
         default: both
       kundpilot_repeats:
         description: 'Upprepningar, 1 eller 2'

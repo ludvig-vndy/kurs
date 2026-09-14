@@ -490,6 +490,9 @@ export async function utred(apiKey, kropp, verktyg, kor, tackning, provaSvar) {
        planera forst och svara sist, sa forloppet ar oforandrat. */
     const svar = await anropa(apiKey, {
       model: kropp.model, max_tokens: kropp.max_tokens,
+      // Trusted testpilot only. Preserve every source and instruction; cache
+      // the growing conversation as well as the existing stable system prefix.
+      ...(kropp.cacheMessages === true ? {cache_control:{type:'ephemeral'}} : {}),
       // Sonnet 5 räknar även tänkandet mot max_tokens. Medium begränsar
       // arbetet per varv; tids- och anropsbudgeterna gäller fortfarande.
       ...(kropp.model === MODEL_DJUP ? {output_config:{effort:'medium'}} : {}),
@@ -1053,7 +1056,8 @@ async function besvaraFraga(context) {
   const omfang = djup
     ? '\nSVARSOMFÅNG: Ge först den viktigaste bedömningen, sedan belägg och de alternativ som faktiskt ändrar bedömningen, sist nästa avgörande kontroll. Normalt högst fyra prosablock med högst två meningar i varje, totalt 160–220 ord. Faktaposter visas separat och räknas inte in. Lägg till utrymme bara när frågans delfrågor kräver det, inte för att återberätta din undersökning.\n'
     : '\nSVARSOMFÅNG: Besvara frågan i normalt högst tre prosablock med högst två meningar i varje, totalt 100–150 ord. Börja med slutsatsen. Ge därefter det avgörande sambandet eller alternativet, och avsluta med den viktigaste konkreta kontrollen. En enkel fråga får gärna ett enda kort block. Faktaposter visas separat och räknas inte in. Lägg till utrymme bara om användaren ber om utförlighet eller fler delfrågor behöver besvaras.\n';
-  const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: omfang + system, fraga: question };
+  const brev = { model: modell, max_tokens: modell === MODEL_DJUP ? 4096 : 1600, system: omfang + system, fraga: question,
+    ...(research?.cacheMessages === true ? {cacheMessages:true} : {}) };
   const undersokning = skapaUndersokning();
   const kor = async (namn, input, signal) => {
     sattMoment(tackning,namn==='berakna'?'beraknar':namn==='planera'?'planerar':'laser');
